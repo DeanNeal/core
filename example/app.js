@@ -1,6 +1,6 @@
 // import 'document-register-element';
 // import Styles from 'styles/main.scss';
-import { Register } from './framework/core.js';
+import { Register } from 'src/framework/core.js';
 // import { AuthComponent } from './components/auth/auth.component';
 // import { RegistrationComponent } from './components/auth/registration/registration.component';
 // import { RemindComponent } from './components/auth/remind/remind.component';
