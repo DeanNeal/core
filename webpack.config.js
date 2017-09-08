@@ -1,6 +1,7 @@
 var path = require('path');
 var webpack = require('webpack');
 var ExtractTextPlugin = require("extract-text-webpack-plugin");
+var SmartBannerPlugin = require('smart-banner-webpack-plugin');
 var CopyWebpackPlugin = require('copy-webpack-plugin');
 var HtmlWebpackPlugin = require('html-webpack-plugin');
 var CleanWebpackPlugin = require('clean-webpack-plugin');
@@ -10,6 +11,8 @@ const NODE_ENV = process.env.NODE_ENV || 'dev';
 
 var libraryName = '[name]';
 var outputFile = libraryName + '.js';
+
+ const package1 = require('./package.json');
 
 module.exports = {
     entry: {
@@ -25,8 +28,7 @@ module.exports = {
         umdNamedDefine: true
     },
     module: {
-        loaders: [
-            {
+        loaders: [{
                 loader: 'babel-loader',
                 test: path.join(__dirname, 'src'),
                 query: {
@@ -94,10 +96,10 @@ module.exports = {
 //------PRODUCTION CONFIG--------//
 
 if (NODE_ENV == 'dev') {
-    module.exports.entry.devApp =  ['./src/example/app.js'];
-    
+    module.exports.entry.devApp = ['./src/example/app.js'];
+
     module.exports.plugins.push(
-        new ExtractTextPlugin("[name].css", {allChunks: true}),
+        new ExtractTextPlugin("[name].css", { allChunks: true }),
         new webpack.HotModuleReplacementPlugin(),
         new CopyWebpackPlugin([{
             context: 'src/example/img',
@@ -114,10 +116,10 @@ if (NODE_ENV == 'dev') {
             filename: path.resolve('build/index.html'),
             template: path.resolve(__dirname, 'src/example/index.html')
         }),
-         new HtmlWebpackHarddiskPlugin({
+        new HtmlWebpackHarddiskPlugin({
             alwaysWriteToDisk: true,
             filename: 'index.html'
-         })
+        })
         // new webpack.optimize.CommonsChunkPlugin({
         //     name: "vendor"
         // })
@@ -127,14 +129,19 @@ if (NODE_ENV == 'dev') {
 
 if (NODE_ENV == 'prod') {
     module.exports.plugins.push(
-        // new webpack.optimize.UglifyJsPlugin({
-        //     compress: {
-        //         warnings: false
-        //     },
-        //     mangle: {
-        //         keep_fnames: true
-        //     }
-        // }),
+        new webpack.optimize.UglifyJsPlugin({
+            compress: {
+                warnings: false
+            },
+            mangle: {
+                keep_fnames: true
+            }
+        }),
+        new SmartBannerPlugin({
+            banner: `AceJs ${package1.version}\nMay be freely distributed under the MIT license \nAuthor: Bogdan Zinkevich\nLast update: ${new Date().toLocaleString()}\n`,
+            raw: false,
+            entryOnly: true
+        }),
         new CleanWebpackPlugin(['build'], {
             root: path.resolve(__dirname),
             verbose: true
