@@ -2,6 +2,7 @@
   "name": "ace-js",
   "version": "1.0.4",
   "description": "JS framework based on web components",
+  "repository": "https://github.com/DeanNeal/ace-js.git",
   "scripts": {
     "watch": "webpack --watch",
     "dev": "webpack-dev-server --progress --colors --hot --display-modules --display-reasons --profile",
