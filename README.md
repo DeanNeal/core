@@ -1,6 +1,6 @@
 # ace-js
 
-AceJs - is a front-end framework based on web components approach.
+AceJs - is a front-end framework based on web components technology.
 
 ## Installation
 

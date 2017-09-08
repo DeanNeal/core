@@ -288,13 +288,13 @@ return /******/ (function(modules) { // webpackBootstrap
 	    // console.time('modules')
 	    if (!options.routes) {
 	        console.warn('You should set routes!');
+	    } else {
+	        new _routerSwitcher.RegisterRouteElement(options.routes);
 	    }
 
 	    if (options.styles) {
 	        loadStyle(options.styles);
 	    }
-
-	    new _routerSwitcher.RegisterRouteElement(options.routes);
 
 	    options.components.forEach(function (component) {
 	        registerComponent(component);

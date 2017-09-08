@@ -8,13 +8,16 @@ var CssSourceMapPlugin = require('css-sourcemaps-webpack-plugin');
 var HtmlWebpackHarddiskPlugin = require('html-webpack-harddisk-plugin');
 const NODE_ENV = process.env.NODE_ENV || 'dev';
 
-var libraryName = 'index';
+var libraryName = '[name]';
 var outputFile = libraryName + '.js';
 
 module.exports = {
-    entry: ['./src/core.js'],
+    entry: {
+        index: ['./src/core.js']
+        // devApp: ['./src/example/app.js']
+    },
     output: {
-        path: path.join(__dirname, ''),
+        path: path.join(__dirname, NODE_ENV == 'prod' ? '' : 'build'),
         filename: outputFile, //NODE_ENV == 'prod' ? '[name][hash].js' : '[name].js',
         publicPath: '',
         library: libraryName,
@@ -59,68 +62,69 @@ module.exports = {
     // },
 
     plugins: [
-      //  new CssSourceMapPlugin(),
-        // new ExtractTextPlugin("[name].css", {allChunks: true}),
-        // Avoid publishing files when compilation fails
         new webpack.NoErrorsPlugin(),
-        // new webpack.ProvidePlugin({
-        //     $: "jquery",
-        //     jQuery: "jquery",
-        //     "window.jQuery": "jquery",
-        //     "moment": "moment"
-        // }),
         new webpack.DefinePlugin({
             NODE_ENV: JSON.stringify(NODE_ENV)
-        }),
-        // new webpack.HotModuleReplacementPlugin(),
-        // new CopyWebpackPlugin([{
-        //     context: 'example/img',
-        //     from: '**/*',
-        //     to: 'img'
-        // }, {
-        //     context: 'example/css',
-        //     from: '**/*',
-        //     to: 'css'
-        // }]),
-        // new HtmlWebpackPlugin({
-        //     title: 'ACE',
-        //     alwaysWriteToDisk: true,
-        //     filename: path.resolve('build/index.html'),
-        //     template: path.resolve(__dirname, 'example/index.html')
-        // }),
-        //  new HtmlWebpackHarddiskPlugin({
-        //     alwaysWriteToDisk: true,
-        //     filename: 'index.html'
-        //  })
-        // new webpack.optimize.CommonsChunkPlugin({
-        //     name: "vendor"
-        // })
+        })
     ],
     // Create Sourcemaps for the bundle
     // devtool: 'source-map',
     resolve: {
-        root: path.resolve(__dirname, '/'),
+        root: path.resolve(__dirname, 'src'),
         alias: {
-            img: 'img',
-            example: 'example',
-            src: 'src'
+            // img: 'img',
+            // example: path.resolve(__dirname, 'example'),
+            // src: path.resolve(__dirname, 'src')
             //framework: 'framework',
             //assets: path.resolve(__dirname, 'dev/assets'),
         },
-        extensions: ['', '.js']
+        extensions: ['', '.js', 'css', 'scss', 'html']
     },
     devServer: {
         port: "8080",
         contentBase: path.resolve(__dirname, 'build'),
         colors: true,
         historyApiFallback: true,
-        hot: false,
+        hot: true,
         inline: true // reloads page after any changes
     }
 };
 
 
 //------PRODUCTION CONFIG--------//
+
+if (NODE_ENV == 'dev') {
+    module.exports.entry.devApp =  ['./src/example/app.js'];
+    
+    module.exports.plugins.push(
+        new ExtractTextPlugin("[name].css", {allChunks: true}),
+        new webpack.HotModuleReplacementPlugin(),
+        new CopyWebpackPlugin([{
+            context: 'src/example/img',
+            from: '**/*',
+            to: 'img'
+        }, {
+            context: 'src/example/css',
+            from: '**/*',
+            to: 'css'
+        }]),
+        new HtmlWebpackPlugin({
+            title: 'ACE',
+            alwaysWriteToDisk: true,
+            filename: path.resolve('build/index.html'),
+            template: path.resolve(__dirname, 'src/example/index.html')
+        }),
+         new HtmlWebpackHarddiskPlugin({
+            alwaysWriteToDisk: true,
+            filename: 'index.html'
+         })
+        // new webpack.optimize.CommonsChunkPlugin({
+        //     name: "vendor"
+        // })
+    )
+}
+
+
 if (NODE_ENV == 'prod') {
     module.exports.plugins.push(
         // new webpack.optimize.UglifyJsPlugin({

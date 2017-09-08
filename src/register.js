@@ -5,13 +5,13 @@ export function Register(options) {
     // console.time('modules')
     if (!options.routes) {
         console.warn('You should set routes!');
+    } else {
+        new RegisterRouteElement(options.routes);
     }
 
     if (options.styles) {
         loadStyle(options.styles);
     }
-
-    new RegisterRouteElement(options.routes);
 
     options.components.forEach(component => {
         registerComponent(component);

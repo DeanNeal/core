@@ -1,0 +1,121 @@
+header {
+  height: 60px;
+  border-bottom: 1px solid #ccc;
+  padding: 10px;
+  background-color: $c-white;
+  .logo {
+    // width: 50px;
+    // border-right: 1px solid #fff;
+    // padding-right: 15px;
+    float: left;
+    img{
+      width: auto;
+      height: 39px;
+    }
+
+    & .gantt--main-menu-item {
+      /*padding: 0 $step * 8 0 0;*/
+      height: 39px;
+      display: flex;
+      align-items: center;
+      font-size: 24px;
+      font-weight: bold;
+    }
+  }
+  .gantt--main-menu {
+    display: flex;
+    height: 100%;
+    float: left;
+    align-items: center;
+
+    .gantt--main-menu-item {
+      color: $c-black;
+      position: relative;
+      &.active {
+        &:after {
+          content: '';
+          position: absolute;
+          width: 100%;
+          bottom: 0;
+          left: 0;
+          border-bottom: 3px solid $c-yellow;
+        }
+      }
+      // transition: 0.3s all;
+    }
+
+
+    &-item {
+      padding: 10px;
+      height: 100%;
+      display: block;
+      text-decoration: none;
+      color: $c-grey;
+      font-size: $step * 4;
+      font-weight: 300;
+
+      &:hover {
+        opacity: 0.8;
+      }
+    }
+  }
+  .right-menu {
+    float: right;
+    margin-right: 10px;
+    display: flex;
+    align-items: center;
+
+    .search-input{
+      margin-right: 10px;
+
+      input[type="text"]{
+        height: 39px;
+        padding: 0 $step * 8 0 $step * 3;
+        font-size: 16px;
+        border: none;
+        border-top: 3px solid transparent;
+        border-bottom: 3px solid $c-yellow;
+        box-sizing: border-box;
+
+        &:focus{
+          border: 3px solid $c-anthr;
+          padding-right: 29px;
+        }
+      }
+
+      i{
+        color:  $c-anthr;
+        position: absolute;
+        top: 0;
+        right: $step * 2;
+        font-size: 18px;
+        bottom: 0;
+        margin: auto;
+        width: 18px;
+        height: 18px;
+      }
+    }
+
+    .profile-menu {
+      align-items: center;
+      justify-content: center;
+      display: flex;
+      font-size: 14px;
+      color: $c-black;
+      font-weight: 500;
+      position: relative;
+      cursor: pointer;
+
+      .avatar {
+        background-size: cover!important;
+        background-position: center center!important;
+        border-radius: 100%;
+        width: 40px;
+        height: 40px;
+      }
+      .username {
+        margin-right: 10px;
+      }
+    }
+  }
+}
