@@ -1,4 +1,4 @@
-import {Component} from '../../../../core';
+import { Component } from '../../../../core';
 import Tpl from './handlers.component.html';
 export class DocHandlersComponent extends Component {
     constructor(params) {
@@ -8,7 +8,32 @@ export class DocHandlersComponent extends Component {
     }
 
     onInit() {
+        this.props.set({
+            value: 'value',
+            model: 'Something',
+            className: 'unclicked',
+            showClass: true,
+            isVisible: false,
+            width: '50px',
+            height: '100px',
+            items: [{name: 1}, {name: 2}, {name: 3}],
+            image: 'https://www.w3schools.com/css/img_fjords.jpg'
+        })
+    }
 
+    changeClass() {
+        this.props.set('className', 'clicked');
+    }
+
+    changeSize() {
+        this.props.set({
+            height: '75px',
+            width: '100px'
+        })
+    }
+
+    showElement() {
+        this.props.set('isVisible', true);
     }
 
     onDestroy() {

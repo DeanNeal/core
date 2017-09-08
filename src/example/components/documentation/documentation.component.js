@@ -85,7 +85,7 @@ export class DocumentationComponent extends Component {
                     name: 'Http methods',
                     route: 'documentation/http-methods'
                 }, {
-                    name: 'Multimedia API',
+                    name: 'Hypermedia API',
                     route: 'documentation/multimedia-api'
                 }]
             }
