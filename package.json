@@ -1,6 +1,6 @@
 {
   "name": "ace-js",
-  "version": "1.0.6",
+  "version": "1.0.7",
   "description": "JS framework based on web components",
   "repository": "https://github.com/DeanNeal/ace-js.git",
   "scripts": {
