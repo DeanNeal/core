@@ -1,0 +1,25 @@
+<!-- <app-header></app-header> -->
+<main>
+    
+    <div class="main-content">
+        <div class="top-menu">
+            <div>
+                Year <app-common-dropdown frameworkModel="props.year" frameworkInput="items: yearsArray, model: props.year"></app-common-dropdown>
+                Month <app-common-dropdown frameworkModel="props.month" frameworkInput="items: monthsArray, model: props.month"></app-common-dropdown>
+            </div>
+
+            <h3>Total budget: <span frameworkValue="props.totalBudget"></span>$</h3>
+        </div>
+        
+        <div class="projects--header">
+            <div class="projects--header-item title active">Title <div class="arrow"></div></div>
+            <div class="projects--header-item due">Due date <div class="arrow"></div></div>
+            <div class="projects--header-item link"> <div class="arrow"></div></div>
+            <div class="projects--header-item budget">Budget <div class="arrow"></div></div>
+            <div class="projects--header-item currency">Currency <div class="arrow"></div></div>
+        </div>
+
+        <app-finances-project  frameworkFor="props.items"></app-finances-project>
+    
+    </div>
+</main>

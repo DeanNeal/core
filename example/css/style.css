@@ -1,0 +1,54 @@
+html, body {
+    height: 100%;
+}
+
+body {
+    display: flex;
+    flex-direction: row;
+    font-family: 'Open Sans';
+    line-height: 1.2;
+    font-size: 14px;
+    color: #000000;
+}
+
+a {
+    text-decoration: none;
+    color: #17b6ed;
+}
+
+i {
+    cursor: pointer;
+}
+
+route-switcher, child-route-switcher{
+    display: flex;
+    flex: 1;
+    width: 100%;
+    height: calc(100% - 100px);
+}
+
+gantt--scale {
+    width: 100%;
+}
+
+.container {
+    padding: 2%;
+    min-height: calc(100% - 140px);
+    overflow: hidden;
+}
+
+.pointer {
+    cursor: pointer;
+}
+
+.form-control {
+    margin: 10px 0px;
+}
+
+.text-center {
+    text-align: center;
+}
+
+.text-underline {
+    text-decoration: underline;
+}

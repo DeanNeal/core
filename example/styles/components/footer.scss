@@ -1,0 +1,36 @@
+footer {
+  //background: url(../img/striped-line.jpg);
+  background-size: 46px;
+  background-position: 0;
+  height: $step * 10;
+
+  .info-panel {
+    font-size: 0;
+    display: inline-flex;
+    justify-content: flex-start;
+    padding: $step $step * 2;
+    height: 100%;
+    width: 100%;
+    background: rgba(0, 0, 0, .3);
+
+    //.info-panel__item
+    &__item {
+      font-size: $step * 3;
+      display: block;
+      min-width: 200px;
+      background-color: $c-white;
+      border: 1px solid $c-anthr;
+      text-align: right;
+      line-height: $step * 4;
+      padding: $step * 2;
+      text-transform: uppercase;
+      
+      //.info-panel__item + .info-panel__item
+      & + .info-panel__item {
+        margin-left: $step * 3;
+      }
+    }
+  }
+
+
+}

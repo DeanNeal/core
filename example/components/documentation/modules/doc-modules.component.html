@@ -1,0 +1,34 @@
+<h3>Modules</h3>
+<span class="text">To simplify <b>app.js</b> you can split your code into modules</span>
+<br>
+<span class="text">Call your module as <b>index.js</b> for easier using, so then just import <b>components/documentation</b> where index.js file is.</span>
+
+<div class="code-block">
+    <div class="code-header">index.js</div>
+    <pre>
+        import {DocumentationComponent} from './documentation.component';
+        import {DocQuickStartComponent} from './quick-start/doc-quick-start.component';
+
+        export default [
+            {c: DocumentationComponent, selector: 'app-documentation'},
+            {c: DocQuickStartComponent, selector: 'app-documentation-quick-start'}
+            ...
+        ]
+</pre>
+</div>
+
+
+<div class="code-block">
+    <div class="code-header">app.js</div>
+    <pre>
+        import Docs from './components/documentation';
+        Register({
+            ...
+            modules: [
+                Docs
+                ...
+            ]
+            ...
+        });
+</pre>
+</div>

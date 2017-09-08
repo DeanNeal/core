@@ -1,0 +1,58 @@
+<!-- <app-header></app-header> -->
+
+<main>
+
+	<div class="avatar">
+		<div class="avatar-img relative" frameworkRef="image" frameworkStyle="background:props.avatar">
+			<input type="file" class="input-file" frameworkRef="avatar" frameworkChange="avatarChange">
+		</div>
+		<span class="avatar-username">Power user</span>
+	</div>
+
+	<div class="personal-info">
+		<form frameworkSubmit="changeProfile" frameworkRef="form" frameworkChange="validation">
+			<div class="app-form__row">
+				<label class="app-form__label">
+					<!-- <span class="app-form__label__text">User name</span> -->
+					<input type="text" required placeholder="Username" maxlength="50" frameworkModel="props.username" class="app-form__label__input" />
+				</label>
+			</div>
+
+			<div class="app-form__row">
+				<label class="app-form__label">
+					<!-- <span class="app-form__label__text">User email</span> -->
+					<input type="email" required placeholder="Email" frameworkModel="props.email" class="app-form__label__input" />
+				</label>
+			</div>
+
+			<div class="app-form__row content--end">
+				<button type="" class="app-btn">Submit</button>
+			</div>
+		</form>
+
+		<form class="app-form" frameworkSubmit="resetPassword">
+			<h3>Reset password</h3>
+
+			<div class="app-form__row">
+				<label class="app-form__label">
+					<!-- <span class="app-form__label__text">Old password</span> -->
+					<input type="password" placeholder="Old password" required class="app-form__label__input" />
+				</label>
+			</div>
+
+			<div class="app-form__row">
+				<label class="app-form__label">
+					<!-- <span class="app-form__label__text">New password</span> -->
+					<input type="password" placeholder="New password" required class="app-form__label__input" />
+				</label>
+			</div>
+
+			<div class="app-form__row content--space-between">
+				<a class="text-underline" frameworkLink="remind">Forgot password?</a>
+				<button type="" class="app-btn">Submit</button>
+			</div>
+		</form>
+	</div>
+</main>
+
+<app-crop-modal></app-crop-modal>

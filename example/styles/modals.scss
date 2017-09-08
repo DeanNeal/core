@@ -1,0 +1,111 @@
+
+@import './../styles/variables.scss';
+@import './../styles/helpers.scss';
+@import './../styles/base.scss';
+@import './../styles/form.scss';
+.modal-container{
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  background: rgba(0, 0, 0, 0.5);
+  z-index:1000;
+  .modal{
+    position: fixed;
+    width: 40%;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    top: 0;
+    background: #fff;
+    margin: auto;
+    height: 80%;
+    box-shadow: 0px 0px 20px -2px #000;
+    padding: 30px;
+    min-width: 800px;
+    border-radius: 3px;
+    overflow: auto;
+    &-bottom{
+      float: right;
+      .app-btn{
+        margin-left: 10px;
+      }
+    }
+    label{
+      // font-weight: bold;
+    }
+  }
+
+  .modal.crop {
+    user-select: none;
+    .tag_faded {
+      background: #000;
+      opacity: 0.7;
+      filter: alpha(opacity=70);
+      cursor: crosshair;
+      left: 0px;
+      top: 0px;
+      width: 100%;
+      height: 100%;
+      z-index: 1030;
+      position: absolute;
+    }
+
+    /*.tag_frame_inner{*/
+    /*width: 550px;*/
+    /*}*/
+    .tag_frame {
+      position: absolute;
+      cursor: move;
+      z-index: 1040;
+      left: 0;
+      top: 0;
+      width: 200px;
+      height: 200px;
+      display: block;
+      overflow: hidden;
+      text-align: left;
+      direction: ltr;
+    }
+
+    .tag_frame_resizer {
+      position: absolute;
+      background-color: #f2f2f2;
+      width: 10px;
+      height: 10px;
+      z-index: 9999;
+      opacity: 0.3;
+      transition-property: opacity;
+      -webkit-transition-duration: 0.3s;
+      transition-duration: 0.3s;
+      -webkit-transition-timing-function: ease;
+      transition-timing-function: ease;
+    }
+
+    .tag_frame_resizer:hover {
+      opacity: 0.9;
+    }
+
+    .j-modal__content {
+      user-select: none;
+      -moz-user-select: none;
+      -webkit-user-select: none;
+      -ms-user-select: none;
+    }
+
+    .j-modal__preview {
+      margin: auto;
+      display: block;
+      border-radius: 100%;
+      width: 25%;
+    }
+
+    .j-modal__crop_container {
+      position: relative;
+      margin: 0px auto;
+      font-size: 0px;
+    }
+
+  }
+}
+

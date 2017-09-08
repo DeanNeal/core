@@ -1,0 +1,41 @@
+<h3>Smart object</h3>
+<div class="text"><b>Smart object (SO)</b> - is a observable object with it's own methods.
+    <br>Every component has
+    <b>props</b> property which is SO.
+</div>
+<div class="text">At first you should create SO with <b>new</b> operator, also you can use initial params</div>
+
+<div class="code-block">
+    <div class="code-header">user.store.js</div>
+    <pre>
+        import { SmartObject } from 'framework/model'
+
+        class UserStore extends Store {
+            constructor() {
+                super();
+                this.user = new SmartObject();
+            }
+        }
+</pre>
+</div>
+
+<div class="block">
+    <b class="title">sub(()=> {})</b>
+    <span class="text">Creates a subscriber that watch any changes of SO</span>
+</div>
+
+<div class="block">
+    <b class="title">set('name', 'New value')</b>
+    <span class="text">Set new value</span>
+</div>
+
+<div class="block">
+    <b class="title">get('name')</b>
+    <span class="text">Get value from by <b>name</b> prop</span>
+</div>
+
+<div class="block">
+    <b class="title">save(params)</b>
+    <span class="text">Is used for updating of object bu id</span>
+</div>
+

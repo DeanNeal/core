@@ -1,0 +1,23 @@
+<main>
+
+    <div class="main-content justify-space-between">
+
+        <ul class="main-list">
+            <li style="font-size: 14px;padding: 5px; font-weight: 300;">
+                <small>v0.1</small>
+            </li>
+            <li frameworkFor="props.categories">
+                <div class="list-head" frameworkValue="name"></div>
+                <ol class="list">
+                    <li frameworkFor="items">
+                        <a frameworkValue="name" frameworkLink="@route" frameworkLinkExact="true"></a>
+                    </li>
+                </ol>
+            </li>
+        </ul>
+
+        <div class="documentation-section">
+            <child-route-switcher></child-route-switcher>
+        </div>
+    </div>
+</main>

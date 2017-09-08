@@ -1,0 +1,36 @@
+app-notifications {
+  position: fixed;
+  width: 250px;
+  // height: 200px;
+  right: 20px;
+  top: 70px;
+  .animated {
+    animation-duration: 0.5;
+  }
+  app-notification {
+    display: block;
+    background: #d0f6ff;
+    padding: 7px 25px 7px 7px;
+    border-radius: 3px;
+    border: 1px solid #ccc;
+    box-shadow: 0px 0px 11px -4px #000;
+    margin-top: 10px;
+    font-size: 12px;
+    &:first-child {
+      margin-top: 0px;
+    }
+    position: relative;
+    b {
+      font-weight: bold;
+      color: $c-blue;
+    }
+    .fa {
+      color: #525252;
+      position: absolute;
+      right: 8px;
+      top: 5px;
+      font-size: 17px;
+    }
+  }
+
+}

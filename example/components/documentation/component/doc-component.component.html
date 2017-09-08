@@ -1,0 +1,55 @@
+<h3>Example component</h3>
+
+<div class="code-block">
+    <div class="code-header">example.component.js</div>
+    <pre>
+    import { <b>Component</b> } from 'framework/core';
+    import <b>Tpl</b> from './example.component.html';
+    export class <b>ExampleComponent</b> extends Component {
+        constructor(params) {
+            super(params, {
+                <b>template</b>: Tpl,
+                <b>hostEvents</b>: {
+                    click: 'rootClick'
+                },
+                <b>hostClasses</b>: {
+                    selected: 'props.selected',
+                    hidden: '!props.visible'
+                },
+                <b>hostStyles</b>: {
+                    width: {value: 'props.width', suffix: 'px'}
+                }
+            });
+        }
+    }
+</pre>
+</div>
+
+
+<div class="block">
+    <b class="title">template</b>
+    <span class="text">Specifies <b>Tpl</b> template for current component </span>
+</div>
+
+<div class="block">
+    <b class="title">hostEvents</b>
+    <span class="text">Add <b>event listeners</b> to root element of component</span>
+</div>
+
+<div class="block">
+    <b class="title">hostClasses</b>
+    <span class="text">Bind <b>classList</b> of root element with props. <br>
+        <b>selected</b> - key, as class name
+        <br>
+        <b>'props.selected'</b> - value, as propery to bind
+    </span>
+</div>
+
+<div class="block">
+    <b class="title">hostStyles</b>
+    <span class="text">Bind styles of root element with props. <br>
+        <b>width</b> - key, as css property <br>
+        <b>value</b>:string - property to bind <br>
+        <b>suffix</b>:string - for example 'px'
+    </span>
+</div>

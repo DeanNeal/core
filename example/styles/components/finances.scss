@@ -1,0 +1,102 @@
+app-finances {
+    width: 100%;
+
+
+    .main-content {
+        padding: 10px 40px 20px 40px; 
+        overflow: auto;
+        width: 100%;
+        .top-menu {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 20px;
+        }
+        .empty-results {
+            font-weight: normal;
+            color: #a5a5a5;
+        }
+        .bottom-menu {
+            position: fixed;
+            bottom: 73px;
+            right: 30px;
+        }
+        .projects {
+            &--header {
+                display: flex;
+                padding: 10px 10px;
+                &-item {
+                    cursor: pointer;
+                    &.active {
+                        .arrow {
+                            display: inline-block;
+                        }
+                    }
+                    .arrow {
+                        display: none;
+                        cursor: pointer;
+                        width: 18px;
+                        height: 18px; // display: inline-block;
+                        background-image: url('../img/icon-down-black.png');
+                        background-repeat: no-repeat;
+                        background-position: 50% 50%;
+                        position: absolute;
+                    }
+                }
+            }
+            &--item {
+                display: flex;
+                font-size: 12px;
+                padding: 10px 10px;
+                border: 1px solid #ccc;
+                margin: 4px 0px;
+                border-radius: 3px;
+                align-items: center;
+                input[type="text"] {
+                    border: none;
+                    width: 100%;
+                    background: none;
+                    padding: 0px 20px 0 0px;
+                } // .status {
+                //     span {
+                //         padding: 4px;
+                //         border: 1px solid #ccc;
+                //         border-radius: 4px;
+                //         background: #ccc;
+                //     }
+                // }
+                &:hover {
+                    background: #fafafa;
+                }
+            }
+        }
+        .title {
+            width: 20%;
+        }
+        .due {
+            width: 20%;
+        }
+        .link {
+            width: 35%;
+            text-align: center;
+        }
+        .budget {
+            width: 20%;
+            text-align: center;
+        }
+        .currency {
+            text-align: center;
+            width: 5%;
+        }
+    }
+
+    main {
+        height: 100%;//calc(100% - 110px);
+        display: flex;
+        flex: 1;
+
+        user-select: none;
+        position: relative;
+        border-bottom: 1px solid #ccc;
+        margin-bottom: 50px;
+    }
+}

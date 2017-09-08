@@ -1,0 +1,78 @@
+<h3>Router config</h3>
+<div class="text">To run router you should create <b>_router.js</b> config file, where describes rules for navigation
+</div>
+
+<div class="block">
+    <b class="title">path</b>
+    <span class="text">current route compares with path, and if they match then component is rendered</span>
+</div>
+
+<div class="block">
+    <b class="title">component</b>
+    <span class="text">defines what router should to show</span>
+</div>
+
+<div class="block">
+    <b class="title">children</b>
+    <span class="text">specifies all the child routes activated under the current route</span>
+</div>
+
+
+<div class="block">
+    <b class="title">{path: <b>'/'</b>, component: 'app-home'}</b>
+    <span class="text">leeds to <b>root</b> page</span>
+</div>
+
+<div class="block">
+    <b class="title">{path: <b>'example/:id'</b>, component: 'app-example-page'}</b>
+    <span class="text">leeds to example page with <b>':id'</b> param</span>
+</div>
+
+<div class="block">
+    <b class="title"> {
+        path: <b>'parent'</b>,
+        component: 'app-parent-component'}  </b>
+    <span class="text">leeds to page <b>parent</b> with children</span>
+</div>
+
+<div class="block">
+    <b class="title">
+        {path: <b>''</b>, component: 'app-child-root}
+    </b>
+    <span class="text">root child route</span>
+</div>
+
+<div class="block">
+    <b class="title">
+        {path: <b>'child-component'</b>, component: 'app-child-one'}
+    </b>
+    <span class="text">shows <b>child-component</b> component inside parent component</span>
+</div>
+
+<div class="block">
+    <b class="title">
+        {path: '404', component: <b>'app-not-found'</b>}
+    </b>
+    <span class="text">leeds to <b>'not found page'</b></span>
+</div>
+
+<br>
+<div class="code-block">
+    <div class="code-header">_router.js</div>
+    <pre>
+
+    export let Routes = [
+    {path: <b>'/'</b>, component: 'app-home'},
+    {path: <b>'example/:id'</b>, component: 'app-example-page'},
+    {
+            path: <b>'parent'</b>,
+            component: 'app-parent-component',
+            children: [
+                {path: <b>'/'</b>, component: 'app-child-root},
+                {path: <b>'child-component'</b>, component: 'app-child-one'}
+            ]
+        },
+        {path: '404', component: <b>'app-not-found'</b>}
+    ];
+</pre>
+</div>

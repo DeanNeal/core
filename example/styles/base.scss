@@ -1,0 +1,76 @@
+h1, h2, h3, h4, h5, h6 {
+  // font-weight: bold;
+  margin-bottom: 20px;
+}
+
+h1 {
+  font-size: 26px;
+}
+
+h2 {
+  font-size: 24px;
+}
+
+h3 {
+  font-size: 22px;
+}
+
+h4 {
+  font-size: 20px;
+}
+
+h5 {
+  font-size: 18px;
+}
+
+h6 {
+  font-size: 16px;
+}
+
+p {
+  font-size: 14px;
+  margin-bottom: 15px;
+  line-height: 2;
+}
+
+a {
+  color: $c-blue;
+  cursor: pointer;
+}
+
+img {
+  width: 100%;
+}
+
+b{
+  font-weight: 700;
+}
+
+.hidden{
+  display: none!important;
+}
+
+.relative {
+  position: relative;
+}
+
+.full-width{
+  width: 100%;
+}
+
+.text-center{
+  text-align: center;
+}
+
+
+.attached-file{
+  display: flex;
+  height: 40px;
+  align-items: center;
+  margin: 5px 0px;
+  justify-content: space-between;
+}
+
+* {
+  font-family: 'Roboto', sans-serif;
+}

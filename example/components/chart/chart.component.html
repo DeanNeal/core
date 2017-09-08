@@ -1,0 +1,30 @@
+<!-- <app-header></app-header> -->
+
+<main class="full-width" frameworkClass="hidden: !props.ifNoResults" >
+    <app-sidebar></app-sidebar>
+
+    <div class="gantt--container full-width">
+        <app-scale frameworkRef="scale"></app-scale>
+        <div class="gantt--canvas" frameworkMousewheel="mousewheel"  frameworkRef="canvas">
+            <app-chart-bar class="gantt--canvas-bar" frameworkFor="props.items" frameworkSubscribe="deleteTask:setRandom"></app-chart-bar>
+        </div>
+    </div>
+
+    <div class="gantt--scroller-y" frameworkScroll="checkYScroll" frameworkRef="scrollerY">
+        <div frameworkStyle="height:props.scrollerYHeight"></div>
+    </div>
+</main>
+
+
+<div class="not-found" frameworkClass="hidden: props.ifNoResults">
+<!--<div class="not-found" frameworkClass="hidden: props.items.length">-->
+    <div>Nothing found on your request</div><br>
+    <button class="app-btn" frameworkClick="showAll">Show all projects</button>
+</div>
+
+<div class="gantt--scroller-x" frameworkRef="scrollerX" frameworkScroll="checkXScroll" frameworkClass="hidden: !props.ifNoResults">
+    <div frameworkStyle="width:props.scrollerXWidth"></div>
+</div>
+
+<app-project-create-modal></app-project-create-modal>
+<app-project-edit-modal></app-project-edit-modal>
