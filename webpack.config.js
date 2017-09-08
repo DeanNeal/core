@@ -17,11 +17,10 @@ var outputFile = libraryName + '.js';
 module.exports = {
     entry: {
         index: ['./src/core.js']
-        // devApp: ['./src/example/app.js']
     },
     output: {
         path: path.join(__dirname, NODE_ENV == 'prod' ? '' : 'build'),
-        filename: outputFile, //NODE_ENV == 'prod' ? '[name][hash].js' : '[name].js',
+        filename: outputFile,
         publicPath: '',
         library: libraryName,
         libraryTarget: 'umd',
@@ -39,9 +38,7 @@ module.exports = {
                 test: /\.(tpl|html)$/,
                 loader: 'html',
                 query: {
-                    // variable: 'data',
                     withImports: true
-                    // engine: 'lodash'
                 }
             },
             {
@@ -59,10 +56,6 @@ module.exports = {
         ]
     },
 
-    // sassLoader: {
-    //     includePath: ['dev/assets/scss']
-    // },
-
     plugins: [
         new webpack.NoErrorsPlugin(),
         new webpack.DefinePlugin({
@@ -74,11 +67,7 @@ module.exports = {
     resolve: {
         root: path.resolve(__dirname, 'src'),
         alias: {
-            // img: 'img',
-            // example: path.resolve(__dirname, 'example'),
-            // src: path.resolve(__dirname, 'src')
-            //framework: 'framework',
-            //assets: path.resolve(__dirname, 'dev/assets'),
+
         },
         extensions: ['', '.js', 'css', 'scss', 'html']
     },
@@ -120,9 +109,6 @@ if (NODE_ENV == 'dev') {
             alwaysWriteToDisk: true,
             filename: 'index.html'
         })
-        // new webpack.optimize.CommonsChunkPlugin({
-        //     name: "vendor"
-        // })
     )
 }
 
