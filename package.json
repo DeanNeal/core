@@ -1,6 +1,6 @@
 {
   "name": "ace-js",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "JS framework based on web components",
   "scripts": {
     "watch": "webpack --watch",
