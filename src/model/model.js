@@ -20,16 +20,14 @@ export class SmartObject {
             set: value => this.set(key, value),
             get: () => this.get(key),
             configurable: true
-            //writable: true
         })
     }
 
     sub(f) {
         this.callbacksArray.push({f, id: ++this.lId});
 
-        // if (Object.keys(this._data).length) {
-        //     f.call(this, this._data);
-        // }
+        f.call(this, this._data);
+
         let a = Number(this.lId);
         return {
             unsubscribe: () => {

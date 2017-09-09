@@ -8,12 +8,7 @@ export class HttpMethodsComponent extends Component {
     }
 
     onInit() {
-        // Http.catalog.sub(catalog=>{
 
-        //  catalog.get_stat({users: ''}).then(res=>{
-
-        //  })
-        // })
     }
 
     getWeater() {

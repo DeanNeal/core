@@ -4,8 +4,8 @@ export function _props(array, data) {
         let params = item.attr.split('.');
         let r = this.getComponentVariable(params, data);
 
-        r = r === '' ? '' : r;
-        r = r === 0 ? 0 : r;
+        // r = r === '' ? '' : r;
+        // r = r === 0 ? 0 : r;
         if (Utils.isCustomElement(item.elem)) {
             return;
         }

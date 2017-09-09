@@ -72,7 +72,7 @@ module.exports = {
         extensions: ['', '.js', 'css', 'scss', 'html']
     },
     devServer: {
-        port: "8080",
+        port: "8081",
         contentBase: path.resolve(__dirname, 'build'),
         colors: true,
         historyApiFallback: true,
@@ -89,7 +89,7 @@ if (NODE_ENV == 'dev') {
 
     module.exports.plugins.push(
         new ExtractTextPlugin("[name].css", { allChunks: true }),
-        new webpack.HotModuleReplacementPlugin(),
+        // new webpack.HotModuleReplacementPlugin(),
         new CopyWebpackPlugin([{
             context: 'src/example/img',
             from: '**/*',

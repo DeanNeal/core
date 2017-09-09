@@ -1,5 +1,5 @@
 import Router from './router-core';
-import {GlobalData} from './../core';
+import { GlobalData } from './../core';
 
 export class RouteSwitcher {
     constructor(routes, root) {
@@ -7,7 +7,9 @@ export class RouteSwitcher {
         this.root = root;
 
         GlobalData.sub((data) => {
-            this.onCreate();
+            if (data.appIsReady) {
+                this.onCreate();
+            }
         });
     }
 
@@ -18,7 +20,7 @@ export class RouteSwitcher {
                     if (this.prevPage !== route.path) { // don't refresh parent router
                         this.root.innerHTML = null;
                         if (params) {
-                            window.temporaryObj = Object.assign({id: parseInt(params)});
+                            window.temporaryObj = Object.assign({ id: parseInt(params) });
                         }
 
                         let newComp = document.createElement(route.component);
@@ -58,19 +60,19 @@ export class RouteSwitcher {
 export function RegisterRouteElement(routes) {
     let ElemProto = Object.create(HTMLElement.prototype);
     let elem;
-    ElemProto.createdCallback = function (params) {
+    ElemProto.createdCallback = function(params) {
         elem = new RouteSwitcher(routes, this);
     };
 
-    ElemProto.detachedCallback = function () {
+    ElemProto.detachedCallback = function() {
 
     };
 
-    ElemProto.attachedCallback = function () {
+    ElemProto.attachedCallback = function() {
 
     };
 
-    ElemProto.attributeChangedCallback = function (a, b, c) {
+    ElemProto.attributeChangedCallback = function(a, b, c) {
 
     };
 

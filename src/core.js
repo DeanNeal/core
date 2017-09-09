@@ -8,14 +8,13 @@ import GlobalEvents from './global-events';
 import {Utils} from './utils/utils';
 import {Http} from './http.js';
 import {Store} from './store.js';
-// import {Dispatcher} from './dispatcher';
+
 
 let GlobalData = new SmartObject();
 
 export {
     SmartObject,
     GlobalData,
-    // Dispatcher,
     Register,
     Component,
     Router,

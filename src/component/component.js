@@ -21,7 +21,7 @@ export class Component {
             // console.warn('Foor loop is detected!')
         } else {
             options.ce ? Component.render.call(this, options.ce) : console.warn('Component data is expected. See your component constructor!');
-            this.props.sub(r => {
+            this.props.sub(r => {//console.log(this);
                 Handlers._for.call(this, Privates._forArrays.get(this));
                 Handlers._props.call(this, Privates._modelArrays.get(this));
                 Handlers._input.call(this, Privates._inputArrays.get(this));
@@ -34,7 +34,7 @@ export class Component {
                 Handlers._hostStyles.call(this, Privates._hostStyles.get(this));
                 this.onUpdate();
             });
-            this.props._callAll(); // invokes once subscriber was set
+            //this.props._callAll(); // invokes once subscriber was set
         }
 
     }
@@ -200,8 +200,8 @@ export class Component {
     getComponentVariable(variable, data) {
         if (data && typeof data !== 'object') return data;
         return variable.reduce((o, i, index) => {
-            if (!o[i]) { // in case when variable is undefined
-                return index === variable.length - 1 ? undefined : {};
+            if (!o[i] && o[i] !== 0) { // in case when variable is undefined
+                return index === variable.length - 1 ? null : {};
             } else {
                 return o[i]
             }
