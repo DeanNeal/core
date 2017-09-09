@@ -12,8 +12,8 @@ export function _if(array) {
                 reverse = true;
             }
 
-            if (res.indexOf('==') > -1) {
-                let equality = res.replace(/ +/g, "").split('==');
+            if (res.indexOf('==') > -1 || res.indexOf('===') > -1) {
+                let equality = res.indexOf('===') > -1 ? res.replace(/ +/g, "").split('===') : res.replace(/ +/g, "").split('==');
                 let r = this.getComponentVariable(equality[0].split('.'));
 
                 return !!equality[1];

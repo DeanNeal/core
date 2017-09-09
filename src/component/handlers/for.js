@@ -24,6 +24,7 @@ export function _for(array, data) {
                     Handlers.eventListeners.call(this, prevContent, array[i]);
                     bindClassForLoop.call(this, prevContent, array[i]);
                     styleUnitForLoop.call(this, prevContent, array[i]);
+                    // bindIfForLoop.call(this, prevContent, array[i]);de
                     bindPropsToViewForLoop.call(this, prevContent, array[i]);
                     bindAttrsForLoop.call(this, prevContent, array[i]);
                     addLinksRefsForLoop.call(this, prevContent, array[i]);
@@ -71,6 +72,11 @@ function bindAttrsForLoop(root, data) {
     let array = Handlers._init(root, 'frameworkAttr');
     Handlers._attr.call(this, array, data);
 }
+
+// function bindIfForLoop(root, data) {
+//     let array = Handlers._init(root, 'frameworkIf');
+//     Handlers._if.call(this, array, data);
+// }
 
 function forAttachForLoop(root, data) {
     let array = Handlers._init(root, 'frameworkFor');

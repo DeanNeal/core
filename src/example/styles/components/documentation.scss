@@ -2,14 +2,13 @@ app-documentation {
     width: 100%;
 
     .main-content {
-
-        overflow: auto;
         width: 100%;
         display: flex;
         .main-list {
             width: 15%;
             border-right: 1px solid #ccc;
             padding: 20px 40px 20px 40px;
+            overflow: auto;
             .list-head {
                 margin-bottom: 5px;
             }
@@ -102,7 +101,7 @@ app-documentation {
     //  width: 100%;
     //}
     .title {
-        font-family: "Open Sans Semibold"; //width: 150px;
+        font-family: 'Roboto', sans-serif; //width: 150px;
         margin-right: 20px;
     }
     .text {

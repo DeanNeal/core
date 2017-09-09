@@ -1,17 +1,30 @@
 <h3>Http methods</h3>
-<div>Add <b>import {Http} from 'framework/core'</b> to your component, then</div>
+<div>Add <b>import {Http} from 'ace-js'</b> to your component, then</div>
 <div class="block">
-    <div class="text"><b>GET</b> <pre>Http.get(url).then(response=>{ })</pre></div>
+    <b class="title">GET</b>
+    <div class="text">
+        <div>Http.get(url).then(response=>{ })</div>
+        <br>
+        Example: 
+        <button frameworkClick="getWeater">Get weater info</button>
+        <div frameworkIf="props.weather"> 
+            City: <b frameworkValue="props.weather.name"></b>
+            <br>
+            Temp: <b frameworkValue="props.weather.main.temp"></b> C
+            <br>
+            Wind: <b frameworkValue="props.weather.wind.speed"></b> m/s
+        </div>
+    </div>
 </div>
-
 <div class="block">
-    <div class="text"><b>POST</b> <pre>Http.post(url, params).then(response=>{ })</pre></div>
-</div>
-
-<div class="block">
-    <div class="text"><b>PUT</b> <pre>Http.put(url, params).then(response=>{ })</pre></div>
+    <b class="title">POST</b>
+    <div class="text"><div>Http.post(url, params).then(response=>{ })</div></div>
 </div>
 <div class="block">
-    <div class="text"><b>DELETE</b> <pre>Http.delete(url).then(response=>{ })</pre></div>
+    <b class="title">PUT</b>
+    <div class="text"> <div>Http.put(url, params).then(response=>{ })</div></div>
 </div>
-
+<div class="block">
+    <b class="title">DELETE</b>
+    <div class="text"> <div>Http.delete(url).then(response=>{ })</div></div>
+</div>

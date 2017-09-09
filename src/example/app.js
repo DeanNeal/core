@@ -22,6 +22,7 @@ Register({
     modules: [
         Docs
     ],
+    serverUrl: 'https://karlilu.ace-st.com',
     routes: Routes,
     styles: Styles
 });

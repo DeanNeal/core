@@ -1,4 +1,4 @@
-import {Component, Router} from 'core';
+import {Component, Router, Http} from 'core';
 import Tpl from './container.component.html';
 
 export class ContainerComponent extends Component {
@@ -8,7 +8,7 @@ export class ContainerComponent extends Component {
         });
     }
 
-    onAttach() {
-
+    onInit() {
+		// Http.getCatalog('/catalog');
     }
 }

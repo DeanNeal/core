@@ -27,9 +27,9 @@ export class SmartObject {
     sub(f) {
         this.callbacksArray.push({f, id: ++this.lId});
 
-        if (Object.keys(this._data).length) {
-            f.call(this, this._data);
-        }
+        // if (Object.keys(this._data).length) {
+        //     f.call(this, this._data);
+        // }
         let a = Number(this.lId);
         return {
             unsubscribe: () => {

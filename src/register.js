@@ -1,4 +1,4 @@
-import { RouteSwitcher, Component, GlobalData} from './core';
+import { RouteSwitcher, Component, GlobalData, Http} from './core';
 import {RegisterRouteElement} from './router/router-switcher';
 
 export function Register(options) {
@@ -11,6 +11,10 @@ export function Register(options) {
 
     if (options.styles) {
         loadStyle(options.styles);
+    }
+
+    if(options.serverUrl){
+        Http.setServerUrl(options.serverUrl);
     }
 
     options.components.forEach(component => {

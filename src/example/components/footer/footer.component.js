@@ -1,4 +1,4 @@
-import {Component} from 'framework/core';
+import {Component} from '../../core';
 import Tpl from './footer.component.html';
  
 export class FooterComponent extends Component {

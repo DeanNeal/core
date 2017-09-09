@@ -1,6 +1,6 @@
-import {Model, Router, SmartObject} from '../core';
+import { Model, Router, SmartObject } from '../core';
 import Privates from './private';
-import {Handlers} from './handlers';
+import { Handlers } from './handlers';
 
 export class Component {
     constructor(options = {}, custom = {}) {
@@ -34,6 +34,7 @@ export class Component {
                 Handlers._hostStyles.call(this, Privates._hostStyles.get(this));
                 this.onUpdate();
             });
+            this.props._callAll(); // invokes once subscriber was set
         }
 
     }
@@ -118,8 +119,7 @@ export class Component {
         this.onInit();
     }
 
-    INPUT() {
-    }
+    INPUT() {}
 
 
     /***********************************************/
@@ -199,7 +199,13 @@ export class Component {
 
     getComponentVariable(variable, data) {
         if (data && typeof data !== 'object') return data;
-        return variable.reduce((o, i) => o[i], data || this)
+        return variable.reduce((o, i, index) => {
+            if (!o[i]) { // in case when variable is undefined
+                return index === variable.length - 1 ? undefined : {};
+            } else {
+                return o[i]
+            }
+        }, data || this)
     }
 
     getParentComponent(parentName) {

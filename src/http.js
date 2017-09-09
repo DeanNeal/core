@@ -1,11 +1,7 @@
-import {SmartObject} from './model/model';
+import { SmartObject } from './model/model';
 
 const methods = ['get', 'post', 'put', 'delete'];
 
-export const server = 'http://tripsee-app.ace-st.com';
-
-
-// @Injectable()
 export class Model {
     constructor(res) {
         this.links = {};
@@ -26,7 +22,7 @@ export class Model {
     }
 }
 
-// base collection class
+
 export class Collection {
     constructor(options = []) {
         this.links = {};
@@ -77,43 +73,58 @@ export class Collection {
     }
 }
 
-
-class HttpFetcher {
-    constructor() {
-
-    }
-
-    get(url) {
-        return this.request('get', url);
-    }
-    post(url) {
-        return this.request('post', url);
-    }
-    put(url) {
-        return this.request('put', url);
-    }
-    delete(url) {
-        return this.request('delete', url);
-    }
-    request(type, url) {
-        return fetch(url, {
-            method: type
-        })
-    }
-}
-
 class HttpModule {
     constructor() {
-        this.http = new HttpFetcher();
         this.catalog = new SmartObject();
+        this.server = '';
+    }
+
+    get(url, params, settings) {
+        const urlParams = new URLSearchParams();
+        let newParams = '';
+        for (let key in params) {
+            urlParams.set(key, params[key]);
+        }
+
+        if (params && Object.keys(params).length) {
+            newParams += '?' + urlParams.toString();
+        }
+
+        return this.request('get', url + newParams, params, settings);
+    }
+    post(url, params, settings) {
+        return this.request('post', url, params, settings);
+    }
+    put(url, params, settings) {
+        return this.request('put', url, params, settings);
+    }
+    delete(url, params, settings) {
+        return this.request('delete', url, params, settings);
+    }
+    request(type, url, params = {}, settings = {}) {
+        return fetch(this.server + url, {
+            method: type,
+            headers: settings.headers, 
+            body: params
+        });
+    }
+    remoteRequest(type, url, params) {
+        return fetch(url, {
+            method: type,
+            body: params
+        }).then(res => res.json());
+    }
+
+    setServerUrl(url) {
+        this.server = url;
     }
 
     // get entry point
-    get() {
-        this.http.get(server + '/catalog')
-            .then(res => res.json())
+    getCatalog(url) {
+        return this.makeRequest('get', url)
             .then(res => {
-                this.catalog.set({'entry': this.getModel(res)});
+                this.catalog.set(res);
+                return res;
             });
     }
 
@@ -157,24 +168,18 @@ class HttpModule {
     makeRequest(method, url, args = {}, id = '') {
         let sub;
         const context = this;
-        // MayBe(id).on(r => url += '/' + id);
         switch (method) {
             case 'get':
-                const params = new URLSearchParams();
-                for (let key in args) {
-                    params.set(key, args[key]);
-                }
-                
-                sub = this.middleware(this.http[method](server + url, { search: params, headers: context.getGetHeaders() }));
+                sub = this.middleware(this[method](url, args, { headers: context.getGetHeaders() }));
                 break;
             case 'post':
-                sub = this.middleware(this.http[method](server + url, args, this.getHeaders()));
+                sub = this.middleware(this[method](url, args, this.getHeaders()));
                 break;
             case 'put':
-                sub = this.middleware(this.http[method](server + url, args, this.getHeaders()));
+                sub = this.middleware(this[method](url, args, this.getHeaders()));
                 break;
             case 'delete':
-                sub = this.middleware(this.http[method](server + url, this.getHeaders()));
+                sub = this.middleware(this[method](url, this.getHeaders()));
                 break;
         }
 
@@ -182,12 +187,12 @@ class HttpModule {
         return sub;
     }
 
-    //
+    // 
     middleware(response) {
         return response
-              .then(res => res.json())
-              .then(res => this.createEntity(res))
-              .catch(err => {
+            .then(res => res.json())
+            .then(res => this.createEntity(res))
+            .catch(err => {
                 switch (err.status) {
                     case 406:
 
@@ -211,8 +216,8 @@ class HttpModule {
     getHeaders() {
         const headers = new Headers();
         let token = JSON.parse(localStorage.getItem('token'));
-        if(token) {
-          headers.append('Authorization', `Bearer ${token}`);
+        if (token) {
+            headers.append('Authorization', `Bearer ${token}`);
         }
         return new RequestOptions({ headers: headers });
     }

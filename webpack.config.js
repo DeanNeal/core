@@ -76,7 +76,7 @@ module.exports = {
         contentBase: path.resolve(__dirname, 'build'),
         colors: true,
         historyApiFallback: true,
-        hot: true,
+        hot: false,
         inline: true // reloads page after any changes
     }
 };
