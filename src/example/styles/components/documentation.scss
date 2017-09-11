@@ -62,7 +62,7 @@ app-documentation {
 
         display: block; //padding: 9.5px;
         margin: 0 0 10px;
-        font-size: 13px;
+        font-size: 14px;
         line-height: 1.42857143;
         color: #333;
         word-break: break-all;
@@ -73,6 +73,37 @@ app-documentation {
         .code-header {
             background: #ccc;
             padding: 10px;
+        }
+    }
+    .folder-structure{
+        padding: 20px;
+        width: 50%;
+        .children{
+            position: relative;
+            overflow: hidden;
+            padding-left: 24px;
+            &:first-child{
+                padding: 0;
+            }
+        }
+        &--item{
+            padding: 5px 0px;
+            position: relative;
+            .folder-structure--item{
+                padding-left: 30px;
+                &:before{
+                    content: "";
+                    left: 10px;
+                    bottom: 15px;
+                    width: 16px;
+                    height: 9999px;
+                    position: absolute;
+                    border-width: 0 0 1px 1px;
+                    border-style: solid;
+                    border-color: #ccc;
+                    border-radius: 0 0 0 3px;
+                }
+            }
         }
     }
     .comment {
@@ -125,4 +156,8 @@ app-documentation-handlers {
     .unclicked {
         color: red;
     }
+}
+
+app-documentation-architecture {
+    width: 100%;
 }

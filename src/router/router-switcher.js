@@ -5,12 +5,7 @@ export class RouteSwitcher {
     constructor(routes, root) {
         this.routes = routes;
         this.root = root;
-
-        GlobalData.sub((data) => {
-            if (data.appIsReady) {
-                this.onCreate();
-            }
-        });
+        this.onCreate();
     }
 
     onCreate() {

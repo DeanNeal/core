@@ -1,19 +1,14 @@
-import { RouteSwitcher, Component, GlobalData, Http} from './core';
-import {RegisterRouteElement} from './router/router-switcher';
+import { RouteSwitcher, Component, Http } from './core';
+import { RegisterRouteElement } from './router/router-switcher';
 
 export function Register(options) {
     // console.time('modules')
-    if (!options.routes) {
-        console.warn('You should set routes!');
-    } else {
-        new RegisterRouteElement(options.routes);
-    }
 
     if (options.styles) {
         loadStyle(options.styles);
     }
 
-    if(options.serverUrl){
+    if (options.serverUrl) {
         Http.setServerUrl(options.serverUrl);
     }
 
@@ -27,7 +22,15 @@ export function Register(options) {
         });
     });
 
-    GlobalData.set('appIsReady', true);
+    if (!options.routes) {
+        console.warn('You should set routes!');
+    } else {
+        new RegisterRouteElement(options.routes);
+    }
+
+    if (options.onReady) {
+        options.onReady.call(this);
+    }
     // console.timeEnd('modules')
 }
 

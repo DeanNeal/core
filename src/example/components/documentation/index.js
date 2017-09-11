@@ -1,5 +1,6 @@
 import {DocumentationComponent} from './documentation.component';
 import {DocQuickStartComponent} from './quick-start/doc-quick-start.component';
+import {DocArchitectureComponent} from './architecture/doc-architecture.component';
 import {DocComponentComponent} from './component/doc-component.component';
 import {DocLifecycleComponent} from './lifecycle/doc-lifecycle.component';
 import {DocUtilsComponent} from './utils/doc-utils.component';
@@ -14,6 +15,7 @@ import {HttpMethodsComponent} from './http-methods/doc-http-methods.component';
 export default [
     {c: DocumentationComponent, selector: 'app-documentation'},
     {c: DocQuickStartComponent, selector: 'app-documentation-quick-start'},
+    {c: DocArchitectureComponent, selector: 'app-documentation-architecture'},
     {c: DocHowToComponent, selector: 'app-documentation-how-to-install'},
     {c: DocComponentComponent, selector: 'app-documentation-component'},
     {c: DocLifecycleComponent, selector: 'app-documentation-lifecycle'},

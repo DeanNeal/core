@@ -12,7 +12,7 @@ const NODE_ENV = process.env.NODE_ENV || 'dev';
 var libraryName = '[name]';
 var outputFile = libraryName + '.js';
 
- const package1 = require('./package.json');
+ const packageJSON = require('./package.json');
 
 module.exports = {
     entry: {
@@ -59,7 +59,8 @@ module.exports = {
     plugins: [
         new webpack.NoErrorsPlugin(),
         new webpack.DefinePlugin({
-            NODE_ENV: JSON.stringify(NODE_ENV)
+            NODE_ENV: JSON.stringify(NODE_ENV),
+            VERSION: JSON.stringify(packageJSON.version)
         })
     ],
     // Create Sourcemaps for the bundle
@@ -115,16 +116,16 @@ if (NODE_ENV == 'dev') {
 
 if (NODE_ENV == 'prod') {
     module.exports.plugins.push(
-        new webpack.optimize.UglifyJsPlugin({
-            compress: {
-                warnings: false
-            },
-            mangle: {
-                keep_fnames: true
-            }
-        }),
+        // new webpack.optimize.UglifyJsPlugin({
+        //     compress: {
+        //         warnings: false
+        //     },
+        //     mangle: {
+        //         keep_fnames: true
+        //     }
+        // }),
         new SmartBannerPlugin({
-            banner: `AceJs ${package1.version}\nMay be freely distributed under the MIT license \nAuthor: Bogdan Zinkevich\nLast update: ${new Date().toLocaleString()}\n`,
+            banner: `${packageJSON.name} ${packageJSON.version}\nMay be freely distributed under the MIT license \nAuthor: ${packageJSON.author}\nLast update: ${new Date().toLocaleString()}\n`,
             raw: false,
             entryOnly: true
         }),
