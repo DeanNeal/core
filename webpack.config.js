@@ -90,7 +90,7 @@ if (NODE_ENV == 'dev') {
 
     module.exports.plugins.push(
         new ExtractTextPlugin("[name].css", { allChunks: true }),
-        // new webpack.HotModuleReplacementPlugin(),
+        new webpack.HotModuleReplacementPlugin(),
         new CopyWebpackPlugin([{
             context: 'src/example/img',
             from: '**/*',

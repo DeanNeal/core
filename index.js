@@ -1,8 +1,8 @@
 /*!
- * ace-js 0.0.14
+ * ace-js 0.0.15
  * May be freely distributed under the MIT license 
  * Author: Bogdan Zinkevich
- * Last update: 2017-9-11 11:26:31
+ * Last update: 2017-9-11 15:21:10
  * 
  */
 (function webpackUniversalModuleDefinition(root, factory) {
@@ -2328,6 +2328,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	        value: function setServerUrl(url) {
 	            this.server = url;
 	        }
+	    }, {
+	        key: 'setInterceptor',
+	        value: function setInterceptor() {}
+	        //TODO
+
 
 	        // get entry point
 
@@ -2336,7 +2341,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        value: function getCatalog(url) {
 	            var _this3 = this;
 
-	            return this.makeRequest('get', url).then(function (res) {
+	            return this.hMRequest('get', url).then(function (res) {
 	                _this3.catalog.set(res);
 	                return res;
 	            });
@@ -2360,7 +2365,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	                            methods.forEach(function (method) {
 	                                if (link.href) {
 	                                    _this4[method + '_' + link.rel] = function (params, id) {
-	                                        return context.makeRequest(method, link.href, params, id);
+	                                        return context.hMRequest(method, link.href, params, id);
 	                                    };
 	                                }
 	                            });
@@ -2405,8 +2410,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	        // makes request with current params
 
 	    }, {
-	        key: 'makeRequest',
-	        value: function makeRequest(method, url) {
+	        key: 'hMRequest',
+	        value: function hMRequest(method, url) {
 	            var args = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : {};
 	            var id = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : '';
 
@@ -2442,22 +2447,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	            }).then(function (res) {
 	                return _this7.createEntity(res);
 	            }).catch(function (err) {
-	                switch (err.status) {
-	                    case 406:
-
-	                        break;
-	                    case 422:
-	                        break;
-	                    case 404:
-	                        break;
-	                    case 500:
-	                    case 502:
-	                        break;
-	                    default:
-
-	                        break;
-	                }
-
 	                return null;
 	            });
 	        }
@@ -2469,7 +2458,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	            if (token) {
 	                headers.append('Authorization', 'Bearer ' + token);
 	            }
-	            return new RequestOptions({ headers: headers });
+	            return { headers: headers };
 	        }
 	    }, {
 	        key: 'getGetHeaders',

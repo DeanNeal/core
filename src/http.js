@@ -104,7 +104,7 @@ class HttpModule {
     request(type, url, params = {}, settings = {}) {
         return fetch(this.server + url, {
             method: type,
-            headers: settings.headers, 
+            headers: settings.headers,
             body: params
         });
     }
@@ -119,9 +119,13 @@ class HttpModule {
         this.server = url;
     }
 
+    setInterceptor() {
+        //TODO
+    }
+
     // get entry point
     getCatalog(url) {
-        return this.makeRequest('get', url)
+        return this.hMRequest('get', url)
             .then(res => {
                 this.catalog.set(res);
                 return res;
@@ -139,7 +143,7 @@ class HttpModule {
                         methods.forEach(method => {
                             if (link.href) {
                                 this[`${method}_${link.rel}`] = (params, id) => {
-                                    return context.makeRequest(method, link.href, params, id);
+                                    return context.hMRequest(method, link.href, params, id);
                                 };
                             }
                         });
@@ -165,7 +169,7 @@ class HttpModule {
     }
 
     // makes request with current params
-    makeRequest(method, url, args = {}, id = '') {
+    hMRequest(method, url, args = {}, id = '') {
         let sub;
         const context = this;
         switch (method) {
@@ -193,22 +197,6 @@ class HttpModule {
             .then(res => res.json())
             .then(res => this.createEntity(res))
             .catch(err => {
-                switch (err.status) {
-                    case 406:
-
-                        break;
-                    case 422:
-                        break;
-                    case 404:
-                        break;
-                    case 500:
-                    case 502:
-                        break;
-                    default:
-
-                        break;
-                }
-
                 return null;
             });
     }
@@ -219,7 +207,7 @@ class HttpModule {
         if (token) {
             headers.append('Authorization', `Bearer ${token}`);
         }
-        return new RequestOptions({ headers: headers });
+        return { headers: headers };
     }
 
     getGetHeaders() {
