@@ -1,8 +1,8 @@
 /*!
- * AceJs 1.0.9
+ * ace-js 0.0.14
  * May be freely distributed under the MIT license 
  * Author: Bogdan Zinkevich
- * Last update: 2017-9-11 10:17:24
+ * Last update: 2017-9-11 11:26:31
  * 
  */
 (function webpackUniversalModuleDefinition(root, factory) {
@@ -314,7 +314,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	    if (options.onReady) {
 	        options.onReady.call(this);
 	    }
-	    console.log("Version: " + (123));
 	    // console.timeEnd('modules')
 	}
 
@@ -1102,17 +1101,16 @@ return /******/ (function(modules) { // webpackBootstrap
 	        var params = item.attr.split('.');
 	        var r = _this.getComponentVariable(params, data);
 
-	        // r = r === '' ? '' : r;
-	        // r = r === 0 ? 0 : r;
 	        if (_core.Utils.isCustomElement(item.elem)) {
 	            return;
 	        }
+	        //TODO rewrite with switch
 	        if (item.elem.localName === 'input') {
 	            if (item.elem.type === 'checkbox') r ? item.elem.setAttribute('checked', true) : item.elem.removeAttribute('checked');
 	            if (item.elem.type === 'radio') {
 	                item.elem.value === r ? item.elem.setAttribute('checked', true) : item.elem.removeAttribute('selected');
 	            }
-	            if (item.elem.type === 'text') item.elem.value = r;
+	            if (item.elem.type === 'text' || item.elem.type === 'email' || item.elem.type === 'password') item.elem.value = r;
 	        } else {
 	            item.elem.innerHTML = r;
 	        }
