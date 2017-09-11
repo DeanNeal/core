@@ -1,6 +1,6 @@
 # AceJS
 
-AceJs - is a front-end framework based on web components technology.
+AceJs - is a MVVM front-end framework based on web components technology.
 
 ## Installation
 

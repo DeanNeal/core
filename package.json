@@ -1,7 +1,7 @@
 {
   "name": "ace-js",
   "version": "0.0.10",
-  "description": "JS framework based on web components",
+  "description": "AceJs - is a MVVM front-end framework based on web components technology",
   "repository": "https://github.com/DeanNeal/ace-js.git",
   "scripts": {
     "watch": "webpack --watch",
