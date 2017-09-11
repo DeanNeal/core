@@ -2,7 +2,6 @@
 
   > AceJs - is a front-end framework based on web components technology.
 
-[![Build Status](https://travis-ci.org/bredele/ace-js.svg?branch=master)](https://travis-ci.org/bredele/ace-js)
 [![NPM](https://img.shields.io/npm/v/ace-js.svg)](https://www.npmjs.com/package/ace-js)
 [![Downloads](https://img.shields.io/npm/dm/ace-js.svg)](http://npm-stat.com/charts.html?package=ace-js)
 
