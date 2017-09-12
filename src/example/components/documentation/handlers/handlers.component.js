@@ -36,6 +36,10 @@ export class DocHandlersComponent extends Component {
         this.props.set('isVisible', true);
     }
 
+    onChange() {
+        alert('Event from child');
+    }
+
     onDestroy() {
 
     }

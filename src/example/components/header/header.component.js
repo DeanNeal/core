@@ -11,7 +11,7 @@ export class HeaderComponent extends Component {
     }
 
     onInit() {
-        this.props.set('value', '');
+        
     }
 
     onDestroy() {

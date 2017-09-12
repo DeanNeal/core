@@ -57,6 +57,7 @@ export class Component {
         Privates._refArrays.set(this, []);
         Privates._attrArrays.set(this, []);
         Privates._outsideArrays.set(this, []);
+        Privates._onArrays.set(this, []);
         Privates._patternArrays.set(this, []);
         Privates._globalEvents.set(this, null);
         Privates._hostEvents.set(this, custom.hostEvents);
@@ -83,20 +84,13 @@ export class Component {
         Handlers._init.call(this, this.root, 'frameworkOutside', '_outsideArrays');
         Handlers._init.call(this, this.root, 'frameworkPattern', '_patternArrays');
 
-        for (let elem of this.getElement(`[frameworkSubscribe]`)) {
-            let listeners = elem.getAttribute('frameworkSubscribe');
-            listeners = listeners.split(',');
-            if (listeners.length) {
-                listeners.forEach(listener => {
-                    listener = listener.replace(/ +/g, "");
-                    Component.on.call(this, listener.split(':')[0], this[listener.split(':')[1]]);
-                });
-            }
-            elem.removeAttribute('frameworkSubscribe');
-        }
+
+        Handlers._init.call(this, this.root, 'frameworkOn', '_onArrays');
+
 
         Handlers._model.call(this, Privates._modelArrays.get(this));
         Handlers._outside.call(this, Privates._outsideArrays.get(this));
+        Handlers._on.call(this, Privates._onArrays.get(this));
         Handlers._pattern.call(this, Privates._patternArrays.get(this));
         Handlers._elRef.call(this, Privates._refArrays.get(this));
 

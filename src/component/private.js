@@ -16,6 +16,7 @@ const PRIVATES = {
     _refArrays: new WeakMap(),
     _attrArrays: new WeakMap(),
     _outsideArrays: new WeakMap(),
+    _onArrays: new WeakMap(),
     _patternArrays: new WeakMap(),
     _globalEvents: new WeakMap()
 };

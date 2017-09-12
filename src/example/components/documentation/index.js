@@ -12,6 +12,8 @@ import {DocRouterConfigComponent} from './router-config/doc-router-config.compon
 import {HttpModuleComponent} from './http-module/doc-http-module.component';
 import {HttpMethodsComponent} from './http-methods/doc-http-methods.component';
 
+import {ExampleChildComponent} from './handlers/example-child.component';
+
 export default [
     {c: DocumentationComponent, selector: 'app-documentation'},
     {c: DocQuickStartComponent, selector: 'app-documentation-quick-start'},
@@ -25,5 +27,8 @@ export default [
     {c: DocSmartObjectComponent, selector: 'app-documentation-smart-object'},
     {c: DocRouterConfigComponent, selector: 'app-documentation-router-config'},
     {c: HttpModuleComponent, selector: 'app-documentation-http-module'},
-    {c: HttpMethodsComponent, selector: 'app-documentation-http-methods'}
+    {c: HttpMethodsComponent, selector: 'app-documentation-http-methods'},
+
+
+    {c: ExampleChildComponent, selector: 'app-example-child'}
 ]
