@@ -1,8 +1,8 @@
 /*!
- * ace-js 0.0.16
+ * ace-js 0.0.18
  * May be freely distributed under the MIT license 
  * Author: Bogdan Zinkevich
- * Last update: 2017-9-12 15:44:09
+ * Last update: 2017-9-12 19:34:40
  * 
  */
 (function webpackUniversalModuleDefinition(root, factory) {
@@ -87,17 +87,17 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var _routerCore2 = _interopRequireDefault(_routerCore);
 
-	var _templateEngine = __webpack_require__(25);
+	var _templateEngine = __webpack_require__(26);
 
-	var _globalEvents = __webpack_require__(26);
+	var _globalEvents = __webpack_require__(27);
 
 	var _globalEvents2 = _interopRequireDefault(_globalEvents);
 
-	var _utils = __webpack_require__(27);
+	var _utils = __webpack_require__(28);
 
-	var _http = __webpack_require__(28);
+	var _http = __webpack_require__(29);
 
-	var _store = __webpack_require__(29);
+	var _store = __webpack_require__(30);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -837,6 +837,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	            _private2.default._refArrays.set(this, []);
 	            _private2.default._attrArrays.set(this, []);
 	            _private2.default._outsideArrays.set(this, []);
+	            _private2.default._onArrays.set(this, []);
 	            _private2.default._patternArrays.set(this, []);
 	            _private2.default._globalEvents.set(this, null);
 	            _private2.default._hostEvents.set(this, custom.hostEvents);
@@ -866,41 +867,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	            _handlers.Handlers._init.call(this, this.root, 'frameworkOutside', '_outsideArrays');
 	            _handlers.Handlers._init.call(this, this.root, 'frameworkPattern', '_patternArrays');
 
-	            var _iteratorNormalCompletion = true;
-	            var _didIteratorError = false;
-	            var _iteratorError = undefined;
-
-	            try {
-	                for (var _iterator = this.getElement('[frameworkSubscribe]')[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
-	                    var elem = _step.value;
-
-	                    var listeners = elem.getAttribute('frameworkSubscribe');
-	                    listeners = listeners.split(',');
-	                    if (listeners.length) {
-	                        listeners.forEach(function (listener) {
-	                            listener = listener.replace(/ +/g, "");
-	                            Component.on.call(_this2, listener.split(':')[0], _this2[listener.split(':')[1]]);
-	                        });
-	                    }
-	                    elem.removeAttribute('frameworkSubscribe');
-	                }
-	            } catch (err) {
-	                _didIteratorError = true;
-	                _iteratorError = err;
-	            } finally {
-	                try {
-	                    if (!_iteratorNormalCompletion && _iterator.return) {
-	                        _iterator.return();
-	                    }
-	                } finally {
-	                    if (_didIteratorError) {
-	                        throw _iteratorError;
-	                    }
-	                }
-	            }
+	            _handlers.Handlers._init.call(this, this.root, 'frameworkOn', '_onArrays');
 
 	            _handlers.Handlers._model.call(this, _private2.default._modelArrays.get(this));
 	            _handlers.Handlers._outside.call(this, _private2.default._outsideArrays.get(this));
+	            _handlers.Handlers._on.call(this, _private2.default._onArrays.get(this));
 	            _handlers.Handlers._pattern.call(this, _private2.default._patternArrays.get(this));
 	            _handlers.Handlers._elRef.call(this, _private2.default._refArrays.get(this));
 
@@ -982,6 +953,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    _refArrays: new WeakMap(),
 	    _attrArrays: new WeakMap(),
 	    _outsideArrays: new WeakMap(),
+	    _onArrays: new WeakMap(),
 	    _patternArrays: new WeakMap(),
 	    _globalEvents: new WeakMap()
 	};
@@ -1025,9 +997,11 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var _outside2 = __webpack_require__(23);
 
+	var _on2 = __webpack_require__(24);
+
 	var _init2 = __webpack_require__(16);
 
-	var _host = __webpack_require__(24);
+	var _host = __webpack_require__(25);
 
 	var Handlers = {
 	    _style: _style2._style,
@@ -1046,6 +1020,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    eventListeners: _event.eventListeners,
 	    removeEventListeners: _event.removeEventListeners,
 	    _outside: _outside2._outside,
+	    _on: _on2._on,
 	    _init: _init2._init,
 	    _hostEvents: _host._hostEvents,
 	    _hostClasses: _host._hostClasses,
@@ -1764,6 +1739,36 @@ return /******/ (function(modules) { // webpackBootstrap
 
 /***/ }),
 /* 24 */
+/***/ (function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	exports._on = _on;
+
+	var _core = __webpack_require__(1);
+
+	function _on(array) {
+	    var _this = this;
+
+	    array.forEach(function (item) {
+	        var listeners = item.attr;
+	        listeners = listeners.replace(/ +/g, "").split(',');
+
+	        if (listeners.length) {
+	            listeners.forEach(function (listener) {
+	                var eventName = listener.split(':')[0];
+	                var fn = _this[listener.split(':')[1]];
+	                _core.Component.on.call(_this, eventName, fn);
+	            });
+	        }
+	    });
+	}
+
+/***/ }),
+/* 25 */
 /***/ (function(module, exports) {
 
 	'use strict';
@@ -1808,7 +1813,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	}
 
 /***/ }),
-/* 25 */
+/* 26 */
 /***/ (function(module, exports) {
 
 	'use strict';
@@ -1854,7 +1859,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	}
 
 /***/ }),
-/* 26 */
+/* 27 */
 /***/ (function(module, exports) {
 
 	'use strict';
@@ -1919,7 +1924,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	exports.default = new GlobalEvents();
 
 /***/ }),
-/* 27 */
+/* 28 */
 /***/ (function(module, exports) {
 
 	'use strict';
@@ -2144,7 +2149,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	exports.Utils = Utils;
 
 /***/ }),
-/* 28 */
+/* 29 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -2496,7 +2501,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	exports.Http = Http;
 
 /***/ }),
-/* 29 */
+/* 30 */
 /***/ (function(module, exports) {
 
 	"use strict";
