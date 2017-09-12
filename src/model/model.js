@@ -101,6 +101,10 @@ export class SmartObject {
         this.set(res);
     }
 
+    last() {
+        return this._data[this._data.length - 1];
+    }
+
     remove(id) {
         this._data = this._data.filter(item => item.id != id);
         this._callAll();

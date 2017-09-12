@@ -31,7 +31,8 @@ module.exports = {
                 loader: 'babel-loader',
                 test: path.join(__dirname, 'src'),
                 query: {
-                    presets: 'es2015'
+                    presets: 'es2015',
+                    plugins: ['transform-decorators-legacy' ]
                 }
             },
             {

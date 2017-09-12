@@ -1,8 +1,8 @@
 /*!
- * ace-js 0.0.15
+ * ace-js 0.0.16
  * May be freely distributed under the MIT license 
  * Author: Bogdan Zinkevich
- * Last update: 2017-9-11 15:21:10
+ * Last update: 2017-9-12 15:44:09
  * 
  */
 (function webpackUniversalModuleDefinition(root, factory) {
@@ -254,6 +254,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	                return item;
 	            });
 	            this.set(res);
+	        }
+	    }, {
+	        key: 'last',
+	        value: function last() {
+	            return this._data[this._data.length - 1];
 	        }
 	    }, {
 	        key: 'remove',
@@ -1338,8 +1343,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	                    }
 	                    elem.COMPONENT.props.set(array[i]);
 	                }
-	                //invokes only onUpdate
-	                elem.COMPONENT.onUpdate();
 	            });
 
 	            item.cached = JSON.parse(JSON.stringify(array));

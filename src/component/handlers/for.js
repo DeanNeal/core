@@ -53,8 +53,6 @@ export function _for(array, data) {
                     }
                     elem.COMPONENT.props.set(array[i]);
                 }
-                //invokes only onUpdate
-                elem.COMPONENT.onUpdate();
             });
 
             item.cached = JSON.parse(JSON.stringify(array));
