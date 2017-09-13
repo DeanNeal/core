@@ -1,5 +1,5 @@
 import {Component, Utils} from '../../core';
-import {Handlers} from './index';
+import {Directives} from './index';
 import {_init} from './init';
 
 export function _for(array, data) {
@@ -20,14 +20,14 @@ export function _for(array, data) {
                     prevContent.removeAttribute('ac-for');
                     item.items.push(prevContent);
                     item.parent.insertBefore(prevContent, item.comment);
-                    // forAttachForLoop.call(this, prevContent, array[i]);
-                    // Handlers.eventListeners.call(this, prevContent, array[i]);
-                    // bindClassForLoop.call(this, prevContent, array[i]);
-                    // styleUnitForLoop.call(this, prevContent, array[i]);
+                    forAttachForLoop.call(this, prevContent, array[i]);
+                    Directives.eventListeners.call(this, prevContent, array[i]);
+                    bindClassForLoop.call(this, prevContent, array[i]);
+                    styleUnitForLoop.call(this, prevContent, array[i]);
                     // // bindIfForLoop.call(this, prevContent, array[i]);de
                     bindPropsToViewForLoop.call(this, prevContent, array[i]);
-                    // bindAttrsForLoop.call(this, prevContent, array[i]);
-                    // addLinksRefsForLoop.call(this, prevContent, array[i]);
+                    bindAttrsForLoop.call(this, prevContent, array[i]);
+                    addLinksRefsForLoop.call(this, prevContent, array[i]);
                 }
                 return;
             }
@@ -62,37 +62,36 @@ export function _for(array, data) {
 }
 
 function addLinksRefsForLoop(root, data) {
-    let array = Handlers._init(root, 'ac-link');
-    Handlers._link.call(this, array, data);
+    let array = Directives._init.call(this, root, 'ac-link');
+    Directives._link.call(this, array, data);
 }
 
 function bindAttrsForLoop(root, data) {
-    let array = Handlers._init(root, 'ac-attr');
-    Handlers._attr.call(this, array, data);
+    let array = Directives._init.call(this, root, 'ac-attr');
+    Directives._attr.call(this, array, data);
 }
 
 // function bindIfForLoop(root, data) {
-//     let array = Handlers._init(root, 'frameworkIf');
-//     Handlers._if.call(this, array, data);
+//     let array = Directives._init(root, 'frameworkIf');
+//     Directives._if.call(this, array, data);
 // }
 
 function forAttachForLoop(root, data) {
-    let array = Handlers._init(root, 'ac-for');
-    Handlers._for.call(this, array, data);
+    let array = Directives._init.call(this, root, 'ac-for');
+    Directives._for.call(this, array, data);
 }
 
 function bindPropsToViewForLoop(root, data) {
-    let array = Handlers._init(root, 'ac-value');
-    Handlers._props.call(this, array, data);
+    let array = Directives._init.call(this, root, 'ac-value');
+    Directives._props.call(this, array, data);
 }
 
 function styleUnitForLoop(root, data) {
-    let array = Handlers._init(root, 'ac-style');
-    Handlers._style.call(this, array, data);
+    let array = Directives._init.call(this, root, 'ac-style');
+    Directives._style.call(this, array, data);
 }
 
 function bindClassForLoop(root, data) {
-    let array = Handlers._init(root, 'ac-class');
-    console.log(array);
-    Handlers._class.call(this, array, data);
+    let array = Directives._init.call(this, root, 'ac-class');
+    Directives._class.call(this, array, data);
 }

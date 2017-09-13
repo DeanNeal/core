@@ -1,8 +1,8 @@
 import {PRIVATES} from '../private';
 import {Utils} from '../../core';
 
-export function _init(root, directive) {
-    let array = directive ? PRIVATES.DIRECTIVES[directive] : [];
+export function _init(root, directive, newArray) {
+    let array = newArray || [];
 
     let attr = root.getAttribute(directive);
     if (attr && !Utils.isCustomElement(root)) { // only for loops
@@ -41,10 +41,11 @@ export function _init(root, directive) {
             items: [],
             parent: elem.parentNode,
             cached: elem
-        };console.log(array);
+        };
         array.get ? array.get(this).push(obj) : array.push(obj);
         elem.removeAttribute(directive);
         if (directive === 'ac-for') elem.remove();
     }
+
     return array;
 }

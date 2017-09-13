@@ -15,7 +15,7 @@ import { _on } from './on';
 import { _init } from './init';
 import { _hostEvents, _hostClasses, _hostStyles } from './host';
 
-const Handlers = {
+const Directives = {
     _style,
     _props,
     _pattern,
@@ -39,4 +39,4 @@ const Handlers = {
     _hostStyles
 };
 
-export { Handlers };
+export { Directives };

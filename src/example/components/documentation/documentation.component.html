@@ -4,13 +4,13 @@
 
         <ul class="main-list">
             <li style="font-size: 14px;padding: 5px; font-weight: 300;">
-                v<small @value="props.version"></small>
+                v<small ac-value="props.version"></small>
             </li>
-            <li @for="props.categories">
-                <div class="list-head" @value="name"></div>
+            <li ac-for="props.categories">
+                <div class="list-head" ac-value="name"></div>
                 <ol class="list">
-                    <li @for="items">
-                        <a @value="name" @link="@route" frameworkLinkExact="true"></a>
+                    <li ac-for="items">
+                        <a ac-value="name" ac-link="@route" frameworkLinkExact="true"></a>
                     </li>
                 </ol>
             </li>

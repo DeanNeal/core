@@ -51,8 +51,11 @@ export class DocumentationComponent extends Component {
                 {
                     name: 'Template',
                     items: [{
-                        name: 'Handlers and syntax',
-                        route: 'documentation/handlers'
+                        name: 'Directives',
+                        route: 'documentation/directives'
+                    }, {
+                        name: 'Events',
+                        route: 'documentation/events'
                     }]
                 },
                 {

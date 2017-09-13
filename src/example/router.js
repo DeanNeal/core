@@ -10,7 +10,7 @@ export let Routes = [
             {path: 'component', component: 'app-documentation-component'},
             {path: 'lifecycle', component: 'app-documentation-lifecycle'},
             {path: 'utils', component: 'app-documentation-utils'},
-            {path: 'handlers', component: 'app-documentation-handlers'},
+            {path: 'directives', component: 'app-documentation-directives'},
             {path: 'modules', component: 'app-documentation-modules'},
             {path: 'smart-object', component: 'app-documentation-smart-object'},
             {path: 'router-config', component: 'app-documentation-router-config'},

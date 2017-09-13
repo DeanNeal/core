@@ -1,14 +1,14 @@
-<h3>Template handlers</h3>
+<h3>Directives</h3>
 <div class="code-block">
     <div class="code-header">example.component.js</div>
     <pre>
         onInit() {
             this.props.set({
                 <b>value</b>: 'value',
-                <b>model</b>: '<span frameworkValue="props.model"></span>',
-                <b>className</b>: '<span frameworkValue="props.className"></span>',
+                <b>model</b>: '<span ac-value="props.model"></span>',
+                <b>className</b>: '<span ac-value="props.className"></span>',
                 <b>showClass</b>: true,
-                <b>isVisible</b>: <span frameworkValue="props.isVisible"></span>,
+                <b>isVisible</b>: <span ac-value="props.isVisible"></span>,
                 <b>width</b>: '50px',
                 <b>height</b>: '100px'
                 <b>items</b>: [{name: 1}, {name: 2}, {name: 3}]
@@ -19,99 +19,106 @@
 </div>
 </div>
 <div class="block">
-    <b class="title">frameworkValue="props.value"</b>
+    <b class="title">ac-value="props.value"</b>
     <div class="text">
         Bind props <b>props.value</b> with certain element
         <br>
-        <input type="text" frameworkValue="props.value">
+        <input type="text" ac-value="props.value">
     </div>
 </div>
 <div class="block">
-    <b class="title">frameworkModel="props.model"</b>
+    <b class="title">ac-model="props.model"</b> 
     <div class="text">
         <b>Two way data binding</b> between <b>props.model</b> and html element
         <br>
         <div>
-            <input type="text" frameworkModel="props.model">
+            <input type="text" ac-model="props.model">
         </div>
     </div>
 </div>
 <div class="block">
-    <b class="title">frameworkInput="inputData: props.selectedValue"</b>
+    <b class="title">ac-input="inputData: props.selectedValue"</b>
     <div class="text">Allow send <b>props.selectedValue</b> from parent component to child component <b>inputData</b>.</div>
 </div>
 <div class="block">
-    <b class="title">frameworkRef="element"</b>
+    <b class="title">ac-ref="element"</b>
     <div class="text">Add <b>element</b> to ui list. ui - is a list of reference elements</div>
 </div>
 <div class="block">
     <b class="title">
-    frameworkClass="className: showClass"
+    ac-class="className: showClass"
     <br>
-    frameworkClass="@props.class"
+    ac-class="@props.class"
     </b>
     <div class="text">Get 2 params: name of class, boolean(adds class if true). You can use
         <b>comma(,)</b> symbol to specify several conditions. Also @ is available, so you can bind props to className
         <br><br>
         <button frameworkClick="changeClass">Change class</button>
-        <b><span frameworkClass="@props.className">Example</span></b>
+        <b><span ac-class="@props.className">Example</span></b>
     </div>
 </div>
 <div class="block">
-    <b class="title">frameworkStyle="height: props.height"</b>
+    <b class="title">ac-style="height: props.height"</b>
     <div class="text">
             Binds props to css rules. Gets 2 params: <b>height</b> - css rule and <b>value</b> - value from props.
             <br><br>
             <button frameworkClick="changeSize">Change size</button>
             <br><br>
-            <div style="border: 1px solid red" frameworkStyle="height: props.height, width: props.width"></div>
+            <div style="border: 1px solid red" ac-style="height: props.height, width: props.width"></div>
      </div>
 </div>
 
 <div class="block">
-    <b class="title">frameworkIf="props.isVisible"</b>
+    <b class="title">ac-if="props.isVisible"</b>
     <div class="text">Serve to hide or show element; Gets 1 params: <b>value</b>
     <br><br>
     <button frameworkClick="showElement">Show</button>
-    <span frameworkIf="props.isVisible">Element is shown now</span>
+    <span ac-if="props.isVisible">Element is shown now</span>
     </div>
 </div>
 <div class="block">
-    <b class="title">frameworFor="props.items"</b>
+    <b class="title">ac-for="props.items"</b>
     <div class="text">Repeater. Creates instance for every element in collection <b>props.items</b>
     <br><br>
     <ul>
-        <li frameworkFor="props.items" frameworkValue="name"></li>
+        <li ac-for="props.items" ac-value="name"></li>
     </ul>
  
     </div>
 </div>
 <div class="block">
-    <b class="title">frameworAttr="src: props.image"</b>
+    <b class="title">ac-attr="src: props.image"</b>
     <div class="text">Binds attr <b>src</b> with url from <b>props.image</b>
     <br>
-    <img frameworkAttr="src: props.image" style="width: 200px">
+    <img ac-attr="src: props.image" style="width: 200px">
     </div>
 </div>
 <div class="block">
-    <b class="title">frameworLink="documentation"</b>
+    <b class="title">ac-link="documentation"</b>
     <div class="text">Serves for navigation inside application. In this case link leads to documentation page</div>
 </div>
 
 <div class="block">
-    <b class="title">frameworkOn="change: onChange"</b>
+    <b class="title">ac-on="change: onChange"</b>
     <div class="text">
     Add event listener to the root element of component, that listen to child events
     <br><br>
-    <app-example-child frameworkOn="change: onChange"></app-example-child>
+    <app-example-child ac-on="onChange: onChange"></app-example-child>
     </div>
 </div>
 
 <div class="block">
-    <b class="title">frameworPattern="[0-9]"</b>
-    <div class="text">Add <b>error class</b> to the element if value is invalid(doesn't match the pattern)</div>
+    <b class="title">ac-pattern="[0-9]"</b>
+    <div class="text">
+    Add <b>error class</b> to the element if value is invalid(doesn't match the pattern)
+    <form frameworkSubmit="submit">
+        <input required type="text" ac-pattern="[0-9]: Invalid">
+        <button>Submit</button>
+    </form>
+    
+    </div>
 </div>
 <div class="block">
-    <b class="title">frameworkOutside="outsideClick"</b>
-    <div class="text">Trigger method <b>outsideClick</b> if user clicked beyond the element where frameworkOutside is specified</div>
+    <b class="title">ac-outside="outsideClick"</b>
+    <div class="text">Trigger method <b>outsideClick</b> if user clicked beyond the element where ac-outside is specified</div>
 </div>

@@ -11,7 +11,7 @@ export class ExampleChildComponent extends Component {
     }
 
     trigger() {
-    	this.emit('change');
+    	this.emit('onChange');
     }
 
 }

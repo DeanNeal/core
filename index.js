@@ -1,8 +1,8 @@
 /*!
- * ace-js 0.0.18
+ * ace-js 0.0.19
  * May be freely distributed under the MIT license 
  * Author: Bogdan Zinkevich
- * Last update: 2017-9-12 19:34:40
+ * Last update: 2017-9-13 18:43:29
  * 
  */
 (function webpackUniversalModuleDefinition(root, factory) {
@@ -87,17 +87,17 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var _routerCore2 = _interopRequireDefault(_routerCore);
 
-	var _templateEngine = __webpack_require__(26);
+	var _templateEngine = __webpack_require__(27);
 
-	var _globalEvents = __webpack_require__(27);
+	var _globalEvents = __webpack_require__(28);
 
 	var _globalEvents2 = _interopRequireDefault(_globalEvents);
 
-	var _utils = __webpack_require__(28);
+	var _utils = __webpack_require__(29);
 
-	var _http = __webpack_require__(29);
+	var _http = __webpack_require__(30);
 
-	var _store = __webpack_require__(30);
+	var _store = __webpack_require__(31);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -683,11 +683,9 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var _private = __webpack_require__(7);
 
-	var _private2 = _interopRequireDefault(_private);
+	var _directives = __webpack_require__(9);
 
-	var _handlers = __webpack_require__(8);
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	var _Directives = __webpack_require__(10);
 
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
@@ -711,26 +709,24 @@ return /******/ (function(modules) { // webpackBootstrap
 	        Component.setPrivates.call(this, custom);
 
 	        this.ui = {};
-
-	        if (options.ce.getAttribute('frameworkFor')) {
+	        // console.log(options.ce.attributes);
+	        if (options.ce.getAttribute('ac-for')) {
 	            // console.warn('Foor loop is detected!')
 	        } else {
 	            options.ce ? Component.render.call(this, options.ce) : console.warn('Component data is expected. See your component constructor!');
 	            this.props.sub(function (r) {
-	                //console.log(this);
-	                _handlers.Handlers._for.call(_this, _private2.default._forArrays.get(_this));
-	                _handlers.Handlers._props.call(_this, _private2.default._modelArrays.get(_this));
-	                _handlers.Handlers._input.call(_this, _private2.default._inputArrays.get(_this));
-	                _handlers.Handlers._props.call(_this, _private2.default._valueArrays.get(_this));
-	                _handlers.Handlers._style.call(_this, _private2.default._styleArrays.get(_this));
-	                _handlers.Handlers._if.call(_this, _private2.default._ifArrays.get(_this));
-	                _handlers.Handlers._class.call(_this, _private2.default._classArrays.get(_this));
-	                _handlers.Handlers._attr.call(_this, _private2.default._attrArrays.get(_this));
-	                _handlers.Handlers._hostClasses.call(_this, _private2.default._hostClasses.get(_this));
-	                _handlers.Handlers._hostStyles.call(_this, _private2.default._hostStyles.get(_this));
+	                _Directives.Directives._for.call(_this, _private.PRIVATES.DIRECTIVES['ac-for'].get(_this));
+	                _Directives.Directives._props.call(_this, _private.PRIVATES.DIRECTIVES['ac-value'].get(_this));
+	                _Directives.Directives._input.call(_this, _private.PRIVATES.DIRECTIVES['ac-input'].get(_this));
+	                _Directives.Directives._props.call(_this, _private.PRIVATES.DIRECTIVES['ac-model'].get(_this));
+	                _Directives.Directives._style.call(_this, _private.PRIVATES.DIRECTIVES['ac-style'].get(_this));
+	                _Directives.Directives._if.call(_this, _private.PRIVATES.DIRECTIVES['ac-if'].get(_this));
+	                _Directives.Directives._class.call(_this, _private.PRIVATES.DIRECTIVES['ac-class'].get(_this));
+	                _Directives.Directives._attr.call(_this, _private.PRIVATES.DIRECTIVES['ac-attr'].get(_this));
+	                _Directives.Directives._hostClasses.call(_this, _private.PRIVATES.HOST.CLASS.get(_this));
+	                _Directives.Directives._hostStyles.call(_this, _private.PRIVATES.HOST.STYLE.get(_this));
 	                _this.onUpdate();
 	            });
-	            //this.props._callAll(); // invokes once subscriber was set
 	        }
 	    }
 
@@ -741,7 +737,17 @@ return /******/ (function(modules) { // webpackBootstrap
 	                rest[_key] = arguments[_key];
 	            }
 
-	            _private2.default._subscriptions.set(this, rest);
+	            _private.PRIVATES.SUBSCRIPTIONS.set(this, rest);
+	        }
+	    }, {
+	        key: 'preCompileTpl',
+	        value: function preCompileTpl(html) {
+	            // DIRECTIVES_NAMES.forEach(directive=>{
+	            //     var stringToGoIntoTheRegex = '@'+directive.split('-')[1];
+	            //     var regex = new RegExp(stringToGoIntoTheRegex, "g");
+	            //     html = html.replace(regex, `ac-${directive.split('-')[1]}`)
+	            // });
+	            return html;
 	        }
 	    }, {
 	        key: 'INPUT',
@@ -824,25 +830,16 @@ return /******/ (function(modules) { // webpackBootstrap
 	    }], [{
 	        key: 'setPrivates',
 	        value: function setPrivates(custom) {
-	            _private2.default._subscriptions.set(this, []);
-	            _private2.default._eventsArray.set(this, []);
-	            _private2.default._forArrays.set(this, []);
-	            _private2.default._styleArrays.set(this, []);
-	            _private2.default._routeArrays.set(this, []);
-	            _private2.default._valueArrays.set(this, []);
-	            _private2.default._inputArrays.set(this, []);
-	            _private2.default._modelArrays.set(this, []);
-	            _private2.default._ifArrays.set(this, []);
-	            _private2.default._classArrays.set(this, []);
-	            _private2.default._refArrays.set(this, []);
-	            _private2.default._attrArrays.set(this, []);
-	            _private2.default._outsideArrays.set(this, []);
-	            _private2.default._onArrays.set(this, []);
-	            _private2.default._patternArrays.set(this, []);
-	            _private2.default._globalEvents.set(this, null);
-	            _private2.default._hostEvents.set(this, custom.hostEvents);
-	            _private2.default._hostClasses.set(this, custom.hostClasses);
-	            _private2.default._hostStyles.set(this, custom.hostStyles);
+	            for (var array in _private.PRIVATES.DIRECTIVES) {
+	                _private.PRIVATES.DIRECTIVES[array].set(this, []);
+	            }
+
+	            _private.PRIVATES.EVENTS.set(this, []);
+	            _private.PRIVATES.SUBSCRIPTIONS.set(this, []);
+	            _private.PRIVATES.GLOBAL_EVENTS.set(this, null);
+	            _private.PRIVATES.HOST.EVENTS.set(this, custom.hostEvents);
+	            _private.PRIVATES.HOST.CLASS.set(this, custom.hostClasses);
+	            _private.PRIVATES.HOST.STYLE.set(this, custom.hostStyles);
 	        }
 	    }, {
 	        key: 'render',
@@ -851,34 +848,26 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	            this.onCreate();
 	            this.root = this.shadow ? o.createShadowRoot() : o;
-	            this.root.innerHTML = this.tpl;
+	            this.root.innerHTML = this.preCompileTpl(this.tpl);
 	            // this.loadStyle();
 
-	            _handlers.Handlers._init.call(this, this.root, 'frameworkFor', '_forArrays');
-	            _handlers.Handlers._init.call(this, this.root, 'frameworkStyle', '_styleArrays');
-	            _handlers.Handlers._init.call(this, this.root, 'frameworkValue', '_valueArrays');
-	            _handlers.Handlers._init.call(this, this.root, 'frameworkInput', '_inputArrays');
-	            _handlers.Handlers._init.call(this, this.root, 'frameworkModel', '_modelArrays');
-	            _handlers.Handlers._init.call(this, this.root, 'frameworkIf', '_ifArrays');
-	            _handlers.Handlers._init.call(this, this.root, 'frameworkClass', '_classArrays');
-	            _handlers.Handlers._init.call(this, this.root, 'frameworkRef', '_refArrays');
-	            _handlers.Handlers._init.call(this, this.root, 'frameworkLink', '_routeArrays');
-	            _handlers.Handlers._init.call(this, this.root, 'frameworkAttr', '_attrArrays');
-	            _handlers.Handlers._init.call(this, this.root, 'frameworkOutside', '_outsideArrays');
-	            _handlers.Handlers._init.call(this, this.root, 'frameworkPattern', '_patternArrays');
+	            _directives.DIRECTIVES_NAMES.forEach(function (directive) {
+	                _Directives.Directives._init.call(_this2, _this2.root, directive, _private.PRIVATES.DIRECTIVES[directive]);
+	            });
 
-	            _handlers.Handlers._init.call(this, this.root, 'frameworkOn', '_onArrays');
+	            _Directives.Directives._model.call(this, _private.PRIVATES.DIRECTIVES['ac-model'].get(this));
+	            _Directives.Directives._link.call(this, _private.PRIVATES.DIRECTIVES['ac-link'].get(this));
+	            _Directives.Directives._on.call(this, _private.PRIVATES.DIRECTIVES['ac-on'].get(this));
 
-	            _handlers.Handlers._model.call(this, _private2.default._modelArrays.get(this));
-	            _handlers.Handlers._outside.call(this, _private2.default._outsideArrays.get(this));
-	            _handlers.Handlers._on.call(this, _private2.default._onArrays.get(this));
-	            _handlers.Handlers._pattern.call(this, _private2.default._patternArrays.get(this));
-	            _handlers.Handlers._elRef.call(this, _private2.default._refArrays.get(this));
+	            _Directives.Directives._outside.call(this, _private.PRIVATES.DIRECTIVES['ac-outside'].get(this));
+	            _Directives.Directives._pattern.call(this, _private.PRIVATES.DIRECTIVES['ac-pattern'].get(this));
+	            _Directives.Directives._elRef.call(this, _private.PRIVATES.DIRECTIVES['ac-ref'].get(this));
 
-	            _handlers.Handlers.eventListeners.call(this, this.root);
-	            _handlers.Handlers._hostEvents.call(this, _private2.default._hostEvents.get(this));
+	            _Directives.Directives.eventListeners.call(this, this.root);
 
-	            if (_private2.default._routeArrays.get(this).length || _private2.default._forArrays.get(this).length) {
+	            _Directives.Directives._hostEvents.call(this, _private.PRIVATES.HOST.EVENTS.get(this));
+
+	            if (_private.PRIVATES.DIRECTIVES['ac-link'].get(this).length || _private.PRIVATES.DIRECTIVES['ac-for'].get(this).length) {
 	                this.routerSub = _core.Router.onChange(function () {
 	                    var a = _this2.root.querySelectorAll('[href]');
 	                    a.forEach(function (item) {
@@ -889,8 +878,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	                    });
 	                });
 	            }
-	            _handlers.Handlers._link.call(this, _private2.default._routeArrays.get(this));
-
 	            this.onInit();
 	        }
 	    }, {
@@ -906,17 +893,17 @@ return /******/ (function(modules) { // webpackBootstrap
 	    }, {
 	        key: 'destroy',
 	        value: function destroy() {
-	            _handlers.Handlers.removeEventListeners.call(this, _private2.default._eventsArray.get(this));
+	            _Directives.Directives.removeEventListeners.call(this, _private.PRIVATES.EVENTS.get(this));
 	            // unsubscribe from global events
-	            if (_private2.default._globalEvents.get(this)) {
-	                _private2.default._globalEvents.get(this).unsubscribe();
+	            if (_private.PRIVATES.GLOBAL_EVENTS.get(this)) {
+	                _private.PRIVATES.GLOBAL_EVENTS.get(this).unsubscribe();
 	            }
 	            //unsubscribe from router changes
 	            if (this.routerSub) {
 	                // console.log('destroyed', this);
 	                this.routerSub.unsubscribe();
 	            }
-	            _private2.default._subscriptions.get(this).forEach(function (item) {
+	            _private.PRIVATES.SUBSCRIPTIONS.get(this).forEach(function (item) {
 	                return item.unsubscribe();
 	            });
 	            this.onDestroy();
@@ -928,40 +915,6 @@ return /******/ (function(modules) { // webpackBootstrap
 
 /***/ }),
 /* 7 */
-/***/ (function(module, exports) {
-
-	"use strict";
-
-	Object.defineProperty(exports, "__esModule", {
-	    value: true
-	});
-	var PRIVATES = {
-	    _subscriptions: new WeakMap(),
-	    _hostEvents: new WeakMap(),
-	    _hostClasses: new WeakMap(),
-	    _hostStyles: new WeakMap(),
-	    _eventsArray: new WeakMap(),
-	    _forArrays: new WeakMap(),
-	    _styleArrays: new WeakMap(),
-	    _linksRefs: new WeakMap(),
-	    _routeArrays: new WeakMap(),
-	    _valueArrays: new WeakMap(),
-	    _inputArrays: new WeakMap(),
-	    _modelArrays: new WeakMap(),
-	    _ifArrays: new WeakMap(),
-	    _classArrays: new WeakMap(),
-	    _refArrays: new WeakMap(),
-	    _attrArrays: new WeakMap(),
-	    _outsideArrays: new WeakMap(),
-	    _onArrays: new WeakMap(),
-	    _patternArrays: new WeakMap(),
-	    _globalEvents: new WeakMap()
-	};
-
-	exports.default = PRIVATES;
-
-/***/ }),
-/* 8 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -969,41 +922,96 @@ return /******/ (function(modules) { // webpackBootstrap
 	Object.defineProperty(exports, "__esModule", {
 	    value: true
 	});
-	exports.Handlers = undefined;
+	exports.PRIVATES = undefined;
 
-	var _style2 = __webpack_require__(9);
+	var _events = __webpack_require__(8);
 
-	var _props2 = __webpack_require__(10);
+	var _directives = __webpack_require__(9);
 
-	var _pattern2 = __webpack_require__(11);
+	var PRIVATES = {
+	    DIRECTIVES: {},
+	    EVENTS: new WeakMap(),
+	    SUBSCRIPTIONS: new WeakMap(),
+	    GLOBAL_EVENTS: new WeakMap(),
+	    HOST: {
+	        CLASS: new WeakMap(),
+	        STYLE: new WeakMap(),
+	        EVENTS: new WeakMap()
+	    }
+	};
 
-	var _if2 = __webpack_require__(12);
+	_directives.DIRECTIVES_NAMES.forEach(function (directive) {
+	    PRIVATES.DIRECTIVES[directive] = new WeakMap();
+	});
 
-	var _class2 = __webpack_require__(13);
+	exports.PRIVATES = PRIVATES;
 
-	var _elRef2 = __webpack_require__(14);
+/***/ }),
+/* 8 */
+/***/ (function(module, exports) {
 
-	var _for2 = __webpack_require__(15);
+	'use strict';
 
-	var _model2 = __webpack_require__(17);
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	var EVENTS = exports.EVENTS = ['Click', 'Keyup', 'Change', 'Mouseover', 'Mouseout', 'MouseDown', 'MouseUp', 'Scroll', 'Mousewheel', 'Submit', 'Focus', 'Blur'];
 
-	var _attr2 = __webpack_require__(18);
+/***/ }),
+/* 9 */
+/***/ (function(module, exports) {
 
-	var _input2 = __webpack_require__(19);
+	'use strict';
 
-	var _link2 = __webpack_require__(20);
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	var DIRECTIVES_NAMES = exports.DIRECTIVES_NAMES = ['ac-for', 'ac-style', 'ac-value', 'ac-input', 'ac-model', 'ac-if', 'ac-class', 'ac-link', 'ac-attr', 'ac-on', 'ac-pattern', 'ac-outside', 'ac-ref'];
 
-	var _event = __webpack_require__(21);
+/***/ }),
+/* 10 */
+/***/ (function(module, exports, __webpack_require__) {
 
-	var _outside2 = __webpack_require__(23);
+	'use strict';
 
-	var _on2 = __webpack_require__(24);
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	exports.Directives = undefined;
 
-	var _init2 = __webpack_require__(16);
+	var _style2 = __webpack_require__(11);
 
-	var _host = __webpack_require__(25);
+	var _props2 = __webpack_require__(12);
 
-	var Handlers = {
+	var _pattern2 = __webpack_require__(13);
+
+	var _if2 = __webpack_require__(14);
+
+	var _class2 = __webpack_require__(15);
+
+	var _elRef2 = __webpack_require__(16);
+
+	var _for2 = __webpack_require__(17);
+
+	var _model2 = __webpack_require__(19);
+
+	var _attr2 = __webpack_require__(20);
+
+	var _input2 = __webpack_require__(21);
+
+	var _link2 = __webpack_require__(22);
+
+	var _event = __webpack_require__(23);
+
+	var _outside2 = __webpack_require__(24);
+
+	var _on2 = __webpack_require__(25);
+
+	var _init2 = __webpack_require__(18);
+
+	var _host = __webpack_require__(26);
+
+	var Directives = {
 	    _style: _style2._style,
 	    _props: _props2._props,
 	    _pattern: _pattern2._pattern,
@@ -1027,10 +1035,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	    _hostStyles: _host._hostStyles
 	};
 
-	exports.Handlers = Handlers;
+	exports.Directives = Directives;
 
 /***/ }),
-/* 9 */
+/* 11 */
 /***/ (function(module, exports) {
 
 	'use strict';
@@ -1062,7 +1070,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	}
 
 /***/ }),
-/* 10 */
+/* 12 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -1098,7 +1106,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	}
 
 /***/ }),
-/* 11 */
+/* 13 */
 /***/ (function(module, exports) {
 
 	'use strict';
@@ -1127,7 +1135,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	}
 
 /***/ }),
-/* 12 */
+/* 14 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -1182,7 +1190,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	}
 
 /***/ }),
-/* 13 */
+/* 15 */
 /***/ (function(module, exports) {
 
 	'use strict';
@@ -1230,7 +1238,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	}
 
 /***/ }),
-/* 14 */
+/* 16 */
 /***/ (function(module, exports) {
 
 	"use strict";
@@ -1249,7 +1257,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	}
 
 /***/ }),
-/* 15 */
+/* 17 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -1261,9 +1269,9 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var _core = __webpack_require__(1);
 
-	var _index = __webpack_require__(8);
+	var _index = __webpack_require__(10);
 
-	var _init2 = __webpack_require__(16);
+	var _init2 = __webpack_require__(18);
 
 	function _for(array, data) {
 	    var _this = this;
@@ -1282,14 +1290,14 @@ return /******/ (function(modules) { // webpackBootstrap
 	                item.items = [];
 	                for (var i = 0; i <= array.length - 1; i++) {
 	                    var prevContent = item.elem.cloneNode(true);
-	                    prevContent.removeAttribute('frameworkFor');
+	                    prevContent.removeAttribute('ac-for');
 	                    item.items.push(prevContent);
 	                    item.parent.insertBefore(prevContent, item.comment);
 	                    forAttachForLoop.call(_this, prevContent, array[i]);
-	                    _index.Handlers.eventListeners.call(_this, prevContent, array[i]);
+	                    _index.Directives.eventListeners.call(_this, prevContent, array[i]);
 	                    bindClassForLoop.call(_this, prevContent, array[i]);
 	                    styleUnitForLoop.call(_this, prevContent, array[i]);
-	                    // bindIfForLoop.call(this, prevContent, array[i]);de
+	                    // // bindIfForLoop.call(this, prevContent, array[i]);de
 	                    bindPropsToViewForLoop.call(_this, prevContent, array[i]);
 	                    bindAttrsForLoop.call(_this, prevContent, array[i]);
 	                    addLinksRefsForLoop.call(_this, prevContent, array[i]);
@@ -1326,42 +1334,42 @@ return /******/ (function(modules) { // webpackBootstrap
 	}
 
 	function addLinksRefsForLoop(root, data) {
-	    var array = _index.Handlers._init(root, 'frameworkLink');
-	    _index.Handlers._link.call(this, array, data);
+	    var array = _index.Directives._init.call(this, root, 'ac-link');
+	    _index.Directives._link.call(this, array, data);
 	}
 
 	function bindAttrsForLoop(root, data) {
-	    var array = _index.Handlers._init(root, 'frameworkAttr');
-	    _index.Handlers._attr.call(this, array, data);
+	    var array = _index.Directives._init.call(this, root, 'ac-attr');
+	    _index.Directives._attr.call(this, array, data);
 	}
 
 	// function bindIfForLoop(root, data) {
-	//     let array = Handlers._init(root, 'frameworkIf');
-	//     Handlers._if.call(this, array, data);
+	//     let array = Directives._init(root, 'frameworkIf');
+	//     Directives._if.call(this, array, data);
 	// }
 
 	function forAttachForLoop(root, data) {
-	    var array = _index.Handlers._init(root, 'frameworkFor');
-	    _index.Handlers._for.call(this, array, data);
+	    var array = _index.Directives._init.call(this, root, 'ac-for');
+	    _index.Directives._for.call(this, array, data);
 	}
 
 	function bindPropsToViewForLoop(root, data) {
-	    var array = _index.Handlers._init(root, 'frameworkValue');
-	    _index.Handlers._props.call(this, array, data);
+	    var array = _index.Directives._init.call(this, root, 'ac-value');
+	    _index.Directives._props.call(this, array, data);
 	}
 
 	function styleUnitForLoop(root, data) {
-	    var array = _index.Handlers._init(root, 'frameworkStyle');
-	    _index.Handlers._style.call(this, array, data);
+	    var array = _index.Directives._init.call(this, root, 'ac-style');
+	    _index.Directives._style.call(this, array, data);
 	}
 
 	function bindClassForLoop(root, data) {
-	    var array = _index.Handlers._init(root, 'frameworkClass');
-	    _index.Handlers._class.call(this, array, data);
+	    var array = _index.Directives._init.call(this, root, 'ac-class');
+	    _index.Directives._class.call(this, array, data);
 	}
 
 /***/ }),
-/* 16 */
+/* 18 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -1373,16 +1381,12 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var _private = __webpack_require__(7);
 
-	var _private2 = _interopRequireDefault(_private);
-
 	var _core = __webpack_require__(1);
 
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	function _init(root, directive, newArray) {
+	    var array = newArray || [];
 
-	function _init(root, handlerAttr, privateArray) {
-	    var array = privateArray ? _private2.default[privateArray] : [];
-
-	    var attr = root.getAttribute(handlerAttr);
+	    var attr = root.getAttribute(directive);
 	    if (attr && !_core.Utils.isCustomElement(root)) {
 	        // only for loops
 	        var obj = {
@@ -1394,8 +1398,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	        };
 
 	        array.get ? array.get(this).push(obj) : array.push(obj);
-	        root.removeAttribute(handlerAttr);
-	        if (handlerAttr === 'frameworkFor') elem.remove();
+	        root.removeAttribute(directive);
+	        if (directive === 'ac-for') elem.remove();
 	    }
 
 	    var _iteratorNormalCompletion = true;
@@ -1403,19 +1407,19 @@ return /******/ (function(modules) { // webpackBootstrap
 	    var _iteratorError = undefined;
 
 	    try {
-	        for (var _iterator = root.querySelectorAll('[' + handlerAttr + ']')[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
+	        for (var _iterator = root.querySelectorAll('[' + directive + ']')[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
 	            var _elem = _step.value;
 
-	            var _attr = _elem.getAttribute(handlerAttr);
+	            var _attr = _elem.getAttribute(directive);
 
 	            // exclude inner loops
-	            if (handlerAttr === 'frameworkFor' && _elem.querySelectorAll('[frameworkFor]').length) {
+	            if (directive === 'ac-for' && _elem.querySelectorAll('[ac-for]').length) {
 	                var _iteratorNormalCompletion2 = true;
 	                var _didIteratorError2 = false;
 	                var _iteratorError2 = undefined;
 
 	                try {
-	                    for (var _iterator2 = _elem.querySelectorAll('[frameworkFor]')[Symbol.iterator](), _step2; !(_iteratorNormalCompletion2 = (_step2 = _iterator2.next()).done); _iteratorNormalCompletion2 = true) {
+	                    for (var _iterator2 = _elem.querySelectorAll('[ac-for]')[Symbol.iterator](), _step2; !(_iteratorNormalCompletion2 = (_step2 = _iterator2.next()).done); _iteratorNormalCompletion2 = true) {
 	                        var innerElem = _step2.value;
 
 	                        innerElem.setAttribute('frameworkInnerLoop', true);
@@ -1436,7 +1440,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	                }
 	            }
 
-	            if (handlerAttr === 'frameworkFor' && _elem.getAttribute('frameworkInnerLoop')) {
+	            if (directive === 'ac-for' && _elem.getAttribute('frameworkInnerLoop')) {
 	                _elem.removeAttribute('frameworkInnerLoop');
 	                return;
 	            }
@@ -1444,14 +1448,14 @@ return /******/ (function(modules) { // webpackBootstrap
 	            var _obj = {
 	                elem: _elem,
 	                attr: _attr,
-	                comment: _core.Utils.insertAfter(document.createComment(handlerAttr + ': ' + _attr), _elem),
+	                comment: _core.Utils.insertAfter(document.createComment(directive + ': ' + _attr), _elem),
 	                items: [],
 	                parent: _elem.parentNode,
 	                cached: _elem
 	            };
 	            array.get ? array.get(this).push(_obj) : array.push(_obj);
-	            _elem.removeAttribute(handlerAttr);
-	            if (handlerAttr === 'frameworkFor') _elem.remove();
+	            _elem.removeAttribute(directive);
+	            if (directive === 'ac-for') _elem.remove();
 	        }
 	    } catch (err) {
 	        _didIteratorError = true;
@@ -1472,7 +1476,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	}
 
 /***/ }),
-/* 17 */
+/* 19 */
 /***/ (function(module, exports) {
 
 	'use strict';
@@ -1512,7 +1516,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	}
 
 /***/ }),
-/* 18 */
+/* 20 */
 /***/ (function(module, exports) {
 
 	'use strict';
@@ -1539,7 +1543,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	}
 
 /***/ }),
-/* 19 */
+/* 21 */
 /***/ (function(module, exports) {
 
 	'use strict';
@@ -1565,7 +1569,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	}
 
 /***/ }),
-/* 20 */
+/* 22 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -1603,7 +1607,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	}
 
 /***/ }),
-/* 21 */
+/* 23 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -1617,13 +1621,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var _private = __webpack_require__(7);
 
-	var _private2 = _interopRequireDefault(_private);
-
-	var _events = __webpack_require__(22);
-
-	var _events2 = _interopRequireDefault(_events);
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	var _events = __webpack_require__(8);
 
 	function eventUnitCore(elem, event, data) {
 	    var _this = this;
@@ -1645,14 +1643,15 @@ return /******/ (function(modules) { // webpackBootstrap
 	            }
 	        }
 	    };
-	    _private2.default._eventsArray.get(this).push(newEvent);
+
+	    _private.PRIVATES.EVENTS.get(this).push(newEvent);
 	    newEvent.el.addEventListener(newEvent.event.toLowerCase(), newEvent.f, false);
 	}
 
 	function eventListeners(root, data) {
 	    var _this2 = this;
 
-	    _events2.default.forEach(function (event) {
+	    _events.EVENTS.forEach(function (event) {
 	        var targets = root.querySelectorAll('[framework' + event + ']');
 	        if (root.getAttribute('framework' + event)) {
 	            eventUnitCore.call(_this2, root, event, data);
@@ -1692,19 +1691,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	}
 
 /***/ }),
-/* 22 */
-/***/ (function(module, exports) {
-
-	'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-	var events = ['Click', 'Keyup', 'Change', 'Mouseover', 'Mouseout', 'MouseDown', 'MouseUp', 'Scroll', 'Mousewheel', 'Submit', 'Focus', 'Blur'];
-	exports.default = events;
-
-/***/ }),
-/* 23 */
+/* 24 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -1716,11 +1703,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var _private = __webpack_require__(7);
 
-	var _private2 = _interopRequireDefault(_private);
-
 	var _core = __webpack_require__(1);
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	function _outside(array) {
 	    var _this = this;
@@ -1728,7 +1711,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    array.forEach(function (item) {
 	        var attr = item.attr;
 
-	        _private2.default._globalEvents.set(_this, _core.GlobalEvents.onClick(function (e) {
+	        _private.PRIVATES.GLOBAL_EVENTS.set(_this, _core.GlobalEvents.onClick(function (e) {
 	            var ouside = _this.shadow ? item.elem.contains(e.path[0]) : item.elem.contains(e.target);
 	            if (!ouside) {
 	                _this[attr].call(_this, e);
@@ -1738,7 +1721,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	}
 
 /***/ }),
-/* 24 */
+/* 25 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -1768,7 +1751,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	}
 
 /***/ }),
-/* 25 */
+/* 26 */
 /***/ (function(module, exports) {
 
 	'use strict';
@@ -1813,7 +1796,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	}
 
 /***/ }),
-/* 26 */
+/* 27 */
 /***/ (function(module, exports) {
 
 	'use strict';
@@ -1859,7 +1842,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	}
 
 /***/ }),
-/* 27 */
+/* 28 */
 /***/ (function(module, exports) {
 
 	'use strict';
@@ -1924,7 +1907,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	exports.default = new GlobalEvents();
 
 /***/ }),
-/* 28 */
+/* 29 */
 /***/ (function(module, exports) {
 
 	'use strict';
@@ -2149,7 +2132,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	exports.Utils = Utils;
 
 /***/ }),
-/* 29 */
+/* 30 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -2501,7 +2484,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	exports.Http = Http;
 
 /***/ }),
-/* 30 */
+/* 31 */
 /***/ (function(module, exports) {
 
 	"use strict";

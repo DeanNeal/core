@@ -1,5 +1,6 @@
-import Privates from '../private';
-import Events from '../events';
+import {PRIVATES} from '../private';
+import {EVENTS} from '../const/events';
+
 export function eventUnitCore(elem, event, data) {
     let funcParams = elem.getAttribute(`framework${event}`);
     elem.removeAttribute(`framework${event}`);
@@ -18,12 +19,13 @@ export function eventUnitCore(elem, event, data) {
             }
         }
     };
-    Privates._eventsArray.get(this).push(newEvent);
+    
+    PRIVATES.EVENTS.get(this).push(newEvent);
     newEvent.el.addEventListener(newEvent.event.toLowerCase(), newEvent.f, false);
 }
 
 export function eventListeners(root, data) {
-    Events.forEach(event => {
+    EVENTS.forEach(event => {
         let targets = root.querySelectorAll(`[framework${event}]`);
         if (root.getAttribute(`framework${event}`)) {
             eventUnitCore.call(this, root, event, data);

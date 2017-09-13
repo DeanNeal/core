@@ -1,6 +1,6 @@
 import { Component } from '../../../../core';
-import Tpl from './handlers.component.html';
-export class DocHandlersComponent extends Component {
+import Tpl from './directives.component.html';
+export class DocDirectivesComponent extends Component {
     constructor(params) {
         super(params, {
             template: Tpl
