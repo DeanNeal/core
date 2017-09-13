@@ -1,10 +1,10 @@
-import Privates from '../private';
+import {PRIVATES} from '../private';
 import {Utils} from '../../core';
 
-export function _init(root, handlerAttr, privateArray) {
-    let array = privateArray ? Privates[privateArray] : [];
+export function _init(root, directive) {
+    let array = directive ? PRIVATES.DIRECTIVES[directive] : [];
 
-    let attr = root.getAttribute(handlerAttr);
+    let attr = root.getAttribute(directive);
     if (attr && !Utils.isCustomElement(root)) { // only for loops
         let obj = {
             elem: root,
@@ -15,21 +15,21 @@ export function _init(root, handlerAttr, privateArray) {
         };
 
         array.get ? array.get(this).push(obj) : array.push(obj);
-        root.removeAttribute(handlerAttr);
-        if (handlerAttr === 'frameworkFor') elem.remove();
+        root.removeAttribute(directive);
+        if (directive === 'ac-for') elem.remove();
     }
 
-    for (let elem of root.querySelectorAll(`[${handlerAttr}]`)) {
-        let attr = elem.getAttribute(handlerAttr);
+    for (let elem of root.querySelectorAll(`[${directive}]`)) {
+        let attr = elem.getAttribute(directive);
 
         // exclude inner loops
-        if (handlerAttr === 'frameworkFor' && elem.querySelectorAll('[frameworkFor]').length) {
-            for (let innerElem of elem.querySelectorAll(`[frameworkFor]`)) {
+        if (directive === 'ac-for' && elem.querySelectorAll('[ac-for]').length) {
+            for (let innerElem of elem.querySelectorAll(`[ac-for]`)) {
                 innerElem.setAttribute('frameworkInnerLoop', true);
             }
         }
 
-        if (handlerAttr === 'frameworkFor' && elem.getAttribute('frameworkInnerLoop')) {
+        if (directive === 'ac-for' && elem.getAttribute('frameworkInnerLoop')) {
             elem.removeAttribute('frameworkInnerLoop');
             return;
         }
@@ -37,14 +37,14 @@ export function _init(root, handlerAttr, privateArray) {
         let obj = {
             elem,
             attr,
-            comment: Utils.insertAfter(document.createComment(handlerAttr + ': ' + attr), elem),
+            comment: Utils.insertAfter(document.createComment(directive + ': ' + attr), elem),
             items: [],
             parent: elem.parentNode,
             cached: elem
-        };
+        };console.log(array);
         array.get ? array.get(this).push(obj) : array.push(obj);
-        elem.removeAttribute(handlerAttr);
-        if (handlerAttr === 'frameworkFor') elem.remove();
+        elem.removeAttribute(directive);
+        if (directive === 'ac-for') elem.remove();
     }
     return array;
 }

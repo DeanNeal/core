@@ -17,17 +17,17 @@ export function _for(array, data) {
                 item.items = [];
                 for (let i = 0; i <= array.length - 1; i++) {
                     let prevContent = item.elem.cloneNode(true);
-                    prevContent.removeAttribute('frameworkFor');
+                    prevContent.removeAttribute('ac-for');
                     item.items.push(prevContent);
                     item.parent.insertBefore(prevContent, item.comment);
-                    forAttachForLoop.call(this, prevContent, array[i]);
-                    Handlers.eventListeners.call(this, prevContent, array[i]);
-                    bindClassForLoop.call(this, prevContent, array[i]);
-                    styleUnitForLoop.call(this, prevContent, array[i]);
-                    // bindIfForLoop.call(this, prevContent, array[i]);de
+                    // forAttachForLoop.call(this, prevContent, array[i]);
+                    // Handlers.eventListeners.call(this, prevContent, array[i]);
+                    // bindClassForLoop.call(this, prevContent, array[i]);
+                    // styleUnitForLoop.call(this, prevContent, array[i]);
+                    // // bindIfForLoop.call(this, prevContent, array[i]);de
                     bindPropsToViewForLoop.call(this, prevContent, array[i]);
-                    bindAttrsForLoop.call(this, prevContent, array[i]);
-                    addLinksRefsForLoop.call(this, prevContent, array[i]);
+                    // bindAttrsForLoop.call(this, prevContent, array[i]);
+                    // addLinksRefsForLoop.call(this, prevContent, array[i]);
                 }
                 return;
             }
@@ -62,12 +62,12 @@ export function _for(array, data) {
 }
 
 function addLinksRefsForLoop(root, data) {
-    let array = Handlers._init(root, 'frameworkLink');
+    let array = Handlers._init(root, 'ac-link');
     Handlers._link.call(this, array, data);
 }
 
 function bindAttrsForLoop(root, data) {
-    let array = Handlers._init(root, 'frameworkAttr');
+    let array = Handlers._init(root, 'ac-attr');
     Handlers._attr.call(this, array, data);
 }
 
@@ -77,21 +77,22 @@ function bindAttrsForLoop(root, data) {
 // }
 
 function forAttachForLoop(root, data) {
-    let array = Handlers._init(root, 'frameworkFor');
+    let array = Handlers._init(root, 'ac-for');
     Handlers._for.call(this, array, data);
 }
 
 function bindPropsToViewForLoop(root, data) {
-    let array = Handlers._init(root, 'frameworkValue');
+    let array = Handlers._init(root, 'ac-value');
     Handlers._props.call(this, array, data);
 }
 
 function styleUnitForLoop(root, data) {
-    let array = Handlers._init(root, 'frameworkStyle');
+    let array = Handlers._init(root, 'ac-style');
     Handlers._style.call(this, array, data);
 }
 
 function bindClassForLoop(root, data) {
-    let array = Handlers._init(root, 'frameworkClass');
+    let array = Handlers._init(root, 'ac-class');
+    console.log(array);
     Handlers._class.call(this, array, data);
 }
