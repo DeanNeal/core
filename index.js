@@ -1,8 +1,8 @@
 /*!
- * ace-js 0.1.0
+ * ace-js 0.1.1
  * May be freely distributed under the MIT license 
  * Author: Bogdan Zinkevich
- * Last update: 2017-9-13 18:53:31
+ * Last update: 2017-9-14 11:00:39
  * 
  */
 (function webpackUniversalModuleDefinition(root, factory) {
@@ -1290,7 +1290,12 @@ return /******/ (function(modules) { // webpackBootstrap
 	                item.items = [];
 	                for (var i = 0; i <= array.length - 1; i++) {
 	                    var prevContent = item.elem.cloneNode(true);
-	                    prevContent.removeAttribute('ac-for');
+
+	                    // loop through the old element's attributes and give them to the new element
+	                    for (var _i = 0; _i < item.elem.attributes.length; _i++) {
+	                        prevContent.setAttribute(item.elem.attributes[_i].nodeName, item.elem.attributes[_i].nodeValue);
+	                    }
+
 	                    item.items.push(prevContent);
 	                    item.parent.insertBefore(prevContent, item.comment);
 	                    forAttachForLoop.call(_this, prevContent, array[i]);
@@ -1310,11 +1315,16 @@ return /******/ (function(modules) { // webpackBootstrap
 	                    item.remove();
 	                });
 	                item.items = [];
-	                for (var _i = 0; _i <= array.length - 1; _i++) {
-	                    window.temporaryObj = Object.assign({}, array[_i]);
-	                    var q = document.createElement(compName);
-	                    item.items.push(q);
-	                    item.parent.insertBefore(q, item.comment);
+	                for (var _i2 = 0; _i2 <= array.length - 1; _i2++) {
+	                    window.temporaryObj = Object.assign({}, array[_i2]);
+	                    var newEl = document.createElement(compName);
+
+	                    // loop through the old element's attributes and give them to the new element
+	                    for (var _i3 = 0; _i3 < item.elem.attributes.length; _i3++) {
+	                        newEl.setAttribute(item.elem.attributes[_i3].nodeName, item.elem.attributes[_i3].nodeValue);
+	                    }
+	                    item.items.push(newEl);
+	                    item.parent.insertBefore(newEl, item.comment);
 	                }
 	            }
 

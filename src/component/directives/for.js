@@ -17,7 +17,12 @@ export function _for(array, data) {
                 item.items = [];
                 for (let i = 0; i <= array.length - 1; i++) {
                     let prevContent = item.elem.cloneNode(true);
-                    prevContent.removeAttribute('ac-for');
+
+                    // loop through the old element's attributes and give them to the new element
+                    for (let i = 0; i < item.elem.attributes.length; i++) {
+                        prevContent.setAttribute(item.elem.attributes[i].nodeName, item.elem.attributes[i].nodeValue);
+                    }
+
                     item.items.push(prevContent);
                     item.parent.insertBefore(prevContent, item.comment);
                     forAttachForLoop.call(this, prevContent, array[i]);
@@ -39,9 +44,14 @@ export function _for(array, data) {
                 item.items = [];
                 for (let i = 0; i <= array.length - 1; i++) {
                     window.temporaryObj = Object.assign({}, array[i]);
-                    let q = document.createElement(compName);
-                    item.items.push(q);
-                    item.parent.insertBefore(q, item.comment);
+                    let newEl = document.createElement(compName);
+
+                    // loop through the old element's attributes and give them to the new element
+                    for (let i = 0; i < item.elem.attributes.length; i++) {
+                        newEl.setAttribute(item.elem.attributes[i].nodeName, item.elem.attributes[i].nodeValue);
+                    }
+                    item.items.push(newEl);
+                    item.parent.insertBefore(newEl, item.comment);
                 }
             }
 
