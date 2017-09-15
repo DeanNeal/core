@@ -1,8 +1,8 @@
 /*!
- * ace-js 0.1.2
+ * ace-js 0.1.3
  * May be freely distributed under the MIT license 
  * Author: Bogdan Zinkevich
- * Last update: 2017-9-15 10:12:00
+ * Last update: 2017-9-15 10:43:28
  * 
  */
 (function webpackUniversalModuleDefinition(root, factory) {
