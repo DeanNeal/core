@@ -1,4 +1,6 @@
 import { Component, Utils } from '../../core';
+
+
 export function _on(array) {
     array.forEach(item => {
         let listeners = item.attr;
@@ -8,8 +10,15 @@ export function _on(array) {
             listeners.forEach(listener => {
                 let eventName = listener.split(':')[0];
                 let fn = this[listener.split(':')[1]];
-                Component.on.call(this, eventName, fn);
+                on.call(this, eventName, fn);
             });
         }
+    });
+}
+
+function on(event, f) {
+    this.root.addEventListener(event, (e) => {
+        e.stopPropagation(); // to prevent further propagation
+        f.call(this, e, e.detail);
     });
 }

@@ -107,12 +107,12 @@ export class Component {
 
     /***********************************************/
 
-    static on(event, f) {
-        this.root.addEventListener(event, (e) => {
-            e.stopPropagation(); // to prevent further propagation
-            f.call(this, e, e.detail);
-        });
-    }
+    // static on(event, f) {
+    //     this.root.addEventListener(event, (e) => {
+    //         e.stopPropagation(); // to prevent further propagation
+    //         f.call(this, e, e.detail);
+    //     });
+    // }
 
     emit(event, data, parentName) {
         let myEvent = new CustomEvent(event, {

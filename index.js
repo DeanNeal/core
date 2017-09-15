@@ -2,7 +2,7 @@
  * ace-js 0.1.3
  * May be freely distributed under the MIT license 
  * Author: Bogdan Zinkevich
- * Last update: 2017-9-15 10:43:28
+ * Last update: 2017-9-15 19:47:17
  * 
  */
 (function webpackUniversalModuleDefinition(root, factory) {
@@ -768,6 +768,13 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	        /***********************************************/
 
+	        // static on(event, f) {
+	        //     this.root.addEventListener(event, (e) => {
+	        //         e.stopPropagation(); // to prevent further propagation
+	        //         f.call(this, e, e.detail);
+	        //     });
+	        // }
+
 	    }, {
 	        key: 'emit',
 	        value: function emit(event, data, parentName) {
@@ -892,16 +899,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	                });
 	            }
 	            this.onInit();
-	        }
-	    }, {
-	        key: 'on',
-	        value: function on(event, f) {
-	            var _this3 = this;
-
-	            this.root.addEventListener(event, function (e) {
-	                e.stopPropagation(); // to prevent further propagation
-	                f.call(_this3, e, e.detail);
-	            });
 	        }
 	    }, {
 	        key: 'destroy',
@@ -1767,9 +1764,18 @@ return /******/ (function(modules) { // webpackBootstrap
 	            listeners.forEach(function (listener) {
 	                var eventName = listener.split(':')[0];
 	                var fn = _this[listener.split(':')[1]];
-	                _core.Component.on.call(_this, eventName, fn);
+	                on.call(_this, eventName, fn);
 	            });
 	        }
+	    });
+	}
+
+	function on(event, f) {
+	    var _this2 = this;
+
+	    this.root.addEventListener(event, function (e) {
+	        e.stopPropagation(); // to prevent further propagation
+	        f.call(_this2, e, e.detail);
 	    });
 	}
 
