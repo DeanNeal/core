@@ -11,7 +11,7 @@ export function eventUnitCore(elem, event, data) {
         event: event,
         el: elem,
         f: (e) => {
-            e.preventDefault();
+            // e.preventDefault();
             if (this[fnName]) {
                 this[fnName].call(this, e, params[1] || data);
             } else {

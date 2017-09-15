@@ -1,1 +1,1 @@
-export const EVENTS = ['Click', 'Keyup', 'Change', 'Mouseover', 'Mouseout', 'MouseDown', 'MouseUp', 'Scroll', 'Mousewheel', 'Submit', 'Focus', 'Blur'];
+export const EVENTS = ['Click', 'Keyup', 'Change', 'Mouseover', 'Mouseout', 'MouseDown', 'MouseUp', 'Scroll', 'Mousewheel', 'Submit', 'Focus', 'Blur', 'Dragstart'];

@@ -2,7 +2,7 @@
  * ace-js 0.1.2
  * May be freely distributed under the MIT license 
  * Author: Bogdan Zinkevich
- * Last update: 2017-9-14 11:02:58
+ * Last update: 2017-9-15 10:12:00
  * 
  */
 (function webpackUniversalModuleDefinition(root, factory) {
@@ -73,7 +73,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	Object.defineProperty(exports, "__esModule", {
 	    value: true
 	});
-	exports.Store = exports.Http = exports.Utils = exports.GlobalEvents = exports.TemplateEngine = exports.RouteSwitcher = exports.Router = exports.Component = exports.Register = exports.SmartObject = undefined;
+	exports.Store = exports.Http = exports.Plugins = exports.Utils = exports.GlobalEvents = exports.TemplateEngine = exports.RouteSwitcher = exports.Router = exports.Component = exports.Register = exports.SmartObject = undefined;
 
 	var _model = __webpack_require__(2);
 
@@ -95,9 +95,15 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var _utils = __webpack_require__(29);
 
-	var _http = __webpack_require__(30);
+	var _plugins = __webpack_require__(30);
 
-	var _store = __webpack_require__(31);
+	var Plugins = _interopRequireWildcard(_plugins);
+
+	var _http = __webpack_require__(32);
+
+	var _store = __webpack_require__(33);
+
+	function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -109,6 +115,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	exports.TemplateEngine = _templateEngine.TemplateEngine;
 	exports.GlobalEvents = _globalEvents2.default;
 	exports.Utils = _utils.Utils;
+	exports.Plugins = Plugins;
 	exports.Http = _http.Http;
 	exports.Store = _store.Store;
 
@@ -189,6 +196,12 @@ return /******/ (function(modules) { // webpackBootstrap
 	                return r.id !== id;
 	            });
 	            // console.log(this.callbacksArray);
+	        }
+	    }, {
+	        key: 'clear',
+	        value: function clear() {
+	            this._data = {};
+	            this._callAll();
 	        }
 	    }, {
 	        key: 'reset',
@@ -955,7 +968,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	Object.defineProperty(exports, "__esModule", {
 	  value: true
 	});
-	var EVENTS = exports.EVENTS = ['Click', 'Keyup', 'Change', 'Mouseover', 'Mouseout', 'MouseDown', 'MouseUp', 'Scroll', 'Mousewheel', 'Submit', 'Focus', 'Blur'];
+	var EVENTS = exports.EVENTS = ['Click', 'Keyup', 'Change', 'Mouseover', 'Mouseout', 'MouseDown', 'MouseUp', 'Scroll', 'Mousewheel', 'Submit', 'Focus', 'Blur', 'Dragstart'];
 
 /***/ }),
 /* 9 */
@@ -1645,7 +1658,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        event: event,
 	        el: elem,
 	        f: function f(e) {
-	            e.preventDefault();
+	            // e.preventDefault();
 	            if (_this[fnName]) {
 	                _this[fnName].call(_this, e, params[1] || data);
 	            } else {
@@ -2148,6 +2161,164 @@ return /******/ (function(modules) { // webpackBootstrap
 	'use strict';
 
 	Object.defineProperty(exports, "__esModule", {
+		value: true
+	});
+	exports.Sortable = undefined;
+
+	var _sortable = __webpack_require__(31);
+
+	var _sortable2 = _interopRequireDefault(_sortable);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	exports.Sortable = _sortable2.default;
+
+/***/ }),
+/* 31 */
+/***/ (function(module, exports) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+
+	var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	var Sortable = function () {
+	    function Sortable(root, cb) {
+	        _classCallCheck(this, Sortable);
+
+	        this._onDragstart = this._onDragstart.bind(this);
+	        this._onDragOver = this._onDragOver.bind(this);
+	        this._onDragEnd = this._onDragEnd.bind(this);
+	        this._onDrop = this._onDrop.bind(this);
+	        this._onDragLeave = this._onDragLeave.bind(this);
+	    }
+
+	    _createClass(Sortable, [{
+	        key: 'init',
+	        value: function init(params) {
+	            if ((typeof params === 'undefined' ? 'undefined' : _typeof(params)) === 'object') {
+	                this.root = params.el;
+	                if (params.onDrop) {
+	                    this.onDrop = params.onDrop;
+	                }
+	                this.addEvents();
+	                this.addInexes();
+	            } else {
+	                console.warn('Please specify params as object');
+	            }
+	        }
+	    }, {
+	        key: 'addEvents',
+	        value: function addEvents() {
+	            this.root.addEventListener('dragstart', this._onDragstart, false);
+	        }
+	    }, {
+	        key: 'addInexes',
+	        value: function addInexes() {
+	            [].forEach.call(this.root.children, function (el, i) {
+	                el.setAttribute('data-index', i);
+	            });
+	        }
+	    }, {
+	        key: '_onDragstart',
+	        value: function _onDragstart(evt, a) {
+	            var _this = this;
+
+	            this.dragEl = evt.target; // save element
+
+	            // set type of d&d
+	            evt.dataTransfer.effectAllowed = 'move';
+	            evt.dataTransfer.setData('Text', this.dragEl.textContent);
+
+	            this.root.addEventListener('dragover', this._onDragOver, false);
+	            this.root.addEventListener('dragleave', this._onDragLeave, false);
+
+	            this.root.addEventListener('drop', this._onDrop, false);
+	            this.root.addEventListener('dragend', this._onDragEnd, false);
+
+	            // timeout is necessary, because dragEl shouldn't has ghost class
+	            setTimeout(function () {
+	                _this.dragEl.classList.add('ghost');
+	            });
+	        }
+	    }, {
+	        key: '_onDragLeave',
+	        value: function _onDragLeave(e) {
+	            var target = e.target;
+	        }
+	    }, {
+	        key: '_onDragOver',
+	        value: function _onDragOver(evt) {
+	            evt.preventDefault();
+	            evt.dataTransfer.dropEffect = 'move';
+	            var target = this.target = evt.target;
+
+	            if (target && target !== this.dragEl && target.nodeName === this.dragEl.nodeName && target.parentNode === this.dragEl.parentNode) {
+	                if (target.nextElementSibling === this.dragEl) {
+	                    this.root.insertBefore(this.dragEl, target);
+	                } else if (!target.nextElementSibling) {
+	                    this.insertAfter(this.dragEl, target);
+	                } else {
+	                    this.root.insertBefore(this.dragEl, target.nextElementSibling);
+	                }
+	            }
+	        }
+	    }, {
+	        key: '_onDragEnd',
+	        value: function _onDragEnd(e) {
+	            e.preventDefault();
+	            this.dragEl.classList.remove('ghost');
+
+	            this.root.removeEventListener('dragover', this._onDragOver, false);
+	            this.root.removeEventListener('dragleave', this._onDragLeave, false);
+	            this.root.removeEventListener('dragend', this._onDragEnd, false);
+	            this.root.removeEventListener('drop', this._onDrop, false);
+	        }
+	    }, {
+	        key: '_onDrop',
+	        value: function _onDrop(e) {
+	            var target = e.target;
+	            this.dragEl.classList.remove('ghost');
+
+	            // check if dragEl and target are not the same element and they both have the same nodeName
+	            if (this.dragEl.draggable && target.draggable) {
+	                if (this.onDrop) {
+	                    this.onDrop.call(this, this.root.children);
+	                }
+	            }
+	        }
+	    }, {
+	        key: 'insertAfter',
+	        value: function insertAfter(elem, refElem) {
+	            var parent = refElem.parentNode;
+	            var next = refElem.nextSibling;
+	            if (next) {
+	                return parent.insertBefore(elem, next);
+	            } else {
+	                return parent.appendChild(elem);
+	            }
+	        }
+	    }]);
+
+	    return Sortable;
+	}();
+
+	exports.default = new Sortable();
+
+/***/ }),
+/* 32 */
+/***/ (function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
 	    value: true
 	});
 	exports.Http = exports.Collection = exports.Model = undefined;
@@ -2494,7 +2665,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	exports.Http = Http;
 
 /***/ }),
-/* 31 */
+/* 33 */
 /***/ (function(module, exports) {
 
 	"use strict";

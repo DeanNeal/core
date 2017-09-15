@@ -6,6 +6,7 @@ import Router from './router/router-core';
 import { TemplateEngine } from './template-engine';
 import GlobalEvents from './global-events';
 import { Utils } from './utils/utils';
+import * as Plugins from './plugins';
 import { Http } from './http.js';
 import { Store } from './store.js';
 
@@ -18,6 +19,7 @@ export {
     TemplateEngine,
     GlobalEvents,
     Utils,
+    Plugins,
     Http,
     Store
 };

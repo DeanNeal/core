@@ -44,6 +44,11 @@ export class SmartObject {
         // console.log(this.callbacksArray);
     }
 
+    clear() {
+        this._data = {};
+        this._callAll();
+    }
+
     reset(data) {
         this._data = data;
         this.defineProperties(data);
