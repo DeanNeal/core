@@ -2,7 +2,7 @@
  * ace-js 0.1.3
  * May be freely distributed under the MIT license 
  * Author: Bogdan Zinkevich
- * Last update: 2017-9-15 19:47:17
+ * Last update: 2017-9-15 23:39:03
  * 
  */
 (function webpackUniversalModuleDefinition(root, factory) {
@@ -965,7 +965,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	Object.defineProperty(exports, "__esModule", {
 	  value: true
 	});
-	var EVENTS = exports.EVENTS = ['Click', 'Keyup', 'Change', 'Mouseover', 'Mouseout', 'MouseDown', 'MouseUp', 'Scroll', 'Mousewheel', 'Submit', 'Focus', 'Blur', 'Dragstart'];
+	var EVENTS = exports.EVENTS = ['click', 'keyup', 'change', 'mouseover', 'mouseout', 'mousedown', 'mouseup', 'scroll', 'mousewheel', 'submit', 'focus', 'blur', 'dragstart'];
 
 /***/ }),
 /* 9 */
@@ -1968,6 +1968,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        return rand;
 	    },
 	    addDays: function addDays(date, count) {
+	        date = new Date(date);
 	        var clone = new Date(date.getTime());
 	        return new Date(clone.setDate(clone.getDate() + count));
 	    },

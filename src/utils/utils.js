@@ -23,6 +23,7 @@ const Utils = {
     },
 
     addDays(date, count) {
+        date = new Date(date);
         let clone = new Date(date.getTime());
         return new Date(clone.setDate(clone.getDate() + count));
     },
