@@ -1,8 +1,8 @@
 /*!
- * ace-js 0.1.4
+ * ace-js 0.1.5
  * May be freely distributed under the MIT license 
  * Author: Bogdan Zinkevich
- * Last update: 2017-9-17 14:25:21
+ * Last update: 2017-9-17 14:28:12
  * 
  */
 (function webpackUniversalModuleDefinition(root, factory) {
@@ -2283,8 +2283,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	            e.preventDefault();
 	            this.dragEl.classList.remove('ghost');
 
-	            if (this.onDrop) {
-	                this.onDrop.call(this, this.root.children);
+	            if (this.onDragEnd) {
+	                this.onDragEnd.call(this, this.root.children);
 	            }
 
 	            this.root.removeEventListener('dragover', this._onDragOver, false);
