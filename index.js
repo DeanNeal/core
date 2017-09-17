@@ -2,7 +2,7 @@
  * ace-js 0.1.5
  * May be freely distributed under the MIT license 
  * Author: Bogdan Zinkevich
- * Last update: 2017-9-17 14:28:12
+ * Last update: 2017-9-17 14:32:48
  * 
  */
 (function webpackUniversalModuleDefinition(root, factory) {
@@ -2212,8 +2212,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	        value: function init(params) {
 	            if ((typeof params === 'undefined' ? 'undefined' : _typeof(params)) === 'object') {
 	                this.root = params.el;
-	                if (params.onDrop) {
-	                    this.onDrop = params.onDrop;
+	                if (params.onDragEnd) {
+	                    this.onDragEnd = params.onDragEnd;
 	                }
 	                this.addEvents();
 	                this.addInexes();

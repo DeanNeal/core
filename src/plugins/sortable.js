@@ -11,8 +11,8 @@ class Sortable {
     init(params) {
         if (typeof params === 'object') {
             this.root = params.el;
-            if (params.onDrop) {
-                this.onDrop = params.onDrop;
+            if (params.onDragEnd) {
+                this.onDragEnd = params.onDragEnd;
             }
             this.addEvents();
             this.addInexes();
