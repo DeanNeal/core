@@ -2,7 +2,7 @@
  * ace-js 0.1.4
  * May be freely distributed under the MIT license 
  * Author: Bogdan Zinkevich
- * Last update: 2017-9-15 23:40:24
+ * Last update: 2017-9-17 14:25:21
  * 
  */
 (function webpackUniversalModuleDefinition(root, factory) {
@@ -2203,7 +2203,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        this._onDragstart = this._onDragstart.bind(this);
 	        this._onDragOver = this._onDragOver.bind(this);
 	        this._onDragEnd = this._onDragEnd.bind(this);
-	        this._onDrop = this._onDrop.bind(this);
+	        // this._onDrop = this._onDrop.bind(this);
 	        this._onDragLeave = this._onDragLeave.bind(this);
 	    }
 
@@ -2247,7 +2247,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	            this.root.addEventListener('dragover', this._onDragOver, false);
 	            this.root.addEventListener('dragleave', this._onDragLeave, false);
 
-	            this.root.addEventListener('drop', this._onDrop, false);
+	            // this.root.addEventListener('drop', this._onDrop, false);
 	            this.root.addEventListener('dragend', this._onDragEnd, false);
 
 	            // timeout is necessary, because dragEl shouldn't has ghost class
@@ -2283,24 +2283,28 @@ return /******/ (function(modules) { // webpackBootstrap
 	            e.preventDefault();
 	            this.dragEl.classList.remove('ghost');
 
+	            if (this.onDrop) {
+	                this.onDrop.call(this, this.root.children);
+	            }
+
 	            this.root.removeEventListener('dragover', this._onDragOver, false);
 	            this.root.removeEventListener('dragleave', this._onDragLeave, false);
 	            this.root.removeEventListener('dragend', this._onDragEnd, false);
-	            this.root.removeEventListener('drop', this._onDrop, false);
+	            // this.root.removeEventListener('drop', this._onDrop, false);
 	        }
-	    }, {
-	        key: '_onDrop',
-	        value: function _onDrop(e) {
-	            var target = e.target;
-	            this.dragEl.classList.remove('ghost');
 
-	            // check if dragEl and target are not the same element and they both have the same nodeName
-	            if (this.dragEl.draggable && target.draggable) {
-	                if (this.onDrop) {
-	                    this.onDrop.call(this, this.root.children);
-	                }
-	            }
-	        }
+	        // _onDrop(e) {
+	        //     let target = e.target;
+	        //     this.dragEl.classList.remove('ghost');
+
+	        //     // check if dragEl and target are not the same element and they both have the same nodeName
+	        //     if (this.dragEl.draggable && target.draggable) {
+	        //         if (this.onDrop) {
+	        //             this.onDrop.call(this, this.root.children);
+	        //         }
+	        //     }
+	        // }
+
 	    }, {
 	        key: 'insertAfter',
 	        value: function insertAfter(elem, refElem) {

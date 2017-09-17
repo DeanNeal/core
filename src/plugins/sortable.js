@@ -4,7 +4,7 @@ class Sortable {
         this._onDragstart = this._onDragstart.bind(this);
         this._onDragOver = this._onDragOver.bind(this);
         this._onDragEnd = this._onDragEnd.bind(this);
-        this._onDrop = this._onDrop.bind(this);
+        // this._onDrop = this._onDrop.bind(this);
         this._onDragLeave = this._onDragLeave.bind(this);
     }
 
@@ -42,7 +42,7 @@ class Sortable {
         this.root.addEventListener('dragover', this._onDragOver, false);
         this.root.addEventListener('dragleave', this._onDragLeave, false);
 
-        this.root.addEventListener('drop', this._onDrop, false);
+        // this.root.addEventListener('drop', this._onDrop, false);
         this.root.addEventListener('dragend', this._onDragEnd, false);
 
         // timeout is necessary, because dragEl shouldn't has ghost class
@@ -76,23 +76,27 @@ class Sortable {
         e.preventDefault();
         this.dragEl.classList.remove('ghost');
 
+        if (this.onDragEnd) {
+            this.onDragEnd.call(this, this.root.children);
+        }
+
         this.root.removeEventListener('dragover', this._onDragOver, false);
         this.root.removeEventListener('dragleave', this._onDragLeave, false);
         this.root.removeEventListener('dragend', this._onDragEnd, false);
-        this.root.removeEventListener('drop', this._onDrop, false);
+        // this.root.removeEventListener('drop', this._onDrop, false);
     }
 
-    _onDrop(e) {
-        let target = e.target;
-        this.dragEl.classList.remove('ghost');
+    // _onDrop(e) {
+    //     let target = e.target;
+    //     this.dragEl.classList.remove('ghost');
 
-        // check if dragEl and target are not the same element and they both have the same nodeName
-        if (this.dragEl.draggable && target.draggable) {
-            if (this.onDrop) {
-                this.onDrop.call(this, this.root.children);
-            }
-        }
-    }
+    //     // check if dragEl and target are not the same element and they both have the same nodeName
+    //     if (this.dragEl.draggable && target.draggable) {
+    //         if (this.onDrop) {
+    //             this.onDrop.call(this, this.root.children);
+    //         }
+    //     }
+    // }
 
     insertAfter(elem, refElem) {
         let parent = refElem.parentNode;
