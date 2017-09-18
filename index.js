@@ -1,8 +1,8 @@
 /*!
- * ace-js 0.1.6
+ * ace-js 0.1.7
  * May be freely distributed under the MIT license 
  * Author: Bogdan Zinkevich
- * Last update: 2017-9-18 10:48:19
+ * Last update: 2017-9-18 10:51:30
  * 
  */
 (function webpackUniversalModuleDefinition(root, factory) {
@@ -1606,7 +1606,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    var _this = this;
 
 	    array.forEach(function (item) {
-	        item.elem.removeEventListener('click', item.callback, false);
+	        item.elem.removeEventListener('click', item.callback, false); // remove previous handler
 
 	        var route = (0, _core.TemplateEngine)(item.attr, data || _this);
 	        item.callback = function (e) {
