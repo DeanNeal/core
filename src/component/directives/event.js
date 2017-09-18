@@ -25,7 +25,7 @@ export function createEventObject(elem, event, context) {
             let regExp =  /\(([^)]+)\)/; 
             let fnParams = regExp.exec(fnName); // get value between brackets
             let args = [];
-            fnName = fnName.replace(regExp, ''); // remove everything between brackets
+            let functionName = fnName.replace(regExp, ''); // remove everything between brackets
 
             if(fnParams) {
                 fnParams[1].replace(/ +/g, "").split(',').forEach(res=>{
@@ -34,8 +34,8 @@ export function createEventObject(elem, event, context) {
                 });
             }
 
-            if (this[fnName]) {
-                this[fnName].call(this, e, ...args);
+            if (this[functionName]) {
+                this[functionName].call(this, e, ...args);
             } else {
                 console.warn('You have no function in your component');
             }

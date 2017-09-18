@@ -2,7 +2,7 @@
  * ace-js 0.1.10
  * May be freely distributed under the MIT license 
  * Author: Bogdan Zinkevich
- * Last update: 2017-9-18 17:34:57
+ * Last update: 2017-9-18 22:06:08
  * 
  */
 (function webpackUniversalModuleDefinition(root, factory) {
@@ -1367,7 +1367,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    var array = [];
 
 	    _events.EVENTS_NAMES.forEach(function (directive) {
-	        array.push(_index.Directives._initEvent.call(_this2, _this2.root, directive, [], context));
+	        array.push(_index.Directives._initEvent.call(_this2, root, directive, [], context));
 	    });
 
 	    array = array.reduce(function (a, b) {
@@ -1600,7 +1600,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	            var regExp = /\(([^)]+)\)/;
 	            var fnParams = regExp.exec(fnName); // get value between brackets
 	            var args = [];
-	            fnName = fnName.replace(regExp, ''); // remove everything between brackets
+	            var functionName = fnName.replace(regExp, ''); // remove everything between brackets
 
 	            if (fnParams) {
 	                fnParams[1].replace(/ +/g, "").split(',').forEach(function (res) {
@@ -1609,10 +1609,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	                });
 	            }
 
-	            if (_this[fnName]) {
-	                var _fnName;
+	            if (_this[functionName]) {
+	                var _functionName;
 
-	                (_fnName = _this[fnName]).call.apply(_fnName, [_this, e].concat(args));
+	                (_functionName = _this[functionName]).call.apply(_functionName, [_this, e].concat(args));
 	            } else {
 	                console.warn('You have no function in your component');
 	            }

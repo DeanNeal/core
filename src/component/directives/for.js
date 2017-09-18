@@ -80,7 +80,7 @@ function eventsForLoop(root, context) {
     let array = [];
 
     EVENTS_NAMES.forEach(directive => {
-        array.push(Directives._initEvent.call(this, this.root, directive, [], context));
+        array.push(Directives._initEvent.call(this, root, directive, [], context));
     });
 
     array = array.reduce((a, b) => a.concat(b), []);
