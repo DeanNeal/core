@@ -2,7 +2,7 @@
  * ace-js 0.1.7
  * May be freely distributed under the MIT license 
  * Author: Bogdan Zinkevich
- * Last update: 2017-9-18 10:51:30
+ * Last update: 2017-9-18 13:10:21
  * 
  */
 (function webpackUniversalModuleDefinition(root, factory) {
@@ -2021,70 +2021,42 @@ return /******/ (function(modules) { // webpackBootstrap
 	        return isAttribute.indexOf("-") !== -1;
 	    },
 	    changeSortingId: function changeSortingId(array, params) {
+	        params.reverse = !params.reverse;
 	        return array.map(function (item) {
-	            item.active = item.id === params.id;
+	            if (item.id === params.id) {
+	                item.active = true;
+	            } else {
+	                item.active = false;
+	                item.reverse = false;
+	            }
 	            return item;
 	        });
 	    },
-	    sorting: function sorting(array, params, reverse) {
-	        if (reverse) {
-	            alert(2);
+	    sorting: function sorting(array, params) {
+	        switch (params.type) {
+	            case 'date':
+	                array.sort(function (a, b) {
+	                    return new Date(a[params.id]).getTime() - new Date(b[params.id]).getTime();
+	                });
+	                break;
+	            case 'string':
+	                array.sort(function (a, b) {
+	                    if (a[params.id] < b[params.id]) {
+	                        return -1;
+	                    } else {
+	                        return 1;
+	                    }
+	                });
+	                break;
+	            case 'number':
+	                array.sort(function (a, b) {
+	                    return a[params.id] - b[params.id];
+	                });
+	                break;
+	        }
+
+	        if (params.reverse) {
 	            array.reverse();
-	        } else {
-	            switch (params.type) {
-	                // case 'date':
-	                //     array.sort((a, b) => {
-	                //         return new Date(a.data[params.id]).getTime() - new Date(b.data[params.id]).getTime();
-	                //     });
-	                //     break;
-	                case 'string':
-	                    array.sort(function (a, b) {
-	                        if (a[params.id] > b[params.id]) {
-	                            return -1;
-	                        } else {
-	                            return 1;
-	                        }
-	                    });
-	                    break;
-	                // case 'role':
-	                //     array.sort((a, b) => {
-	                //         if (a.data.role.name.toLowerCase() > b.data.role.name.toLowerCase()) {
-	                //             return -1;
-	                //         } else {
-	                //             return 1;
-	                //         }
-	                //     });
-	                //     break;
-	                // case 'name':
-	                //     array.sort((a, b) => {
-	                //         let personA = a.data.person;
-	                //         let personB = b.data.person;
-	                //         if (personA && personB && personA.firstName && personB.firstName &&
-	                //             (personA.firstName.toLowerCase() > personB.firstName.toLowerCase())) {
-	                //             return -1;
-	                //         } else {
-	                //             return 1;
-	                //         }
-	                //     });
-	                //     break;
-	                // case 'region':
-	                //     array.sort((a, b) => {
-	                //         let personA = a.data.person;
-	                //         let personB = b.data.person;
-	                //         if (personA && personB && personA.address.country && personB.address.country &&
-	                //             (personA.address.country.nicename.toLowerCase() > personB.address.country.nicename.toLowerCase())) {
-	                //             return -1;
-	                //         } else {
-	                //             return 1;
-	                //         }
-	                //     });
-	                //     break;
-	                // case 'number':
-	                //     array.sort((a, b) => {
-	                //         return a.data[params.id] - b.data[params.id];
-	                //     });
-	                //     break;
-	            }
 	        }
 
 	        return array;

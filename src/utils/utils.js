@@ -104,71 +104,43 @@ const Utils = {
     },
 
     changeSortingId(array, params) {
+        params.reverse = !params.reverse;
         return array.map(item => {
-            item.active = item.id === params.id;
+            if (item.id === params.id) {
+                item.active = true;
+            } else {
+                item.active = false;
+                item.reverse = false;
+            }
             return item;
         });
     },
 
-    sorting(array, params, reverse) {
-        if (reverse) {
-            alert(2);
+    sorting(array, params) {
+        switch (params.type) {
+            case 'date':
+                array.sort((a, b) => {
+                    return new Date(a[params.id]).getTime() - new Date(b[params.id]).getTime();
+                });
+                break;
+            case 'string':
+                array.sort((a, b) => {
+                    if (a[params.id] < b[params.id]) {
+                        return -1;
+                    } else {
+                        return 1;
+                    }
+                });
+                break;
+            case 'number':
+                array.sort((a, b) => {
+                    return a[params.id] - b[params.id];
+                });
+                break;
+        }
+        
+        if (params.reverse) {
             array.reverse();
-        } else {
-            switch (params.type) {
-                // case 'date':
-                //     array.sort((a, b) => {
-                //         return new Date(a.data[params.id]).getTime() - new Date(b.data[params.id]).getTime();
-                //     });
-                //     break;
-                case 'string':
-                    array.sort((a, b) => {
-                        if (a[params.id] > b[params.id]) {
-                            return -1;
-                        } else {
-                            return 1;
-                        }
-                    });
-                    break;
-                // case 'role':
-                //     array.sort((a, b) => {
-                //         if (a.data.role.name.toLowerCase() > b.data.role.name.toLowerCase()) {
-                //             return -1;
-                //         } else {
-                //             return 1;
-                //         }
-                //     });
-                //     break;
-                // case 'name':
-                //     array.sort((a, b) => {
-                //         let personA = a.data.person;
-                //         let personB = b.data.person;
-                //         if (personA && personB && personA.firstName && personB.firstName &&
-                //             (personA.firstName.toLowerCase() > personB.firstName.toLowerCase())) {
-                //             return -1;
-                //         } else {
-                //             return 1;
-                //         }
-                //     });
-                //     break;
-                // case 'region':
-                //     array.sort((a, b) => {
-                //         let personA = a.data.person;
-                //         let personB = b.data.person;
-                //         if (personA && personB && personA.address.country && personB.address.country &&
-                //             (personA.address.country.nicename.toLowerCase() > personB.address.country.nicename.toLowerCase())) {
-                //             return -1;
-                //         } else {
-                //             return 1;
-                //         }
-                //     });
-                //     break;
-                // case 'number':
-                //     array.sort((a, b) => {
-                //         return a.data[params.id] - b.data[params.id];
-                //     });
-                //     break;
-            }
         }
 
         return array;
@@ -191,11 +163,11 @@ const Utils = {
                 currentTime = 0,
                 increment = 20;
 
-            this.animateScroll({direction, element, increment, currentTime, change, start, duration});
+            this.animateScroll({ direction, element, increment, currentTime, change, start, duration });
         }
     },
 
-    animateScroll (r){
+    animateScroll(r) {
         r.currentTime += r.increment;
         if (r.direction === 'left')
             r.element.scrollLeft = this.easeInOutQuad(r.currentTime, r.start, r.change, r.duration);
@@ -224,4 +196,4 @@ const Utils = {
     }
 };
 
-export {Utils};
+export { Utils };
