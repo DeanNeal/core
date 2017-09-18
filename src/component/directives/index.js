@@ -9,10 +9,10 @@ import { _model } from './model';
 import { _attr } from './attr';
 import { _input } from './input';
 import { _link, setActiveLink } from './link';
-import { eventUnitCore, eventListeners, removeEventListeners } from './event';
+import { _events, eventUnitCore, removeEventListeners } from './event';
 import { _outside } from './outside';
 import { _on } from './on';
-import { _init } from './init';
+import { _init , _initEvent} from './init';
 import { _hostEvents, _hostClasses, _hostStyles } from './host';
 
 const Directives = {
@@ -28,12 +28,13 @@ const Directives = {
     _input,
     _link,
     setActiveLink,
+    _events,
     eventUnitCore,
-    eventListeners,
     removeEventListeners,
     _outside,
     _on,
     _init,
+    _initEvent,
     _hostEvents,
     _hostClasses,
     _hostStyles

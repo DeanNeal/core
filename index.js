@@ -2,7 +2,7 @@
  * ace-js 0.1.8
  * May be freely distributed under the MIT license 
  * Author: Bogdan Zinkevich
- * Last update: 2017-9-18 13:18:16
+ * Last update: 2017-9-18 15:15:40
  * 
  */
 (function webpackUniversalModuleDefinition(root, factory) {
@@ -696,7 +696,9 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var _private = __webpack_require__(7);
 
-	var _directives = __webpack_require__(9);
+	var _directives = __webpack_require__(8);
+
+	var _events = __webpack_require__(9);
 
 	var _Directives = __webpack_require__(10);
 
@@ -876,16 +878,16 @@ return /******/ (function(modules) { // webpackBootstrap
 	                _Directives.Directives._init.call(_this2, _this2.root, directive, _private.PRIVATES.DIRECTIVES[directive]);
 	            });
 
-	            _Directives.Directives._model.call(this, _private.PRIVATES.DIRECTIVES['ac-model'].get(this));
-	            // Directives._link.call(this, PRIVATES.DIRECTIVES['ac-link'].get(this));
-	            _Directives.Directives._on.call(this, _private.PRIVATES.DIRECTIVES['ac-on'].get(this));
+	            _events.EVENTS_NAMES.forEach(function (directive) {
+	                _Directives.Directives._initEvent.call(_this2, _this2.root, directive, _private.PRIVATES.EVENTS);
+	            });
 
+	            _Directives.Directives._model.call(this, _private.PRIVATES.DIRECTIVES['ac-model'].get(this));
+	            _Directives.Directives._on.call(this, _private.PRIVATES.DIRECTIVES['ac-on'].get(this));
 	            _Directives.Directives._outside.call(this, _private.PRIVATES.DIRECTIVES['ac-outside'].get(this));
 	            _Directives.Directives._pattern.call(this, _private.PRIVATES.DIRECTIVES['ac-pattern'].get(this));
 	            _Directives.Directives._elRef.call(this, _private.PRIVATES.DIRECTIVES['ac-ref'].get(this));
-
-	            _Directives.Directives.eventListeners.call(this, this.root);
-
+	            _Directives.Directives._events.call(this, _private.PRIVATES.EVENTS.get(this));
 	            _Directives.Directives._hostEvents.call(this, _private.PRIVATES.HOST.EVENTS.get(this));
 
 	            if (_private.PRIVATES.DIRECTIVES['ac-link'].get(this).length || _private.PRIVATES.DIRECTIVES['ac-for'].get(this).length) {
@@ -894,7 +896,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	                    a.forEach(function (item) {
 	                        var fullRoute = _core.Router.getCurrentFullPath();
 	                        var attr = item.getAttribute('href');
-	                        var setActive = attr === fullRoute.join('/') || fullRoute[0] === attr && !item.getAttribute('frameworkLinkExact');
+	                        var setActive = attr === fullRoute.join('/') || fullRoute[0] === attr && !item.getAttribute('ac-link-exact');
 	                        setActive ? item.classList.add('active') : item.classList.remove('active');
 	                    });
 	                });
@@ -935,9 +937,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	});
 	exports.PRIVATES = undefined;
 
-	var _events = __webpack_require__(8);
-
-	var _directives = __webpack_require__(9);
+	var _directives = __webpack_require__(8);
 
 	var PRIVATES = {
 	    DIRECTIVES: {},
@@ -949,7 +949,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	        STYLE: new WeakMap(),
 	        EVENTS: new WeakMap()
 	    }
-	};
+	}; // import { EVENTS } from './const/events';
+
 
 	_directives.DIRECTIVES_NAMES.forEach(function (directive) {
 	    PRIVATES.DIRECTIVES[directive] = new WeakMap();
@@ -964,9 +965,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	'use strict';
 
 	Object.defineProperty(exports, "__esModule", {
-	  value: true
+	    value: true
 	});
-	var EVENTS = exports.EVENTS = ['click', 'keyup', 'change', 'mouseover', 'mouseout', 'mousedown', 'mouseup', 'scroll', 'mousewheel', 'submit', 'focus', 'blur', 'dragstart'];
+	var DIRECTIVES_NAMES = exports.DIRECTIVES_NAMES = ['ac-for', 'ac-style', 'ac-value', 'ac-input', 'ac-model', 'ac-if', 'ac-class', 'ac-link', 'ac-attr', 'ac-on', 'ac-pattern', 'ac-outside', 'ac-ref'];
 
 /***/ }),
 /* 9 */
@@ -975,9 +976,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	'use strict';
 
 	Object.defineProperty(exports, "__esModule", {
-	    value: true
+	  value: true
 	});
-	var DIRECTIVES_NAMES = exports.DIRECTIVES_NAMES = ['ac-for', 'ac-style', 'ac-value', 'ac-input', 'ac-model', 'ac-if', 'ac-class', 'ac-link', 'ac-attr', 'ac-on', 'ac-pattern', 'ac-outside', 'ac-ref'];
+	var EVENTS_NAMES = exports.EVENTS_NAMES = ['click', 'keyup', 'change', 'mouseover', 'mouseout', 'mousedown', 'mouseup', 'scroll', 'mousewheel', 'submit', 'focus', 'blur', 'dragstart'];
 
 /***/ }),
 /* 10 */
@@ -1004,15 +1005,15 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var _for2 = __webpack_require__(17);
 
-	var _model2 = __webpack_require__(19);
+	var _model2 = __webpack_require__(20);
 
-	var _attr2 = __webpack_require__(20);
+	var _attr2 = __webpack_require__(21);
 
-	var _input2 = __webpack_require__(21);
+	var _input2 = __webpack_require__(22);
 
-	var _link2 = __webpack_require__(22);
+	var _link2 = __webpack_require__(23);
 
-	var _event = __webpack_require__(23);
+	var _event = __webpack_require__(19);
 
 	var _outside2 = __webpack_require__(24);
 
@@ -1035,12 +1036,13 @@ return /******/ (function(modules) { // webpackBootstrap
 	    _input: _input2._input,
 	    _link: _link2._link,
 	    setActiveLink: _link2.setActiveLink,
+	    _events: _event._events,
 	    eventUnitCore: _event.eventUnitCore,
-	    eventListeners: _event.eventListeners,
 	    removeEventListeners: _event.removeEventListeners,
 	    _outside: _outside2._outside,
 	    _on: _on2._on,
 	    _init: _init2._init,
+	    _initEvent: _init2._initEvent,
 	    _hostEvents: _host._hostEvents,
 	    _hostClasses: _host._hostClasses,
 	    _hostStyles: _host._hostStyles
@@ -1284,6 +1286,8 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var _init2 = __webpack_require__(18);
 
+	var _events = __webpack_require__(9);
+
 	function _for(array, data) {
 	    var _this = this;
 
@@ -1309,14 +1313,17 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	                    item.items.push(prevContent);
 	                    item.parent.insertBefore(prevContent, item.comment);
+
 	                    forAttachForLoop.call(_this, prevContent, array[i]);
-	                    _index.Directives.eventListeners.call(_this, prevContent, array[i]);
 	                    bindClassForLoop.call(_this, prevContent, array[i]);
 	                    styleUnitForLoop.call(_this, prevContent, array[i]);
-	                    // // bindIfForLoop.call(this, prevContent, array[i]);de
+	                    // // bindIfForLoop.call(this, prevContent, array[i]);
 	                    bindPropsToViewForLoop.call(_this, prevContent, array[i]);
 	                    bindAttrsForLoop.call(_this, prevContent, array[i]);
 	                    addLinksRefsForLoop.call(_this, prevContent, array[i]);
+
+	                    eventsForLoop.call(_this, prevContent, array[i]);
+	                    // Directives._events.call(this, prevContent, array[i]);
 	                }
 	                return;
 	            }
@@ -1354,6 +1361,21 @@ return /******/ (function(modules) { // webpackBootstrap
 	    }
 	}
 
+	function eventsForLoop(root, data) {
+	    var _this2 = this;
+
+	    var array = [];
+
+	    _events.EVENTS_NAMES.forEach(function (directive) {
+	        array.push(_index.Directives._initEvent.call(_this2, _this2.root, directive, []));
+	    });
+
+	    array = array.reduce(function (a, b) {
+	        return a.concat(b);
+	    }, []);
+	    _index.Directives._events.call(this, array, data);
+	}
+
 	function addLinksRefsForLoop(root, data) {
 	    var array = _index.Directives._init.call(this, root, 'ac-link');
 	    _index.Directives._link.call(this, array, data);
@@ -1365,7 +1387,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	}
 
 	// function bindIfForLoop(root, data) {
-	//     let array = Directives._init(root, 'frameworkIf');
+	//     let array = Directives._init(root, 'ac-if');
 	//     Directives._if.call(this, array, data);
 	// }
 
@@ -1399,10 +1421,13 @@ return /******/ (function(modules) { // webpackBootstrap
 	    value: true
 	});
 	exports._init = _init;
+	exports._initEvent = _initEvent;
 
 	var _private = __webpack_require__(7);
 
 	var _core = __webpack_require__(1);
+
+	var _event = __webpack_require__(19);
 
 	function _init(root, directive, newArray) {
 	    var array = newArray || [];
@@ -1443,7 +1468,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	                    for (var _iterator2 = _elem.querySelectorAll('[ac-for]')[Symbol.iterator](), _step2; !(_iteratorNormalCompletion2 = (_step2 = _iterator2.next()).done); _iteratorNormalCompletion2 = true) {
 	                        var innerElem = _step2.value;
 
-	                        innerElem.setAttribute('frameworkInnerLoop', true);
+	                        innerElem.setAttribute('ac-inner-loop', true);
 	                    }
 	                } catch (err) {
 	                    _didIteratorError2 = true;
@@ -1461,8 +1486,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	                }
 	            }
 
-	            if (directive === 'ac-for' && _elem.getAttribute('frameworkInnerLoop')) {
-	                _elem.removeAttribute('frameworkInnerLoop');
+	            if (directive === 'ac-for' && _elem.getAttribute('ac-inner-loop')) {
+	                _elem.removeAttribute('ac-inner-loop');
 	                return;
 	            }
 
@@ -1496,8 +1521,98 @@ return /******/ (function(modules) { // webpackBootstrap
 	    return array;
 	}
 
+	function _initEvent(root, directive, newArray) {
+	    var array = newArray || [];
+	    var targets = root.querySelectorAll('[ac-' + directive + ']');
+	    if (root.getAttribute('ac-' + directive)) {
+	        var obj = _event.createEventObject.call(this, root, directive);
+	        array.get ? array.get(this).push(obj) : array.push(obj);
+	    }
+
+	    var _iteratorNormalCompletion3 = true;
+	    var _didIteratorError3 = false;
+	    var _iteratorError3 = undefined;
+
+	    try {
+	        for (var _iterator3 = targets[Symbol.iterator](), _step3; !(_iteratorNormalCompletion3 = (_step3 = _iterator3.next()).done); _iteratorNormalCompletion3 = true) {
+	            var _elem2 = _step3.value;
+
+	            var _obj2 = _event.createEventObject.call(this, _elem2, directive);
+	            array.get ? array.get(this).push(_obj2) : array.push(_obj2);
+	        }
+	    } catch (err) {
+	        _didIteratorError3 = true;
+	        _iteratorError3 = err;
+	    } finally {
+	        try {
+	            if (!_iteratorNormalCompletion3 && _iterator3.return) {
+	                _iterator3.return();
+	            }
+	        } finally {
+	            if (_didIteratorError3) {
+	                throw _iteratorError3;
+	            }
+	        }
+	    }
+
+	    return array;
+	}
+
 /***/ }),
 /* 19 */
+/***/ (function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	exports._events = _events;
+	exports.removeEventListeners = removeEventListeners;
+	exports.createEventObject = createEventObject;
+
+	var _private = __webpack_require__(7);
+
+	function _events(array, data) {
+	    array.forEach(function (newEvent) {
+	        newEvent.customData = data;
+	        newEvent.el.addEventListener(newEvent.event.toLowerCase(), newEvent.f, false);
+	    });
+	}
+
+	function removeEventListeners(array) {
+	    array.forEach(function (eventItem, i) {
+	        eventItem.el.removeEventListener(eventItem.event, eventItem.f, false);
+	    });
+	}
+
+	function createEventObject(elem, event) {
+	    var _this = this;
+
+	    var funcParams = elem.getAttribute('ac-' + event);
+	    elem.removeAttribute('ac-' + event);
+	    var params = funcParams.replace(/ +/g, "").split(':');
+	    var fnName = params[0];
+	    var newEvent = {
+	        fnName: fnName,
+	        event: event,
+	        el: elem,
+	        customData: {},
+	        f: function f(e) {
+	            // e.preventDefault();
+	            if (_this[fnName]) {
+	                _this[fnName].call(_this, e, params[1] || newEvent.customData);
+	            } else {
+	                console.warn('You have no function in your component');
+	            }
+	        }
+	    };
+
+	    return newEvent;
+	}
+
+/***/ }),
+/* 20 */
 /***/ (function(module, exports) {
 
 	'use strict';
@@ -1537,7 +1652,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	}
 
 /***/ }),
-/* 20 */
+/* 21 */
 /***/ (function(module, exports) {
 
 	'use strict';
@@ -1564,7 +1679,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	}
 
 /***/ }),
-/* 21 */
+/* 22 */
 /***/ (function(module, exports) {
 
 	'use strict';
@@ -1590,7 +1705,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	}
 
 /***/ }),
-/* 22 */
+/* 23 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -1616,90 +1731,6 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	        item.elem.addEventListener('click', item.callback, false);
 	        item.elem.setAttribute('href', route || '/');
-	    });
-	}
-
-/***/ }),
-/* 23 */
-/***/ (function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
-	    value: true
-	});
-	exports.eventUnitCore = eventUnitCore;
-	exports.eventListeners = eventListeners;
-	exports.removeEventListeners = removeEventListeners;
-
-	var _private = __webpack_require__(7);
-
-	var _events = __webpack_require__(8);
-
-	function eventUnitCore(elem, event, data) {
-	    var _this = this;
-
-	    var funcParams = elem.getAttribute('framework' + event);
-	    elem.removeAttribute('framework' + event);
-	    var params = funcParams.replace(/ +/g, "").split(':');
-	    var fnName = params[0];
-	    var newEvent = {
-	        fnName: fnName,
-	        event: event,
-	        el: elem,
-	        f: function f(e) {
-	            // e.preventDefault();
-	            if (_this[fnName]) {
-	                _this[fnName].call(_this, e, params[1] || data);
-	            } else {
-	                console.warn('You have no function in your component');
-	            }
-	        }
-	    };
-
-	    _private.PRIVATES.EVENTS.get(this).push(newEvent);
-	    newEvent.el.addEventListener(newEvent.event.toLowerCase(), newEvent.f, false);
-	}
-
-	function eventListeners(root, data) {
-	    var _this2 = this;
-
-	    _events.EVENTS.forEach(function (event) {
-	        var targets = root.querySelectorAll('[framework' + event + ']');
-	        if (root.getAttribute('framework' + event)) {
-	            eventUnitCore.call(_this2, root, event, data);
-	        }
-
-	        var _iteratorNormalCompletion = true;
-	        var _didIteratorError = false;
-	        var _iteratorError = undefined;
-
-	        try {
-	            for (var _iterator = targets[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
-	                var elem = _step.value;
-
-	                eventUnitCore.call(_this2, elem, event, data);
-	            }
-	        } catch (err) {
-	            _didIteratorError = true;
-	            _iteratorError = err;
-	        } finally {
-	            try {
-	                if (!_iteratorNormalCompletion && _iterator.return) {
-	                    _iterator.return();
-	                }
-	            } finally {
-	                if (_didIteratorError) {
-	                    throw _iteratorError;
-	                }
-	            }
-	        }
-	    });
-	}
-
-	function removeEventListeners(array) {
-	    array.forEach(function (eventItem, i) {
-	        eventItem.el.removeEventListener(eventItem.event, eventItem.f, false);
 	    });
 	}
 

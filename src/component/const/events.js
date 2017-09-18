@@ -1,1 +1,1 @@
-export const EVENTS = ['click', 'keyup', 'change', 'mouseover', 'mouseout', 'mousedown', 'mouseup', 'scroll', 'mousewheel', 'submit', 'focus', 'blur', 'dragstart'];
+export const EVENTS_NAMES = ['click', 'keyup', 'change', 'mouseover', 'mouseout', 'mousedown', 'mouseup', 'scroll', 'mousewheel', 'submit', 'focus', 'blur', 'dragstart'];

@@ -21,6 +21,10 @@ export class DocDirectivesComponent extends Component {
         })
     }
 
+    submit(e) {
+        e.preventDefault();
+    }
+
     changeClass() {
         this.props.set('className', 'clicked');
     }

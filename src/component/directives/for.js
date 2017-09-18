@@ -1,6 +1,7 @@
-import {Component, Utils} from '../../core';
-import {Directives} from './index';
-import {_init} from './init';
+import { Component, Utils } from '../../core';
+import { Directives } from './index';
+import { _init } from './init';
+import { EVENTS_NAMES } from '../const/events';
 
 export function _for(array, data) {
     if (array.length) {
@@ -25,14 +26,17 @@ export function _for(array, data) {
 
                     item.items.push(prevContent);
                     item.parent.insertBefore(prevContent, item.comment);
+
                     forAttachForLoop.call(this, prevContent, array[i]);
-                    Directives.eventListeners.call(this, prevContent, array[i]);
                     bindClassForLoop.call(this, prevContent, array[i]);
                     styleUnitForLoop.call(this, prevContent, array[i]);
-                    // // bindIfForLoop.call(this, prevContent, array[i]);de
+                    // // bindIfForLoop.call(this, prevContent, array[i]);
                     bindPropsToViewForLoop.call(this, prevContent, array[i]);
                     bindAttrsForLoop.call(this, prevContent, array[i]);
                     addLinksRefsForLoop.call(this, prevContent, array[i]);
+
+                    eventsForLoop.call(this, prevContent, array[i]);
+                    // Directives._events.call(this, prevContent, array[i]);
                 }
                 return;
             }
@@ -71,6 +75,19 @@ export function _for(array, data) {
     }
 }
 
+
+function eventsForLoop(root, data) {
+    let array = [];
+
+    EVENTS_NAMES.forEach(directive => {
+        array.push(Directives._initEvent.call(this, this.root, directive, []));
+    });
+
+    array = array.reduce((a, b) => a.concat(b), []);
+    Directives._events.call(this, array, data);
+}
+
+
 function addLinksRefsForLoop(root, data) {
     let array = Directives._init.call(this, root, 'ac-link');
     Directives._link.call(this, array, data);
@@ -82,7 +99,7 @@ function bindAttrsForLoop(root, data) {
 }
 
 // function bindIfForLoop(root, data) {
-//     let array = Directives._init(root, 'frameworkIf');
+//     let array = Directives._init(root, 'ac-if');
 //     Directives._if.call(this, array, data);
 // }
 

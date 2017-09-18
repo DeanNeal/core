@@ -1,6 +1,6 @@
 import {PRIVATES} from '../private';
 import {Utils} from '../../core';
-
+import {createEventObject} from './event';
 export function _init(root, directive, newArray) {
     let array = newArray || [];
 
@@ -25,12 +25,12 @@ export function _init(root, directive, newArray) {
         // exclude inner loops
         if (directive === 'ac-for' && elem.querySelectorAll('[ac-for]').length) {
             for (let innerElem of elem.querySelectorAll(`[ac-for]`)) {
-                innerElem.setAttribute('frameworkInnerLoop', true);
+                innerElem.setAttribute('ac-inner-loop', true);
             }
         }
 
-        if (directive === 'ac-for' && elem.getAttribute('frameworkInnerLoop')) {
-            elem.removeAttribute('frameworkInnerLoop');
+        if (directive === 'ac-for' && elem.getAttribute('ac-inner-loop')) {
+            elem.removeAttribute('ac-inner-loop');
             return;
         }
 
@@ -47,5 +47,22 @@ export function _init(root, directive, newArray) {
         if (directive === 'ac-for') elem.remove();
     }
 
+    return array;
+}
+
+
+export function _initEvent(root, directive, newArray) {
+    let array = newArray || [];
+    let targets = root.querySelectorAll(`[ac-${directive}]`);
+    if (root.getAttribute(`ac-${directive}`)) {
+        let obj = createEventObject.call(this, root, directive);
+        array.get ? array.get(this).push(obj) : array.push(obj);
+        
+    }
+
+    for (let elem of targets) {
+        let obj = createEventObject.call(this, elem, directive);
+        array.get ? array.get(this).push(obj) : array.push(obj);
+    }
     return array;
 }

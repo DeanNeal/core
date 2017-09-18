@@ -1,7 +1,7 @@
 import { Model, Router, SmartObject } from '../core';
 import { PRIVATES } from './private';
 import { DIRECTIVES_NAMES } from './const/directives';
-
+import { EVENTS_NAMES } from './const/events';
 import { Directives } from './Directives';
 
 export class Component {
@@ -77,16 +77,16 @@ export class Component {
             Directives._init.call(this, this.root, directive, PRIVATES.DIRECTIVES[directive]);
         });
 
-        Directives._model.call(this, PRIVATES.DIRECTIVES['ac-model'].get(this));
-        // Directives._link.call(this, PRIVATES.DIRECTIVES['ac-link'].get(this));
-        Directives._on.call(this, PRIVATES.DIRECTIVES['ac-on'].get(this));
+        EVENTS_NAMES.forEach(directive => {
+            Directives._initEvent.call(this, this.root, directive, PRIVATES.EVENTS);
+        });
 
+        Directives._model.call(this, PRIVATES.DIRECTIVES['ac-model'].get(this));
+        Directives._on.call(this, PRIVATES.DIRECTIVES['ac-on'].get(this));
         Directives._outside.call(this, PRIVATES.DIRECTIVES['ac-outside'].get(this));
         Directives._pattern.call(this, PRIVATES.DIRECTIVES['ac-pattern'].get(this));
         Directives._elRef.call(this, PRIVATES.DIRECTIVES['ac-ref'].get(this));
-
-        Directives.eventListeners.call(this, this.root);
-
+        Directives._events.call(this, PRIVATES.EVENTS.get(this));
         Directives._hostEvents.call(this, PRIVATES.HOST.EVENTS.get(this));
 
         if (PRIVATES.DIRECTIVES['ac-link'].get(this).length || PRIVATES.DIRECTIVES['ac-for'].get(this).length) {
@@ -95,7 +95,7 @@ export class Component {
                 a.forEach(item => {
                     let fullRoute = Router.getCurrentFullPath();
                     let attr = item.getAttribute('href');
-                    let setActive = attr === fullRoute.join('/') || (fullRoute[0] === attr && !item.getAttribute('frameworkLinkExact'))
+                    let setActive = attr === fullRoute.join('/') || (fullRoute[0] === attr && !item.getAttribute('ac-link-exact'))
                     setActive ? item.classList.add('active') : item.classList.remove('active')
                 });
             });

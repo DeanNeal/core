@@ -1,4 +1,4 @@
-import { EVENTS } from './const/events';
+// import { EVENTS } from './const/events';
 import { DIRECTIVES_NAMES } from './const/directives';
 
 const PRIVATES = {
