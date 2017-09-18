@@ -2,7 +2,7 @@
  * ace-js 0.1.6
  * May be freely distributed under the MIT license 
  * Author: Bogdan Zinkevich
- * Last update: 2017-9-17 14:33:28
+ * Last update: 2017-9-18 10:48:19
  * 
  */
 (function webpackUniversalModuleDefinition(root, factory) {
@@ -736,6 +736,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	                _Directives.Directives._if.call(_this, _private.PRIVATES.DIRECTIVES['ac-if'].get(_this));
 	                _Directives.Directives._class.call(_this, _private.PRIVATES.DIRECTIVES['ac-class'].get(_this));
 	                _Directives.Directives._attr.call(_this, _private.PRIVATES.DIRECTIVES['ac-attr'].get(_this));
+	                _Directives.Directives._link.call(_this, _private.PRIVATES.DIRECTIVES['ac-link'].get(_this));
 	                _Directives.Directives._hostClasses.call(_this, _private.PRIVATES.HOST.CLASS.get(_this));
 	                _Directives.Directives._hostStyles.call(_this, _private.PRIVATES.HOST.STYLE.get(_this));
 	                _this.onUpdate();
@@ -876,7 +877,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	            });
 
 	            _Directives.Directives._model.call(this, _private.PRIVATES.DIRECTIVES['ac-model'].get(this));
-	            _Directives.Directives._link.call(this, _private.PRIVATES.DIRECTIVES['ac-link'].get(this));
+	            // Directives._link.call(this, PRIVATES.DIRECTIVES['ac-link'].get(this));
 	            _Directives.Directives._on.call(this, _private.PRIVATES.DIRECTIVES['ac-on'].get(this));
 
 	            _Directives.Directives._outside.call(this, _private.PRIVATES.DIRECTIVES['ac-outside'].get(this));
@@ -1605,25 +1606,17 @@ return /******/ (function(modules) { // webpackBootstrap
 	    var _this = this;
 
 	    array.forEach(function (item) {
-	        var route = getRoute.call(_this, item, data);
-	        item.elem.addEventListener('click', function (e) {
+	        item.elem.removeEventListener('click', item.callback, false);
+
+	        var route = (0, _core.TemplateEngine)(item.attr, data || _this);
+	        item.callback = function (e) {
 	            e.preventDefault();
 	            _core.Router.navigate(route);
-	        }, false);
+	        };
+
+	        item.elem.addEventListener('click', item.callback, false);
 	        item.elem.setAttribute('href', route || '/');
 	    });
-	}
-
-	function getRoute(item, data) {
-	    var route = '';
-	    var params = item.attr.split('.');
-	    if (params[0][0] === '@') {
-	        params[0] = params[0].substr(1);
-	        route = this.getComponentVariable(params, data);
-	    } else {
-	        route = item.attr;
-	    }
-	    return route;
 	}
 
 /***/ }),
@@ -1833,41 +1826,26 @@ return /******/ (function(modules) { // webpackBootstrap
 	Object.defineProperty(exports, "__esModule", {
 	    value: true
 	});
-
-	var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
-
 	exports.TemplateEngine = TemplateEngine;
-	// export function TemplateEngine(html, options = {}) {
-	//     let re = /<%([^%>]+)?%>/g, reExp = /(^( )?(if|for|else|switch|case|break|{|}))(.*)?/g, code = 'var r=[];\n', cursor = 0, match;
-	//     let add = function(line, js) {
-	//         js? (code += line.match(reExp) ? line + '\n' : 'r.push(' + line + ');\n') :
-	//             (code += line != '' ? 'r.push("' + line.replace(/"/g, '\\"') + '");\n' : '');
-	//         return add;
-	//     };
-	//     while(match = re.exec(html)) {
-	//         add(html.slice(cursor, match.index))(match[1], true);
-	//         cursor = match.index + match[0].length;
-	//     }
-	//     add(html.substr(cursor, html.length - cursor));
-	//     code += 'return r.join("");';
-	//     return new Function(code.replace(/[\r\t\n]/g, '')).apply(options);
-	// }
-	String.prototype.replaceAll = function (search, replace) {
-	    return this.split(search).join(replace);
-	};
-
 	function TemplateEngine(html) {
 	    var options = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
 
-	    if (typeof options === 'string') {
-	        html = html.replaceAll("{{this}}", options ? options : '');
+	    var re = /{{([^%>]+)?}}/g,
+	        reExp = /(^( )?(if|for|else|switch|case|break|{|}))(.*)?/g,
+	        code = 'var r=[];\n',
+	        cursor = 0,
+	        match = void 0;
+	    var add = function add(line, js) {
+	        js ? code += line.match(reExp) ? line + '\n' : 'r.push(' + line + ');\n' : code += line != '' ? 'r.push("' + line.replace(/"/g, '\\"') + '");\n' : '';
+	        return add;
+	    };
+	    while (match = re.exec(html)) {
+	        add(html.slice(cursor, match.index))(match[1], true);
+	        cursor = match.index + match[0].length;
 	    }
-	    if ((typeof options === 'undefined' ? 'undefined' : _typeof(options)) === 'object') {
-	        for (var prop in options) {
-	            html = html.replaceAll("{{" + prop + "}}", options[prop]);
-	        }
-	    }
-	    return html;
+	    add(html.substr(cursor, html.length - cursor));
+	    code += 'return r.join("");';
+	    return new Function(code.replace(/[\r\t\n]/g, '')).apply(options);
 	}
 
 /***/ }),

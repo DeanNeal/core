@@ -32,6 +32,7 @@ export class Component {
                 Directives._if.call(this, PRIVATES.DIRECTIVES['ac-if'].get(this));
                 Directives._class.call(this, PRIVATES.DIRECTIVES['ac-class'].get(this));
                 Directives._attr.call(this, PRIVATES.DIRECTIVES['ac-attr'].get(this));
+                Directives._link.call(this, PRIVATES.DIRECTIVES['ac-link'].get(this));
                 Directives._hostClasses.call(this, PRIVATES.HOST.CLASS.get(this));
                 Directives._hostStyles.call(this, PRIVATES.HOST.STYLE.get(this));
                 this.onUpdate();
@@ -77,7 +78,7 @@ export class Component {
         });
 
         Directives._model.call(this, PRIVATES.DIRECTIVES['ac-model'].get(this));
-        Directives._link.call(this, PRIVATES.DIRECTIVES['ac-link'].get(this));
+        // Directives._link.call(this, PRIVATES.DIRECTIVES['ac-link'].get(this));
         Directives._on.call(this, PRIVATES.DIRECTIVES['ac-on'].get(this));
 
         Directives._outside.call(this, PRIVATES.DIRECTIVES['ac-outside'].get(this));
