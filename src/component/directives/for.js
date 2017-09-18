@@ -76,15 +76,15 @@ export function _for(array, data) {
 }
 
 
-function eventsForLoop(root, data) {
+function eventsForLoop(root, context) {
     let array = [];
 
     EVENTS_NAMES.forEach(directive => {
-        array.push(Directives._initEvent.call(this, this.root, directive, []));
+        array.push(Directives._initEvent.call(this, this.root, directive, [], context));
     });
 
     array = array.reduce((a, b) => a.concat(b), []);
-    Directives._events.call(this, array, data);
+    Directives._events.call(this, array);
 }
 
 

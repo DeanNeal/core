@@ -2,7 +2,7 @@
  * ace-js 0.1.9
  * May be freely distributed under the MIT license 
  * Author: Bogdan Zinkevich
- * Last update: 2017-9-18 15:21:33
+ * Last update: 2017-9-18 17:28:27
  * 
  */
 (function webpackUniversalModuleDefinition(root, factory) {
@@ -1361,19 +1361,19 @@ return /******/ (function(modules) { // webpackBootstrap
 	    }
 	}
 
-	function eventsForLoop(root, data) {
+	function eventsForLoop(root, context) {
 	    var _this2 = this;
 
 	    var array = [];
 
 	    _events.EVENTS_NAMES.forEach(function (directive) {
-	        array.push(_index.Directives._initEvent.call(_this2, _this2.root, directive, []));
+	        array.push(_index.Directives._initEvent.call(_this2, _this2.root, directive, [], context));
 	    });
 
 	    array = array.reduce(function (a, b) {
 	        return a.concat(b);
 	    }, []);
-	    _index.Directives._events.call(this, array, data);
+	    _index.Directives._events.call(this, array);
 	}
 
 	function addLinksRefsForLoop(root, data) {
@@ -1521,11 +1521,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	    return array;
 	}
 
-	function _initEvent(root, directive, newArray) {
+	function _initEvent(root, directive, newArray, context) {
 	    var array = newArray || [];
 	    var targets = root.querySelectorAll('[ac-' + directive + ']');
 	    if (root.getAttribute('ac-' + directive)) {
-	        var obj = _event.createEventObject.call(this, root, directive);
+	        var obj = _event.createEventObject.call(this, root, directive, context);
 	        array.get ? array.get(this).push(obj) : array.push(obj);
 	    }
 
@@ -1537,7 +1537,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        for (var _iterator3 = targets[Symbol.iterator](), _step3; !(_iteratorNormalCompletion3 = (_step3 = _iterator3.next()).done); _iteratorNormalCompletion3 = true) {
 	            var _elem2 = _step3.value;
 
-	            var _obj2 = _event.createEventObject.call(this, _elem2, directive);
+	            var _obj2 = _event.createEventObject.call(this, _elem2, directive, context);
 	            array.get ? array.get(this).push(_obj2) : array.push(_obj2);
 	        }
 	    } catch (err) {
@@ -1573,9 +1573,8 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var _private = __webpack_require__(7);
 
-	function _events(array, data) {
+	function _events(array) {
 	    array.forEach(function (newEvent) {
-	        newEvent.customData = data;
 	        newEvent.el.addEventListener(newEvent.event.toLowerCase(), newEvent.f, false);
 	    });
 	}
@@ -1586,7 +1585,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    });
 	}
 
-	function createEventObject(elem, event) {
+	function createEventObject(elem, event, context) {
 	    var _this = this;
 
 	    var funcParams = elem.getAttribute('ac-' + event);
@@ -1597,11 +1596,23 @@ return /******/ (function(modules) { // webpackBootstrap
 	        fnName: fnName,
 	        event: event,
 	        el: elem,
-	        customData: {},
 	        f: function f(e) {
-	            // e.preventDefault();
+	            var regExp = /\(([^)]+)\)/;
+	            var fnParams = regExp.exec(fnName); // get value between brackets
+	            var args = [];
+	            fnName = fnName.replace(regExp, ''); // remove everything between brackets
+
+	            if (fnParams) {
+	                fnParams[1].replace(/ +/g, "").split(',').forEach(function (res) {
+	                    var arg = new Function('return ' + res).apply(context || _this);
+	                    args.push(arg);
+	                });
+	            }
+
 	            if (_this[fnName]) {
-	                _this[fnName].call(_this, e, params[1] || newEvent.customData);
+	                var _fnName;
+
+	                (_fnName = _this[fnName]).call.apply(_fnName, [_this, e].concat(args));
 	            } else {
 	                console.warn('You have no function in your component');
 	            }

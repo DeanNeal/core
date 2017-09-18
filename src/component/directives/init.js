@@ -51,17 +51,17 @@ export function _init(root, directive, newArray) {
 }
 
 
-export function _initEvent(root, directive, newArray) {
+export function _initEvent(root, directive, newArray, context) {
     let array = newArray || [];
     let targets = root.querySelectorAll(`[ac-${directive}]`);
     if (root.getAttribute(`ac-${directive}`)) {
-        let obj = createEventObject.call(this, root, directive);
+        let obj = createEventObject.call(this, root, directive, context);
         array.get ? array.get(this).push(obj) : array.push(obj);
         
     }
 
     for (let elem of targets) {
-        let obj = createEventObject.call(this, elem, directive);
+        let obj = createEventObject.call(this, elem, directive, context);
         array.get ? array.get(this).push(obj) : array.push(obj);
     }
     return array;
