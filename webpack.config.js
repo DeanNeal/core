@@ -125,6 +125,12 @@ if (NODE_ENV == 'prod') {
         //         keep_fnames: true
         //     }
         // }),
+        new HtmlWebpackPlugin({
+            title: 'ACE',
+            alwaysWriteToDisk: true,
+            filename: path.resolve('index.html'),
+            template: path.resolve(__dirname, 'src/example/index.html')
+        }),
         new SmartBannerPlugin({
             banner: `${packageJSON.name} ${packageJSON.version}\nMay be freely distributed under the MIT license \nAuthor: ${packageJSON.author}\nLast update: ${new Date().toLocaleString()}\n`,
             raw: false,
