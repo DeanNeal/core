@@ -97,7 +97,7 @@ module.exports = {
     },
     devServer: {
         port: "8081",
-        contentBase: path.resolve(__dirname, 'build'),
+        contentBase: '',
         colors: true,
         historyApiFallback: true,
         hot: false,
