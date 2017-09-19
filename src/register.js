@@ -79,37 +79,6 @@ export function RegisterElement(comp) {
 }
 
 
-// let elem;
-// class BasicElement extends HTMLElement {
-//     constructor(params) {
-//         super(params);
-//     }
-//     connectedCallback(params) {
-//         // this.textContent = 'Just a basic custom element.';
-//         console.log(params);
-//         let attrs = {};
-//         for (let i = 0; i < this.attributes.length; i++) {
-//             attrs[this.attributes[i].nodeName] = this.attributes[i].nodeValue
-//         }
-//
-//         let test = window.temporaryObj || {};// Object.assign({}, window.temporaryObj);
-//         delete window.temporaryObj;
-//         elem = new comp.c({ce: this, attrs: attrs, props: test});
-//         this.COMPONENT = elem;
-//     }
-//
-//     disconnectedCallback() {
-//         this.COMPONENT.destroy();
-//     }
-//
-//     attributeChangedCallback(attrName, oldVal, newVal) {
-//     }
-// }
-// customElements.define(comp.selector, BasicElement);
-
-
-
-
 function loadStyle(styles) {
     if (styles) {
         let css = styles.toString(),

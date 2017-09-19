@@ -2,6 +2,12 @@ export function _style(array, data) {
     array.forEach(item => {
         let array = item.attr.split(',');
 
+        // for objects
+        // let a=  new Function('return ' + array).apply(this.props._data);
+        // for(let key in a){
+        //     item.elem.style[key] = a[key];
+        // }
+
         array.forEach(prop => {
             let minus = false;
             let params = prop.replace(/ +/g, "").split(':');

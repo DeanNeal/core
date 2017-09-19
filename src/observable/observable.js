@@ -1,6 +1,7 @@
-export class SmartObject {
+import { ifObject, ifArray } from '../decorators';
+
+export class Observable {
     constructor(options) {
-        this._data = options || {};
         this.lId = -1;
         if (options) {
             this.defineProperties(options);
@@ -24,7 +25,7 @@ export class SmartObject {
     }
 
     sub(f) {
-        this.callbacksArray.push({f, id: ++this.lId});
+        this.callbacksArray.push({ f, id: ++this.lId });
 
         f.call(this, this._data);
 
@@ -49,12 +50,6 @@ export class SmartObject {
         this._callAll();
     }
 
-    reset(data) {
-        this._data = data;
-        this.defineProperties(data);
-        this._callAll();
-    }
-
     set(data, value) {
 
         if (typeof data == 'object') {
@@ -74,6 +69,10 @@ export class SmartObject {
         this._callAll();
     }
 
+    getData() {
+        return this._data;
+    }
+
     get(key) {
         return this._data[key];
     }
@@ -85,15 +84,23 @@ export class SmartObject {
             }
         });
     }
+}
 
-    add(data, model) {
-        if (typeof data === 'object') {
-            this._data.push(data);
-        } else {
-            this[data].push(model);
-        }
 
-        this._callAll();
+
+@ifObject
+export class ObservableModel extends Observable {
+    constructor(options) {
+        super(options);
+        this._data = options || {};
+    }
+}
+
+
+@ifArray
+export class ObservableCollection extends Observable {
+    constructor(options) {
+        super(options);
     }
 
     save(params) {
@@ -108,6 +115,16 @@ export class SmartObject {
 
     last() {
         return this._data[this._data.length - 1];
+    }
+
+    push(data, model) {
+        this._data.push(data);
+        this._callAll();
+    }
+
+    unshift(data, model) {
+        this._data.unshift(data);
+        this._callAll();
     }
 
     remove(id) {

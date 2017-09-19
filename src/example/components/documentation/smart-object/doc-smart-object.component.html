@@ -8,12 +8,12 @@
 <div class="code-block">
     <div class="code-header">user.store.js</div>
     <pre>
-        import { SmartObject } from 'framework/model'
+        import { ObservableModel } from 'framework/model'
 
         class UserStore extends Store {
             constructor() {
                 super();
-                this.user = new SmartObject();
+                this.user = new ObservableModel();
             }
         }
 </pre>

@@ -1,4 +1,4 @@
-import { SmartObject } from './model/model';
+import { ObservableModel } from './observable/observable';
 
 const methods = ['get', 'post', 'put', 'delete'];
 
@@ -75,7 +75,7 @@ export class Collection {
 
 class HttpModule {
     constructor() {
-        this.catalog = new SmartObject();
+        this.catalog = new ObservableModel();
         this.server = '';
     }
 

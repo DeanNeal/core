@@ -1,4 +1,4 @@
-import { SmartObject } from './model/model';
+import { ObservableModel, ObservableCollection } from './observable/observable';
 import { Register } from './register';
 import { Component } from './component/component';
 import { RouteSwitcher } from './router/router-switcher';
@@ -11,7 +11,7 @@ import { Http } from './http.js';
 import { Store } from './store.js';
 
 export {
-    SmartObject,
+    ObservableModel, ObservableCollection,
     Register,
     Component,
     Router,

@@ -1,4 +1,4 @@
-import { Model, Router, SmartObject } from '../core';
+import { Router, ObservableModel } from '../core';
 import { PRIVATES } from './private';
 import { DIRECTIVES_NAMES } from './const/directives';
 import { EVENTS_NAMES } from './const/events';
@@ -11,7 +11,7 @@ export class Component {
         this.shadow = custom.shadow || false;
         this.type = custom.type;
 
-        this.props = new SmartObject(options.props);
+        this.props = new ObservableModel(options.props);
         this.root = null;
 
 
@@ -64,7 +64,21 @@ export class Component {
             let regex = new RegExp(stringToGoIntoTheRegex, "g");
             html = html.replace(regex, `ac-${event}`)
         });
+        html = this.htmlInterpolation(html);
         return html
+    }
+
+    htmlInterpolation(html) {
+        // let regExp =  /{{([^}]+)}}/g; 
+        // let fnParams = regExp.exec(html); // get value between brackets
+        // let args = [];
+
+        // if(fnParams) {
+        //     // let arg = new Function('return ' + fnParams[1]).apply(this);
+        //     // html = html.replace(regExp, arg);
+        //     console.log(html);
+        // }
+        return html;
     }
 
     static render(o) {

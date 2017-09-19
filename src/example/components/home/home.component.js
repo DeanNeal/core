@@ -9,12 +9,4 @@ export class HomeComponent extends Component {
             // shadow: true
         });
     }
-
-    onAttach() {
-
-    }
-
-    join() {
-    	// Router.navigate('dashboard');
-    }
 }
