@@ -22,7 +22,7 @@ module.exports = {
     output: {
         path: path.join('build'),
         filename: outputFile,
-        publicPath: '',
+        publicPath: 'build',
         library: libraryName,
         libraryTarget: 'umd',
         umdNamedDefine: true
@@ -78,7 +78,7 @@ module.exports = {
         new HtmlWebpackPlugin({
             title: 'ACE',
             alwaysWriteToDisk: true,
-            filename: path.resolve('build/index.html'),
+            filename: path.resolve('index.html'),
             template: path.resolve(__dirname, 'src/example/index.html')
         }),
         new HtmlWebpackHarddiskPlugin({
