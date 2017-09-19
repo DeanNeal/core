@@ -2,7 +2,7 @@ import { Component } from '../../../../core';
 export class ExampleChildComponent extends Component {
     constructor(params) {
         super(params, {
-            template: 'Child component <button ac-click="trigger">Emit \'change\' event </button>'
+            template: 'Child component <button @click="trigger">Emit \'change\' event </button>'
         });
     }
 

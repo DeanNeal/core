@@ -58,12 +58,12 @@ export class Component {
         PRIVATES.HOST.STYLE.set(this, custom.hostStyles);
     }
 
-    preCompileTpl(html) {
-        // DIRECTIVES_NAMES.forEach(directive=>{
-        //     var stringToGoIntoTheRegex = '@'+directive.split('-')[1];
-        //     var regex = new RegExp(stringToGoIntoTheRegex, "g");
-        //     html = html.replace(regex, `ac-${directive.split('-')[1]}`)
-        // });
+    preCompileTpl(html) {console.time('111');
+        EVENTS_NAMES.forEach(event=>{
+            let stringToGoIntoTheRegex = '@'+event;
+            let regex = new RegExp(stringToGoIntoTheRegex, "g");
+            html = html.replace(regex, `ac-${event}`)
+        });
         return html
     }
 

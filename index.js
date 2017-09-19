@@ -2,7 +2,7 @@
  * ace-js 0.1.11
  * May be freely distributed under the MIT license 
  * Author: Bogdan Zinkevich
- * Last update: 2017-9-18 22:11:19
+ * Last update: 2017-9-19 14:07:55
  * 
  */
 (function webpackUniversalModuleDefinition(root, factory) {
@@ -758,11 +758,12 @@ return /******/ (function(modules) { // webpackBootstrap
 	    }, {
 	        key: 'preCompileTpl',
 	        value: function preCompileTpl(html) {
-	            // DIRECTIVES_NAMES.forEach(directive=>{
-	            //     var stringToGoIntoTheRegex = '@'+directive.split('-')[1];
-	            //     var regex = new RegExp(stringToGoIntoTheRegex, "g");
-	            //     html = html.replace(regex, `ac-${directive.split('-')[1]}`)
-	            // });
+	            console.time('111');
+	            _events.EVENTS_NAMES.forEach(function (event) {
+	                var stringToGoIntoTheRegex = '@' + event;
+	                var regex = new RegExp(stringToGoIntoTheRegex, "g");
+	                html = html.replace(regex, 'ac-' + event);
+	            });
 	            return html;
 	        }
 	    }, {
@@ -1160,7 +1161,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var _core = __webpack_require__(1);
 
-	function _if(array) {
+	function _if(array, data) {
 	    var _this = this;
 
 	    array.forEach(function (item) {
@@ -1177,13 +1178,13 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	            if (res.indexOf('==') > -1 || res.indexOf('===') > -1) {
 	                var equality = res.indexOf('===') > -1 ? res.replace(/ +/g, "").split('===') : res.replace(/ +/g, "").split('==');
-	                var _r = _this.getComponentVariable(equality[0].split('.'));
+	                var _r = _this.getComponentVariable(equality[0].split('.'), data);
 
 	                return !!equality[1];
 	            }
 
 	            var params = res.split('.');
-	            var r = _this.getComponentVariable(params);
+	            var r = _this.getComponentVariable(params, data);
 	            r = reverse ? !r : r;
 
 	            return !!r;
@@ -1317,13 +1318,12 @@ return /******/ (function(modules) { // webpackBootstrap
 	                    forAttachForLoop.call(_this, prevContent, array[i]);
 	                    bindClassForLoop.call(_this, prevContent, array[i]);
 	                    styleUnitForLoop.call(_this, prevContent, array[i]);
-	                    // // bindIfForLoop.call(this, prevContent, array[i]);
+	                    bindIfForLoop.call(_this, prevContent, array[i]);
 	                    bindPropsToViewForLoop.call(_this, prevContent, array[i]);
 	                    bindAttrsForLoop.call(_this, prevContent, array[i]);
 	                    addLinksRefsForLoop.call(_this, prevContent, array[i]);
 
 	                    eventsForLoop.call(_this, prevContent, array[i]);
-	                    // Directives._events.call(this, prevContent, array[i]);
 	                }
 	                return;
 	            }
@@ -1386,10 +1386,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	    _index.Directives._attr.call(this, array, data);
 	}
 
-	// function bindIfForLoop(root, data) {
-	//     let array = Directives._init(root, 'ac-if');
-	//     Directives._if.call(this, array, data);
-	// }
+	function bindIfForLoop(root, data) {
+	    var array = _index.Directives._init(root, 'ac-if');
+	    _index.Directives._if.call(this, array, data);
+	}
 
 	function forAttachForLoop(root, data) {
 	    var array = _index.Directives._init.call(this, root, 'ac-for');

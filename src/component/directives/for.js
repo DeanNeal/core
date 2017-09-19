@@ -30,13 +30,12 @@ export function _for(array, data) {
                     forAttachForLoop.call(this, prevContent, array[i]);
                     bindClassForLoop.call(this, prevContent, array[i]);
                     styleUnitForLoop.call(this, prevContent, array[i]);
-                    // // bindIfForLoop.call(this, prevContent, array[i]);
+                    bindIfForLoop.call(this, prevContent, array[i]);
                     bindPropsToViewForLoop.call(this, prevContent, array[i]);
                     bindAttrsForLoop.call(this, prevContent, array[i]);
                     addLinksRefsForLoop.call(this, prevContent, array[i]);
 
                     eventsForLoop.call(this, prevContent, array[i]);
-                    // Directives._events.call(this, prevContent, array[i]);
                 }
                 return;
             }
@@ -98,10 +97,10 @@ function bindAttrsForLoop(root, data) {
     Directives._attr.call(this, array, data);
 }
 
-// function bindIfForLoop(root, data) {
-//     let array = Directives._init(root, 'ac-if');
-//     Directives._if.call(this, array, data);
-// }
+function bindIfForLoop(root, data) {
+    let array = Directives._init(root, 'ac-if');
+    Directives._if.call(this, array, data);
+}
 
 function forAttachForLoop(root, data) {
     let array = Directives._init.call(this, root, 'ac-for');

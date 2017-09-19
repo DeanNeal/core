@@ -53,7 +53,7 @@
     <div class="text">Get 2 params: name of class, boolean(adds class if true). You can use
         <b>comma(,)</b> symbol to specify several conditions. Also @ is available, so you can bind props to className
         <br><br>
-        <button ac-click="changeClass">Change class</button>
+        <button @click="changeClass">Change class</button>
         <b><span ac-class="@props.className">Example</span></b>
     </div>
 </div>
@@ -62,7 +62,7 @@
     <div class="text">
             Binds props to css rules. Gets 2 params: <b>height</b> - css rule and <b>value</b> - value from props.
             <br><br>
-            <button ac-click="changeSize">Change size</button>
+            <button @click="changeSize">Change size</button>
             <br><br>
             <div style="border: 1px solid red" ac-style="height: props.height, width: props.width"></div>
      </div>
@@ -72,7 +72,7 @@
     <b class="title">ac-if="props.isVisible"</b>
     <div class="text">Serve to hide or show element; Gets 1 params: <b>value</b>
     <br><br>
-    <button ac-click="showElement">Show</button>
+    <button @click="showElement">Show</button>
     <span ac-if="props.isVisible">Element is shown now</span>
     </div>
 </div>

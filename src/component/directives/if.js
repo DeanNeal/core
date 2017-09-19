@@ -1,5 +1,5 @@
 import {Utils} from '../../core';
-export function _if(array) {
+export function _if(array, data) {
     array.forEach(item => {
         let attr = item.attr;
         let conditions = attr.replace(/ +/g, "").split('&&');
@@ -14,13 +14,13 @@ export function _if(array) {
 
             if (res.indexOf('==') > -1 || res.indexOf('===') > -1) {
                 let equality = res.indexOf('===') > -1 ? res.replace(/ +/g, "").split('===') : res.replace(/ +/g, "").split('==');
-                let r = this.getComponentVariable(equality[0].split('.'));
+                let r = this.getComponentVariable(equality[0].split('.'), data);
 
                 return !!equality[1];
             }
 
             let params = res.split('.');
-            let r = this.getComponentVariable(params);
+            let r = this.getComponentVariable(params, data);
             r = reverse ? !r : r;
 
             return !!r;
