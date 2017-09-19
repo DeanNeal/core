@@ -16,10 +16,11 @@ var outputFile = libraryName + '.js';
 
 module.exports = {
     entry: {
-        index: ['./src/core.js']
+        index: ['./src/core.js'],
+        demo: ['./src/example/app.js']
     },
     output: {
-        path: path.join(__dirname, NODE_ENV == 'prod' ? '' : 'build'),
+        path: path.join('build'),
         filename: outputFile,
         publicPath: '',
         library: libraryName,
@@ -62,6 +63,27 @@ module.exports = {
         new webpack.DefinePlugin({
             NODE_ENV: JSON.stringify(NODE_ENV),
             VERSION: JSON.stringify(packageJSON.version)
+        }),
+        new ExtractTextPlugin("[name].css", { allChunks: true }),
+        new webpack.HotModuleReplacementPlugin(),
+        new CopyWebpackPlugin([{
+            context: 'src/example/img',
+            from: '**/*',
+            to: 'img'
+        }, {
+            context: 'src/example/css',
+            from: '**/*',
+            to: 'css'
+        }]),
+        new HtmlWebpackPlugin({
+            title: 'ACE',
+            alwaysWriteToDisk: true,
+            filename: path.resolve('build/index.html'),
+            template: path.resolve(__dirname, 'src/example/index.html')
+        }),
+        new HtmlWebpackHarddiskPlugin({
+            alwaysWriteToDisk: true,
+            filename: 'index.html'
         })
     ],
     // Create Sourcemaps for the bundle
@@ -86,35 +108,6 @@ module.exports = {
 
 //------PRODUCTION CONFIG--------//
 
-if (NODE_ENV == 'dev') {
-    module.exports.entry.devApp = ['./src/example/app.js'];
-
-    module.exports.plugins.push(
-        new ExtractTextPlugin("[name].css", { allChunks: true }),
-        new webpack.HotModuleReplacementPlugin(),
-        new CopyWebpackPlugin([{
-            context: 'src/example/img',
-            from: '**/*',
-            to: 'img'
-        }, {
-            context: 'src/example/css',
-            from: '**/*',
-            to: 'css'
-        }]),
-        new HtmlWebpackPlugin({
-            title: 'ACE',
-            alwaysWriteToDisk: true,
-            filename: path.resolve('build/index.html'),
-            template: path.resolve(__dirname, 'src/example/index.html')
-        }),
-        new HtmlWebpackHarddiskPlugin({
-            alwaysWriteToDisk: true,
-            filename: 'index.html'
-        })
-    )
-}
-
-
 if (NODE_ENV == 'prod') {
     module.exports.plugins.push(
         // new webpack.optimize.UglifyJsPlugin({
@@ -125,12 +118,6 @@ if (NODE_ENV == 'prod') {
         //         keep_fnames: true
         //     }
         // }),
-        new HtmlWebpackPlugin({
-            title: 'ACE',
-            alwaysWriteToDisk: true,
-            filename: path.resolve('index.html'),
-            template: path.resolve(__dirname, 'src/example/index.html')
-        }),
         new SmartBannerPlugin({
             banner: `${packageJSON.name} ${packageJSON.version}\nMay be freely distributed under the MIT license \nAuthor: ${packageJSON.author}\nLast update: ${new Date().toLocaleString()}\n`,
             raw: false,

@@ -43,7 +43,7 @@
     "webpack-dev-server": "^1.14.1"
   },
   "dependencies": {},
-  "main": "index.js",
+  "main": "build/index.js",
   "author": "Bogdan Zinkevich",
   "license": "MIT"
 }
