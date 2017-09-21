@@ -28,6 +28,7 @@ import Styles from './styles/main.scss';
 //     }
 // });
 
+let COMPONENTS = [];
 
 import { Router, ObservableModel } from '../core';
 import { PRIVATES } from '../component/private';
@@ -40,20 +41,7 @@ class Init {
         this.root = options.root;
         this.COMPONENTS = options.components;
         loadStyle(options.styles);
-        this.init();
-    }
-
-    init() {
-        this.compile();
-    }
-
-    compile() {
-        this.COMPONENTS.forEach(comp => {
-            let component = this.root.querySelectorAll(comp.selector)[0];
-            if (component) {
-                new comp.c(component);
-            }
-        });
+        new RootComponent(options.root);
     }
 }
 
@@ -123,8 +111,16 @@ class Component {
             });
         }
         this.onInit();
+        this.compile();
+    }
 
-        this.onInit();
+    compile() {
+        COMPONENTS.forEach(comp => {console.log(this.root, comp.selector);
+            let component = this.root.querySelectorAll(comp.selector)[0];
+            if (component) {
+                new comp.c(component);
+            }
+        });
     }
 
     getComponentVariable(variable, data) {
@@ -147,7 +143,7 @@ class Component {
     }
 }
 
-class ContainerComponent extends Component {
+class RootComponent extends Component {
     constructor(root) {
         super(root, {
             template: `
@@ -239,6 +235,15 @@ class RouteSwitcher {
         this.onCreate();
     }
 
+    compile() {
+        COMPONENTS.forEach(comp => {console.log(this.root, comp.selector);
+            let component = this.root.querySelectorAll(comp.selector)[0];
+            if (component) {
+                new comp.c(component);
+            }
+        });
+    }
+
     onCreate() {
         this.routes.forEach(route => {
             Router
@@ -253,6 +258,8 @@ class RouteSwitcher {
                         this.root.appendChild(newComp);
                         this.prevPage = route.path;
                     }
+
+                    this.compile();
 
                     // let router = this.root.querySelectorAll('child-route-switcher')[0];
                     // if (router) {
@@ -284,17 +291,16 @@ class RouteSwitcher {
 }
 
 
-
-new Init({
-    root: document.querySelectorAll('app-root')[0],
-    styles: Styles,
-    components: [
-
-        { c: ContainerComponent, selector: 'app-container' },
+COMPONENTS = [
         { c: HeaderComponent, selector: 'app-header' },
         { c: RouteSwitcher, selector: 'route-switcher' },
         { c: HomeComponent, selector: 'app-home'}
     ]
+
+new Init({
+    root: document.querySelectorAll('app-root')[0],
+    styles: Styles,
+    components: COMPONENTS
 });
 
 
