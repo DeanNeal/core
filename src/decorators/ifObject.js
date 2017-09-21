@@ -1,4 +1,4 @@
-export default function ifObject(Class) {
+export default function IfObject(Class) {
     return function(data) {
         if ((typeof data === 'object' &&  Array.isArray(data) === false ) || !data) {
             let instance = new Class(data);

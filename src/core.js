@@ -1,4 +1,5 @@
 import { ObservableModel, ObservableCollection } from './observable/observable';
+import * as Decorators from './decorators';
 import { Register } from './register';
 import { Component } from './component/component';
 import { RouteSwitcher } from './router/router-switcher';
@@ -12,6 +13,7 @@ import { Store } from './store.js';
 
 export {
     ObservableModel, ObservableCollection,
+    Decorators,
     Register,
     Component,
     Router,

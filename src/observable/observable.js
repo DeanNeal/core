@@ -1,4 +1,4 @@
-import { ifObject, ifArray } from '../decorators';
+import { IfObject, IfArray } from '../decorators';
 
 export class Observable {
     constructor(options) {
@@ -88,7 +88,7 @@ export class Observable {
 
 
 
-@ifObject
+@IfObject
 export class ObservableModel extends Observable {
     constructor(options) {
         super(options);
@@ -97,7 +97,7 @@ export class ObservableModel extends Observable {
 }
 
 
-@ifArray
+@IfArray
 export class ObservableCollection extends Observable {
     constructor(options) {
         super(options);

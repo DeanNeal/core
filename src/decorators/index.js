@@ -1,7 +1,9 @@
-import ifObject from './ifObject';
-import ifArray from './ifArray';
+import IfObject from './ifObject';
+import IfArray from './ifArray';
+import ComponentDecorator from './component';
 
 export {
-    ifObject,
-    ifArray
+    IfObject,
+    IfArray,
+    ComponentDecorator
 }

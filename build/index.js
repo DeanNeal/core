@@ -2,7 +2,7 @@
  * ace-js 0.1.15
  * May be freely distributed under the MIT license 
  * Author: Bogdan Zinkevich
- * Last update: 2017-9-19 21:07:26
+ * Last update: 2017-9-21 10:27:26
  * 
  */
 (function webpackUniversalModuleDefinition(root, factory) {
@@ -82,7 +82,7 @@ return /******/ (function(modules) { // webpackBootstrap
 /******/ 	}
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "7e2ce43db2c3e068816a"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "c5b44510a531608f1df8"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
 /******/ 	
@@ -617,42 +617,47 @@ return /******/ (function(modules) { // webpackBootstrap
 	Object.defineProperty(exports, "__esModule", {
 	    value: true
 	});
-	exports.Store = exports.Http = exports.Plugins = exports.Utils = exports.GlobalEvents = exports.TemplateEngine = exports.RouteSwitcher = exports.Router = exports.Component = exports.Register = exports.ObservableCollection = exports.ObservableModel = undefined;
+	exports.Store = exports.Http = exports.Plugins = exports.Utils = exports.GlobalEvents = exports.TemplateEngine = exports.RouteSwitcher = exports.Router = exports.Component = exports.Register = exports.Decorators = exports.ObservableCollection = exports.ObservableModel = undefined;
 
 	var _observable = __webpack_require__(7);
 
-	var _register = __webpack_require__(11);
+	var _decorators = __webpack_require__(8);
 
-	var _component = __webpack_require__(14);
+	var Decorators = _interopRequireWildcard(_decorators);
 
-	var _routerSwitcher = __webpack_require__(12);
+	var _register = __webpack_require__(32);
 
-	var _routerCore = __webpack_require__(13);
+	var _component = __webpack_require__(35);
+
+	var _routerSwitcher = __webpack_require__(33);
+
+	var _routerCore = __webpack_require__(34);
 
 	var _routerCore2 = _interopRequireDefault(_routerCore);
 
-	var _templateEngine = __webpack_require__(35);
+	var _templateEngine = __webpack_require__(36);
 
-	var _globalEvents = __webpack_require__(36);
+	var _globalEvents = __webpack_require__(37);
 
 	var _globalEvents2 = _interopRequireDefault(_globalEvents);
 
-	var _utils = __webpack_require__(37);
+	var _utils = __webpack_require__(38);
 
-	var _plugins = __webpack_require__(38);
+	var _plugins = __webpack_require__(39);
 
 	var Plugins = _interopRequireWildcard(_plugins);
 
-	var _http = __webpack_require__(40);
+	var _http = __webpack_require__(41);
 
-	var _store = __webpack_require__(41);
-
-	function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
+	var _store = __webpack_require__(42);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+	function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
+
 	exports.ObservableModel = _observable.ObservableModel;
 	exports.ObservableCollection = _observable.ObservableCollection;
+	exports.Decorators = Decorators;
 	exports.Register = _register.Register;
 	exports.Component = _component.Component;
 	exports.Router = _routerCore2.default;
@@ -802,7 +807,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    return Observable;
 	}();
 
-	var ObservableModel = exports.ObservableModel = (0, _decorators.ifObject)(_class = function (_Observable) {
+	var ObservableModel = exports.ObservableModel = (0, _decorators.IfObject)(_class = function (_Observable) {
 	    _inherits(ObservableModel, _Observable);
 
 	    function ObservableModel(options) {
@@ -817,7 +822,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    return ObservableModel;
 	}(Observable)) || _class;
 
-	var ObservableCollection = exports.ObservableCollection = (0, _decorators.ifArray)(_class2 = function (_Observable2) {
+	var ObservableCollection = exports.ObservableCollection = (0, _decorators.IfArray)(_class2 = function (_Observable2) {
 	    _inherits(ObservableCollection, _Observable2);
 
 	    function ObservableCollection(options) {
@@ -876,7 +881,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	Object.defineProperty(exports, "__esModule", {
 	    value: true
 	});
-	exports.ifArray = exports.ifObject = undefined;
+	exports.ComponentDecorator = exports.IfArray = exports.IfObject = undefined;
 
 	var _ifObject = __webpack_require__(9);
 
@@ -886,10 +891,15 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var _ifArray2 = _interopRequireDefault(_ifArray);
 
+	var _component = __webpack_require__(11);
+
+	var _component2 = _interopRequireDefault(_component);
+
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-	exports.ifObject = _ifObject2.default;
-	exports.ifArray = _ifArray2.default;
+	exports.IfObject = _ifObject2.default;
+	exports.IfArray = _ifArray2.default;
+	exports.ComponentDecorator = _component2.default;
 
 /***/ }),
 /* 9 */
@@ -903,8 +913,8 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
 
-	exports.default = ifObject;
-	function ifObject(Class) {
+	exports.default = IfObject;
+	function IfObject(Class) {
 	    return function (data) {
 	        if ((typeof data === 'undefined' ? 'undefined' : _typeof(data)) === 'object' && Array.isArray(data) === false || !data) {
 	            var instance = new Class(data);
@@ -925,8 +935,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	Object.defineProperty(exports, "__esModule", {
 	    value: true
 	});
-	exports.default = ifArray;
-	function ifArray(Class) {
+	exports.default = IfArray;
+	function IfArray(Class) {
 	    return function (data) {
 	        if (Array.isArray(data) || !data) {
 	            var instance = new Class(data);
@@ -947,12 +957,1015 @@ return /******/ (function(modules) { // webpackBootstrap
 	Object.defineProperty(exports, "__esModule", {
 	    value: true
 	});
+	exports.default = ComponentDecorator;
+
+	var _core = __webpack_require__(6);
+
+	var _private = __webpack_require__(12);
+
+	var _directives = __webpack_require__(13);
+
+	var _events = __webpack_require__(14);
+
+	var _Directives = __webpack_require__(15);
+
+	function ComponentDecorator(decoratorParams) {
+	    return function decorator(Class) {
+	        return function (args) {
+
+	            Class.prototype = Object.setPrototypeOf(Class.prototype, _core.Component.prototype);
+	            var instance = new Class(args);
+
+	            instance.tpl = decoratorParams.template || 'Empty template';
+	            // this.styles = custom.styles;
+	            instance.shadow = decoratorParams.shadow || false;
+	            instance.type = decoratorParams.type;
+
+	            instance.props = new _core.ObservableModel(args.props);
+	            instance.root = null;
+
+	            _core.Component.setPrivates.call(instance, {});
+
+	            instance.ui = {};
+	            // console.log(options.ce.attributes);
+	            if (args.ce.getAttribute('ac-for')) {
+	                // console.warn('Foor loop is detected!')
+	            } else {
+	                args.ce ? _core.Component.render.call(instance, args.ce) : console.warn('Component data is expected. See your component constructor!');
+	                instance.props.sub(function (r) {
+	                    _Directives.Directives._for.call(instance, _private.PRIVATES.DIRECTIVES['ac-for'].get(instance));
+	                    _Directives.Directives._props.call(instance, _private.PRIVATES.DIRECTIVES['ac-value'].get(instance));
+	                    _Directives.Directives._input.call(instance, _private.PRIVATES.DIRECTIVES['ac-input'].get(instance));
+	                    _Directives.Directives._props.call(instance, _private.PRIVATES.DIRECTIVES['ac-model'].get(instance));
+	                    _Directives.Directives._style.call(instance, _private.PRIVATES.DIRECTIVES['ac-style'].get(instance));
+	                    _Directives.Directives._if.call(instance, _private.PRIVATES.DIRECTIVES['ac-if'].get(instance));
+	                    _Directives.Directives._class.call(instance, _private.PRIVATES.DIRECTIVES['ac-class'].get(instance));
+	                    _Directives.Directives._attr.call(instance, _private.PRIVATES.DIRECTIVES['ac-attr'].get(instance));
+	                    _Directives.Directives._link.call(instance, _private.PRIVATES.DIRECTIVES['ac-link'].get(instance));
+	                    _Directives.Directives._hostClasses.call(instance, _private.PRIVATES.HOST.CLASS.get(instance));
+	                    _Directives.Directives._hostStyles.call(instance, _private.PRIVATES.HOST.STYLE.get(instance));
+	                    instance.onUpdate();
+	                });
+	            }
+
+	            return instance;
+	        };
+	    };
+	}
+
+/***/ }),
+/* 12 */
+/***/ (function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	exports.PRIVATES = undefined;
+
+	var _directives = __webpack_require__(13);
+
+	var PRIVATES = {
+	    DIRECTIVES: {},
+	    EVENTS: new WeakMap(),
+	    SUBSCRIPTIONS: new WeakMap(),
+	    GLOBAL_EVENTS: new WeakMap(),
+	    HOST: {
+	        CLASS: new WeakMap(),
+	        STYLE: new WeakMap(),
+	        EVENTS: new WeakMap()
+	    }
+	}; // import { EVENTS } from './const/events';
+
+
+	_directives.DIRECTIVES_NAMES.forEach(function (directive) {
+	    PRIVATES.DIRECTIVES[directive] = new WeakMap();
+	});
+
+	exports.PRIVATES = PRIVATES;
+
+/***/ }),
+/* 13 */
+/***/ (function(module, exports) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	var DIRECTIVES_NAMES = exports.DIRECTIVES_NAMES = ['ac-for', 'ac-style', 'ac-value', 'ac-input', 'ac-model', 'ac-if', 'ac-class', 'ac-link', 'ac-attr', 'ac-on', 'ac-pattern', 'ac-outside', 'ac-ref'];
+
+/***/ }),
+/* 14 */
+/***/ (function(module, exports) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	var EVENTS_NAMES = exports.EVENTS_NAMES = ['click', 'keyup', 'change', 'mouseover', 'mouseout', 'mousedown', 'mouseup', 'scroll', 'mousewheel', 'submit', 'focus', 'blur', 'dragstart'];
+
+/***/ }),
+/* 15 */
+/***/ (function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	exports.Directives = undefined;
+
+	var _style2 = __webpack_require__(16);
+
+	var _props2 = __webpack_require__(17);
+
+	var _pattern2 = __webpack_require__(18);
+
+	var _if2 = __webpack_require__(19);
+
+	var _class2 = __webpack_require__(20);
+
+	var _elRef2 = __webpack_require__(21);
+
+	var _for2 = __webpack_require__(22);
+
+	var _model2 = __webpack_require__(25);
+
+	var _attr2 = __webpack_require__(26);
+
+	var _input2 = __webpack_require__(27);
+
+	var _link2 = __webpack_require__(28);
+
+	var _event = __webpack_require__(24);
+
+	var _outside2 = __webpack_require__(29);
+
+	var _on2 = __webpack_require__(30);
+
+	var _init2 = __webpack_require__(23);
+
+	var _host = __webpack_require__(31);
+
+	var Directives = {
+	    _style: _style2._style,
+	    _props: _props2._props,
+	    _pattern: _pattern2._pattern,
+	    _if: _if2._if,
+	    _class: _class2._class,
+	    _elRef: _elRef2._elRef,
+	    _for: _for2._for,
+	    _model: _model2._model,
+	    _attr: _attr2._attr,
+	    _input: _input2._input,
+	    _link: _link2._link,
+	    setActiveLink: _link2.setActiveLink,
+	    _events: _event._events,
+	    eventUnitCore: _event.eventUnitCore,
+	    removeEventListeners: _event.removeEventListeners,
+	    _outside: _outside2._outside,
+	    _on: _on2._on,
+	    _init: _init2._init,
+	    _initEvent: _init2._initEvent,
+	    _hostEvents: _host._hostEvents,
+	    _hostClasses: _host._hostClasses,
+	    _hostStyles: _host._hostStyles
+	};
+
+	exports.Directives = Directives;
+
+/***/ }),
+/* 16 */
+/***/ (function(module, exports) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	exports._style = _style;
+	function _style(array, data) {
+	    var _this = this;
+
+	    array.forEach(function (item) {
+	        var array = item.attr.split(',');
+
+	        // for objects
+	        // let a=  new Function('return ' + array).apply(this.props._data);
+	        // for(let key in a){
+	        //     item.elem.style[key] = a[key];
+	        // }
+
+	        array.forEach(function (prop) {
+	            var minus = false;
+	            var params = prop.replace(/ +/g, "").split(':');
+	            var styleName = params[0];
+	            if (params[1][0] === '-') {
+	                params[1] = params[1].substr(1);
+	                minus = true;
+	            }
+	            var variable = params[1].split('.');
+	            var r = _this.getComponentVariable(variable, data);
+	            r = minus ? '-' + r : r;
+	            r ? item.elem.style[styleName] = r : item.elem.style[styleName] = '';
+	        });
+	    });
+	}
+
+/***/ }),
+/* 17 */
+/***/ (function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	exports._props = _props;
+
+	var _core = __webpack_require__(6);
+
+	function _props(array, data) {
+	    var _this = this;
+
+	    array.forEach(function (item) {
+	        var params = item.attr.split('.');
+	        var r = _this.getComponentVariable(params, data);
+
+	        if (_core.Utils.isCustomElement(item.elem)) {
+	            return;
+	        }
+	        //TODO rewrite with switch
+	        if (item.elem.localName === 'input') {
+	            if (item.elem.type === 'checkbox') r ? item.elem.setAttribute('checked', true) : item.elem.removeAttribute('checked');
+	            if (item.elem.type === 'radio') {
+	                item.elem.value === r ? item.elem.setAttribute('checked', true) : item.elem.removeAttribute('selected');
+	            }
+	            if (item.elem.type === 'text' || item.elem.type === 'email' || item.elem.type === 'password') item.elem.value = r;
+	        } else {
+	            item.elem.innerHTML = r;
+	        }
+	    });
+	}
+
+/***/ }),
+/* 18 */
+/***/ (function(module, exports) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	exports._pattern = _pattern;
+	function _pattern(array) {
+	    array.forEach(function (item) {
+	        var attr = item.attr.split(':');
+	        var pattern = new RegExp(attr[0], 'gi');
+
+	        item.elem.addEventListener('keyup', function (e) {
+	            var value = e.target.value;
+
+	            if (value.match(pattern)) {
+	                item.elem.style.borderColor = '';
+	                item.elem.setCustomValidity('');
+	            } else {
+	                item.elem.style.borderColor = '#ff6666';
+	                item.elem.setCustomValidity(attr[1]);
+	            }
+	        }, false);
+	    });
+	}
+
+/***/ }),
+/* 19 */
+/***/ (function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	exports._if = _if;
+
+	var _core = __webpack_require__(6);
+
+	function _if(array, data) {
+	    var _this = this;
+
+	    array.forEach(function (item) {
+	        var attr = item.attr;
+	        var conditions = attr.replace(/ +/g, "").split('&&');
+
+	        conditions = conditions.map(function (res) {
+	            var reverse = false;
+	            // let a = eval('this.' + attr);
+	            if (res[0] === '!') {
+	                res = res.substring(1);
+	                reverse = true;
+	            }
+
+	            if (res.indexOf('==') > -1 || res.indexOf('===') > -1) {
+	                var equality = res.indexOf('===') > -1 ? res.replace(/ +/g, "").split('===') : res.replace(/ +/g, "").split('==');
+	                var _r = _this.getComponentVariable(equality[0].split('.'), data);
+
+	                return !!equality[1];
+	            }
+
+	            var params = res.split('.');
+	            var r = _this.getComponentVariable(params, data);
+	            r = reverse ? !r : r;
+
+	            return !!r;
+	        });
+
+	        if (conditions.filter(function (item) {
+	            return item;
+	        }).length === conditions.length) {
+	            if (!item.elem.parentNode) {
+	                // insert only if elem doesn't exists
+	                _core.Utils.insertAfter(item.cached, item.comment);
+	            }
+	        } else {
+	            item.elem.remove();
+	        }
+	    });
+	}
+
+/***/ }),
+/* 20 */
+/***/ (function(module, exports) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	exports._class = _class;
+	function _class(array, data) {
+	    var _this = this;
+
+	    array.forEach(function (item) {
+	        var array = item.attr.split(',');
+
+	        var root = item.elem;
+	        array.forEach(function (prop) {
+	            if (prop[0] !== '@') {
+	                var reverse = false;
+	                var params = prop.replace(/ +/g, "").split(':');
+	                if (params[1][0] === '!') {
+	                    params[1] = params[1].substring(1);
+	                    reverse = true;
+	                }
+	                var className = params[0];
+	                var variable = params[1].split('.');
+	                var r = _this.getComponentVariable(variable, data);
+	                r = reverse ? !r : r;
+	                r ? root.classList.add(className) : root.classList.remove(className);
+	            } else {
+	                var _params = prop.split('@');
+	                var _variable = _params[1].split('.');
+	                var _r = _this.getComponentVariable(_variable, data);
+
+	                //remove previous class
+
+	                if (item.prev) {
+	                    root.classList.remove(item.prev);
+	                }
+	                item.prev = _r;
+
+	                root.classList.add(_r);
+	            }
+	        });
+	    });
+	}
+
+/***/ }),
+/* 21 */
+/***/ (function(module, exports) {
+
+	"use strict";
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	exports._elRef = _elRef;
+	function _elRef(array) {
+	    var _this = this;
+
+	    array.forEach(function (item) {
+	        var attr = item.attr;
+	        _this.ui[attr] = item.elem;
+	    });
+	}
+
+/***/ }),
+/* 22 */
+/***/ (function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	exports._for = _for;
+
+	var _core = __webpack_require__(6);
+
+	var _index = __webpack_require__(15);
+
+	var _init2 = __webpack_require__(23);
+
+	var _events = __webpack_require__(14);
+
+	function _for(array, data) {
+	    var _this = this;
+
+	    if (array.length) {
+	        //console.log(this); //console.time('modules')
+	        array.forEach(function (item) {
+	            var compName = item.elem.localName;
+
+	            array = _this.getComponentVariable(item.attr.split('.'), data) || [];
+
+	            if (!_core.Utils.isCustomElement(item.elem)) {
+	                item.items.forEach(function (item) {
+	                    item.remove();
+	                });
+	                item.items = [];
+	                for (var i = 0; i <= array.length - 1; i++) {
+	                    var prevContent = item.elem.cloneNode(true);
+
+	                    // loop through the old element's attributes and give them to the new element
+	                    for (var _i = 0; _i < item.elem.attributes.length; _i++) {
+	                        prevContent.setAttribute(item.elem.attributes[_i].nodeName, item.elem.attributes[_i].nodeValue);
+	                    }
+
+	                    item.items.push(prevContent);
+	                    item.parent.insertBefore(prevContent, item.comment);
+
+	                    forAttachForLoop.call(_this, prevContent, array[i]);
+	                    bindClassForLoop.call(_this, prevContent, array[i]);
+	                    styleUnitForLoop.call(_this, prevContent, array[i]);
+	                    bindIfForLoop.call(_this, prevContent, array[i]);
+	                    bindPropsToViewForLoop.call(_this, prevContent, array[i]);
+	                    bindAttrsForLoop.call(_this, prevContent, array[i]);
+	                    addLinksRefsForLoop.call(_this, prevContent, array[i]);
+
+	                    eventsForLoop.call(_this, prevContent, array[i]);
+	                }
+	                return;
+	            }
+
+	            if (item.cached.length !== array.length) {
+	                item.items.forEach(function (item) {
+	                    item.remove();
+	                });
+	                item.items = [];
+	                for (var _i2 = 0; _i2 <= array.length - 1; _i2++) {
+	                    window.temporaryObj = Object.assign({}, array[_i2]);
+	                    var newEl = document.createElement(compName);
+
+	                    // loop through the old element's attributes and give them to the new element
+	                    for (var _i3 = 0; _i3 < item.elem.attributes.length; _i3++) {
+	                        newEl.setAttribute(item.elem.attributes[_i3].nodeName, item.elem.attributes[_i3].nodeValue);
+	                    }
+	                    item.items.push(newEl);
+	                    item.parent.insertBefore(newEl, item.comment);
+	                }
+	            }
+
+	            item.items.forEach(function (elem, i) {
+	                if (JSON.stringify(item.cached[i]) !== JSON.stringify(array[i])) {
+	                    if (!elem.COMPONENT) {
+	                        console.warn('Please create component with name ' + compName);
+	                        return;
+	                    }
+	                    elem.COMPONENT.props.set(array[i]);
+	                }
+	            });
+
+	            item.cached = JSON.parse(JSON.stringify(array));
+	        }); //console.timeEnd('modules')
+	    }
+	}
+
+	function eventsForLoop(root, context) {
+	    var _this2 = this;
+
+	    var array = [];
+
+	    _events.EVENTS_NAMES.forEach(function (directive) {
+	        array.push(_index.Directives._initEvent.call(_this2, root, directive, [], context));
+	    });
+
+	    array = array.reduce(function (a, b) {
+	        return a.concat(b);
+	    }, []);
+	    _index.Directives._events.call(this, array);
+	}
+
+	function addLinksRefsForLoop(root, data) {
+	    var array = _index.Directives._init.call(this, root, 'ac-link');
+	    _index.Directives._link.call(this, array, data);
+	}
+
+	function bindAttrsForLoop(root, data) {
+	    var array = _index.Directives._init.call(this, root, 'ac-attr');
+	    _index.Directives._attr.call(this, array, data);
+	}
+
+	function bindIfForLoop(root, data) {
+	    var array = _index.Directives._init(root, 'ac-if');
+	    _index.Directives._if.call(this, array, data);
+	}
+
+	function forAttachForLoop(root, data) {
+	    var array = _index.Directives._init.call(this, root, 'ac-for');
+	    _index.Directives._for.call(this, array, data);
+	}
+
+	function bindPropsToViewForLoop(root, data) {
+	    var array = _index.Directives._init.call(this, root, 'ac-value');
+	    _index.Directives._props.call(this, array, data);
+	}
+
+	function styleUnitForLoop(root, data) {
+	    var array = _index.Directives._init.call(this, root, 'ac-style');
+	    _index.Directives._style.call(this, array, data);
+	}
+
+	function bindClassForLoop(root, data) {
+	    var array = _index.Directives._init.call(this, root, 'ac-class');
+	    _index.Directives._class.call(this, array, data);
+	}
+
+/***/ }),
+/* 23 */
+/***/ (function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	exports._init = _init;
+	exports._initEvent = _initEvent;
+
+	var _private = __webpack_require__(12);
+
+	var _core = __webpack_require__(6);
+
+	var _event = __webpack_require__(24);
+
+	function _init(root, directive, newArray) {
+	    var array = newArray || [];
+
+	    var attr = root.getAttribute(directive);
+	    if (attr && !_core.Utils.isCustomElement(root)) {
+	        // only for loops
+	        var obj = {
+	            elem: root,
+	            attr: attr,
+	            items: [],
+	            parent: root.parentNode,
+	            cached: root
+	        };
+
+	        array.get ? array.get(this).push(obj) : array.push(obj);
+	        root.removeAttribute(directive);
+	        if (directive === 'ac-for') elem.remove();
+	    }
+
+	    var _iteratorNormalCompletion = true;
+	    var _didIteratorError = false;
+	    var _iteratorError = undefined;
+
+	    try {
+	        for (var _iterator = root.querySelectorAll('[' + directive + ']')[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
+	            var _elem = _step.value;
+
+	            var _attr = _elem.getAttribute(directive);
+
+	            // exclude inner loops
+	            if (directive === 'ac-for' && _elem.querySelectorAll('[ac-for]').length) {
+	                var _iteratorNormalCompletion2 = true;
+	                var _didIteratorError2 = false;
+	                var _iteratorError2 = undefined;
+
+	                try {
+	                    for (var _iterator2 = _elem.querySelectorAll('[ac-for]')[Symbol.iterator](), _step2; !(_iteratorNormalCompletion2 = (_step2 = _iterator2.next()).done); _iteratorNormalCompletion2 = true) {
+	                        var innerElem = _step2.value;
+
+	                        innerElem.setAttribute('ac-inner-loop', true);
+	                    }
+	                } catch (err) {
+	                    _didIteratorError2 = true;
+	                    _iteratorError2 = err;
+	                } finally {
+	                    try {
+	                        if (!_iteratorNormalCompletion2 && _iterator2.return) {
+	                            _iterator2.return();
+	                        }
+	                    } finally {
+	                        if (_didIteratorError2) {
+	                            throw _iteratorError2;
+	                        }
+	                    }
+	                }
+	            }
+
+	            if (directive === 'ac-for' && _elem.getAttribute('ac-inner-loop')) {
+	                _elem.removeAttribute('ac-inner-loop');
+	                return;
+	            }
+
+	            var _obj = {
+	                elem: _elem,
+	                attr: _attr,
+	                comment: _core.Utils.insertAfter(document.createComment(directive + ': ' + _attr), _elem),
+	                items: [],
+	                parent: _elem.parentNode,
+	                cached: _elem
+	            };
+	            array.get ? array.get(this).push(_obj) : array.push(_obj);
+	            _elem.removeAttribute(directive);
+	            if (directive === 'ac-for') _elem.remove();
+	        }
+	    } catch (err) {
+	        _didIteratorError = true;
+	        _iteratorError = err;
+	    } finally {
+	        try {
+	            if (!_iteratorNormalCompletion && _iterator.return) {
+	                _iterator.return();
+	            }
+	        } finally {
+	            if (_didIteratorError) {
+	                throw _iteratorError;
+	            }
+	        }
+	    }
+
+	    return array;
+	}
+
+	function _initEvent(root, directive, newArray, context) {
+	    var array = newArray || [];
+	    var targets = root.querySelectorAll('[ac-' + directive + ']');
+	    if (root.getAttribute('ac-' + directive)) {
+	        var obj = _event.createEventObject.call(this, root, directive, context);
+	        array.get ? array.get(this).push(obj) : array.push(obj);
+	    }
+
+	    var _iteratorNormalCompletion3 = true;
+	    var _didIteratorError3 = false;
+	    var _iteratorError3 = undefined;
+
+	    try {
+	        for (var _iterator3 = targets[Symbol.iterator](), _step3; !(_iteratorNormalCompletion3 = (_step3 = _iterator3.next()).done); _iteratorNormalCompletion3 = true) {
+	            var _elem2 = _step3.value;
+
+	            var _obj2 = _event.createEventObject.call(this, _elem2, directive, context);
+	            array.get ? array.get(this).push(_obj2) : array.push(_obj2);
+	        }
+	    } catch (err) {
+	        _didIteratorError3 = true;
+	        _iteratorError3 = err;
+	    } finally {
+	        try {
+	            if (!_iteratorNormalCompletion3 && _iterator3.return) {
+	                _iterator3.return();
+	            }
+	        } finally {
+	            if (_didIteratorError3) {
+	                throw _iteratorError3;
+	            }
+	        }
+	    }
+
+	    return array;
+	}
+
+/***/ }),
+/* 24 */
+/***/ (function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	exports._events = _events;
+	exports.removeEventListeners = removeEventListeners;
+	exports.createEventObject = createEventObject;
+
+	var _private = __webpack_require__(12);
+
+	function _events(array) {
+	    array.forEach(function (newEvent) {
+	        newEvent.el.addEventListener(newEvent.event.toLowerCase(), newEvent.f, false);
+	    });
+	}
+
+	function removeEventListeners(array) {
+	    array.forEach(function (eventItem, i) {
+	        eventItem.el.removeEventListener(eventItem.event, eventItem.f, false);
+	    });
+	}
+
+	function createEventObject(elem, event, context) {
+	    var _this = this;
+
+	    var funcParams = elem.getAttribute('ac-' + event);
+	    elem.removeAttribute('ac-' + event);
+	    var params = funcParams.replace(/ +/g, "").split(':');
+	    var fnName = params[0];
+	    var newEvent = {
+	        fnName: fnName,
+	        event: event,
+	        el: elem,
+	        f: function f(e) {
+	            var regExp = /\(([^)]+)\)/;
+	            var fnParams = regExp.exec(fnName); // get value between brackets
+	            var args = [];
+	            var functionName = fnName.replace(regExp, ''); // remove everything between brackets
+
+	            if (fnParams) {
+	                fnParams[1].replace(/ +/g, "").split(',').forEach(function (res) {
+	                    var arg = new Function('return ' + res).apply(context || _this);
+	                    args.push(arg);
+	                });
+	            }
+
+	            if (_this[functionName]) {
+	                var _functionName;
+
+	                (_functionName = _this[functionName]).call.apply(_functionName, [_this, e].concat(args));
+	            } else {
+	                console.warn('You have no function in your component');
+	            }
+	        }
+	    };
+
+	    return newEvent;
+	}
+
+/***/ }),
+/* 25 */
+/***/ (function(module, exports) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	exports._model = _model;
+	function _model(array) {
+	    var _this = this;
+
+	    array.forEach(function (item) {
+	        var params = item.attr.split('.');
+
+	        item.elem.addEventListener('keyup', function (e) {
+	            var value = e.currentTarget.value;
+	            _this.props.set(params[params.length - 1], value);
+	        }, false);
+
+	        if (item.elem.type === 'checkbox' || item.elem.type === 'radio') {
+	            item.elem.addEventListener('change', function (e) {
+	                var params = item.attr.split('.');
+	                var last = params[params.length - 1];
+	                params.splice(-1, 1);
+	                var r = params.reduce(function (o, i) {
+	                    return o[i];
+	                }, _this);
+	                r[last] = item.elem.type === 'radio' ? e.currentTarget.value : e.currentTarget.checked;
+	                _this.props._callAll();
+	            }, false);
+	        }
+
+	        item.elem.addEventListener('modelChange', function (e) {
+	            _this.props.set(params[params.length - 1], e.detail);
+	        }, false);
+	    });
+	}
+
+/***/ }),
+/* 26 */
+/***/ (function(module, exports) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	exports._attr = _attr;
+	function _attr(array, data) {
+	    var _this = this;
+
+	    array.forEach(function (item) {
+	        var array = item.attr.split(',');
+
+	        array.forEach(function (prop) {
+	            var params = prop.replace(/ +/g, "").split(':');
+	            var attrName = params[0];
+	            var variable = params[1].split('.');
+	            var r = _this.getComponentVariable(variable, data);
+
+	            r ? item.elem.setAttribute(attrName, r) : item.elem.removeAttribute(attrName);
+	        });
+	    });
+	}
+
+/***/ }),
+/* 27 */
+/***/ (function(module, exports) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	exports._input = _input;
+	function _input(array) {
+	    var _this = this;
+
+	    array.forEach(function (item) {
+
+	        var array = item.attr.replace(/ +/g, "").split(',');
+	        var inputParams = {};
+	        array.forEach(function (item) {
+	            var variable = item.split(':')[0];
+	            var params = item.split(':')[1].split('.');
+	            inputParams[variable] = _this.getComponentVariable(params);
+	        });
+	        item.elem.COMPONENT.INPUT(inputParams);
+	    });
+	}
+
+/***/ }),
+/* 28 */
+/***/ (function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	exports._link = _link;
+
+	var _core = __webpack_require__(6);
+
+	function _link(array, data) {
+	    var _this = this;
+
+	    array.forEach(function (item) {
+	        item.elem.removeEventListener('click', item.callback, false); // remove previous handler
+
+	        var route = (0, _core.TemplateEngine)(item.attr, data || _this);
+	        item.callback = function (e) {
+	            e.preventDefault();
+	            _core.Router.navigate(route);
+	        };
+
+	        item.elem.addEventListener('click', item.callback, false);
+	        item.elem.setAttribute('href', route || '/');
+	    });
+	}
+
+/***/ }),
+/* 29 */
+/***/ (function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	exports._outside = _outside;
+
+	var _private = __webpack_require__(12);
+
+	var _core = __webpack_require__(6);
+
+	function _outside(array) {
+	    var _this = this;
+
+	    array.forEach(function (item) {
+	        var attr = item.attr;
+
+	        _private.PRIVATES.GLOBAL_EVENTS.set(_this, _core.GlobalEvents.onClick(function (e) {
+	            var ouside = _this.shadow ? item.elem.contains(e.path[0]) : item.elem.contains(e.target);
+	            if (!ouside) {
+	                _this[attr].call(_this, e);
+	            }
+	        }, item));
+	    });
+	}
+
+/***/ }),
+/* 30 */
+/***/ (function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	exports._on = _on;
+
+	var _core = __webpack_require__(6);
+
+	function _on(array) {
+	    var _this = this;
+
+	    array.forEach(function (item) {
+	        var listeners = item.attr;
+	        listeners = listeners.replace(/ +/g, "").split(',');
+
+	        if (listeners.length) {
+	            listeners.forEach(function (listener) {
+	                var eventName = listener.split(':')[0];
+	                var fn = _this[listener.split(':')[1]];
+	                on.call(_this, eventName, fn);
+	            });
+	        }
+	    });
+	}
+
+	function on(event, f) {
+	    var _this2 = this;
+
+	    this.root.addEventListener(event, function (e) {
+	        e.stopPropagation(); // to prevent further propagation
+	        f.call(_this2, e, e.detail);
+	    });
+	}
+
+/***/ }),
+/* 31 */
+/***/ (function(module, exports) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	exports._hostEvents = _hostEvents;
+	exports._hostClasses = _hostClasses;
+	exports._hostStyles = _hostStyles;
+	function _hostEvents(events) {
+	    for (var event in events) {
+	        var fn = this[events[event]].bind(this);
+	        this.root.addEventListener(event, fn, false);
+	    }
+	}
+
+	function _hostClasses(hostClasses) {
+	    for (var className in hostClasses) {
+	        var attr = hostClasses[className];
+	        var reverse = false;
+	        if (attr[0] === '!') {
+	            attr = attr.substr(1);
+	            reverse = true;
+	        }
+
+	        var r = this.getComponentVariable(attr.split('.'));
+	        r = reverse ? !r : r;
+	        r ? this.root.classList.add(className) : this.root.classList.remove(className);
+	    }
+	}
+
+	function _hostStyles(hostStyles) {
+	    for (var styleName in hostStyles) {
+	        if (typeof hostStyles[styleName].value === 'string') {
+	            var r = this.getComponentVariable(hostStyles[styleName].value.split('.'));
+	            this.root.style[styleName] = r + hostStyles[styleName].suffix;
+	        } else {
+	            this.root.style[styleName] = hostStyles[styleName].value + hostStyles[styleName].preffix;
+	        }
+	    }
+	}
+
+/***/ }),
+/* 32 */
+/***/ (function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
 	exports.Register = Register;
 	exports.RegisterElement = RegisterElement;
 
 	var _core = __webpack_require__(6);
 
-	var _routerSwitcher = __webpack_require__(12);
+	var _routerSwitcher = __webpack_require__(33);
 
 	function Register(options) {
 	    // console.time('modules')
@@ -1049,7 +2062,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	}
 
 /***/ }),
-/* 12 */
+/* 33 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -1063,7 +2076,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	exports.RegisterRouteElement = RegisterRouteElement;
 
-	var _routerCore = __webpack_require__(13);
+	var _routerCore = __webpack_require__(34);
 
 	var _routerCore2 = _interopRequireDefault(_routerCore);
 
@@ -1154,7 +2167,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	}
 
 /***/ }),
-/* 13 */
+/* 34 */
 /***/ (function(module, exports) {
 
 	'use strict';
@@ -1301,7 +2314,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	exports.default = new Router();
 
 /***/ }),
-/* 14 */
+/* 35 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -1317,13 +2330,13 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var _core = __webpack_require__(6);
 
-	var _private = __webpack_require__(15);
+	var _private = __webpack_require__(12);
 
-	var _directives = __webpack_require__(16);
+	var _directives = __webpack_require__(13);
 
-	var _events = __webpack_require__(17);
+	var _events = __webpack_require__(14);
 
-	var _Directives = __webpack_require__(18);
+	var _Directives = __webpack_require__(15);
 
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
@@ -1336,7 +2349,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	        _classCallCheck(this, Component);
 
-	        this.tpl = custom.template || 'Empty template';
+	        this.tpl = this.tpl || custom.template || 'Empty template';
 	        // this.styles = custom.styles;
 	        this.shadow = custom.shadow || false;
 	        this.type = custom.type;
@@ -1566,945 +2579,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	}();
 
 /***/ }),
-/* 15 */
-/***/ (function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
-	    value: true
-	});
-	exports.PRIVATES = undefined;
-
-	var _directives = __webpack_require__(16);
-
-	var PRIVATES = {
-	    DIRECTIVES: {},
-	    EVENTS: new WeakMap(),
-	    SUBSCRIPTIONS: new WeakMap(),
-	    GLOBAL_EVENTS: new WeakMap(),
-	    HOST: {
-	        CLASS: new WeakMap(),
-	        STYLE: new WeakMap(),
-	        EVENTS: new WeakMap()
-	    }
-	}; // import { EVENTS } from './const/events';
-
-
-	_directives.DIRECTIVES_NAMES.forEach(function (directive) {
-	    PRIVATES.DIRECTIVES[directive] = new WeakMap();
-	});
-
-	exports.PRIVATES = PRIVATES;
-
-/***/ }),
-/* 16 */
-/***/ (function(module, exports) {
-
-	'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
-	    value: true
-	});
-	var DIRECTIVES_NAMES = exports.DIRECTIVES_NAMES = ['ac-for', 'ac-style', 'ac-value', 'ac-input', 'ac-model', 'ac-if', 'ac-class', 'ac-link', 'ac-attr', 'ac-on', 'ac-pattern', 'ac-outside', 'ac-ref'];
-
-/***/ }),
-/* 17 */
-/***/ (function(module, exports) {
-
-	'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-	var EVENTS_NAMES = exports.EVENTS_NAMES = ['click', 'keyup', 'change', 'mouseover', 'mouseout', 'mousedown', 'mouseup', 'scroll', 'mousewheel', 'submit', 'focus', 'blur', 'dragstart'];
-
-/***/ }),
-/* 18 */
-/***/ (function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
-	    value: true
-	});
-	exports.Directives = undefined;
-
-	var _style2 = __webpack_require__(19);
-
-	var _props2 = __webpack_require__(20);
-
-	var _pattern2 = __webpack_require__(21);
-
-	var _if2 = __webpack_require__(22);
-
-	var _class2 = __webpack_require__(23);
-
-	var _elRef2 = __webpack_require__(24);
-
-	var _for2 = __webpack_require__(25);
-
-	var _model2 = __webpack_require__(28);
-
-	var _attr2 = __webpack_require__(29);
-
-	var _input2 = __webpack_require__(30);
-
-	var _link2 = __webpack_require__(31);
-
-	var _event = __webpack_require__(27);
-
-	var _outside2 = __webpack_require__(32);
-
-	var _on2 = __webpack_require__(33);
-
-	var _init2 = __webpack_require__(26);
-
-	var _host = __webpack_require__(34);
-
-	var Directives = {
-	    _style: _style2._style,
-	    _props: _props2._props,
-	    _pattern: _pattern2._pattern,
-	    _if: _if2._if,
-	    _class: _class2._class,
-	    _elRef: _elRef2._elRef,
-	    _for: _for2._for,
-	    _model: _model2._model,
-	    _attr: _attr2._attr,
-	    _input: _input2._input,
-	    _link: _link2._link,
-	    setActiveLink: _link2.setActiveLink,
-	    _events: _event._events,
-	    eventUnitCore: _event.eventUnitCore,
-	    removeEventListeners: _event.removeEventListeners,
-	    _outside: _outside2._outside,
-	    _on: _on2._on,
-	    _init: _init2._init,
-	    _initEvent: _init2._initEvent,
-	    _hostEvents: _host._hostEvents,
-	    _hostClasses: _host._hostClasses,
-	    _hostStyles: _host._hostStyles
-	};
-
-	exports.Directives = Directives;
-
-/***/ }),
-/* 19 */
-/***/ (function(module, exports) {
-
-	'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
-	    value: true
-	});
-	exports._style = _style;
-	function _style(array, data) {
-	    var _this = this;
-
-	    array.forEach(function (item) {
-	        var array = item.attr.split(',');
-
-	        // for objects
-	        // let a=  new Function('return ' + array).apply(this.props._data);
-	        // for(let key in a){
-	        //     item.elem.style[key] = a[key];
-	        // }
-
-	        array.forEach(function (prop) {
-	            var minus = false;
-	            var params = prop.replace(/ +/g, "").split(':');
-	            var styleName = params[0];
-	            if (params[1][0] === '-') {
-	                params[1] = params[1].substr(1);
-	                minus = true;
-	            }
-	            var variable = params[1].split('.');
-	            var r = _this.getComponentVariable(variable, data);
-	            r = minus ? '-' + r : r;
-	            r ? item.elem.style[styleName] = r : item.elem.style[styleName] = '';
-	        });
-	    });
-	}
-
-/***/ }),
-/* 20 */
-/***/ (function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
-	    value: true
-	});
-	exports._props = _props;
-
-	var _core = __webpack_require__(6);
-
-	function _props(array, data) {
-	    var _this = this;
-
-	    array.forEach(function (item) {
-	        var params = item.attr.split('.');
-	        var r = _this.getComponentVariable(params, data);
-
-	        if (_core.Utils.isCustomElement(item.elem)) {
-	            return;
-	        }
-	        //TODO rewrite with switch
-	        if (item.elem.localName === 'input') {
-	            if (item.elem.type === 'checkbox') r ? item.elem.setAttribute('checked', true) : item.elem.removeAttribute('checked');
-	            if (item.elem.type === 'radio') {
-	                item.elem.value === r ? item.elem.setAttribute('checked', true) : item.elem.removeAttribute('selected');
-	            }
-	            if (item.elem.type === 'text' || item.elem.type === 'email' || item.elem.type === 'password') item.elem.value = r;
-	        } else {
-	            item.elem.innerHTML = r;
-	        }
-	    });
-	}
-
-/***/ }),
-/* 21 */
-/***/ (function(module, exports) {
-
-	'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
-	    value: true
-	});
-	exports._pattern = _pattern;
-	function _pattern(array) {
-	    array.forEach(function (item) {
-	        var attr = item.attr.split(':');
-	        var pattern = new RegExp(attr[0], 'gi');
-
-	        item.elem.addEventListener('keyup', function (e) {
-	            var value = e.target.value;
-
-	            if (value.match(pattern)) {
-	                item.elem.style.borderColor = '';
-	                item.elem.setCustomValidity('');
-	            } else {
-	                item.elem.style.borderColor = '#ff6666';
-	                item.elem.setCustomValidity(attr[1]);
-	            }
-	        }, false);
-	    });
-	}
-
-/***/ }),
-/* 22 */
-/***/ (function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
-	    value: true
-	});
-	exports._if = _if;
-
-	var _core = __webpack_require__(6);
-
-	function _if(array, data) {
-	    var _this = this;
-
-	    array.forEach(function (item) {
-	        var attr = item.attr;
-	        var conditions = attr.replace(/ +/g, "").split('&&');
-
-	        conditions = conditions.map(function (res) {
-	            var reverse = false;
-	            // let a = eval('this.' + attr);
-	            if (res[0] === '!') {
-	                res = res.substring(1);
-	                reverse = true;
-	            }
-
-	            if (res.indexOf('==') > -1 || res.indexOf('===') > -1) {
-	                var equality = res.indexOf('===') > -1 ? res.replace(/ +/g, "").split('===') : res.replace(/ +/g, "").split('==');
-	                var _r = _this.getComponentVariable(equality[0].split('.'), data);
-
-	                return !!equality[1];
-	            }
-
-	            var params = res.split('.');
-	            var r = _this.getComponentVariable(params, data);
-	            r = reverse ? !r : r;
-
-	            return !!r;
-	        });
-
-	        if (conditions.filter(function (item) {
-	            return item;
-	        }).length === conditions.length) {
-	            if (!item.elem.parentNode) {
-	                // insert only if elem doesn't exists
-	                _core.Utils.insertAfter(item.cached, item.comment);
-	            }
-	        } else {
-	            item.elem.remove();
-	        }
-	    });
-	}
-
-/***/ }),
-/* 23 */
-/***/ (function(module, exports) {
-
-	'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
-	    value: true
-	});
-	exports._class = _class;
-	function _class(array, data) {
-	    var _this = this;
-
-	    array.forEach(function (item) {
-	        var array = item.attr.split(',');
-
-	        var root = item.elem;
-	        array.forEach(function (prop) {
-	            if (prop[0] !== '@') {
-	                var reverse = false;
-	                var params = prop.replace(/ +/g, "").split(':');
-	                if (params[1][0] === '!') {
-	                    params[1] = params[1].substring(1);
-	                    reverse = true;
-	                }
-	                var className = params[0];
-	                var variable = params[1].split('.');
-	                var r = _this.getComponentVariable(variable, data);
-	                r = reverse ? !r : r;
-	                r ? root.classList.add(className) : root.classList.remove(className);
-	            } else {
-	                var _params = prop.split('@');
-	                var _variable = _params[1].split('.');
-	                var _r = _this.getComponentVariable(_variable, data);
-
-	                //remove previous class
-
-	                if (item.prev) {
-	                    root.classList.remove(item.prev);
-	                }
-	                item.prev = _r;
-
-	                root.classList.add(_r);
-	            }
-	        });
-	    });
-	}
-
-/***/ }),
-/* 24 */
-/***/ (function(module, exports) {
-
-	"use strict";
-
-	Object.defineProperty(exports, "__esModule", {
-	    value: true
-	});
-	exports._elRef = _elRef;
-	function _elRef(array) {
-	    var _this = this;
-
-	    array.forEach(function (item) {
-	        var attr = item.attr;
-	        _this.ui[attr] = item.elem;
-	    });
-	}
-
-/***/ }),
-/* 25 */
-/***/ (function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
-	    value: true
-	});
-	exports._for = _for;
-
-	var _core = __webpack_require__(6);
-
-	var _index = __webpack_require__(18);
-
-	var _init2 = __webpack_require__(26);
-
-	var _events = __webpack_require__(17);
-
-	function _for(array, data) {
-	    var _this = this;
-
-	    if (array.length) {
-	        //console.log(this); //console.time('modules')
-	        array.forEach(function (item) {
-	            var compName = item.elem.localName;
-
-	            array = _this.getComponentVariable(item.attr.split('.'), data) || [];
-
-	            if (!_core.Utils.isCustomElement(item.elem)) {
-	                item.items.forEach(function (item) {
-	                    item.remove();
-	                });
-	                item.items = [];
-	                for (var i = 0; i <= array.length - 1; i++) {
-	                    var prevContent = item.elem.cloneNode(true);
-
-	                    // loop through the old element's attributes and give them to the new element
-	                    for (var _i = 0; _i < item.elem.attributes.length; _i++) {
-	                        prevContent.setAttribute(item.elem.attributes[_i].nodeName, item.elem.attributes[_i].nodeValue);
-	                    }
-
-	                    item.items.push(prevContent);
-	                    item.parent.insertBefore(prevContent, item.comment);
-
-	                    forAttachForLoop.call(_this, prevContent, array[i]);
-	                    bindClassForLoop.call(_this, prevContent, array[i]);
-	                    styleUnitForLoop.call(_this, prevContent, array[i]);
-	                    bindIfForLoop.call(_this, prevContent, array[i]);
-	                    bindPropsToViewForLoop.call(_this, prevContent, array[i]);
-	                    bindAttrsForLoop.call(_this, prevContent, array[i]);
-	                    addLinksRefsForLoop.call(_this, prevContent, array[i]);
-
-	                    eventsForLoop.call(_this, prevContent, array[i]);
-	                }
-	                return;
-	            }
-
-	            if (item.cached.length !== array.length) {
-	                item.items.forEach(function (item) {
-	                    item.remove();
-	                });
-	                item.items = [];
-	                for (var _i2 = 0; _i2 <= array.length - 1; _i2++) {
-	                    window.temporaryObj = Object.assign({}, array[_i2]);
-	                    var newEl = document.createElement(compName);
-
-	                    // loop through the old element's attributes and give them to the new element
-	                    for (var _i3 = 0; _i3 < item.elem.attributes.length; _i3++) {
-	                        newEl.setAttribute(item.elem.attributes[_i3].nodeName, item.elem.attributes[_i3].nodeValue);
-	                    }
-	                    item.items.push(newEl);
-	                    item.parent.insertBefore(newEl, item.comment);
-	                }
-	            }
-
-	            item.items.forEach(function (elem, i) {
-	                if (JSON.stringify(item.cached[i]) !== JSON.stringify(array[i])) {
-	                    if (!elem.COMPONENT) {
-	                        console.warn('Please create component with name ' + compName);
-	                        return;
-	                    }
-	                    elem.COMPONENT.props.set(array[i]);
-	                }
-	            });
-
-	            item.cached = JSON.parse(JSON.stringify(array));
-	        }); //console.timeEnd('modules')
-	    }
-	}
-
-	function eventsForLoop(root, context) {
-	    var _this2 = this;
-
-	    var array = [];
-
-	    _events.EVENTS_NAMES.forEach(function (directive) {
-	        array.push(_index.Directives._initEvent.call(_this2, root, directive, [], context));
-	    });
-
-	    array = array.reduce(function (a, b) {
-	        return a.concat(b);
-	    }, []);
-	    _index.Directives._events.call(this, array);
-	}
-
-	function addLinksRefsForLoop(root, data) {
-	    var array = _index.Directives._init.call(this, root, 'ac-link');
-	    _index.Directives._link.call(this, array, data);
-	}
-
-	function bindAttrsForLoop(root, data) {
-	    var array = _index.Directives._init.call(this, root, 'ac-attr');
-	    _index.Directives._attr.call(this, array, data);
-	}
-
-	function bindIfForLoop(root, data) {
-	    var array = _index.Directives._init(root, 'ac-if');
-	    _index.Directives._if.call(this, array, data);
-	}
-
-	function forAttachForLoop(root, data) {
-	    var array = _index.Directives._init.call(this, root, 'ac-for');
-	    _index.Directives._for.call(this, array, data);
-	}
-
-	function bindPropsToViewForLoop(root, data) {
-	    var array = _index.Directives._init.call(this, root, 'ac-value');
-	    _index.Directives._props.call(this, array, data);
-	}
-
-	function styleUnitForLoop(root, data) {
-	    var array = _index.Directives._init.call(this, root, 'ac-style');
-	    _index.Directives._style.call(this, array, data);
-	}
-
-	function bindClassForLoop(root, data) {
-	    var array = _index.Directives._init.call(this, root, 'ac-class');
-	    _index.Directives._class.call(this, array, data);
-	}
-
-/***/ }),
-/* 26 */
-/***/ (function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
-	    value: true
-	});
-	exports._init = _init;
-	exports._initEvent = _initEvent;
-
-	var _private = __webpack_require__(15);
-
-	var _core = __webpack_require__(6);
-
-	var _event = __webpack_require__(27);
-
-	function _init(root, directive, newArray) {
-	    var array = newArray || [];
-
-	    var attr = root.getAttribute(directive);
-	    if (attr && !_core.Utils.isCustomElement(root)) {
-	        // only for loops
-	        var obj = {
-	            elem: root,
-	            attr: attr,
-	            items: [],
-	            parent: root.parentNode,
-	            cached: root
-	        };
-
-	        array.get ? array.get(this).push(obj) : array.push(obj);
-	        root.removeAttribute(directive);
-	        if (directive === 'ac-for') elem.remove();
-	    }
-
-	    var _iteratorNormalCompletion = true;
-	    var _didIteratorError = false;
-	    var _iteratorError = undefined;
-
-	    try {
-	        for (var _iterator = root.querySelectorAll('[' + directive + ']')[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
-	            var _elem = _step.value;
-
-	            var _attr = _elem.getAttribute(directive);
-
-	            // exclude inner loops
-	            if (directive === 'ac-for' && _elem.querySelectorAll('[ac-for]').length) {
-	                var _iteratorNormalCompletion2 = true;
-	                var _didIteratorError2 = false;
-	                var _iteratorError2 = undefined;
-
-	                try {
-	                    for (var _iterator2 = _elem.querySelectorAll('[ac-for]')[Symbol.iterator](), _step2; !(_iteratorNormalCompletion2 = (_step2 = _iterator2.next()).done); _iteratorNormalCompletion2 = true) {
-	                        var innerElem = _step2.value;
-
-	                        innerElem.setAttribute('ac-inner-loop', true);
-	                    }
-	                } catch (err) {
-	                    _didIteratorError2 = true;
-	                    _iteratorError2 = err;
-	                } finally {
-	                    try {
-	                        if (!_iteratorNormalCompletion2 && _iterator2.return) {
-	                            _iterator2.return();
-	                        }
-	                    } finally {
-	                        if (_didIteratorError2) {
-	                            throw _iteratorError2;
-	                        }
-	                    }
-	                }
-	            }
-
-	            if (directive === 'ac-for' && _elem.getAttribute('ac-inner-loop')) {
-	                _elem.removeAttribute('ac-inner-loop');
-	                return;
-	            }
-
-	            var _obj = {
-	                elem: _elem,
-	                attr: _attr,
-	                comment: _core.Utils.insertAfter(document.createComment(directive + ': ' + _attr), _elem),
-	                items: [],
-	                parent: _elem.parentNode,
-	                cached: _elem
-	            };
-	            array.get ? array.get(this).push(_obj) : array.push(_obj);
-	            _elem.removeAttribute(directive);
-	            if (directive === 'ac-for') _elem.remove();
-	        }
-	    } catch (err) {
-	        _didIteratorError = true;
-	        _iteratorError = err;
-	    } finally {
-	        try {
-	            if (!_iteratorNormalCompletion && _iterator.return) {
-	                _iterator.return();
-	            }
-	        } finally {
-	            if (_didIteratorError) {
-	                throw _iteratorError;
-	            }
-	        }
-	    }
-
-	    return array;
-	}
-
-	function _initEvent(root, directive, newArray, context) {
-	    var array = newArray || [];
-	    var targets = root.querySelectorAll('[ac-' + directive + ']');
-	    if (root.getAttribute('ac-' + directive)) {
-	        var obj = _event.createEventObject.call(this, root, directive, context);
-	        array.get ? array.get(this).push(obj) : array.push(obj);
-	    }
-
-	    var _iteratorNormalCompletion3 = true;
-	    var _didIteratorError3 = false;
-	    var _iteratorError3 = undefined;
-
-	    try {
-	        for (var _iterator3 = targets[Symbol.iterator](), _step3; !(_iteratorNormalCompletion3 = (_step3 = _iterator3.next()).done); _iteratorNormalCompletion3 = true) {
-	            var _elem2 = _step3.value;
-
-	            var _obj2 = _event.createEventObject.call(this, _elem2, directive, context);
-	            array.get ? array.get(this).push(_obj2) : array.push(_obj2);
-	        }
-	    } catch (err) {
-	        _didIteratorError3 = true;
-	        _iteratorError3 = err;
-	    } finally {
-	        try {
-	            if (!_iteratorNormalCompletion3 && _iterator3.return) {
-	                _iterator3.return();
-	            }
-	        } finally {
-	            if (_didIteratorError3) {
-	                throw _iteratorError3;
-	            }
-	        }
-	    }
-
-	    return array;
-	}
-
-/***/ }),
-/* 27 */
-/***/ (function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
-	    value: true
-	});
-	exports._events = _events;
-	exports.removeEventListeners = removeEventListeners;
-	exports.createEventObject = createEventObject;
-
-	var _private = __webpack_require__(15);
-
-	function _events(array) {
-	    array.forEach(function (newEvent) {
-	        newEvent.el.addEventListener(newEvent.event.toLowerCase(), newEvent.f, false);
-	    });
-	}
-
-	function removeEventListeners(array) {
-	    array.forEach(function (eventItem, i) {
-	        eventItem.el.removeEventListener(eventItem.event, eventItem.f, false);
-	    });
-	}
-
-	function createEventObject(elem, event, context) {
-	    var _this = this;
-
-	    var funcParams = elem.getAttribute('ac-' + event);
-	    elem.removeAttribute('ac-' + event);
-	    var params = funcParams.replace(/ +/g, "").split(':');
-	    var fnName = params[0];
-	    var newEvent = {
-	        fnName: fnName,
-	        event: event,
-	        el: elem,
-	        f: function f(e) {
-	            var regExp = /\(([^)]+)\)/;
-	            var fnParams = regExp.exec(fnName); // get value between brackets
-	            var args = [];
-	            var functionName = fnName.replace(regExp, ''); // remove everything between brackets
-
-	            if (fnParams) {
-	                fnParams[1].replace(/ +/g, "").split(',').forEach(function (res) {
-	                    var arg = new Function('return ' + res).apply(context || _this);
-	                    args.push(arg);
-	                });
-	            }
-
-	            if (_this[functionName]) {
-	                var _functionName;
-
-	                (_functionName = _this[functionName]).call.apply(_functionName, [_this, e].concat(args));
-	            } else {
-	                console.warn('You have no function in your component');
-	            }
-	        }
-	    };
-
-	    return newEvent;
-	}
-
-/***/ }),
-/* 28 */
-/***/ (function(module, exports) {
-
-	'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
-	    value: true
-	});
-	exports._model = _model;
-	function _model(array) {
-	    var _this = this;
-
-	    array.forEach(function (item) {
-	        var params = item.attr.split('.');
-
-	        item.elem.addEventListener('keyup', function (e) {
-	            var value = e.currentTarget.value;
-	            _this.props.set(params[params.length - 1], value);
-	        }, false);
-
-	        if (item.elem.type === 'checkbox' || item.elem.type === 'radio') {
-	            item.elem.addEventListener('change', function (e) {
-	                var params = item.attr.split('.');
-	                var last = params[params.length - 1];
-	                params.splice(-1, 1);
-	                var r = params.reduce(function (o, i) {
-	                    return o[i];
-	                }, _this);
-	                r[last] = item.elem.type === 'radio' ? e.currentTarget.value : e.currentTarget.checked;
-	                _this.props._callAll();
-	            }, false);
-	        }
-
-	        item.elem.addEventListener('modelChange', function (e) {
-	            _this.props.set(params[params.length - 1], e.detail);
-	        }, false);
-	    });
-	}
-
-/***/ }),
-/* 29 */
-/***/ (function(module, exports) {
-
-	'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
-	    value: true
-	});
-	exports._attr = _attr;
-	function _attr(array, data) {
-	    var _this = this;
-
-	    array.forEach(function (item) {
-	        var array = item.attr.split(',');
-
-	        array.forEach(function (prop) {
-	            var params = prop.replace(/ +/g, "").split(':');
-	            var attrName = params[0];
-	            var variable = params[1].split('.');
-	            var r = _this.getComponentVariable(variable, data);
-
-	            r ? item.elem.setAttribute(attrName, r) : item.elem.removeAttribute(attrName);
-	        });
-	    });
-	}
-
-/***/ }),
-/* 30 */
-/***/ (function(module, exports) {
-
-	'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
-	    value: true
-	});
-	exports._input = _input;
-	function _input(array) {
-	    var _this = this;
-
-	    array.forEach(function (item) {
-
-	        var array = item.attr.replace(/ +/g, "").split(',');
-	        var inputParams = {};
-	        array.forEach(function (item) {
-	            var variable = item.split(':')[0];
-	            var params = item.split(':')[1].split('.');
-	            inputParams[variable] = _this.getComponentVariable(params);
-	        });
-	        item.elem.COMPONENT.INPUT(inputParams);
-	    });
-	}
-
-/***/ }),
-/* 31 */
-/***/ (function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
-	    value: true
-	});
-	exports._link = _link;
-
-	var _core = __webpack_require__(6);
-
-	function _link(array, data) {
-	    var _this = this;
-
-	    array.forEach(function (item) {
-	        item.elem.removeEventListener('click', item.callback, false); // remove previous handler
-
-	        var route = (0, _core.TemplateEngine)(item.attr, data || _this);
-	        item.callback = function (e) {
-	            e.preventDefault();
-	            _core.Router.navigate(route);
-	        };
-
-	        item.elem.addEventListener('click', item.callback, false);
-	        item.elem.setAttribute('href', route || '/');
-	    });
-	}
-
-/***/ }),
-/* 32 */
-/***/ (function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
-	    value: true
-	});
-	exports._outside = _outside;
-
-	var _private = __webpack_require__(15);
-
-	var _core = __webpack_require__(6);
-
-	function _outside(array) {
-	    var _this = this;
-
-	    array.forEach(function (item) {
-	        var attr = item.attr;
-
-	        _private.PRIVATES.GLOBAL_EVENTS.set(_this, _core.GlobalEvents.onClick(function (e) {
-	            var ouside = _this.shadow ? item.elem.contains(e.path[0]) : item.elem.contains(e.target);
-	            if (!ouside) {
-	                _this[attr].call(_this, e);
-	            }
-	        }, item));
-	    });
-	}
-
-/***/ }),
-/* 33 */
-/***/ (function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
-	    value: true
-	});
-	exports._on = _on;
-
-	var _core = __webpack_require__(6);
-
-	function _on(array) {
-	    var _this = this;
-
-	    array.forEach(function (item) {
-	        var listeners = item.attr;
-	        listeners = listeners.replace(/ +/g, "").split(',');
-
-	        if (listeners.length) {
-	            listeners.forEach(function (listener) {
-	                var eventName = listener.split(':')[0];
-	                var fn = _this[listener.split(':')[1]];
-	                on.call(_this, eventName, fn);
-	            });
-	        }
-	    });
-	}
-
-	function on(event, f) {
-	    var _this2 = this;
-
-	    this.root.addEventListener(event, function (e) {
-	        e.stopPropagation(); // to prevent further propagation
-	        f.call(_this2, e, e.detail);
-	    });
-	}
-
-/***/ }),
-/* 34 */
-/***/ (function(module, exports) {
-
-	'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
-	    value: true
-	});
-	exports._hostEvents = _hostEvents;
-	exports._hostClasses = _hostClasses;
-	exports._hostStyles = _hostStyles;
-	function _hostEvents(events) {
-	    for (var event in events) {
-	        var fn = this[events[event]].bind(this);
-	        this.root.addEventListener(event, fn, false);
-	    }
-	}
-
-	function _hostClasses(hostClasses) {
-	    for (var className in hostClasses) {
-	        var attr = hostClasses[className];
-	        var reverse = false;
-	        if (attr[0] === '!') {
-	            attr = attr.substr(1);
-	            reverse = true;
-	        }
-
-	        var r = this.getComponentVariable(attr.split('.'));
-	        r = reverse ? !r : r;
-	        r ? this.root.classList.add(className) : this.root.classList.remove(className);
-	    }
-	}
-
-	function _hostStyles(hostStyles) {
-	    for (var styleName in hostStyles) {
-	        if (typeof hostStyles[styleName].value === 'string') {
-	            var r = this.getComponentVariable(hostStyles[styleName].value.split('.'));
-	            this.root.style[styleName] = r + hostStyles[styleName].suffix;
-	        } else {
-	            this.root.style[styleName] = hostStyles[styleName].value + hostStyles[styleName].preffix;
-	        }
-	    }
-	}
-
-/***/ }),
-/* 35 */
+/* 36 */
 /***/ (function(module, exports) {
 
 	'use strict';
@@ -2535,7 +2610,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	}
 
 /***/ }),
-/* 36 */
+/* 37 */
 /***/ (function(module, exports) {
 
 	'use strict';
@@ -2600,7 +2675,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	exports.default = new GlobalEvents();
 
 /***/ }),
-/* 37 */
+/* 38 */
 /***/ (function(module, exports) {
 
 	'use strict';
@@ -2798,7 +2873,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	exports.Utils = Utils;
 
 /***/ }),
-/* 38 */
+/* 39 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -2808,7 +2883,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	});
 	exports.Sortable = undefined;
 
-	var _sortable = __webpack_require__(39);
+	var _sortable = __webpack_require__(40);
 
 	var _sortable2 = _interopRequireDefault(_sortable);
 
@@ -2817,7 +2892,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	exports.Sortable = _sortable2.default;
 
 /***/ }),
-/* 39 */
+/* 40 */
 /***/ (function(module, exports) {
 
 	'use strict';
@@ -2960,7 +3035,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	exports.default = new Sortable();
 
 /***/ }),
-/* 40 */
+/* 41 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -3312,7 +3387,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	exports.Http = Http;
 
 /***/ }),
-/* 41 */
+/* 42 */
 /***/ (function(module, exports) {
 
 	"use strict";
