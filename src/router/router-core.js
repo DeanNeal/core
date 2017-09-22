@@ -8,7 +8,7 @@ class Router {
             // Make sure popstate doesn't run on init -- this is a common issue with Safari and old versions of Chrome
             if (self.state && self.state.previousState === null) return false;
 
-            let a = this.getCurrentRoute(this.getCurrentPath());
+            let a = this.getCurrentRoute(this.getFullStringPath());
             if (a) {
                 a.callback();
                 this.runSubscribtions();
@@ -24,6 +24,10 @@ class Router {
 
     getCurrentFullPath() {
         return location.pathname.split('/').filter(item => item) || '/';
+    }
+
+    getFullStringPath() {
+        return location.pathname.substr(1) || '/';
     }
 
     getCurrentRoute(path) {

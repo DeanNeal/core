@@ -2,7 +2,7 @@
  * ace-js 0.1.15
  * May be freely distributed under the MIT license 
  * Author: Bogdan Zinkevich
- * Last update: 2017-9-21 10:27:26
+ * Last update: 2017-9-22 09:58:50
  * 
  */
 (function webpackUniversalModuleDefinition(root, factory) {
@@ -82,7 +82,7 @@ return /******/ (function(modules) { // webpackBootstrap
 /******/ 	}
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "c5b44510a531608f1df8"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "837de3cb541bbbb19f82"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
 /******/ 	
@@ -2319,7 +2319,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	            // Make sure popstate doesn't run on init -- this is a common issue with Safari and old versions of Chrome
 	            if (self.state && self.state.previousState === null) return false;
 
-	            var a = _this.getCurrentRoute(_this.getCurrentPath());
+	            var a = _this.getCurrentRoute(_this.getFullStringPath());
 	            if (a) {
 	                a.callback();
 	                _this.runSubscribtions();
@@ -2342,6 +2342,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	            return location.pathname.split('/').filter(function (item) {
 	                return item;
 	            }) || '/';
+	        }
+	    }, {
+	        key: 'getFullStringPath',
+	        value: function getFullStringPath() {
+	            return location.pathname.substr(1) || '/';
 	        }
 	    }, {
 	        key: 'getCurrentRoute',
@@ -2474,7 +2479,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	        _classCallCheck(this, Component);
 
-	        this.tpl = this.tpl || custom.template || 'Empty template';
+	        this.tpl = custom.template || 'Empty template';
 	        // this.styles = custom.styles;
 	        this.shadow = custom.shadow || false;
 	        this.type = custom.type;
@@ -3170,6 +3175,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	});
 	exports.Http = exports.Collection = exports.Model = undefined;
 
+	var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
+
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 	var _observable = __webpack_require__(7);
@@ -3291,56 +3298,82 @@ return /******/ (function(modules) { // webpackBootstrap
 	    }
 
 	    _createClass(HttpModule, [{
+	        key: 'makeRequest',
+	        value: function makeRequest(opts) {
+	            var _this3 = this;
+
+	            return new Promise(function (resolve, reject) {
+	                var xhr = new XMLHttpRequest();
+	                xhr.open(opts.method, _this3.server + opts.url);
+	                xhr.onload = function () {
+	                    if (this.status >= 200 && this.status < 300) {
+	                        resolve(xhr.response);
+	                    } else {
+	                        reject({
+	                            status: this.status,
+	                            statusText: xhr.statusText,
+	                            response: JSON.parse(xhr.response)
+	                        });
+	                    }
+	                };
+	                xhr.onerror = function () {
+	                    reject({
+	                        status: this.status,
+	                        statusText: xhr.statusText
+	                    });
+	                };
+	                if (opts.headers) {
+	                    Object.keys(opts.headers).forEach(function (key) {
+	                        xhr.setRequestHeader(key, opts.headers[key]);
+	                    });
+	                }
+	                xhr.setRequestHeader('Content-Type', 'application/json');
+	                var params = opts.params;
+
+	                if (opts.method.toLowerCase() === 'get') {
+	                    if (params && (typeof params === 'undefined' ? 'undefined' : _typeof(params)) === 'object') {
+	                        params = Object.keys(params).map(function (key) {
+	                            return encodeURIComponent(key) + '=' + encodeURIComponent(params[key]);
+	                        }).join('&');
+	                    }
+	                }
+
+	                if (opts.method.toLowerCase() === 'post') {
+	                    params = JSON.stringify(params);
+	                }
+
+	                xhr.send(params);
+	            });
+	        }
+	    }, {
+	        key: 'getParams',
+	        value: function getParams(params) {
+	            if (params && (typeof params === 'undefined' ? 'undefined' : _typeof(params)) === 'object') {
+	                params = Object.keys(params).map(function (key) {
+	                    return encodeURIComponent(key) + '=' + encodeURIComponent(params[key]);
+	                }).join('&');
+	            }
+	            return params;
+	        }
+	    }, {
 	        key: 'get',
-	        value: function get(url, params, settings) {
-	            var urlParams = new URLSearchParams();
-	            var newParams = '';
-	            for (var key in params) {
-	                urlParams.set(key, params[key]);
-	            }
-
-	            if (params && Object.keys(params).length) {
-	                newParams += '?' + urlParams.toString();
-	            }
-
-	            return this.request('get', url + newParams, params, settings);
+	        value: function get(url, params, headers) {
+	            return this.makeRequest({ method: 'get', url: url, params: params, headers: headers });
 	        }
 	    }, {
 	        key: 'post',
-	        value: function post(url, params, settings) {
-	            return this.request('post', url, params, settings);
+	        value: function post(url, params, headers) {
+	            return this.makeRequest({ method: 'post', url: url, params: params, headers: headers });
 	        }
 	    }, {
 	        key: 'put',
-	        value: function put(url, params, settings) {
-	            return this.request('put', url, params, settings);
+	        value: function put() {
+	            return this.makeRequest({ method: 'put', url: url, params: params, headers: headers });
 	        }
 	    }, {
 	        key: 'delete',
-	        value: function _delete(url, params, settings) {
-	            return this.request('delete', url, params, settings);
-	        }
-	    }, {
-	        key: 'request',
-	        value: function request(type, url) {
-	            var params = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : {};
-	            var settings = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : {};
-
-	            return fetch(this.server + url, {
-	                method: type,
-	                headers: settings.headers,
-	                body: params
-	            });
-	        }
-	    }, {
-	        key: 'remoteRequest',
-	        value: function remoteRequest(type, url, params) {
-	            return fetch(url, {
-	                method: type,
-	                body: params
-	            }).then(function (res) {
-	                return res.json();
-	            });
+	        value: function _delete() {
+	            return this.makeRequest({ method: 'delete', url: url, params: {}, headers: headers });
 	        }
 	    }, {
 	        key: 'setServerUrl',
@@ -3358,10 +3391,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	    }, {
 	        key: 'getCatalog',
 	        value: function getCatalog(url) {
-	            var _this3 = this;
+	            var _this4 = this;
 
 	            return this.hMRequest('get', url).then(function (res) {
-	                _this3.catalog.set(res);
+	                _this4.catalog.set(res);
 	                return res;
 	            });
 	        }
@@ -3376,14 +3409,14 @@ return /******/ (function(modules) { // webpackBootstrap
 	                function FactoryModel(options) {
 	                    _classCallCheck(this, FactoryModel);
 
-	                    var _this4 = _possibleConstructorReturn(this, (FactoryModel.__proto__ || Object.getPrototypeOf(FactoryModel)).call(this, options));
+	                    var _this5 = _possibleConstructorReturn(this, (FactoryModel.__proto__ || Object.getPrototypeOf(FactoryModel)).call(this, options));
 
 	                    if (response.links) {
 	                        response.links.map(function (link) {
-	                            _this4.links['' + link.rel] = link.href; // for access to raw link
+	                            _this5.links['' + link.rel] = link.href; // for access to raw link
 	                            methods.forEach(function (method) {
 	                                if (link.href) {
-	                                    _this4[method + '_' + link.rel] = function (params, id) {
+	                                    _this5[method + '_' + link.rel] = function (params, id) {
 	                                        return context.hMRequest(method, link.href, params, id);
 	                                    };
 	                                }
@@ -3391,7 +3424,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	                        });
 	                    }
 
-	                    return _this4;
+	                    return _this5;
 	                }
 
 	                return FactoryModel;
@@ -3405,10 +3438,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	    }, {
 	        key: 'getCollection',
 	        value: function getCollection(response) {
-	            var _this5 = this;
+	            var _this6 = this;
 
 	            var models = response.map(function (model) {
-	                return _this5.getModel(model);
+	                return _this6.getModel(model);
 	            });
 
 	            var FactoryCollection = function (_Collection) {
@@ -3436,6 +3469,11 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	            var sub = void 0;
 	            var context = this;
+
+	            if (id) {
+	                url += '/' + id;
+	            }
+
 	            switch (method) {
 	                case 'get':
 	                    sub = this.middleware(this[method](url, args, { headers: context.getGetHeaders() }));
@@ -3459,14 +3497,14 @@ return /******/ (function(modules) { // webpackBootstrap
 	    }, {
 	        key: 'middleware',
 	        value: function middleware(response) {
-	            var _this7 = this;
+	            var _this8 = this;
 
 	            return response.then(function (res) {
-	                return res.json();
+	                return JSON.parse(res);
 	            }).then(function (res) {
-	                return _this7.createEntity(res);
+	                return _this8.createEntity(res);
 	            }).catch(function (err) {
-	                return null;
+	                return Promise.reject(err);
 	            });
 	        }
 	    }, {
@@ -3474,10 +3512,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	        value: function getHeaders() {
 	            var headers = new Headers();
 	            var token = JSON.parse(localStorage.getItem('token'));
+	            headers.append('Content-Type', 'application/json');
 	            if (token) {
 	                headers.append('Authorization', 'Bearer ' + token);
 	            }
-	            return { headers: headers };
+	            return headers;
 	        }
 	    }, {
 	        key: 'getGetHeaders',
