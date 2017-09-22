@@ -2,7 +2,7 @@
  * ace-js 0.1.17
  * May be freely distributed under the MIT license 
  * Author: Bogdan Zinkevich
- * Last update: 2017-9-22 11:25:19
+ * Last update: 2017-9-22 12:10:05
  * 
  */
 (function webpackUniversalModuleDefinition(root, factory) {
@@ -82,7 +82,7 @@ return /******/ (function(modules) { // webpackBootstrap
 /******/ 	}
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "1f0385557df1e8cbe7d8"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "9318dcee96fc5adfe17c"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
 /******/ 	
@@ -3198,11 +3198,32 @@ return /******/ (function(modules) { // webpackBootstrap
 	                    });
 	                };
 	                if (opts.headers) {
-	                    Object.keys(opts.headers).forEach(function (key) {
-	                        xhr.setRequestHeader(key, opts.headers[key]);
-	                    });
+	                    var _iteratorNormalCompletion = true;
+	                    var _didIteratorError = false;
+	                    var _iteratorError = undefined;
+
+	                    try {
+	                        for (var _iterator = opts.headers.keys()[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
+	                            var key = _step.value;
+
+	                            xhr.setRequestHeader(key, opts.headers.get(key));
+	                        }
+	                    } catch (err) {
+	                        _didIteratorError = true;
+	                        _iteratorError = err;
+	                    } finally {
+	                        try {
+	                            if (!_iteratorNormalCompletion && _iterator.return) {
+	                                _iterator.return();
+	                            }
+	                        } finally {
+	                            if (_didIteratorError) {
+	                                throw _iteratorError;
+	                            }
+	                        }
+	                    }
 	                }
-	                xhr.setRequestHeader('Content-Type', 'application/json');
+
 	                var params = opts.params;
 
 	                if (opts.method.toLowerCase() === 'get') {
@@ -3213,7 +3234,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	                    }
 	                }
 
-	                if (opts.method.toLowerCase() === 'post') {
+	                if (opts.method.toLowerCase() === 'post' || opts.method.toLowerCase() === 'put') {
 	                    params = JSON.stringify(params);
 	                }
 
@@ -3242,12 +3263,12 @@ return /******/ (function(modules) { // webpackBootstrap
 	        }
 	    }, {
 	        key: 'put',
-	        value: function put() {
+	        value: function put(url, params, headers) {
 	            return this.makeRequest({ method: 'put', url: url, params: params, headers: headers });
 	        }
 	    }, {
 	        key: 'delete',
-	        value: function _delete() {
+	        value: function _delete(url, params, headers) {
 	            return this.makeRequest({ method: 'delete', url: url, params: {}, headers: headers });
 	        }
 	    }, {
@@ -3351,7 +3372,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	            switch (method) {
 	                case 'get':
-	                    sub = this.middleware(this[method](url, args, { headers: context.getGetHeaders() }));
+	                    sub = this.middleware(this[method](url, args, this.getHeaders()));
 	                    break;
 	                case 'post':
 	                    sub = this.middleware(this[method](url, args, this.getHeaders()));

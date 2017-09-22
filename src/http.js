@@ -83,7 +83,7 @@ class HttpModule {
 
     makeRequest(opts) {
         return new Promise((resolve, reject) => {
-            var xhr = new XMLHttpRequest();
+            let xhr = new XMLHttpRequest();
             xhr.open(opts.method, this.server + opts.url);
             xhr.onload = function() {
                 if (this.status >= 200 && this.status < 300) {
@@ -103,12 +103,12 @@ class HttpModule {
                 });
             };
             if (opts.headers) {
-                Object.keys(opts.headers).forEach(function(key) {
-                    xhr.setRequestHeader(key, opts.headers[key]);
-                });
+                for(let key of opts.headers.keys()) {
+                    xhr.setRequestHeader(key, opts.headers.get(key));
+                }
             }
-            xhr.setRequestHeader('Content-Type', 'application/json');
-            var params = opts.params;
+
+            let params = opts.params;
 
             if (opts.method.toLowerCase() === 'get') {
                 if (params && typeof params === 'object') {
@@ -118,7 +118,7 @@ class HttpModule {
                 }
             }
 
-            if (opts.method.toLowerCase() === 'post') {
+            if (opts.method.toLowerCase() === 'post' || opts.method.toLowerCase() === 'put') {
                 params = JSON.stringify(params);
             }
 
@@ -144,11 +144,11 @@ class HttpModule {
         return this.makeRequest({ method: 'post', url, params, headers });
     }
 
-    put() {
+    put(url, params, headers) {
         return this.makeRequest({ method: 'put', url, params, headers });
     }
 
-    delete() {
+    delete(url, params, headers) {
         return this.makeRequest({ method: 'delete', url, params: {}, headers });
     }
 
@@ -216,7 +216,7 @@ class HttpModule {
 
         switch (method) {
             case 'get':
-                sub = this.middleware(this[method](url, args, { headers: context.getGetHeaders() }));
+                sub = this.middleware(this[method](url, args, this.getGetHeaders()));
                 break;
             case 'post':
                 sub = this.middleware(this[method](url, args, this.getHeaders()));
