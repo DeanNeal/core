@@ -1,8 +1,8 @@
 /*!
- * ace-js 0.1.17
+ * ace-js 0.1.18
  * May be freely distributed under the MIT license 
  * Author: Bogdan Zinkevich
- * Last update: 2017-9-22 12:10:05
+ * Last update: 2017-9-22 12:42:55
  * 
  */
 (function webpackUniversalModuleDefinition(root, factory) {
@@ -82,7 +82,7 @@ return /******/ (function(modules) { // webpackBootstrap
 /******/ 	}
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "9318dcee96fc5adfe17c"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "4ee7f16769232a4fdf61"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
 /******/ 	
@@ -3497,7 +3497,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	            switch (method) {
 	                case 'get':
-	                    sub = this.middleware(this[method](url, args, this.getHeaders()));
+	                    sub = this.middleware(this[method](url, args, this.getGetHeaders()));
 	                    break;
 	                case 'post':
 	                    sub = this.middleware(this[method](url, args, this.getHeaders()));
@@ -3908,7 +3908,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	            this.getElement('pre').forEach(function (item) {});
 
 	            this.props.set({
-	                version: ("0.1.17"),
+	                version: ("0.1.18"),
 	                'categories': [{
 	                    name: 'Getting started',
 	                    items: [{
