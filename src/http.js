@@ -245,7 +245,7 @@ class HttpModule {
 
     getHeaders() {
         const headers = new Headers();
-        let token = JSON.parse(localStorage.getItem('token'));
+        let token = localStorage.getItem('token');
         headers.append('Content-Type', `application/json`);
         if (token) {
             headers.append('Authorization', `Bearer ${token}`);

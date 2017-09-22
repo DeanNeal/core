@@ -2,7 +2,7 @@
  * ace-js 0.1.16
  * May be freely distributed under the MIT license 
  * Author: Bogdan Zinkevich
- * Last update: 2017-9-22 10:08:50
+ * Last update: 2017-9-22 10:26:11
  * 
  */
 (function webpackUniversalModuleDefinition(root, factory) {
@@ -82,7 +82,7 @@ return /******/ (function(modules) { // webpackBootstrap
 /******/ 	}
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "4ceb7b8d61f84a813115"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "d6714a688f6c03e83d2d"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
 /******/ 	
@@ -2231,7 +2231,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	                        // don't refresh parent router
 	                        _this.root.innerHTML = null;
 	                        if (params) {
-	                            window.temporaryObj = Object.assign({ id: parseInt(params) });
+	                            window.temporaryObj = Object.assign({ id: params });
 	                        }
 
 	                        var newComp = document.createElement(route.component);
@@ -3511,7 +3511,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        key: 'getHeaders',
 	        value: function getHeaders() {
 	            var headers = new Headers();
-	            var token = JSON.parse(localStorage.getItem('token'));
+	            var token = localStorage.getItem('token');
 	            headers.append('Content-Type', 'application/json');
 	            if (token) {
 	                headers.append('Authorization', 'Bearer ' + token);

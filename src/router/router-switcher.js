@@ -15,7 +15,7 @@ export class RouteSwitcher {
                     if (this.prevPage !== route.path) { // don't refresh parent router
                         this.root.innerHTML = null;
                         if (params) {
-                            window.temporaryObj = Object.assign({ id: parseInt(params) });
+                            window.temporaryObj = Object.assign({ id: params });
                         }
 
                         let newComp = document.createElement(route.component);
