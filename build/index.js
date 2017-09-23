@@ -2,7 +2,7 @@
  * ace-js 0.1.15
  * May be freely distributed under the MIT license 
  * Author: Bogdan Zinkevich
- * Last update: 2017-9-21 10:27:26
+ * Last update: 2017-9-23 12:12:55
  * 
  */
 (function webpackUniversalModuleDefinition(root, factory) {
@@ -82,7 +82,7 @@ return /******/ (function(modules) { // webpackBootstrap
 /******/ 	}
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "c5b44510a531608f1df8"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "e9c3dbe1056207d77c68"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
 /******/ 	
@@ -627,11 +627,11 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var _register = __webpack_require__(32);
 
-	var _component = __webpack_require__(35);
+	var _component = __webpack_require__(33);
 
-	var _routerSwitcher = __webpack_require__(33);
+	var _routerSwitcher = __webpack_require__(34);
 
-	var _routerCore = __webpack_require__(34);
+	var _routerCore = __webpack_require__(35);
 
 	var _routerCore2 = _interopRequireDefault(_routerCore);
 
@@ -1961,11 +1961,109 @@ return /******/ (function(modules) { // webpackBootstrap
 	    value: true
 	});
 	exports.Register = Register;
-	exports.RegisterElement = RegisterElement;
 
 	var _core = __webpack_require__(6);
 
-	var _routerSwitcher = __webpack_require__(33);
+	var _component = __webpack_require__(33);
+
+	var _routerSwitcher = __webpack_require__(34);
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	// export function Register(options) {
+	//     // console.time('modules')
+
+	//     if (options.styles) {
+	//         loadStyle(options.styles);
+	//     }
+
+	//     if (options.serverUrl) {
+	//         Http.setServerUrl(options.serverUrl);
+	//     }
+
+	//     options.components.forEach(component => {
+	//         registerComponent(component);
+	//     });
+
+	//     options.modules.forEach(module => {
+	//         module.forEach(component => {
+	//             registerComponent(component);
+	//         });
+	//     });
+
+	//     if (!options.routes) {
+	//         console.warn('You should set routes!');
+	//     } else {
+	//         new RegisterRouteElement(options.routes);
+	//     }
+
+	//     if (options.onReady) {
+	//         options.onReady.call(this);
+	//     }
+	//     // console.timeEnd('modules')
+	// }
+
+	// function registerComponent(component) {
+	//     if (component.c instanceof Component.constructor) {
+	//         RegisterElement(component);
+	//     } else {
+	//         console.warn('Wrong type of component');
+	//     }
+	// }
+
+	// export function RegisterElement(comp) {
+	//     let ElemProto = Object.create(HTMLElement.prototype);
+	//     let elem;
+	//     ElemProto.createdCallback = function(params) {
+	//         let attrs = {};
+	//         for (let i = 0; i < this.attributes.length; i++) {
+	//             attrs[this.attributes[i].nodeName] = this.attributes[i].nodeValue
+	//         }
+
+	//         //temporary solution
+	//         let props = window.temporaryObj || {};
+	//         delete window.temporaryObj;
+	//         elem = new comp.c({ ce: this, attrs, props });
+	//         this.COMPONENT = elem;
+	//     };
+
+	//     ElemProto.detachedCallback = function() {
+	//         // elem.destroy();
+	//         //  elem = undefined;
+	//         Component.destroy.call(this.COMPONENT);
+	//     };
+
+	//     ElemProto.attachedCallback = function() {
+	//         elem.onAttach();
+	//         // this.COMPONENT.onAttach();
+	//     };
+
+	//     ElemProto.attributeChangedCallback = function(a, b, c) {
+	//         // elem.props.update(a, c);
+	//     };
+
+	//     document.registerElement(comp.selector, {
+	//         prototype: ElemProto
+	//     });
+	// }
+
+	var RootComponent = function (_Component) {
+	    _inherits(RootComponent, _Component);
+
+	    function RootComponent(root) {
+	        _classCallCheck(this, RootComponent);
+
+	        return _possibleConstructorReturn(this, (RootComponent.__proto__ || Object.getPrototypeOf(RootComponent)).call(this, root, {
+	            template: '\n                    <app-header></app-header>\n                    <route-switcher></route-switcher>\n                    <app-footer></app-footer>\n\n            '
+	        }));
+	    }
+
+	    return RootComponent;
+	}(_component.Component);
 
 	function Register(options) {
 	    // console.time('modules')
@@ -1978,9 +2076,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	        _core.Http.setServerUrl(options.serverUrl);
 	    }
 
-	    options.components.forEach(function (component) {
-	        registerComponent(component);
-	    });
+	    window.COMPONENTS = options.components;
+	    window.Routes = options.routes;
 
 	    options.modules.forEach(function (module) {
 	        module.forEach(function (component) {
@@ -1988,60 +2085,15 @@ return /******/ (function(modules) { // webpackBootstrap
 	        });
 	    });
 
-	    if (!options.routes) {
-	        console.warn('You should set routes!');
-	    } else {
-	        new _routerSwitcher.RegisterRouteElement(options.routes);
-	    }
-
-	    if (options.onReady) {
-	        options.onReady.call(this);
-	    }
-	    // console.timeEnd('modules')
+	    new RootComponent(options.root);
 	}
 
 	function registerComponent(component) {
-	    if (component.c instanceof _core.Component.constructor) {
-	        RegisterElement(component);
+	    if (component.c instanceof _component.Component.constructor) {
+	        window.COMPONENTS.push(component);
 	    } else {
 	        console.warn('Wrong type of component');
 	    }
-	}
-
-	function RegisterElement(comp) {
-	    var ElemProto = Object.create(HTMLElement.prototype);
-	    var elem = void 0;
-	    ElemProto.createdCallback = function (params) {
-	        var attrs = {};
-	        for (var i = 0; i < this.attributes.length; i++) {
-	            attrs[this.attributes[i].nodeName] = this.attributes[i].nodeValue;
-	        }
-
-	        //temporary solution
-	        var props = window.temporaryObj || {};
-	        delete window.temporaryObj;
-	        elem = new comp.c({ ce: this, attrs: attrs, props: props });
-	        this.COMPONENT = elem;
-	    };
-
-	    ElemProto.detachedCallback = function () {
-	        // elem.destroy();
-	        //  elem = undefined;
-	        _core.Component.destroy.call(this.COMPONENT);
-	    };
-
-	    ElemProto.attachedCallback = function () {
-	        elem.onAttach();
-	        // this.COMPONENT.onAttach();
-	    };
-
-	    ElemProto.attributeChangedCallback = function (a, b, c) {
-	        // elem.props.update(a, c);
-	    };
-
-	    document.registerElement(comp.selector, {
-	        prototype: ElemProto
-	    });
 	}
 
 	function loadStyle(styles) {
@@ -2070,13 +2122,412 @@ return /******/ (function(modules) { // webpackBootstrap
 	Object.defineProperty(exports, "__esModule", {
 	    value: true
 	});
+	exports.Component = undefined;
+
+	var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }(); // import { Router, ObservableModel } from '../core';
+	// import { PRIVATES } from './private';
+	// import { DIRECTIVES_NAMES } from './const/directives';
+	// import { EVENTS_NAMES } from './const/events';
+	// import { Directives } from './Directives';
+
+	// export class Component {
+	//     constructor(options = {}, custom = {}) {
+	//         this.tpl = custom.template || 'Empty template';
+	//         // this.styles = custom.styles;
+	//         this.shadow = custom.shadow || false;
+	//         this.type = custom.type;
+
+	//         this.props = new ObservableModel(options.props);
+	//         this.root = null;
+
+
+	//         Component.setPrivates.call(this, custom);
+
+	//         this.ui = {};
+	//         // console.log(options.ce.attributes);
+	//         if (options.ce.getAttribute('ac-for')) {
+	//             // console.warn('Foor loop is detected!')
+	//         } else {
+	//             options.ce ? Component.render.call(this, options.ce) : console.warn('Component data is expected. See your component constructor!');
+	//             this.props.sub(r => {
+	//                 Directives._for.call(this, PRIVATES.DIRECTIVES['ac-for'].get(this));
+	//                 Directives._props.call(this, PRIVATES.DIRECTIVES['ac-value'].get(this));
+	//                 Directives._input.call(this, PRIVATES.DIRECTIVES['ac-input'].get(this));
+	//                 Directives._props.call(this, PRIVATES.DIRECTIVES['ac-model'].get(this));
+	//                 Directives._style.call(this, PRIVATES.DIRECTIVES['ac-style'].get(this));
+	//                 Directives._if.call(this, PRIVATES.DIRECTIVES['ac-if'].get(this));
+	//                 Directives._class.call(this, PRIVATES.DIRECTIVES['ac-class'].get(this));
+	//                 Directives._attr.call(this, PRIVATES.DIRECTIVES['ac-attr'].get(this));
+	//                 Directives._link.call(this, PRIVATES.DIRECTIVES['ac-link'].get(this));
+	//                 Directives._hostClasses.call(this, PRIVATES.HOST.CLASS.get(this));
+	//                 Directives._hostStyles.call(this, PRIVATES.HOST.STYLE.get(this));
+	//                 this.onUpdate();
+	//             });
+	//         }
+
+	//     }
+
+	//     setSubscriptions(...rest) {
+	//         PRIVATES.SUBSCRIPTIONS.set(this, rest);
+	//     }
+
+	//     static setPrivates(custom) {
+	//         for (let array in PRIVATES.DIRECTIVES) {
+	//             PRIVATES.DIRECTIVES[array].set(this, []);
+	//         }
+
+	//         PRIVATES.EVENTS.set(this, []);
+	//         PRIVATES.SUBSCRIPTIONS.set(this, []);
+	//         PRIVATES.GLOBAL_EVENTS.set(this, null);
+	//         PRIVATES.HOST.EVENTS.set(this, custom.hostEvents);
+	//         PRIVATES.HOST.CLASS.set(this, custom.hostClasses);
+	//         PRIVATES.HOST.STYLE.set(this, custom.hostStyles);
+	//     }
+
+	//     preCompileTpl(html) {console.time('111');
+	//         EVENTS_NAMES.forEach(event=>{
+	//             let stringToGoIntoTheRegex = '@'+event;
+	//             let regex = new RegExp(stringToGoIntoTheRegex, "g");
+	//             html = html.replace(regex, `ac-${event}`)
+	//         });
+	//         html = this.htmlInterpolation(html);
+	//         return html
+	//     }
+
+	//     htmlInterpolation(html) {
+	//         // let regExp =  /{{([^}]+)}}/g; 
+	//         // let fnParams = regExp.exec(html); // get value between brackets
+	//         // let args = [];
+
+	//         // if(fnParams) {
+	//         //     // let arg = new Function('return ' + fnParams[1]).apply(this);
+	//         //     // html = html.replace(regExp, arg);
+	//         //     console.log(html);
+	//         // }
+	//         return html;
+	//     }
+
+	//     static render(o) {
+	//         this.onCreate();
+	//         this.root = this.shadow ? o.createShadowRoot() : o;
+	//         this.root.innerHTML = this.preCompileTpl(this.tpl);
+	//         // this.loadStyle();
+
+	//         DIRECTIVES_NAMES.forEach(directive => {
+	//             Directives._init.call(this, this.root, directive, PRIVATES.DIRECTIVES[directive]);
+	//         });
+
+	//         EVENTS_NAMES.forEach(directive => {
+	//             Directives._initEvent.call(this, this.root, directive, PRIVATES.EVENTS);
+	//         });
+
+	//         Directives._model.call(this, PRIVATES.DIRECTIVES['ac-model'].get(this));
+	//         Directives._on.call(this, PRIVATES.DIRECTIVES['ac-on'].get(this));
+	//         Directives._outside.call(this, PRIVATES.DIRECTIVES['ac-outside'].get(this));
+	//         Directives._pattern.call(this, PRIVATES.DIRECTIVES['ac-pattern'].get(this));
+	//         Directives._elRef.call(this, PRIVATES.DIRECTIVES['ac-ref'].get(this));
+	//         Directives._events.call(this, PRIVATES.EVENTS.get(this));
+	//         Directives._hostEvents.call(this, PRIVATES.HOST.EVENTS.get(this));
+
+	//         if (PRIVATES.DIRECTIVES['ac-link'].get(this).length || PRIVATES.DIRECTIVES['ac-for'].get(this).length) {
+	//             this.routerSub = Router.onChange(() => {
+	//                 let a = this.root.querySelectorAll('[href]');
+	//                 a.forEach(item => {
+	//                     let fullRoute = Router.getCurrentFullPath();
+	//                     let attr = item.getAttribute('href');
+	//                     let setActive = attr === fullRoute.join('/') || (fullRoute[0] === attr && !item.getAttribute('ac-link-exact'))
+	//                     setActive ? item.classList.add('active') : item.classList.remove('active')
+	//                 });
+	//             });
+	//         }
+	//         this.onInit();
+	//     }
+
+	//     INPUT() {}
+
+
+	//     /***********************************************/
+
+	//     // static on(event, f) {
+	//     //     this.root.addEventListener(event, (e) => {
+	//     //         e.stopPropagation(); // to prevent further propagation
+	//     //         f.call(this, e, e.detail);
+	//     //     });
+	//     // }
+
+	//     emit(event, data, parentName) {
+	//         let myEvent = new CustomEvent(event, {
+	//             detail: data,
+	//             bubbles: true,
+	//             cancelable: false
+	//         });
+
+	//         if (parentName) {
+	//             this.getParentComponent(parentName).dispatchEvent(myEvent);
+	//         } else {
+	//             this.root.dispatchEvent(myEvent);
+	//         }
+	//     }
+
+	//     // broadcast(q, name, data) {
+	//     //     let myEvent = new CustomEvent(event, {
+	//     //         detail: data,
+	//     //         bubbles: true,
+	//     //         cancelable: false
+	//     //     });
+	//     //     q.dispatchEvent(myEvent);
+	//     // }
+
+	//     static destroy() {
+	//         Directives.removeEventListeners.call(this, PRIVATES.EVENTS.get(this));
+	//         // unsubscribe from global events
+	//         if (PRIVATES.GLOBAL_EVENTS.get(this)) {
+	//             PRIVATES.GLOBAL_EVENTS.get(this).unsubscribe();
+	//         }
+	//         //unsubscribe from router changes
+	//         if (this.routerSub) {
+	//             // console.log('destroyed', this);
+	//             this.routerSub.unsubscribe();
+	//         }
+	//         PRIVATES.SUBSCRIPTIONS.get(this).forEach(item => item.unsubscribe());
+	//         this.onDestroy();
+	//     }
+
+	//     onCreate() {
+
+	//     }
+
+	//     onUpdate() {
+
+	//     }
+
+	//     onDestroy() {
+
+	//     }
+
+	//     onInit() {
+
+	//     }
+
+	//     onAttach() {
+
+	//     }
+
+	//     getElement(target) {
+	//         return this.root.querySelectorAll(target);
+	//     }
+
+	//     getRoot() {
+	//         return this.root;
+	//     }
+
+	//     getComponentVariable(variable, data) {
+	//         if (data && typeof data !== 'object') return data;
+	//         return variable.reduce((o, i, index) => {
+	//             if (!o[i] && o[i] !== 0) { // in case when variable is undefined
+	//                 return index === variable.length - 1 ? null : {};
+	//             } else {
+	//                 return o[i]
+	//             }
+	//         }, data || this)
+	//     }
+
+	//     getParentComponent(parentName) {
+	//         let root = this.root;
+	//         while (root && parentName !== root.constructor.name) {
+	//             root = root.parentNode;
+	//         }
+	//         return root;
+	//     }
+	// }
+
+
+	var _core = __webpack_require__(6);
+
+	var _private = __webpack_require__(12);
+
+	var _Directives = __webpack_require__(15);
+
+	var _directives = __webpack_require__(13);
+
+	var _events = __webpack_require__(14);
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	var Component = exports.Component = function () {
+	    function Component(root, options) {
+	        _classCallCheck(this, Component);
+
+	        this.root = root;
+	        this.tpl = options.template || 'Empty template';
+	        this.props = new _core.ObservableModel(options.props);
+
+	        // this.root.COMPONENT = this;
+	        Component.setPrivates.call(this, {});
+
+	        this.render();
+	    }
+
+	    _createClass(Component, [{
+	        key: 'render',
+	        value: function render() {
+	            var _this = this;
+
+	            this.root.innerHTML = this.preCompileTpl(this.tpl);
+
+	            this.compile();
+
+	            this.compileRouter();
+	            console.log(this);
+
+	            _directives.DIRECTIVES_NAMES.forEach(function (directive) {
+	                _Directives.Directives._init.call(_this, _this.root, directive, _private.PRIVATES.DIRECTIVES[directive]);
+	            });
+
+	            _events.EVENTS_NAMES.forEach(function (directive) {
+	                _Directives.Directives._initEvent.call(_this, _this.root, directive, _private.PRIVATES.EVENTS);
+	            });
+
+	            _Directives.Directives._model.call(this, _private.PRIVATES.DIRECTIVES['ac-model'].get(this));
+	            _Directives.Directives._on.call(this, _private.PRIVATES.DIRECTIVES['ac-on'].get(this));
+	            _Directives.Directives._outside.call(this, _private.PRIVATES.DIRECTIVES['ac-outside'].get(this));
+	            _Directives.Directives._pattern.call(this, _private.PRIVATES.DIRECTIVES['ac-pattern'].get(this));
+	            _Directives.Directives._elRef.call(this, _private.PRIVATES.DIRECTIVES['ac-ref'].get(this));
+	            _Directives.Directives._events.call(this, _private.PRIVATES.EVENTS.get(this));
+	            _Directives.Directives._hostEvents.call(this, _private.PRIVATES.HOST.EVENTS.get(this));
+
+	            if (_private.PRIVATES.DIRECTIVES['ac-link'].get(this).length || _private.PRIVATES.DIRECTIVES['ac-for'].get(this).length) {
+	                this.routerSub = _core.Router.onChange(function () {
+	                    var a = _this.root.querySelectorAll('[href]');
+	                    a.forEach(function (item) {
+	                        var fullRoute = _core.Router.getCurrentFullPath();
+	                        var attr = item.getAttribute('href');
+	                        var setActive = attr === fullRoute.join('/') || fullRoute[0] === attr && !item.getAttribute('ac-link-exact');
+	                        setActive ? item.classList.add('active') : item.classList.remove('active');
+	                    });
+	                });
+	            }
+
+	            this.props.sub(function (r) {
+	                _Directives.Directives._for.call(_this, _private.PRIVATES.DIRECTIVES['ac-for'].get(_this));
+	                _Directives.Directives._props.call(_this, _private.PRIVATES.DIRECTIVES['ac-value'].get(_this));
+	                _Directives.Directives._input.call(_this, _private.PRIVATES.DIRECTIVES['ac-input'].get(_this));
+	                _Directives.Directives._props.call(_this, _private.PRIVATES.DIRECTIVES['ac-model'].get(_this));
+	                _Directives.Directives._style.call(_this, _private.PRIVATES.DIRECTIVES['ac-style'].get(_this));
+	                _Directives.Directives._if.call(_this, _private.PRIVATES.DIRECTIVES['ac-if'].get(_this));
+	                _Directives.Directives._class.call(_this, _private.PRIVATES.DIRECTIVES['ac-class'].get(_this));
+	                _Directives.Directives._attr.call(_this, _private.PRIVATES.DIRECTIVES['ac-attr'].get(_this));
+	                _Directives.Directives._link.call(_this, _private.PRIVATES.DIRECTIVES['ac-link'].get(_this));
+	                _Directives.Directives._hostClasses.call(_this, _private.PRIVATES.HOST.CLASS.get(_this));
+	                _Directives.Directives._hostStyles.call(_this, _private.PRIVATES.HOST.STYLE.get(_this));
+	                _this.onUpdate();
+	            });
+
+	            this.onInit();
+	        }
+	    }, {
+	        key: 'compile',
+	        value: function compile() {
+	            var _this2 = this;
+
+	            window.COMPONENTS.forEach(function (comp) {
+	                var component = _this2.root.querySelectorAll(comp.selector)[0];
+	                if (component) {
+	                    new comp.c(component); // OR CUT ELEMENT END INSERT NEW ONE
+	                }
+	            });
+	        }
+	    }, {
+	        key: 'compileRouter',
+	        value: function compileRouter() {
+	            var aaa = this.root.querySelectorAll('route-switcher')[0];
+	            if (aaa) {
+	                new _core.RouteSwitcher(aaa);
+	            }
+	        }
+	    }, {
+	        key: 'preCompileTpl',
+	        value: function preCompileTpl(html) {
+	            this.compile(html);
+
+	            _events.EVENTS_NAMES.forEach(function (event) {
+	                var stringToGoIntoTheRegex = '@' + event;
+	                var regex = new RegExp(stringToGoIntoTheRegex, "g");
+	                html = html.replace(regex, 'ac-' + event);
+	            });
+	            // html = this.htmlInterpolation(html);
+	            return html;
+	        }
+	    }, {
+	        key: 'setSubscriptions',
+	        value: function setSubscriptions() {
+	            for (var _len = arguments.length, rest = Array(_len), _key = 0; _key < _len; _key++) {
+	                rest[_key] = arguments[_key];
+	            }
+
+	            _private.PRIVATES.SUBSCRIPTIONS.set(this, rest);
+	        }
+	    }, {
+	        key: 'getComponentVariable',
+	        value: function getComponentVariable(variable, data) {
+	            if (data && (typeof data === 'undefined' ? 'undefined' : _typeof(data)) !== 'object') return data;
+	            return variable.reduce(function (o, i, index) {
+	                if (!o[i] && o[i] !== 0) {
+	                    // in case when variable is undefined
+	                    return index === variable.length - 1 ? null : {};
+	                } else {
+	                    return o[i];
+	                }
+	            }, data || this);
+	        }
+	    }, {
+	        key: 'getElement',
+	        value: function getElement(target) {
+	            return this.root.querySelectorAll(target);
+	        }
+	    }, {
+	        key: 'onUpdate',
+	        value: function onUpdate() {}
+	    }, {
+	        key: 'onInit',
+	        value: function onInit() {}
+	    }], [{
+	        key: 'setPrivates',
+	        value: function setPrivates(custom) {
+	            for (var array in _private.PRIVATES.DIRECTIVES) {
+	                _private.PRIVATES.DIRECTIVES[array].set(this, []);
+	            }
+
+	            _private.PRIVATES.EVENTS.set(this, []);
+	            _private.PRIVATES.SUBSCRIPTIONS.set(this, []);
+	            _private.PRIVATES.GLOBAL_EVENTS.set(this, null);
+	            // PRIVATES.HOST.EVENTS.set(this, custom.hostEvents);
+	            // PRIVATES.HOST.CLASS.set(this, custom.hostClasses);
+	            // PRIVATES.HOST.STYLE.set(this, custom.hostStyles);
+	        }
+	    }]);
+
+	    return Component;
+	}();
+
+/***/ }),
+/* 34 */
+/***/ (function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
 	exports.RouteSwitcher = undefined;
 
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 	exports.RegisterRouteElement = RegisterRouteElement;
 
-	var _routerCore = __webpack_require__(34);
+	var _routerCore = __webpack_require__(35);
 
 	var _routerCore2 = _interopRequireDefault(_routerCore);
 
@@ -2086,16 +2537,71 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
+	// export class RouteSwitcher {
+	//     constructor(routes, root) {
+	//         this.routes = routes;
+	//         this.root = root;
+	//         this.onCreate();
+	//     }
+
+	//     onCreate() {
+	//         this.routes.forEach(route => {
+	//             Router
+	//                 .on(route.path, (params) => {
+	//                     if (this.prevPage !== route.path) { // don't refresh parent router
+	//                         this.root.innerHTML = null;
+	//                         if (params) {
+	//                             window.temporaryObj = Object.assign({ id: parseInt(params) });
+	//                         }
+
+	//                         let newComp = document.createElement(route.component);
+	//                         this.root.appendChild(newComp);
+	//                         this.prevPage = route.path;
+	//                     }
+
+	//                     let router = this.root.querySelectorAll('child-route-switcher')[0];
+	//                     if (router) {
+	//                         router.innerHTML = null;
+	//                         let current = this.routes.filter(item => item.path === route.path)[0];
+	//                         let path = Router.getCurrentFullPath()[1];
+	//                         let child = path ?
+	//                             current.children.filter(item => item.path === path)[0] :
+	//                             current.children.filter(item => item.path === '' || item.path === '/')[0];
+
+	//                         if (this.prevChild !== path || !this.prevChild) {
+	//                             if (child) {
+	//                                 let newComp = document.createElement(child.component);
+	//                                 router.appendChild(newComp);
+	//                             } else {
+	//                                 let newComp = document.createElement('div');
+	//                                 newComp.innerHTML = `Please specify a component for this route <b style="color: red">${Router.getCurrentFullPath().join('/')}</b>!`;
+	//                                 router.appendChild(newComp);
+	//                             }
+	//                             this.prevChild = path;
+	//                         }
+	//                     }
+
+
+	//                 }, route.children);
+	//         });
+	//         Router.update();
+	//     }
+	// }
+
+
 	var RouteSwitcher = exports.RouteSwitcher = function () {
-	    function RouteSwitcher(routes, root) {
+	    function RouteSwitcher(root) {
 	        _classCallCheck(this, RouteSwitcher);
 
-	        this.routes = routes;
+	        this.routes = window.Routes;
 	        this.root = root;
 	        this.onCreate();
 	    }
 
 	    _createClass(RouteSwitcher, [{
+	        key: 'compile',
+	        value: function compile() {}
+	    }, {
 	        key: 'onCreate',
 	        value: function onCreate() {
 	            var _this = this;
@@ -2109,12 +2615,22 @@ return /******/ (function(modules) { // webpackBootstrap
 	                            window.temporaryObj = Object.assign({ id: parseInt(params) });
 	                        }
 
-	                        var newComp = document.createElement(route.component);
-	                        _this.root.appendChild(newComp);
+	                        var newCompEmpty = window.COMPONENTS.filter(function (r) {
+	                            return r.selector === route.component;
+	                        })[0];
+	                        if (newCompEmpty) {
+	                            var newComp = document.createElement(route.component);
+	                            _this.root.appendChild(newComp);
+	                            new newCompEmpty.c(newComp);
+	                        } else {
+	                            _this.appendEmpty(_this.root);
+	                        }
+
 	                        _this.prevPage = route.path;
 	                    }
 
 	                    var router = _this.root.querySelectorAll('child-route-switcher')[0];
+
 	                    if (router) {
 	                        router.innerHTML = null;
 	                        var current = _this.routes.filter(function (item) {
@@ -2131,10 +2647,12 @@ return /******/ (function(modules) { // webpackBootstrap
 	                            if (child) {
 	                                var _newComp = document.createElement(child.component);
 	                                router.appendChild(_newComp);
+	                                var _newCompEmpty = window.COMPONENTS.filter(function (r) {
+	                                    return r.selector === child.component;
+	                                })[0];
+	                                new _newCompEmpty.c(_newComp);
 	                            } else {
-	                                var _newComp2 = document.createElement('div');
-	                                _newComp2.innerHTML = 'Please specify a component for this route <b style="color: red">' + _routerCore2.default.getCurrentFullPath().join('/') + '</b>!';
-	                                router.appendChild(_newComp2);
+	                                _this.appendEmpty(router);
 	                            }
 	                            _this.prevChild = path;
 	                        }
@@ -2142,6 +2660,13 @@ return /******/ (function(modules) { // webpackBootstrap
 	                }, route.children);
 	            });
 	            _routerCore2.default.update();
+	        }
+	    }, {
+	        key: 'appendEmpty',
+	        value: function appendEmpty(root) {
+	            var newComp = document.createElement('div');
+	            newComp.innerHTML = 'Please specify a component for this route <b style="color: red">' + _routerCore2.default.getCurrentFullPath().join('/') + '</b>!';
+	            root.appendChild(newComp);
 	        }
 	    }]);
 
@@ -2167,7 +2692,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	}
 
 /***/ }),
-/* 34 */
+/* 35 */
 /***/ (function(module, exports) {
 
 	'use strict';
@@ -2312,271 +2837,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	}();
 
 	exports.default = new Router();
-
-/***/ }),
-/* 35 */
-/***/ (function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
-	    value: true
-	});
-	exports.Component = undefined;
-
-	var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
-
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-	var _core = __webpack_require__(6);
-
-	var _private = __webpack_require__(12);
-
-	var _directives = __webpack_require__(13);
-
-	var _events = __webpack_require__(14);
-
-	var _Directives = __webpack_require__(15);
-
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-	var Component = exports.Component = function () {
-	    function Component() {
-	        var _this = this;
-
-	        var options = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
-	        var custom = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
-
-	        _classCallCheck(this, Component);
-
-	        this.tpl = this.tpl || custom.template || 'Empty template';
-	        // this.styles = custom.styles;
-	        this.shadow = custom.shadow || false;
-	        this.type = custom.type;
-
-	        this.props = new _core.ObservableModel(options.props);
-	        this.root = null;
-
-	        Component.setPrivates.call(this, custom);
-
-	        this.ui = {};
-	        // console.log(options.ce.attributes);
-	        if (options.ce.getAttribute('ac-for')) {
-	            // console.warn('Foor loop is detected!')
-	        } else {
-	            options.ce ? Component.render.call(this, options.ce) : console.warn('Component data is expected. See your component constructor!');
-	            this.props.sub(function (r) {
-	                _Directives.Directives._for.call(_this, _private.PRIVATES.DIRECTIVES['ac-for'].get(_this));
-	                _Directives.Directives._props.call(_this, _private.PRIVATES.DIRECTIVES['ac-value'].get(_this));
-	                _Directives.Directives._input.call(_this, _private.PRIVATES.DIRECTIVES['ac-input'].get(_this));
-	                _Directives.Directives._props.call(_this, _private.PRIVATES.DIRECTIVES['ac-model'].get(_this));
-	                _Directives.Directives._style.call(_this, _private.PRIVATES.DIRECTIVES['ac-style'].get(_this));
-	                _Directives.Directives._if.call(_this, _private.PRIVATES.DIRECTIVES['ac-if'].get(_this));
-	                _Directives.Directives._class.call(_this, _private.PRIVATES.DIRECTIVES['ac-class'].get(_this));
-	                _Directives.Directives._attr.call(_this, _private.PRIVATES.DIRECTIVES['ac-attr'].get(_this));
-	                _Directives.Directives._link.call(_this, _private.PRIVATES.DIRECTIVES['ac-link'].get(_this));
-	                _Directives.Directives._hostClasses.call(_this, _private.PRIVATES.HOST.CLASS.get(_this));
-	                _Directives.Directives._hostStyles.call(_this, _private.PRIVATES.HOST.STYLE.get(_this));
-	                _this.onUpdate();
-	            });
-	        }
-	    }
-
-	    _createClass(Component, [{
-	        key: 'setSubscriptions',
-	        value: function setSubscriptions() {
-	            for (var _len = arguments.length, rest = Array(_len), _key = 0; _key < _len; _key++) {
-	                rest[_key] = arguments[_key];
-	            }
-
-	            _private.PRIVATES.SUBSCRIPTIONS.set(this, rest);
-	        }
-	    }, {
-	        key: 'preCompileTpl',
-	        value: function preCompileTpl(html) {
-	            console.time('111');
-	            _events.EVENTS_NAMES.forEach(function (event) {
-	                var stringToGoIntoTheRegex = '@' + event;
-	                var regex = new RegExp(stringToGoIntoTheRegex, "g");
-	                html = html.replace(regex, 'ac-' + event);
-	            });
-	            html = this.htmlInterpolation(html);
-	            return html;
-	        }
-	    }, {
-	        key: 'htmlInterpolation',
-	        value: function htmlInterpolation(html) {
-	            // let regExp =  /{{([^}]+)}}/g; 
-	            // let fnParams = regExp.exec(html); // get value between brackets
-	            // let args = [];
-
-	            // if(fnParams) {
-	            //     // let arg = new Function('return ' + fnParams[1]).apply(this);
-	            //     // html = html.replace(regExp, arg);
-	            //     console.log(html);
-	            // }
-	            return html;
-	        }
-	    }, {
-	        key: 'INPUT',
-	        value: function INPUT() {}
-
-	        /***********************************************/
-
-	        // static on(event, f) {
-	        //     this.root.addEventListener(event, (e) => {
-	        //         e.stopPropagation(); // to prevent further propagation
-	        //         f.call(this, e, e.detail);
-	        //     });
-	        // }
-
-	    }, {
-	        key: 'emit',
-	        value: function emit(event, data, parentName) {
-	            var myEvent = new CustomEvent(event, {
-	                detail: data,
-	                bubbles: true,
-	                cancelable: false
-	            });
-
-	            if (parentName) {
-	                this.getParentComponent(parentName).dispatchEvent(myEvent);
-	            } else {
-	                this.root.dispatchEvent(myEvent);
-	            }
-	        }
-
-	        // broadcast(q, name, data) {
-	        //     let myEvent = new CustomEvent(event, {
-	        //         detail: data,
-	        //         bubbles: true,
-	        //         cancelable: false
-	        //     });
-	        //     q.dispatchEvent(myEvent);
-	        // }
-
-	    }, {
-	        key: 'onCreate',
-	        value: function onCreate() {}
-	    }, {
-	        key: 'onUpdate',
-	        value: function onUpdate() {}
-	    }, {
-	        key: 'onDestroy',
-	        value: function onDestroy() {}
-	    }, {
-	        key: 'onInit',
-	        value: function onInit() {}
-	    }, {
-	        key: 'onAttach',
-	        value: function onAttach() {}
-	    }, {
-	        key: 'getElement',
-	        value: function getElement(target) {
-	            return this.root.querySelectorAll(target);
-	        }
-	    }, {
-	        key: 'getRoot',
-	        value: function getRoot() {
-	            return this.root;
-	        }
-	    }, {
-	        key: 'getComponentVariable',
-	        value: function getComponentVariable(variable, data) {
-	            if (data && (typeof data === 'undefined' ? 'undefined' : _typeof(data)) !== 'object') return data;
-	            return variable.reduce(function (o, i, index) {
-	                if (!o[i] && o[i] !== 0) {
-	                    // in case when variable is undefined
-	                    return index === variable.length - 1 ? null : {};
-	                } else {
-	                    return o[i];
-	                }
-	            }, data || this);
-	        }
-	    }, {
-	        key: 'getParentComponent',
-	        value: function getParentComponent(parentName) {
-	            var root = this.root;
-	            while (root && parentName !== root.constructor.name) {
-	                root = root.parentNode;
-	            }
-	            return root;
-	        }
-	    }], [{
-	        key: 'setPrivates',
-	        value: function setPrivates(custom) {
-	            for (var array in _private.PRIVATES.DIRECTIVES) {
-	                _private.PRIVATES.DIRECTIVES[array].set(this, []);
-	            }
-
-	            _private.PRIVATES.EVENTS.set(this, []);
-	            _private.PRIVATES.SUBSCRIPTIONS.set(this, []);
-	            _private.PRIVATES.GLOBAL_EVENTS.set(this, null);
-	            _private.PRIVATES.HOST.EVENTS.set(this, custom.hostEvents);
-	            _private.PRIVATES.HOST.CLASS.set(this, custom.hostClasses);
-	            _private.PRIVATES.HOST.STYLE.set(this, custom.hostStyles);
-	        }
-	    }, {
-	        key: 'render',
-	        value: function render(o) {
-	            var _this2 = this;
-
-	            this.onCreate();
-	            this.root = this.shadow ? o.createShadowRoot() : o;
-	            this.root.innerHTML = this.preCompileTpl(this.tpl);
-	            // this.loadStyle();
-
-	            _directives.DIRECTIVES_NAMES.forEach(function (directive) {
-	                _Directives.Directives._init.call(_this2, _this2.root, directive, _private.PRIVATES.DIRECTIVES[directive]);
-	            });
-
-	            _events.EVENTS_NAMES.forEach(function (directive) {
-	                _Directives.Directives._initEvent.call(_this2, _this2.root, directive, _private.PRIVATES.EVENTS);
-	            });
-
-	            _Directives.Directives._model.call(this, _private.PRIVATES.DIRECTIVES['ac-model'].get(this));
-	            _Directives.Directives._on.call(this, _private.PRIVATES.DIRECTIVES['ac-on'].get(this));
-	            _Directives.Directives._outside.call(this, _private.PRIVATES.DIRECTIVES['ac-outside'].get(this));
-	            _Directives.Directives._pattern.call(this, _private.PRIVATES.DIRECTIVES['ac-pattern'].get(this));
-	            _Directives.Directives._elRef.call(this, _private.PRIVATES.DIRECTIVES['ac-ref'].get(this));
-	            _Directives.Directives._events.call(this, _private.PRIVATES.EVENTS.get(this));
-	            _Directives.Directives._hostEvents.call(this, _private.PRIVATES.HOST.EVENTS.get(this));
-
-	            if (_private.PRIVATES.DIRECTIVES['ac-link'].get(this).length || _private.PRIVATES.DIRECTIVES['ac-for'].get(this).length) {
-	                this.routerSub = _core.Router.onChange(function () {
-	                    var a = _this2.root.querySelectorAll('[href]');
-	                    a.forEach(function (item) {
-	                        var fullRoute = _core.Router.getCurrentFullPath();
-	                        var attr = item.getAttribute('href');
-	                        var setActive = attr === fullRoute.join('/') || fullRoute[0] === attr && !item.getAttribute('ac-link-exact');
-	                        setActive ? item.classList.add('active') : item.classList.remove('active');
-	                    });
-	                });
-	            }
-	            this.onInit();
-	        }
-	    }, {
-	        key: 'destroy',
-	        value: function destroy() {
-	            _Directives.Directives.removeEventListeners.call(this, _private.PRIVATES.EVENTS.get(this));
-	            // unsubscribe from global events
-	            if (_private.PRIVATES.GLOBAL_EVENTS.get(this)) {
-	                _private.PRIVATES.GLOBAL_EVENTS.get(this).unsubscribe();
-	            }
-	            //unsubscribe from router changes
-	            if (this.routerSub) {
-	                // console.log('destroyed', this);
-	                this.routerSub.unsubscribe();
-	            }
-	            _private.PRIVATES.SUBSCRIPTIONS.get(this).forEach(function (item) {
-	                return item.unsubscribe();
-	            });
-	            this.onDestroy();
-	        }
-	    }]);
-
-	    return Component;
-	}();
 
 /***/ }),
 /* 36 */
@@ -3238,6 +3498,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	            return this.hMRequest('get', url).then(function (res) {
 	                _this3.catalog.set(res);
 	                return res;
+	            }).catch(function (err) {
+	                alert('Internal error');
 	            });
 	        }
 	    }, {

@@ -217,7 +217,7 @@
 
 
 
-import { Router, ObservableModel } from '../core';
+import { Router, RouteSwitcher, ObservableModel } from '../core';
 import { PRIVATES } from '../component/private';
 import { Directives } from '../component/Directives';
 import { DIRECTIVES_NAMES } from '../component/const/directives';
@@ -230,6 +230,13 @@ export class Component {
         this.tpl = options.template || 'Empty template';
         this.props = new ObservableModel(options.props);
 
+        // this.root.COMPONENT = this;
+        Component.setPrivates.call(this, {});
+
+        this.render();
+    }
+
+    static setPrivates(custom) {
         for (let array in PRIVATES.DIRECTIVES) {
             PRIVATES.DIRECTIVES[array].set(this, []);
         }
@@ -240,6 +247,44 @@ export class Component {
         // PRIVATES.HOST.EVENTS.set(this, custom.hostEvents);
         // PRIVATES.HOST.CLASS.set(this, custom.hostClasses);
         // PRIVATES.HOST.STYLE.set(this, custom.hostStyles);
+    }
+
+    render() {
+        this.root.innerHTML = this.preCompileTpl(this.tpl);
+
+        this.compile();
+
+        this.compileRouter();
+console.log(this);
+        
+        DIRECTIVES_NAMES.forEach(directive => {
+            Directives._init.call(this, this.root, directive, PRIVATES.DIRECTIVES[directive]);
+        });
+
+
+        EVENTS_NAMES.forEach(directive => {
+            Directives._initEvent.call(this, this.root, directive, PRIVATES.EVENTS);
+        });
+
+        Directives._model.call(this, PRIVATES.DIRECTIVES['ac-model'].get(this));
+        Directives._on.call(this, PRIVATES.DIRECTIVES['ac-on'].get(this));
+        Directives._outside.call(this, PRIVATES.DIRECTIVES['ac-outside'].get(this));
+        Directives._pattern.call(this, PRIVATES.DIRECTIVES['ac-pattern'].get(this));
+        Directives._elRef.call(this, PRIVATES.DIRECTIVES['ac-ref'].get(this));
+        Directives._events.call(this, PRIVATES.EVENTS.get(this));   
+        Directives._hostEvents.call(this, PRIVATES.HOST.EVENTS.get(this));
+
+        if (PRIVATES.DIRECTIVES['ac-link'].get(this).length || PRIVATES.DIRECTIVES['ac-for'].get(this).length) {
+            this.routerSub = Router.onChange(() => { 
+                let a = this.root.querySelectorAll('[href]');  
+                a.forEach(item => {
+                    let fullRoute = Router.getCurrentFullPath();
+                    let attr = item.getAttribute('href');
+                    let setActive = attr === fullRoute.join('/') || (fullRoute[0] === attr && !item.getAttribute('ac-link-exact'))
+                    setActive ? item.classList.add('active') : item.classList.remove('active')
+                });
+            });
+        }
 
         this.props.sub(r => {
                 Directives._for.call(this, PRIVATES.DIRECTIVES['ac-for'].get(this));
@@ -255,53 +300,42 @@ export class Component {
                 Directives._hostStyles.call(this, PRIVATES.HOST.STYLE.get(this));
             this.onUpdate();
         });
-
-        this.render();
-    }
-
-    render() {
-        this.root.innerHTML = this.tpl;
-
-        DIRECTIVES_NAMES.forEach(directive => {
-            Directives._init.call(this, this.root, directive, PRIVATES.DIRECTIVES[directive]);
-        });
-
-        EVENTS_NAMES.forEach(directive => {
-            Directives._initEvent.call(this, this.root, directive, PRIVATES.EVENTS);
-        });
-
-        Directives._model.call(this, PRIVATES.DIRECTIVES['ac-model'].get(this));
-        Directives._on.call(this, PRIVATES.DIRECTIVES['ac-on'].get(this));
-        Directives._outside.call(this, PRIVATES.DIRECTIVES['ac-outside'].get(this));
-        Directives._pattern.call(this, PRIVATES.DIRECTIVES['ac-pattern'].get(this));
-        Directives._elRef.call(this, PRIVATES.DIRECTIVES['ac-ref'].get(this));
-        Directives._events.call(this, PRIVATES.EVENTS.get(this));
-        Directives._hostEvents.call(this, PRIVATES.HOST.EVENTS.get(this));
-
-        if (PRIVATES.DIRECTIVES['ac-link'].get(this).length || PRIVATES.DIRECTIVES['ac-for'].get(this).length) {
-            this.routerSub = Router.onChange(() => {
-                let a = this.root.querySelectorAll('[href]');
-                a.forEach(item => {
-                    let fullRoute = Router.getCurrentFullPath();
-                    let attr = item.getAttribute('href');
-                    let setActive = attr === fullRoute.join('/') || (fullRoute[0] === attr && !item.getAttribute('ac-link-exact'))
-                    setActive ? item.classList.add('active') : item.classList.remove('active')
-                });
-            });
-        }
-        this.onInit();
-        this.compile();
+        
+        this.onInit();    
     }
 
     compile() {
-        COMPONENTS.forEach(comp => {console.log(this.root, comp.selector);
+        window.COMPONENTS.forEach(comp => {
             let component = this.root.querySelectorAll(comp.selector)[0];
             if (component) {
-                new comp.c(component);
+                new comp.c(component); // OR CUT ELEMENT END INSERT NEW ONE
             }
         });
     }
 
+    compileRouter() {
+        let aaa = this.root.querySelectorAll('route-switcher')[0];
+        if(aaa){
+            new RouteSwitcher(aaa);
+        }  
+    }
+
+    preCompileTpl(html) {
+        this.compile(html);
+
+        EVENTS_NAMES.forEach(event=>{
+            let stringToGoIntoTheRegex = '@'+event;
+            let regex = new RegExp(stringToGoIntoTheRegex, "g");
+            html = html.replace(regex, `ac-${event}`)
+        });
+        // html = this.htmlInterpolation(html);
+        return html
+    }
+
+    setSubscriptions(...rest) {
+        PRIVATES.SUBSCRIPTIONS.set(this, rest);
+    }
+    
     getComponentVariable(variable, data) {
         if (data && typeof data !== 'object') return data;
         return variable.reduce((o, i, index) => {
@@ -311,6 +345,10 @@ export class Component {
                 return o[i]
             }
         }, data || this)
+    }
+
+    getElement(target) {
+        return this.root.querySelectorAll(target);
     }
 
     onUpdate() {

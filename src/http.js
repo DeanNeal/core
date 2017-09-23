@@ -129,7 +129,9 @@ class HttpModule {
             .then(res => {
                 this.catalog.set(res);
                 return res;
-            });
+            }).catch(err=>{
+                alert('Internal error');
+            })
     }
 
     getModel(response) {

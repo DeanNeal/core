@@ -100,32 +100,29 @@ export function Register(options) {
         loadStyle(options.styles);
     }
 
+    if (options.serverUrl) {
+        Http.setServerUrl(options.serverUrl);
+    }
+
+    window.COMPONENTS = options.components;
+    window.Routes = options.routes;
+
+    options.modules.forEach(module => {
+        module.forEach(component => {
+             registerComponent(component);
+        });
+    });
+
+
     new RootComponent(options.root);
+}
 
-    // if (options.serverUrl) {
-    //     Http.setServerUrl(options.serverUrl);
-    // }
-
-    // options.components.forEach(component => {
-    //     registerComponent(component);
-    // });
-
-    // options.modules.forEach(module => {
-    //     module.forEach(component => {
-    //         registerComponent(component);
-    //     });
-    // });
-
-    // if (!options.routes) {
-    //     console.warn('You should set routes!');
-    // } else {
-    //     new RegisterRouteElement(options.routes);
-    // }
-
-    // if (options.onReady) {
-    //     options.onReady.call(this);
-    // }
-    // console.timeEnd('modules')
+function registerComponent(component) {
+    if (component.c instanceof Component.constructor) {
+        window.COMPONENTS.push(component);
+    } else {
+        console.warn('Wrong type of component');
+    }
 }
 
 
