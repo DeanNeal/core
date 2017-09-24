@@ -2,7 +2,7 @@
  * ace-js 0.2.0
  * May be freely distributed under the MIT license 
  * Author: Bogdan Zinkevich
- * Last update: 2017-9-24 13:28:55
+ * Last update: 2017-9-24 18:48:04
  * 
  */
 (function webpackUniversalModuleDefinition(root, factory) {
@@ -82,7 +82,7 @@ return /******/ (function(modules) { // webpackBootstrap
 /******/ 	}
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "b568aa491ab23e65a6d1"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "5c2743884077ec0f356e"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
 /******/ 	
@@ -1426,15 +1426,13 @@ return /******/ (function(modules) { // webpackBootstrap
 	                });
 	                item.items = [];
 	                for (var _i2 = 0; _i2 <= array.length - 1; _i2++) {
-	                    // window.temporaryObj = Object.assign({}, array[i]);
-	                    // let newEl = document.createElement(compName);
 	                    var newComp = _core.Component.COMPONENTS.filter(function (r) {
 	                        return r.selector === compName;
 	                    })[0];
 	                    // if(newComp) {
 	                    var newEl = document.createElement(compName);
 	                    _this.root.appendChild(newEl);
-	                    new newComp.c(newEl, array[_i2]);
+	                    new newComp.c(newEl, Object.assign({}, array[_i2]));
 	                    // }
 
 	                    // loop through the old element's attributes and give them to the new element
