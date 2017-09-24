@@ -73,46 +73,83 @@ export class Collection {
     }
 }
 
+
+
 class HttpModule {
     constructor() {
         this.catalog = new ObservableModel();
         this.server = '';
     }
 
-    get(url, params, settings) {
-        const urlParams = new URLSearchParams();
-        let newParams = '';
-        for (let key in params) {
-            urlParams.set(key, params[key]);
-        }
+    makeRequest(opts) {
+        return new Promise((resolve, reject) => {
+            let xhr = new XMLHttpRequest();
+            xhr.open(opts.method, this.server + opts.url);
+            xhr.onload = function() {
+                if (this.status >= 200 && this.status < 300) {
+                    resolve(xhr.response);
+                } else {
+                    reject({
+                        status: this.status,
+                        statusText: xhr.statusText,
+                        response: JSON.parse(xhr.response)
+                    });
+                }
+            };
+            xhr.onerror = function() {
+                reject({
+                    status: this.status,
+                    statusText: xhr.statusText
+                });
+            };
+            if (opts.headers) {
+                for(let key of opts.headers.keys()) {
+                    xhr.setRequestHeader(key, opts.headers.get(key));
+                }
+            }
 
-        if (params && Object.keys(params).length) {
-            newParams += '?' + urlParams.toString();
-        }
+            let params = opts.params;
 
-        return this.request('get', url + newParams, params, settings);
-    }
-    post(url, params, settings) {
-        return this.request('post', url, params, settings);
-    }
-    put(url, params, settings) {
-        return this.request('put', url, params, settings);
-    }
-    delete(url, params, settings) {
-        return this.request('delete', url, params, settings);
-    }
-    request(type, url, params = {}, settings = {}) {
-        return fetch(this.server + url, {
-            method: type,
-            headers: settings.headers,
-            body: params
+            if (opts.method.toLowerCase() === 'get') {
+                if (params && typeof params === 'object') {
+                    params = Object.keys(params).map(function(key) {
+                        return encodeURIComponent(key) + '=' + encodeURIComponent(params[key]);
+                    }).join('&');
+                }
+            }
+
+            if (opts.method.toLowerCase() === 'post' || opts.method.toLowerCase() === 'put') {
+                params = JSON.stringify(params);
+            }
+
+            xhr.send(params);
         });
     }
-    remoteRequest(type, url, params) {
-        return fetch(url, {
-            method: type,
-            body: params
-        }).then(res => res.json());
+
+    getParams(params) {
+        if (params && typeof params === 'object') {
+            params = Object.keys(params).map(function(key) {
+                return encodeURIComponent(key) + '=' + encodeURIComponent(params[key]);
+            }).join('&');
+        }
+        return params;
+    }
+
+
+    get(url, params, headers) {
+        return this.makeRequest({ method: 'get', url, params, headers});
+    }
+
+    post(url, params, headers) {
+        return this.makeRequest({ method: 'post', url, params, headers });
+    }
+
+    put(url, params, headers) {
+        return this.makeRequest({ method: 'put', url, params, headers });
+    }
+
+    delete(url, params, headers) {
+        return this.makeRequest({ method: 'delete', url, params: {}, headers });
     }
 
     setServerUrl(url) {
@@ -129,9 +166,7 @@ class HttpModule {
             .then(res => {
                 this.catalog.set(res);
                 return res;
-            }).catch(err=>{
-                alert('Internal error');
-            })
+            });
     }
 
     getModel(response) {
@@ -174,9 +209,14 @@ class HttpModule {
     hMRequest(method, url, args = {}, id = '') {
         let sub;
         const context = this;
+
+        if(id) {
+            url += '/' + id
+        }
+
         switch (method) {
             case 'get':
-                sub = this.middleware(this[method](url, args, { headers: context.getGetHeaders() }));
+                sub = this.middleware(this[method](url, args, this.getGetHeaders()));
                 break;
             case 'post':
                 sub = this.middleware(this[method](url, args, this.getHeaders()));
@@ -196,20 +236,21 @@ class HttpModule {
     // 
     middleware(response) {
         return response
-            .then(res => res.json())
+            .then(res => JSON.parse(res))
             .then(res => this.createEntity(res))
             .catch(err => {
-                return null;
+                return Promise.reject(err)
             });
     }
 
     getHeaders() {
         const headers = new Headers();
-        let token = JSON.parse(localStorage.getItem('token'));
+        let token = localStorage.getItem('token');
+        headers.append('Content-Type', `application/json`);
         if (token) {
             headers.append('Authorization', `Bearer ${token}`);
         }
-        return { headers: headers };
+        return headers;
     }
 
     getGetHeaders() {
