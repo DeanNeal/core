@@ -9,6 +9,10 @@
         constructor(params) {
             super(params, {
                 <b>template</b>: Tpl,
+                <b>props</b>: {
+                    title: 'Some title'        
+                }
+                
                 <b>hostEvents</b>: {
                     click: 'rootClick'
                 },
@@ -33,6 +37,11 @@
 <div class="block">
     <b class="title">template</b>
     <span class="text">Specifies <b>Tpl</b> template for current component </span>
+</div>
+
+<div class="block">
+    <b class="title">props</b>
+    <span class="text">Initial properties of component</span>
 </div>
 
 <div class="block">

@@ -1,7 +1,7 @@
 import {Component, Router, Http} from 'core';
-import Tpl from './container.component.html';
+import Tpl from './root.component.html';
 
-export class ContainerComponent extends Component {
+export class RootComponent extends Component {
     constructor(params) {
         super(params, {
             template: Tpl
