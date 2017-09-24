@@ -1,8 +1,8 @@
 /*!
- * ace-js 0.1.15
+ * ace-js 0.2.0
  * May be freely distributed under the MIT license 
  * Author: Bogdan Zinkevich
- * Last update: 2017-9-24 12:48:20
+ * Last update: 2017-9-24 13:28:55
  * 
  */
 (function webpackUniversalModuleDefinition(root, factory) {
@@ -82,7 +82,7 @@ return /******/ (function(modules) { // webpackBootstrap
 /******/ 	}
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "2debd3e016cc88cfb171"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "b568aa491ab23e65a6d1"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
 /******/ 	
