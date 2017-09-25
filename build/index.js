@@ -2,7 +2,7 @@
  * ace-js 0.2.1
  * May be freely distributed under the MIT license 
  * Author: Bogdan Zinkevich
- * Last update: 2017-9-24 19:06:27
+ * Last update: 2017-9-25 23:51:52
  * 
  */
 (function webpackUniversalModuleDefinition(root, factory) {
@@ -82,7 +82,7 @@ return /******/ (function(modules) { // webpackBootstrap
 /******/ 	}
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "b406e0935fa4a2bb01e2"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "3096410a8ac88df93597"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
 /******/ 	
@@ -1897,18 +1897,21 @@ return /******/ (function(modules) { // webpackBootstrap
 	            listeners.forEach(function (listener) {
 	                var eventName = listener.split(':')[0];
 	                var fn = _this[listener.split(':')[1]];
-	                on.call(_this, eventName, fn);
+	                on.call(_this, eventName, fn, item.elem);
 	            });
 	        }
 	    });
 	}
 
-	function on(event, f) {
+	function on(event, f, el) {
 	    var _this2 = this;
 
 	    this.root.addEventListener(event, function (e) {
-	        e.stopPropagation(); // to prevent further propagation
-	        f.call(_this2, e, e.detail);
+	        if (e.target === el) {
+	            // listen to current component changes        
+	            e.stopPropagation(); // to prevent further propagation
+	            f.call(_this2, e, e.detail);
+	        }
 	    });
 	}
 

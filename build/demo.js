@@ -2,7 +2,7 @@
  * ace-js 0.2.1
  * May be freely distributed under the MIT license 
  * Author: Bogdan Zinkevich
- * Last update: 2017-9-24 19:06:27
+ * Last update: 2017-9-25 23:51:52
  * 
  */
 (function webpackUniversalModuleDefinition(root, factory) {
@@ -82,7 +82,7 @@ return /******/ (function(modules) { // webpackBootstrap
 /******/ 	}
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "b406e0935fa4a2bb01e2"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "3096410a8ac88df93597"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
 /******/ 	
@@ -2024,18 +2024,21 @@ return /******/ (function(modules) { // webpackBootstrap
 	            listeners.forEach(function (listener) {
 	                var eventName = listener.split(':')[0];
 	                var fn = _this[listener.split(':')[1]];
-	                on.call(_this, eventName, fn);
+	                on.call(_this, eventName, fn, item.elem);
 	            });
 	        }
 	    });
 	}
 
-	function on(event, f) {
+	function on(event, f, el) {
 	    var _this2 = this;
 
 	    this.root.addEventListener(event, function (e) {
-	        e.stopPropagation(); // to prevent further propagation
-	        f.call(_this2, e, e.detail);
+	        if (e.target === el) {
+	            // listen to current component changes        
+	            e.stopPropagation(); // to prevent further propagation
+	            f.call(_this2, e, e.detail);
+	        }
 	    });
 	}
 
@@ -4083,7 +4086,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	"use strict";
 
-	module.exports = "<h3>Architecture</h3>\r\n<b>Please follow this file structure:</b>\r\n<br><br>\r\n<div class=\"code-block folder-structure\">\r\n    <div class=\"folder-structure--item\">\r\n        AceJs project\r\n        <div class=\"children\">\r\n            <div class=\"folder-structure--item\">\r\n                dev\r\n            </div>\r\n            <div class=\"children\">\r\n                <div class=\"folder-structure--item\">components</div>\r\n                <div class=\"children\">\r\n                \t<div class=\"folder-structure--item\">component-one</div>\r\n                \t<div class=\"children\">\r\n                \t\t<div class=\"folder-structure--item\">component-one.component.js</div>\r\n                \t\t<div class=\"folder-structure--item\">component-one.component.html</div>\r\n                \t</div>\r\n                \t<div class=\"folder-structure--item\">component-two</div>\r\n                \t<div class=\"folder-structure--item\">component ...</div>\r\n                </div>\r\n                <div class=\"folder-structure--item\">stores</div>\r\n                <div class=\"folder-structure--item\">styles</div>\r\n                <div class=\"folder-structure--item\">app.js</div>\r\n                <div class=\"folder-structure--item\">assets\r\n                </div>\r\n                <div class=\"children\">\r\n                    <div class=\"folder-structure--item\">img</div>\r\n                    <div class=\"folder-structure--item\">fonts</div>\r\n                </div>\r\n                <div class=\"folder-structure--item\">routes.js</div>\r\n            </div>\r\n            <div class=\"folder-structure--item\">index.html</div>\r\n            <div class=\"folder-structure--item\">node_modules</div>\r\n            <div class=\"folder-structure--item\">package.json</div>\r\n            <div class=\"folder-structure--item\">webpack.config.js</div>\r\n        </div>\r\n    </div>\r\n</div>\r\n\r\n<br>\r\n<b>You can see basic principles of AceJs on following picture: </b>\r\n<img src=\"" + __webpack_require__(58) + "\">\r\n\r\n\r\n<br><br>\r\n<div class=\"code-block\">\r\n    <div class=\"code-header\">app.js</div>\r\n    <pre>\r\n        import Styles from './styles/main.scss';\r\n        import { Register } from '../core';\r\n\r\n        import { HomeComponent } from './components/home/home.component';\r\n        import { ContainerComponent } from './components/container/container.component';\r\n        import { HeaderComponent } from './components/header/header.component';\r\n\r\n        import Docs from './components/documentation';\r\n\r\n        import { Routes } from './router.js';\r\n        <b>Register</b>({\r\n            <b>components</b>: [\r\n                { c: HomeComponent, selector: 'app-home' },\r\n                { c: ContainerComponent, selector: 'app-container' },\r\n                { c: HeaderComponent, selector: 'app-header' }\r\n            ],\r\n            <b>modules</b>: [\r\n                Docs\r\n            ],\r\n            <b>serverUrl</b>: \"\",\r\n            <b>routes</b>: Routes,\r\n            <b>styles</b>: Styles\r\n        });\r\n    </pre>\r\n</div>";
+	module.exports = "<h3>Architecture</h3>\r\n<b>Please follow this file structure:</b>\r\n<br><br>\r\n<div class=\"code-block folder-structure\">\r\n    <div class=\"folder-structure--item\">\r\n        AceJs project\r\n        <div class=\"children\">\r\n            <div class=\"folder-structure--item\">\r\n                dev\r\n            </div>\r\n            <div class=\"children\">\r\n                <div class=\"folder-structure--item\">components</div>\r\n                <div class=\"children\">\r\n                \t<div class=\"folder-structure--item\">component-one</div>\r\n                \t<div class=\"children\">\r\n                \t\t<div class=\"folder-structure--item\">component-one.component.js</div>\r\n                \t\t<div class=\"folder-structure--item\">component-one.component.html</div>\r\n                \t</div>\r\n                \t<div class=\"folder-structure--item\">component-two</div>\r\n                \t<div class=\"folder-structure--item\">component ...</div>\r\n                </div>\r\n                <div class=\"folder-structure--item\">stores</div>\r\n                <div class=\"folder-structure--item\">styles</div>\r\n                <div class=\"folder-structure--item\">app.js</div>\r\n                <div class=\"folder-structure--item\">assets\r\n                </div>\r\n                <div class=\"children\">\r\n                    <div class=\"folder-structure--item\">img</div>\r\n                    <div class=\"folder-structure--item\">fonts</div>\r\n                </div>\r\n                <div class=\"folder-structure--item\">routes.js</div>\r\n            </div>\r\n            <div class=\"folder-structure--item\">index.html</div>\r\n            <div class=\"folder-structure--item\">node_modules</div>\r\n            <div class=\"folder-structure--item\">package.json</div>\r\n            <div class=\"folder-structure--item\">webpack.config.js</div>\r\n        </div>\r\n    </div>\r\n</div>\r\n\r\n<br>\r\n<b>You can see basic principles of AceJs on following picture: </b>\r\n<img src=\"" + __webpack_require__(58) + "\">\r\n\r\n\r\n<br><br>\r\n<div class=\"code-block\">\r\n    <div class=\"code-header\">app.js</div>\r\n    <pre>\r\n        import Styles from './styles/main.scss';\r\n        import { Register } from '../core';\r\n        import { RootComponent } from './components/root/root.component';\r\n        import { HomeComponent } from './components/home/home.component';\r\n        import { HeaderComponent } from './components/header/header.component';\r\n\r\n        import Docs from './components/documentation';\r\n\r\n        import { Routes } from './router.js';\r\n        <b>Register</b>({\r\n            <b>root</b>: {\r\n                c: RootComponent, selector: 'app-root'\r\n            },\r\n            <b>components</b>: [\r\n                { c: HomeComponent, selector: 'app-home' },\r\n                { c: HeaderComponent, selector: 'app-header' }\r\n            ],\r\n            <b>modules</b>: [\r\n                Docs\r\n            ],\r\n            <b>serverUrl</b>: \"\",\r\n            <b>routes</b>: Routes,\r\n            <b>styles</b>: Styles\r\n        });\r\n    </pre>\r\n</div>";
 
 /***/ }),
 /* 58 */
