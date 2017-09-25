@@ -1,8 +1,8 @@
 /*!
- * ace-js 0.1.18
+ * ace-js 0.2.2
  * May be freely distributed under the MIT license 
  * Author: Bogdan Zinkevich
- * Last update: 2017-9-22 12:42:55
+ * Last update: 2017-9-26 00:01:43
  * 
  */
 (function webpackUniversalModuleDefinition(root, factory) {
@@ -82,7 +82,7 @@ return /******/ (function(modules) { // webpackBootstrap
 /******/ 	}
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "4ee7f16769232a4fdf61"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "14cbe734e68e40b737e4"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
 /******/ 	
@@ -617,7 +617,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var _home = __webpack_require__(43);
 
-	var _container = __webpack_require__(45);
+	var _root = __webpack_require__(45);
 
 	var _header = __webpack_require__(47);
 
@@ -632,12 +632,14 @@ return /******/ (function(modules) { // webpackBootstrap
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	(0, _core.Register)({
-	    components: [{ c: _home.HomeComponent, selector: 'app-home' }, { c: _container.ContainerComponent, selector: 'app-container' }, { c: _header.HeaderComponent, selector: 'app-header' }, { c: _plugins.PluginsComponent, selector: 'app-plugins' }],
-	    modules: [_documentation2.default],
-	    serverUrl: '',
-	    routes: _router.Routes,
+	    root: {
+	        c: _root.RootComponent, selector: 'app-root'
+	    },
 	    styles: _main2.default,
-	    onReady: function onReady() {}
+	    components: [{ c: _header.HeaderComponent, selector: 'app-header' }, { c: _home.HomeComponent, selector: 'app-home' }, { c: _plugins.PluginsComponent, selector: 'app-plugins' }],
+	    modules: [_documentation2.default],
+	    routes: _router.Routes
+
 	});
 
 /***/ }),
@@ -752,11 +754,11 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var _register = __webpack_require__(32);
 
-	var _component = __webpack_require__(35);
+	var _component = __webpack_require__(33);
 
-	var _routerSwitcher = __webpack_require__(33);
+	var _routerSwitcher = __webpack_require__(34);
 
-	var _routerCore = __webpack_require__(34);
+	var _routerCore = __webpack_require__(35);
 
 	var _routerCore2 = _interopRequireDefault(_routerCore);
 
@@ -1551,8 +1553,14 @@ return /******/ (function(modules) { // webpackBootstrap
 	                });
 	                item.items = [];
 	                for (var _i2 = 0; _i2 <= array.length - 1; _i2++) {
-	                    window.temporaryObj = Object.assign({}, array[_i2]);
+	                    var newComp = _core.Component.COMPONENTS.filter(function (r) {
+	                        return r.selector === compName;
+	                    })[0];
+	                    // if(newComp) {
 	                    var newEl = document.createElement(compName);
+	                    _this.root.appendChild(newEl);
+	                    new newComp.c(newEl, Object.assign({}, array[_i2]));
+	                    // }
 
 	                    // loop through the old element's attributes and give them to the new element
 	                    for (var _i3 = 0; _i3 < item.elem.attributes.length; _i3++) {
@@ -2016,18 +2024,21 @@ return /******/ (function(modules) { // webpackBootstrap
 	            listeners.forEach(function (listener) {
 	                var eventName = listener.split(':')[0];
 	                var fn = _this[listener.split(':')[1]];
-	                on.call(_this, eventName, fn);
+	                on.call(_this, eventName, fn, item.elem);
 	            });
 	        }
 	    });
 	}
 
-	function on(event, f) {
+	function on(event, f, el) {
 	    var _this2 = this;
 
 	    this.root.addEventListener(event, function (e) {
-	        e.stopPropagation(); // to prevent further propagation
-	        f.call(_this2, e, e.detail);
+	        if (e.target === el) {
+	            // listen to current component changes        
+	            e.stopPropagation(); // to prevent further propagation
+	            f.call(_this2, e, e.detail);
+	        }
 	    });
 	}
 
@@ -2086,11 +2097,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	    value: true
 	});
 	exports.Register = Register;
-	exports.RegisterElement = RegisterElement;
 
 	var _core = __webpack_require__(6);
 
-	var _routerSwitcher = __webpack_require__(33);
+	var _component = __webpack_require__(33);
 
 	function Register(options) {
 	    // console.time('modules')
@@ -2102,10 +2112,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	    if (options.serverUrl) {
 	        _core.Http.setServerUrl(options.serverUrl);
 	    }
-
-	    options.components.forEach(function (component) {
-	        registerComponent(component);
-	    });
+	    _component.Component.COMPONENTS = options.components;
+	    _core.RouteSwitcher.ROUTES = options.routes;
 
 	    options.modules.forEach(function (module) {
 	        module.forEach(function (component) {
@@ -2113,68 +2121,26 @@ return /******/ (function(modules) { // webpackBootstrap
 	        });
 	    });
 
-	    if (!options.routes) {
-	        console.warn('You should set routes!');
+	    var rootEl = document.querySelectorAll(options.root.selector)[0];
+	    if (rootEl) {
+	        new options.root.c(rootEl);
 	    } else {
-	        new _routerSwitcher.RegisterRouteElement(options.routes);
+	        console.warn('There is no root component');
 	    }
-
-	    if (options.onReady) {
-	        options.onReady.call(this);
-	    }
-	    // console.timeEnd('modules')
 	}
 
 	function registerComponent(component) {
-	    if (component.c instanceof _core.Component.constructor) {
-	        RegisterElement(component);
+	    if (component.c instanceof _component.Component.constructor) {
+	        _component.Component.COMPONENTS.push(component);
 	    } else {
 	        console.warn('Wrong type of component');
 	    }
 	}
 
-	function RegisterElement(comp) {
-	    var ElemProto = Object.create(HTMLElement.prototype);
-	    var elem = void 0;
-	    ElemProto.createdCallback = function (params) {
-	        var attrs = {};
-	        for (var i = 0; i < this.attributes.length; i++) {
-	            attrs[this.attributes[i].nodeName] = this.attributes[i].nodeValue;
-	        }
-
-	        //temporary solution
-	        var props = window.temporaryObj || {};
-	        delete window.temporaryObj;
-	        elem = new comp.c({ ce: this, attrs: attrs, props: props });
-	        this.COMPONENT = elem;
-	    };
-
-	    ElemProto.detachedCallback = function () {
-	        // elem.destroy();
-	        //  elem = undefined;
-	        _core.Component.destroy.call(this.COMPONENT);
-	    };
-
-	    ElemProto.attachedCallback = function () {
-	        elem.onAttach();
-	        // this.COMPONENT.onAttach();
-	    };
-
-	    ElemProto.attributeChangedCallback = function (a, b, c) {
-	        // elem.props.update(a, c);
-	    };
-
-	    document.registerElement(comp.selector, {
-	        prototype: ElemProto
-	    });
-	}
-
 	function loadStyle(styles) {
 	    if (styles) {
 	        var css = styles.toString(),
-
-	        //head = document.head || document.getElementsByTagName('head')[0],
-	        style = document.createElement('style');
+	            style = document.createElement('style');
 
 	        style.type = 'text/css';
 	        if (style.styleSheet) {
@@ -2195,13 +2161,267 @@ return /******/ (function(modules) { // webpackBootstrap
 	Object.defineProperty(exports, "__esModule", {
 	    value: true
 	});
+	exports.Component = undefined;
+
+	var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _core = __webpack_require__(6);
+
+	var _private = __webpack_require__(12);
+
+	var _Directives = __webpack_require__(15);
+
+	var _directives = __webpack_require__(13);
+
+	var _events = __webpack_require__(14);
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	var Component = exports.Component = function () {
+	    function Component(root, options) {
+	        _classCallCheck(this, Component);
+
+	        this.root = root;
+	        this.tpl = options.template || 'Empty template';
+	        this.props = new _core.ObservableModel(options.props);
+	        this.type = options.type;
+
+	        this.ui = {};
+	        this.root.COMPONENT = this;
+	        Component.setPrivates.call(this, options);
+
+	        if (this.root.getAttribute('ac-for')) {
+	            // console.warn('Foor loop is detected!')
+	        } else {
+	            this.render();
+	            this.listenToPropsChanges();
+	        }
+	    }
+
+	    _createClass(Component, [{
+	        key: 'render',
+	        value: function render() {
+	            var _this = this;
+
+	            this.root.innerHTML = this.preCompileTpl(this.tpl);
+
+	            this.compile(); // render custom elements
+
+	            this.compileRouter(); // render main router
+	            // console.log(this);
+
+	            _directives.DIRECTIVES_NAMES.forEach(function (directive) {
+	                _Directives.Directives._init.call(_this, _this.root, directive, _private.PRIVATES.DIRECTIVES[directive]);
+	            });
+
+	            _events.EVENTS_NAMES.forEach(function (directive) {
+	                _Directives.Directives._initEvent.call(_this, _this.root, directive, _private.PRIVATES.EVENTS);
+	            });
+
+	            _Directives.Directives._model.call(this, _private.PRIVATES.DIRECTIVES['ac-model'].get(this));
+	            _Directives.Directives._on.call(this, _private.PRIVATES.DIRECTIVES['ac-on'].get(this));
+	            _Directives.Directives._outside.call(this, _private.PRIVATES.DIRECTIVES['ac-outside'].get(this));
+	            _Directives.Directives._pattern.call(this, _private.PRIVATES.DIRECTIVES['ac-pattern'].get(this));
+	            _Directives.Directives._elRef.call(this, _private.PRIVATES.DIRECTIVES['ac-ref'].get(this));
+	            _Directives.Directives._events.call(this, _private.PRIVATES.EVENTS.get(this));
+	            _Directives.Directives._hostEvents.call(this, _private.PRIVATES.HOST.EVENTS.get(this));
+
+	            if (_private.PRIVATES.DIRECTIVES['ac-link'].get(this).length || _private.PRIVATES.DIRECTIVES['ac-for'].get(this).length) {
+	                this.routerSub = _core.Router.onChange(function () {
+	                    var a = _this.root.querySelectorAll('[href]');
+	                    a.forEach(function (item) {
+	                        var fullRoute = _core.Router.getCurrentFullPath();
+	                        var attr = item.getAttribute('href');
+	                        var setActive = attr === fullRoute.join('/') || fullRoute[0] === attr && !item.getAttribute('ac-link-exact');
+	                        setActive ? item.classList.add('active') : item.classList.remove('active');
+	                    });
+	                });
+	            }
+
+	            this.onInit();
+	        }
+	    }, {
+	        key: 'listenToPropsChanges',
+	        value: function listenToPropsChanges() {
+	            var _this2 = this;
+
+	            this.props.sub(function (r) {
+	                _Directives.Directives._for.call(_this2, _private.PRIVATES.DIRECTIVES['ac-for'].get(_this2));
+	                _Directives.Directives._props.call(_this2, _private.PRIVATES.DIRECTIVES['ac-value'].get(_this2));
+	                _Directives.Directives._input.call(_this2, _private.PRIVATES.DIRECTIVES['ac-input'].get(_this2));
+	                _Directives.Directives._props.call(_this2, _private.PRIVATES.DIRECTIVES['ac-model'].get(_this2));
+	                _Directives.Directives._style.call(_this2, _private.PRIVATES.DIRECTIVES['ac-style'].get(_this2));
+	                _Directives.Directives._if.call(_this2, _private.PRIVATES.DIRECTIVES['ac-if'].get(_this2));
+	                _Directives.Directives._class.call(_this2, _private.PRIVATES.DIRECTIVES['ac-class'].get(_this2));
+	                _Directives.Directives._attr.call(_this2, _private.PRIVATES.DIRECTIVES['ac-attr'].get(_this2));
+	                _Directives.Directives._link.call(_this2, _private.PRIVATES.DIRECTIVES['ac-link'].get(_this2));
+	                _Directives.Directives._hostClasses.call(_this2, _private.PRIVATES.HOST.CLASS.get(_this2));
+	                _Directives.Directives._hostStyles.call(_this2, _private.PRIVATES.HOST.STYLE.get(_this2));
+	                _this2.onUpdate();
+	            });
+	        }
+	    }, {
+	        key: 'compile',
+	        value: function compile() {
+	            var _this3 = this;
+
+	            Component.COMPONENTS.forEach(function (comp) {
+	                var component = _this3.root.querySelectorAll(comp.selector);
+	                if (component.length) {
+	                    component.forEach(function (r) {
+	                        if (!r.COMPONENT) {
+	                            // don't reinitialize
+	                            new comp.c(r);
+	                        }
+	                    });
+	                }
+	            });
+	        }
+	    }, {
+	        key: 'compileRouter',
+	        value: function compileRouter() {
+	            var router = this.root.querySelectorAll('route-switcher')[0];
+	            if (router) {
+	                new _core.RouteSwitcher(router);
+	            }
+	        }
+	    }, {
+	        key: 'preCompileTpl',
+	        value: function preCompileTpl(html) {
+	            this.compile(html);
+
+	            _events.EVENTS_NAMES.forEach(function (event) {
+	                var stringToGoIntoTheRegex = '@' + event;
+	                var regex = new RegExp(stringToGoIntoTheRegex, "g");
+	                html = html.replace(regex, 'ac-' + event);
+	            });
+	            // html = this.htmlInterpolation(html);
+	            return html;
+	        }
+	    }, {
+	        key: 'setSubscriptions',
+	        value: function setSubscriptions() {
+	            for (var _len = arguments.length, rest = Array(_len), _key = 0; _key < _len; _key++) {
+	                rest[_key] = arguments[_key];
+	            }
+
+	            _private.PRIVATES.SUBSCRIPTIONS.set(this, rest);
+	        }
+	    }, {
+	        key: 'getComponentVariable',
+	        value: function getComponentVariable(variable, data) {
+	            if (data && (typeof data === 'undefined' ? 'undefined' : _typeof(data)) !== 'object') return data;
+	            return variable.reduce(function (o, i, index) {
+	                if (!o[i] && o[i] !== 0) {
+	                    // in case when variable is undefined
+	                    return index === variable.length - 1 ? null : {};
+	                } else {
+	                    return o[i];
+	                }
+	            }, data || this);
+	        }
+	    }, {
+	        key: 'getElement',
+	        value: function getElement(target) {
+	            return this.root.querySelectorAll(target);
+	        }
+	    }, {
+	        key: 'getRoot',
+	        value: function getRoot() {
+	            return this.root;
+	        }
+	    }, {
+	        key: 'emit',
+	        value: function emit(event, data, parentName) {
+	            var myEvent = new CustomEvent(event, {
+	                detail: data,
+	                bubbles: true,
+	                cancelable: false
+	            });
+
+	            if (parentName) {
+	                this.getParentComponent(parentName).dispatchEvent(myEvent);
+	            } else {
+	                this.root.dispatchEvent(myEvent);
+	            }
+	        }
+	    }, {
+	        key: 'getParentComponent',
+	        value: function getParentComponent(parentName) {
+	            var root = this.root;
+	            while (root && parentName !== root.constructor.name) {
+	                root = root.parentNode;
+	            }
+	            return root;
+	        }
+	    }, {
+	        key: 'destroy',
+	        value: function destroy() {
+	            // remove all event listeners
+	            _Directives.Directives.removeEventListeners.call(this, _private.PRIVATES.EVENTS.get(this));
+
+	            // unsubscribe from global events
+	            if (_private.PRIVATES.GLOBAL_EVENTS.get(this)) {
+	                _private.PRIVATES.GLOBAL_EVENTS.get(this).unsubscribe();
+	            }
+	            //unsubscribe from router changes
+	            if (this.routerSub) {
+	                // console.log('destroyed', this);
+	                this.routerSub.unsubscribe();
+	            }
+
+	            //unsubscribe from components subscribers
+	            _private.PRIVATES.SUBSCRIPTIONS.get(this).forEach(function (item) {
+	                return item.unsubscribe();
+	            });
+
+	            this.root = null;
+	            this.onDestroy();
+	        }
+	    }, {
+	        key: 'onDestroy',
+	        value: function onDestroy() {}
+	    }, {
+	        key: 'onUpdate',
+	        value: function onUpdate() {}
+	    }, {
+	        key: 'onInit',
+	        value: function onInit() {}
+	    }], [{
+	        key: 'setPrivates',
+	        value: function setPrivates(options) {
+	            for (var array in _private.PRIVATES.DIRECTIVES) {
+	                _private.PRIVATES.DIRECTIVES[array].set(this, []);
+	            }
+
+	            _private.PRIVATES.EVENTS.set(this, []);
+	            _private.PRIVATES.SUBSCRIPTIONS.set(this, []);
+	            _private.PRIVATES.GLOBAL_EVENTS.set(this, null);
+	            _private.PRIVATES.HOST.EVENTS.set(this, options.hostEvents);
+	            _private.PRIVATES.HOST.CLASS.set(this, options.hostClasses);
+	            _private.PRIVATES.HOST.STYLE.set(this, options.hostStyles);
+	        }
+	    }]);
+
+	    return Component;
+	}();
+
+/***/ }),
+/* 34 */
+/***/ (function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
 	exports.RouteSwitcher = undefined;
 
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-	exports.RegisterRouteElement = RegisterRouteElement;
-
-	var _routerCore = __webpack_require__(34);
+	var _routerCore = __webpack_require__(35);
 
 	var _routerCore2 = _interopRequireDefault(_routerCore);
 
@@ -2212,10 +2432,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 	var RouteSwitcher = exports.RouteSwitcher = function () {
-	    function RouteSwitcher(routes, root) {
+	    function RouteSwitcher(root) {
 	        _classCallCheck(this, RouteSwitcher);
 
-	        this.routes = routes;
+	        this.routes = RouteSwitcher.ROUTES;
 	        this.root = root;
 	        this.onCreate();
 	    }
@@ -2229,18 +2449,28 @@ return /******/ (function(modules) { // webpackBootstrap
 	                _routerCore2.default.on(route.path, function (params) {
 	                    if (_this.prevPage !== route.path) {
 	                        // don't refresh parent router
+	                        // REMOVE ALL COMPONENTS BEFORE CLEARING
+	                        _this.destroyChild(_this.root);
 	                        _this.root.innerHTML = null;
-	                        if (params) {
-	                            window.temporaryObj = Object.assign({ id: params });
+
+	                        var newCompEmpty = _core.Component.COMPONENTS.filter(function (r) {
+	                            return r.selector === route.component;
+	                        })[0];
+	                        if (newCompEmpty) {
+	                            var newComp = document.createElement(route.component);
+	                            _this.root.appendChild(newComp);
+	                            new newCompEmpty.c(newComp, { routeParams: params });
+	                        } else {
+	                            _this.appendEmpty(_this.root);
 	                        }
 
-	                        var newComp = document.createElement(route.component);
-	                        _this.root.appendChild(newComp);
 	                        _this.prevPage = route.path;
 	                    }
 
 	                    var router = _this.root.querySelectorAll('child-route-switcher')[0];
+
 	                    if (router) {
+	                        _this.destroyChild(router);
 	                        router.innerHTML = null;
 	                        var current = _this.routes.filter(function (item) {
 	                            return item.path === route.path;
@@ -2256,10 +2486,12 @@ return /******/ (function(modules) { // webpackBootstrap
 	                            if (child) {
 	                                var _newComp = document.createElement(child.component);
 	                                router.appendChild(_newComp);
+	                                var _newCompEmpty = _core.Component.COMPONENTS.filter(function (r) {
+	                                    return r.selector === child.component;
+	                                })[0];
+	                                new _newCompEmpty.c(_newComp);
 	                            } else {
-	                                var _newComp2 = document.createElement('div');
-	                                _newComp2.innerHTML = 'Please specify a component for this route <b style="color: red">' + _routerCore2.default.getCurrentFullPath().join('/') + '</b>!';
-	                                router.appendChild(_newComp2);
+	                                _this.appendEmpty(router);
 	                            }
 	                            _this.prevChild = path;
 	                        }
@@ -2268,31 +2500,30 @@ return /******/ (function(modules) { // webpackBootstrap
 	            });
 	            _routerCore2.default.update();
 	        }
+	    }, {
+	        key: 'destroyChild',
+	        value: function destroyChild(root) {
+	            _core.Component.COMPONENTS.forEach(function (r) {
+	                var a = root.querySelectorAll(r.selector);
+	                a.forEach(function (r) {
+	                    r.COMPONENT.destroy();
+	                });
+	            });
+	        }
+	    }, {
+	        key: 'appendEmpty',
+	        value: function appendEmpty(root) {
+	            var newComp = document.createElement('div');
+	            newComp.innerHTML = 'Please specify a component for this route <b style="color: red">' + _routerCore2.default.getCurrentFullPath().join('/') + '</b>!';
+	            root.appendChild(newComp);
+	        }
 	    }]);
 
 	    return RouteSwitcher;
 	}();
 
-	function RegisterRouteElement(routes) {
-	    var ElemProto = Object.create(HTMLElement.prototype);
-	    var elem = void 0;
-	    ElemProto.createdCallback = function (params) {
-	        elem = new RouteSwitcher(routes, this);
-	    };
-
-	    ElemProto.detachedCallback = function () {};
-
-	    ElemProto.attachedCallback = function () {};
-
-	    ElemProto.attributeChangedCallback = function (a, b, c) {};
-
-	    document.registerElement('route-switcher', {
-	        prototype: ElemProto
-	    });
-	}
-
 /***/ }),
-/* 34 */
+/* 35 */
 /***/ (function(module, exports) {
 
 	'use strict';
@@ -2319,7 +2550,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	            // Make sure popstate doesn't run on init -- this is a common issue with Safari and old versions of Chrome
 	            if (self.state && self.state.previousState === null) return false;
 
-	            var a = _this.getCurrentRoute(_this.getFullStringPath());
+	            var a = _this.getCurrentRoute(_this.getCurrentPath());
 	            if (a) {
 	                a.callback();
 	                _this.runSubscribtions();
@@ -2342,11 +2573,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	            return location.pathname.split('/').filter(function (item) {
 	                return item;
 	            }) || '/';
-	        }
-	    }, {
-	        key: 'getFullStringPath',
-	        value: function getFullStringPath() {
-	            return location.pathname.substr(1) || '/';
 	        }
 	    }, {
 	        key: 'getCurrentRoute',
@@ -2442,271 +2668,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	}();
 
 	exports.default = new Router();
-
-/***/ }),
-/* 35 */
-/***/ (function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
-	    value: true
-	});
-	exports.Component = undefined;
-
-	var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
-
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-	var _core = __webpack_require__(6);
-
-	var _private = __webpack_require__(12);
-
-	var _directives = __webpack_require__(13);
-
-	var _events = __webpack_require__(14);
-
-	var _Directives = __webpack_require__(15);
-
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-	var Component = exports.Component = function () {
-	    function Component() {
-	        var _this = this;
-
-	        var options = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
-	        var custom = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
-
-	        _classCallCheck(this, Component);
-
-	        this.tpl = custom.template || 'Empty template';
-	        // this.styles = custom.styles;
-	        this.shadow = custom.shadow || false;
-	        this.type = custom.type;
-
-	        this.props = new _core.ObservableModel(options.props);
-	        this.root = null;
-
-	        Component.setPrivates.call(this, custom);
-
-	        this.ui = {};
-	        // console.log(options.ce.attributes);
-	        if (options.ce.getAttribute('ac-for')) {
-	            // console.warn('Foor loop is detected!')
-	        } else {
-	            options.ce ? Component.render.call(this, options.ce) : console.warn('Component data is expected. See your component constructor!');
-	            this.props.sub(function (r) {
-	                _Directives.Directives._for.call(_this, _private.PRIVATES.DIRECTIVES['ac-for'].get(_this));
-	                _Directives.Directives._props.call(_this, _private.PRIVATES.DIRECTIVES['ac-value'].get(_this));
-	                _Directives.Directives._input.call(_this, _private.PRIVATES.DIRECTIVES['ac-input'].get(_this));
-	                _Directives.Directives._props.call(_this, _private.PRIVATES.DIRECTIVES['ac-model'].get(_this));
-	                _Directives.Directives._style.call(_this, _private.PRIVATES.DIRECTIVES['ac-style'].get(_this));
-	                _Directives.Directives._if.call(_this, _private.PRIVATES.DIRECTIVES['ac-if'].get(_this));
-	                _Directives.Directives._class.call(_this, _private.PRIVATES.DIRECTIVES['ac-class'].get(_this));
-	                _Directives.Directives._attr.call(_this, _private.PRIVATES.DIRECTIVES['ac-attr'].get(_this));
-	                _Directives.Directives._link.call(_this, _private.PRIVATES.DIRECTIVES['ac-link'].get(_this));
-	                _Directives.Directives._hostClasses.call(_this, _private.PRIVATES.HOST.CLASS.get(_this));
-	                _Directives.Directives._hostStyles.call(_this, _private.PRIVATES.HOST.STYLE.get(_this));
-	                _this.onUpdate();
-	            });
-	        }
-	    }
-
-	    _createClass(Component, [{
-	        key: 'setSubscriptions',
-	        value: function setSubscriptions() {
-	            for (var _len = arguments.length, rest = Array(_len), _key = 0; _key < _len; _key++) {
-	                rest[_key] = arguments[_key];
-	            }
-
-	            _private.PRIVATES.SUBSCRIPTIONS.set(this, rest);
-	        }
-	    }, {
-	        key: 'preCompileTpl',
-	        value: function preCompileTpl(html) {
-	            console.time('111');
-	            _events.EVENTS_NAMES.forEach(function (event) {
-	                var stringToGoIntoTheRegex = '@' + event;
-	                var regex = new RegExp(stringToGoIntoTheRegex, "g");
-	                html = html.replace(regex, 'ac-' + event);
-	            });
-	            html = this.htmlInterpolation(html);
-	            return html;
-	        }
-	    }, {
-	        key: 'htmlInterpolation',
-	        value: function htmlInterpolation(html) {
-	            // let regExp =  /{{([^}]+)}}/g; 
-	            // let fnParams = regExp.exec(html); // get value between brackets
-	            // let args = [];
-
-	            // if(fnParams) {
-	            //     // let arg = new Function('return ' + fnParams[1]).apply(this);
-	            //     // html = html.replace(regExp, arg);
-	            //     console.log(html);
-	            // }
-	            return html;
-	        }
-	    }, {
-	        key: 'INPUT',
-	        value: function INPUT() {}
-
-	        /***********************************************/
-
-	        // static on(event, f) {
-	        //     this.root.addEventListener(event, (e) => {
-	        //         e.stopPropagation(); // to prevent further propagation
-	        //         f.call(this, e, e.detail);
-	        //     });
-	        // }
-
-	    }, {
-	        key: 'emit',
-	        value: function emit(event, data, parentName) {
-	            var myEvent = new CustomEvent(event, {
-	                detail: data,
-	                bubbles: true,
-	                cancelable: false
-	            });
-
-	            if (parentName) {
-	                this.getParentComponent(parentName).dispatchEvent(myEvent);
-	            } else {
-	                this.root.dispatchEvent(myEvent);
-	            }
-	        }
-
-	        // broadcast(q, name, data) {
-	        //     let myEvent = new CustomEvent(event, {
-	        //         detail: data,
-	        //         bubbles: true,
-	        //         cancelable: false
-	        //     });
-	        //     q.dispatchEvent(myEvent);
-	        // }
-
-	    }, {
-	        key: 'onCreate',
-	        value: function onCreate() {}
-	    }, {
-	        key: 'onUpdate',
-	        value: function onUpdate() {}
-	    }, {
-	        key: 'onDestroy',
-	        value: function onDestroy() {}
-	    }, {
-	        key: 'onInit',
-	        value: function onInit() {}
-	    }, {
-	        key: 'onAttach',
-	        value: function onAttach() {}
-	    }, {
-	        key: 'getElement',
-	        value: function getElement(target) {
-	            return this.root.querySelectorAll(target);
-	        }
-	    }, {
-	        key: 'getRoot',
-	        value: function getRoot() {
-	            return this.root;
-	        }
-	    }, {
-	        key: 'getComponentVariable',
-	        value: function getComponentVariable(variable, data) {
-	            if (data && (typeof data === 'undefined' ? 'undefined' : _typeof(data)) !== 'object') return data;
-	            return variable.reduce(function (o, i, index) {
-	                if (!o[i] && o[i] !== 0) {
-	                    // in case when variable is undefined
-	                    return index === variable.length - 1 ? null : {};
-	                } else {
-	                    return o[i];
-	                }
-	            }, data || this);
-	        }
-	    }, {
-	        key: 'getParentComponent',
-	        value: function getParentComponent(parentName) {
-	            var root = this.root;
-	            while (root && parentName !== root.constructor.name) {
-	                root = root.parentNode;
-	            }
-	            return root;
-	        }
-	    }], [{
-	        key: 'setPrivates',
-	        value: function setPrivates(custom) {
-	            for (var array in _private.PRIVATES.DIRECTIVES) {
-	                _private.PRIVATES.DIRECTIVES[array].set(this, []);
-	            }
-
-	            _private.PRIVATES.EVENTS.set(this, []);
-	            _private.PRIVATES.SUBSCRIPTIONS.set(this, []);
-	            _private.PRIVATES.GLOBAL_EVENTS.set(this, null);
-	            _private.PRIVATES.HOST.EVENTS.set(this, custom.hostEvents);
-	            _private.PRIVATES.HOST.CLASS.set(this, custom.hostClasses);
-	            _private.PRIVATES.HOST.STYLE.set(this, custom.hostStyles);
-	        }
-	    }, {
-	        key: 'render',
-	        value: function render(o) {
-	            var _this2 = this;
-
-	            this.onCreate();
-	            this.root = this.shadow ? o.createShadowRoot() : o;
-	            this.root.innerHTML = this.preCompileTpl(this.tpl);
-	            // this.loadStyle();
-
-	            _directives.DIRECTIVES_NAMES.forEach(function (directive) {
-	                _Directives.Directives._init.call(_this2, _this2.root, directive, _private.PRIVATES.DIRECTIVES[directive]);
-	            });
-
-	            _events.EVENTS_NAMES.forEach(function (directive) {
-	                _Directives.Directives._initEvent.call(_this2, _this2.root, directive, _private.PRIVATES.EVENTS);
-	            });
-
-	            _Directives.Directives._model.call(this, _private.PRIVATES.DIRECTIVES['ac-model'].get(this));
-	            _Directives.Directives._on.call(this, _private.PRIVATES.DIRECTIVES['ac-on'].get(this));
-	            _Directives.Directives._outside.call(this, _private.PRIVATES.DIRECTIVES['ac-outside'].get(this));
-	            _Directives.Directives._pattern.call(this, _private.PRIVATES.DIRECTIVES['ac-pattern'].get(this));
-	            _Directives.Directives._elRef.call(this, _private.PRIVATES.DIRECTIVES['ac-ref'].get(this));
-	            _Directives.Directives._events.call(this, _private.PRIVATES.EVENTS.get(this));
-	            _Directives.Directives._hostEvents.call(this, _private.PRIVATES.HOST.EVENTS.get(this));
-
-	            if (_private.PRIVATES.DIRECTIVES['ac-link'].get(this).length || _private.PRIVATES.DIRECTIVES['ac-for'].get(this).length) {
-	                this.routerSub = _core.Router.onChange(function () {
-	                    var a = _this2.root.querySelectorAll('[href]');
-	                    a.forEach(function (item) {
-	                        var fullRoute = _core.Router.getCurrentFullPath();
-	                        var attr = item.getAttribute('href');
-	                        var setActive = attr === fullRoute.join('/') || fullRoute[0] === attr && !item.getAttribute('ac-link-exact');
-	                        setActive ? item.classList.add('active') : item.classList.remove('active');
-	                    });
-	                });
-	            }
-	            this.onInit();
-	        }
-	    }, {
-	        key: 'destroy',
-	        value: function destroy() {
-	            _Directives.Directives.removeEventListeners.call(this, _private.PRIVATES.EVENTS.get(this));
-	            // unsubscribe from global events
-	            if (_private.PRIVATES.GLOBAL_EVENTS.get(this)) {
-	                _private.PRIVATES.GLOBAL_EVENTS.get(this).unsubscribe();
-	            }
-	            //unsubscribe from router changes
-	            if (this.routerSub) {
-	                // console.log('destroyed', this);
-	                this.routerSub.unsubscribe();
-	            }
-	            _private.PRIVATES.SUBSCRIPTIONS.get(this).forEach(function (item) {
-	                return item.unsubscribe();
-	            });
-	            this.onDestroy();
-	        }
-	    }]);
-
-	    return Component;
-	}();
 
 /***/ }),
 /* 36 */
@@ -3656,15 +3617,15 @@ return /******/ (function(modules) { // webpackBootstrap
 	Object.defineProperty(exports, "__esModule", {
 	    value: true
 	});
-	exports.ContainerComponent = undefined;
+	exports.RootComponent = undefined;
 
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 	var _core = __webpack_require__(6);
 
-	var _containerComponent = __webpack_require__(46);
+	var _rootComponent = __webpack_require__(46);
 
-	var _containerComponent2 = _interopRequireDefault(_containerComponent);
+	var _rootComponent2 = _interopRequireDefault(_rootComponent);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -3674,25 +3635,25 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-	var ContainerComponent = exports.ContainerComponent = function (_Component) {
-	    _inherits(ContainerComponent, _Component);
+	var RootComponent = exports.RootComponent = function (_Component) {
+	    _inherits(RootComponent, _Component);
 
-	    function ContainerComponent(params) {
-	        _classCallCheck(this, ContainerComponent);
+	    function RootComponent(params) {
+	        _classCallCheck(this, RootComponent);
 
-	        return _possibleConstructorReturn(this, (ContainerComponent.__proto__ || Object.getPrototypeOf(ContainerComponent)).call(this, params, {
-	            template: _containerComponent2.default
+	        return _possibleConstructorReturn(this, (RootComponent.__proto__ || Object.getPrototypeOf(RootComponent)).call(this, params, {
+	            template: _rootComponent2.default
 	        }));
 	    }
 
-	    _createClass(ContainerComponent, [{
+	    _createClass(RootComponent, [{
 	        key: 'onInit',
 	        value: function onInit() {
 	            // Http.getCatalog('/catalog');
 	        }
 	    }]);
 
-	    return ContainerComponent;
+	    return RootComponent;
 	}(_core.Component);
 
 /***/ }),
@@ -3716,8 +3677,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-	var _dec, _class; // import {Component, Router} from '../../../core';
-
+	var _core = __webpack_require__(6);
 
 	var _decorators = __webpack_require__(8);
 
@@ -3729,13 +3689,24 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
 	// import ProjectsStore from 'stores/projects.store';
 	// import UserStore from 'stores/user.store';
-	var HeaderComponent = exports.HeaderComponent = (_dec = (0, _decorators.ComponentDecorator)({
-	    template: _headerComponent2.default
-	}), _dec(_class = function () {
-	    function HeaderComponent(params) {
+	// @ComponentDecorator({
+	//     template: Tpl
+	// })
+	var HeaderComponent = exports.HeaderComponent = function (_Component) {
+	    _inherits(HeaderComponent, _Component);
+
+	    function HeaderComponent(root) {
 	        _classCallCheck(this, HeaderComponent);
+
+	        return _possibleConstructorReturn(this, (HeaderComponent.__proto__ || Object.getPrototypeOf(HeaderComponent)).call(this, root, {
+	            template: _headerComponent2.default
+	        }));
 	    }
 
 	    _createClass(HeaderComponent, [{
@@ -3749,7 +3720,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    }]);
 
 	    return HeaderComponent;
-	}()) || _class);
+	}(_core.Component);
 
 /***/ }),
 /* 48 */
@@ -3908,7 +3879,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	            this.getElement('pre').forEach(function (item) {});
 
 	            this.props.set({
-	                version: ("0.1.18"),
+	                version: ("0.2.2"),
 	                'categories': [{
 	                    name: 'Getting started',
 	                    items: [{
@@ -4115,7 +4086,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	"use strict";
 
-	module.exports = "<h3>Architecture</h3>\r\n<b>Please follow this file structure:</b>\r\n<br><br>\r\n<div class=\"code-block folder-structure\">\r\n    <div class=\"folder-structure--item\">\r\n        AceJs project\r\n        <div class=\"children\">\r\n            <div class=\"folder-structure--item\">\r\n                dev\r\n            </div>\r\n            <div class=\"children\">\r\n                <div class=\"folder-structure--item\">components</div>\r\n                <div class=\"children\">\r\n                \t<div class=\"folder-structure--item\">component-one</div>\r\n                \t<div class=\"children\">\r\n                \t\t<div class=\"folder-structure--item\">component-one.component.js</div>\r\n                \t\t<div class=\"folder-structure--item\">component-one.component.html</div>\r\n                \t</div>\r\n                \t<div class=\"folder-structure--item\">component-two</div>\r\n                \t<div class=\"folder-structure--item\">component ...</div>\r\n                </div>\r\n                <div class=\"folder-structure--item\">stores</div>\r\n                <div class=\"folder-structure--item\">styles</div>\r\n                <div class=\"folder-structure--item\">app.js</div>\r\n                <div class=\"folder-structure--item\">assets\r\n                </div>\r\n                <div class=\"children\">\r\n                    <div class=\"folder-structure--item\">img</div>\r\n                    <div class=\"folder-structure--item\">fonts</div>\r\n                </div>\r\n                <div class=\"folder-structure--item\">routes.js</div>\r\n            </div>\r\n            <div class=\"folder-structure--item\">index.html</div>\r\n            <div class=\"folder-structure--item\">node_modules</div>\r\n            <div class=\"folder-structure--item\">package.json</div>\r\n            <div class=\"folder-structure--item\">webpack.config.js</div>\r\n        </div>\r\n    </div>\r\n</div>\r\n\r\n<br>\r\n<b>You can see basic principles of AceJs on following picture: </b>\r\n<img src=\"" + __webpack_require__(58) + "\">\r\n\r\n\r\n<br><br>\r\n<div class=\"code-block\">\r\n    <div class=\"code-header\">app.js</div>\r\n    <pre>\r\n        import Styles from './styles/main.scss';\r\n        import { Register } from '../core';\r\n\r\n        import { HomeComponent } from './components/home/home.component';\r\n        import { ContainerComponent } from './components/container/container.component';\r\n        import { HeaderComponent } from './components/header/header.component';\r\n\r\n        import Docs from './components/documentation';\r\n\r\n        import { Routes } from './router.js';\r\n        <b>Register</b>({\r\n            <b>components</b>: [\r\n                { c: HomeComponent, selector: 'app-home' },\r\n                { c: ContainerComponent, selector: 'app-container' },\r\n                { c: HeaderComponent, selector: 'app-header' }\r\n            ],\r\n            <b>modules</b>: [\r\n                Docs\r\n            ],\r\n            <b>serverUrl</b>: \"\",\r\n            <b>routes</b>: Routes,\r\n            <b>styles</b>: Styles\r\n        });\r\n    </pre>\r\n</div>";
+	module.exports = "<h3>Architecture</h3>\r\n<b>Please follow this file structure:</b>\r\n<br><br>\r\n<div class=\"code-block folder-structure\">\r\n    <div class=\"folder-structure--item\">\r\n        AceJs project\r\n        <div class=\"children\">\r\n            <div class=\"folder-structure--item\">\r\n                dev\r\n            </div>\r\n            <div class=\"children\">\r\n                <div class=\"folder-structure--item\">components</div>\r\n                <div class=\"children\">\r\n                \t<div class=\"folder-structure--item\">component-one</div>\r\n                \t<div class=\"children\">\r\n                \t\t<div class=\"folder-structure--item\">component-one.component.js</div>\r\n                \t\t<div class=\"folder-structure--item\">component-one.component.html</div>\r\n                \t</div>\r\n                \t<div class=\"folder-structure--item\">component-two</div>\r\n                \t<div class=\"folder-structure--item\">component ...</div>\r\n                </div>\r\n                <div class=\"folder-structure--item\">stores</div>\r\n                <div class=\"folder-structure--item\">styles</div>\r\n                <div class=\"folder-structure--item\">app.js</div>\r\n                <div class=\"folder-structure--item\">assets\r\n                </div>\r\n                <div class=\"children\">\r\n                    <div class=\"folder-structure--item\">img</div>\r\n                    <div class=\"folder-structure--item\">fonts</div>\r\n                </div>\r\n                <div class=\"folder-structure--item\">routes.js</div>\r\n            </div>\r\n            <div class=\"folder-structure--item\">index.html</div>\r\n            <div class=\"folder-structure--item\">node_modules</div>\r\n            <div class=\"folder-structure--item\">package.json</div>\r\n            <div class=\"folder-structure--item\">webpack.config.js</div>\r\n        </div>\r\n    </div>\r\n</div>\r\n\r\n<br>\r\n<b>You can see basic principles of AceJs on following picture: </b>\r\n<img src=\"" + __webpack_require__(58) + "\">\r\n\r\n\r\n<br><br>\r\n<div class=\"code-block\">\r\n    <div class=\"code-header\">app.js</div>\r\n    <pre>\r\n        import Styles from './styles/main.scss';\r\n        import { Register } from '../core';\r\n        import { RootComponent } from './components/root/root.component';\r\n        import { HomeComponent } from './components/home/home.component';\r\n        import { HeaderComponent } from './components/header/header.component';\r\n\r\n        import Docs from './components/documentation';\r\n\r\n        import { Routes } from './router.js';\r\n        <b>Register</b>({\r\n            <b>root</b>: {\r\n                c: RootComponent, selector: 'app-root'\r\n            },\r\n            <b>components</b>: [\r\n                { c: HomeComponent, selector: 'app-home' },\r\n                { c: HeaderComponent, selector: 'app-header' }\r\n            ],\r\n            <b>modules</b>: [\r\n                Docs\r\n            ],\r\n            <b>serverUrl</b>: \"\",\r\n            <b>routes</b>: Routes,\r\n            <b>styles</b>: Styles\r\n        });\r\n    </pre>\r\n</div>";
 
 /***/ }),
 /* 58 */
@@ -4181,7 +4152,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	"use strict";
 
-	module.exports = "<h3>Example component</h3>\r\n\r\n<div class=\"code-block\">\r\n    <div class=\"code-header\">example.component.js</div>\r\n    <pre>\r\n    import { <b>Component</b> } from 'ace-js';\r\n    import <b>Tpl</b> from './example.component.html';\r\n    export class <b>ExampleComponent</b> extends Component {\r\n        constructor(params) {\r\n            super(params, {\r\n                <b>template</b>: Tpl,\r\n                <b>hostEvents</b>: {\r\n                    click: 'rootClick'\r\n                },\r\n                <b>hostClasses</b>: {\r\n                    selected: 'props.selected',\r\n                    hidden: '!props.visible'\r\n                },\r\n                <b>hostStyles</b>: {\r\n                    width: {value: 'props.width', suffix: 'px'}\r\n                }\r\n            });\r\n        }\r\n\r\n        onInit() {\r\n        \r\n        }\r\n    }\r\n</pre>\r\n</div>\r\n\r\n\r\n<div class=\"block\">\r\n    <b class=\"title\">template</b>\r\n    <span class=\"text\">Specifies <b>Tpl</b> template for current component </span>\r\n</div>\r\n\r\n<div class=\"block\">\r\n    <b class=\"title\">hostEvents</b>\r\n    <span class=\"text\">Add <b>event listeners</b> to root element of component</span>\r\n</div>\r\n\r\n<div class=\"block\">\r\n    <b class=\"title\">hostClasses</b>\r\n    <span class=\"text\">Bind <b>classList</b> of root element with props. <br>\r\n        <b>selected</b> - key, as class name\r\n        <br>\r\n        <b>'props.selected'</b> - value, as propery to bind\r\n    </span>\r\n</div>\r\n\r\n<div class=\"block\">\r\n    <b class=\"title\">hostStyles</b>\r\n    <span class=\"text\">Bind styles of root element with props. <br>\r\n        <b>width</b> - key, as css property <br>\r\n        <b>value</b>:string - property to bind <br>\r\n        <b>suffix</b>:string - for example 'px'\r\n    </span>\r\n</div>";
+	module.exports = "<h3>Example component</h3>\r\n\r\n<div class=\"code-block\">\r\n    <div class=\"code-header\">example.component.js</div>\r\n    <pre>\r\n    import { <b>Component</b> } from 'ace-js';\r\n    import <b>Tpl</b> from './example.component.html';\r\n    export class <b>ExampleComponent</b> extends Component {\r\n        constructor(params) {\r\n            super(params, {\r\n                <b>template</b>: Tpl,\r\n                <b>props</b>: {\r\n                    title: 'Some title'        \r\n                }\r\n                \r\n                <b>hostEvents</b>: {\r\n                    click: 'rootClick'\r\n                },\r\n                <b>hostClasses</b>: {\r\n                    selected: 'props.selected',\r\n                    hidden: '!props.visible'\r\n                },\r\n                <b>hostStyles</b>: {\r\n                    width: {value: 'props.width', suffix: 'px'}\r\n                }\r\n            });\r\n        }\r\n\r\n        onInit() {\r\n        \r\n        }\r\n    }\r\n</pre>\r\n</div>\r\n\r\n\r\n<div class=\"block\">\r\n    <b class=\"title\">template</b>\r\n    <span class=\"text\">Specifies <b>Tpl</b> template for current component </span>\r\n</div>\r\n\r\n<div class=\"block\">\r\n    <b class=\"title\">props</b>\r\n    <span class=\"text\">Initial properties of component</span>\r\n</div>\r\n\r\n<div class=\"block\">\r\n    <b class=\"title\">hostEvents</b>\r\n    <span class=\"text\">Add <b>event listeners</b> to root element of component</span>\r\n</div>\r\n\r\n<div class=\"block\">\r\n    <b class=\"title\">hostClasses</b>\r\n    <span class=\"text\">Bind <b>classList</b> of root element with props. <br>\r\n        <b>selected</b> - key, as class name\r\n        <br>\r\n        <b>'props.selected'</b> - value, as propery to bind\r\n    </span>\r\n</div>\r\n\r\n<div class=\"block\">\r\n    <b class=\"title\">hostStyles</b>\r\n    <span class=\"text\">Bind styles of root element with props. <br>\r\n        <b>width</b> - key, as css property <br>\r\n        <b>value</b>:string - property to bind <br>\r\n        <b>suffix</b>:string - for example 'px'\r\n    </span>\r\n</div>";
 
 /***/ }),
 /* 61 */

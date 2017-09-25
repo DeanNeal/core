@@ -46,8 +46,12 @@ export function _for(array, data) {
                 });
                 item.items = [];
                 for (let i = 0; i <= array.length - 1; i++) {
-                    window.temporaryObj = Object.assign({}, array[i]);
-                    let newEl = document.createElement(compName);
+                    let newComp = Component.COMPONENTS.filter(r=> r.selector === compName)[0];
+                    // if(newComp) {
+                        let newEl = document.createElement(compName);
+                        this.root.appendChild(newEl);
+                        new newComp.c(newEl, Object.assign({}, array[i]));
+                    // }
 
                     // loop through the old element's attributes and give them to the new element
                     for (let i = 0; i < item.elem.attributes.length; i++) {
