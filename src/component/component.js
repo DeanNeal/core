@@ -39,6 +39,7 @@ export class Component {
 
     render() {
         this.root.innerHTML = this.preCompileTpl(this.tpl);
+        this.onAttach();
 
         this.compile(); // render custom elements
 
@@ -197,6 +198,10 @@ export class Component {
 
     }
 
+    onAttach() {
+
+    }
+    
     onUpdate() {
 
     }

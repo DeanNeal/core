@@ -143,7 +143,8 @@ app-documentation {
     .section-title {
         font-size: 16px;
         margin-top: 20px;
-        border-bottom: 1px solid;
+        border-bottom: 1px solid #ccc;
+        padding: 6px;
     }
     .in-development{
         color:red;
@@ -157,7 +158,7 @@ app-documentation {
         border-bottom: 1px solid #ccc;
         display: flex;
         align-items: center;
-        padding: 20px;
+        // padding: 20px;
         justify-content: space-between;
     }
     .label {
