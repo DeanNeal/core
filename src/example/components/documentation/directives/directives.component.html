@@ -1,23 +1,8 @@
 <h3>Directives</h3>
-<div class="code-block">
-    <div class="code-header">example.component.js</div>
-    <pre>
-        onInit() {
-            this.props.set({
-                <b>value</b>: 'value',
-                <b>model</b>: '<span ac-value="props.model"></span>',
-                <b>className</b>: '<span ac-value="props.className"></span>',
-                <b>showClass</b>: true,
-                <b>isVisible</b>: <span ac-value="props.isVisible"></span>,
-                <b>width</b>: <span ac-value="props.width"></span>,
-                <b>height</b>: <span ac-value="props.height"></span>'
-                <b>items</b>: [{name: 1}, {name: 2}, {name: 3}]
-                <b>image</b>: 'https://www.w3schools.com/css/img_fjords.jpg'
-            })
-        }
-    </pre>
-</div>
-</div>
+<div class="text">Directives - special attributes with <b>ac-</b> prefix</div>
+<div class="text">All properties of component are stored in special field called <b>props</b></div>
+
+<!-- 
 <div class="block">
     <b class="title">ac-value="props.value"</b>
     <div class="text">
@@ -121,4 +106,4 @@
 <div class="block">
     <b class="title">ac-outside="outsideClick"</b>
     <div class="text">Trigger method <b>outsideClick</b> if user clicked beyond the element where ac-outside is specified</div>
-</div>
+</div> -->

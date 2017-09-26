@@ -61,37 +61,42 @@ app-documentation {
     .code-block {
 
         display: block; //padding: 9.5px;
-        margin: 0 0 10px;
+        margin: 10px 0 10px;
         font-size: 14px;
-        line-height: 1.42857143;
-        color: #333;
         word-break: break-all;
         word-wrap: break-word;
         background-color: rgba(247, 247, 247, 0.85);
-        border: 1px solid #ccc;
+        border: 1px solid #f3eeee;
         border-radius: 4px;
         .code-header {
             background: #ccc;
             padding: 10px;
         }
+        .attr {
+            color: #17b6ed;
+        }
+        .text {
+            // color: #333;
+            font-weight: bold;
+        }
     }
-    .folder-structure{
+    .folder-structure {
         padding: 20px;
         width: 50%;
-        .children{
+        .children {
             position: relative;
             overflow: hidden;
             padding-left: 24px;
-            &:first-child{
+            &:first-child {
                 padding: 0;
             }
         }
-        &--item{
+        &--item {
             padding: 5px 0px;
             position: relative;
-            .folder-structure--item{
+            .folder-structure--item {
                 padding-left: 30px;
-                &:before{
+                &:before {
                     content: "";
                     left: 10px;
                     bottom: 15px;
@@ -135,9 +140,18 @@ app-documentation {
         font-family: 'Roboto', sans-serif; //width: 150px;
         margin-right: 20px;
     }
+    .section-title {
+        font-size: 16px;
+        margin-top: 20px;
+        border-bottom: 1px solid;
+    }
+    .in-development{
+        color:red;
+    }
     .text {
         width: 500px;
         font-weight: 300;
+        margin: 10px 0;
     }
     .block {
         border-bottom: 1px solid #ccc;
@@ -145,6 +159,15 @@ app-documentation {
         align-items: center;
         padding: 20px;
         justify-content: space-between;
+    }
+    .label {
+        padding: 3px 5px; // background: #ccc;
+        display: inline-block;
+        color: #17b6ed;
+        font-weight: bold;
+        font-size: 16px;
+        border-radius: 3px;
+        border: 1px solid;
     }
 }
 

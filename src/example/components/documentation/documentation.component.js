@@ -51,11 +51,26 @@ export class DocumentationComponent extends Component {
                 {
                     name: 'Template',
                     items: [{
+                        name: 'Interpolation',
+                        route: 'documentation/interpolation'
+                    }, {
                         name: 'Directives',
                         route: 'documentation/directives'
                     }, {
+                        name: 'Conditional rendering',
+                        route: 'documentation/conditional-rendering'
+                    }, {
+                        name: 'List rendering',
+                        route: 'documentation/list-rendering'
+                    }, {
+                        name: 'Classes & Styles',
+                        route: 'documentation/classes-styles'
+                    }, {
                         name: 'Events',
                         route: 'documentation/events'
+                    }, {
+                        name: 'Forms',
+                        route: 'documentation/forms'
                     }]
                 },
                 {
@@ -64,13 +79,9 @@ export class DocumentationComponent extends Component {
                         name: 'Stores',
                         route: 'documentation/store'
                     }, {
-                        name: 'Smart Object',
+                        name: 'Observable',
                         route: 'documentation/smart-object'
                     }]
-                },
-                {
-                    name: 'Styles',
-                    items: []
                 },
                 {
                     name: 'Routing',

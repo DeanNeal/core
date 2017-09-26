@@ -5,6 +5,11 @@ import {DocComponentComponent} from './component/doc-component.component';
 import {DocLifecycleComponent} from './lifecycle/doc-lifecycle.component';
 import {DocUtilsComponent} from './utils/doc-utils.component';
 import {DocDirectivesComponent} from './directives/directives.component';
+
+
+import {DocInterpolationComponent} from './interpolation/doc-interpolation.component';
+import {DocConditionalComponent} from './conditional/doc-conditional.component';
+
 import {DocModulesComponent} from './modules/doc-modules.component';
 import {DocSmartObjectComponent} from './smart-object/doc-smart-object.component';
 import {DocHowToComponent} from './how-to-install/doc-how-to.component';
@@ -23,6 +28,11 @@ export default [
     {c: DocLifecycleComponent, selector: 'app-documentation-lifecycle'},
     {c: DocUtilsComponent, selector: 'app-documentation-utils'},
     {c: DocDirectivesComponent, selector: 'app-documentation-directives'},
+
+    {c: DocInterpolationComponent, selector: 'app-documentation-interpolation'},
+    {c: DocConditionalComponent, selector: 'app-documentation-conditional'},
+
+
     {c: DocModulesComponent, selector: 'app-documentation-modules'},
     {c: DocSmartObjectComponent, selector: 'app-documentation-smart-object'},
     {c: DocRouterConfigComponent, selector: 'app-documentation-router-config'},
