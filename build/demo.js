@@ -2,7 +2,7 @@
  * ace-js 0.2.3
  * May be freely distributed under the MIT license 
  * Author: Bogdan Zinkevich
- * Last update: 2017-9-27 16:23:56
+ * Last update: 2017-9-27 17:46:52
  * 
  */
 (function webpackUniversalModuleDefinition(root, factory) {
@@ -82,7 +82,7 @@ return /******/ (function(modules) { // webpackBootstrap
 /******/ 	}
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "aa09508b1ed6e1d27c72"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "8606f56a18a55a257687"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
 /******/ 	
@@ -2501,71 +2501,91 @@ return /******/ (function(modules) { // webpackBootstrap
 	                    if (_this.prevPage !== route.path) {
 	                        // don't refresh parent router
 	                        // REMOVE ALL COMPONENTS BEFORE CLEARING
-	                        _this.destroyChild(_this.root);
-	                        _this.root.innerHTML = null;
-
-	                        var newCompEmpty = _core.Component.COMPONENTS.filter(function (r) {
-	                            return r.selector === route.component;
-	                        })[0];
-	                        if (newCompEmpty) {
-	                            var newComp = document.createElement(route.component);
-	                            _this.root.appendChild(newComp);
-	                            new newCompEmpty.c(newComp, { routeParams: params });
-	                        } else {
-	                            _this.appendEmpty(_this.root);
-	                        }
-
+	                        _this.destroyChildren(_this.root);
+	                        _this.renderComponent(_this.root, route, params);
 	                        _this.prevPage = route.path;
 	                    }
 
 	                    var router = _this.root.querySelectorAll('child-route-switcher')[0];
 
 	                    if (router) {
-	                        _this.destroyChild(router);
-	                        router.innerHTML = null;
+	                        _this.destroyChildren(router);
 	                        var current = _this.routes.filter(function (item) {
 	                            return item.path === route.path;
 	                        })[0];
 	                        var path = _routerCore2.default.getCurrentFullPath()[1];
-	                        var child = path ? current.children.filter(function (item) {
-	                            return item.path === path;
-	                        })[0] : current.children.filter(function (item) {
-	                            return item.path === '' || item.path === '/';
-	                        })[0];
+	                        var child = _this.getChild(current, path);
 
 	                        if (_this.prevChild !== path || !_this.prevChild) {
-	                            if (child) {
-	                                var _newComp = document.createElement(child.component);
-	                                router.appendChild(_newComp);
-	                                var _newCompEmpty = _core.Component.COMPONENTS.filter(function (r) {
-	                                    return r.selector === child.component;
-	                                })[0];
-	                                new _newCompEmpty.c(_newComp);
-	                            } else {
-	                                _this.appendEmpty(router);
-	                            }
+	                            _this.renderComponent(router, child, params);
 	                            _this.prevChild = path;
 	                        }
 	                    }
-	                }, route.children);
+	                });
 	            });
 	            _routerCore2.default.update();
 	        }
 	    }, {
-	        key: 'destroyChild',
-	        value: function destroyChild(root) {
+	        key: 'getChild',
+	        value: function getChild(current, path) {
+	            return path ? current.children.filter(function (item) {
+	                return item.path === path;
+	            })[0] : current.children.filter(function (item) {
+	                return item.path === '' || item.path === '/';
+	            })[0];
+	        }
+	    }, {
+	        key: 'renderComponent',
+	        value: function renderComponent(root, route, params) {
+	            if (route) {
+	                var newCompObject = _core.Component.COMPONENTS.filter(function (r) {
+	                    return r.selector === route.component;
+	                })[0];
+	                var newComp = document.createElement(route.component);
+	                this.checkAccess(root, newComp, route);
+	                new newCompObject.c(newComp, { routeParams: params });
+	            } else {
+	                this.appendEmpty(root);
+	            }
+	        }
+	    }, {
+	        key: 'checkAccess',
+	        value: function checkAccess(root, newComp, route) {
+	            if (route.protector) {
+	                var protector = new route.protector();
+	                if (protector.check()) {
+	                    root.appendChild(newComp);
+	                } else {
+	                    this.noAccess(root);
+	                }
+	            } else {
+	                root.appendChild(newComp);
+	            }
+	        }
+	    }, {
+	        key: 'destroyChildren',
+	        value: function destroyChildren(root) {
 	            _core.Component.COMPONENTS.forEach(function (r) {
 	                var a = root.querySelectorAll(r.selector);
 	                a.forEach(function (r) {
 	                    r.COMPONENT.destroy();
 	                });
 	            });
+	            root.innerHTML = null;
 	        }
 	    }, {
 	        key: 'appendEmpty',
 	        value: function appendEmpty(root) {
 	            var newComp = document.createElement('div');
 	            newComp.innerHTML = 'Please specify a component for this route <b style="color: red">' + _routerCore2.default.getCurrentFullPath().join('/') + '</b>!';
+	            root.appendChild(newComp);
+	        }
+	    }, {
+	        key: 'noAccess',
+	        value: function noAccess(root) {
+	            var newComp = document.createElement('div');
+	            newComp.innerHTML = 'You have no access to this page';
+	            newComp.className = 'no-access';
 	            root.appendChild(newComp);
 	        }
 	    }]);
@@ -4012,6 +4032,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	                    }, {
 	                        name: 'Router configuration',
 	                        route: 'documentation/router-config'
+	                    }, {
+	                        name: 'Protectors',
+	                        route: 'documentation/route-protectors'
 	                    }]
 	                }, {
 	                    name: 'HTTP',
@@ -4158,7 +4181,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	"use strict";
 
-	module.exports = "<h3>Architecture</h3>\r\n<b>Please follow this file structure:</b>\r\n<br>\r\n<div class=\"code-block folder-structure\">\r\n    <div class=\"folder-structure--item\">\r\n        AceJs project\r\n        <div class=\"children\">\r\n            <div class=\"folder-structure--item\">\r\n                dev\r\n            </div>\r\n            <div class=\"children\">\r\n                <div class=\"folder-structure--item\">components</div>\r\n                <div class=\"children\">\r\n                \t<div class=\"folder-structure--item\">component-one</div>\r\n                \t<div class=\"children\">\r\n                \t\t<div class=\"folder-structure--item\">component-one.component.js</div>\r\n                \t\t<div class=\"folder-structure--item\">component-one.component.html</div>\r\n                \t</div>\r\n                \t<div class=\"folder-structure--item\">component-two</div>\r\n                \t<div class=\"folder-structure--item\">component ...</div>\r\n                </div>\r\n                <div class=\"folder-structure--item\">stores</div>\r\n                <div class=\"folder-structure--item\">styles</div>\r\n                <div class=\"folder-structure--item\">app.js</div>\r\n                <div class=\"folder-structure--item\">assets\r\n                </div>\r\n                <div class=\"children\">\r\n                    <div class=\"folder-structure--item\">img</div>\r\n                    <div class=\"folder-structure--item\">fonts</div>\r\n                </div>\r\n                <div class=\"folder-structure--item\">routes.js</div>\r\n            </div>\r\n            <div class=\"folder-structure--item\">index.html</div>\r\n            <div class=\"folder-structure--item\">node_modules</div>\r\n            <div class=\"folder-structure--item\">package.json</div>\r\n            <div class=\"folder-structure--item\">webpack.config.js</div>\r\n        </div>\r\n    </div>\r\n</div>\r\n\r\n<br>\r\n<b>You can see basic principles of AceJs on following picture: </b>\r\n<img src=\"" + __webpack_require__(59) + "\">\r\n\r\n\r\n<br><br>\r\n<div class=\"code-block\">\r\n    <div class=\"code-header\">app.js</div>\r\n    <pre>\r\n        import Styles from './styles/main.scss';\r\n        import { Register } from '../core';\r\n        import { RootComponent } from './components/root/root.component';\r\n        import { HomeComponent } from './components/home/home.component';\r\n        import { HeaderComponent } from './components/header/header.component';\r\n\r\n        import Docs from './components/documentation';\r\n\r\n        import { Routes } from './router.js';\r\n        <b>Register</b>({\r\n            <b>root</b>: {\r\n                c: RootComponent, selector: 'app-root'\r\n            },\r\n            <b>components</b>: [\r\n                { c: HomeComponent, selector: 'app-home' },\r\n                { c: HeaderComponent, selector: 'app-header' }\r\n            ],\r\n            <b>modules</b>: [\r\n                Docs\r\n            ],\r\n            <b>serverUrl</b>: \"\",\r\n            <b>routes</b>: Routes,\r\n            <b>styles</b>: Styles\r\n        });\r\n    </pre>\r\n</div>";
+	module.exports = "<h3>Architecture</h3>\r\n<b>Please follow this file structure:</b>\r\n<br>\r\n<div class=\"code-block folder-structure\">\r\n    <div class=\"folder-structure--item\">\r\n        AceJs project\r\n        <div class=\"children\">\r\n            <div class=\"folder-structure--item\">\r\n                dev\r\n            </div>\r\n            <div class=\"children\">\r\n                <div class=\"folder-structure--item\">components</div>\r\n                <div class=\"children\">\r\n                \t<div class=\"folder-structure--item\">component-one</div>\r\n                \t<div class=\"children\">\r\n                \t\t<div class=\"folder-structure--item\">component-one.component.js</div>\r\n                \t\t<div class=\"folder-structure--item\">component-one.component.html</div>\r\n                \t</div>\r\n                \t<div class=\"folder-structure--item\">component-two</div>\r\n                \t<div class=\"folder-structure--item\">component ...</div>\r\n                </div>\r\n                <div class=\"folder-structure--item\">stores</div>\r\n                <div class=\"folder-structure--item\">protectors</div>\r\n                <div class=\"folder-structure--item\">styles</div>\r\n                <div class=\"folder-structure--item\">app.js</div>\r\n                <div class=\"folder-structure--item\">assets\r\n                </div>\r\n                <div class=\"children\">\r\n                    <div class=\"folder-structure--item\">img</div>\r\n                    <div class=\"folder-structure--item\">fonts</div>\r\n                </div>\r\n                <div class=\"folder-structure--item\">routes.js</div>\r\n            </div>\r\n            <div class=\"folder-structure--item\">index.html</div>\r\n            <div class=\"folder-structure--item\">node_modules</div>\r\n            <div class=\"folder-structure--item\">package.json</div>\r\n            <div class=\"folder-structure--item\">webpack.config.js</div>\r\n        </div>\r\n    </div>\r\n</div>\r\n\r\n<br>\r\n<b>You can see basic principles of AceJs on following picture: </b>\r\n<img src=\"" + __webpack_require__(59) + "\">\r\n\r\n\r\n<br><br>\r\n<div class=\"code-block\">\r\n    <div class=\"code-header\">app.js</div>\r\n    <pre>\r\n        import Styles from './styles/main.scss';\r\n        import { Register } from '../core';\r\n        import { RootComponent } from './components/root/root.component';\r\n        import { HomeComponent } from './components/home/home.component';\r\n        import { HeaderComponent } from './components/header/header.component';\r\n\r\n        import Docs from './components/documentation';\r\n\r\n        import { Routes } from './router.js';\r\n        <b>Register</b>({\r\n            <b>root</b>: {\r\n                c: RootComponent, selector: 'app-root'\r\n            },\r\n            <b>components</b>: [\r\n                { c: HomeComponent, selector: 'app-home' },\r\n                { c: HeaderComponent, selector: 'app-header' }\r\n            ],\r\n            <b>modules</b>: [\r\n                Docs\r\n            ],\r\n            <b>serverUrl</b>: \"\",\r\n            <b>routes</b>: Routes,\r\n            <b>styles</b>: Styles\r\n        });\r\n    </pre>\r\n</div>";
 
 /***/ }),
 /* 59 */

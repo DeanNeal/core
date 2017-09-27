@@ -91,6 +91,9 @@ export class DocumentationComponent extends Component {
                     }, {
                         name: 'Router configuration',
                         route: 'documentation/router-config'
+                    }, {
+                        name: 'Protectors',
+                        route: 'documentation/route-protectors'
                     }]
                 },
                 {
