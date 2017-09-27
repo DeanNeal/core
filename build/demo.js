@@ -1,8 +1,8 @@
 /*!
- * ace-js 0.2.2
+ * ace-js 0.2.3
  * May be freely distributed under the MIT license 
  * Author: Bogdan Zinkevich
- * Last update: 2017-9-27 16:20:04
+ * Last update: 2017-9-27 16:23:56
  * 
  */
 (function webpackUniversalModuleDefinition(root, factory) {
@@ -82,7 +82,7 @@ return /******/ (function(modules) { // webpackBootstrap
 /******/ 	}
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "0c184db7f11dbb087598"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "aa09508b1ed6e1d27c72"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
 /******/ 	
@@ -3848,7 +3848,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	"use strict";
 
-	module.exports = "<main>\r\n\r\n    <div class=\"main-content justify-space-between\">\r\n\r\n        <ul class=\"main-list\">\r\n            <li ac-for=\"props.plugins\">\r\n                <a class=\"list-head\" ac-value=\"name\" ac-link=\"@route\" ></a>\r\n            </li>\r\n        </ul>\r\n\r\n        <div class=\"plugins-section\">\r\n            <!-- <child-route-switcher></child-route-switcher> -->\r\n        \r\n        \t<h3>Sortable</h3>\r\n        \t<div ac-ref=\"test\">\r\n        \t    <div draggable=\"true\" style=\"border: 1px solid #ccc; padding: 5px;display: block; width: 200px\">First Item</div>\r\n        \t    <div draggable=\"true\" style=\"border: 1px solid #ccc; padding: 5px;display: block; width: 200px\">Second Item</div>\r\n        \t    <div draggable=\"true\" style=\"border: 1px solid #ccc; padding: 5px;display: block; width: 200px\">Third Item</div>\r\n        \t</div>\r\n    \r\n        </div>\r\n    </div>\r\n</main>\r\n\r\n\r\n\r\n";
+	module.exports = "<main>\r\n\r\n    <div class=\"main-content justify-space-between\">\r\n\r\n        <ul class=\"main-list\">\r\n            <li ac-for=\"props.plugins\">\r\n                <a class=\"list-head\" ac-value=\"name\" ac-link=\"{{this.route}}\" ></a>\r\n            </li>\r\n        </ul>\r\n\r\n        <div class=\"plugins-section\">\r\n            <!-- <child-route-switcher></child-route-switcher> -->\r\n        \r\n        \t<h3>Sortable</h3>\r\n        \t<div ac-ref=\"test\">\r\n        \t    <div draggable=\"true\" style=\"border: 1px solid #ccc; padding: 5px;display: block; width: 200px\">First Item</div>\r\n        \t    <div draggable=\"true\" style=\"border: 1px solid #ccc; padding: 5px;display: block; width: 200px\">Second Item</div>\r\n        \t    <div draggable=\"true\" style=\"border: 1px solid #ccc; padding: 5px;display: block; width: 200px\">Third Item</div>\r\n        \t</div>\r\n    \r\n        </div>\r\n    </div>\r\n</main>\r\n\r\n\r\n\r\n";
 
 /***/ }),
 /* 52 */
@@ -3939,7 +3939,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	            this.getElement('pre').forEach(function (item) {});
 
 	            this.props.set({
-	                version: ("0.2.2"),
+	                version: ("0.2.3"),
 	                'categories': [{
 	                    name: 'Getting started',
 	                    items: [{
