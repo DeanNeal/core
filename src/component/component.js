@@ -1,19 +1,37 @@
-import { Router, RouteSwitcher, ObservableModel } from '../core';
+import { Router, RouteSwitcher, ObservableModel, TemplateEngine, Utils } from '../core';
 import { PRIVATES } from '../component/private';
+import Interpolation from './interpolation/interpolation';
 import { Directives } from '../component/Directives';
 import { DIRECTIVES_NAMES } from '../component/const/directives';
 import { EVENTS_NAMES } from '../component/const/events';
 
 
 export class Component {
+    
     constructor(root, options) {
-        this.root = root;
-        this.tpl = options.template || 'Empty template';
-        this.props = new ObservableModel(options.props);
-        this.type = options.type;
+        Component.componentConstructor.call(this, root, options);
+    }
 
-        this.ui = {};
+    static componentConstructor(root, options) {
+        this.root = root;//;console.log(root);
+
+        Object.defineProperty(this, 'options', {
+            value: Object.assign({}, options),
+            writable: false
+        });
+        
+        Object.defineProperty(this, 'tpl', { value: options.template || 'Empty template', writable: false });
+        Object.defineProperty(this, 'props', { value: new ObservableModel(options.props), writable: false });
+
+        Object.defineProperty(this, 'type', { value: options.type, writable: false });
+
+
+        Object.defineProperty(this, '$refs', { value: {}, writable: false });
+        Object.defineProperty(this, '$attrs', { value: {}, writable: false });
+        Object.defineProperty(this, '$routerSub', { value: null, writable: true });
+
         this.root.COMPONENT = this;
+
         Component.setPrivates.call(this, options);
 
         if (this.root.getAttribute('ac-for')) {
@@ -22,7 +40,7 @@ export class Component {
             this.render();
             this.listenToPropsChanges();
         }
-    }
+    } 
 
     static setPrivates(options) {
         for (let array in PRIVATES.DIRECTIVES) {
@@ -35,14 +53,19 @@ export class Component {
         PRIVATES.HOST.EVENTS.set(this, options.hostEvents);
         PRIVATES.HOST.CLASS.set(this, options.hostClasses);
         PRIVATES.HOST.STYLE.set(this, options.hostStyles);
+
+        this.$interpolationArray = [];
     }
 
     render() {
         this.root.innerHTML = this.preCompileTpl(this.tpl);
         this.onAttach();
 
-        this.compile(); // render custom elements
+        // if (this.options.interpolation) {
+        //Interpolation.interpolationInit.call(this, this.root, this.$interpolationArray);
+        // }
 
+        this.compile(); // render custom elements
         this.compileRouter(); // render main router
         // console.log(this);
 
@@ -64,7 +87,7 @@ export class Component {
         Directives._hostEvents.call(this, PRIVATES.HOST.EVENTS.get(this));
 
         if (PRIVATES.DIRECTIVES['ac-link'].get(this).length || PRIVATES.DIRECTIVES['ac-for'].get(this).length) {
-            this.routerSub = Router.onChange(() => {
+            this.$routerSub = Router.onChange(() => {
                 let a = this.root.querySelectorAll('[href]');
                 a.forEach(item => {
                     let fullRoute = Router.getCurrentFullPath();
@@ -91,15 +114,18 @@ export class Component {
             Directives._link.call(this, PRIVATES.DIRECTIVES['ac-link'].get(this));
             Directives._hostClasses.call(this, PRIVATES.HOST.CLASS.get(this));
             Directives._hostStyles.call(this, PRIVATES.HOST.STYLE.get(this));
+
+            // Interpolation.interpolationRun.call(this, this.$interpolationArray);
+
             this.onUpdate();
         });
     }
 
     compile() {
         Component.COMPONENTS.forEach(comp => {
-            let component = this.root.querySelectorAll(comp.selector);
-            if (component.length) {
-                component.forEach(r => {
+            let components = this.root.querySelectorAll(comp.selector);
+            if (components.length) {
+                components.forEach(r => {
                     if (!r.COMPONENT) { // don't reinitialize
                         new comp.c(r);
                     }
@@ -123,7 +149,7 @@ export class Component {
             let regex = new RegExp(stringToGoIntoTheRegex, "g");
             html = html.replace(regex, `ac-${event}`)
         });
-        // html = this.htmlInterpolation(html);
+
         return html
     }
 
@@ -182,9 +208,9 @@ export class Component {
             PRIVATES.GLOBAL_EVENTS.get(this).unsubscribe();
         }
         //unsubscribe from router changes
-        if (this.routerSub) {
+        if (this.$routerSub) {
             // console.log('destroyed', this);
-            this.routerSub.unsubscribe();
+            this.$routerSub.unsubscribe();
         }
 
         //unsubscribe from components subscribers
@@ -201,7 +227,7 @@ export class Component {
     onAttach() {
 
     }
-    
+
     onUpdate() {
 
     }

@@ -1,16 +1,23 @@
-import { Component } from '../../../../core';
+import { Component, Decorators } from '../../../../core';
+
 import Tpl from './doc-interpolation.component.html';
-export class DocInterpolationComponent extends Component {
-    constructor(params) {
-        super(params, {
-            template: Tpl,
-            props: {
-                isVisible: true
-            }
-        });
+
+
+@Decorators.ComponentDecorator({
+    template: Tpl,
+    props: {
+        isVisible: true,
+        title: 'test'
+    }
+})
+export class DocInterpolationComponent {
+    constructor(root, params) {  
+
     }
 
     onInit() {
-
+        // setInterval(()=>{
+        //     this.props.set('title', new Date());
+        // }, 1000);
     }
 }

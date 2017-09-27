@@ -16,7 +16,7 @@ export class PluginsComponent extends Component {
     	}]});
 
     	Plugins.Sortable.init({
-    	    el: this.ui.test
+    	    el: this.$refs.test
     	})
     }
 }

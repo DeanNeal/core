@@ -2,7 +2,7 @@
  * ace-js 0.2.2
  * May be freely distributed under the MIT license 
  * Author: Bogdan Zinkevich
- * Last update: 2017-9-26 00:01:43
+ * Last update: 2017-9-27 16:20:04
  * 
  */
 (function webpackUniversalModuleDefinition(root, factory) {
@@ -82,7 +82,7 @@ return /******/ (function(modules) { // webpackBootstrap
 /******/ 	}
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "14cbe734e68e40b737e4"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "0c184db7f11dbb087598"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
 /******/ 	
@@ -629,27 +629,27 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var _component = __webpack_require__(33);
 
-	var _routerSwitcher = __webpack_require__(34);
+	var _routerSwitcher = __webpack_require__(35);
 
-	var _routerCore = __webpack_require__(35);
+	var _routerCore = __webpack_require__(36);
 
 	var _routerCore2 = _interopRequireDefault(_routerCore);
 
-	var _templateEngine = __webpack_require__(36);
+	var _templateEngine = __webpack_require__(37);
 
-	var _globalEvents = __webpack_require__(37);
+	var _globalEvents = __webpack_require__(38);
 
 	var _globalEvents2 = _interopRequireDefault(_globalEvents);
 
-	var _utils = __webpack_require__(38);
+	var _utils = __webpack_require__(39);
 
-	var _plugins = __webpack_require__(39);
+	var _plugins = __webpack_require__(40);
 
 	var Plugins = _interopRequireWildcard(_plugins);
 
-	var _http = __webpack_require__(41);
+	var _http = __webpack_require__(42);
 
-	var _store = __webpack_require__(42);
+	var _store = __webpack_require__(43);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -971,43 +971,10 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	function ComponentDecorator(decoratorParams) {
 	    return function decorator(Class) {
-	        return function (args) {
-
+	        return function (root, options) {
 	            Class.prototype = Object.setPrototypeOf(Class.prototype, _core.Component.prototype);
-	            var instance = new Class(args);
-
-	            instance.tpl = decoratorParams.template || 'Empty template';
-	            // this.styles = custom.styles;
-	            instance.shadow = decoratorParams.shadow || false;
-	            instance.type = decoratorParams.type;
-
-	            instance.props = new _core.ObservableModel(args.props);
-	            instance.root = null;
-
-	            _core.Component.setPrivates.call(instance, {});
-
-	            instance.ui = {};
-	            // console.log(options.ce.attributes);
-	            if (args.ce.getAttribute('ac-for')) {
-	                // console.warn('Foor loop is detected!')
-	            } else {
-	                args.ce ? _core.Component.render.call(instance, args.ce) : console.warn('Component data is expected. See your component constructor!');
-	                instance.props.sub(function (r) {
-	                    _Directives.Directives._for.call(instance, _private.PRIVATES.DIRECTIVES['ac-for'].get(instance));
-	                    _Directives.Directives._props.call(instance, _private.PRIVATES.DIRECTIVES['ac-value'].get(instance));
-	                    _Directives.Directives._input.call(instance, _private.PRIVATES.DIRECTIVES['ac-input'].get(instance));
-	                    _Directives.Directives._props.call(instance, _private.PRIVATES.DIRECTIVES['ac-model'].get(instance));
-	                    _Directives.Directives._style.call(instance, _private.PRIVATES.DIRECTIVES['ac-style'].get(instance));
-	                    _Directives.Directives._if.call(instance, _private.PRIVATES.DIRECTIVES['ac-if'].get(instance));
-	                    _Directives.Directives._class.call(instance, _private.PRIVATES.DIRECTIVES['ac-class'].get(instance));
-	                    _Directives.Directives._attr.call(instance, _private.PRIVATES.DIRECTIVES['ac-attr'].get(instance));
-	                    _Directives.Directives._link.call(instance, _private.PRIVATES.DIRECTIVES['ac-link'].get(instance));
-	                    _Directives.Directives._hostClasses.call(instance, _private.PRIVATES.HOST.CLASS.get(instance));
-	                    _Directives.Directives._hostStyles.call(instance, _private.PRIVATES.HOST.STYLE.get(instance));
-	                    instance.onUpdate();
-	                });
-	            }
-
+	            var instance = new Class();
+	            _core.Component.componentConstructor.call(instance, root, decoratorParams);
 	            return instance;
 	        };
 	    };
@@ -1358,7 +1325,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	    array.forEach(function (item) {
 	        var attr = item.attr;
-	        _this.ui[attr] = item.elem;
+	        _this.$refs[attr] = item.elem;
 	    });
 	}
 
@@ -2044,11 +2011,17 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var _private = __webpack_require__(12);
 
+	var _interpolation = __webpack_require__(34);
+
+	var _interpolation2 = _interopRequireDefault(_interpolation);
+
 	var _Directives = __webpack_require__(15);
 
 	var _directives = __webpack_require__(13);
 
 	var _events = __webpack_require__(14);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
@@ -2056,21 +2029,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    function Component(root, options) {
 	        _classCallCheck(this, Component);
 
-	        this.root = root;
-	        this.tpl = options.template || 'Empty template';
-	        this.props = new _core.ObservableModel(options.props);
-	        this.type = options.type;
-
-	        this.ui = {};
-	        this.root.COMPONENT = this;
-	        Component.setPrivates.call(this, options);
-
-	        if (this.root.getAttribute('ac-for')) {
-	            // console.warn('Foor loop is detected!')
-	        } else {
-	            this.render();
-	            this.listenToPropsChanges();
-	        }
+	        Component.componentConstructor.call(this, root, options);
 	    }
 
 	    _createClass(Component, [{
@@ -2079,9 +2038,13 @@ return /******/ (function(modules) { // webpackBootstrap
 	            var _this = this;
 
 	            this.root.innerHTML = this.preCompileTpl(this.tpl);
+	            this.onAttach();
+
+	            // if (this.options.interpolation) {
+	            //Interpolation.interpolationInit.call(this, this.root, this.$interpolationArray);
+	            // }
 
 	            this.compile(); // render custom elements
-
 	            this.compileRouter(); // render main router
 	            // console.log(this);
 
@@ -2102,7 +2065,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	            _Directives.Directives._hostEvents.call(this, _private.PRIVATES.HOST.EVENTS.get(this));
 
 	            if (_private.PRIVATES.DIRECTIVES['ac-link'].get(this).length || _private.PRIVATES.DIRECTIVES['ac-for'].get(this).length) {
-	                this.routerSub = _core.Router.onChange(function () {
+	                this.$routerSub = _core.Router.onChange(function () {
 	                    var a = _this.root.querySelectorAll('[href]');
 	                    a.forEach(function (item) {
 	                        var fullRoute = _core.Router.getCurrentFullPath();
@@ -2132,6 +2095,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	                _Directives.Directives._link.call(_this2, _private.PRIVATES.DIRECTIVES['ac-link'].get(_this2));
 	                _Directives.Directives._hostClasses.call(_this2, _private.PRIVATES.HOST.CLASS.get(_this2));
 	                _Directives.Directives._hostStyles.call(_this2, _private.PRIVATES.HOST.STYLE.get(_this2));
+
+	                // Interpolation.interpolationRun.call(this, this.$interpolationArray);
+
 	                _this2.onUpdate();
 	            });
 	        }
@@ -2141,9 +2107,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	            var _this3 = this;
 
 	            Component.COMPONENTS.forEach(function (comp) {
-	                var component = _this3.root.querySelectorAll(comp.selector);
-	                if (component.length) {
-	                    component.forEach(function (r) {
+	                var components = _this3.root.querySelectorAll(comp.selector);
+	                if (components.length) {
+	                    components.forEach(function (r) {
 	                        if (!r.COMPONENT) {
 	                            // don't reinitialize
 	                            new comp.c(r);
@@ -2170,7 +2136,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	                var regex = new RegExp(stringToGoIntoTheRegex, "g");
 	                html = html.replace(regex, 'ac-' + event);
 	            });
-	            // html = this.htmlInterpolation(html);
+
 	            return html;
 	        }
 	    }, {
@@ -2240,9 +2206,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	                _private.PRIVATES.GLOBAL_EVENTS.get(this).unsubscribe();
 	            }
 	            //unsubscribe from router changes
-	            if (this.routerSub) {
+	            if (this.$routerSub) {
 	                // console.log('destroyed', this);
-	                this.routerSub.unsubscribe();
+	                this.$routerSub.unsubscribe();
 	            }
 
 	            //unsubscribe from components subscribers
@@ -2257,12 +2223,45 @@ return /******/ (function(modules) { // webpackBootstrap
 	        key: 'onDestroy',
 	        value: function onDestroy() {}
 	    }, {
+	        key: 'onAttach',
+	        value: function onAttach() {}
+	    }, {
 	        key: 'onUpdate',
 	        value: function onUpdate() {}
 	    }, {
 	        key: 'onInit',
 	        value: function onInit() {}
 	    }], [{
+	        key: 'componentConstructor',
+	        value: function componentConstructor(root, options) {
+	            this.root = root; //;console.log(root);
+
+	            Object.defineProperty(this, 'options', {
+	                value: Object.assign({}, options),
+	                writable: false
+	            });
+
+	            Object.defineProperty(this, 'tpl', { value: options.template || 'Empty template', writable: false });
+	            Object.defineProperty(this, 'props', { value: new _core.ObservableModel(options.props), writable: false });
+
+	            Object.defineProperty(this, 'type', { value: options.type, writable: false });
+
+	            Object.defineProperty(this, '$refs', { value: {}, writable: false });
+	            Object.defineProperty(this, '$attrs', { value: {}, writable: false });
+	            Object.defineProperty(this, '$routerSub', { value: null, writable: true });
+
+	            this.root.COMPONENT = this;
+
+	            Component.setPrivates.call(this, options);
+
+	            if (this.root.getAttribute('ac-for')) {
+	                // console.warn('Foor loop is detected!')
+	            } else {
+	                this.render();
+	                this.listenToPropsChanges();
+	            }
+	        }
+	    }, {
 	        key: 'setPrivates',
 	        value: function setPrivates(options) {
 	            for (var array in _private.PRIVATES.DIRECTIVES) {
@@ -2275,6 +2274,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	            _private.PRIVATES.HOST.EVENTS.set(this, options.hostEvents);
 	            _private.PRIVATES.HOST.CLASS.set(this, options.hostClasses);
 	            _private.PRIVATES.HOST.STYLE.set(this, options.hostStyles);
+
+	            this.$interpolationArray = [];
 	        }
 	    }]);
 
@@ -2283,6 +2284,56 @@ return /******/ (function(modules) { // webpackBootstrap
 
 /***/ }),
 /* 34 */
+/***/ (function(module, exports) {
+
+	"use strict";
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	var Interpolation = {
+	    interpolationInit: function interpolationInit(root, array) {
+	        // let regExp = /{{[^%>]+?}}/g;
+	        // let matches = root.innerHTML.match(regExp);
+
+	        // if(matches) {        
+	        //     matches.forEach((match, i) => {
+	        //         let a = deepSearch(array, root, match);
+	        //         // console.log(a, match);
+	        //         // item.elem.innerHTML = item.elem.innerHTML.replace(expression[0], '<div ac-interpolaction>  </div>');
+	        //         // let r = this.getComponentVariable(expression[1].split('.'), this.props)
+	        //         // item.elem.innerHTML = item.cached.innerHTML.replace(expression[0], r);
+	        //     });
+	        // }
+	    },
+
+	    interpolationRun: function interpolationRun(array) {
+	        // array.forEach(item=>{
+	        //     // console.log(item);
+	        // })
+	    }
+	};
+
+	function deepSearch(array, node, match) {
+	    node.childNodes.forEach(function (r) {
+	        var regExp = /{{([^%>]+)?}}/;
+	        var expression = regExp.exec(r.textContent);
+
+	        console.log(r.textContent.trim());
+	        if (r.nodeType === 3 && r.textContent.trim() === match) {
+
+	            array.push({
+	                elem: r
+	            });
+	        }
+	        deepSearch(array, r, match);
+	    });
+	    return array;
+	}
+	exports.default = Interpolation;
+
+/***/ }),
+/* 35 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -2294,7 +2345,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-	var _routerCore = __webpack_require__(35);
+	var _routerCore = __webpack_require__(36);
 
 	var _routerCore2 = _interopRequireDefault(_routerCore);
 
@@ -2396,7 +2447,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	}();
 
 /***/ }),
-/* 35 */
+/* 36 */
 /***/ (function(module, exports) {
 
 	'use strict';
@@ -2423,7 +2474,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	            // Make sure popstate doesn't run on init -- this is a common issue with Safari and old versions of Chrome
 	            if (self.state && self.state.previousState === null) return false;
 
-	            var a = _this.getCurrentRoute(_this.getCurrentPath());
+	            var a = _this.getCurrentRoute(_this.getFullStringPath());
 	            if (a) {
 	                a.callback();
 	                _this.runSubscribtions();
@@ -2446,6 +2497,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	            return location.pathname.split('/').filter(function (item) {
 	                return item;
 	            }) || '/';
+	        }
+	    }, {
+	        key: 'getFullStringPath',
+	        value: function getFullStringPath() {
+	            return location.pathname.substr(1) || '/';
 	        }
 	    }, {
 	        key: 'getCurrentRoute',
@@ -2543,7 +2599,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	exports.default = new Router();
 
 /***/ }),
-/* 36 */
+/* 37 */
 /***/ (function(module, exports) {
 
 	'use strict';
@@ -2574,7 +2630,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	}
 
 /***/ }),
-/* 37 */
+/* 38 */
 /***/ (function(module, exports) {
 
 	'use strict';
@@ -2639,7 +2695,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	exports.default = new GlobalEvents();
 
 /***/ }),
-/* 38 */
+/* 39 */
 /***/ (function(module, exports) {
 
 	'use strict';
@@ -2837,7 +2893,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	exports.Utils = Utils;
 
 /***/ }),
-/* 39 */
+/* 40 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -2847,7 +2903,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	});
 	exports.Sortable = undefined;
 
-	var _sortable = __webpack_require__(40);
+	var _sortable = __webpack_require__(41);
 
 	var _sortable2 = _interopRequireDefault(_sortable);
 
@@ -2856,7 +2912,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	exports.Sortable = _sortable2.default;
 
 /***/ }),
-/* 40 */
+/* 41 */
 /***/ (function(module, exports) {
 
 	'use strict';
@@ -2999,7 +3055,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	exports.default = new Sortable();
 
 /***/ }),
-/* 41 */
+/* 42 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -3406,7 +3462,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	exports.Http = Http;
 
 /***/ }),
-/* 42 */
+/* 43 */
 /***/ (function(module, exports) {
 
 	"use strict";
