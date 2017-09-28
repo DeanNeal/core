@@ -54,7 +54,7 @@ export class Component {
         PRIVATES.HOST.CLASS.set(this, options.hostClasses);
         PRIVATES.HOST.STYLE.set(this, options.hostStyles);
 
-        this.$interpolationArray = [];
+        // this.$interpolationArray = [];
     }
 
     render() {
@@ -166,6 +166,18 @@ export class Component {
                 return o[i]
             }
         }, data || this)
+    }
+
+    setComponentVariable(string, value) {
+        let params = string.split('.');
+        let lastProp = params[params.length - 1];
+        if(params.length > 1){
+            params.splice(-1, 1);
+        }
+        
+        let target = params.reduce((o, i) => o[i], this);
+        target[lastProp] = value;
+        this.props._callAll();
     }
 
     getElement(target) {

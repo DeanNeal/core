@@ -2,7 +2,7 @@
  * ace-js 0.2.4
  * May be freely distributed under the MIT license 
  * Author: Bogdan Zinkevich
- * Last update: 2017-9-27 17:47:53
+ * Last update: 2017-9-28 15:42:57
  * 
  */
 (function webpackUniversalModuleDefinition(root, factory) {
@@ -82,7 +82,7 @@ return /******/ (function(modules) { // webpackBootstrap
 /******/ 	}
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "5d7a6a95ab51663711a3"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "e91a2d5cac3a3b9134e5"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
 /******/ 	
@@ -1701,28 +1701,18 @@ return /******/ (function(modules) { // webpackBootstrap
 	    var _this = this;
 
 	    array.forEach(function (item) {
-	        var params = item.attr.split('.');
-
 	        item.elem.addEventListener('keyup', function (e) {
-	            var value = e.currentTarget.value;
-	            _this.props.set(params[params.length - 1], value);
+	            _this.setComponentVariable(item.attr, e.currentTarget.value);
 	        }, false);
 
 	        if (item.elem.type === 'checkbox' || item.elem.type === 'radio') {
 	            item.elem.addEventListener('change', function (e) {
-	                var params = item.attr.split('.');
-	                var last = params[params.length - 1];
-	                params.splice(-1, 1);
-	                var r = params.reduce(function (o, i) {
-	                    return o[i];
-	                }, _this);
-	                r[last] = item.elem.type === 'radio' ? e.currentTarget.value : e.currentTarget.checked;
-	                _this.props._callAll();
+	                _this.setComponentVariable(item.attr, item.elem.type === 'radio' ? e.currentTarget.value : e.currentTarget.checked);
 	            }, false);
 	        }
 
 	        item.elem.addEventListener('modelChange', function (e) {
-	            _this.props.set(params[params.length - 1], e.detail);
+	            _this.setComponentVariable(item.attr, e.detail);
 	        }, false);
 	    });
 	}
@@ -2162,6 +2152,21 @@ return /******/ (function(modules) { // webpackBootstrap
 	            }, data || this);
 	        }
 	    }, {
+	        key: 'setComponentVariable',
+	        value: function setComponentVariable(string, value) {
+	            var params = string.split('.');
+	            var lastProp = params[params.length - 1];
+	            if (params.length > 1) {
+	                params.splice(-1, 1);
+	            }
+
+	            var target = params.reduce(function (o, i) {
+	                return o[i];
+	            }, this);
+	            target[lastProp] = value;
+	            this.props._callAll();
+	        }
+	    }, {
 	        key: 'getElement',
 	        value: function getElement(target) {
 	            return this.root.querySelectorAll(target);
@@ -2275,7 +2280,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	            _private.PRIVATES.HOST.CLASS.set(this, options.hostClasses);
 	            _private.PRIVATES.HOST.STYLE.set(this, options.hostStyles);
 
-	            this.$interpolationArray = [];
+	            // this.$interpolationArray = [];
 	        }
 	    }]);
 
@@ -3217,7 +3222,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	                xhr.open(opts.method, _this3.server + opts.url);
 	                xhr.onload = function () {
 	                    if (this.status >= 200 && this.status < 300) {
-	                        resolve(xhr.response);
+	                        resolve(JSON.parse(xhr.response));
 	                    } else {
 	                        reject({
 	                            status: this.status,
@@ -3430,9 +3435,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	        value: function middleware(response) {
 	            var _this8 = this;
 
-	            return response.then(function (res) {
-	                return JSON.parse(res);
-	            }).then(function (res) {
+	            return response
+	            // .then(res => JSON.parse(res))
+	            .then(function (res) {
 	                return _this8.createEntity(res);
 	            }).catch(function (err) {
 	                return Promise.reject(err);

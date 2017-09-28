@@ -12,7 +12,7 @@ export class HttpMethodsComponent extends Component {
     }
 
     getWeater() {
-        Http.remoteRequest('get', 'http://api.openweathermap.org/data/2.5/weather?q=London&APPID=31ff47785771280c27a522d0cc5c9cba&units=metric').then(res => {
+        Http.makeRequest({method: 'get', url: 'http://api.openweathermap.org/data/2.5/weather?q=London&APPID=31ff47785771280c27a522d0cc5c9cba&units=metric'}).then(res => {
             this.props.set('weather', res);
         })
     }

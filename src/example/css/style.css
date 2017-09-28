@@ -20,7 +20,7 @@ i {
     cursor: pointer;
 }
 
-route-switcher, child-route-switcher{
+route-switcher{
     display: flex;
     flex: 1;
     width: 100%;

@@ -87,7 +87,7 @@ class HttpModule {
             xhr.open(opts.method, this.server + opts.url);
             xhr.onload = function() {
                 if (this.status >= 200 && this.status < 300) {
-                    resolve(xhr.response);
+                    resolve(JSON.parse(xhr.response));
                 } else {
                     reject({
                         status: this.status,
@@ -236,7 +236,7 @@ class HttpModule {
     // 
     middleware(response) {
         return response
-            .then(res => JSON.parse(res))
+            // .then(res => JSON.parse(res))
             .then(res => this.createEntity(res))
             .catch(err => {
                 return Promise.reject(err)

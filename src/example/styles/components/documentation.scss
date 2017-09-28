@@ -172,7 +172,11 @@ app-documentation {
     }
 }
 
-
+child-route-switcher{
+    display: block;
+    // margin: auto;
+    width: 60%;
+}
 app-documentation-directives {
     .clicked {
         color: green;

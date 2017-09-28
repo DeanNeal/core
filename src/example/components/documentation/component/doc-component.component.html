@@ -33,6 +33,30 @@
 </pre>
 </div>
 
+<div class="text">or with decorator</div>
+
+<div class="code-block">
+    <div class="code-header">example.component.js</div>
+    <pre>
+        import { <b>Component, Decorators</b> } from '../../../../core';
+
+        import <b>Tpl</b> from './doc-interpolation.component.html';
+
+
+        <b>@Decorators.ComponentDecorator</b>({
+            <b>template</b>: Tpl,
+            <b>props</b>: {
+                isVisible: true,
+                title: 'test'
+            }
+        })
+        export class <b>ExampleComponent</b> {
+            onInit() {
+            
+            }
+        }
+</pre>
+</div>
 
 <div class="block">
     <b class="title">template</b>
