@@ -1,3 +1,13 @@
+<a name="0.2.6"></a>
+# [0.2.6](https://github.com/DeanNeal/ace-js) (2017-09-28)
+
+### Enhancements
+* **core:** deep merge for ObservableModel set method ([#25](https://github.com/DeanNeal/ace-js/issues/25))
+
+### Bugs
+* **core:** ac-model bug with property path ([#24](https://github.com/DeanNeal/ace-js/issues/24))
+
+
 <a name="0.2.0"></a>
 # [0.2.0](https://github.com/DeanNeal/ace-js) (2017-09-24)
 
