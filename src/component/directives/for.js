@@ -60,6 +60,7 @@ export function _for(array, data) {
                     item.items.push(newEl);
                     item.parent.insertBefore(newEl, item.comment);
                 }
+                item.cached = []; // refresh cached array
             }
 
             item.items.forEach((elem, i) => {

@@ -1,4 +1,5 @@
 import { IfObject, IfArray } from '../decorators';
+import deepmerge from 'deepmerge';
 
 export class Observable {
     constructor(options) {
@@ -50,24 +51,24 @@ export class Observable {
         this._callAll();
     }
 
-    set(data, value) {
+    // set(data, value) {
+    //     if (typeof data == 'object') {
+    //         if (data.length || data.length === 0) {
+    //             this._data = data;
+    //         } else {
+    //             // for (let key in data) {
+    //             //     this._data[key] = data[key];
+    //             // }
+    //             this._data = deepmerge(this._data, data);
+    //             this.defineProperties(data);
+    //         }
+    //     } else {
+    //         this.defineProperty(data, value);
+    //         this._data[data] = value;
+    //     }
 
-        if (typeof data == 'object') {
-            if (data.length || data.length === 0) {
-                this._data = data;
-            } else {
-                for (let key in data) {
-                    this._data[key] = data[key];
-                }
-                this.defineProperties(data);
-            }
-        } else {
-            this.defineProperty(data, value);
-            this._data[data] = value;
-        }
-
-        this._callAll();
-    }
+    //     this._callAll();
+    // }
 
     getData() {
         return this._data;
@@ -94,6 +95,19 @@ export class ObservableModel extends Observable {
         super(options);
         this._data = options || {};
     }
+
+    set(data, value) {
+        if (typeof data == 'object') {
+            const dontMerge = (destination, source) => source;
+            this._data = deepmerge(this._data, data, { arrayMerge: dontMerge });
+            this.defineProperties(data);
+        } else {
+            this.defineProperty(data, value);
+            this._data[data] = value;
+        }
+
+        this._callAll();
+    }
 }
 
 
@@ -101,6 +115,11 @@ export class ObservableModel extends Observable {
 export class ObservableCollection extends Observable {
     constructor(options) {
         super(options);
+    }
+
+    set(data, value) {
+        this._data = data;
+        this._callAll();
     }
 
     save(params) {

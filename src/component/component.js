@@ -176,8 +176,13 @@ export class Component {
         }
         
         let target = params.reduce((o, i) => o[i], this);
-        target[lastProp] = value;
-        this.props._callAll();
+        if(target === this.props) { // use instanceof
+            // target._data[lastProp] = value;
+            this.props.set(lastProp, value);
+        } else {
+            target[lastProp] = value;
+            this.props.set(this.props.getData());
+        }
     }
 
     getElement(target) {
