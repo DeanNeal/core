@@ -1,8 +1,8 @@
 /*!
- * ace-js 0.2.6
+ * ace-js 0.2.7
  * May be freely distributed under the MIT license 
  * Author: Bogdan Zinkevich
- * Last update: 2017-9-29 15:23:43
+ * Last update: 2017-9-30 17:44:55
  * 
  */
 (function webpackUniversalModuleDefinition(root, factory) {
@@ -82,7 +82,7 @@ return /******/ (function(modules) { // webpackBootstrap
 /******/ 	}
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "f1cab724aa3220205fb2"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "a994027d636153812fab"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
 /******/ 	
@@ -1197,11 +1197,20 @@ return /******/ (function(modules) { // webpackBootstrap
 	        }
 	        //TODO rewrite with switch
 	        if (item.elem.localName === 'input') {
-	            if (item.elem.type === 'checkbox') r ? item.elem.setAttribute('checked', true) : item.elem.removeAttribute('checked');
-	            if (item.elem.type === 'radio') {
-	                item.elem.value === r ? item.elem.setAttribute('checked', true) : item.elem.removeAttribute('selected');
+	            switch (item.elem.type) {
+	                case 'checkbox':
+	                    r ? item.elem.setAttribute('checked', true) : item.elem.removeAttribute('checked');
+	                    break;
+	                case 'radio':
+	                    item.elem.value === r ? item.elem.setAttribute('checked', true) : item.elem.removeAttribute('selected');
+	                    break;
+	                case 'text':
+	                case 'email':
+	                case 'password':
+	                    item.elem.value = r;
+	                    break;
+
 	            }
-	            if (item.elem.type === 'text' || item.elem.type === 'email' || item.elem.type === 'password') item.elem.value = r;
 	        } else {
 	            item.elem.innerHTML = r;
 	        }
@@ -1732,14 +1741,31 @@ return /******/ (function(modules) { // webpackBootstrap
 	    var _this = this;
 
 	    array.forEach(function (item) {
-	        item.elem.addEventListener('keyup', function (e) {
-	            _this.setComponentVariable(item.attr, e.currentTarget.value);
-	        }, false);
 
-	        if (item.elem.type === 'checkbox' || item.elem.type === 'radio') {
-	            item.elem.addEventListener('change', function (e) {
-	                _this.setComponentVariable(item.attr, item.elem.type === 'radio' ? e.currentTarget.value : e.currentTarget.checked);
-	            }, false);
+	        if (item.elem.localName === 'input') {
+
+	            switch (item.elem.type) {
+	                case 'checkbox':
+	                    item.elem.addEventListener('change', function (e) {
+	                        _this.setComponentVariable(item.attr, e.currentTarget.checked ? e.currentTarget.value : null);
+	                    }, false);
+	                    break;
+	                case 'radio':
+	                    item.elem.addEventListener('change', function (e) {
+	                        _this.setComponentVariable(item.attr, e.currentTarget.value);
+	                    }, false);
+	                    break;
+	                case 'text':
+	                case 'email':
+	                case 'password':
+	                    item.elem.addEventListener('keydown', function (e) {
+	                        _this.setComponentVariable(item.attr, e.currentTarget.value);
+	                    }, false);
+	                    item.elem.addEventListener('keyup', function (e) {
+	                        _this.setComponentVariable(item.attr, e.currentTarget.value);
+	                    }, false);
+	                    break;
+	            }
 	        }
 
 	        item.elem.addEventListener('modelChange', function (e) {
