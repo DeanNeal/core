@@ -81,6 +81,15 @@ class HttpModule {
         this.server = '';
     }
 
+    onprogress(f) {
+        if(f && f.constructor) {
+            this.onprogressCallback = f;
+        } else {
+            console.warn('Passed data must be a function');
+        }
+        
+    }
+
     makeRequest(opts) {
         return new Promise((resolve, reject) => {
             let xhr = new XMLHttpRequest();
@@ -102,6 +111,13 @@ class HttpModule {
                     statusText: xhr.statusText
                 });
             };
+
+            xhr.upload.onprogress = function(event) {
+                if(this.onprogressCallback){
+                    this.onprogressCallback.call(this, event.loaded + ' / ' + event.total)
+                }
+            }
+
             if (opts.headers) {
                 for(let key of opts.headers.keys()) {
                     xhr.setRequestHeader(key, opts.headers.get(key));
@@ -239,7 +255,11 @@ class HttpModule {
             // .then(res => JSON.parse(res))
             .then(res => this.createEntity(res))
             .catch(err => {
-                return Promise.reject(err)
+                if(err.status === 0) {
+                    throw new Error('Server error');
+                } else {
+                    return Promise.reject(err)
+                }
             });
     }
 

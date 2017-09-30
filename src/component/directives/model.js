@@ -1,13 +1,31 @@
 export function _model(array) {
     array.forEach(item => {
-        item.elem.addEventListener('keyup', (e) => {
-            this.setComponentVariable(item.attr, e.currentTarget.value);
-        }, false);
 
-        if (item.elem.type === 'checkbox' || item.elem.type === 'radio') {
-            item.elem.addEventListener('change', (e) => {
-                this.setComponentVariable(item.attr, item.elem.type === 'radio' ? e.currentTarget.value : e.currentTarget.checked);
-            }, false);
+        if (item.elem.localName === 'input') {
+
+            switch (item.elem.type) {
+                case 'checkbox':
+                    item.elem.addEventListener('change', (e) => {
+                        this.setComponentVariable(item.attr, e.currentTarget.checked ? e.currentTarget.value : null);
+                    }, false);
+                    break;
+                case 'radio':
+                    item.elem.addEventListener('change', (e) => {
+                        this.setComponentVariable(item.attr, e.currentTarget.value);
+                    }, false);
+                    break;
+                case 'text':
+                case 'email':
+                case 'password':
+                    item.elem.addEventListener('keydown', (e) => {
+                        this.setComponentVariable(item.attr, e.currentTarget.value);
+                    }, false);
+                    item.elem.addEventListener('keyup', (e) => {
+                        this.setComponentVariable(item.attr, e.currentTarget.value);
+                    }, false);
+                    break;
+            }
+
         }
 
         item.elem.addEventListener('modelChange', (e) => {

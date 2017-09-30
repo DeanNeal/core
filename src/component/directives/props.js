@@ -9,11 +9,20 @@ export function _props(array, data) {
         }
         //TODO rewrite with switch
         if (item.elem.localName === 'input') {
-            if (item.elem.type === 'checkbox') r ? item.elem.setAttribute('checked', true) : item.elem.removeAttribute('checked');
-            if (item.elem.type === 'radio') {
-                item.elem.value === r ? item.elem.setAttribute('checked', true) : item.elem.removeAttribute('selected');
+            switch(item.elem.type){
+                case 'checkbox':
+                    r ? item.elem.setAttribute('checked', true) : item.elem.removeAttribute('checked');
+                break;
+                case 'radio':
+                    item.elem.value === r ? item.elem.setAttribute('checked', true) : item.elem.removeAttribute('selected');
+                break;
+                case 'text':
+                case 'email':
+                case 'password':
+                    item.elem.value = r;
+                break;
+
             }
-            if (item.elem.type === 'text' || item.elem.type === 'email' || item.elem.type === 'password') item.elem.value = r;
         } else {
             item.elem.innerHTML = r;
         }

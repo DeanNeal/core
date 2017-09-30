@@ -9,6 +9,7 @@ import {DocDirectivesComponent} from './directives/directives.component';
 
 import {DocInterpolationComponent} from './interpolation/doc-interpolation.component';
 import {DocConditionalComponent} from './conditional/doc-conditional.component';
+import {DocFormsComponent} from './forms/doc-forms.component';
 
 import {DocModulesComponent} from './modules/doc-modules.component';
 import {DocSmartObjectComponent} from './smart-object/doc-smart-object.component';
@@ -31,6 +32,7 @@ export default [
 
     {c: DocInterpolationComponent, selector: 'app-documentation-interpolation'},
     {c: DocConditionalComponent, selector: 'app-documentation-conditional'},
+    {c: DocFormsComponent, selector: 'app-documentation-forms'},
 
 
     {c: DocModulesComponent, selector: 'app-documentation-modules'},

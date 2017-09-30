@@ -2,7 +2,7 @@
  * ace-js 0.2.6
  * May be freely distributed under the MIT license 
  * Author: Bogdan Zinkevich
- * Last update: 2017-9-28 19:43:42
+ * Last update: 2017-9-29 15:23:43
  * 
  */
 (function webpackUniversalModuleDefinition(root, factory) {
@@ -82,7 +82,7 @@ return /******/ (function(modules) { // webpackBootstrap
 /******/ 	}
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "e26bf40e3132d54c264b"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "f1cab724aa3220205fb2"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
 /******/ 	
@@ -3353,6 +3353,15 @@ return /******/ (function(modules) { // webpackBootstrap
 	    }
 
 	    _createClass(HttpModule, [{
+	        key: 'onprogress',
+	        value: function onprogress(f) {
+	            if (f && f.constructor) {
+	                this.onprogressCallback = f;
+	            } else {
+	                console.warn('Passed data must be a function');
+	            }
+	        }
+	    }, {
 	        key: 'makeRequest',
 	        value: function makeRequest(opts) {
 	            var _this3 = this;
@@ -3377,6 +3386,13 @@ return /******/ (function(modules) { // webpackBootstrap
 	                        statusText: xhr.statusText
 	                    });
 	                };
+
+	                xhr.upload.onprogress = function (event) {
+	                    if (this.onprogressCallback) {
+	                        this.onprogressCallback.call(this, event.loaded + ' / ' + event.total);
+	                    }
+	                };
+
 	                if (opts.headers) {
 	                    var _iteratorNormalCompletion = true;
 	                    var _didIteratorError = false;
@@ -3580,7 +3596,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	            .then(function (res) {
 	                return _this8.createEntity(res);
 	            }).catch(function (err) {
-	                return Promise.reject(err);
+	                if (err.status === 0) {
+	                    throw new Error('Server error');
+	                } else {
+	                    return Promise.reject(err);
+	                }
 	            });
 	        }
 	    }, {

@@ -14,6 +14,7 @@ export let Routes = [
             { path: 'interpolation', component: 'app-documentation-interpolation' },
             { path: 'directives', component: 'app-documentation-directives' },
             { path: 'conditional-rendering', component: 'app-documentation-conditional' },
+            { path: 'forms', component: 'app-documentation-forms'},
             { path: 'modules', component: 'app-documentation-modules' },
             { path: 'smart-object', component: 'app-documentation-smart-object' },
             { path: 'router-config', component: 'app-documentation-router-config' },
