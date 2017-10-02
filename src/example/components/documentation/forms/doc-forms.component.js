@@ -6,6 +6,9 @@ import Tpl from './doc-forms.component.html';
     props: {
     	checkbox: {
 
+    	},
+    	form: {
+
     	}
     }
 })
@@ -15,7 +18,7 @@ export class DocFormsComponent {
 
     }
 
-    onDestroy() {
-
+    submit(e, form) {
+    	
     }
 }

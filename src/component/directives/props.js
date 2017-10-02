@@ -1,8 +1,13 @@
 import {Utils} from '../../core';
 export function _props(array, data) {
     array.forEach(item => {
-        let params = item.attr.split('.');
-        let r = this.getComponentVariable(params, data);
+        let params = Utils.removeSpacesFromString(item.attr).split(':'), r;
+        let formatter = params[1];
+        if(formatter && formatter === 'json'){
+            r = JSON.stringify(this.getComponentVariable(params[0].split('.'), data));
+        } else {
+            r = this.getComponentVariable(params[0].split('.'), data);
+        }
 
         if (Utils.isCustomElement(item.elem)) {
             return;

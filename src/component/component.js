@@ -85,7 +85,7 @@ export class Component {
         Directives._elRef.call(this, PRIVATES.DIRECTIVES['ac-ref'].get(this));
         Directives._events.call(this, PRIVATES.EVENTS.get(this));
         Directives._hostEvents.call(this, PRIVATES.HOST.EVENTS.get(this));
-
+        Directives._formValidation.call(this, PRIVATES.DIRECTIVES['ac-form-validation'].get(this));
         if (PRIVATES.DIRECTIVES['ac-link'].get(this).length || PRIVATES.DIRECTIVES['ac-for'].get(this).length) {
             this.$routerSub = Router.onChange(() => {
                 let a = this.root.querySelectorAll('[href]');

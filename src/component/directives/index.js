@@ -14,6 +14,7 @@ import { _outside } from './outside';
 import { _on } from './on';
 import { _init , _initEvent} from './init';
 import { _hostEvents, _hostClasses, _hostStyles } from './host';
+import {_formValidation} from './form-validation';
 
 const Directives = {
     _style,
@@ -37,7 +38,8 @@ const Directives = {
     _initEvent,
     _hostEvents,
     _hostClasses,
-    _hostStyles
+    _hostStyles,
+    _formValidation
 };
 
 export { Directives };

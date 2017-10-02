@@ -189,3 +189,24 @@ app-documentation-directives {
 app-documentation-architecture {
     width: 100%;
 }
+
+app-documentation-forms{
+    .ac-error[type]{
+        border: 1px solid rgba(255, 0, 0, 0.47)
+    }
+    .input{
+        margin: 10px 0px;
+        input{
+            border: 1px solid #ccc;
+            padding: 4px;
+        }
+    }
+    button{
+        cursor: pointer;
+        padding: 4px;
+        border: none;
+        background: #17b6ed;
+        color: #fff;
+        border-radius: 4px;
+    }
+}

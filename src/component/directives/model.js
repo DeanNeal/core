@@ -6,7 +6,7 @@ export function _model(array) {
             switch (item.elem.type) {
                 case 'checkbox':
                     item.elem.addEventListener('change', (e) => {
-                        this.setComponentVariable(item.attr, e.currentTarget.checked ? e.currentTarget.value : null);
+                        this.setComponentVariable(item.attr, e.currentTarget.checked ? true: false);
                     }, false);
                     break;
                 case 'radio':
