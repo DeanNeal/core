@@ -1,8 +1,8 @@
 /*!
- * ace-js 0.2.7
+ * ace-js 0.2.8
  * May be freely distributed under the MIT license 
  * Author: Bogdan Zinkevich
- * Last update: 2017-9-30 17:44:55
+ * Last update: 2017-10-2 23:37:20
  * 
  */
 (function webpackUniversalModuleDefinition(root, factory) {
@@ -82,7 +82,7 @@ return /******/ (function(modules) { // webpackBootstrap
 /******/ 	}
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "a994027d636153812fab"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "f3567f50cbad31e7edd6"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
 /******/ 	
@@ -625,31 +625,31 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var Decorators = _interopRequireWildcard(_decorators);
 
-	var _register = __webpack_require__(33);
+	var _register = __webpack_require__(34);
 
-	var _component = __webpack_require__(34);
+	var _component = __webpack_require__(35);
 
-	var _routerSwitcher = __webpack_require__(36);
+	var _routerSwitcher = __webpack_require__(37);
 
-	var _routerCore = __webpack_require__(37);
+	var _routerCore = __webpack_require__(38);
 
 	var _routerCore2 = _interopRequireDefault(_routerCore);
 
-	var _templateEngine = __webpack_require__(38);
+	var _templateEngine = __webpack_require__(39);
 
-	var _globalEvents = __webpack_require__(39);
+	var _globalEvents = __webpack_require__(40);
 
 	var _globalEvents2 = _interopRequireDefault(_globalEvents);
 
-	var _utils = __webpack_require__(40);
+	var _utils = __webpack_require__(41);
 
-	var _plugins = __webpack_require__(41);
+	var _plugins = __webpack_require__(42);
 
 	var Plugins = _interopRequireWildcard(_plugins);
 
-	var _http = __webpack_require__(43);
+	var _http = __webpack_require__(44);
 
-	var _store = __webpack_require__(44);
+	var _store = __webpack_require__(45);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -688,7 +688,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var _decorators = __webpack_require__(8);
 
-	var _deepmerge = __webpack_require__(32);
+	var _deepmerge = __webpack_require__(33);
 
 	var _deepmerge2 = _interopRequireDefault(_deepmerge);
 
@@ -1051,7 +1051,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	Object.defineProperty(exports, "__esModule", {
 	    value: true
 	});
-	var DIRECTIVES_NAMES = exports.DIRECTIVES_NAMES = ['ac-for', 'ac-style', 'ac-value', 'ac-input', 'ac-model', 'ac-if', 'ac-class', 'ac-link', 'ac-attr', 'ac-on', 'ac-pattern', 'ac-outside', 'ac-ref'];
+	var DIRECTIVES_NAMES = exports.DIRECTIVES_NAMES = ['ac-for', 'ac-style', 'ac-value', 'ac-input', 'ac-model', 'ac-if', 'ac-class', 'ac-link', 'ac-attr', 'ac-on', 'ac-pattern', 'ac-outside', 'ac-ref', 'ac-form-validation'];
 
 /***/ }),
 /* 14 */
@@ -1107,6 +1107,8 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var _host = __webpack_require__(31);
 
+	var _formValidation2 = __webpack_require__(32);
+
 	var Directives = {
 	    _style: _style2._style,
 	    _props: _props2._props,
@@ -1129,7 +1131,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	    _initEvent: _init2._initEvent,
 	    _hostEvents: _host._hostEvents,
 	    _hostClasses: _host._hostClasses,
-	    _hostStyles: _host._hostStyles
+	    _hostStyles: _host._hostStyles,
+	    _formValidation: _formValidation2._formValidation
 	};
 
 	exports.Directives = Directives;
@@ -1189,8 +1192,14 @@ return /******/ (function(modules) { // webpackBootstrap
 	    var _this = this;
 
 	    array.forEach(function (item) {
-	        var params = item.attr.split('.');
-	        var r = _this.getComponentVariable(params, data);
+	        var params = _core.Utils.removeSpacesFromString(item.attr).split(':'),
+	            r = void 0;
+	        var formatter = params[1];
+	        if (formatter && formatter === 'json') {
+	            r = JSON.stringify(_this.getComponentVariable(params[0].split('.'), data));
+	        } else {
+	            r = _this.getComponentVariable(params[0].split('.'), data);
+	        }
 
 	        if (_core.Utils.isCustomElement(item.elem)) {
 	            return;
@@ -1231,16 +1240,14 @@ return /******/ (function(modules) { // webpackBootstrap
 	    array.forEach(function (item) {
 	        var attr = item.attr.split(':');
 	        var pattern = new RegExp(attr[0], 'gi');
-
+	        var title = item.elem.getAttribute('ac-pattern-title');
 	        item.elem.addEventListener('keyup', function (e) {
 	            var value = e.target.value;
 
 	            if (value.match(pattern)) {
-	                item.elem.style.borderColor = '';
 	                item.elem.setCustomValidity('');
 	            } else {
-	                item.elem.style.borderColor = '#ff6666';
-	                item.elem.setCustomValidity(attr[1]);
+	                item.elem.setCustomValidity(title);
 	            }
 	        }, false);
 	    });
@@ -1747,7 +1754,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	            switch (item.elem.type) {
 	                case 'checkbox':
 	                    item.elem.addEventListener('change', function (e) {
-	                        _this.setComponentVariable(item.attr, e.currentTarget.checked ? e.currentTarget.value : null);
+	                        _this.setComponentVariable(item.attr, e.currentTarget.checked ? true : false);
 	                    }, false);
 	                    break;
 	                case 'radio':
@@ -1976,6 +1983,29 @@ return /******/ (function(modules) { // webpackBootstrap
 
 /***/ }),
 /* 32 */
+/***/ (function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	exports._formValidation = _formValidation;
+
+	var _core = __webpack_require__(6);
+
+	function _formValidation(array, data) {
+	    array.forEach(function (item) {
+	        var attr = item.attr;
+	        item.elem.addEventListener('change', function (e) {
+	            var target = e.target;
+	            target.checkValidity() ? target.classList.remove('ac-error') : target.classList.add('ac-error');
+	        }, false);
+	    });
+	}
+
+/***/ }),
+/* 33 */
 /***/ (function(module, exports) {
 
 	'use strict';
@@ -2078,7 +2108,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ }),
-/* 33 */
+/* 34 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -2090,7 +2120,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var _core = __webpack_require__(6);
 
-	var _component = __webpack_require__(34);
+	var _component = __webpack_require__(35);
 
 	function Register(options) {
 	    // console.time('modules')
@@ -2143,7 +2173,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	}
 
 /***/ }),
-/* 34 */
+/* 35 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -2161,7 +2191,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var _private = __webpack_require__(12);
 
-	var _interpolation = __webpack_require__(35);
+	var _interpolation = __webpack_require__(36);
 
 	var _interpolation2 = _interopRequireDefault(_interpolation);
 
@@ -2213,7 +2243,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	            _Directives.Directives._elRef.call(this, _private.PRIVATES.DIRECTIVES['ac-ref'].get(this));
 	            _Directives.Directives._events.call(this, _private.PRIVATES.EVENTS.get(this));
 	            _Directives.Directives._hostEvents.call(this, _private.PRIVATES.HOST.EVENTS.get(this));
-
+	            _Directives.Directives._formValidation.call(this, _private.PRIVATES.DIRECTIVES['ac-form-validation'].get(this));
 	            if (_private.PRIVATES.DIRECTIVES['ac-link'].get(this).length || _private.PRIVATES.DIRECTIVES['ac-for'].get(this).length) {
 	                this.$routerSub = _core.Router.onChange(function () {
 	                    var a = _this.root.querySelectorAll('[href]');
@@ -2454,7 +2484,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	}();
 
 /***/ }),
-/* 35 */
+/* 36 */
 /***/ (function(module, exports) {
 
 	"use strict";
@@ -2504,7 +2534,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	exports.default = Interpolation;
 
 /***/ }),
-/* 36 */
+/* 37 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -2516,7 +2546,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-	var _routerCore = __webpack_require__(37);
+	var _routerCore = __webpack_require__(38);
 
 	var _routerCore2 = _interopRequireDefault(_routerCore);
 
@@ -2638,7 +2668,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	}();
 
 /***/ }),
-/* 37 */
+/* 38 */
 /***/ (function(module, exports) {
 
 	'use strict';
@@ -2790,7 +2820,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	exports.default = new Router();
 
 /***/ }),
-/* 38 */
+/* 39 */
 /***/ (function(module, exports) {
 
 	'use strict';
@@ -2821,7 +2851,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	}
 
 /***/ }),
-/* 39 */
+/* 40 */
 /***/ (function(module, exports) {
 
 	'use strict';
@@ -2886,7 +2916,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	exports.default = new GlobalEvents();
 
 /***/ }),
-/* 40 */
+/* 41 */
 /***/ (function(module, exports) {
 
 	'use strict';
@@ -3078,13 +3108,16 @@ return /******/ (function(modules) { // webpackBootstrap
 	        if (t < 1) return c / 2 * t * t + b;
 	        t--;
 	        return -c / 2 * (t * (t - 2) - 1) + b;
+	    },
+	    removeSpacesFromString: function removeSpacesFromString(str) {
+	        return str.replace(/ +/g, "");
 	    }
 	};
 
 	exports.Utils = Utils;
 
 /***/ }),
-/* 41 */
+/* 42 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -3094,7 +3127,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	});
 	exports.Sortable = undefined;
 
-	var _sortable = __webpack_require__(42);
+	var _sortable = __webpack_require__(43);
 
 	var _sortable2 = _interopRequireDefault(_sortable);
 
@@ -3103,7 +3136,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	exports.Sortable = _sortable2.default;
 
 /***/ }),
-/* 42 */
+/* 43 */
 /***/ (function(module, exports) {
 
 	'use strict';
@@ -3246,7 +3279,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	exports.default = new Sortable();
 
 /***/ }),
-/* 43 */
+/* 44 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -3673,7 +3706,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	exports.Http = Http;
 
 /***/ }),
-/* 44 */
+/* 45 */
 /***/ (function(module, exports) {
 
 	"use strict";
