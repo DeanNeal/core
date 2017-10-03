@@ -81,19 +81,32 @@ class HttpModule {
         this.server = '';
     }
 
-    onprogress(f) {
+    onProgress(f) {
         if(f && f.constructor) {
             this.onprogressCallback = f;
         } else {
             console.warn('Passed data must be a function');
         }
-        
+    }
+
+    onError(f) {
+        if(f && f.constructor) {
+            this.onerrorCallback = f;
+        } else {
+            console.warn('Passed data must be a function');
+        }
     }
 
     makeRequest(opts) {
         return new Promise((resolve, reject) => {
             let xhr = new XMLHttpRequest();
+
             xhr.open(opts.method, this.server + opts.url);
+            xhr.onprogress = (event)=> {
+                if(this.onprogressCallback){
+                    this.onprogressCallback.call(this, event)
+                }
+            }
             xhr.onload = function() {
                 if (this.status >= 200 && this.status < 300) {
                     resolve(JSON.parse(xhr.response));
@@ -111,12 +124,6 @@ class HttpModule {
                     statusText: xhr.statusText
                 });
             };
-
-            xhr.upload.onprogress = function(event) {
-                if(this.onprogressCallback){
-                    this.onprogressCallback.call(this, event.loaded + ' / ' + event.total)
-                }
-            }
 
             if (opts.headers) {
                 for(let key of opts.headers.keys()) {
@@ -255,6 +262,9 @@ class HttpModule {
             // .then(res => JSON.parse(res))
             .then(res => this.createEntity(res))
             .catch(err => {
+                if(this.onerrorCallback) {
+                    this.onerrorCallback.call(this, err);
+                }
                 if(err.status === 0) {
                     throw new Error('Server error');
                 } else {

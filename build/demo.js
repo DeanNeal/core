@@ -2,7 +2,7 @@
  * ace-js 0.2.8
  * May be freely distributed under the MIT license 
  * Author: Bogdan Zinkevich
- * Last update: 2017-10-2 23:37:20
+ * Last update: 2017-10-3 23:22:28
  * 
  */
 (function webpackUniversalModuleDefinition(root, factory) {
@@ -82,7 +82,7 @@ return /******/ (function(modules) { // webpackBootstrap
 /******/ 	}
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "f3567f50cbad31e7edd6"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "a9e4bc864cda15cadf8a"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
 /******/ 	
@@ -3539,10 +3539,19 @@ return /******/ (function(modules) { // webpackBootstrap
 	    }
 
 	    _createClass(HttpModule, [{
-	        key: 'onprogress',
-	        value: function onprogress(f) {
+	        key: 'onProgress',
+	        value: function onProgress(f) {
 	            if (f && f.constructor) {
 	                this.onprogressCallback = f;
+	            } else {
+	                console.warn('Passed data must be a function');
+	            }
+	        }
+	    }, {
+	        key: 'onError',
+	        value: function onError(f) {
+	            if (f && f.constructor) {
+	                this.onerrorCallback = f;
 	            } else {
 	                console.warn('Passed data must be a function');
 	            }
@@ -3554,7 +3563,13 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	            return new Promise(function (resolve, reject) {
 	                var xhr = new XMLHttpRequest();
+
 	                xhr.open(opts.method, _this3.server + opts.url);
+	                xhr.onprogress = function (event) {
+	                    if (_this3.onprogressCallback) {
+	                        _this3.onprogressCallback.call(_this3, event);
+	                    }
+	                };
 	                xhr.onload = function () {
 	                    if (this.status >= 200 && this.status < 300) {
 	                        resolve(JSON.parse(xhr.response));
@@ -3571,12 +3586,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	                        status: this.status,
 	                        statusText: xhr.statusText
 	                    });
-	                };
-
-	                xhr.upload.onprogress = function (event) {
-	                    if (this.onprogressCallback) {
-	                        this.onprogressCallback.call(this, event.loaded + ' / ' + event.total);
-	                    }
 	                };
 
 	                if (opts.headers) {
@@ -3782,6 +3791,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	            .then(function (res) {
 	                return _this8.createEntity(res);
 	            }).catch(function (err) {
+	                if (_this8.onerrorCallback) {
+	                    _this8.onerrorCallback.call(_this8, err);
+	                }
 	                if (err.status === 0) {
 	                    throw new Error('Server error');
 	                } else {
@@ -5208,7 +5220,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	"use strict";
 
-	module.exports = "<h3>Http methods</h3>\r\n<div>Add <b>import {Http} from 'ace-js'</b> to your component, then</div>\r\n<div class=\"block\">\r\n    <b class=\"title\">GET</b>\r\n    <div class=\"text\">\r\n        <div>Http.get(url).then(response=>{ })</div>\r\n        <br>\r\n        Example: \r\n        <button @click=\"getWeater\">Get weater info</button>\r\n        <div ac-if=\"props.weather\"> \r\n            City: <b ac-value=\"props.weather.name\"></b>\r\n            <br>\r\n            Temp: <b ac-value=\"props.weather.main.temp\"></b> C\r\n            <br>\r\n            Wind: <b ac-value=\"props.weather.wind.speed\"></b> m/s\r\n        </div>\r\n    </div>\r\n</div>\r\n<div class=\"block\">\r\n    <b class=\"title\">POST</b>\r\n    <div class=\"text\"><div>Http.post(url, params).then(response=>{ })</div></div>\r\n</div>\r\n<div class=\"block\">\r\n    <b class=\"title\">PUT</b>\r\n    <div class=\"text\"> <div>Http.put(url, params).then(response=>{ })</div></div>\r\n</div>\r\n<div class=\"block\">\r\n    <b class=\"title\">DELETE</b>\r\n    <div class=\"text\"> <div>Http.delete(url).then(response=>{ })</div></div>\r\n</div>";
+	module.exports = "<h3>Http methods</h3>\r\n<div>Add <b>import {Http} from 'ace-js'</b> to your component, then</div>\r\n<div class=\"block\">\r\n    <b class=\"title\">GET</b>\r\n    <div class=\"text\">\r\n        <div>Http.get(url).then(response=>{ })</div>\r\n        <br>\r\n        Example: \r\n        <button @click=\"getWeater\">Get weater info</button>\r\n        <div ac-if=\"props.weather\"> \r\n            City: <b ac-value=\"props.weather.name\"></b>\r\n            <br>\r\n            Temp: <b ac-value=\"props.weather.main.temp\"></b> C\r\n            <br>\r\n            Wind: <b ac-value=\"props.weather.wind.speed\"></b> m/s\r\n        </div>\r\n    </div>\r\n</div>\r\n<div class=\"block\">\r\n    <b class=\"title\">POST</b>\r\n    <div class=\"text\"><div>Http.post(url, params).then(response=>{ })</div></div>\r\n</div>\r\n<div class=\"block\">\r\n    <b class=\"title\">PUT</b>\r\n    <div class=\"text\"> <div>Http.put(url, params).then(response=>{ })</div></div>\r\n</div>\r\n<div class=\"block\">\r\n    <b class=\"title\">DELETE</b>\r\n    <div class=\"text\"> <div>Http.delete(url).then(response=>{ })</div></div>\r\n</div>\r\n\r\n<div class=\"section-title\">Interceptors</div>\r\n<div class=\"text\">In your code you can use interceptors to add your own logic</div>\r\n<div class=\"code-block\">\r\n    <div class=\"code-header\">example.component.js</div>\r\n    <pre>\r\n        import { Component, Http } from 'ace-js';\r\n        import Tpl from './root.component.html';\r\n        import NotificaitonsStore from 'stores/notifications.store';\r\n        import UserStore from 'stores/user.store'\r\n        export class ExampleComponent extends Component {\r\n            constructor(params) {\r\n                super(params, {\r\n                    template: Tpl\r\n                });\r\n            }\r\n\r\n            onInit() {\r\n                Http.getCatalog('/catalog');\r\n                Http.onProgress(event => {\r\n                    console.log(event.loaded + ' / ' + event.total);\r\n                });\r\n                Http.onError(err => {\r\n                    switch (err.status) {\r\n                      case 401:\r\n                        UserStore.logout('auth');\r\n                        break;\r\n                      case 406:\r\n                        NotificaitonsStore.show({ type: 'error', text: err.response.message });\r\n                        UserStore.logout('auth');\r\n                        break;\r\n                      case 422:\r\n                        break;\r\n                      case 404:\r\n                        break;\r\n                      case 403:\r\n\r\n                        break;\r\n                      case 500:\r\n                      case 502:\r\n                        break;\r\n                      default:\r\n\r\n                        break;\r\n                    }\r\n                });\r\n            }\r\n        }\r\n    </pre>\r\n</div>";
 
 /***/ }),
 /* 88 */

@@ -2,7 +2,7 @@
  * ace-js 0.2.8
  * May be freely distributed under the MIT license 
  * Author: Bogdan Zinkevich
- * Last update: 2017-10-2 23:37:20
+ * Last update: 2017-10-3 23:22:28
  * 
  */
 (function webpackUniversalModuleDefinition(root, factory) {
@@ -82,7 +82,7 @@ return /******/ (function(modules) { // webpackBootstrap
 /******/ 	}
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "f3567f50cbad31e7edd6"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "a9e4bc864cda15cadf8a"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
 /******/ 	
@@ -3412,10 +3412,19 @@ return /******/ (function(modules) { // webpackBootstrap
 	    }
 
 	    _createClass(HttpModule, [{
-	        key: 'onprogress',
-	        value: function onprogress(f) {
+	        key: 'onProgress',
+	        value: function onProgress(f) {
 	            if (f && f.constructor) {
 	                this.onprogressCallback = f;
+	            } else {
+	                console.warn('Passed data must be a function');
+	            }
+	        }
+	    }, {
+	        key: 'onError',
+	        value: function onError(f) {
+	            if (f && f.constructor) {
+	                this.onerrorCallback = f;
 	            } else {
 	                console.warn('Passed data must be a function');
 	            }
@@ -3427,7 +3436,13 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	            return new Promise(function (resolve, reject) {
 	                var xhr = new XMLHttpRequest();
+
 	                xhr.open(opts.method, _this3.server + opts.url);
+	                xhr.onprogress = function (event) {
+	                    if (_this3.onprogressCallback) {
+	                        _this3.onprogressCallback.call(_this3, event);
+	                    }
+	                };
 	                xhr.onload = function () {
 	                    if (this.status >= 200 && this.status < 300) {
 	                        resolve(JSON.parse(xhr.response));
@@ -3444,12 +3459,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	                        status: this.status,
 	                        statusText: xhr.statusText
 	                    });
-	                };
-
-	                xhr.upload.onprogress = function (event) {
-	                    if (this.onprogressCallback) {
-	                        this.onprogressCallback.call(this, event.loaded + ' / ' + event.total);
-	                    }
 	                };
 
 	                if (opts.headers) {
@@ -3655,6 +3664,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	            .then(function (res) {
 	                return _this8.createEntity(res);
 	            }).catch(function (err) {
+	                if (_this8.onerrorCallback) {
+	                    _this8.onerrorCallback.call(_this8, err);
+	                }
 	                if (err.status === 0) {
 	                    throw new Error('Server error');
 	                } else {

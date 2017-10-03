@@ -28,3 +28,53 @@
     <b class="title">DELETE</b>
     <div class="text"> <div>Http.delete(url).then(response=>{ })</div></div>
 </div>
+
+<div class="section-title">Interceptors</div>
+<div class="text">In your code you can use interceptors to add your own logic</div>
+<div class="code-block">
+    <div class="code-header">example.component.js</div>
+    <pre>
+        import { Component, Http } from 'ace-js';
+        import Tpl from './root.component.html';
+        import NotificaitonsStore from 'stores/notifications.store';
+        import UserStore from 'stores/user.store'
+        export class ExampleComponent extends Component {
+            constructor(params) {
+                super(params, {
+                    template: Tpl
+                });
+            }
+
+            onInit() {
+                Http.getCatalog('/catalog');
+                Http.onProgress(event => {
+                    console.log(event.loaded + ' / ' + event.total);
+                });
+                Http.onError(err => {
+                    switch (err.status) {
+                      case 401:
+                        UserStore.logout('auth');
+                        break;
+                      case 406:
+                        NotificaitonsStore.show({ type: 'error', text: err.response.message });
+                        UserStore.logout('auth');
+                        break;
+                      case 422:
+                        break;
+                      case 404:
+                        break;
+                      case 403:
+
+                        break;
+                      case 500:
+                      case 502:
+                        break;
+                      default:
+
+                        break;
+                    }
+                });
+            }
+        }
+    </pre>
+</div>
