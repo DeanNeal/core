@@ -1,5 +1,5 @@
 <a name="0.2.9"></a>
-# [0.2.6](https://github.com/DeanNeal/ace-js) (2017-09-28)
+# [0.2.9](https://github.com/DeanNeal/ace-js) (2017-10-03)
 ### Features
 * **http:** error interceptor ([#28](https://github.com/DeanNeal/ace-js/issues/28))
 * **http:** Extend http module. add onprogress feature... ([#1](https://github.com/DeanNeal/ace-js/issues/1))
