@@ -2,7 +2,7 @@
  * ace-js 0.3.0
  * May be freely distributed under the MIT license 
  * Author: Bogdan Zinkevich
- * Last update: 2017-10-5 12:47:40
+ * Last update: 2017-10-5 20:10:02
  * 
  */
 (function webpackUniversalModuleDefinition(root, factory) {
@@ -82,7 +82,7 @@ return /******/ (function(modules) { // webpackBootstrap
 /******/ 	}
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "be32528389cd97f683d2"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "904baaf5edd51cbd1b1c"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
 /******/ 	
@@ -2283,7 +2283,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    }
 
 	    if (options.serverUrl) {
-	        if (options.serverUrl instanceof String) {
+	        if (typeof options.serverUrl === 'string') {
 	            _core.Http.setServerUrl(options.serverUrl);
 	        } else {
 	            throw new Error('directives must be a string');

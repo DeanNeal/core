@@ -9,7 +9,7 @@ export function Register(options) {
     }
 
     if (options.serverUrl) {
-        if (options.serverUrl instanceof String) {
+        if (typeof options.serverUrl === 'string') {
             Http.setServerUrl(options.serverUrl);
         } else {
             throw new Error('directives must be a string');
