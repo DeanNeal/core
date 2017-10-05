@@ -1,5 +1,4 @@
 import { Component, ObservableModel } from '../core';
-import { PRIVATES } from '../component/private';
 import { DIRECTIVES_NAMES } from '../component/const/directives';
 import { EVENTS_NAMES } from '../component/const/events';
 import { Directives } from '../component/Directives';

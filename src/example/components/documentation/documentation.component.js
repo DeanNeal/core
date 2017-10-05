@@ -57,6 +57,9 @@ export class DocumentationComponent extends Component {
                         name: 'Directives',
                         route: 'documentation/directives'
                     }, {
+                        name: 'Custom directives',
+                        route: 'documentation/custom-directives'
+                    }, {
                         name: 'Conditional rendering',
                         route: 'documentation/conditional-rendering'
                     }, {

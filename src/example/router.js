@@ -13,6 +13,7 @@ export let Routes = [
             { path: 'utils', component: 'app-documentation-utils' },
             { path: 'interpolation', component: 'app-documentation-interpolation' },
             { path: 'directives', component: 'app-documentation-directives' },
+            { path: 'custom-directives', component: 'app-documentation-custom-directives'},
             { path: 'conditional-rendering', component: 'app-documentation-conditional' },
             { path: 'forms', component: 'app-documentation-forms'},
             { path: 'modules', component: 'app-documentation-modules' },

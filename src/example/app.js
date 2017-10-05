@@ -8,6 +8,10 @@ import { PluginsComponent} from './components/plugins/plugins.component';
 
 import Docs from './components/documentation';
 
+
+import UpperCaseDirective from './directives/upper-case.directive.js';
+
+
 import { Routes } from './router.js';
 
 
@@ -20,6 +24,9 @@ Register({
         { c: HeaderComponent, selector: 'app-header' },
         { c: HomeComponent, selector: 'app-home'},
         { c: PluginsComponent, selector: 'app-plugins'}
+    ],
+    directives: [
+        UpperCaseDirective
     ],
     modules: [Docs],
     routes: Routes

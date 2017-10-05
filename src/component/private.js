@@ -3,6 +3,7 @@ import { DIRECTIVES_NAMES } from './const/directives';
 
 const PRIVATES = {
     DIRECTIVES: {},
+    CUSTOM_DIRECTIVES: {},
     EVENTS: new WeakMap(),
     SUBSCRIPTIONS: new WeakMap(),
     GLOBAL_EVENTS: new WeakMap(),

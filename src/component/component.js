@@ -1,25 +1,25 @@
 import { Router, RouteSwitcher, ObservableModel, TemplateEngine, Utils } from '../core';
 import { PRIVATES } from '../component/private';
-import Interpolation from './interpolation/interpolation';
+// import Interpolation from './interpolation/interpolation';
 import { Directives } from '../component/Directives';
 import { DIRECTIVES_NAMES } from '../component/const/directives';
 import { EVENTS_NAMES } from '../component/const/events';
 
 
 export class Component {
-    
+
     constructor(root, options) {
         Component.componentConstructor.call(this, root, options);
     }
 
     static componentConstructor(root, options) {
-        this.root = root;//;console.log(root);
+        this.root = root; //;console.log(root);
 
         Object.defineProperty(this, 'options', {
             value: Object.assign({}, options),
             writable: false
         });
-        
+
         Object.defineProperty(this, 'tpl', { value: options.template || 'Empty template', writable: false });
         Object.defineProperty(this, 'props', { value: new ObservableModel(options.props), writable: false });
 
@@ -40,7 +40,7 @@ export class Component {
             this.render();
             this.listenToPropsChanges();
         }
-    } 
+    }
 
     static setPrivates(options) {
         for (let array in PRIVATES.DIRECTIVES) {
@@ -54,6 +54,16 @@ export class Component {
         PRIVATES.HOST.CLASS.set(this, options.hostClasses);
         PRIVATES.HOST.STYLE.set(this, options.hostStyles);
 
+
+        Component.DIRECTIVES.forEach((directive) => {
+            if(!PRIVATES.CUSTOM_DIRECTIVES[directive.params.selector]){
+                PRIVATES.CUSTOM_DIRECTIVES[directive.params.selector] = new WeakMap();
+            }
+            PRIVATES.CUSTOM_DIRECTIVES[directive.params.selector].set(this, []);
+        });
+        
+        // console.log(PRIVATES.CUSTOM_DIRECTIVES, this);
+        
         // this.$interpolationArray = [];
     }
 
@@ -78,6 +88,16 @@ export class Component {
             Directives._initEvent.call(this, this.root, directive, PRIVATES.EVENTS);
         });
 
+        //custom directives
+        Component.DIRECTIVES.forEach((Directive) => {
+            let array = Directives._init.call(this, this.root, Directive.params.selector, PRIVATES.CUSTOM_DIRECTIVES[Directive.params.selector]);
+            if(array){
+                array.get(this).map(item=>{
+                    item.directive = new Directive(item.elem);
+                });
+            }
+        });
+
         Directives._model.call(this, PRIVATES.DIRECTIVES['ac-model'].get(this));
         Directives._on.call(this, PRIVATES.DIRECTIVES['ac-on'].get(this));
         Directives._outside.call(this, PRIVATES.DIRECTIVES['ac-outside'].get(this));
@@ -86,6 +106,8 @@ export class Component {
         Directives._events.call(this, PRIVATES.EVENTS.get(this));
         Directives._hostEvents.call(this, PRIVATES.HOST.EVENTS.get(this));
         Directives._formValidation.call(this, PRIVATES.DIRECTIVES['ac-form-validation'].get(this));
+
+        //TODO rewrite
         if (PRIVATES.DIRECTIVES['ac-link'].get(this).length || PRIVATES.DIRECTIVES['ac-for'].get(this).length) {
             this.$routerSub = Router.onChange(() => {
                 let a = this.root.querySelectorAll('[href]');
@@ -116,6 +138,15 @@ export class Component {
             Directives._hostStyles.call(this, PRIVATES.HOST.STYLE.get(this));
 
             // Interpolation.interpolationRun.call(this, this.$interpolationArray);
+
+            Component.DIRECTIVES.forEach((directive) => {
+                let array = PRIVATES.CUSTOM_DIRECTIVES[directive.params.selector].get(this);
+                if(array && array.length){
+                    array.forEach(r=>{
+                        r.directive.onUpdate();
+                    });
+                }
+            });
 
             this.onUpdate();
         });
@@ -171,12 +202,12 @@ export class Component {
     setComponentVariable(string, value) {
         let params = string.split('.');
         let lastProp = params[params.length - 1];
-        if(params.length > 1){
+        if (params.length > 1) {
             params.splice(-1, 1);
         }
-        
+
         let target = params.reduce((o, i) => o[i], this);
-        if(target === this.props) { // use instanceof
+        if (target === this.props) { // use instanceof
             // target._data[lastProp] = value;
             this.props.set(lastProp, value);
         } else {

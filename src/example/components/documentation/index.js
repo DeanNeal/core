@@ -5,6 +5,7 @@ import {DocComponentComponent} from './component/doc-component.component';
 import {DocLifecycleComponent} from './lifecycle/doc-lifecycle.component';
 import {DocUtilsComponent} from './utils/doc-utils.component';
 import {DocDirectivesComponent} from './directives/directives.component';
+import {DocCustomDirectivesComponent} from './custom-directives/custom-directives.component';
 
 
 import {DocInterpolationComponent} from './interpolation/doc-interpolation.component';
@@ -29,6 +30,7 @@ export default [
     {c: DocLifecycleComponent, selector: 'app-documentation-lifecycle'},
     {c: DocUtilsComponent, selector: 'app-documentation-utils'},
     {c: DocDirectivesComponent, selector: 'app-documentation-directives'},
+    {c: DocCustomDirectivesComponent, selector: 'app-documentation-custom-directives'},
 
     {c: DocInterpolationComponent, selector: 'app-documentation-interpolation'},
     {c: DocConditionalComponent, selector: 'app-documentation-conditional'},
