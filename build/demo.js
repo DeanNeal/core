@@ -1,8 +1,8 @@
 /*!
- * ace-js 0.2.9
+ * ace-js 0.3.0
  * May be freely distributed under the MIT license 
  * Author: Bogdan Zinkevich
- * Last update: 2017-10-3 23:24:37
+ * Last update: 2017-10-5 12:47:40
  * 
  */
 (function webpackUniversalModuleDefinition(root, factory) {
@@ -82,7 +82,7 @@ return /******/ (function(modules) { // webpackBootstrap
 /******/ 	}
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "96bd717420289c7ec927"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "be32528389cd97f683d2"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
 /******/ 	
@@ -627,7 +627,11 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var _documentation2 = _interopRequireDefault(_documentation);
 
-	var _router = __webpack_require__(89);
+	var _upperCaseDirective = __webpack_require__(91);
+
+	var _upperCaseDirective2 = _interopRequireDefault(_upperCaseDirective);
+
+	var _router = __webpack_require__(92);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -637,6 +641,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    },
 	    styles: _main2.default,
 	    components: [{ c: _header.HeaderComponent, selector: 'app-header' }, { c: _home.HomeComponent, selector: 'app-home' }, { c: _plugins.PluginsComponent, selector: 'app-plugins' }],
+	    directives: [_upperCaseDirective2.default],
 	    modules: [_documentation2.default],
 	    routes: _router.Routes
 
@@ -752,9 +757,9 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var Decorators = _interopRequireWildcard(_decorators);
 
-	var _register = __webpack_require__(34);
+	var _register = __webpack_require__(35);
 
-	var _component = __webpack_require__(35);
+	var _component = __webpack_require__(36);
 
 	var _routerSwitcher = __webpack_require__(37);
 
@@ -815,7 +820,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var _decorators = __webpack_require__(8);
 
-	var _deepmerge = __webpack_require__(33);
+	var _deepmerge = __webpack_require__(34);
 
 	var _deepmerge2 = _interopRequireDefault(_deepmerge);
 
@@ -1038,7 +1043,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	Object.defineProperty(exports, "__esModule", {
 	    value: true
 	});
-	exports.ComponentDecorator = exports.IfArray = exports.IfObject = undefined;
+	exports.DirectiveDecorator = exports.ComponentDecorator = exports.IfArray = exports.IfObject = undefined;
 
 	var _ifObject = __webpack_require__(9);
 
@@ -1052,11 +1057,16 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var _component2 = _interopRequireDefault(_component);
 
+	var _directive = __webpack_require__(33);
+
+	var _directive2 = _interopRequireDefault(_directive);
+
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	exports.IfObject = _ifObject2.default;
 	exports.IfArray = _ifArray2.default;
 	exports.ComponentDecorator = _component2.default;
+	exports.DirectiveDecorator = _directive2.default;
 
 /***/ }),
 /* 9 */
@@ -1118,13 +1128,11 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var _core = __webpack_require__(6);
 
-	var _private = __webpack_require__(12);
+	var _directives = __webpack_require__(12);
 
-	var _directives = __webpack_require__(13);
+	var _events = __webpack_require__(13);
 
-	var _events = __webpack_require__(14);
-
-	var _Directives = __webpack_require__(15);
+	var _Directives = __webpack_require__(14);
 
 	function ComponentDecorator(decoratorParams) {
 	    return function decorator(Class) {
@@ -1139,38 +1147,6 @@ return /******/ (function(modules) { // webpackBootstrap
 
 /***/ }),
 /* 12 */
-/***/ (function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
-	    value: true
-	});
-	exports.PRIVATES = undefined;
-
-	var _directives = __webpack_require__(13);
-
-	var PRIVATES = {
-	    DIRECTIVES: {},
-	    EVENTS: new WeakMap(),
-	    SUBSCRIPTIONS: new WeakMap(),
-	    GLOBAL_EVENTS: new WeakMap(),
-	    HOST: {
-	        CLASS: new WeakMap(),
-	        STYLE: new WeakMap(),
-	        EVENTS: new WeakMap()
-	    }
-	}; // import { EVENTS } from './const/events';
-
-
-	_directives.DIRECTIVES_NAMES.forEach(function (directive) {
-	    PRIVATES.DIRECTIVES[directive] = new WeakMap();
-	});
-
-	exports.PRIVATES = PRIVATES;
-
-/***/ }),
-/* 13 */
 /***/ (function(module, exports) {
 
 	'use strict';
@@ -1181,7 +1157,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	var DIRECTIVES_NAMES = exports.DIRECTIVES_NAMES = ['ac-for', 'ac-style', 'ac-value', 'ac-input', 'ac-model', 'ac-if', 'ac-class', 'ac-link', 'ac-attr', 'ac-on', 'ac-pattern', 'ac-outside', 'ac-ref', 'ac-form-validation'];
 
 /***/ }),
-/* 14 */
+/* 13 */
 /***/ (function(module, exports) {
 
 	'use strict';
@@ -1192,7 +1168,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	var EVENTS_NAMES = exports.EVENTS_NAMES = ['click', 'keyup', 'change', 'mouseover', 'mouseout', 'mousedown', 'mouseup', 'scroll', 'mousewheel', 'submit', 'focus', 'blur', 'dragstart'];
 
 /***/ }),
-/* 15 */
+/* 14 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -1202,19 +1178,19 @@ return /******/ (function(modules) { // webpackBootstrap
 	});
 	exports.Directives = undefined;
 
-	var _style2 = __webpack_require__(16);
+	var _style2 = __webpack_require__(15);
 
-	var _props2 = __webpack_require__(17);
+	var _props2 = __webpack_require__(16);
 
-	var _pattern2 = __webpack_require__(18);
+	var _pattern2 = __webpack_require__(17);
 
-	var _if2 = __webpack_require__(19);
+	var _if2 = __webpack_require__(18);
 
-	var _class2 = __webpack_require__(20);
+	var _class2 = __webpack_require__(19);
 
-	var _elRef2 = __webpack_require__(21);
+	var _elRef2 = __webpack_require__(20);
 
-	var _for2 = __webpack_require__(22);
+	var _for2 = __webpack_require__(21);
 
 	var _model2 = __webpack_require__(25);
 
@@ -1230,7 +1206,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var _on2 = __webpack_require__(30);
 
-	var _init2 = __webpack_require__(23);
+	var _init2 = __webpack_require__(22);
 
 	var _host = __webpack_require__(31);
 
@@ -1265,7 +1241,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	exports.Directives = Directives;
 
 /***/ }),
-/* 16 */
+/* 15 */
 /***/ (function(module, exports) {
 
 	'use strict';
@@ -1303,7 +1279,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	}
 
 /***/ }),
-/* 17 */
+/* 16 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -1354,7 +1330,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	}
 
 /***/ }),
-/* 18 */
+/* 17 */
 /***/ (function(module, exports) {
 
 	'use strict';
@@ -1381,7 +1357,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	}
 
 /***/ }),
-/* 19 */
+/* 18 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -1436,7 +1412,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	}
 
 /***/ }),
-/* 20 */
+/* 19 */
 /***/ (function(module, exports) {
 
 	'use strict';
@@ -1484,7 +1460,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	}
 
 /***/ }),
-/* 21 */
+/* 20 */
 /***/ (function(module, exports) {
 
 	"use strict";
@@ -1503,7 +1479,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	}
 
 /***/ }),
-/* 22 */
+/* 21 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -1515,11 +1491,11 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var _core = __webpack_require__(6);
 
-	var _index = __webpack_require__(15);
+	var _index = __webpack_require__(14);
 
-	var _init2 = __webpack_require__(23);
+	var _init2 = __webpack_require__(22);
 
-	var _events = __webpack_require__(14);
+	var _events = __webpack_require__(13);
 
 	function _for(array, data) {
 	    var _this = this;
@@ -1651,7 +1627,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	}
 
 /***/ }),
-/* 23 */
+/* 22 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -1662,7 +1638,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	exports._init = _init;
 	exports._initEvent = _initEvent;
 
-	var _private = __webpack_require__(12);
+	var _private = __webpack_require__(23);
 
 	var _core = __webpack_require__(6);
 
@@ -1798,6 +1774,39 @@ return /******/ (function(modules) { // webpackBootstrap
 	}
 
 /***/ }),
+/* 23 */
+/***/ (function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	exports.PRIVATES = undefined;
+
+	var _directives = __webpack_require__(12);
+
+	var PRIVATES = {
+	    DIRECTIVES: {},
+	    CUSTOM_DIRECTIVES: {},
+	    EVENTS: new WeakMap(),
+	    SUBSCRIPTIONS: new WeakMap(),
+	    GLOBAL_EVENTS: new WeakMap(),
+	    HOST: {
+	        CLASS: new WeakMap(),
+	        STYLE: new WeakMap(),
+	        EVENTS: new WeakMap()
+	    }
+	}; // import { EVENTS } from './const/events';
+
+
+	_directives.DIRECTIVES_NAMES.forEach(function (directive) {
+	    PRIVATES.DIRECTIVES[directive] = new WeakMap();
+	});
+
+	exports.PRIVATES = PRIVATES;
+
+/***/ }),
 /* 24 */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -1810,7 +1819,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	exports.removeEventListeners = removeEventListeners;
 	exports.createEventObject = createEventObject;
 
-	var _private = __webpack_require__(12);
+	var _private = __webpack_require__(23);
 
 	function _events(array) {
 	    array.forEach(function (newEvent) {
@@ -2002,7 +2011,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	});
 	exports._outside = _outside;
 
-	var _private = __webpack_require__(12);
+	var _private = __webpack_require__(23);
 
 	var _core = __webpack_require__(6);
 
@@ -2135,6 +2144,23 @@ return /******/ (function(modules) { // webpackBootstrap
 /* 33 */
 /***/ (function(module, exports) {
 
+	"use strict";
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	exports.default = DirectiveDecorator;
+	function DirectiveDecorator(decoratorParams) {
+	    return function decorator(Class) {
+	        Class.params = decoratorParams;
+	        return Class;
+	    };
+	}
+
+/***/ }),
+/* 34 */
+/***/ (function(module, exports) {
+
 	'use strict';
 
 	var isMergeableObject = function isMergeableObject(value) {
@@ -2235,7 +2261,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ }),
-/* 34 */
+/* 35 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -2247,7 +2273,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var _core = __webpack_require__(6);
 
-	var _component = __webpack_require__(35);
+	var _component = __webpack_require__(36);
 
 	function Register(options) {
 	    // console.time('modules')
@@ -2257,16 +2283,34 @@ return /******/ (function(modules) { // webpackBootstrap
 	    }
 
 	    if (options.serverUrl) {
-	        _core.Http.setServerUrl(options.serverUrl);
+	        if (options.serverUrl instanceof String) {
+	            _core.Http.setServerUrl(options.serverUrl);
+	        } else {
+	            throw new Error('directives must be a string');
+	        }
 	    }
+
 	    _component.Component.COMPONENTS = options.components;
 	    _core.RouteSwitcher.ROUTES = options.routes;
+	    _component.Component.DIRECTIVES = []; // for custom directives
 
-	    options.modules.forEach(function (module) {
-	        module.forEach(function (component) {
-	            registerComponent(component);
+	    if (options.directives) {
+	        if (options.directives instanceof Array) {
+	            _component.Component.DIRECTIVES = options.directives;
+	        } else {
+	            throw new Error('directives must be an array');
+	        }
+	    }
+
+	    if (options.modules instanceof Array) {
+	        options.modules.forEach(function (module) {
+	            module.forEach(function (component) {
+	                registerComponent(component);
+	            });
 	        });
-	    });
+	    } else {
+	        throw new Error('modules must be an array');
+	    }
 
 	    var rootEl = document.querySelectorAll(options.root.selector)[0];
 	    if (rootEl) {
@@ -2300,7 +2344,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	}
 
 /***/ }),
-/* 35 */
+/* 36 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -2313,22 +2357,18 @@ return /******/ (function(modules) { // webpackBootstrap
 	var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
 
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	// import Interpolation from './interpolation/interpolation';
+
 
 	var _core = __webpack_require__(6);
 
-	var _private = __webpack_require__(12);
+	var _private = __webpack_require__(23);
 
-	var _interpolation = __webpack_require__(36);
+	var _Directives = __webpack_require__(14);
 
-	var _interpolation2 = _interopRequireDefault(_interpolation);
+	var _directives = __webpack_require__(12);
 
-	var _Directives = __webpack_require__(15);
-
-	var _directives = __webpack_require__(13);
-
-	var _events = __webpack_require__(14);
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	var _events = __webpack_require__(13);
 
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
@@ -2363,6 +2403,16 @@ return /******/ (function(modules) { // webpackBootstrap
 	                _Directives.Directives._initEvent.call(_this, _this.root, directive, _private.PRIVATES.EVENTS);
 	            });
 
+	            //custom directives
+	            Component.DIRECTIVES.forEach(function (Directive) {
+	                var array = _Directives.Directives._init.call(_this, _this.root, Directive.params.selector, _private.PRIVATES.CUSTOM_DIRECTIVES[Directive.params.selector]);
+	                if (array) {
+	                    array.get(_this).map(function (item) {
+	                        item.directive = new Directive(item.elem);
+	                    });
+	                }
+	            });
+
 	            _Directives.Directives._model.call(this, _private.PRIVATES.DIRECTIVES['ac-model'].get(this));
 	            _Directives.Directives._on.call(this, _private.PRIVATES.DIRECTIVES['ac-on'].get(this));
 	            _Directives.Directives._outside.call(this, _private.PRIVATES.DIRECTIVES['ac-outside'].get(this));
@@ -2371,6 +2421,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	            _Directives.Directives._events.call(this, _private.PRIVATES.EVENTS.get(this));
 	            _Directives.Directives._hostEvents.call(this, _private.PRIVATES.HOST.EVENTS.get(this));
 	            _Directives.Directives._formValidation.call(this, _private.PRIVATES.DIRECTIVES['ac-form-validation'].get(this));
+
+	            //TODO rewrite
 	            if (_private.PRIVATES.DIRECTIVES['ac-link'].get(this).length || _private.PRIVATES.DIRECTIVES['ac-for'].get(this).length) {
 	                this.$routerSub = _core.Router.onChange(function () {
 	                    var a = _this.root.querySelectorAll('[href]');
@@ -2404,6 +2456,15 @@ return /******/ (function(modules) { // webpackBootstrap
 	                _Directives.Directives._hostStyles.call(_this2, _private.PRIVATES.HOST.STYLE.get(_this2));
 
 	                // Interpolation.interpolationRun.call(this, this.$interpolationArray);
+
+	                Component.DIRECTIVES.forEach(function (directive) {
+	                    var array = _private.PRIVATES.CUSTOM_DIRECTIVES[directive.params.selector].get(_this2);
+	                    if (array && array.length) {
+	                        array.forEach(function (r) {
+	                            r.directive.onUpdate();
+	                        });
+	                    }
+	                });
 
 	                _this2.onUpdate();
 	            });
@@ -2592,6 +2653,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	    }, {
 	        key: 'setPrivates',
 	        value: function setPrivates(options) {
+	            var _this4 = this;
+
 	            for (var array in _private.PRIVATES.DIRECTIVES) {
 	                _private.PRIVATES.DIRECTIVES[array].set(this, []);
 	            }
@@ -2603,62 +2666,21 @@ return /******/ (function(modules) { // webpackBootstrap
 	            _private.PRIVATES.HOST.CLASS.set(this, options.hostClasses);
 	            _private.PRIVATES.HOST.STYLE.set(this, options.hostStyles);
 
+	            Component.DIRECTIVES.forEach(function (directive) {
+	                if (!_private.PRIVATES.CUSTOM_DIRECTIVES[directive.params.selector]) {
+	                    _private.PRIVATES.CUSTOM_DIRECTIVES[directive.params.selector] = new WeakMap();
+	                }
+	                _private.PRIVATES.CUSTOM_DIRECTIVES[directive.params.selector].set(_this4, []);
+	            });
+
+	            // console.log(PRIVATES.CUSTOM_DIRECTIVES, this);
+
 	            // this.$interpolationArray = [];
 	        }
 	    }]);
 
 	    return Component;
 	}();
-
-/***/ }),
-/* 36 */
-/***/ (function(module, exports) {
-
-	"use strict";
-
-	Object.defineProperty(exports, "__esModule", {
-	    value: true
-	});
-	var Interpolation = {
-	    interpolationInit: function interpolationInit(root, array) {
-	        // let regExp = /{{[^%>]+?}}/g;
-	        // let matches = root.innerHTML.match(regExp);
-
-	        // if(matches) {        
-	        //     matches.forEach((match, i) => {
-	        //         let a = deepSearch(array, root, match);
-	        //         // console.log(a, match);
-	        //         // item.elem.innerHTML = item.elem.innerHTML.replace(expression[0], '<div ac-interpolaction>  </div>');
-	        //         // let r = this.getComponentVariable(expression[1].split('.'), this.props)
-	        //         // item.elem.innerHTML = item.cached.innerHTML.replace(expression[0], r);
-	        //     });
-	        // }
-	    },
-
-	    interpolationRun: function interpolationRun(array) {
-	        // array.forEach(item=>{
-	        //     // console.log(item);
-	        // })
-	    }
-	};
-
-	function deepSearch(array, node, match) {
-	    node.childNodes.forEach(function (r) {
-	        var regExp = /{{([^%>]+)?}}/;
-	        var expression = regExp.exec(r.textContent);
-
-	        console.log(r.textContent.trim());
-	        if (r.nodeType === 3 && r.textContent.trim() === match) {
-
-	            array.push({
-	                elem: r
-	            });
-	        }
-	        deepSearch(array, r, match);
-	    });
-	    return array;
-	}
-	exports.default = Interpolation;
 
 /***/ }),
 /* 37 */
@@ -4130,27 +4152,29 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var _directives = __webpack_require__(68);
 
-	var _docInterpolation = __webpack_require__(70);
+	var _customDirectives = __webpack_require__(70);
 
-	var _docConditional = __webpack_require__(72);
+	var _docInterpolation = __webpack_require__(72);
 
-	var _docForms = __webpack_require__(74);
+	var _docConditional = __webpack_require__(74);
 
-	var _docModules = __webpack_require__(76);
+	var _docForms = __webpack_require__(76);
 
-	var _docSmartObject = __webpack_require__(78);
+	var _docModules = __webpack_require__(78);
 
-	var _docHowTo = __webpack_require__(80);
+	var _docSmartObject = __webpack_require__(80);
 
-	var _docRouterConfig = __webpack_require__(82);
+	var _docHowTo = __webpack_require__(82);
 
-	var _docHttpModule = __webpack_require__(84);
+	var _docRouterConfig = __webpack_require__(84);
 
-	var _docHttpMethods = __webpack_require__(86);
+	var _docHttpModule = __webpack_require__(86);
 
-	var _exampleChild = __webpack_require__(88);
+	var _docHttpMethods = __webpack_require__(88);
 
-	exports.default = [{ c: _documentation.DocumentationComponent, selector: 'app-documentation' }, { c: _docQuickStart.DocQuickStartComponent, selector: 'app-documentation-quick-start' }, { c: _docArchitecture.DocArchitectureComponent, selector: 'app-documentation-architecture' }, { c: _docHowTo.DocHowToComponent, selector: 'app-documentation-how-to-install' }, { c: _docComponent.DocComponentComponent, selector: 'app-documentation-component' }, { c: _docLifecycle.DocLifecycleComponent, selector: 'app-documentation-lifecycle' }, { c: _docUtils.DocUtilsComponent, selector: 'app-documentation-utils' }, { c: _directives.DocDirectivesComponent, selector: 'app-documentation-directives' }, { c: _docInterpolation.DocInterpolationComponent, selector: 'app-documentation-interpolation' }, { c: _docConditional.DocConditionalComponent, selector: 'app-documentation-conditional' }, { c: _docForms.DocFormsComponent, selector: 'app-documentation-forms' }, { c: _docModules.DocModulesComponent, selector: 'app-documentation-modules' }, { c: _docSmartObject.DocSmartObjectComponent, selector: 'app-documentation-smart-object' }, { c: _docRouterConfig.DocRouterConfigComponent, selector: 'app-documentation-router-config' }, { c: _docHttpModule.HttpModuleComponent, selector: 'app-documentation-http-module' }, { c: _docHttpMethods.HttpMethodsComponent, selector: 'app-documentation-http-methods' }, { c: _exampleChild.ExampleChildComponent, selector: 'app-example-child' }];
+	var _exampleChild = __webpack_require__(90);
+
+	exports.default = [{ c: _documentation.DocumentationComponent, selector: 'app-documentation' }, { c: _docQuickStart.DocQuickStartComponent, selector: 'app-documentation-quick-start' }, { c: _docArchitecture.DocArchitectureComponent, selector: 'app-documentation-architecture' }, { c: _docHowTo.DocHowToComponent, selector: 'app-documentation-how-to-install' }, { c: _docComponent.DocComponentComponent, selector: 'app-documentation-component' }, { c: _docLifecycle.DocLifecycleComponent, selector: 'app-documentation-lifecycle' }, { c: _docUtils.DocUtilsComponent, selector: 'app-documentation-utils' }, { c: _directives.DocDirectivesComponent, selector: 'app-documentation-directives' }, { c: _customDirectives.DocCustomDirectivesComponent, selector: 'app-documentation-custom-directives' }, { c: _docInterpolation.DocInterpolationComponent, selector: 'app-documentation-interpolation' }, { c: _docConditional.DocConditionalComponent, selector: 'app-documentation-conditional' }, { c: _docForms.DocFormsComponent, selector: 'app-documentation-forms' }, { c: _docModules.DocModulesComponent, selector: 'app-documentation-modules' }, { c: _docSmartObject.DocSmartObjectComponent, selector: 'app-documentation-smart-object' }, { c: _docRouterConfig.DocRouterConfigComponent, selector: 'app-documentation-router-config' }, { c: _docHttpModule.HttpModuleComponent, selector: 'app-documentation-http-module' }, { c: _docHttpMethods.HttpMethodsComponent, selector: 'app-documentation-http-methods' }, { c: _exampleChild.ExampleChildComponent, selector: 'app-example-child' }];
 
 /***/ }),
 /* 55 */
@@ -4197,7 +4221,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	            this.getElement('pre').forEach(function (item) {});
 
 	            this.props.set({
-	                version: ("0.2.9"),
+	                version: ("0.3.0"),
 	                'categories': [{
 	                    name: 'Getting started',
 	                    items: [{
@@ -4237,6 +4261,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	                    }, {
 	                        name: 'Directives',
 	                        route: 'documentation/directives'
+	                    }, {
+	                        name: 'Custom directives',
+	                        route: 'documentation/custom-directives'
 	                    }, {
 	                        name: 'Conditional rendering',
 	                        route: 'documentation/conditional-rendering'
@@ -4709,6 +4736,64 @@ return /******/ (function(modules) { // webpackBootstrap
 	Object.defineProperty(exports, "__esModule", {
 	    value: true
 	});
+	exports.DocCustomDirectivesComponent = undefined;
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _core = __webpack_require__(6);
+
+	var _customDirectivesComponent = __webpack_require__(71);
+
+	var _customDirectivesComponent2 = _interopRequireDefault(_customDirectivesComponent);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var DocCustomDirectivesComponent = exports.DocCustomDirectivesComponent = function (_Component) {
+	    _inherits(DocCustomDirectivesComponent, _Component);
+
+	    function DocCustomDirectivesComponent(params) {
+	        _classCallCheck(this, DocCustomDirectivesComponent);
+
+	        return _possibleConstructorReturn(this, (DocCustomDirectivesComponent.__proto__ || Object.getPrototypeOf(DocCustomDirectivesComponent)).call(this, params, {
+	            template: _customDirectivesComponent2.default,
+	            props: {
+	                test: 'test',
+	                show: true
+	            }
+	        }));
+	    }
+
+	    _createClass(DocCustomDirectivesComponent, [{
+	        key: 'onInit',
+	        value: function onInit() {}
+	    }]);
+
+	    return DocCustomDirectivesComponent;
+	}(_core.Component);
+
+/***/ }),
+/* 71 */
+/***/ (function(module, exports) {
+
+	"use strict";
+
+	module.exports = "<h3>Custom directives</h3>\r\n\r\n\r\n\r\n<div class=\"code-block\">\r\n    <div class=\"code-header\">example.directive.js</div>\r\n    <pre>\r\n\timport {Decorators} from 'core';\r\n\r\n\t@Decorators.DirectiveDecorator({\r\n\t    selector: 'upperCase'\r\n\t})\r\n\texport default class UpperCaseDirectove {\r\n\t    constructor(elem) {\r\n\t        this.elem = elem;\r\n\t    }\r\n\r\n\t    onUpdate() {\r\n\t        this.toUpperCase();\r\n\t    }\r\n\r\n\t    toUpperCase() {\r\n\t        this.elem.innerHTML = this.elem.innerHTML.toUpperCase();\r\n\t    }\r\n\t}\r\n</pre>\r\n</div>\r\n\r\n<div class=\"block\">\r\n    <b class=\"title\">onUpdate</b>\r\n    <div class=\"text\"><div>Triggeres when component is updated</div></div>\r\n</div>\r\n\r\n<span ac-value=\"props.test\" upperCase ac-if=\"props.show\"></span>\r\n\r\n\r\n<div class=\"code-block\">\r\n    <div class=\"code-header\">example.component.html</div>\r\n\t<pre><span><</span>span upperCase><span class=\"text\"></span><span><</span>/span></pre>\r\n</div>";
+
+/***/ }),
+/* 72 */
+/***/ (function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
 	exports.DocInterpolationComponent = undefined;
 
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
@@ -4717,7 +4802,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var _core = __webpack_require__(6);
 
-	var _docInterpolationComponent = __webpack_require__(71);
+	var _docInterpolationComponent = __webpack_require__(73);
 
 	var _docInterpolationComponent2 = _interopRequireDefault(_docInterpolationComponent);
 
@@ -4749,7 +4834,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	}()) || _class);
 
 /***/ }),
-/* 71 */
+/* 73 */
 /***/ (function(module, exports) {
 
 	"use strict";
@@ -4757,7 +4842,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	module.exports = "<h3 class=\"in-development\">In development!</h3>\r\n<h3>Interpolation</h3>\r\n\r\n<div class=\"section-title\">Text interpolation</div>\r\n\r\n<div class=\"text\"><b>Interpolation</b> - is one of the ways how to bind data with tempalte</div>\r\n<div class=\"text\">We use <b>'Mustache'</b> syntax, which means value from double curly braces will be replaced with the value from props.title</div>\r\n\r\n\r\n<div class=\"code-block\">\r\n    <div class=\"code-header\">example.component.js</div>\r\n    <pre>\r\n    import { <b>Component</b> } from 'ace-js';\r\n    import <b>Tpl</b> from './example.component.html';\r\n    export class <b>ExampleComponent</b> extends Component {\r\n        constructor(params) {\r\n            super(params, {\r\n                <b>template</b>: Tpl,\r\n                <b>props</b>: {\r\n                    title: 'Some title'        \r\n                }\r\n            });\r\n        }\r\n\r\n    }\r\n</pre>\r\n</div>\r\n\r\n<div class=\"code-block\">\r\n    <div class=\"code-header\">example.component.html</div>\r\n\t<pre><span><</span>span><span class=\"text\">{{title}}</span><span><</span>/span></pre>\r\n</div>\r\n\r\n<div class=\"text\">will be replaced with props.title value</div>\r\n<div class=\"code-block\">\r\n\t<pre><span><</span>span><span class=\"text\">Some title</span><span><</span>/span></pre>\r\n</div>\r\n\r\n\r\n<div class=\"section-title\">Javascript expressions</div>\r\n<div class=\"code-block\">\r\n\t<pre><span><</span>span><span class=\"text\">{{isReady ? 'OK' : 'FAIL'}}</span><span><</span>/span></pre>\r\n</div>\r\n<div class=\"text\">This expression will be calculated as ussual js expression</div>\r\n\r\n<br>\r\n<div class=\"text\">The alturnative way is using of <b class=\"label\">ac-value</b></div>";
 
 /***/ }),
-/* 72 */
+/* 74 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -4771,7 +4856,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var _core = __webpack_require__(6);
 
-	var _docConditionalComponent = __webpack_require__(73);
+	var _docConditionalComponent = __webpack_require__(75);
 
 	var _docConditionalComponent2 = _interopRequireDefault(_docConditionalComponent);
 
@@ -4806,7 +4891,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	}(_core.Component);
 
 /***/ }),
-/* 73 */
+/* 75 */
 /***/ (function(module, exports) {
 
 	"use strict";
@@ -4814,7 +4899,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	module.exports = "<h3>Conditional rendering</h3>\r\n<div class=\"section-title\">ac-if</div>\r\n\r\n<div class=\"code-block\">\r\n\t<pre><span><</span>span <b>ac-if</b>=\"<span class=\"attr\">props.isVisible</span>\"><span class=\"text\">Something</span><span><</span>/span></pre>\r\n</div>\r\n\r\n<div class=\"text\">In this case <b>ac-if</b> directive checks <b>isVisible</b> property and if it is true element will be added to the page, otherwise will be removed</div>";
 
 /***/ }),
-/* 74 */
+/* 76 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -4830,7 +4915,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var _core = __webpack_require__(6);
 
-	var _docFormsComponent = __webpack_require__(75);
+	var _docFormsComponent = __webpack_require__(77);
 
 	var _docFormsComponent2 = _interopRequireDefault(_docFormsComponent);
 
@@ -4861,7 +4946,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	}()) || _class);
 
 /***/ }),
-/* 75 */
+/* 77 */
 /***/ (function(module, exports) {
 
 	"use strict";
@@ -4869,7 +4954,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	module.exports = "<h3>Forms</h3>\r\n\r\n<div class=\"title\">[type=\"text\"]</div>\r\n<div class=\"input\">\r\n\t<div ac-value=\"props.input\"></div>\r\n\t<input type=\"text\" ac-model=\"props.input\">\r\n</div>\r\n\r\n<div class=\"title\">[type=\"email\"]</div>\r\n<div class=\"input\">\r\n\t<div ac-value=\"props.email\"></div>\r\n\t<input type=\"email\" ac-model=\"props.email\">\r\n</div>\r\n\r\n<div class=\"title\">[type=\"password\"]</div>\r\n<div class=\"input\">\r\n\t<div ac-value=\"props.password\"></div>\r\n\t<input type=\"password\" ac-model=\"props.password\">\r\n</div>\r\n\r\n<div class=\"title\">[type=\"radio\"]</div>\r\n<div class=\"input\">\r\n\t<div ac-value=\"props.radio\"></div>\r\n\t<input type=\"radio\" ac-model=\"props.radio\" value=\"1\" name=\"radio\">\r\n\t<input type=\"radio\" ac-model=\"props.radio\" value=\"2\" name=\"radio\">\r\n</div>\r\n\r\n<div class=\"title\">[type=\"checkbox\"]</div>\r\n<div class=\"input\">\r\n\t<div ac-value=\"props.checkbox.check1\"></div>\r\n\t<div ac-value=\"props.checkbox.check2\"></div>\r\n\t<input type=\"checkbox\" ac-model=\"props.checkbox.check1\" value=\"1\">\r\n\t<input type=\"checkbox\" ac-model=\"props.checkbox.check2\" value=\"2\">\r\n</div>\r\n\r\n<div class=\"section-title\">Form validation</div>\r\n\r\n<form ac-submit=\"submit\" ac-form-validation> \r\n\t<div class=\"input\"> \r\n\t  Result: <span ac-value=\"props.form : json\"></span>\r\n\t</div>\r\n\t<div class=\"input\">\r\n\t\t<input type=\"text\" placeholder=\"name\" ac-model=\"props.form.name\" required ac-pattern=\"[0-9]\" ac-pattern-title=\"0-9\">\r\n\t</div>\r\n\t<div class=\"input\">\r\n\t\t<input type=\"email\" placeholder=\"email\"  ac-model=\"props.form.email\" required>\r\n\t</div>\r\n\t<div class=\"input\">\r\n\t\t<input type=\"checkbox\" ac-model=\"props.form.checkbox\" required>\r\n\t</div>\r\n\t\r\n\t<button>Submit</button>\r\n</form>";
 
 /***/ }),
-/* 76 */
+/* 78 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -4883,7 +4968,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var _core = __webpack_require__(6);
 
-	var _docModulesComponent = __webpack_require__(77);
+	var _docModulesComponent = __webpack_require__(79);
 
 	var _docModulesComponent2 = _interopRequireDefault(_docModulesComponent);
 
@@ -4919,7 +5004,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	}(_core.Component);
 
 /***/ }),
-/* 77 */
+/* 79 */
 /***/ (function(module, exports) {
 
 	"use strict";
@@ -4927,7 +5012,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	module.exports = "<h3>Modules</h3>\r\n<span class=\"text\">To simplify <b>app.js</b> you can split your code into modules</span>\r\n<br>\r\n<span class=\"text\">Call your module as <b>index.js</b> for easier using, so then just import <b>components/documentation</b> where index.js file is.</span>\r\n\r\n<div class=\"code-block\">\r\n    <div class=\"code-header\">index.js</div>\r\n    <pre>\r\n        import {DocumentationComponent} from './documentation.component';\r\n        import {DocQuickStartComponent} from './quick-start/doc-quick-start.component';\r\n\r\n        export default [\r\n            {c: DocumentationComponent, selector: 'app-documentation'},\r\n            {c: DocQuickStartComponent, selector: 'app-documentation-quick-start'}\r\n            ...\r\n        ]\r\n</pre>\r\n</div>\r\n\r\n\r\n<div class=\"code-block\">\r\n    <div class=\"code-header\">app.js</div>\r\n    <pre>\r\n        import Docs from './components/documentation';\r\n        Register({\r\n            ...\r\n            modules: [\r\n                Docs\r\n                ...\r\n            ]\r\n            ...\r\n        });\r\n</pre>\r\n</div>\r\n";
 
 /***/ }),
-/* 78 */
+/* 80 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -4941,7 +5026,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var _core = __webpack_require__(6);
 
-	var _docSmartObjectComponent = __webpack_require__(79);
+	var _docSmartObjectComponent = __webpack_require__(81);
 
 	var _docSmartObjectComponent2 = _interopRequireDefault(_docSmartObjectComponent);
 
@@ -4977,7 +5062,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	}(_core.Component);
 
 /***/ }),
-/* 79 */
+/* 81 */
 /***/ (function(module, exports) {
 
 	"use strict";
@@ -4985,7 +5070,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	module.exports = "<h3>Observables</h3>\r\n\r\n<div class=\"section-title\">Observable model</div>\r\n\r\n<div class=\"text\"><b>ObservableModel</b> - is a observable object with it's own methods.\r\n    <br>Every component has\r\n    <b>props</b> property which is ObservableModel.\r\n</div>\r\n<div class=\"text\">At first you should create ObservableModel with <b>new</b> operator, also you can use initial params</div>\r\n\r\n<div class=\"code-block\">\r\n    <div class=\"code-header\">user.store.js</div>\r\n    <pre>\r\n        import { ObservableModel } from 'framework/model'\r\n\r\n        class UserStore extends Store {\r\n            constructor() {\r\n                super();\r\n                this.user = new ObservableModel();\r\n            }\r\n        }\r\n</pre>\r\n</div>\r\n\r\n<div class=\"block\">\r\n    <b class=\"title\">sub(()=> {})</b>\r\n    <span class=\"text\">Creates a subscriber that watch any changes of ObservableModel</span>\r\n</div>\r\n\r\n<div class=\"block\">\r\n    <b class=\"title\">set('name', 'New value')</b>\r\n    <span class=\"text\">Set new value</span>\r\n</div>\r\n\r\n<div class=\"block\">\r\n    <b class=\"title\">get('name')</b>\r\n    <span class=\"text\">Get value from by <b>name</b> prop</span>\r\n</div>\r\n\r\n<div class=\"block\">\r\n    <b class=\"title\">save(params)</b>\r\n    <span class=\"text\">Is used for updating of object bu id</span>\r\n</div>\r\n\r\n\r\n\r\n<div class=\"section-title\">Observable collection</div>";
 
 /***/ }),
-/* 80 */
+/* 82 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -4999,7 +5084,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var _core = __webpack_require__(6);
 
-	var _docHowToComponent = __webpack_require__(81);
+	var _docHowToComponent = __webpack_require__(83);
 
 	var _docHowToComponent2 = _interopRequireDefault(_docHowToComponent);
 
@@ -5035,7 +5120,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	}(_core.Component);
 
 /***/ }),
-/* 81 */
+/* 83 */
 /***/ (function(module, exports) {
 
 	"use strict";
@@ -5043,7 +5128,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	module.exports = "<h3>How to install</h3>\r\n<div class=\"text\">To add AceJs framework to your node_modules</div>\r\n<div class=\"code-block\">\r\n    <pre>\r\n    <b>npm i ace-js</b>\r\n</pre>\r\n</div>\r\n<div class=\"text\">Now you can develop your application with AceJs</div>\r\n<div class=\"code-block\">\r\n    <pre>\r\n\tlet <b>AceJs</b> = require('ace-js');\r\n\tor\r\n\timport {...} from 'ace-js';\r\n</pre>\r\n</div>\r\n<!--     <b>npm i</b> - install all node modules\r\n    <b>npm run dev</b> - starts the dev server\r\n    <b>npm run prod</b> - creates production index.js bundle -->";
 
 /***/ }),
-/* 82 */
+/* 84 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -5057,7 +5142,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var _core = __webpack_require__(6);
 
-	var _docRouterConfigComponent = __webpack_require__(83);
+	var _docRouterConfigComponent = __webpack_require__(85);
 
 	var _docRouterConfigComponent2 = _interopRequireDefault(_docRouterConfigComponent);
 
@@ -5092,7 +5177,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	}(_core.Component);
 
 /***/ }),
-/* 83 */
+/* 85 */
 /***/ (function(module, exports) {
 
 	"use strict";
@@ -5100,7 +5185,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	module.exports = "<h3>Router config</h3>\r\n<div class=\"text\">To run router you should create <b>_router.js</b> config file, where describes rules for navigation\r\n</div>\r\n\r\n<div class=\"block\">\r\n    <b class=\"title\">path</b>\r\n    <span class=\"text\">current route compares with path, and if they match then component is rendered</span>\r\n</div>\r\n\r\n<div class=\"block\">\r\n    <b class=\"title\">component</b>\r\n    <span class=\"text\">defines what router should to show</span>\r\n</div>\r\n\r\n<div class=\"block\">\r\n    <b class=\"title\">children</b>\r\n    <span class=\"text\">specifies all the child routes activated under the current route</span>\r\n</div>\r\n\r\n\r\n<div class=\"block\">\r\n    <b class=\"title\">{path: <b>'/'</b>, component: 'app-home'}</b>\r\n    <span class=\"text\">leeds to <b>root</b> page</span>\r\n</div>\r\n\r\n<div class=\"block\">\r\n    <b class=\"title\">{path: <b>'example/:id'</b>, component: 'app-example-page'}</b>\r\n    <span class=\"text\">leeds to example page with <b>':id'</b> param</span>\r\n</div>\r\n\r\n<div class=\"block\">\r\n    <b class=\"title\"> {\r\n        path: <b>'parent'</b>,\r\n        component: 'app-parent-component'}  </b>\r\n    <span class=\"text\">leeds to page <b>parent</b> with children</span>\r\n</div>\r\n\r\n<div class=\"block\">\r\n    <b class=\"title\">\r\n        {path: <b>''</b>, component: 'app-child-root}\r\n    </b>\r\n    <span class=\"text\">root child route</span>\r\n</div>\r\n\r\n<div class=\"block\">\r\n    <b class=\"title\">\r\n        {path: <b>'child-component'</b>, component: 'app-child-one'}\r\n    </b>\r\n    <span class=\"text\">shows <b>child-component</b> component inside parent component</span>\r\n</div>\r\n\r\n<div class=\"block\">\r\n    <b class=\"title\">\r\n        {path: '404', component: <b>'app-not-found'</b>}\r\n    </b>\r\n    <span class=\"text\">leeds to <b>'not found page'</b></span>\r\n</div>\r\n\r\n<br>\r\n<div class=\"code-block\">\r\n    <div class=\"code-header\">_router.js</div>\r\n    <pre>\r\n\r\n    export let Routes = [\r\n    {path: <b>'/'</b>, component: 'app-home'},\r\n    {path: <b>'example/:id'</b>, component: 'app-example-page'},\r\n    {\r\n            path: <b>'parent'</b>,\r\n            component: 'app-parent-component',\r\n            children: [\r\n                {path: <b>'/'</b>, component: 'app-child-root},\r\n                {path: <b>'child-component'</b>, component: 'app-child-one'}\r\n            ]\r\n        },\r\n        {path: '404', component: <b>'app-not-found'</b>}\r\n    ];\r\n</pre>\r\n</div>\r\n";
 
 /***/ }),
-/* 84 */
+/* 86 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -5114,7 +5199,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var _core = __webpack_require__(6);
 
-	var _docHttpModuleComponent = __webpack_require__(85);
+	var _docHttpModuleComponent = __webpack_require__(87);
 
 	var _docHttpModuleComponent2 = _interopRequireDefault(_docHttpModuleComponent);
 
@@ -5149,7 +5234,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	}(_core.Component);
 
 /***/ }),
-/* 85 */
+/* 87 */
 /***/ (function(module, exports) {
 
 	"use strict";
@@ -5157,7 +5242,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	module.exports = "<h3>Http module</h3>\r\n\r\n<div class=\"text\"><b>Http module</b> is part <b>core</b> module.</div>\r\n<div class=\"text\">To use this module you should <b>import {Http} from 'ace-js'</b></div>";
 
 /***/ }),
-/* 86 */
+/* 88 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -5171,7 +5256,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var _core = __webpack_require__(6);
 
-	var _docHttpMethodsComponent = __webpack_require__(87);
+	var _docHttpMethodsComponent = __webpack_require__(89);
 
 	var _docHttpMethodsComponent2 = _interopRequireDefault(_docHttpMethodsComponent);
 
@@ -5215,7 +5300,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	}(_core.Component);
 
 /***/ }),
-/* 87 */
+/* 89 */
 /***/ (function(module, exports) {
 
 	"use strict";
@@ -5223,7 +5308,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	module.exports = "<h3>Http methods</h3>\r\n<div>Add <b>import {Http} from 'ace-js'</b> to your component, then</div>\r\n<div class=\"block\">\r\n    <b class=\"title\">GET</b>\r\n    <div class=\"text\">\r\n        <div>Http.get(url).then(response=>{ })</div>\r\n        <br>\r\n        Example: \r\n        <button @click=\"getWeater\">Get weater info</button>\r\n        <div ac-if=\"props.weather\"> \r\n            City: <b ac-value=\"props.weather.name\"></b>\r\n            <br>\r\n            Temp: <b ac-value=\"props.weather.main.temp\"></b> C\r\n            <br>\r\n            Wind: <b ac-value=\"props.weather.wind.speed\"></b> m/s\r\n        </div>\r\n    </div>\r\n</div>\r\n<div class=\"block\">\r\n    <b class=\"title\">POST</b>\r\n    <div class=\"text\"><div>Http.post(url, params).then(response=>{ })</div></div>\r\n</div>\r\n<div class=\"block\">\r\n    <b class=\"title\">PUT</b>\r\n    <div class=\"text\"> <div>Http.put(url, params).then(response=>{ })</div></div>\r\n</div>\r\n<div class=\"block\">\r\n    <b class=\"title\">DELETE</b>\r\n    <div class=\"text\"> <div>Http.delete(url).then(response=>{ })</div></div>\r\n</div>\r\n\r\n<div class=\"section-title\">Interceptors</div>\r\n<div class=\"text\">In your code you can use interceptors to add your own logic</div>\r\n<div class=\"code-block\">\r\n    <div class=\"code-header\">example.component.js</div>\r\n    <pre>\r\n        import { Component, Http } from 'ace-js';\r\n        import Tpl from './root.component.html';\r\n        import NotificaitonsStore from 'stores/notifications.store';\r\n        import UserStore from 'stores/user.store'\r\n        export class ExampleComponent extends Component {\r\n            constructor(params) {\r\n                super(params, {\r\n                    template: Tpl\r\n                });\r\n            }\r\n\r\n            onInit() {\r\n                Http.getCatalog('/catalog');\r\n                Http.onProgress(event => {\r\n                    console.log(event.loaded + ' / ' + event.total);\r\n                });\r\n                Http.onError(err => {\r\n                    switch (err.status) {\r\n                      case 401:\r\n                        UserStore.logout('auth');\r\n                        break;\r\n                      case 406:\r\n                        NotificaitonsStore.show({ type: 'error', text: err.response.message });\r\n                        UserStore.logout('auth');\r\n                        break;\r\n                      case 422:\r\n                        break;\r\n                      case 404:\r\n                        break;\r\n                      case 403:\r\n\r\n                        break;\r\n                      case 500:\r\n                      case 502:\r\n                        break;\r\n                      default:\r\n\r\n                        break;\r\n                    }\r\n                });\r\n            }\r\n        }\r\n    </pre>\r\n</div>";
 
 /***/ }),
-/* 88 */
+/* 90 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -5268,7 +5353,51 @@ return /******/ (function(modules) { // webpackBootstrap
 	}(_core.Component);
 
 /***/ }),
-/* 89 */
+/* 91 */
+/***/ (function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	exports.default = undefined;
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _dec, _class;
+
+	var _core = __webpack_require__(6);
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	var UpperCaseDirectove = (_dec = _core.Decorators.DirectiveDecorator({
+	    selector: 'upperCase'
+	}), _dec(_class = function () {
+	    function UpperCaseDirectove(elem) {
+	        _classCallCheck(this, UpperCaseDirectove);
+
+	        this.elem = elem;
+	    }
+
+	    _createClass(UpperCaseDirectove, [{
+	        key: 'onUpdate',
+	        value: function onUpdate() {
+	            this.toUpperCase();
+	        }
+	    }, {
+	        key: 'toUpperCase',
+	        value: function toUpperCase() {
+	            this.elem.innerHTML = this.elem.innerHTML.toUpperCase();
+	        }
+	    }]);
+
+	    return UpperCaseDirectove;
+	}()) || _class);
+	exports.default = UpperCaseDirectove;
+
+/***/ }),
+/* 92 */
 /***/ (function(module, exports) {
 
 	'use strict';
@@ -5279,7 +5408,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	var Routes = exports.Routes = [{ path: '/', component: 'app-home' }, { path: 'plugins', component: 'app-plugins' }, {
 	    path: 'documentation',
 	    component: 'app-documentation',
-	    children: [{ path: '/', component: 'app-documentation-quick-start' }, { path: 'how-to-install', component: 'app-documentation-how-to-install' }, { path: 'architecture', component: 'app-documentation-architecture' }, { path: 'component', component: 'app-documentation-component' }, { path: 'lifecycle', component: 'app-documentation-lifecycle' }, { path: 'utils', component: 'app-documentation-utils' }, { path: 'interpolation', component: 'app-documentation-interpolation' }, { path: 'directives', component: 'app-documentation-directives' }, { path: 'conditional-rendering', component: 'app-documentation-conditional' }, { path: 'forms', component: 'app-documentation-forms' }, { path: 'modules', component: 'app-documentation-modules' }, { path: 'smart-object', component: 'app-documentation-smart-object' }, { path: 'router-config', component: 'app-documentation-router-config' }, { path: 'http-module', component: 'app-documentation-http-module' }, { path: 'http-methods', component: 'app-documentation-http-methods' }]
+	    children: [{ path: '/', component: 'app-documentation-quick-start' }, { path: 'how-to-install', component: 'app-documentation-how-to-install' }, { path: 'architecture', component: 'app-documentation-architecture' }, { path: 'component', component: 'app-documentation-component' }, { path: 'lifecycle', component: 'app-documentation-lifecycle' }, { path: 'utils', component: 'app-documentation-utils' }, { path: 'interpolation', component: 'app-documentation-interpolation' }, { path: 'directives', component: 'app-documentation-directives' }, { path: 'custom-directives', component: 'app-documentation-custom-directives' }, { path: 'conditional-rendering', component: 'app-documentation-conditional' }, { path: 'forms', component: 'app-documentation-forms' }, { path: 'modules', component: 'app-documentation-modules' }, { path: 'smart-object', component: 'app-documentation-smart-object' }, { path: 'router-config', component: 'app-documentation-router-config' }, { path: 'http-module', component: 'app-documentation-http-module' }, { path: 'http-methods', component: 'app-documentation-http-methods' }]
 	}, { path: '404', component: 'app-not-found' // wrong route
 	}];
 

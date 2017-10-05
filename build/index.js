@@ -1,8 +1,8 @@
 /*!
- * ace-js 0.2.9
+ * ace-js 0.3.0
  * May be freely distributed under the MIT license 
  * Author: Bogdan Zinkevich
- * Last update: 2017-10-3 23:24:37
+ * Last update: 2017-10-5 12:47:40
  * 
  */
 (function webpackUniversalModuleDefinition(root, factory) {
@@ -82,7 +82,7 @@ return /******/ (function(modules) { // webpackBootstrap
 /******/ 	}
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "96bd717420289c7ec927"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "be32528389cd97f683d2"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
 /******/ 	
@@ -625,9 +625,9 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var Decorators = _interopRequireWildcard(_decorators);
 
-	var _register = __webpack_require__(34);
+	var _register = __webpack_require__(35);
 
-	var _component = __webpack_require__(35);
+	var _component = __webpack_require__(36);
 
 	var _routerSwitcher = __webpack_require__(37);
 
@@ -688,7 +688,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var _decorators = __webpack_require__(8);
 
-	var _deepmerge = __webpack_require__(33);
+	var _deepmerge = __webpack_require__(34);
 
 	var _deepmerge2 = _interopRequireDefault(_deepmerge);
 
@@ -911,7 +911,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	Object.defineProperty(exports, "__esModule", {
 	    value: true
 	});
-	exports.ComponentDecorator = exports.IfArray = exports.IfObject = undefined;
+	exports.DirectiveDecorator = exports.ComponentDecorator = exports.IfArray = exports.IfObject = undefined;
 
 	var _ifObject = __webpack_require__(9);
 
@@ -925,11 +925,16 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var _component2 = _interopRequireDefault(_component);
 
+	var _directive = __webpack_require__(33);
+
+	var _directive2 = _interopRequireDefault(_directive);
+
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	exports.IfObject = _ifObject2.default;
 	exports.IfArray = _ifArray2.default;
 	exports.ComponentDecorator = _component2.default;
+	exports.DirectiveDecorator = _directive2.default;
 
 /***/ }),
 /* 9 */
@@ -991,13 +996,11 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var _core = __webpack_require__(6);
 
-	var _private = __webpack_require__(12);
+	var _directives = __webpack_require__(12);
 
-	var _directives = __webpack_require__(13);
+	var _events = __webpack_require__(13);
 
-	var _events = __webpack_require__(14);
-
-	var _Directives = __webpack_require__(15);
+	var _Directives = __webpack_require__(14);
 
 	function ComponentDecorator(decoratorParams) {
 	    return function decorator(Class) {
@@ -1012,38 +1015,6 @@ return /******/ (function(modules) { // webpackBootstrap
 
 /***/ }),
 /* 12 */
-/***/ (function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
-	    value: true
-	});
-	exports.PRIVATES = undefined;
-
-	var _directives = __webpack_require__(13);
-
-	var PRIVATES = {
-	    DIRECTIVES: {},
-	    EVENTS: new WeakMap(),
-	    SUBSCRIPTIONS: new WeakMap(),
-	    GLOBAL_EVENTS: new WeakMap(),
-	    HOST: {
-	        CLASS: new WeakMap(),
-	        STYLE: new WeakMap(),
-	        EVENTS: new WeakMap()
-	    }
-	}; // import { EVENTS } from './const/events';
-
-
-	_directives.DIRECTIVES_NAMES.forEach(function (directive) {
-	    PRIVATES.DIRECTIVES[directive] = new WeakMap();
-	});
-
-	exports.PRIVATES = PRIVATES;
-
-/***/ }),
-/* 13 */
 /***/ (function(module, exports) {
 
 	'use strict';
@@ -1054,7 +1025,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	var DIRECTIVES_NAMES = exports.DIRECTIVES_NAMES = ['ac-for', 'ac-style', 'ac-value', 'ac-input', 'ac-model', 'ac-if', 'ac-class', 'ac-link', 'ac-attr', 'ac-on', 'ac-pattern', 'ac-outside', 'ac-ref', 'ac-form-validation'];
 
 /***/ }),
-/* 14 */
+/* 13 */
 /***/ (function(module, exports) {
 
 	'use strict';
@@ -1065,7 +1036,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	var EVENTS_NAMES = exports.EVENTS_NAMES = ['click', 'keyup', 'change', 'mouseover', 'mouseout', 'mousedown', 'mouseup', 'scroll', 'mousewheel', 'submit', 'focus', 'blur', 'dragstart'];
 
 /***/ }),
-/* 15 */
+/* 14 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -1075,19 +1046,19 @@ return /******/ (function(modules) { // webpackBootstrap
 	});
 	exports.Directives = undefined;
 
-	var _style2 = __webpack_require__(16);
+	var _style2 = __webpack_require__(15);
 
-	var _props2 = __webpack_require__(17);
+	var _props2 = __webpack_require__(16);
 
-	var _pattern2 = __webpack_require__(18);
+	var _pattern2 = __webpack_require__(17);
 
-	var _if2 = __webpack_require__(19);
+	var _if2 = __webpack_require__(18);
 
-	var _class2 = __webpack_require__(20);
+	var _class2 = __webpack_require__(19);
 
-	var _elRef2 = __webpack_require__(21);
+	var _elRef2 = __webpack_require__(20);
 
-	var _for2 = __webpack_require__(22);
+	var _for2 = __webpack_require__(21);
 
 	var _model2 = __webpack_require__(25);
 
@@ -1103,7 +1074,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var _on2 = __webpack_require__(30);
 
-	var _init2 = __webpack_require__(23);
+	var _init2 = __webpack_require__(22);
 
 	var _host = __webpack_require__(31);
 
@@ -1138,7 +1109,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	exports.Directives = Directives;
 
 /***/ }),
-/* 16 */
+/* 15 */
 /***/ (function(module, exports) {
 
 	'use strict';
@@ -1176,7 +1147,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	}
 
 /***/ }),
-/* 17 */
+/* 16 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -1227,7 +1198,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	}
 
 /***/ }),
-/* 18 */
+/* 17 */
 /***/ (function(module, exports) {
 
 	'use strict';
@@ -1254,7 +1225,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	}
 
 /***/ }),
-/* 19 */
+/* 18 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -1309,7 +1280,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	}
 
 /***/ }),
-/* 20 */
+/* 19 */
 /***/ (function(module, exports) {
 
 	'use strict';
@@ -1357,7 +1328,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	}
 
 /***/ }),
-/* 21 */
+/* 20 */
 /***/ (function(module, exports) {
 
 	"use strict";
@@ -1376,7 +1347,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	}
 
 /***/ }),
-/* 22 */
+/* 21 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -1388,11 +1359,11 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var _core = __webpack_require__(6);
 
-	var _index = __webpack_require__(15);
+	var _index = __webpack_require__(14);
 
-	var _init2 = __webpack_require__(23);
+	var _init2 = __webpack_require__(22);
 
-	var _events = __webpack_require__(14);
+	var _events = __webpack_require__(13);
 
 	function _for(array, data) {
 	    var _this = this;
@@ -1524,7 +1495,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	}
 
 /***/ }),
-/* 23 */
+/* 22 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -1535,7 +1506,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	exports._init = _init;
 	exports._initEvent = _initEvent;
 
-	var _private = __webpack_require__(12);
+	var _private = __webpack_require__(23);
 
 	var _core = __webpack_require__(6);
 
@@ -1671,6 +1642,39 @@ return /******/ (function(modules) { // webpackBootstrap
 	}
 
 /***/ }),
+/* 23 */
+/***/ (function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	exports.PRIVATES = undefined;
+
+	var _directives = __webpack_require__(12);
+
+	var PRIVATES = {
+	    DIRECTIVES: {},
+	    CUSTOM_DIRECTIVES: {},
+	    EVENTS: new WeakMap(),
+	    SUBSCRIPTIONS: new WeakMap(),
+	    GLOBAL_EVENTS: new WeakMap(),
+	    HOST: {
+	        CLASS: new WeakMap(),
+	        STYLE: new WeakMap(),
+	        EVENTS: new WeakMap()
+	    }
+	}; // import { EVENTS } from './const/events';
+
+
+	_directives.DIRECTIVES_NAMES.forEach(function (directive) {
+	    PRIVATES.DIRECTIVES[directive] = new WeakMap();
+	});
+
+	exports.PRIVATES = PRIVATES;
+
+/***/ }),
 /* 24 */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -1683,7 +1687,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	exports.removeEventListeners = removeEventListeners;
 	exports.createEventObject = createEventObject;
 
-	var _private = __webpack_require__(12);
+	var _private = __webpack_require__(23);
 
 	function _events(array) {
 	    array.forEach(function (newEvent) {
@@ -1875,7 +1879,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	});
 	exports._outside = _outside;
 
-	var _private = __webpack_require__(12);
+	var _private = __webpack_require__(23);
 
 	var _core = __webpack_require__(6);
 
@@ -2008,6 +2012,23 @@ return /******/ (function(modules) { // webpackBootstrap
 /* 33 */
 /***/ (function(module, exports) {
 
+	"use strict";
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	exports.default = DirectiveDecorator;
+	function DirectiveDecorator(decoratorParams) {
+	    return function decorator(Class) {
+	        Class.params = decoratorParams;
+	        return Class;
+	    };
+	}
+
+/***/ }),
+/* 34 */
+/***/ (function(module, exports) {
+
 	'use strict';
 
 	var isMergeableObject = function isMergeableObject(value) {
@@ -2108,7 +2129,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ }),
-/* 34 */
+/* 35 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -2120,7 +2141,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var _core = __webpack_require__(6);
 
-	var _component = __webpack_require__(35);
+	var _component = __webpack_require__(36);
 
 	function Register(options) {
 	    // console.time('modules')
@@ -2130,16 +2151,34 @@ return /******/ (function(modules) { // webpackBootstrap
 	    }
 
 	    if (options.serverUrl) {
-	        _core.Http.setServerUrl(options.serverUrl);
+	        if (options.serverUrl instanceof String) {
+	            _core.Http.setServerUrl(options.serverUrl);
+	        } else {
+	            throw new Error('directives must be a string');
+	        }
 	    }
+
 	    _component.Component.COMPONENTS = options.components;
 	    _core.RouteSwitcher.ROUTES = options.routes;
+	    _component.Component.DIRECTIVES = []; // for custom directives
 
-	    options.modules.forEach(function (module) {
-	        module.forEach(function (component) {
-	            registerComponent(component);
+	    if (options.directives) {
+	        if (options.directives instanceof Array) {
+	            _component.Component.DIRECTIVES = options.directives;
+	        } else {
+	            throw new Error('directives must be an array');
+	        }
+	    }
+
+	    if (options.modules instanceof Array) {
+	        options.modules.forEach(function (module) {
+	            module.forEach(function (component) {
+	                registerComponent(component);
+	            });
 	        });
-	    });
+	    } else {
+	        throw new Error('modules must be an array');
+	    }
 
 	    var rootEl = document.querySelectorAll(options.root.selector)[0];
 	    if (rootEl) {
@@ -2173,7 +2212,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	}
 
 /***/ }),
-/* 35 */
+/* 36 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -2186,22 +2225,18 @@ return /******/ (function(modules) { // webpackBootstrap
 	var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
 
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	// import Interpolation from './interpolation/interpolation';
+
 
 	var _core = __webpack_require__(6);
 
-	var _private = __webpack_require__(12);
+	var _private = __webpack_require__(23);
 
-	var _interpolation = __webpack_require__(36);
+	var _Directives = __webpack_require__(14);
 
-	var _interpolation2 = _interopRequireDefault(_interpolation);
+	var _directives = __webpack_require__(12);
 
-	var _Directives = __webpack_require__(15);
-
-	var _directives = __webpack_require__(13);
-
-	var _events = __webpack_require__(14);
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	var _events = __webpack_require__(13);
 
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
@@ -2236,6 +2271,16 @@ return /******/ (function(modules) { // webpackBootstrap
 	                _Directives.Directives._initEvent.call(_this, _this.root, directive, _private.PRIVATES.EVENTS);
 	            });
 
+	            //custom directives
+	            Component.DIRECTIVES.forEach(function (Directive) {
+	                var array = _Directives.Directives._init.call(_this, _this.root, Directive.params.selector, _private.PRIVATES.CUSTOM_DIRECTIVES[Directive.params.selector]);
+	                if (array) {
+	                    array.get(_this).map(function (item) {
+	                        item.directive = new Directive(item.elem);
+	                    });
+	                }
+	            });
+
 	            _Directives.Directives._model.call(this, _private.PRIVATES.DIRECTIVES['ac-model'].get(this));
 	            _Directives.Directives._on.call(this, _private.PRIVATES.DIRECTIVES['ac-on'].get(this));
 	            _Directives.Directives._outside.call(this, _private.PRIVATES.DIRECTIVES['ac-outside'].get(this));
@@ -2244,6 +2289,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	            _Directives.Directives._events.call(this, _private.PRIVATES.EVENTS.get(this));
 	            _Directives.Directives._hostEvents.call(this, _private.PRIVATES.HOST.EVENTS.get(this));
 	            _Directives.Directives._formValidation.call(this, _private.PRIVATES.DIRECTIVES['ac-form-validation'].get(this));
+
+	            //TODO rewrite
 	            if (_private.PRIVATES.DIRECTIVES['ac-link'].get(this).length || _private.PRIVATES.DIRECTIVES['ac-for'].get(this).length) {
 	                this.$routerSub = _core.Router.onChange(function () {
 	                    var a = _this.root.querySelectorAll('[href]');
@@ -2277,6 +2324,15 @@ return /******/ (function(modules) { // webpackBootstrap
 	                _Directives.Directives._hostStyles.call(_this2, _private.PRIVATES.HOST.STYLE.get(_this2));
 
 	                // Interpolation.interpolationRun.call(this, this.$interpolationArray);
+
+	                Component.DIRECTIVES.forEach(function (directive) {
+	                    var array = _private.PRIVATES.CUSTOM_DIRECTIVES[directive.params.selector].get(_this2);
+	                    if (array && array.length) {
+	                        array.forEach(function (r) {
+	                            r.directive.onUpdate();
+	                        });
+	                    }
+	                });
 
 	                _this2.onUpdate();
 	            });
@@ -2465,6 +2521,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	    }, {
 	        key: 'setPrivates',
 	        value: function setPrivates(options) {
+	            var _this4 = this;
+
 	            for (var array in _private.PRIVATES.DIRECTIVES) {
 	                _private.PRIVATES.DIRECTIVES[array].set(this, []);
 	            }
@@ -2476,62 +2534,21 @@ return /******/ (function(modules) { // webpackBootstrap
 	            _private.PRIVATES.HOST.CLASS.set(this, options.hostClasses);
 	            _private.PRIVATES.HOST.STYLE.set(this, options.hostStyles);
 
+	            Component.DIRECTIVES.forEach(function (directive) {
+	                if (!_private.PRIVATES.CUSTOM_DIRECTIVES[directive.params.selector]) {
+	                    _private.PRIVATES.CUSTOM_DIRECTIVES[directive.params.selector] = new WeakMap();
+	                }
+	                _private.PRIVATES.CUSTOM_DIRECTIVES[directive.params.selector].set(_this4, []);
+	            });
+
+	            // console.log(PRIVATES.CUSTOM_DIRECTIVES, this);
+
 	            // this.$interpolationArray = [];
 	        }
 	    }]);
 
 	    return Component;
 	}();
-
-/***/ }),
-/* 36 */
-/***/ (function(module, exports) {
-
-	"use strict";
-
-	Object.defineProperty(exports, "__esModule", {
-	    value: true
-	});
-	var Interpolation = {
-	    interpolationInit: function interpolationInit(root, array) {
-	        // let regExp = /{{[^%>]+?}}/g;
-	        // let matches = root.innerHTML.match(regExp);
-
-	        // if(matches) {        
-	        //     matches.forEach((match, i) => {
-	        //         let a = deepSearch(array, root, match);
-	        //         // console.log(a, match);
-	        //         // item.elem.innerHTML = item.elem.innerHTML.replace(expression[0], '<div ac-interpolaction>  </div>');
-	        //         // let r = this.getComponentVariable(expression[1].split('.'), this.props)
-	        //         // item.elem.innerHTML = item.cached.innerHTML.replace(expression[0], r);
-	        //     });
-	        // }
-	    },
-
-	    interpolationRun: function interpolationRun(array) {
-	        // array.forEach(item=>{
-	        //     // console.log(item);
-	        // })
-	    }
-	};
-
-	function deepSearch(array, node, match) {
-	    node.childNodes.forEach(function (r) {
-	        var regExp = /{{([^%>]+)?}}/;
-	        var expression = regExp.exec(r.textContent);
-
-	        console.log(r.textContent.trim());
-	        if (r.nodeType === 3 && r.textContent.trim() === match) {
-
-	            array.push({
-	                elem: r
-	            });
-	        }
-	        deepSearch(array, r, match);
-	    });
-	    return array;
-	}
-	exports.default = Interpolation;
 
 /***/ }),
 /* 37 */
