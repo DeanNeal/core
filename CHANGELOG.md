@@ -1,3 +1,8 @@
+<a name="0.3.0"></a>
+# [0.3.0](https://github.com/DeanNeal/ace-js) (2017-10-05)
+### Features
+* **core:** add custom directives ([#22](https://github.com/DeanNeal/ace-js/issues/22))
+
 <a name="0.2.9"></a>
 # [0.2.9](https://github.com/DeanNeal/ace-js) (2017-10-03)
 ### Features
