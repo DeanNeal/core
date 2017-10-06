@@ -79,11 +79,12 @@ export class Component {
         this.compileRouter(); // render main router
         // console.log(this);
 
+        //internal directives
         DIRECTIVES_NAMES.forEach(directive => {
             Directives._init.call(this, this.root, directive, PRIVATES.DIRECTIVES[directive]);
         });
 
-
+        //events
         EVENTS_NAMES.forEach(directive => {
             Directives._initEvent.call(this, this.root, directive, PRIVATES.EVENTS);
         });
@@ -139,15 +140,7 @@ export class Component {
 
             // Interpolation.interpolationRun.call(this, this.$interpolationArray);
 
-            Component.DIRECTIVES.forEach((directive) => {
-                let array = PRIVATES.CUSTOM_DIRECTIVES[directive.params.selector].get(this);
-                if(array && array.length){
-                    array.forEach(r=>{
-                        r.directive.onUpdate();
-                    });
-                }
-            });
-
+            Directives._customDirective.call(this);
             this.onUpdate();
         });
     }

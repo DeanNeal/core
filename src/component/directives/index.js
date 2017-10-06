@@ -15,6 +15,7 @@ import { _on } from './on';
 import { _init , _initEvent} from './init';
 import { _hostEvents, _hostClasses, _hostStyles } from './host';
 import {_formValidation} from './form-validation';
+import {_customDirective} from './custom-directive';
 
 const Directives = {
     _style,
@@ -39,7 +40,8 @@ const Directives = {
     _hostEvents,
     _hostClasses,
     _hostStyles,
-    _formValidation
+    _formValidation,
+    _customDirective
 };
 
 export { Directives };

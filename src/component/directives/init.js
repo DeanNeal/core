@@ -33,15 +33,20 @@ export function _init(root, directive, newArray) {
             elem.removeAttribute('ac-inner-loop');
             return;
         }
-
+ 
         let obj = {
             elem,
             attr,
-            comment: Utils.insertAfter(document.createComment(directive + ': ' + attr), elem),
+            // comment: Utils.insertAfter(document.createComment(directive + ': ' + attr), elem),
             items: [],
             parent: elem.parentNode,
             cached: elem
         };
+        
+        // only for certain directives
+        if(directive === 'ac-for' || directive === 'ac-if') { 
+            obj.comment = Utils.insertAfter(document.createComment(directive + ': ' + attr), elem);
+        }
         array.get ? array.get(this).push(obj) : array.push(obj);
         elem.removeAttribute(directive);
         if (directive === 'ac-for') elem.remove();
