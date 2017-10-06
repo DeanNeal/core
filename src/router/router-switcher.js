@@ -45,9 +45,14 @@ export class RouteSwitcher {
     renderComponent(root, route, params){
         if(route) {
             let newCompObject = Component.COMPONENTS.filter(r=> r.selector === route.component)[0];
-            let newComp = document.createElement(route.component);
-            this.checkAccess(root, newComp, route);
-            new newCompObject.c(newComp, { routeParams: params });
+            if(newCompObject){
+                let newComp = document.createElement(route.component);
+                this.checkAccess(root, newComp, route); 
+                new newCompObject.c(newComp, { routeParams: params });
+            } else {
+                this.appendEmpty(root);
+            }
+            
         } else {
             this.appendEmpty(root);
         }

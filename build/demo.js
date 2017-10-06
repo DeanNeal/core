@@ -2,7 +2,7 @@
  * ace-js 0.3.2
  * May be freely distributed under the MIT license 
  * Author: Bogdan Zinkevich
- * Last update: 2017-10-6 15:53:36
+ * Last update: 2017-10-6 17:41:59
  * 
  */
 (function webpackUniversalModuleDefinition(root, factory) {
@@ -82,7 +82,7 @@ return /******/ (function(modules) { // webpackBootstrap
 /******/ 	}
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "ee627bb18494dd2e0427"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "e100b4706f72d5d3d6ea"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
 /******/ 	
@@ -615,32 +615,39 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var _core = __webpack_require__(6);
 
-	var _home = __webpack_require__(47);
+	var _controls = __webpack_require__(45);
 
-	var _root = __webpack_require__(49);
+	var _home = __webpack_require__(51);
 
-	var _header = __webpack_require__(51);
+	var _root = __webpack_require__(53);
 
-	var _plugins = __webpack_require__(53);
+	var _header = __webpack_require__(55);
 
-	var _documentation = __webpack_require__(55);
+	var _plugins = __webpack_require__(57);
+
+	var _controls2 = __webpack_require__(59);
+
+	var _notFound = __webpack_require__(61);
+
+	var _documentation = __webpack_require__(63);
 
 	var _documentation2 = _interopRequireDefault(_documentation);
 
-	var _upperCaseDirective = __webpack_require__(92);
+	var _upperCaseDirective = __webpack_require__(100);
 
 	var _upperCaseDirective2 = _interopRequireDefault(_upperCaseDirective);
 
-	var _router = __webpack_require__(93);
+	var _router = __webpack_require__(101);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	(0, _core.Register)({
 	    root: {
-	        c: _root.RootComponent, selector: 'app-root'
+	        c: _root.RootComponent,
+	        selector: 'app-root'
 	    },
 	    styles: _main2.default,
-	    components: [{ c: _header.HeaderComponent, selector: 'app-header' }, { c: _home.HomeComponent, selector: 'app-home' }, { c: _plugins.PluginsComponent, selector: 'app-plugins' }],
+	    components: [{ c: _header.HeaderComponent, selector: 'app-header' }, { c: _home.HomeComponent, selector: 'app-home' }, { c: _plugins.PluginsComponent, selector: 'app-plugins' }, { c: _controls2.ControlsComponent, selector: 'app-controls' }, { c: _notFound.NotFoundComponent, selector: 'app-not-found' }, { c: _controls.DatepickerComponent, selector: 'app-datepicker' }],
 	    directives: [_upperCaseDirective2.default],
 	    modules: [_documentation2.default],
 	    routes: _router.Routes
@@ -658,7 +665,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	exports.i(__webpack_require__(4), "");
 
 	// module
-	exports.push([module.id, ".content--end {\n  justify-content: flex-end;\n}\n\n.content--space-between {\n  justify-content: space-between;\n}\n\n.content--center {\n  align-items: center;\n}\n\n.flex {\n  display: flex;\n}\n\n.input-file {\n  position: absolute;\n  opacity: 0;\n  width: 100%;\n  height: 100%;\n  left: 0;\n  right: 0;\n  cursor: pointer;\n}\n\n.app-container {\n  width: 1024px;\n  margin: 0 auto;\n}\n\n.app-btn {\n  border: none;\n  background: none;\n  padding: 10px 30px;\n  cursor: pointer;\n  color: white;\n  position: relative;\n  background-color: #17b6ed;\n  border-radius: 2px;\n}\n\n.app-btn.small {\n  width: 150px;\n}\n\n.app-btn input[type='file'] {\n  opacity: 0;\n  cursor: pointer;\n  height: 100%;\n  position: absolute;\n  width: 100%;\n  top: 0;\n  left: 0;\n}\n\n.app-btn:hover {\n  background-color: #46c5f1;\n}\n\nheader {\n  height: 60px;\n  border-bottom: 1px solid #ccc;\n  padding: 10px;\n  background-color: #ffffff;\n}\n\nheader .logo {\n  float: left;\n}\n\nheader .logo img {\n  width: auto;\n  height: 39px;\n}\n\nheader .logo .gantt--main-menu-item {\n  /*padding: 0 $step * 8 0 0;*/\n  height: 39px;\n  display: flex;\n  align-items: center;\n  font-size: 24px;\n  font-weight: bold;\n}\n\nheader .gantt--main-menu {\n  display: flex;\n  height: 100%;\n  float: left;\n  align-items: center;\n}\n\nheader .gantt--main-menu .gantt--main-menu-item {\n  color: #191919;\n  position: relative;\n}\n\nheader .gantt--main-menu .gantt--main-menu-item.active:after {\n  content: '';\n  position: absolute;\n  width: 100%;\n  bottom: 0;\n  left: 0;\n  border-bottom: 3px solid #f9d710;\n}\n\nheader .gantt--main-menu-item {\n  padding: 10px;\n  height: 100%;\n  display: block;\n  text-decoration: none;\n  color: #676767;\n  font-size: 16px;\n  font-weight: 300;\n}\n\nheader .gantt--main-menu-item:hover {\n  opacity: 0.8;\n}\n\nheader .right-menu {\n  float: right;\n  margin-right: 10px;\n  display: flex;\n  align-items: center;\n}\n\nheader .right-menu .search-input {\n  margin-right: 10px;\n}\n\nheader .right-menu .search-input input[type=\"text\"] {\n  height: 39px;\n  padding: 0 32px 0 12px;\n  font-size: 16px;\n  border: none;\n  border-top: 3px solid transparent;\n  border-bottom: 3px solid #f9d710;\n  box-sizing: border-box;\n}\n\nheader .right-menu .search-input input[type=\"text\"]:focus {\n  border: 3px solid #0a0a0a;\n  padding-right: 29px;\n}\n\nheader .right-menu .search-input i {\n  color: #0a0a0a;\n  position: absolute;\n  top: 0;\n  right: 8px;\n  font-size: 18px;\n  bottom: 0;\n  margin: auto;\n  width: 18px;\n  height: 18px;\n}\n\nheader .right-menu .profile-menu {\n  align-items: center;\n  justify-content: center;\n  display: flex;\n  font-size: 14px;\n  color: #191919;\n  font-weight: 500;\n  position: relative;\n  cursor: pointer;\n}\n\nheader .right-menu .profile-menu .avatar {\n  background-size: cover !important;\n  background-position: center center !important;\n  border-radius: 100%;\n  width: 40px;\n  height: 40px;\n}\n\nheader .right-menu .profile-menu .username {\n  margin-right: 10px;\n}\n\nfooter {\n  background-size: 46px;\n  background-position: 0;\n  height: 40px;\n}\n\nfooter .info-panel {\n  font-size: 0;\n  display: inline-flex;\n  justify-content: flex-start;\n  padding: 4px 8px;\n  height: 100%;\n  width: 100%;\n  background: rgba(0, 0, 0, 0.3);\n}\n\nfooter .info-panel__item {\n  font-size: 12px;\n  display: block;\n  min-width: 200px;\n  background-color: #ffffff;\n  border: 1px solid #0a0a0a;\n  text-align: right;\n  line-height: 16px;\n  padding: 8px;\n  text-transform: uppercase;\n}\n\nfooter .info-panel__item + .info-panel__item {\n  margin-left: 12px;\n}\n\napp-home {\n  display: flex;\n  flex-direction: column;\n  flex: 1;\n  justify-content: center;\n  text-align: center;\n}\n\napp-home .app-home__bottom {\n  margin-top: 90px;\n}\n\napp-not-found {\n  width: 100%;\n}\n\napp-not-found h1 {\n  display: flex;\n  /* flex-direction: column; */\n  /* flex: 1; */\n  align-items: center;\n  justify-content: center;\n  width: 100%;\n  height: calc(100% - 60px);\n  margin: 0;\n}\n\napp-documentation {\n  width: 100%;\n}\n\napp-documentation .main-content {\n  width: 100%;\n  display: flex;\n}\n\napp-documentation .main-content .main-list {\n  width: 15%;\n  border-right: 1px solid #ccc;\n  padding: 20px 40px 20px 40px;\n  overflow: auto;\n}\n\napp-documentation .main-content .main-list .list-head {\n  margin-bottom: 5px;\n}\n\napp-documentation .main-content .main-list > li {\n  margin-bottom: 10px;\n  font-size: 16px;\n  font-weight: 600;\n}\n\napp-documentation .main-content .main-list ol .active {\n  color: #17b6ed;\n}\n\napp-documentation .main-content .main-list ol li {\n  padding-left: 20px;\n  cursor: pointer;\n  font-size: 14px;\n  font-weight: 400;\n}\n\napp-documentation .main-content .main-list ol li a {\n  color: #000;\n  display: block;\n  padding: 5px;\n}\n\napp-documentation .main-content .main-list ol li a:hover {\n  background: #f5f5f5;\n}\n\napp-documentation .main-content .main-list ol li:hover {\n  text-decoration: underline;\n}\n\napp-documentation .main-content .documentation-section {\n  width: 85%;\n  padding-left: 20px;\n  overflow: auto;\n  padding: 20px 40px 20px 40px;\n}\n\napp-documentation main {\n  height: 100%;\n  display: flex;\n  flex: 1;\n  user-select: none;\n  position: relative;\n  border-bottom: 1px solid #ccc;\n}\n\napp-documentation .code-block {\n  display: block;\n  margin: 10px 0 10px;\n  font-size: 14px;\n  word-break: break-all;\n  word-wrap: break-word;\n  background-color: rgba(247, 247, 247, 0.85);\n  border: 1px solid #f3eeee;\n  border-radius: 4px;\n}\n\napp-documentation .code-block .code-header {\n  background: #ccc;\n  padding: 10px;\n}\n\napp-documentation .code-block .attr {\n  color: #17b6ed;\n}\n\napp-documentation .code-block .text {\n  font-weight: bold;\n}\n\napp-documentation .folder-structure {\n  padding: 20px;\n  width: 50%;\n}\n\napp-documentation .folder-structure .children {\n  position: relative;\n  overflow: hidden;\n  padding-left: 24px;\n}\n\napp-documentation .folder-structure .children:first-child {\n  padding: 0;\n}\n\napp-documentation .folder-structure--item {\n  padding: 5px 0px;\n  position: relative;\n}\n\napp-documentation .folder-structure--item .folder-structure--item {\n  padding-left: 30px;\n}\n\napp-documentation .folder-structure--item .folder-structure--item:before {\n  content: \"\";\n  left: 10px;\n  bottom: 15px;\n  width: 16px;\n  height: 9999px;\n  position: absolute;\n  border-width: 0 0 1px 1px;\n  border-style: solid;\n  border-color: #ccc;\n  border-radius: 0 0 0 3px;\n}\n\napp-documentation .comment {\n  display: inline-block;\n  color: #aaa;\n}\n\napp-documentation pre {\n  padding: 10px;\n}\n\napp-documentation .kwd {\n  color: #17b6ed;\n}\n\napp-documentation .str {\n  color: #d4ce10;\n}\n\napp-documentation .typ {\n  color: red;\n}\n\napp-documentation .met {\n  color: #00d400;\n}\n\napp-documentation .white {\n  color: #fff;\n}\n\napp-documentation .title {\n  font-family: 'Roboto', sans-serif;\n  margin-right: 20px;\n}\n\napp-documentation .section-title {\n  font-size: 16px;\n  margin-top: 20px;\n  border-bottom: 1px solid #ccc;\n  padding: 6px;\n}\n\napp-documentation .in-development {\n  color: red;\n}\n\napp-documentation .text {\n  width: 500px;\n  font-weight: 300;\n  margin: 10px 0;\n}\n\napp-documentation .block {\n  border-bottom: 1px solid #ccc;\n  display: flex;\n  align-items: center;\n  justify-content: space-between;\n}\n\napp-documentation .label {\n  padding: 3px 5px;\n  display: inline-block;\n  color: #17b6ed;\n  font-weight: bold;\n  font-size: 16px;\n  border-radius: 3px;\n  border: 1px solid;\n}\n\nchild-route-switcher {\n  display: block;\n  width: 60%;\n}\n\napp-documentation-directives .clicked {\n  color: green;\n}\n\napp-documentation-directives .unclicked {\n  color: red;\n}\n\napp-documentation-architecture {\n  width: 100%;\n}\n\napp-documentation-forms .ac-error[type] {\n  border: 1px solid rgba(255, 0, 0, 0.47);\n}\n\napp-documentation-forms .input {\n  margin: 10px 0px;\n}\n\napp-documentation-forms .input input {\n  border: 1px solid #ccc;\n  padding: 4px;\n}\n\napp-documentation-forms button {\n  cursor: pointer;\n  padding: 4px;\n  border: none;\n  background: #17b6ed;\n  color: #fff;\n  border-radius: 4px;\n}\n\napp-plugins {\n  width: 100%;\n}\n\napp-plugins .main-content {\n  width: 100%;\n  display: flex;\n}\n\napp-plugins .main-content .main-list {\n  width: 15%;\n  border-right: 1px solid #ccc;\n  padding: 20px 40px 20px 40px;\n  overflow: auto;\n}\n\napp-plugins .main-content .main-list .list-head {\n  margin-bottom: 5px;\n}\n\napp-plugins .main-content .plugins-section {\n  width: 85%;\n  padding-left: 20px;\n  overflow: auto;\n  padding: 20px 40px 20px 40px;\n}\n\napp-plugins main {\n  height: 100%;\n  display: flex;\n  flex: 1;\n  user-select: none;\n  position: relative;\n  border-bottom: 1px solid #ccc;\n}\n\napp-container {\n  width: 100%;\n}\n\nh1,\nh2,\nh3,\nh4,\nh5,\nh6 {\n  margin-bottom: 20px;\n}\n\nh1 {\n  font-size: 26px;\n}\n\nh2 {\n  font-size: 24px;\n}\n\nh3 {\n  font-size: 22px;\n}\n\nh4 {\n  font-size: 20px;\n}\n\nh5 {\n  font-size: 18px;\n}\n\nh6 {\n  font-size: 16px;\n}\n\np {\n  font-size: 14px;\n  margin-bottom: 15px;\n  line-height: 2;\n}\n\na {\n  color: #17b6ed;\n  cursor: pointer;\n}\n\nimg {\n  width: 100%;\n}\n\nb {\n  font-weight: 700;\n}\n\n.hidden {\n  display: none !important;\n}\n\n.relative {\n  position: relative;\n}\n\n.full-width {\n  width: 100%;\n}\n\n.text-center {\n  text-align: center;\n}\n\n.attached-file {\n  display: flex;\n  height: 40px;\n  align-items: center;\n  margin: 5px 0px;\n  justify-content: space-between;\n}\n\n* {\n  font-family: 'Roboto', sans-serif;\n}\n\n.dropdown-container {\n  font-size: 12px;\n  font-weight: normal;\n}\n\n.dropdown {\n  position: absolute;\n  background: #fff;\n  border: 1px solid #ccc;\n  /* bottom: 0; */\n  top: 100%;\n  z-index: 1000;\n  width: 200px;\n  right: 0;\n  opacity: 0;\n  margin-top: 35px;\n  visibility: hidden;\n  transition-property: all;\n  transition-duration: 0.3s;\n  transition-timing-function: ease;\n  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);\n  border-radius: 4px;\n  overflow: hidden;\n}\n\n.dropdown ul li.active {\n  background: #f1f1f1;\n}\n\n.dropdown ul li a {\n  font-size: 12px;\n  padding: 10px;\n  display: block;\n}\n\n.dropdown ul li:hover {\n  background: #f1f1f1;\n}\n\n.dropdown.open {\n  opacity: 1;\n  visibility: visible;\n  margin-top: 0;\n}\n\napp-status-dropdown .dropdown-value {\n  cursor: pointer;\n  padding: 4px;\n  color: #fff;\n  border-radius: 4px;\n  background: #17b6ed;\n}\n\napp-status-dropdown .dropdown-value.done {\n  background: #5db95d;\n}\n\napp-status-dropdown .dropdown-value.in_progress {\n  background: #17b6ed;\n}\n\napp-status-dropdown .dropdown-value.feedback {\n  background: #c3c3c3;\n}\n\napp-color-dropdown .dropdown {\n  left: 0;\n  max-height: 200px;\n  padding: 5px;\n  overflow: auto;\n}\n\napp-color-dropdown .dropdown-item {\n  margin: 5px;\n  cursor: pointer;\n  border-radius: 100%;\n  transition: 0.2s all;\n}\n\napp-color-dropdown .dropdown-item.active {\n  transform: scale(1.2);\n}\n\napp-color-dropdown .dropdown-item:hover {\n  transform: scale(1.2);\n}\n\napp-color-dropdown .dropdown-item-color {\n  border-radius: 100%;\n  width: 30px;\n  height: 30px;\n}\n\napp-color-dropdown .dropdown ul {\n  display: flex;\n  justify-content: space-between;\n  flex-flow: row wrap;\n}\n\napp-color-dropdown .dropdown-value {\n  cursor: pointer;\n  width: 40px;\n  height: 40px;\n  border-radius: 100%;\n}\n\napp-assignee-dropdown .profile-menu {\n  align-items: center;\n  display: flex;\n}\n\napp-assignee-dropdown .avatar {\n  width: 30px;\n  display: flex;\n  margin-right: 10px;\n  background-size: cover !important;\n  background-position: center;\n  height: 30px;\n  border-radius: 100%;\n}\n\napp-common-dropdown {\n  display: inline-block;\n}\n\napp-common-dropdown .dropdown-value {\n  cursor: pointer;\n  padding: 4px;\n  color: #fff;\n  border-radius: 4px;\n  background: #cccccc;\n}\n\n.content--end {\n  justify-content: flex-end;\n}\n\n.content--space-between {\n  justify-content: space-between;\n}\n\n.content--center {\n  align-items: center;\n}\n\n.flex {\n  display: flex;\n}\n\n.input-file {\n  position: absolute;\n  opacity: 0;\n  width: 100%;\n  height: 100%;\n  left: 0;\n  right: 0;\n  cursor: pointer;\n}\n\n.app-container {\n  width: 1024px;\n  margin: 0 auto;\n}\n\n.app-btn {\n  border: none;\n  background: none;\n  padding: 10px 30px;\n  cursor: pointer;\n  color: white;\n  position: relative;\n  background-color: #17b6ed;\n  border-radius: 2px;\n}\n\n.app-btn.small {\n  width: 150px;\n}\n\n.app-btn input[type='file'] {\n  opacity: 0;\n  cursor: pointer;\n  height: 100%;\n  position: absolute;\n  width: 100%;\n  top: 0;\n  left: 0;\n}\n\n.app-btn:hover {\n  background-color: #46c5f1;\n}\n\nh1,\nh2,\nh3,\nh4,\nh5,\nh6 {\n  margin-bottom: 20px;\n}\n\nh1 {\n  font-size: 26px;\n}\n\nh2 {\n  font-size: 24px;\n}\n\nh3 {\n  font-size: 22px;\n}\n\nh4 {\n  font-size: 20px;\n}\n\nh5 {\n  font-size: 18px;\n}\n\nh6 {\n  font-size: 16px;\n}\n\np {\n  font-size: 14px;\n  margin-bottom: 15px;\n  line-height: 2;\n}\n\na {\n  color: #17b6ed;\n  cursor: pointer;\n}\n\nimg {\n  width: 100%;\n}\n\nb {\n  font-weight: 700;\n}\n\n.hidden {\n  display: none !important;\n}\n\n.relative {\n  position: relative;\n}\n\n.full-width {\n  width: 100%;\n}\n\n.text-center {\n  text-align: center;\n}\n\n.attached-file {\n  display: flex;\n  height: 40px;\n  align-items: center;\n  margin: 5px 0px;\n  justify-content: space-between;\n}\n\n* {\n  font-family: 'Roboto', sans-serif;\n}\n\n.app-form__row {\n  display: flex;\n  align-items: center;\n  margin-bottom: 15px;\n}\n\n.app-form__row.col-2 .app-form__label {\n  width: 48%;\n}\n\n.app-form__label {\n  display: flex;\n  flex-direction: column;\n  width: 100%;\n  position: relative;\n}\n\n.app-form__label__text {\n  margin-bottom: 5px;\n  color: #aaa;\n  font-weight: normal;\n}\n\n.app-form__subtitle {\n  position: absolute;\n  bottom: 11px;\n  left: 11px;\n}\n\n.app-form__subtitle + .app-form__label__input {\n  padding-left: 21px;\n}\n\n.app-form__label__input {\n  padding: 10px;\n  border-radius: 5px;\n  border: 1px solid #cccccc;\n}\n\n.app-form__label__textarea {\n  width: 100%;\n  padding: 10px;\n  border-radius: 5px;\n  border: 1px solid #cccccc;\n  resize: vertical;\n  max-height: 300px;\n}\n\n.app-form + .app-form {\n  margin-top: 30px;\n}\n\ninput.error {\n  border: 1px solid rgba(255, 0, 0, 0.47);\n}\n\n.modal-container {\n  position: fixed;\n  width: 100%;\n  height: 100%;\n  top: 0;\n  background: rgba(0, 0, 0, 0.5);\n  z-index: 1000;\n}\n\n.modal-container .modal {\n  position: fixed;\n  width: 40%;\n  left: 0;\n  right: 0;\n  bottom: 0;\n  top: 0;\n  background: #fff;\n  margin: auto;\n  height: 80%;\n  box-shadow: 0px 0px 20px -2px #000;\n  padding: 30px;\n  min-width: 800px;\n  border-radius: 3px;\n  overflow: auto;\n}\n\n.modal-container .modal-bottom {\n  float: right;\n}\n\n.modal-container .modal-bottom .app-btn {\n  margin-left: 10px;\n}\n\n.modal-container .modal.crop {\n  user-select: none;\n  /*.tag_frame_inner{*/\n  /*width: 550px;*/\n  /*}*/\n}\n\n.modal-container .modal.crop .tag_faded {\n  background: #000;\n  opacity: 0.7;\n  filter: alpha(opacity=70);\n  cursor: crosshair;\n  left: 0px;\n  top: 0px;\n  width: 100%;\n  height: 100%;\n  z-index: 1030;\n  position: absolute;\n}\n\n.modal-container .modal.crop .tag_frame {\n  position: absolute;\n  cursor: move;\n  z-index: 1040;\n  left: 0;\n  top: 0;\n  width: 200px;\n  height: 200px;\n  display: block;\n  overflow: hidden;\n  text-align: left;\n  direction: ltr;\n}\n\n.modal-container .modal.crop .tag_frame_resizer {\n  position: absolute;\n  background-color: #f2f2f2;\n  width: 10px;\n  height: 10px;\n  z-index: 9999;\n  opacity: 0.3;\n  transition-property: opacity;\n  -webkit-transition-duration: 0.3s;\n  transition-duration: 0.3s;\n  -webkit-transition-timing-function: ease;\n  transition-timing-function: ease;\n}\n\n.modal-container .modal.crop .tag_frame_resizer:hover {\n  opacity: 0.9;\n}\n\n.modal-container .modal.crop .j-modal__content {\n  user-select: none;\n  -moz-user-select: none;\n  -webkit-user-select: none;\n  -ms-user-select: none;\n}\n\n.modal-container .modal.crop .j-modal__preview {\n  margin: auto;\n  display: block;\n  border-radius: 100%;\n  width: 25%;\n}\n\n.modal-container .modal.crop .j-modal__crop_container {\n  position: relative;\n  margin: 0px auto;\n  font-size: 0px;\n}\n\n/* j-calendar\r\n------------------------------------------------------------------- */\n\n.j-calendar {\n  display: inline-flex;\n  flex-direction: column;\n  flex-wrap: wrap;\n  background: #fff;\n  border-bottom-left-radius: 5px;\n  border-bottom-right-radius: 5px;\n  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.4);\n  overflow: hidden;\n  left: 0;\n  top: 100%;\n  position: absolute;\n  z-index: 1;\n  font-weight: normal;\n}\n\n.j-calendar__wrap {\n  display: flex;\n}\n\n.j-calendar__item + .j-calendar__item .j-calendar__content {\n  border-left: 1px solid #d9d9d9;\n}\n\n.j-calendar__item + .j-calendar__item .j-calendar__header {\n  border-left: 1px solid #d9d9d9;\n}\n\n.j-calendar__header {\n  width: 285px;\n  height: 50px;\n  display: flex;\n  align-items: stretch;\n  justify-content: space-between;\n  font-size: 15px;\n  color: #fff;\n  background: #17b6ed;\n}\n\n.j-calendar__header__center,\n.j-calendar__header__left,\n.j-calendar__header__right {\n  display: flex;\n  align-items: center;\n  justify-content: center;\n}\n\n.j-calendar__header__left,\n.j-calendar__header__right {\n  width: 50px;\n  cursor: pointer;\n}\n\n.j-calendar__header__left:hover,\n.j-calendar__header__right:hover {\n  background: #11a2d5;\n}\n\n.j-calendar__header__empty {\n  width: 50px;\n}\n\n.j-calendar__content {\n  width: 285px;\n  padding: 10px;\n}\n\n.j-calendar__days {\n  display: flex;\n}\n\n.j-calendar__days__item {\n  width: 14.285%;\n  font-size: 13px;\n  cursor: default;\n  text-align: center;\n}\n\n.j-calendar__days__item--output {\n  color: #17b6ed;\n}\n\n.j-calendar__date {\n  display: flex;\n  flex-wrap: wrap;\n  padding-top: 5px;\n}\n\n.j-calendar__date__item {\n  display: flex;\n  align-items: center;\n  justify-content: center;\n  height: 30px;\n  width: 14.285%;\n  font-size: 13px;\n  position: relative;\n}\n\n.j-calendar__date__item.empty {\n  opacity: 0;\n  cursor: default !important;\n}\n\n.j-calendar__date__item:before {\n  content: '';\n  width: 26px;\n  height: 26px;\n  top: 0;\n  left: 0;\n  right: 0;\n  bottom: 0;\n  margin: auto;\n  position: absolute;\n  border-radius: 100%;\n}\n\n.j-calendar__date__item--active {\n  color: #fff;\n  cursor: pointer;\n}\n\n.j-calendar__date__item--active:before {\n  background: #17b6ed;\n}\n\n.j-calendar__date__item--circle {\n  cursor: pointer;\n}\n\n.j-calendar__date__item--circle:before {\n  border: 1px solid #17b6ed;\n}\n\n.j-calendar__date__item--inactive {\n  cursor: default !important;\n  color: #b7b7b7;\n}\n\n.j-calendar__date__item--empty {\n  cursor: default;\n}\n\n.j-calendar__date__item:not(.j-calendar__date__item--empty):not(.j-calendar__date__item--active):not(.j-calendar__date__item--circle):hover {\n  color: #17b6ed;\n  cursor: pointer;\n}\n\n.j-calendar__date__item:not(.j-calendar__date__item--empty):not(.j-calendar__date__item--active):not(.j-calendar__date__item--circle):hover:before {\n  background: #ebecee;\n}\n\n.j-calendar__date__item span {\n  position: relative;\n}\n\n.j-calendar__bottom {\n  margin: 15px 0;\n  text-align: center;\n}\n\n/*!\r\n * animate.css -http://daneden.me/animate\r\n * Version - 3.5.2\r\n * Licensed under the MIT license - http://opensource.org/licenses/MIT\r\n *\r\n * Copyright (c) 2017 Daniel Eden\r\n */\n\n.animated {\n  animation-duration: 1s;\n  animation-fill-mode: both;\n}\n\n.animated.infinite {\n  animation-iteration-count: infinite;\n}\n\n.animated.hinge {\n  animation-duration: 2s;\n}\n\n.animated.flipOutX,\n.animated.flipOutY,\n.animated.bounceIn,\n.animated.bounceOut {\n  animation-duration: .75s;\n}\n\n@keyframes bounce {\n  from, 20%, 53%, 80%, to {\n    animation-timing-function: cubic-bezier(0.215, 0.61, 0.355, 1);\n    transform: translate3d(0, 0, 0);\n  }\n\n  40%, 43% {\n    animation-timing-function: cubic-bezier(0.755, 0.05, 0.855, 0.06);\n    transform: translate3d(0, -30px, 0);\n  }\n\n  70% {\n    animation-timing-function: cubic-bezier(0.755, 0.05, 0.855, 0.06);\n    transform: translate3d(0, -15px, 0);\n  }\n\n  90% {\n    transform: translate3d(0, -4px, 0);\n  }\n}\n\n.bounce {\n  animation-name: bounce;\n  transform-origin: center bottom;\n}\n\n@keyframes flash {\n  from, 50%, to {\n    opacity: 1;\n  }\n\n  25%, 75% {\n    opacity: 0;\n  }\n}\n\n.flash {\n  animation-name: flash;\n}\n\n/* originally authored by Nick Pettit - https://github.com/nickpettit/glide */\n\n@keyframes pulse {\n  from {\n    transform: scale3d(1, 1, 1);\n  }\n\n  50% {\n    transform: scale3d(1.05, 1.05, 1.05);\n  }\n\n  to {\n    transform: scale3d(1, 1, 1);\n  }\n}\n\n.pulse {\n  animation-name: pulse;\n}\n\n@keyframes rubberBand {\n  from {\n    transform: scale3d(1, 1, 1);\n  }\n\n  30% {\n    transform: scale3d(1.25, 0.75, 1);\n  }\n\n  40% {\n    transform: scale3d(0.75, 1.25, 1);\n  }\n\n  50% {\n    transform: scale3d(1.15, 0.85, 1);\n  }\n\n  65% {\n    transform: scale3d(0.95, 1.05, 1);\n  }\n\n  75% {\n    transform: scale3d(1.05, 0.95, 1);\n  }\n\n  to {\n    transform: scale3d(1, 1, 1);\n  }\n}\n\n.rubberBand {\n  animation-name: rubberBand;\n}\n\n@keyframes shake {\n  from, to {\n    transform: translate3d(0, 0, 0);\n  }\n\n  10%, 30%, 50%, 70%, 90% {\n    transform: translate3d(-10px, 0, 0);\n  }\n\n  20%, 40%, 60%, 80% {\n    transform: translate3d(10px, 0, 0);\n  }\n}\n\n.shake {\n  animation-name: shake;\n}\n\n@keyframes headShake {\n  0% {\n    transform: translateX(0);\n  }\n\n  6.5% {\n    transform: translateX(-6px) rotateY(-9deg);\n  }\n\n  18.5% {\n    transform: translateX(5px) rotateY(7deg);\n  }\n\n  31.5% {\n    transform: translateX(-3px) rotateY(-5deg);\n  }\n\n  43.5% {\n    transform: translateX(2px) rotateY(3deg);\n  }\n\n  50% {\n    transform: translateX(0);\n  }\n}\n\n.headShake {\n  animation-timing-function: ease-in-out;\n  animation-name: headShake;\n}\n\n@keyframes swing {\n  20% {\n    transform: rotate3d(0, 0, 1, 15deg);\n  }\n\n  40% {\n    transform: rotate3d(0, 0, 1, -10deg);\n  }\n\n  60% {\n    transform: rotate3d(0, 0, 1, 5deg);\n  }\n\n  80% {\n    transform: rotate3d(0, 0, 1, -5deg);\n  }\n\n  to {\n    transform: rotate3d(0, 0, 1, 0deg);\n  }\n}\n\n.swing {\n  transform-origin: top center;\n  animation-name: swing;\n}\n\n@keyframes tada {\n  from {\n    transform: scale3d(1, 1, 1);\n  }\n\n  10%, 20% {\n    transform: scale3d(0.9, 0.9, 0.9) rotate3d(0, 0, 1, -3deg);\n  }\n\n  30%, 50%, 70%, 90% {\n    transform: scale3d(1.1, 1.1, 1.1) rotate3d(0, 0, 1, 3deg);\n  }\n\n  40%, 60%, 80% {\n    transform: scale3d(1.1, 1.1, 1.1) rotate3d(0, 0, 1, -3deg);\n  }\n\n  to {\n    transform: scale3d(1, 1, 1);\n  }\n}\n\n.tada {\n  animation-name: tada;\n}\n\n/* originally authored by Nick Pettit - https://github.com/nickpettit/glide */\n\n@keyframes wobble {\n  from {\n    transform: none;\n  }\n\n  15% {\n    transform: translate3d(-25%, 0, 0) rotate3d(0, 0, 1, -5deg);\n  }\n\n  30% {\n    transform: translate3d(20%, 0, 0) rotate3d(0, 0, 1, 3deg);\n  }\n\n  45% {\n    transform: translate3d(-15%, 0, 0) rotate3d(0, 0, 1, -3deg);\n  }\n\n  60% {\n    transform: translate3d(10%, 0, 0) rotate3d(0, 0, 1, 2deg);\n  }\n\n  75% {\n    transform: translate3d(-5%, 0, 0) rotate3d(0, 0, 1, -1deg);\n  }\n\n  to {\n    transform: none;\n  }\n}\n\n.wobble {\n  animation-name: wobble;\n}\n\n@keyframes jello {\n  from, 11.1%, to {\n    transform: none;\n  }\n\n  22.2% {\n    transform: skewX(-12.5deg) skewY(-12.5deg);\n  }\n\n  33.3% {\n    transform: skewX(6.25deg) skewY(6.25deg);\n  }\n\n  44.4% {\n    transform: skewX(-3.125deg) skewY(-3.125deg);\n  }\n\n  55.5% {\n    transform: skewX(1.5625deg) skewY(1.5625deg);\n  }\n\n  66.6% {\n    transform: skewX(-0.78125deg) skewY(-0.78125deg);\n  }\n\n  77.7% {\n    transform: skewX(0.39063deg) skewY(0.39063deg);\n  }\n\n  88.8% {\n    transform: skewX(-0.19531deg) skewY(-0.19531deg);\n  }\n}\n\n.jello {\n  animation-name: jello;\n  transform-origin: center;\n}\n\n@keyframes bounceIn {\n  from, 20%, 40%, 60%, 80%, to {\n    animation-timing-function: cubic-bezier(0.215, 0.61, 0.355, 1);\n  }\n\n  0% {\n    opacity: 0;\n    transform: scale3d(0.3, 0.3, 0.3);\n  }\n\n  20% {\n    transform: scale3d(1.1, 1.1, 1.1);\n  }\n\n  40% {\n    transform: scale3d(0.9, 0.9, 0.9);\n  }\n\n  60% {\n    opacity: 1;\n    transform: scale3d(1.03, 1.03, 1.03);\n  }\n\n  80% {\n    transform: scale3d(0.97, 0.97, 0.97);\n  }\n\n  to {\n    opacity: 1;\n    transform: scale3d(1, 1, 1);\n  }\n}\n\n.bounceIn {\n  animation-name: bounceIn;\n}\n\n@keyframes bounceInDown {\n  from, 60%, 75%, 90%, to {\n    animation-timing-function: cubic-bezier(0.215, 0.61, 0.355, 1);\n  }\n\n  0% {\n    opacity: 0;\n    transform: translate3d(0, -3000px, 0);\n  }\n\n  60% {\n    opacity: 1;\n    transform: translate3d(0, 25px, 0);\n  }\n\n  75% {\n    transform: translate3d(0, -10px, 0);\n  }\n\n  90% {\n    transform: translate3d(0, 5px, 0);\n  }\n\n  to {\n    transform: none;\n  }\n}\n\n.bounceInDown {\n  animation-name: bounceInDown;\n}\n\n@keyframes bounceInLeft {\n  from, 60%, 75%, 90%, to {\n    animation-timing-function: cubic-bezier(0.215, 0.61, 0.355, 1);\n  }\n\n  0% {\n    opacity: 0;\n    transform: translate3d(-3000px, 0, 0);\n  }\n\n  60% {\n    opacity: 1;\n    transform: translate3d(25px, 0, 0);\n  }\n\n  75% {\n    transform: translate3d(-10px, 0, 0);\n  }\n\n  90% {\n    transform: translate3d(5px, 0, 0);\n  }\n\n  to {\n    transform: none;\n  }\n}\n\n.bounceInLeft {\n  animation-name: bounceInLeft;\n}\n\n@keyframes bounceInRight {\n  from, 60%, 75%, 90%, to {\n    animation-timing-function: cubic-bezier(0.215, 0.61, 0.355, 1);\n  }\n\n  from {\n    opacity: 0;\n    transform: translate3d(3000px, 0, 0);\n  }\n\n  60% {\n    opacity: 1;\n    transform: translate3d(-25px, 0, 0);\n  }\n\n  75% {\n    transform: translate3d(10px, 0, 0);\n  }\n\n  90% {\n    transform: translate3d(-5px, 0, 0);\n  }\n\n  to {\n    transform: none;\n  }\n}\n\n.bounceInRight {\n  animation-name: bounceInRight;\n}\n\n@keyframes bounceInUp {\n  from, 60%, 75%, 90%, to {\n    animation-timing-function: cubic-bezier(0.215, 0.61, 0.355, 1);\n  }\n\n  from {\n    opacity: 0;\n    transform: translate3d(0, 3000px, 0);\n  }\n\n  60% {\n    opacity: 1;\n    transform: translate3d(0, -20px, 0);\n  }\n\n  75% {\n    transform: translate3d(0, 10px, 0);\n  }\n\n  90% {\n    transform: translate3d(0, -5px, 0);\n  }\n\n  to {\n    transform: translate3d(0, 0, 0);\n  }\n}\n\n.bounceInUp {\n  animation-name: bounceInUp;\n}\n\n@keyframes bounceOut {\n  20% {\n    transform: scale3d(0.9, 0.9, 0.9);\n  }\n\n  50%, 55% {\n    opacity: 1;\n    transform: scale3d(1.1, 1.1, 1.1);\n  }\n\n  to {\n    opacity: 0;\n    transform: scale3d(0.3, 0.3, 0.3);\n  }\n}\n\n.bounceOut {\n  animation-name: bounceOut;\n}\n\n@keyframes bounceOutDown {\n  20% {\n    transform: translate3d(0, 10px, 0);\n  }\n\n  40%, 45% {\n    opacity: 1;\n    transform: translate3d(0, -20px, 0);\n  }\n\n  to {\n    opacity: 0;\n    transform: translate3d(0, 2000px, 0);\n  }\n}\n\n.bounceOutDown {\n  animation-name: bounceOutDown;\n}\n\n@keyframes bounceOutLeft {\n  20% {\n    opacity: 1;\n    transform: translate3d(20px, 0, 0);\n  }\n\n  to {\n    opacity: 0;\n    transform: translate3d(-2000px, 0, 0);\n  }\n}\n\n.bounceOutLeft {\n  animation-name: bounceOutLeft;\n}\n\n@keyframes bounceOutRight {\n  20% {\n    opacity: 1;\n    transform: translate3d(-20px, 0, 0);\n  }\n\n  to {\n    opacity: 0;\n    transform: translate3d(2000px, 0, 0);\n  }\n}\n\n.bounceOutRight {\n  animation-name: bounceOutRight;\n}\n\n@keyframes bounceOutUp {\n  20% {\n    transform: translate3d(0, -10px, 0);\n  }\n\n  40%, 45% {\n    opacity: 1;\n    transform: translate3d(0, 20px, 0);\n  }\n\n  to {\n    opacity: 0;\n    transform: translate3d(0, -2000px, 0);\n  }\n}\n\n.bounceOutUp {\n  animation-name: bounceOutUp;\n}\n\n@keyframes fadeIn {\n  from {\n    opacity: 0;\n  }\n\n  to {\n    opacity: 1;\n  }\n}\n\n.fadeIn {\n  animation-name: fadeIn;\n}\n\n@keyframes fadeInDown {\n  from {\n    opacity: 0;\n    transform: translate3d(0, -100%, 0);\n  }\n\n  to {\n    opacity: 1;\n    transform: none;\n  }\n}\n\n.fadeInDown {\n  animation-name: fadeInDown;\n}\n\n@keyframes fadeInDownBig {\n  from {\n    opacity: 0;\n    transform: translate3d(0, -2000px, 0);\n  }\n\n  to {\n    opacity: 1;\n    transform: none;\n  }\n}\n\n.fadeInDownBig {\n  animation-name: fadeInDownBig;\n}\n\n@keyframes fadeInLeft {\n  from {\n    opacity: 0;\n    transform: translate3d(-100%, 0, 0);\n  }\n\n  to {\n    opacity: 1;\n    transform: none;\n  }\n}\n\n.fadeInLeft {\n  animation-name: fadeInLeft;\n}\n\n@keyframes fadeInLeftBig {\n  from {\n    opacity: 0;\n    transform: translate3d(-2000px, 0, 0);\n  }\n\n  to {\n    opacity: 1;\n    transform: none;\n  }\n}\n\n.fadeInLeftBig {\n  animation-name: fadeInLeftBig;\n}\n\n@keyframes fadeInRight {\n  from {\n    opacity: 0;\n    transform: translate3d(100%, 0, 0);\n  }\n\n  to {\n    opacity: 1;\n    transform: none;\n  }\n}\n\n.fadeInRight {\n  animation-name: fadeInRight;\n}\n\n@keyframes fadeInRightBig {\n  from {\n    opacity: 0;\n    transform: translate3d(2000px, 0, 0);\n  }\n\n  to {\n    opacity: 1;\n    transform: none;\n  }\n}\n\n.fadeInRightBig {\n  animation-name: fadeInRightBig;\n}\n\n@keyframes fadeInUp {\n  from {\n    opacity: 0;\n    transform: translate3d(0, 100%, 0);\n  }\n\n  to {\n    opacity: 1;\n    transform: none;\n  }\n}\n\n.fadeInUp {\n  animation-name: fadeInUp;\n}\n\n@keyframes fadeInUpBig {\n  from {\n    opacity: 0;\n    transform: translate3d(0, 2000px, 0);\n  }\n\n  to {\n    opacity: 1;\n    transform: none;\n  }\n}\n\n.fadeInUpBig {\n  animation-name: fadeInUpBig;\n}\n\n@keyframes fadeOut {\n  from {\n    opacity: 1;\n  }\n\n  to {\n    opacity: 0;\n  }\n}\n\n.fadeOut {\n  animation-name: fadeOut;\n}\n\n@keyframes fadeOutDown {\n  from {\n    opacity: 1;\n  }\n\n  to {\n    opacity: 0;\n    transform: translate3d(0, 100%, 0);\n  }\n}\n\n.fadeOutDown {\n  animation-name: fadeOutDown;\n}\n\n@keyframes fadeOutDownBig {\n  from {\n    opacity: 1;\n  }\n\n  to {\n    opacity: 0;\n    transform: translate3d(0, 2000px, 0);\n  }\n}\n\n.fadeOutDownBig {\n  animation-name: fadeOutDownBig;\n}\n\n@keyframes fadeOutLeft {\n  from {\n    opacity: 1;\n  }\n\n  to {\n    opacity: 0;\n    transform: translate3d(-100%, 0, 0);\n  }\n}\n\n.fadeOutLeft {\n  animation-name: fadeOutLeft;\n}\n\n@keyframes fadeOutLeftBig {\n  from {\n    opacity: 1;\n  }\n\n  to {\n    opacity: 0;\n    transform: translate3d(-2000px, 0, 0);\n  }\n}\n\n.fadeOutLeftBig {\n  animation-name: fadeOutLeftBig;\n}\n\n@keyframes fadeOutRight {\n  from {\n    opacity: 1;\n  }\n\n  to {\n    opacity: 0;\n    transform: translate3d(100%, 0, 0);\n  }\n}\n\n.fadeOutRight {\n  animation-name: fadeOutRight;\n}\n\n@keyframes fadeOutRightBig {\n  from {\n    opacity: 1;\n  }\n\n  to {\n    opacity: 0;\n    transform: translate3d(2000px, 0, 0);\n  }\n}\n\n.fadeOutRightBig {\n  animation-name: fadeOutRightBig;\n}\n\n@keyframes fadeOutUp {\n  from {\n    opacity: 1;\n  }\n\n  to {\n    opacity: 0;\n    transform: translate3d(0, -100%, 0);\n  }\n}\n\n.fadeOutUp {\n  animation-name: fadeOutUp;\n}\n\n@keyframes fadeOutUpBig {\n  from {\n    opacity: 1;\n  }\n\n  to {\n    opacity: 0;\n    transform: translate3d(0, -2000px, 0);\n  }\n}\n\n.fadeOutUpBig {\n  animation-name: fadeOutUpBig;\n}\n\n@keyframes flip {\n  from {\n    transform: perspective(400px) rotate3d(0, 1, 0, -360deg);\n    animation-timing-function: ease-out;\n  }\n\n  40% {\n    transform: perspective(400px) translate3d(0, 0, 150px) rotate3d(0, 1, 0, -190deg);\n    animation-timing-function: ease-out;\n  }\n\n  50% {\n    transform: perspective(400px) translate3d(0, 0, 150px) rotate3d(0, 1, 0, -170deg);\n    animation-timing-function: ease-in;\n  }\n\n  80% {\n    transform: perspective(400px) scale3d(0.95, 0.95, 0.95);\n    animation-timing-function: ease-in;\n  }\n\n  to {\n    transform: perspective(400px);\n    animation-timing-function: ease-in;\n  }\n}\n\n.animated.flip {\n  -webkit-backface-visibility: visible;\n  backface-visibility: visible;\n  animation-name: flip;\n}\n\n@keyframes flipInX {\n  from {\n    transform: perspective(400px) rotate3d(1, 0, 0, 90deg);\n    animation-timing-function: ease-in;\n    opacity: 0;\n  }\n\n  40% {\n    transform: perspective(400px) rotate3d(1, 0, 0, -20deg);\n    animation-timing-function: ease-in;\n  }\n\n  60% {\n    transform: perspective(400px) rotate3d(1, 0, 0, 10deg);\n    opacity: 1;\n  }\n\n  80% {\n    transform: perspective(400px) rotate3d(1, 0, 0, -5deg);\n  }\n\n  to {\n    transform: perspective(400px);\n  }\n}\n\n.flipInX {\n  -webkit-backface-visibility: visible !important;\n  backface-visibility: visible !important;\n  animation-name: flipInX;\n}\n\n@keyframes flipInY {\n  from {\n    transform: perspective(400px) rotate3d(0, 1, 0, 90deg);\n    animation-timing-function: ease-in;\n    opacity: 0;\n  }\n\n  40% {\n    transform: perspective(400px) rotate3d(0, 1, 0, -20deg);\n    animation-timing-function: ease-in;\n  }\n\n  60% {\n    transform: perspective(400px) rotate3d(0, 1, 0, 10deg);\n    opacity: 1;\n  }\n\n  80% {\n    transform: perspective(400px) rotate3d(0, 1, 0, -5deg);\n  }\n\n  to {\n    transform: perspective(400px);\n  }\n}\n\n.flipInY {\n  -webkit-backface-visibility: visible !important;\n  backface-visibility: visible !important;\n  animation-name: flipInY;\n}\n\n@keyframes flipOutX {\n  from {\n    transform: perspective(400px);\n  }\n\n  30% {\n    transform: perspective(400px) rotate3d(1, 0, 0, -20deg);\n    opacity: 1;\n  }\n\n  to {\n    transform: perspective(400px) rotate3d(1, 0, 0, 90deg);\n    opacity: 0;\n  }\n}\n\n.flipOutX {\n  animation-name: flipOutX;\n  -webkit-backface-visibility: visible !important;\n  backface-visibility: visible !important;\n}\n\n@keyframes flipOutY {\n  from {\n    transform: perspective(400px);\n  }\n\n  30% {\n    transform: perspective(400px) rotate3d(0, 1, 0, -15deg);\n    opacity: 1;\n  }\n\n  to {\n    transform: perspective(400px) rotate3d(0, 1, 0, 90deg);\n    opacity: 0;\n  }\n}\n\n.flipOutY {\n  -webkit-backface-visibility: visible !important;\n  backface-visibility: visible !important;\n  animation-name: flipOutY;\n}\n\n@keyframes lightSpeedIn {\n  from {\n    transform: translate3d(100%, 0, 0) skewX(-30deg);\n    opacity: 0;\n  }\n\n  60% {\n    transform: skewX(20deg);\n    opacity: 1;\n  }\n\n  80% {\n    transform: skewX(-5deg);\n    opacity: 1;\n  }\n\n  to {\n    transform: none;\n    opacity: 1;\n  }\n}\n\n.lightSpeedIn {\n  animation-name: lightSpeedIn;\n  animation-timing-function: ease-out;\n}\n\n@keyframes lightSpeedOut {\n  from {\n    opacity: 1;\n  }\n\n  to {\n    transform: translate3d(100%, 0, 0) skewX(30deg);\n    opacity: 0;\n  }\n}\n\n.lightSpeedOut {\n  animation-name: lightSpeedOut;\n  animation-timing-function: ease-in;\n}\n\n@keyframes rotateIn {\n  from {\n    transform-origin: center;\n    transform: rotate3d(0, 0, 1, -200deg);\n    opacity: 0;\n  }\n\n  to {\n    transform-origin: center;\n    transform: none;\n    opacity: 1;\n  }\n}\n\n.rotateIn {\n  animation-name: rotateIn;\n}\n\n@keyframes rotateInDownLeft {\n  from {\n    transform-origin: left bottom;\n    transform: rotate3d(0, 0, 1, -45deg);\n    opacity: 0;\n  }\n\n  to {\n    transform-origin: left bottom;\n    transform: none;\n    opacity: 1;\n  }\n}\n\n.rotateInDownLeft {\n  animation-name: rotateInDownLeft;\n}\n\n@keyframes rotateInDownRight {\n  from {\n    transform-origin: right bottom;\n    transform: rotate3d(0, 0, 1, 45deg);\n    opacity: 0;\n  }\n\n  to {\n    transform-origin: right bottom;\n    transform: none;\n    opacity: 1;\n  }\n}\n\n.rotateInDownRight {\n  animation-name: rotateInDownRight;\n}\n\n@keyframes rotateInUpLeft {\n  from {\n    transform-origin: left bottom;\n    transform: rotate3d(0, 0, 1, 45deg);\n    opacity: 0;\n  }\n\n  to {\n    transform-origin: left bottom;\n    transform: none;\n    opacity: 1;\n  }\n}\n\n.rotateInUpLeft {\n  animation-name: rotateInUpLeft;\n}\n\n@keyframes rotateInUpRight {\n  from {\n    transform-origin: right bottom;\n    transform: rotate3d(0, 0, 1, -90deg);\n    opacity: 0;\n  }\n\n  to {\n    transform-origin: right bottom;\n    transform: none;\n    opacity: 1;\n  }\n}\n\n.rotateInUpRight {\n  animation-name: rotateInUpRight;\n}\n\n@keyframes rotateOut {\n  from {\n    transform-origin: center;\n    opacity: 1;\n  }\n\n  to {\n    transform-origin: center;\n    transform: rotate3d(0, 0, 1, 200deg);\n    opacity: 0;\n  }\n}\n\n.rotateOut {\n  animation-name: rotateOut;\n}\n\n@keyframes rotateOutDownLeft {\n  from {\n    transform-origin: left bottom;\n    opacity: 1;\n  }\n\n  to {\n    transform-origin: left bottom;\n    transform: rotate3d(0, 0, 1, 45deg);\n    opacity: 0;\n  }\n}\n\n.rotateOutDownLeft {\n  animation-name: rotateOutDownLeft;\n}\n\n@keyframes rotateOutDownRight {\n  from {\n    transform-origin: right bottom;\n    opacity: 1;\n  }\n\n  to {\n    transform-origin: right bottom;\n    transform: rotate3d(0, 0, 1, -45deg);\n    opacity: 0;\n  }\n}\n\n.rotateOutDownRight {\n  animation-name: rotateOutDownRight;\n}\n\n@keyframes rotateOutUpLeft {\n  from {\n    transform-origin: left bottom;\n    opacity: 1;\n  }\n\n  to {\n    transform-origin: left bottom;\n    transform: rotate3d(0, 0, 1, -45deg);\n    opacity: 0;\n  }\n}\n\n.rotateOutUpLeft {\n  animation-name: rotateOutUpLeft;\n}\n\n@keyframes rotateOutUpRight {\n  from {\n    transform-origin: right bottom;\n    opacity: 1;\n  }\n\n  to {\n    transform-origin: right bottom;\n    transform: rotate3d(0, 0, 1, 90deg);\n    opacity: 0;\n  }\n}\n\n.rotateOutUpRight {\n  animation-name: rotateOutUpRight;\n}\n\n@keyframes hinge {\n  0% {\n    transform-origin: top left;\n    animation-timing-function: ease-in-out;\n  }\n\n  20%, 60% {\n    transform: rotate3d(0, 0, 1, 80deg);\n    transform-origin: top left;\n    animation-timing-function: ease-in-out;\n  }\n\n  40%, 80% {\n    transform: rotate3d(0, 0, 1, 60deg);\n    transform-origin: top left;\n    animation-timing-function: ease-in-out;\n    opacity: 1;\n  }\n\n  to {\n    transform: translate3d(0, 700px, 0);\n    opacity: 0;\n  }\n}\n\n.hinge {\n  animation-name: hinge;\n}\n\n@keyframes jackInTheBox {\n  from {\n    opacity: 0;\n    transform: scale(0.1) rotate(30deg);\n    transform-origin: center bottom;\n  }\n\n  50% {\n    transform: rotate(-10deg);\n  }\n\n  70% {\n    transform: rotate(3deg);\n  }\n\n  to {\n    opacity: 1;\n    transform: scale(1);\n  }\n}\n\n.jackInTheBox {\n  animation-name: jackInTheBox;\n}\n\n/* originally authored by Nick Pettit - https://github.com/nickpettit/glide */\n\n@keyframes rollIn {\n  from {\n    opacity: 0;\n    transform: translate3d(-100%, 0, 0) rotate3d(0, 0, 1, -120deg);\n  }\n\n  to {\n    opacity: 1;\n    transform: none;\n  }\n}\n\n.rollIn {\n  animation-name: rollIn;\n}\n\n/* originally authored by Nick Pettit - https://github.com/nickpettit/glide */\n\n@keyframes rollOut {\n  from {\n    opacity: 1;\n  }\n\n  to {\n    opacity: 0;\n    transform: translate3d(100%, 0, 0) rotate3d(0, 0, 1, 120deg);\n  }\n}\n\n.rollOut {\n  animation-name: rollOut;\n}\n\n@keyframes zoomIn {\n  from {\n    opacity: 0;\n    transform: scale3d(0.3, 0.3, 0.3);\n  }\n\n  50% {\n    opacity: 1;\n  }\n}\n\n.zoomIn {\n  animation-name: zoomIn;\n}\n\n@keyframes zoomInDown {\n  from {\n    opacity: 0;\n    transform: scale3d(0.1, 0.1, 0.1) translate3d(0, -1000px, 0);\n    animation-timing-function: cubic-bezier(0.55, 0.055, 0.675, 0.19);\n  }\n\n  60% {\n    opacity: 1;\n    transform: scale3d(0.475, 0.475, 0.475) translate3d(0, 60px, 0);\n    animation-timing-function: cubic-bezier(0.175, 0.885, 0.32, 1);\n  }\n}\n\n.zoomInDown {\n  animation-name: zoomInDown;\n}\n\n@keyframes zoomInLeft {\n  from {\n    opacity: 0;\n    transform: scale3d(0.1, 0.1, 0.1) translate3d(-1000px, 0, 0);\n    animation-timing-function: cubic-bezier(0.55, 0.055, 0.675, 0.19);\n  }\n\n  60% {\n    opacity: 1;\n    transform: scale3d(0.475, 0.475, 0.475) translate3d(10px, 0, 0);\n    animation-timing-function: cubic-bezier(0.175, 0.885, 0.32, 1);\n  }\n}\n\n.zoomInLeft {\n  animation-name: zoomInLeft;\n}\n\n@keyframes zoomInRight {\n  from {\n    opacity: 0;\n    transform: scale3d(0.1, 0.1, 0.1) translate3d(1000px, 0, 0);\n    animation-timing-function: cubic-bezier(0.55, 0.055, 0.675, 0.19);\n  }\n\n  60% {\n    opacity: 1;\n    transform: scale3d(0.475, 0.475, 0.475) translate3d(-10px, 0, 0);\n    animation-timing-function: cubic-bezier(0.175, 0.885, 0.32, 1);\n  }\n}\n\n.zoomInRight {\n  animation-name: zoomInRight;\n}\n\n@keyframes zoomInUp {\n  from {\n    opacity: 0;\n    transform: scale3d(0.1, 0.1, 0.1) translate3d(0, 1000px, 0);\n    animation-timing-function: cubic-bezier(0.55, 0.055, 0.675, 0.19);\n  }\n\n  60% {\n    opacity: 1;\n    transform: scale3d(0.475, 0.475, 0.475) translate3d(0, -60px, 0);\n    animation-timing-function: cubic-bezier(0.175, 0.885, 0.32, 1);\n  }\n}\n\n.zoomInUp {\n  animation-name: zoomInUp;\n}\n\n@keyframes zoomOut {\n  from {\n    opacity: 1;\n  }\n\n  50% {\n    opacity: 0;\n    transform: scale3d(0.3, 0.3, 0.3);\n  }\n\n  to {\n    opacity: 0;\n  }\n}\n\n.zoomOut {\n  animation-name: zoomOut;\n}\n\n@keyframes zoomOutDown {\n  40% {\n    opacity: 1;\n    transform: scale3d(0.475, 0.475, 0.475) translate3d(0, -60px, 0);\n    animation-timing-function: cubic-bezier(0.55, 0.055, 0.675, 0.19);\n  }\n\n  to {\n    opacity: 0;\n    transform: scale3d(0.1, 0.1, 0.1) translate3d(0, 2000px, 0);\n    transform-origin: center bottom;\n    animation-timing-function: cubic-bezier(0.175, 0.885, 0.32, 1);\n  }\n}\n\n.zoomOutDown {\n  animation-name: zoomOutDown;\n}\n\n@keyframes zoomOutLeft {\n  40% {\n    opacity: 1;\n    transform: scale3d(0.475, 0.475, 0.475) translate3d(42px, 0, 0);\n  }\n\n  to {\n    opacity: 0;\n    transform: scale(0.1) translate3d(-2000px, 0, 0);\n    transform-origin: left center;\n  }\n}\n\n.zoomOutLeft {\n  animation-name: zoomOutLeft;\n}\n\n@keyframes zoomOutRight {\n  40% {\n    opacity: 1;\n    transform: scale3d(0.475, 0.475, 0.475) translate3d(-42px, 0, 0);\n  }\n\n  to {\n    opacity: 0;\n    transform: scale(0.1) translate3d(2000px, 0, 0);\n    transform-origin: right center;\n  }\n}\n\n.zoomOutRight {\n  animation-name: zoomOutRight;\n}\n\n@keyframes zoomOutUp {\n  40% {\n    opacity: 1;\n    transform: scale3d(0.475, 0.475, 0.475) translate3d(0, 60px, 0);\n    animation-timing-function: cubic-bezier(0.55, 0.055, 0.675, 0.19);\n  }\n\n  to {\n    opacity: 0;\n    transform: scale3d(0.1, 0.1, 0.1) translate3d(0, -2000px, 0);\n    transform-origin: center bottom;\n    animation-timing-function: cubic-bezier(0.175, 0.885, 0.32, 1);\n  }\n}\n\n.zoomOutUp {\n  animation-name: zoomOutUp;\n}\n\n@keyframes slideInDown {\n  from {\n    transform: translate3d(0, -100%, 0);\n    visibility: visible;\n  }\n\n  to {\n    transform: translate3d(0, 0, 0);\n  }\n}\n\n.slideInDown {\n  animation-name: slideInDown;\n}\n\n@keyframes slideInLeft {\n  from {\n    transform: translate3d(-100%, 0, 0);\n    visibility: visible;\n  }\n\n  to {\n    transform: translate3d(0, 0, 0);\n  }\n}\n\n.slideInLeft {\n  animation-name: slideInLeft;\n}\n\n@keyframes slideInRight {\n  from {\n    transform: translate3d(100%, 0, 0);\n    visibility: visible;\n  }\n\n  to {\n    transform: translate3d(0, 0, 0);\n  }\n}\n\n.slideInRight {\n  animation-name: slideInRight;\n}\n\n@keyframes slideInUp {\n  from {\n    transform: translate3d(0, 100%, 0);\n    visibility: visible;\n  }\n\n  to {\n    transform: translate3d(0, 0, 0);\n  }\n}\n\n.slideInUp {\n  animation-name: slideInUp;\n}\n\n@keyframes slideOutDown {\n  from {\n    transform: translate3d(0, 0, 0);\n  }\n\n  to {\n    visibility: hidden;\n    transform: translate3d(0, 100%, 0);\n  }\n}\n\n.slideOutDown {\n  animation-name: slideOutDown;\n}\n\n@keyframes slideOutLeft {\n  from {\n    transform: translate3d(0, 0, 0);\n  }\n\n  to {\n    visibility: hidden;\n    transform: translate3d(-100%, 0, 0);\n  }\n}\n\n.slideOutLeft {\n  animation-name: slideOutLeft;\n}\n\n@keyframes slideOutRight {\n  from {\n    transform: translate3d(0, 0, 0);\n  }\n\n  to {\n    visibility: hidden;\n    transform: translate3d(100%, 0, 0);\n  }\n}\n\n.slideOutRight {\n  animation-name: slideOutRight;\n}\n\n@keyframes slideOutUp {\n  from {\n    transform: translate3d(0, 0, 0);\n  }\n\n  to {\n    visibility: hidden;\n    transform: translate3d(0, -100%, 0);\n  }\n}\n\n.slideOutUp {\n  animation-name: slideOutUp;\n}", ""]);
+	exports.push([module.id, ".content--end {\n  justify-content: flex-end;\n}\n\n.content--space-between {\n  justify-content: space-between;\n}\n\n.content--center {\n  align-items: center;\n}\n\n.flex {\n  display: flex;\n}\n\n.input-file {\n  position: absolute;\n  opacity: 0;\n  width: 100%;\n  height: 100%;\n  left: 0;\n  right: 0;\n  cursor: pointer;\n}\n\n.app-container {\n  width: 1024px;\n  margin: 0 auto;\n}\n\n.app-btn {\n  border: none;\n  background: none;\n  padding: 10px 30px;\n  cursor: pointer;\n  color: white;\n  position: relative;\n  background-color: #17b6ed;\n  border-radius: 2px;\n}\n\n.app-btn.small {\n  width: 150px;\n}\n\n.app-btn input[type='file'] {\n  opacity: 0;\n  cursor: pointer;\n  height: 100%;\n  position: absolute;\n  width: 100%;\n  top: 0;\n  left: 0;\n}\n\n.app-btn:hover {\n  background-color: #46c5f1;\n}\n\nheader {\n  height: 60px;\n  border-bottom: 1px solid #ccc;\n  padding: 10px;\n  background-color: #ffffff;\n}\n\nheader .logo {\n  float: left;\n}\n\nheader .logo img {\n  width: auto;\n  height: 39px;\n}\n\nheader .logo .gantt--main-menu-item {\n  /*padding: 0 $step * 8 0 0;*/\n  height: 39px;\n  display: flex;\n  align-items: center;\n  font-size: 24px;\n  font-weight: bold;\n}\n\nheader .gantt--main-menu {\n  display: flex;\n  height: 100%;\n  float: left;\n  align-items: center;\n}\n\nheader .gantt--main-menu .gantt--main-menu-item {\n  color: #191919;\n  position: relative;\n}\n\nheader .gantt--main-menu .gantt--main-menu-item.active:after {\n  content: '';\n  position: absolute;\n  width: 100%;\n  bottom: 0;\n  left: 0;\n  border-bottom: 3px solid #f9d710;\n}\n\nheader .gantt--main-menu-item {\n  padding: 10px;\n  height: 100%;\n  display: block;\n  text-decoration: none;\n  color: #676767;\n  font-size: 16px;\n  font-weight: 300;\n}\n\nheader .gantt--main-menu-item:hover {\n  opacity: 0.8;\n}\n\nheader .right-menu {\n  float: right;\n  margin-right: 10px;\n  display: flex;\n  align-items: center;\n}\n\nheader .right-menu .search-input {\n  margin-right: 10px;\n}\n\nheader .right-menu .search-input input[type=\"text\"] {\n  height: 39px;\n  padding: 0 32px 0 12px;\n  font-size: 16px;\n  border: none;\n  border-top: 3px solid transparent;\n  border-bottom: 3px solid #f9d710;\n  box-sizing: border-box;\n}\n\nheader .right-menu .search-input input[type=\"text\"]:focus {\n  border: 3px solid #0a0a0a;\n  padding-right: 29px;\n}\n\nheader .right-menu .search-input i {\n  color: #0a0a0a;\n  position: absolute;\n  top: 0;\n  right: 8px;\n  font-size: 18px;\n  bottom: 0;\n  margin: auto;\n  width: 18px;\n  height: 18px;\n}\n\nheader .right-menu .profile-menu {\n  align-items: center;\n  justify-content: center;\n  display: flex;\n  font-size: 14px;\n  color: #191919;\n  font-weight: 500;\n  position: relative;\n  cursor: pointer;\n}\n\nheader .right-menu .profile-menu .avatar {\n  background-size: cover !important;\n  background-position: center center !important;\n  border-radius: 100%;\n  width: 40px;\n  height: 40px;\n}\n\nheader .right-menu .profile-menu .username {\n  margin-right: 10px;\n}\n\nfooter {\n  background-size: 46px;\n  background-position: 0;\n  height: 40px;\n}\n\nfooter .info-panel {\n  font-size: 0;\n  display: inline-flex;\n  justify-content: flex-start;\n  padding: 4px 8px;\n  height: 100%;\n  width: 100%;\n  background: rgba(0, 0, 0, 0.3);\n}\n\nfooter .info-panel__item {\n  font-size: 12px;\n  display: block;\n  min-width: 200px;\n  background-color: #ffffff;\n  border: 1px solid #0a0a0a;\n  text-align: right;\n  line-height: 16px;\n  padding: 8px;\n  text-transform: uppercase;\n}\n\nfooter .info-panel__item + .info-panel__item {\n  margin-left: 12px;\n}\n\napp-home {\n  display: flex;\n  flex-direction: column;\n  flex: 1;\n  justify-content: center;\n  text-align: center;\n}\n\napp-home .app-home__bottom {\n  margin-top: 90px;\n}\n\napp-not-found {\n  width: 100%;\n}\n\napp-not-found h1 {\n  display: flex;\n  /* flex-direction: column; */\n  /* flex: 1; */\n  align-items: center;\n  justify-content: center;\n  width: 100%;\n  height: calc(100% - 60px);\n  margin: 0;\n}\n\napp-documentation {\n  width: 100%;\n}\n\napp-documentation .main-content {\n  width: 100%;\n  display: flex;\n}\n\napp-documentation .main-content .main-list {\n  width: 15%;\n  border-right: 1px solid #ccc;\n  padding: 20px 40px 20px 40px;\n  overflow: auto;\n}\n\napp-documentation .main-content .main-list .list-head {\n  margin-bottom: 5px;\n}\n\napp-documentation .main-content .main-list > li {\n  margin-bottom: 10px;\n  font-size: 16px;\n  font-weight: 600;\n}\n\napp-documentation .main-content .main-list ol .active {\n  color: #17b6ed;\n}\n\napp-documentation .main-content .main-list ol li {\n  padding-left: 20px;\n  cursor: pointer;\n  font-size: 14px;\n  font-weight: 400;\n}\n\napp-documentation .main-content .main-list ol li a {\n  color: #000;\n  display: block;\n  padding: 5px;\n}\n\napp-documentation .main-content .main-list ol li a:hover {\n  background: #f5f5f5;\n}\n\napp-documentation .main-content .main-list ol li:hover {\n  text-decoration: underline;\n}\n\napp-documentation .main-content .documentation-section {\n  width: 85%;\n  padding-left: 20px;\n  overflow: auto;\n  padding: 20px 40px 20px 40px;\n}\n\napp-documentation main {\n  height: 100%;\n  display: flex;\n  flex: 1;\n  user-select: none;\n  position: relative;\n  border-bottom: 1px solid #ccc;\n}\n\napp-documentation .code-block {\n  display: block;\n  margin: 10px 0 10px;\n  font-size: 14px;\n  word-break: break-all;\n  word-wrap: break-word;\n  background-color: rgba(247, 247, 247, 0.85);\n  border: 1px solid #f3eeee;\n  border-radius: 4px;\n}\n\napp-documentation .code-block .code-header {\n  background: #ccc;\n  padding: 10px;\n}\n\napp-documentation .code-block .attr {\n  color: #17b6ed;\n}\n\napp-documentation .code-block .text {\n  font-weight: bold;\n}\n\napp-documentation .folder-structure {\n  padding: 20px;\n  width: 50%;\n}\n\napp-documentation .folder-structure .children {\n  position: relative;\n  overflow: hidden;\n  padding-left: 24px;\n}\n\napp-documentation .folder-structure .children:first-child {\n  padding: 0;\n}\n\napp-documentation .folder-structure--item {\n  padding: 5px 0px;\n  position: relative;\n}\n\napp-documentation .folder-structure--item .folder-structure--item {\n  padding-left: 30px;\n}\n\napp-documentation .folder-structure--item .folder-structure--item:before {\n  content: \"\";\n  left: 10px;\n  bottom: 15px;\n  width: 16px;\n  height: 9999px;\n  position: absolute;\n  border-width: 0 0 1px 1px;\n  border-style: solid;\n  border-color: #ccc;\n  border-radius: 0 0 0 3px;\n}\n\napp-documentation .comment {\n  display: inline-block;\n  color: #aaa;\n}\n\napp-documentation pre {\n  padding: 10px;\n}\n\napp-documentation .kwd {\n  color: #17b6ed;\n}\n\napp-documentation .str {\n  color: #d4ce10;\n}\n\napp-documentation .typ {\n  color: red;\n}\n\napp-documentation .met {\n  color: #00d400;\n}\n\napp-documentation .white {\n  color: #fff;\n}\n\napp-documentation .title {\n  font-family: 'Roboto', sans-serif;\n  margin-right: 20px;\n}\n\napp-documentation .section-title {\n  font-size: 16px;\n  margin-top: 20px;\n  border-bottom: 1px solid #ccc;\n  padding: 6px;\n}\n\napp-documentation .in-development {\n  color: red;\n}\n\napp-documentation .text {\n  width: 500px;\n  font-weight: 300;\n  margin: 10px 0;\n}\n\napp-documentation .block {\n  border-bottom: 1px solid #ccc;\n  display: flex;\n  align-items: center;\n  justify-content: space-between;\n}\n\napp-documentation .label {\n  padding: 3px 5px;\n  display: inline-block;\n  color: #17b6ed;\n  font-weight: bold;\n  font-size: 16px;\n  border-radius: 3px;\n  border: 1px solid;\n}\n\nchild-route-switcher {\n  display: block;\n  width: 60%;\n}\n\napp-documentation-directives .clicked {\n  color: green;\n}\n\napp-documentation-directives .unclicked {\n  color: red;\n}\n\napp-documentation-architecture {\n  width: 100%;\n}\n\napp-documentation-forms .ac-error[type] {\n  border: 1px solid rgba(255, 0, 0, 0.47);\n}\n\napp-documentation-forms .input {\n  margin: 10px 0px;\n}\n\napp-documentation-forms .input input {\n  border: 1px solid #ccc;\n  padding: 4px;\n}\n\napp-documentation-forms button {\n  cursor: pointer;\n  padding: 4px;\n  border: none;\n  background: #17b6ed;\n  color: #fff;\n  border-radius: 4px;\n}\n\napp-plugins,\napp-controls {\n  width: 100%;\n}\n\napp-plugins .main-content,\napp-controls .main-content {\n  width: 100%;\n  display: flex;\n}\n\napp-plugins .main-content .main-list,\napp-controls .main-content .main-list {\n  width: 15%;\n  border-right: 1px solid #ccc;\n  padding: 20px 40px 20px 40px;\n  overflow: auto;\n}\n\napp-plugins .main-content .main-list .list-head,\napp-controls .main-content .main-list .list-head {\n  margin-bottom: 5px;\n}\n\napp-plugins .main-content .plugins-section,\napp-controls .main-content .plugins-section {\n  width: 85%;\n  padding-left: 20px;\n  overflow: auto;\n  padding: 20px 40px 20px 40px;\n}\n\napp-plugins main,\napp-controls main {\n  height: 100%;\n  display: flex;\n  flex: 1;\n  user-select: none;\n  position: relative;\n  border-bottom: 1px solid #ccc;\n}\n\napp-container {\n  width: 100%;\n}\n\nh1,\nh2,\nh3,\nh4,\nh5,\nh6 {\n  margin-bottom: 20px;\n}\n\nh1 {\n  font-size: 26px;\n}\n\nh2 {\n  font-size: 24px;\n}\n\nh3 {\n  font-size: 22px;\n}\n\nh4 {\n  font-size: 20px;\n}\n\nh5 {\n  font-size: 18px;\n}\n\nh6 {\n  font-size: 16px;\n}\n\np {\n  font-size: 14px;\n  margin-bottom: 15px;\n  line-height: 2;\n}\n\na {\n  color: #17b6ed;\n  cursor: pointer;\n}\n\nimg {\n  width: 100%;\n}\n\nb {\n  font-weight: 700;\n}\n\n.hidden {\n  display: none !important;\n}\n\n.relative {\n  position: relative;\n}\n\n.full-width {\n  width: 100%;\n}\n\n.text-center {\n  text-align: center;\n}\n\n.attached-file {\n  display: flex;\n  height: 40px;\n  align-items: center;\n  margin: 5px 0px;\n  justify-content: space-between;\n}\n\n* {\n  font-family: 'Roboto', sans-serif;\n}\n\n.dropdown-container {\n  font-size: 12px;\n  font-weight: normal;\n}\n\n.dropdown {\n  position: absolute;\n  background: #fff;\n  border: 1px solid #ccc;\n  /* bottom: 0; */\n  top: 100%;\n  z-index: 1000;\n  width: 200px;\n  right: 0;\n  opacity: 0;\n  margin-top: 35px;\n  visibility: hidden;\n  transition-property: all;\n  transition-duration: 0.3s;\n  transition-timing-function: ease;\n  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);\n  border-radius: 4px;\n  overflow: hidden;\n}\n\n.dropdown ul li.active {\n  background: #f1f1f1;\n}\n\n.dropdown ul li a {\n  font-size: 12px;\n  padding: 10px;\n  display: block;\n}\n\n.dropdown ul li:hover {\n  background: #f1f1f1;\n}\n\n.dropdown.open {\n  opacity: 1;\n  visibility: visible;\n  margin-top: 0;\n}\n\napp-status-dropdown .dropdown-value {\n  cursor: pointer;\n  padding: 4px;\n  color: #fff;\n  border-radius: 4px;\n  background: #17b6ed;\n}\n\napp-status-dropdown .dropdown-value.done {\n  background: #5db95d;\n}\n\napp-status-dropdown .dropdown-value.in_progress {\n  background: #17b6ed;\n}\n\napp-status-dropdown .dropdown-value.feedback {\n  background: #c3c3c3;\n}\n\napp-color-dropdown .dropdown {\n  left: 0;\n  max-height: 200px;\n  padding: 5px;\n  overflow: auto;\n}\n\napp-color-dropdown .dropdown-item {\n  margin: 5px;\n  cursor: pointer;\n  border-radius: 100%;\n  transition: 0.2s all;\n}\n\napp-color-dropdown .dropdown-item.active {\n  transform: scale(1.2);\n}\n\napp-color-dropdown .dropdown-item:hover {\n  transform: scale(1.2);\n}\n\napp-color-dropdown .dropdown-item-color {\n  border-radius: 100%;\n  width: 30px;\n  height: 30px;\n}\n\napp-color-dropdown .dropdown ul {\n  display: flex;\n  justify-content: space-between;\n  flex-flow: row wrap;\n}\n\napp-color-dropdown .dropdown-value {\n  cursor: pointer;\n  width: 40px;\n  height: 40px;\n  border-radius: 100%;\n}\n\napp-assignee-dropdown .profile-menu {\n  align-items: center;\n  display: flex;\n}\n\napp-assignee-dropdown .avatar {\n  width: 30px;\n  display: flex;\n  margin-right: 10px;\n  background-size: cover !important;\n  background-position: center;\n  height: 30px;\n  border-radius: 100%;\n}\n\napp-common-dropdown {\n  display: inline-block;\n}\n\napp-common-dropdown .dropdown-value {\n  cursor: pointer;\n  padding: 4px;\n  color: #fff;\n  border-radius: 4px;\n  background: #cccccc;\n}\n\n.content--end {\n  justify-content: flex-end;\n}\n\n.content--space-between {\n  justify-content: space-between;\n}\n\n.content--center {\n  align-items: center;\n}\n\n.flex {\n  display: flex;\n}\n\n.input-file {\n  position: absolute;\n  opacity: 0;\n  width: 100%;\n  height: 100%;\n  left: 0;\n  right: 0;\n  cursor: pointer;\n}\n\n.app-container {\n  width: 1024px;\n  margin: 0 auto;\n}\n\n.app-btn {\n  border: none;\n  background: none;\n  padding: 10px 30px;\n  cursor: pointer;\n  color: white;\n  position: relative;\n  background-color: #17b6ed;\n  border-radius: 2px;\n}\n\n.app-btn.small {\n  width: 150px;\n}\n\n.app-btn input[type='file'] {\n  opacity: 0;\n  cursor: pointer;\n  height: 100%;\n  position: absolute;\n  width: 100%;\n  top: 0;\n  left: 0;\n}\n\n.app-btn:hover {\n  background-color: #46c5f1;\n}\n\nh1,\nh2,\nh3,\nh4,\nh5,\nh6 {\n  margin-bottom: 20px;\n}\n\nh1 {\n  font-size: 26px;\n}\n\nh2 {\n  font-size: 24px;\n}\n\nh3 {\n  font-size: 22px;\n}\n\nh4 {\n  font-size: 20px;\n}\n\nh5 {\n  font-size: 18px;\n}\n\nh6 {\n  font-size: 16px;\n}\n\np {\n  font-size: 14px;\n  margin-bottom: 15px;\n  line-height: 2;\n}\n\na {\n  color: #17b6ed;\n  cursor: pointer;\n}\n\nimg {\n  width: 100%;\n}\n\nb {\n  font-weight: 700;\n}\n\n.hidden {\n  display: none !important;\n}\n\n.relative {\n  position: relative;\n}\n\n.full-width {\n  width: 100%;\n}\n\n.text-center {\n  text-align: center;\n}\n\n.attached-file {\n  display: flex;\n  height: 40px;\n  align-items: center;\n  margin: 5px 0px;\n  justify-content: space-between;\n}\n\n* {\n  font-family: 'Roboto', sans-serif;\n}\n\n.app-form__row {\n  display: flex;\n  align-items: center;\n  margin-bottom: 15px;\n}\n\n.app-form__row.col-2 .app-form__label {\n  width: 48%;\n}\n\n.app-form__label {\n  display: flex;\n  flex-direction: column;\n  width: 100%;\n  position: relative;\n}\n\n.app-form__label__text {\n  margin-bottom: 5px;\n  color: #aaa;\n  font-weight: normal;\n}\n\n.app-form__subtitle {\n  position: absolute;\n  bottom: 11px;\n  left: 11px;\n}\n\n.app-form__subtitle + .app-form__label__input {\n  padding-left: 21px;\n}\n\n.app-form__label__input {\n  padding: 10px;\n  border-radius: 5px;\n  border: 1px solid #cccccc;\n}\n\n.app-form__label__textarea {\n  width: 100%;\n  padding: 10px;\n  border-radius: 5px;\n  border: 1px solid #cccccc;\n  resize: vertical;\n  max-height: 300px;\n}\n\n.app-form + .app-form {\n  margin-top: 30px;\n}\n\ninput.error {\n  border: 1px solid rgba(255, 0, 0, 0.47);\n}\n\n.modal-container {\n  position: fixed;\n  width: 100%;\n  height: 100%;\n  top: 0;\n  background: rgba(0, 0, 0, 0.5);\n  z-index: 1000;\n}\n\n.modal-container .modal {\n  position: fixed;\n  width: 40%;\n  left: 0;\n  right: 0;\n  bottom: 0;\n  top: 0;\n  background: #fff;\n  margin: auto;\n  height: 80%;\n  box-shadow: 0px 0px 20px -2px #000;\n  padding: 30px;\n  min-width: 800px;\n  border-radius: 3px;\n  overflow: auto;\n}\n\n.modal-container .modal-bottom {\n  float: right;\n}\n\n.modal-container .modal-bottom .app-btn {\n  margin-left: 10px;\n}\n\n.modal-container .modal.crop {\n  user-select: none;\n  /*.tag_frame_inner{*/\n  /*width: 550px;*/\n  /*}*/\n}\n\n.modal-container .modal.crop .tag_faded {\n  background: #000;\n  opacity: 0.7;\n  filter: alpha(opacity=70);\n  cursor: crosshair;\n  left: 0px;\n  top: 0px;\n  width: 100%;\n  height: 100%;\n  z-index: 1030;\n  position: absolute;\n}\n\n.modal-container .modal.crop .tag_frame {\n  position: absolute;\n  cursor: move;\n  z-index: 1040;\n  left: 0;\n  top: 0;\n  width: 200px;\n  height: 200px;\n  display: block;\n  overflow: hidden;\n  text-align: left;\n  direction: ltr;\n}\n\n.modal-container .modal.crop .tag_frame_resizer {\n  position: absolute;\n  background-color: #f2f2f2;\n  width: 10px;\n  height: 10px;\n  z-index: 9999;\n  opacity: 0.3;\n  transition-property: opacity;\n  -webkit-transition-duration: 0.3s;\n  transition-duration: 0.3s;\n  -webkit-transition-timing-function: ease;\n  transition-timing-function: ease;\n}\n\n.modal-container .modal.crop .tag_frame_resizer:hover {\n  opacity: 0.9;\n}\n\n.modal-container .modal.crop .j-modal__content {\n  user-select: none;\n  -moz-user-select: none;\n  -webkit-user-select: none;\n  -ms-user-select: none;\n}\n\n.modal-container .modal.crop .j-modal__preview {\n  margin: auto;\n  display: block;\n  border-radius: 100%;\n  width: 25%;\n}\n\n.modal-container .modal.crop .j-modal__crop_container {\n  position: relative;\n  margin: 0px auto;\n  font-size: 0px;\n}\n\n/* j-calendar\r\n------------------------------------------------------------------- */\n\n.j-calendar {\n  display: inline-flex;\n  flex-direction: column;\n  flex-wrap: wrap;\n  background: #fff;\n  border-bottom-left-radius: 5px;\n  border-bottom-right-radius: 5px;\n  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.4);\n  overflow: hidden;\n  left: 0;\n  top: 100%;\n  position: absolute;\n  z-index: 1;\n  font-weight: normal;\n}\n\n.j-calendar__wrap {\n  display: flex;\n}\n\n.j-calendar__item + .j-calendar__item .j-calendar__content {\n  border-left: 1px solid #d9d9d9;\n}\n\n.j-calendar__item + .j-calendar__item .j-calendar__header {\n  border-left: 1px solid #d9d9d9;\n}\n\n.j-calendar__header {\n  width: 285px;\n  height: 50px;\n  display: flex;\n  align-items: stretch;\n  justify-content: space-between;\n  font-size: 15px;\n  color: #fff;\n  background: #17b6ed;\n}\n\n.j-calendar__header__center,\n.j-calendar__header__left,\n.j-calendar__header__right {\n  display: flex;\n  align-items: center;\n  justify-content: center;\n}\n\n.j-calendar__header__left,\n.j-calendar__header__right {\n  width: 50px;\n  cursor: pointer;\n}\n\n.j-calendar__header__left:hover,\n.j-calendar__header__right:hover {\n  background: #11a2d5;\n}\n\n.j-calendar__header__empty {\n  width: 50px;\n}\n\n.j-calendar__content {\n  width: 285px;\n  padding: 10px;\n}\n\n.j-calendar__days {\n  display: flex;\n}\n\n.j-calendar__days__item {\n  width: 14.285%;\n  font-size: 13px;\n  cursor: default;\n  text-align: center;\n}\n\n.j-calendar__days__item--output {\n  color: #17b6ed;\n}\n\n.j-calendar__date {\n  display: flex;\n  flex-wrap: wrap;\n  padding-top: 5px;\n}\n\n.j-calendar__date__item {\n  display: flex;\n  align-items: center;\n  justify-content: center;\n  height: 30px;\n  width: 14.285%;\n  font-size: 13px;\n  position: relative;\n}\n\n.j-calendar__date__item.empty {\n  opacity: 0;\n  cursor: default !important;\n}\n\n.j-calendar__date__item:before {\n  content: '';\n  width: 26px;\n  height: 26px;\n  top: 0;\n  left: 0;\n  right: 0;\n  bottom: 0;\n  margin: auto;\n  position: absolute;\n  border-radius: 100%;\n}\n\n.j-calendar__date__item--active {\n  color: #fff;\n  cursor: pointer;\n}\n\n.j-calendar__date__item--active:before {\n  background: #17b6ed;\n}\n\n.j-calendar__date__item--circle {\n  cursor: pointer;\n}\n\n.j-calendar__date__item--circle:before {\n  border: 1px solid #17b6ed;\n}\n\n.j-calendar__date__item--inactive {\n  cursor: default !important;\n  color: #b7b7b7;\n}\n\n.j-calendar__date__item--empty {\n  cursor: default;\n}\n\n.j-calendar__date__item:not(.j-calendar__date__item--empty):not(.j-calendar__date__item--active):not(.j-calendar__date__item--circle):hover {\n  color: #17b6ed;\n  cursor: pointer;\n}\n\n.j-calendar__date__item:not(.j-calendar__date__item--empty):not(.j-calendar__date__item--active):not(.j-calendar__date__item--circle):hover:before {\n  background: #ebecee;\n}\n\n.j-calendar__date__item span {\n  position: relative;\n}\n\n.j-calendar__bottom {\n  margin: 15px 0;\n  text-align: center;\n}\n\n/*!\r\n * animate.css -http://daneden.me/animate\r\n * Version - 3.5.2\r\n * Licensed under the MIT license - http://opensource.org/licenses/MIT\r\n *\r\n * Copyright (c) 2017 Daniel Eden\r\n */\n\n.animated {\n  animation-duration: 1s;\n  animation-fill-mode: both;\n}\n\n.animated.infinite {\n  animation-iteration-count: infinite;\n}\n\n.animated.hinge {\n  animation-duration: 2s;\n}\n\n.animated.flipOutX,\n.animated.flipOutY,\n.animated.bounceIn,\n.animated.bounceOut {\n  animation-duration: .75s;\n}\n\n@keyframes bounce {\n  from, 20%, 53%, 80%, to {\n    animation-timing-function: cubic-bezier(0.215, 0.61, 0.355, 1);\n    transform: translate3d(0, 0, 0);\n  }\n\n  40%, 43% {\n    animation-timing-function: cubic-bezier(0.755, 0.05, 0.855, 0.06);\n    transform: translate3d(0, -30px, 0);\n  }\n\n  70% {\n    animation-timing-function: cubic-bezier(0.755, 0.05, 0.855, 0.06);\n    transform: translate3d(0, -15px, 0);\n  }\n\n  90% {\n    transform: translate3d(0, -4px, 0);\n  }\n}\n\n.bounce {\n  animation-name: bounce;\n  transform-origin: center bottom;\n}\n\n@keyframes flash {\n  from, 50%, to {\n    opacity: 1;\n  }\n\n  25%, 75% {\n    opacity: 0;\n  }\n}\n\n.flash {\n  animation-name: flash;\n}\n\n/* originally authored by Nick Pettit - https://github.com/nickpettit/glide */\n\n@keyframes pulse {\n  from {\n    transform: scale3d(1, 1, 1);\n  }\n\n  50% {\n    transform: scale3d(1.05, 1.05, 1.05);\n  }\n\n  to {\n    transform: scale3d(1, 1, 1);\n  }\n}\n\n.pulse {\n  animation-name: pulse;\n}\n\n@keyframes rubberBand {\n  from {\n    transform: scale3d(1, 1, 1);\n  }\n\n  30% {\n    transform: scale3d(1.25, 0.75, 1);\n  }\n\n  40% {\n    transform: scale3d(0.75, 1.25, 1);\n  }\n\n  50% {\n    transform: scale3d(1.15, 0.85, 1);\n  }\n\n  65% {\n    transform: scale3d(0.95, 1.05, 1);\n  }\n\n  75% {\n    transform: scale3d(1.05, 0.95, 1);\n  }\n\n  to {\n    transform: scale3d(1, 1, 1);\n  }\n}\n\n.rubberBand {\n  animation-name: rubberBand;\n}\n\n@keyframes shake {\n  from, to {\n    transform: translate3d(0, 0, 0);\n  }\n\n  10%, 30%, 50%, 70%, 90% {\n    transform: translate3d(-10px, 0, 0);\n  }\n\n  20%, 40%, 60%, 80% {\n    transform: translate3d(10px, 0, 0);\n  }\n}\n\n.shake {\n  animation-name: shake;\n}\n\n@keyframes headShake {\n  0% {\n    transform: translateX(0);\n  }\n\n  6.5% {\n    transform: translateX(-6px) rotateY(-9deg);\n  }\n\n  18.5% {\n    transform: translateX(5px) rotateY(7deg);\n  }\n\n  31.5% {\n    transform: translateX(-3px) rotateY(-5deg);\n  }\n\n  43.5% {\n    transform: translateX(2px) rotateY(3deg);\n  }\n\n  50% {\n    transform: translateX(0);\n  }\n}\n\n.headShake {\n  animation-timing-function: ease-in-out;\n  animation-name: headShake;\n}\n\n@keyframes swing {\n  20% {\n    transform: rotate3d(0, 0, 1, 15deg);\n  }\n\n  40% {\n    transform: rotate3d(0, 0, 1, -10deg);\n  }\n\n  60% {\n    transform: rotate3d(0, 0, 1, 5deg);\n  }\n\n  80% {\n    transform: rotate3d(0, 0, 1, -5deg);\n  }\n\n  to {\n    transform: rotate3d(0, 0, 1, 0deg);\n  }\n}\n\n.swing {\n  transform-origin: top center;\n  animation-name: swing;\n}\n\n@keyframes tada {\n  from {\n    transform: scale3d(1, 1, 1);\n  }\n\n  10%, 20% {\n    transform: scale3d(0.9, 0.9, 0.9) rotate3d(0, 0, 1, -3deg);\n  }\n\n  30%, 50%, 70%, 90% {\n    transform: scale3d(1.1, 1.1, 1.1) rotate3d(0, 0, 1, 3deg);\n  }\n\n  40%, 60%, 80% {\n    transform: scale3d(1.1, 1.1, 1.1) rotate3d(0, 0, 1, -3deg);\n  }\n\n  to {\n    transform: scale3d(1, 1, 1);\n  }\n}\n\n.tada {\n  animation-name: tada;\n}\n\n/* originally authored by Nick Pettit - https://github.com/nickpettit/glide */\n\n@keyframes wobble {\n  from {\n    transform: none;\n  }\n\n  15% {\n    transform: translate3d(-25%, 0, 0) rotate3d(0, 0, 1, -5deg);\n  }\n\n  30% {\n    transform: translate3d(20%, 0, 0) rotate3d(0, 0, 1, 3deg);\n  }\n\n  45% {\n    transform: translate3d(-15%, 0, 0) rotate3d(0, 0, 1, -3deg);\n  }\n\n  60% {\n    transform: translate3d(10%, 0, 0) rotate3d(0, 0, 1, 2deg);\n  }\n\n  75% {\n    transform: translate3d(-5%, 0, 0) rotate3d(0, 0, 1, -1deg);\n  }\n\n  to {\n    transform: none;\n  }\n}\n\n.wobble {\n  animation-name: wobble;\n}\n\n@keyframes jello {\n  from, 11.1%, to {\n    transform: none;\n  }\n\n  22.2% {\n    transform: skewX(-12.5deg) skewY(-12.5deg);\n  }\n\n  33.3% {\n    transform: skewX(6.25deg) skewY(6.25deg);\n  }\n\n  44.4% {\n    transform: skewX(-3.125deg) skewY(-3.125deg);\n  }\n\n  55.5% {\n    transform: skewX(1.5625deg) skewY(1.5625deg);\n  }\n\n  66.6% {\n    transform: skewX(-0.78125deg) skewY(-0.78125deg);\n  }\n\n  77.7% {\n    transform: skewX(0.39063deg) skewY(0.39063deg);\n  }\n\n  88.8% {\n    transform: skewX(-0.19531deg) skewY(-0.19531deg);\n  }\n}\n\n.jello {\n  animation-name: jello;\n  transform-origin: center;\n}\n\n@keyframes bounceIn {\n  from, 20%, 40%, 60%, 80%, to {\n    animation-timing-function: cubic-bezier(0.215, 0.61, 0.355, 1);\n  }\n\n  0% {\n    opacity: 0;\n    transform: scale3d(0.3, 0.3, 0.3);\n  }\n\n  20% {\n    transform: scale3d(1.1, 1.1, 1.1);\n  }\n\n  40% {\n    transform: scale3d(0.9, 0.9, 0.9);\n  }\n\n  60% {\n    opacity: 1;\n    transform: scale3d(1.03, 1.03, 1.03);\n  }\n\n  80% {\n    transform: scale3d(0.97, 0.97, 0.97);\n  }\n\n  to {\n    opacity: 1;\n    transform: scale3d(1, 1, 1);\n  }\n}\n\n.bounceIn {\n  animation-name: bounceIn;\n}\n\n@keyframes bounceInDown {\n  from, 60%, 75%, 90%, to {\n    animation-timing-function: cubic-bezier(0.215, 0.61, 0.355, 1);\n  }\n\n  0% {\n    opacity: 0;\n    transform: translate3d(0, -3000px, 0);\n  }\n\n  60% {\n    opacity: 1;\n    transform: translate3d(0, 25px, 0);\n  }\n\n  75% {\n    transform: translate3d(0, -10px, 0);\n  }\n\n  90% {\n    transform: translate3d(0, 5px, 0);\n  }\n\n  to {\n    transform: none;\n  }\n}\n\n.bounceInDown {\n  animation-name: bounceInDown;\n}\n\n@keyframes bounceInLeft {\n  from, 60%, 75%, 90%, to {\n    animation-timing-function: cubic-bezier(0.215, 0.61, 0.355, 1);\n  }\n\n  0% {\n    opacity: 0;\n    transform: translate3d(-3000px, 0, 0);\n  }\n\n  60% {\n    opacity: 1;\n    transform: translate3d(25px, 0, 0);\n  }\n\n  75% {\n    transform: translate3d(-10px, 0, 0);\n  }\n\n  90% {\n    transform: translate3d(5px, 0, 0);\n  }\n\n  to {\n    transform: none;\n  }\n}\n\n.bounceInLeft {\n  animation-name: bounceInLeft;\n}\n\n@keyframes bounceInRight {\n  from, 60%, 75%, 90%, to {\n    animation-timing-function: cubic-bezier(0.215, 0.61, 0.355, 1);\n  }\n\n  from {\n    opacity: 0;\n    transform: translate3d(3000px, 0, 0);\n  }\n\n  60% {\n    opacity: 1;\n    transform: translate3d(-25px, 0, 0);\n  }\n\n  75% {\n    transform: translate3d(10px, 0, 0);\n  }\n\n  90% {\n    transform: translate3d(-5px, 0, 0);\n  }\n\n  to {\n    transform: none;\n  }\n}\n\n.bounceInRight {\n  animation-name: bounceInRight;\n}\n\n@keyframes bounceInUp {\n  from, 60%, 75%, 90%, to {\n    animation-timing-function: cubic-bezier(0.215, 0.61, 0.355, 1);\n  }\n\n  from {\n    opacity: 0;\n    transform: translate3d(0, 3000px, 0);\n  }\n\n  60% {\n    opacity: 1;\n    transform: translate3d(0, -20px, 0);\n  }\n\n  75% {\n    transform: translate3d(0, 10px, 0);\n  }\n\n  90% {\n    transform: translate3d(0, -5px, 0);\n  }\n\n  to {\n    transform: translate3d(0, 0, 0);\n  }\n}\n\n.bounceInUp {\n  animation-name: bounceInUp;\n}\n\n@keyframes bounceOut {\n  20% {\n    transform: scale3d(0.9, 0.9, 0.9);\n  }\n\n  50%, 55% {\n    opacity: 1;\n    transform: scale3d(1.1, 1.1, 1.1);\n  }\n\n  to {\n    opacity: 0;\n    transform: scale3d(0.3, 0.3, 0.3);\n  }\n}\n\n.bounceOut {\n  animation-name: bounceOut;\n}\n\n@keyframes bounceOutDown {\n  20% {\n    transform: translate3d(0, 10px, 0);\n  }\n\n  40%, 45% {\n    opacity: 1;\n    transform: translate3d(0, -20px, 0);\n  }\n\n  to {\n    opacity: 0;\n    transform: translate3d(0, 2000px, 0);\n  }\n}\n\n.bounceOutDown {\n  animation-name: bounceOutDown;\n}\n\n@keyframes bounceOutLeft {\n  20% {\n    opacity: 1;\n    transform: translate3d(20px, 0, 0);\n  }\n\n  to {\n    opacity: 0;\n    transform: translate3d(-2000px, 0, 0);\n  }\n}\n\n.bounceOutLeft {\n  animation-name: bounceOutLeft;\n}\n\n@keyframes bounceOutRight {\n  20% {\n    opacity: 1;\n    transform: translate3d(-20px, 0, 0);\n  }\n\n  to {\n    opacity: 0;\n    transform: translate3d(2000px, 0, 0);\n  }\n}\n\n.bounceOutRight {\n  animation-name: bounceOutRight;\n}\n\n@keyframes bounceOutUp {\n  20% {\n    transform: translate3d(0, -10px, 0);\n  }\n\n  40%, 45% {\n    opacity: 1;\n    transform: translate3d(0, 20px, 0);\n  }\n\n  to {\n    opacity: 0;\n    transform: translate3d(0, -2000px, 0);\n  }\n}\n\n.bounceOutUp {\n  animation-name: bounceOutUp;\n}\n\n@keyframes fadeIn {\n  from {\n    opacity: 0;\n  }\n\n  to {\n    opacity: 1;\n  }\n}\n\n.fadeIn {\n  animation-name: fadeIn;\n}\n\n@keyframes fadeInDown {\n  from {\n    opacity: 0;\n    transform: translate3d(0, -100%, 0);\n  }\n\n  to {\n    opacity: 1;\n    transform: none;\n  }\n}\n\n.fadeInDown {\n  animation-name: fadeInDown;\n}\n\n@keyframes fadeInDownBig {\n  from {\n    opacity: 0;\n    transform: translate3d(0, -2000px, 0);\n  }\n\n  to {\n    opacity: 1;\n    transform: none;\n  }\n}\n\n.fadeInDownBig {\n  animation-name: fadeInDownBig;\n}\n\n@keyframes fadeInLeft {\n  from {\n    opacity: 0;\n    transform: translate3d(-100%, 0, 0);\n  }\n\n  to {\n    opacity: 1;\n    transform: none;\n  }\n}\n\n.fadeInLeft {\n  animation-name: fadeInLeft;\n}\n\n@keyframes fadeInLeftBig {\n  from {\n    opacity: 0;\n    transform: translate3d(-2000px, 0, 0);\n  }\n\n  to {\n    opacity: 1;\n    transform: none;\n  }\n}\n\n.fadeInLeftBig {\n  animation-name: fadeInLeftBig;\n}\n\n@keyframes fadeInRight {\n  from {\n    opacity: 0;\n    transform: translate3d(100%, 0, 0);\n  }\n\n  to {\n    opacity: 1;\n    transform: none;\n  }\n}\n\n.fadeInRight {\n  animation-name: fadeInRight;\n}\n\n@keyframes fadeInRightBig {\n  from {\n    opacity: 0;\n    transform: translate3d(2000px, 0, 0);\n  }\n\n  to {\n    opacity: 1;\n    transform: none;\n  }\n}\n\n.fadeInRightBig {\n  animation-name: fadeInRightBig;\n}\n\n@keyframes fadeInUp {\n  from {\n    opacity: 0;\n    transform: translate3d(0, 100%, 0);\n  }\n\n  to {\n    opacity: 1;\n    transform: none;\n  }\n}\n\n.fadeInUp {\n  animation-name: fadeInUp;\n}\n\n@keyframes fadeInUpBig {\n  from {\n    opacity: 0;\n    transform: translate3d(0, 2000px, 0);\n  }\n\n  to {\n    opacity: 1;\n    transform: none;\n  }\n}\n\n.fadeInUpBig {\n  animation-name: fadeInUpBig;\n}\n\n@keyframes fadeOut {\n  from {\n    opacity: 1;\n  }\n\n  to {\n    opacity: 0;\n  }\n}\n\n.fadeOut {\n  animation-name: fadeOut;\n}\n\n@keyframes fadeOutDown {\n  from {\n    opacity: 1;\n  }\n\n  to {\n    opacity: 0;\n    transform: translate3d(0, 100%, 0);\n  }\n}\n\n.fadeOutDown {\n  animation-name: fadeOutDown;\n}\n\n@keyframes fadeOutDownBig {\n  from {\n    opacity: 1;\n  }\n\n  to {\n    opacity: 0;\n    transform: translate3d(0, 2000px, 0);\n  }\n}\n\n.fadeOutDownBig {\n  animation-name: fadeOutDownBig;\n}\n\n@keyframes fadeOutLeft {\n  from {\n    opacity: 1;\n  }\n\n  to {\n    opacity: 0;\n    transform: translate3d(-100%, 0, 0);\n  }\n}\n\n.fadeOutLeft {\n  animation-name: fadeOutLeft;\n}\n\n@keyframes fadeOutLeftBig {\n  from {\n    opacity: 1;\n  }\n\n  to {\n    opacity: 0;\n    transform: translate3d(-2000px, 0, 0);\n  }\n}\n\n.fadeOutLeftBig {\n  animation-name: fadeOutLeftBig;\n}\n\n@keyframes fadeOutRight {\n  from {\n    opacity: 1;\n  }\n\n  to {\n    opacity: 0;\n    transform: translate3d(100%, 0, 0);\n  }\n}\n\n.fadeOutRight {\n  animation-name: fadeOutRight;\n}\n\n@keyframes fadeOutRightBig {\n  from {\n    opacity: 1;\n  }\n\n  to {\n    opacity: 0;\n    transform: translate3d(2000px, 0, 0);\n  }\n}\n\n.fadeOutRightBig {\n  animation-name: fadeOutRightBig;\n}\n\n@keyframes fadeOutUp {\n  from {\n    opacity: 1;\n  }\n\n  to {\n    opacity: 0;\n    transform: translate3d(0, -100%, 0);\n  }\n}\n\n.fadeOutUp {\n  animation-name: fadeOutUp;\n}\n\n@keyframes fadeOutUpBig {\n  from {\n    opacity: 1;\n  }\n\n  to {\n    opacity: 0;\n    transform: translate3d(0, -2000px, 0);\n  }\n}\n\n.fadeOutUpBig {\n  animation-name: fadeOutUpBig;\n}\n\n@keyframes flip {\n  from {\n    transform: perspective(400px) rotate3d(0, 1, 0, -360deg);\n    animation-timing-function: ease-out;\n  }\n\n  40% {\n    transform: perspective(400px) translate3d(0, 0, 150px) rotate3d(0, 1, 0, -190deg);\n    animation-timing-function: ease-out;\n  }\n\n  50% {\n    transform: perspective(400px) translate3d(0, 0, 150px) rotate3d(0, 1, 0, -170deg);\n    animation-timing-function: ease-in;\n  }\n\n  80% {\n    transform: perspective(400px) scale3d(0.95, 0.95, 0.95);\n    animation-timing-function: ease-in;\n  }\n\n  to {\n    transform: perspective(400px);\n    animation-timing-function: ease-in;\n  }\n}\n\n.animated.flip {\n  -webkit-backface-visibility: visible;\n  backface-visibility: visible;\n  animation-name: flip;\n}\n\n@keyframes flipInX {\n  from {\n    transform: perspective(400px) rotate3d(1, 0, 0, 90deg);\n    animation-timing-function: ease-in;\n    opacity: 0;\n  }\n\n  40% {\n    transform: perspective(400px) rotate3d(1, 0, 0, -20deg);\n    animation-timing-function: ease-in;\n  }\n\n  60% {\n    transform: perspective(400px) rotate3d(1, 0, 0, 10deg);\n    opacity: 1;\n  }\n\n  80% {\n    transform: perspective(400px) rotate3d(1, 0, 0, -5deg);\n  }\n\n  to {\n    transform: perspective(400px);\n  }\n}\n\n.flipInX {\n  -webkit-backface-visibility: visible !important;\n  backface-visibility: visible !important;\n  animation-name: flipInX;\n}\n\n@keyframes flipInY {\n  from {\n    transform: perspective(400px) rotate3d(0, 1, 0, 90deg);\n    animation-timing-function: ease-in;\n    opacity: 0;\n  }\n\n  40% {\n    transform: perspective(400px) rotate3d(0, 1, 0, -20deg);\n    animation-timing-function: ease-in;\n  }\n\n  60% {\n    transform: perspective(400px) rotate3d(0, 1, 0, 10deg);\n    opacity: 1;\n  }\n\n  80% {\n    transform: perspective(400px) rotate3d(0, 1, 0, -5deg);\n  }\n\n  to {\n    transform: perspective(400px);\n  }\n}\n\n.flipInY {\n  -webkit-backface-visibility: visible !important;\n  backface-visibility: visible !important;\n  animation-name: flipInY;\n}\n\n@keyframes flipOutX {\n  from {\n    transform: perspective(400px);\n  }\n\n  30% {\n    transform: perspective(400px) rotate3d(1, 0, 0, -20deg);\n    opacity: 1;\n  }\n\n  to {\n    transform: perspective(400px) rotate3d(1, 0, 0, 90deg);\n    opacity: 0;\n  }\n}\n\n.flipOutX {\n  animation-name: flipOutX;\n  -webkit-backface-visibility: visible !important;\n  backface-visibility: visible !important;\n}\n\n@keyframes flipOutY {\n  from {\n    transform: perspective(400px);\n  }\n\n  30% {\n    transform: perspective(400px) rotate3d(0, 1, 0, -15deg);\n    opacity: 1;\n  }\n\n  to {\n    transform: perspective(400px) rotate3d(0, 1, 0, 90deg);\n    opacity: 0;\n  }\n}\n\n.flipOutY {\n  -webkit-backface-visibility: visible !important;\n  backface-visibility: visible !important;\n  animation-name: flipOutY;\n}\n\n@keyframes lightSpeedIn {\n  from {\n    transform: translate3d(100%, 0, 0) skewX(-30deg);\n    opacity: 0;\n  }\n\n  60% {\n    transform: skewX(20deg);\n    opacity: 1;\n  }\n\n  80% {\n    transform: skewX(-5deg);\n    opacity: 1;\n  }\n\n  to {\n    transform: none;\n    opacity: 1;\n  }\n}\n\n.lightSpeedIn {\n  animation-name: lightSpeedIn;\n  animation-timing-function: ease-out;\n}\n\n@keyframes lightSpeedOut {\n  from {\n    opacity: 1;\n  }\n\n  to {\n    transform: translate3d(100%, 0, 0) skewX(30deg);\n    opacity: 0;\n  }\n}\n\n.lightSpeedOut {\n  animation-name: lightSpeedOut;\n  animation-timing-function: ease-in;\n}\n\n@keyframes rotateIn {\n  from {\n    transform-origin: center;\n    transform: rotate3d(0, 0, 1, -200deg);\n    opacity: 0;\n  }\n\n  to {\n    transform-origin: center;\n    transform: none;\n    opacity: 1;\n  }\n}\n\n.rotateIn {\n  animation-name: rotateIn;\n}\n\n@keyframes rotateInDownLeft {\n  from {\n    transform-origin: left bottom;\n    transform: rotate3d(0, 0, 1, -45deg);\n    opacity: 0;\n  }\n\n  to {\n    transform-origin: left bottom;\n    transform: none;\n    opacity: 1;\n  }\n}\n\n.rotateInDownLeft {\n  animation-name: rotateInDownLeft;\n}\n\n@keyframes rotateInDownRight {\n  from {\n    transform-origin: right bottom;\n    transform: rotate3d(0, 0, 1, 45deg);\n    opacity: 0;\n  }\n\n  to {\n    transform-origin: right bottom;\n    transform: none;\n    opacity: 1;\n  }\n}\n\n.rotateInDownRight {\n  animation-name: rotateInDownRight;\n}\n\n@keyframes rotateInUpLeft {\n  from {\n    transform-origin: left bottom;\n    transform: rotate3d(0, 0, 1, 45deg);\n    opacity: 0;\n  }\n\n  to {\n    transform-origin: left bottom;\n    transform: none;\n    opacity: 1;\n  }\n}\n\n.rotateInUpLeft {\n  animation-name: rotateInUpLeft;\n}\n\n@keyframes rotateInUpRight {\n  from {\n    transform-origin: right bottom;\n    transform: rotate3d(0, 0, 1, -90deg);\n    opacity: 0;\n  }\n\n  to {\n    transform-origin: right bottom;\n    transform: none;\n    opacity: 1;\n  }\n}\n\n.rotateInUpRight {\n  animation-name: rotateInUpRight;\n}\n\n@keyframes rotateOut {\n  from {\n    transform-origin: center;\n    opacity: 1;\n  }\n\n  to {\n    transform-origin: center;\n    transform: rotate3d(0, 0, 1, 200deg);\n    opacity: 0;\n  }\n}\n\n.rotateOut {\n  animation-name: rotateOut;\n}\n\n@keyframes rotateOutDownLeft {\n  from {\n    transform-origin: left bottom;\n    opacity: 1;\n  }\n\n  to {\n    transform-origin: left bottom;\n    transform: rotate3d(0, 0, 1, 45deg);\n    opacity: 0;\n  }\n}\n\n.rotateOutDownLeft {\n  animation-name: rotateOutDownLeft;\n}\n\n@keyframes rotateOutDownRight {\n  from {\n    transform-origin: right bottom;\n    opacity: 1;\n  }\n\n  to {\n    transform-origin: right bottom;\n    transform: rotate3d(0, 0, 1, -45deg);\n    opacity: 0;\n  }\n}\n\n.rotateOutDownRight {\n  animation-name: rotateOutDownRight;\n}\n\n@keyframes rotateOutUpLeft {\n  from {\n    transform-origin: left bottom;\n    opacity: 1;\n  }\n\n  to {\n    transform-origin: left bottom;\n    transform: rotate3d(0, 0, 1, -45deg);\n    opacity: 0;\n  }\n}\n\n.rotateOutUpLeft {\n  animation-name: rotateOutUpLeft;\n}\n\n@keyframes rotateOutUpRight {\n  from {\n    transform-origin: right bottom;\n    opacity: 1;\n  }\n\n  to {\n    transform-origin: right bottom;\n    transform: rotate3d(0, 0, 1, 90deg);\n    opacity: 0;\n  }\n}\n\n.rotateOutUpRight {\n  animation-name: rotateOutUpRight;\n}\n\n@keyframes hinge {\n  0% {\n    transform-origin: top left;\n    animation-timing-function: ease-in-out;\n  }\n\n  20%, 60% {\n    transform: rotate3d(0, 0, 1, 80deg);\n    transform-origin: top left;\n    animation-timing-function: ease-in-out;\n  }\n\n  40%, 80% {\n    transform: rotate3d(0, 0, 1, 60deg);\n    transform-origin: top left;\n    animation-timing-function: ease-in-out;\n    opacity: 1;\n  }\n\n  to {\n    transform: translate3d(0, 700px, 0);\n    opacity: 0;\n  }\n}\n\n.hinge {\n  animation-name: hinge;\n}\n\n@keyframes jackInTheBox {\n  from {\n    opacity: 0;\n    transform: scale(0.1) rotate(30deg);\n    transform-origin: center bottom;\n  }\n\n  50% {\n    transform: rotate(-10deg);\n  }\n\n  70% {\n    transform: rotate(3deg);\n  }\n\n  to {\n    opacity: 1;\n    transform: scale(1);\n  }\n}\n\n.jackInTheBox {\n  animation-name: jackInTheBox;\n}\n\n/* originally authored by Nick Pettit - https://github.com/nickpettit/glide */\n\n@keyframes rollIn {\n  from {\n    opacity: 0;\n    transform: translate3d(-100%, 0, 0) rotate3d(0, 0, 1, -120deg);\n  }\n\n  to {\n    opacity: 1;\n    transform: none;\n  }\n}\n\n.rollIn {\n  animation-name: rollIn;\n}\n\n/* originally authored by Nick Pettit - https://github.com/nickpettit/glide */\n\n@keyframes rollOut {\n  from {\n    opacity: 1;\n  }\n\n  to {\n    opacity: 0;\n    transform: translate3d(100%, 0, 0) rotate3d(0, 0, 1, 120deg);\n  }\n}\n\n.rollOut {\n  animation-name: rollOut;\n}\n\n@keyframes zoomIn {\n  from {\n    opacity: 0;\n    transform: scale3d(0.3, 0.3, 0.3);\n  }\n\n  50% {\n    opacity: 1;\n  }\n}\n\n.zoomIn {\n  animation-name: zoomIn;\n}\n\n@keyframes zoomInDown {\n  from {\n    opacity: 0;\n    transform: scale3d(0.1, 0.1, 0.1) translate3d(0, -1000px, 0);\n    animation-timing-function: cubic-bezier(0.55, 0.055, 0.675, 0.19);\n  }\n\n  60% {\n    opacity: 1;\n    transform: scale3d(0.475, 0.475, 0.475) translate3d(0, 60px, 0);\n    animation-timing-function: cubic-bezier(0.175, 0.885, 0.32, 1);\n  }\n}\n\n.zoomInDown {\n  animation-name: zoomInDown;\n}\n\n@keyframes zoomInLeft {\n  from {\n    opacity: 0;\n    transform: scale3d(0.1, 0.1, 0.1) translate3d(-1000px, 0, 0);\n    animation-timing-function: cubic-bezier(0.55, 0.055, 0.675, 0.19);\n  }\n\n  60% {\n    opacity: 1;\n    transform: scale3d(0.475, 0.475, 0.475) translate3d(10px, 0, 0);\n    animation-timing-function: cubic-bezier(0.175, 0.885, 0.32, 1);\n  }\n}\n\n.zoomInLeft {\n  animation-name: zoomInLeft;\n}\n\n@keyframes zoomInRight {\n  from {\n    opacity: 0;\n    transform: scale3d(0.1, 0.1, 0.1) translate3d(1000px, 0, 0);\n    animation-timing-function: cubic-bezier(0.55, 0.055, 0.675, 0.19);\n  }\n\n  60% {\n    opacity: 1;\n    transform: scale3d(0.475, 0.475, 0.475) translate3d(-10px, 0, 0);\n    animation-timing-function: cubic-bezier(0.175, 0.885, 0.32, 1);\n  }\n}\n\n.zoomInRight {\n  animation-name: zoomInRight;\n}\n\n@keyframes zoomInUp {\n  from {\n    opacity: 0;\n    transform: scale3d(0.1, 0.1, 0.1) translate3d(0, 1000px, 0);\n    animation-timing-function: cubic-bezier(0.55, 0.055, 0.675, 0.19);\n  }\n\n  60% {\n    opacity: 1;\n    transform: scale3d(0.475, 0.475, 0.475) translate3d(0, -60px, 0);\n    animation-timing-function: cubic-bezier(0.175, 0.885, 0.32, 1);\n  }\n}\n\n.zoomInUp {\n  animation-name: zoomInUp;\n}\n\n@keyframes zoomOut {\n  from {\n    opacity: 1;\n  }\n\n  50% {\n    opacity: 0;\n    transform: scale3d(0.3, 0.3, 0.3);\n  }\n\n  to {\n    opacity: 0;\n  }\n}\n\n.zoomOut {\n  animation-name: zoomOut;\n}\n\n@keyframes zoomOutDown {\n  40% {\n    opacity: 1;\n    transform: scale3d(0.475, 0.475, 0.475) translate3d(0, -60px, 0);\n    animation-timing-function: cubic-bezier(0.55, 0.055, 0.675, 0.19);\n  }\n\n  to {\n    opacity: 0;\n    transform: scale3d(0.1, 0.1, 0.1) translate3d(0, 2000px, 0);\n    transform-origin: center bottom;\n    animation-timing-function: cubic-bezier(0.175, 0.885, 0.32, 1);\n  }\n}\n\n.zoomOutDown {\n  animation-name: zoomOutDown;\n}\n\n@keyframes zoomOutLeft {\n  40% {\n    opacity: 1;\n    transform: scale3d(0.475, 0.475, 0.475) translate3d(42px, 0, 0);\n  }\n\n  to {\n    opacity: 0;\n    transform: scale(0.1) translate3d(-2000px, 0, 0);\n    transform-origin: left center;\n  }\n}\n\n.zoomOutLeft {\n  animation-name: zoomOutLeft;\n}\n\n@keyframes zoomOutRight {\n  40% {\n    opacity: 1;\n    transform: scale3d(0.475, 0.475, 0.475) translate3d(-42px, 0, 0);\n  }\n\n  to {\n    opacity: 0;\n    transform: scale(0.1) translate3d(2000px, 0, 0);\n    transform-origin: right center;\n  }\n}\n\n.zoomOutRight {\n  animation-name: zoomOutRight;\n}\n\n@keyframes zoomOutUp {\n  40% {\n    opacity: 1;\n    transform: scale3d(0.475, 0.475, 0.475) translate3d(0, 60px, 0);\n    animation-timing-function: cubic-bezier(0.55, 0.055, 0.675, 0.19);\n  }\n\n  to {\n    opacity: 0;\n    transform: scale3d(0.1, 0.1, 0.1) translate3d(0, -2000px, 0);\n    transform-origin: center bottom;\n    animation-timing-function: cubic-bezier(0.175, 0.885, 0.32, 1);\n  }\n}\n\n.zoomOutUp {\n  animation-name: zoomOutUp;\n}\n\n@keyframes slideInDown {\n  from {\n    transform: translate3d(0, -100%, 0);\n    visibility: visible;\n  }\n\n  to {\n    transform: translate3d(0, 0, 0);\n  }\n}\n\n.slideInDown {\n  animation-name: slideInDown;\n}\n\n@keyframes slideInLeft {\n  from {\n    transform: translate3d(-100%, 0, 0);\n    visibility: visible;\n  }\n\n  to {\n    transform: translate3d(0, 0, 0);\n  }\n}\n\n.slideInLeft {\n  animation-name: slideInLeft;\n}\n\n@keyframes slideInRight {\n  from {\n    transform: translate3d(100%, 0, 0);\n    visibility: visible;\n  }\n\n  to {\n    transform: translate3d(0, 0, 0);\n  }\n}\n\n.slideInRight {\n  animation-name: slideInRight;\n}\n\n@keyframes slideInUp {\n  from {\n    transform: translate3d(0, 100%, 0);\n    visibility: visible;\n  }\n\n  to {\n    transform: translate3d(0, 0, 0);\n  }\n}\n\n.slideInUp {\n  animation-name: slideInUp;\n}\n\n@keyframes slideOutDown {\n  from {\n    transform: translate3d(0, 0, 0);\n  }\n\n  to {\n    visibility: hidden;\n    transform: translate3d(0, 100%, 0);\n  }\n}\n\n.slideOutDown {\n  animation-name: slideOutDown;\n}\n\n@keyframes slideOutLeft {\n  from {\n    transform: translate3d(0, 0, 0);\n  }\n\n  to {\n    visibility: hidden;\n    transform: translate3d(-100%, 0, 0);\n  }\n}\n\n.slideOutLeft {\n  animation-name: slideOutLeft;\n}\n\n@keyframes slideOutRight {\n  from {\n    transform: translate3d(0, 0, 0);\n  }\n\n  to {\n    visibility: hidden;\n    transform: translate3d(100%, 0, 0);\n  }\n}\n\n.slideOutRight {\n  animation-name: slideOutRight;\n}\n\n@keyframes slideOutUp {\n  from {\n    transform: translate3d(0, 0, 0);\n  }\n\n  to {\n    visibility: hidden;\n    transform: translate3d(0, -100%, 0);\n  }\n}\n\n.slideOutUp {\n  animation-name: slideOutUp;\n}", ""]);
 
 	// exports
 
@@ -749,7 +756,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	Object.defineProperty(exports, "__esModule", {
 	    value: true
 	});
-	exports.Store = exports.Http = exports.Plugins = exports.Utils = exports.GlobalEvents = exports.TemplateEngine = exports.RouteSwitcher = exports.Router = exports.Component = exports.Register = exports.Decorators = exports.ObservableCollection = exports.ObservableModel = undefined;
+	exports.Store = exports.Http = exports.Controls = exports.Plugins = exports.Utils = exports.GlobalEvents = exports.TemplateEngine = exports.RouteSwitcher = exports.Router = exports.Component = exports.Register = exports.Decorators = exports.ObservableCollection = exports.ObservableModel = undefined;
 
 	var _observable = __webpack_require__(7);
 
@@ -779,9 +786,13 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var Plugins = _interopRequireWildcard(_plugins);
 
-	var _http = __webpack_require__(45);
+	var _controls = __webpack_require__(45);
 
-	var _store = __webpack_require__(46);
+	var Controls = _interopRequireWildcard(_controls);
+
+	var _http = __webpack_require__(49);
+
+	var _store = __webpack_require__(50);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -798,6 +809,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	exports.GlobalEvents = _globalEvents2.default;
 	exports.Utils = _utils.Utils;
 	exports.Plugins = Plugins;
+	exports.Controls = Controls;
 	exports.Http = _http.Http;
 	exports.Store = _store.Store;
 
@@ -2794,9 +2806,13 @@ return /******/ (function(modules) { // webpackBootstrap
 	                var newCompObject = _core.Component.COMPONENTS.filter(function (r) {
 	                    return r.selector === route.component;
 	                })[0];
-	                var newComp = document.createElement(route.component);
-	                this.checkAccess(root, newComp, route);
-	                new newCompObject.c(newComp, { routeParams: params });
+	                if (newCompObject) {
+	                    var newComp = document.createElement(route.component);
+	                    this.checkAccess(root, newComp, route);
+	                    new newCompObject.c(newComp, { routeParams: params });
+	                } else {
+	                    this.appendEmpty(root);
+	                }
 	            } else {
 	                this.appendEmpty(root);
 	            }
@@ -3466,6 +3482,265 @@ return /******/ (function(modules) { // webpackBootstrap
 	Object.defineProperty(exports, "__esModule", {
 	    value: true
 	});
+	exports.DatepickerComponent = undefined;
+
+	var _datepicker = __webpack_require__(46);
+
+	exports.DatepickerComponent = _datepicker.DatepickerComponent;
+
+/***/ }),
+/* 46 */
+/***/ (function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	exports.DatepickerComponent = undefined;
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _core = __webpack_require__(6);
+
+	var _dropdown = __webpack_require__(47);
+
+	var _datepicker = __webpack_require__(48);
+
+	var _datepicker2 = _interopRequireDefault(_datepicker);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	// import Style from './modal.component.scss';
+
+
+	var daysOfWeek = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
+	var daysOfWeekShort = ['Mo', 'Tu', 'Wen', 'Th', 'Fr', 'Sat', 'Sun'];
+	var monthDefaultType = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+	var monthDefaultTypeNew = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+	var minutes = 'm';
+	var hours = 'h';
+
+	var DatepickerComponent = exports.DatepickerComponent = function (_DropdownComponent) {
+	    _inherits(DatepickerComponent, _DropdownComponent);
+
+	    function DatepickerComponent(params) {
+	        _classCallCheck(this, DatepickerComponent);
+
+	        return _possibleConstructorReturn(this, (DatepickerComponent.__proto__ || Object.getPrototypeOf(DatepickerComponent)).call(this, params, {
+	            template: _datepicker2.default
+	        }));
+	    }
+
+	    _createClass(DatepickerComponent, [{
+	        key: 'INPUT',
+	        value: function INPUT(params) {
+	            if (params.date) {
+	                this.props.set({
+	                    model: new Date(params.date),
+	                    formattedDate: _core.Utils.getDateByFormat(params.date, 'yyyy-mm-dd')
+	                });
+	                this.currentDate = new Date(params.date); // init view
+	            }
+
+	            if (params.maxDate) {
+	                this.maxDate = params.maxDate;
+	            }
+
+	            if (params.minDate) {
+	                this.minDate = params.minDate;
+	            }
+
+	            this.update();
+	        }
+	    }, {
+	        key: 'onInit',
+	        value: function onInit() {
+	            this.currentDate = new Date();
+	            this.props.set({ 'daysOfWeekShort': daysOfWeekShort, formattedDate: _core.Utils.getDateByFormat(this.currentDate, 'yyyy-mm-dd') });
+	            this.update();
+	        }
+	    }, {
+	        key: 'update',
+	        value: function update() {
+	            this.props.set({
+	                currentMonth: this.getCurrentMonth(),
+	                currentYear: this.getCurrentYear(),
+	                countOfDays: this.getCountOfDays()
+	            });
+	        }
+	    }, {
+	        key: 'select',
+	        value: function select(event, params) {
+	            if (params.inactive === false) {
+	                this.emit('modelChange', params.date);
+	                this.close();
+	            }
+	            event.stopPropagation();
+	        }
+	    }, {
+	        key: 'prev',
+	        value: function prev(e) {
+	            e.stopPropagation();
+	            this.currentDate = new Date(this.currentDate.setMonth(this.currentDate.getMonth() - 1));
+	            this.update();
+	        }
+	    }, {
+	        key: 'next',
+	        value: function next(e) {
+	            e.stopPropagation();
+	            this.currentDate = new Date(this.currentDate.setMonth(this.currentDate.getMonth() + 1));
+	            this.update();
+	        }
+	    }, {
+	        key: 'getCurrentMonth',
+	        value: function getCurrentMonth() {
+	            var a = monthDefaultType[this.currentDate.getMonth()];
+	            // this.props.set('currentMonth', a);
+	            return a;
+	        }
+	    }, {
+	        key: 'getCurrentYear',
+	        value: function getCurrentYear() {
+	            var a = this.currentDate.getFullYear();
+	            // this.props.set('currentYear', a);
+	            return a;
+	        }
+	    }, {
+	        key: 'getDays',
+	        value: function getDays(date) {
+	            date = new Date(date);
+	            var year = date.getFullYear();
+	            var month = date.getMonth();
+
+	            var monthStart = new Date(year, month, 1);
+	            var monthEnd = new Date(year, month + 1, 1);
+	            var monthLength = (monthEnd - monthStart) / (1000 * 60 * 60 * 24);
+	            var days = [];
+	            var minDate = new Date(this.minDate);
+	            var maxDate = new Date(this.maxDate);
+	            var emptyDays = monthStart.getDay() - 1; // get last dates of prev month
+
+	            monthStart = _core.Utils.addDays(monthStart, -emptyDays); // set start position
+
+	            for (var i = 1; i < monthLength + 1 + emptyDays; i++) {
+	                var _date = _core.Utils.addDays(monthStart, i - 1);
+	                var day = { index: _date.getDate(), date: _date, today: false, selected: false, inactive: false, empty: false };
+
+	                if (i <= emptyDays) {
+	                    day.empty = true;
+	                }
+
+	                if (new Date().toDateString() == day.date.toDateString()) {
+	                    day.today = true;
+	                }
+	                if (this.props.get('model') && this.props.get('model').toDateString() == day.date.toDateString()) {
+	                    day.selected = true;
+	                }
+
+	                // if (this.props.get('model') && this.props.get('model').toDateString() == day.date.toDateString()) {
+	                //     day.selected = true;
+	                // }
+
+	                if (minDate && day.date.setHours(0, 0, 0, 0) <= minDate.setHours(0, 0, 0, 0)) {
+	                    day.inactive = true;
+	                }
+	                if (maxDate && day.date.setHours(0, 0, 0, 0) >= maxDate.setHours(0, 0, 0, 0)) {
+	                    day.inactive = true;
+	                }
+	                days.push(day);
+	            }
+
+	            return days;
+	        }
+	    }, {
+	        key: 'getCountOfDays',
+	        value: function getCountOfDays() {
+	            var a = this.getDays(this.currentDate);
+	            // this.props.set('countOfDays', a);
+	            return a;
+	        }
+	    }]);
+
+	    return DatepickerComponent;
+	}(_dropdown.DropdownComponent);
+
+/***/ }),
+/* 47 */
+/***/ (function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	exports.DropdownComponent = undefined;
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _component = __webpack_require__(34);
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var DropdownComponent = exports.DropdownComponent = function (_Component) {
+	    _inherits(DropdownComponent, _Component);
+
+	    function DropdownComponent(params, options) {
+	        _classCallCheck(this, DropdownComponent);
+
+	        return _possibleConstructorReturn(this, (DropdownComponent.__proto__ || Object.getPrototypeOf(DropdownComponent)).call(this, params, options));
+	    }
+
+	    _createClass(DropdownComponent, [{
+	        key: 'openMenu',
+	        value: function openMenu(e) {
+	            if (this.getRoot().getAttribute('readonly') === null) {
+	                this.props.set('_show', !this.props.get('_show'));
+	            }
+	        }
+	    }, {
+	        key: 'outside',
+	        value: function outside() {
+	            this.close();
+	        }
+	    }, {
+	        key: 'close',
+	        value: function close() {
+	            if (this.props.get('_show')) {
+	                this.props.set('_show', false);
+	            }
+	        }
+	    }]);
+
+	    return DropdownComponent;
+	}(_component.Component);
+
+/***/ }),
+/* 48 */
+/***/ (function(module, exports) {
+
+	"use strict";
+
+	module.exports = "<div ac-outside=\"outside\" class=\"relative\">\r\n\t<div  style=\"width: 100%\">\r\n\t\t<input type=\"text\" @click=\"openMenu\" class=\"app-form__label__input full-width\" placeholder=\"\"  readonly required ac-value=\"props.formattedDate\">\r\n\t\t<!-- <img class=\"datepicker-icon\" src=\"../../assets/img/hanging-calendar.svg\" alt=\"\"> -->\r\n\t</div>\r\n\r\n\t<div class=\"j-calendar\" ac-if=\"props._show\" >\r\n\t    <div class=\"j-calendar__wrap\">\r\n\t        <div class=\"j-calendar__item\">\r\n\t            <div class=\"j-calendar__header\">\r\n\t                <div class=\"j-calendar__header__left\" @click=\"prev\">\r\n\t                    <span>prev</span>\r\n\t                </div>\r\n\t                <div class=\"j-calendar__header__center\">\r\n\t\t                <span ac-value=\"props.currentMonth\"></span>\r\n\t\t                <span style=\"margin-left: 7px;\" ac-value=\"props.currentYear\"></span>\r\n\t                </div>\r\n\t                <div class=\"j-calendar__header__right\" @click=\"next\">\r\n\t                    <span>Next</span>\r\n\t                </div>\r\n\t            </div>\r\n\t            <div class=\"j-calendar__content\">\r\n\t                <div class=\"j-calendar__days\">\r\n\t                    <div class=\"j-calendar__days__item\" ac-for=\"props.daysOfWeekShort\">\r\n\t\t\t\t\t\t\t<span ac-value=\"index\"></span>\r\n\t\t\t\t\t\t</div>\r\n\t                </div>\r\n\t                <div class=\"j-calendar__date\">\r\n\t                    <div class=\"j-calendar__date__item\" \r\n\t                    ac-class=\"j-calendar__date__item--circle:today, j-calendar__date__item--active:selected, j-calendar__date__item--inactive: inactive\"\r\n\t                    ac-for=\"props.countOfDays\"\r\n\t                    @click=\"select(this)\">\r\n\t\t\t\t\t\t\t<span ac-value=\"index\"></span>\r\n\t                    </div>\r\n\t                </div>\r\n\t            </div>\r\n\t        </div>\r\n\t    </div>\r\n\t</div>\r\n</div>\r\n";
+
+/***/ }),
+/* 49 */
+/***/ (function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
 	exports.Http = exports.Collection = exports.Model = undefined;
 
 	var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
@@ -3897,7 +4172,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	exports.Http = Http;
 
 /***/ }),
-/* 46 */
+/* 50 */
 /***/ (function(module, exports) {
 
 	"use strict";
@@ -3924,7 +4199,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	}();
 
 /***/ }),
-/* 47 */
+/* 51 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -3936,7 +4211,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var _core = __webpack_require__(6);
 
-	var _homeComponent = __webpack_require__(48);
+	var _homeComponent = __webpack_require__(52);
 
 	var _homeComponent2 = _interopRequireDefault(_homeComponent);
 
@@ -3965,7 +4240,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	}(_core.Component);
 
 /***/ }),
-/* 48 */
+/* 52 */
 /***/ (function(module, exports) {
 
 	"use strict";
@@ -3973,7 +4248,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	module.exports = "<div class=\"app-container\">\r\n  <h1>ACE JS</h1>\r\n  <p><b>AceJs</b> - is a front-end framework based on web components technology.</p>\r\n  <button type=\"\" ac-link=\"documentation\" class=\"app-btn\">GET STARTED</button>\r\n</div>\r\n";
 
 /***/ }),
-/* 49 */
+/* 53 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -3987,7 +4262,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var _core = __webpack_require__(6);
 
-	var _rootComponent = __webpack_require__(50);
+	var _rootComponent = __webpack_require__(54);
 
 	var _rootComponent2 = _interopRequireDefault(_rootComponent);
 
@@ -4021,7 +4296,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	}(_core.Component);
 
 /***/ }),
-/* 50 */
+/* 54 */
 /***/ (function(module, exports) {
 
 	"use strict";
@@ -4029,7 +4304,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	module.exports = "<app-header></app-header>\r\n<route-switcher></route-switcher>\r\n<app-footer></app-footer>\r\n<!-- <app-notifications></app-notifications>\r\n<app-confirm-modal></app-confirm-modal> -->";
 
 /***/ }),
-/* 51 */
+/* 55 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -4045,7 +4320,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var _decorators = __webpack_require__(8);
 
-	var _headerComponent = __webpack_require__(52);
+	var _headerComponent = __webpack_require__(56);
 
 	var _headerComponent2 = _interopRequireDefault(_headerComponent);
 
@@ -4087,15 +4362,15 @@ return /******/ (function(modules) { // webpackBootstrap
 	}(_core.Component);
 
 /***/ }),
-/* 52 */
+/* 56 */
 /***/ (function(module, exports) {
 
 	"use strict";
 
-	module.exports = "<header>\r\n    <div class=\"logo\">\r\n        <a class=\"gantt--main-menu-item\" ac-link=\"/\">\r\n            ACE JS\r\n        </a>\r\n    </div>\r\n    <ul class=\"gantt--main-menu\">\r\n        <li><a class=\"gantt--main-menu-item\" ac-link=\"documentation\">Documentation</a></li>\r\n        <li><a class=\"gantt--main-menu-item\" ac-link=\"plugins\">Plugins</a></li>\r\n        <!-- <li><a class=\"gantt--main-menu-item\" ac-link=\"todo\">TODO MVVM</a></li> -->\r\n    </ul>\r\n</header>";
+	module.exports = "<header>\r\n    <div class=\"logo\">\r\n        <a class=\"gantt--main-menu-item\" ac-link=\"/\">\r\n            ACE JS\r\n        </a>\r\n    </div>\r\n    <ul class=\"gantt--main-menu\">\r\n        <li><a class=\"gantt--main-menu-item\" ac-link=\"documentation\">Documentation</a></li>\r\n        <li><a class=\"gantt--main-menu-item\" ac-link=\"controls\">Controls</a></li>\r\n        <li><a class=\"gantt--main-menu-item\" ac-link=\"plugins\">Plugins</a></li>\r\n        <!-- <li><a class=\"gantt--main-menu-item\" ac-link=\"todo\">TODO MVVM</a></li> -->\r\n    </ul>\r\n</header>";
 
 /***/ }),
-/* 53 */
+/* 57 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -4109,7 +4384,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var _core = __webpack_require__(6);
 
-	var _pluginsComponent = __webpack_require__(54);
+	var _pluginsComponent = __webpack_require__(58);
 
 	var _pluginsComponent2 = _interopRequireDefault(_pluginsComponent);
 
@@ -4151,7 +4426,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	}(_core.Component);
 
 /***/ }),
-/* 54 */
+/* 58 */
 /***/ (function(module, exports) {
 
 	"use strict";
@@ -4159,7 +4434,117 @@ return /******/ (function(modules) { // webpackBootstrap
 	module.exports = "<main>\r\n\r\n    <div class=\"main-content justify-space-between\">\r\n\r\n        <ul class=\"main-list\">\r\n            <li ac-for=\"props.plugins\">\r\n                <a class=\"list-head\" ac-value=\"name\" ac-link=\"{{this.route}}\" ></a>\r\n            </li>\r\n        </ul>\r\n\r\n        <div class=\"plugins-section\">\r\n            <!-- <child-route-switcher></child-route-switcher> -->\r\n        \r\n        \t<h3>Sortable</h3>\r\n        \t<div ac-ref=\"test\">\r\n        \t    <div draggable=\"true\" style=\"border: 1px solid #ccc; padding: 5px;display: block; width: 200px\">First Item</div>\r\n        \t    <div draggable=\"true\" style=\"border: 1px solid #ccc; padding: 5px;display: block; width: 200px\">Second Item</div>\r\n        \t    <div draggable=\"true\" style=\"border: 1px solid #ccc; padding: 5px;display: block; width: 200px\">Third Item</div>\r\n        \t</div>\r\n    \r\n        </div>\r\n    </div>\r\n</main>\r\n\r\n\r\n\r\n";
 
 /***/ }),
-/* 55 */
+/* 59 */
+/***/ (function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	exports.ControlsComponent = undefined;
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _core = __webpack_require__(6);
+
+	var _controlsComponent = __webpack_require__(60);
+
+	var _controlsComponent2 = _interopRequireDefault(_controlsComponent);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var ControlsComponent = exports.ControlsComponent = function (_Component) {
+	    _inherits(ControlsComponent, _Component);
+
+	    function ControlsComponent(options) {
+	        _classCallCheck(this, ControlsComponent);
+
+	        return _possibleConstructorReturn(this, (ControlsComponent.__proto__ || Object.getPrototypeOf(ControlsComponent)).call(this, options, {
+	            template: _controlsComponent2.default
+	        }));
+	    }
+
+	    _createClass(ControlsComponent, [{
+	        key: 'onInit',
+	        value: function onInit() {
+	            this.props.set({ controls: [{
+	                    name: 'Datepicker',
+	                    route: 'controls/datepicker'
+	                }],
+
+	                date: new Date()
+	            });
+	        }
+	    }]);
+
+	    return ControlsComponent;
+	}(_core.Component);
+
+/***/ }),
+/* 60 */
+/***/ (function(module, exports) {
+
+	"use strict";
+
+	module.exports = "<main>\r\n\r\n    <div class=\"main-content justify-space-between\">\r\n\r\n        <ul class=\"main-list\">\r\n            <li ac-for=\"props.controls\">\r\n                <a class=\"list-head\" ac-value=\"name\" ac-link=\"{{this.route}}\" ></a>\r\n            </li>\r\n        </ul>\r\n\r\n        <div class=\"plugins-section\">\r\n            <!-- <child-route-switcher></child-route-switcher> -->\r\n        \r\n        \t<h3>Datepicker</h3>\r\n            <div style=\"width: 200px\">\r\n                <app-datepicker ac-model=\"props.date\" ac-input=\"date: props.date\"></app-datepicker>\r\n            </div>\r\n        </div>\r\n    </div>\r\n</main>\r\n\r\n\r\n\r\n";
+
+/***/ }),
+/* 61 */
+/***/ (function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	exports.NotFoundComponent = undefined;
+
+	var _core = __webpack_require__(6);
+
+	var _notFoundComponent = __webpack_require__(62);
+
+	var _notFoundComponent2 = _interopRequireDefault(_notFoundComponent);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var NotFoundComponent = exports.NotFoundComponent = function (_Component) {
+	    _inherits(NotFoundComponent, _Component);
+
+	    function NotFoundComponent(options) {
+	        _classCallCheck(this, NotFoundComponent);
+
+	        return _possibleConstructorReturn(this, (NotFoundComponent.__proto__ || Object.getPrototypeOf(NotFoundComponent)).call(this, options, {
+	            template: _notFoundComponent2.default
+	            // shadow: true
+	        }));
+	    }
+
+	    return NotFoundComponent;
+	}(_core.Component);
+
+/***/ }),
+/* 62 */
+/***/ (function(module, exports) {
+
+	"use strict";
+
+	module.exports = "<!-- <app-header></app-header> -->\r\n<h1 style=\"text-align: center\">Page not found</h1>";
+
+/***/ }),
+/* 63 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -4168,46 +4553,46 @@ return /******/ (function(modules) { // webpackBootstrap
 	    value: true
 	});
 
-	var _documentation = __webpack_require__(56);
+	var _documentation = __webpack_require__(64);
 
-	var _docQuickStart = __webpack_require__(58);
+	var _docQuickStart = __webpack_require__(66);
 
-	var _docArchitecture = __webpack_require__(60);
+	var _docArchitecture = __webpack_require__(68);
 
-	var _docComponent = __webpack_require__(63);
+	var _docComponent = __webpack_require__(71);
 
-	var _docLifecycle = __webpack_require__(65);
+	var _docLifecycle = __webpack_require__(73);
 
-	var _docUtils = __webpack_require__(67);
+	var _docUtils = __webpack_require__(75);
 
-	var _directives = __webpack_require__(69);
+	var _directives = __webpack_require__(77);
 
-	var _customDirectives = __webpack_require__(71);
+	var _customDirectives = __webpack_require__(79);
 
-	var _docInterpolation = __webpack_require__(73);
+	var _docInterpolation = __webpack_require__(81);
 
-	var _docConditional = __webpack_require__(75);
+	var _docConditional = __webpack_require__(83);
 
-	var _docForms = __webpack_require__(77);
+	var _docForms = __webpack_require__(85);
 
-	var _docModules = __webpack_require__(79);
+	var _docModules = __webpack_require__(87);
 
-	var _docSmartObject = __webpack_require__(81);
+	var _docSmartObject = __webpack_require__(89);
 
-	var _docHowTo = __webpack_require__(83);
+	var _docHowTo = __webpack_require__(91);
 
-	var _docRouterConfig = __webpack_require__(85);
+	var _docRouterConfig = __webpack_require__(93);
 
-	var _docHttpModule = __webpack_require__(87);
+	var _docHttpModule = __webpack_require__(95);
 
-	var _docHttpMethods = __webpack_require__(89);
+	var _docHttpMethods = __webpack_require__(97);
 
-	var _exampleChild = __webpack_require__(91);
+	var _exampleChild = __webpack_require__(99);
 
 	exports.default = [{ c: _documentation.DocumentationComponent, selector: 'app-documentation' }, { c: _docQuickStart.DocQuickStartComponent, selector: 'app-documentation-quick-start' }, { c: _docArchitecture.DocArchitectureComponent, selector: 'app-documentation-architecture' }, { c: _docHowTo.DocHowToComponent, selector: 'app-documentation-how-to-install' }, { c: _docComponent.DocComponentComponent, selector: 'app-documentation-component' }, { c: _docLifecycle.DocLifecycleComponent, selector: 'app-documentation-lifecycle' }, { c: _docUtils.DocUtilsComponent, selector: 'app-documentation-utils' }, { c: _directives.DocDirectivesComponent, selector: 'app-documentation-directives' }, { c: _customDirectives.DocCustomDirectivesComponent, selector: 'app-documentation-custom-directives' }, { c: _docInterpolation.DocInterpolationComponent, selector: 'app-documentation-interpolation' }, { c: _docConditional.DocConditionalComponent, selector: 'app-documentation-conditional' }, { c: _docForms.DocFormsComponent, selector: 'app-documentation-forms' }, { c: _docModules.DocModulesComponent, selector: 'app-documentation-modules' }, { c: _docSmartObject.DocSmartObjectComponent, selector: 'app-documentation-smart-object' }, { c: _docRouterConfig.DocRouterConfigComponent, selector: 'app-documentation-router-config' }, { c: _docHttpModule.HttpModuleComponent, selector: 'app-documentation-http-module' }, { c: _docHttpMethods.HttpMethodsComponent, selector: 'app-documentation-http-methods' }, { c: _exampleChild.ExampleChildComponent, selector: 'app-example-child' }];
 
 /***/ }),
-/* 56 */
+/* 64 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -4221,7 +4606,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var _core = __webpack_require__(6);
 
-	var _documentationComponent = __webpack_require__(57);
+	var _documentationComponent = __webpack_require__(65);
 
 	var _documentationComponent2 = _interopRequireDefault(_documentationComponent);
 
@@ -4355,7 +4740,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	}(_core.Component);
 
 /***/ }),
-/* 57 */
+/* 65 */
 /***/ (function(module, exports) {
 
 	"use strict";
@@ -4363,7 +4748,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	module.exports = "<main>\r\n\r\n    <div class=\"main-content justify-space-between\">\r\n\r\n        <ul class=\"main-list\">\r\n            <li style=\"font-size: 14px;padding: 5px; font-weight: 300;\">\r\n                v<small ac-value=\"props.version\"></small>\r\n            </li>\r\n            <li ac-for=\"props.categories\">\r\n                <div class=\"list-head\" ac-value=\"name\"></div>\r\n                <ol class=\"list\">\r\n                    <li ac-for=\"items\">\r\n                        <a ac-value=\"name\" ac-link=\"{{this.route}}\" ac-link-exact=\"true\"></a>\r\n                    </li>\r\n                </ol>\r\n            </li>\r\n        </ul>\r\n\r\n        <div class=\"documentation-section\">\r\n            <child-route-switcher></child-route-switcher>\r\n        </div>\r\n    </div>\r\n</main>";
 
 /***/ }),
-/* 58 */
+/* 66 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -4377,7 +4762,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var _core = __webpack_require__(6);
 
-	var _docQuickStartComponent = __webpack_require__(59);
+	var _docQuickStartComponent = __webpack_require__(67);
 
 	var _docQuickStartComponent2 = _interopRequireDefault(_docQuickStartComponent);
 
@@ -4413,7 +4798,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	}(_core.Component);
 
 /***/ }),
-/* 59 */
+/* 67 */
 /***/ (function(module, exports) {
 
 	"use strict";
@@ -4421,7 +4806,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	module.exports = "<h3>Tutorial</h3>\r\n<span class=\"text\">This tutorial will help you to create your first app based on our framework</span>";
 
 /***/ }),
-/* 60 */
+/* 68 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -4435,7 +4820,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var _core = __webpack_require__(6);
 
-	var _docArchitectureComponent = __webpack_require__(61);
+	var _docArchitectureComponent = __webpack_require__(69);
 
 	var _docArchitectureComponent2 = _interopRequireDefault(_docArchitectureComponent);
 
@@ -4471,15 +4856,15 @@ return /******/ (function(modules) { // webpackBootstrap
 	}(_core.Component);
 
 /***/ }),
-/* 61 */
+/* 69 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	"use strict";
 
-	module.exports = "<h3>Architecture</h3>\r\n<b>Please follow this file structure:</b>\r\n<br>\r\n<div class=\"code-block folder-structure\">\r\n    <div class=\"folder-structure--item\">\r\n        AceJs project\r\n        <div class=\"children\">\r\n            <div class=\"folder-structure--item\">\r\n                dev\r\n            </div>\r\n            <div class=\"children\">\r\n                <div class=\"folder-structure--item\">components</div>\r\n                <div class=\"children\">\r\n                \t<div class=\"folder-structure--item\">component-one</div>\r\n                \t<div class=\"children\">\r\n                \t\t<div class=\"folder-structure--item\">component-one.component.js</div>\r\n                \t\t<div class=\"folder-structure--item\">component-one.component.html</div>\r\n                \t</div>\r\n                \t<div class=\"folder-structure--item\">component-two</div>\r\n                \t<div class=\"folder-structure--item\">component ...</div>\r\n                </div>\r\n                <div class=\"folder-structure--item\">stores</div>\r\n                <div class=\"folder-structure--item\">protectors</div>\r\n                <div class=\"folder-structure--item\">styles</div>\r\n                <div class=\"folder-structure--item\">app.js</div>\r\n                <div class=\"folder-structure--item\">assets\r\n                </div>\r\n                <div class=\"children\">\r\n                    <div class=\"folder-structure--item\">img</div>\r\n                    <div class=\"folder-structure--item\">fonts</div>\r\n                </div>\r\n                <div class=\"folder-structure--item\">routes.js</div>\r\n            </div>\r\n            <div class=\"folder-structure--item\">index.html</div>\r\n            <div class=\"folder-structure--item\">node_modules</div>\r\n            <div class=\"folder-structure--item\">package.json</div>\r\n            <div class=\"folder-structure--item\">webpack.config.js</div>\r\n        </div>\r\n    </div>\r\n</div>\r\n\r\n<br>\r\n<b>You can see basic principles of AceJs on following picture: </b>\r\n<img src=\"" + __webpack_require__(62) + "\">\r\n\r\n\r\n<br><br>\r\n<div class=\"code-block\">\r\n    <div class=\"code-header\">app.js</div>\r\n    <pre>\r\n        import Styles from './styles/main.scss';\r\n        import { Register } from '../core';\r\n        import { RootComponent } from './components/root/root.component';\r\n        import { HomeComponent } from './components/home/home.component';\r\n        import { HeaderComponent } from './components/header/header.component';\r\n\r\n        import Docs from './components/documentation';\r\n\r\n        import { Routes } from './router.js';\r\n        <b>Register</b>({\r\n            <b>root</b>: {\r\n                c: RootComponent, selector: 'app-root'\r\n            },\r\n            <b>components</b>: [\r\n                { c: HomeComponent, selector: 'app-home' },\r\n                { c: HeaderComponent, selector: 'app-header' }\r\n            ],\r\n            <b>modules</b>: [\r\n                Docs\r\n            ],\r\n            <b>serverUrl</b>: \"\",\r\n            <b>routes</b>: Routes,\r\n            <b>styles</b>: Styles\r\n        });\r\n    </pre>\r\n</div>";
+	module.exports = "<h3>Architecture</h3>\r\n<b>Please follow this file structure:</b>\r\n<br>\r\n<div class=\"code-block folder-structure\">\r\n    <div class=\"folder-structure--item\">\r\n        AceJs project\r\n        <div class=\"children\">\r\n            <div class=\"folder-structure--item\">\r\n                dev\r\n            </div>\r\n            <div class=\"children\">\r\n                <div class=\"folder-structure--item\">components</div>\r\n                <div class=\"children\">\r\n                \t<div class=\"folder-structure--item\">component-one</div>\r\n                \t<div class=\"children\">\r\n                \t\t<div class=\"folder-structure--item\">component-one.component.js</div>\r\n                \t\t<div class=\"folder-structure--item\">component-one.component.html</div>\r\n                \t</div>\r\n                \t<div class=\"folder-structure--item\">component-two</div>\r\n                \t<div class=\"folder-structure--item\">component ...</div>\r\n                </div>\r\n                <div class=\"folder-structure--item\">stores</div>\r\n                <div class=\"folder-structure--item\">protectors</div>\r\n                <div class=\"folder-structure--item\">styles</div>\r\n                <div class=\"folder-structure--item\">app.js</div>\r\n                <div class=\"folder-structure--item\">assets\r\n                </div>\r\n                <div class=\"children\">\r\n                    <div class=\"folder-structure--item\">img</div>\r\n                    <div class=\"folder-structure--item\">fonts</div>\r\n                </div>\r\n                <div class=\"folder-structure--item\">routes.js</div>\r\n            </div>\r\n            <div class=\"folder-structure--item\">index.html</div>\r\n            <div class=\"folder-structure--item\">node_modules</div>\r\n            <div class=\"folder-structure--item\">package.json</div>\r\n            <div class=\"folder-structure--item\">webpack.config.js</div>\r\n        </div>\r\n    </div>\r\n</div>\r\n\r\n<br>\r\n<b>You can see basic principles of AceJs on following picture: </b>\r\n<img src=\"" + __webpack_require__(70) + "\">\r\n\r\n\r\n<br><br>\r\n<div class=\"code-block\">\r\n    <div class=\"code-header\">app.js</div>\r\n    <pre>\r\n        import Styles from './styles/main.scss';\r\n        import { Register } from '../core';\r\n        import { RootComponent } from './components/root/root.component';\r\n        import { HomeComponent } from './components/home/home.component';\r\n        import { HeaderComponent } from './components/header/header.component';\r\n\r\n        import Docs from './components/documentation';\r\n\r\n        import { Routes } from './router.js';\r\n        <b>Register</b>({\r\n            <b>root</b>: {\r\n                c: RootComponent, selector: 'app-root'\r\n            },\r\n            <b>components</b>: [\r\n                { c: HomeComponent, selector: 'app-home' },\r\n                { c: HeaderComponent, selector: 'app-header' }\r\n            ],\r\n            <b>modules</b>: [\r\n                Docs\r\n            ],\r\n            <b>serverUrl</b>: \"\",\r\n            <b>routes</b>: Routes,\r\n            <b>styles</b>: Styles\r\n        });\r\n    </pre>\r\n</div>";
 
 /***/ }),
-/* 62 */
+/* 70 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -4487,7 +4872,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	module.exports = __webpack_require__.p + "src/example/img/ace-brand.svg";
 
 /***/ }),
-/* 63 */
+/* 71 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -4501,7 +4886,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var _core = __webpack_require__(6);
 
-	var _docComponentComponent = __webpack_require__(64);
+	var _docComponentComponent = __webpack_require__(72);
 
 	var _docComponentComponent2 = _interopRequireDefault(_docComponentComponent);
 
@@ -4537,7 +4922,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	}(_core.Component);
 
 /***/ }),
-/* 64 */
+/* 72 */
 /***/ (function(module, exports) {
 
 	"use strict";
@@ -4545,7 +4930,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	module.exports = "<h3>Example component</h3>\r\n\r\n<div class=\"code-block\">\r\n    <div class=\"code-header\">example.component.js</div>\r\n    <pre>\r\n    import { <b>Component</b> } from 'ace-js';\r\n    import <b>Tpl</b> from './example.component.html';\r\n    export class <b>ExampleComponent</b> extends Component {\r\n        constructor(params) {\r\n            super(params, {\r\n                <b>template</b>: Tpl,\r\n                <b>props</b>: {\r\n                    title: 'Some title'        \r\n                }\r\n                \r\n                <b>hostEvents</b>: {\r\n                    click: 'rootClick'\r\n                },\r\n                <b>hostClasses</b>: {\r\n                    selected: 'props.selected',\r\n                    hidden: '!props.visible'\r\n                },\r\n                <b>hostStyles</b>: {\r\n                    width: {value: 'props.width', suffix: 'px'}\r\n                }\r\n            });\r\n        }\r\n\r\n        onInit() {\r\n        \r\n        }\r\n    }\r\n</pre>\r\n</div>\r\n\r\n<div class=\"text\">or with decorator</div>\r\n\r\n<div class=\"code-block\">\r\n    <div class=\"code-header\">example.component.js</div>\r\n    <pre>\r\n        import { <b>Component, Decorators</b> } from '../../../../core';\r\n\r\n        import <b>Tpl</b> from './doc-interpolation.component.html';\r\n\r\n\r\n        <b>@Decorators.ComponentDecorator</b>({\r\n            <b>template</b>: Tpl,\r\n            <b>props</b>: {\r\n                isVisible: true,\r\n                title: 'test'\r\n            }\r\n        })\r\n        export class <b>ExampleComponent</b> {\r\n            onInit() {\r\n            \r\n            }\r\n        }\r\n</pre>\r\n</div>\r\n\r\n<div class=\"block\">\r\n    <b class=\"title\">template</b>\r\n    <span class=\"text\">Specifies <b>Tpl</b> template for current component </span>\r\n</div>\r\n\r\n<div class=\"block\">\r\n    <b class=\"title\">props</b>\r\n    <span class=\"text\">Initial properties of component</span>\r\n</div>\r\n\r\n<div class=\"block\">\r\n    <b class=\"title\">hostEvents</b>\r\n    <span class=\"text\">Add <b>event listeners</b> to root element of component</span>\r\n</div>\r\n\r\n<div class=\"block\">\r\n    <b class=\"title\">hostClasses</b>\r\n    <span class=\"text\">Bind <b>classList</b> of root element with props. <br>\r\n        <b>selected</b> - key, as class name\r\n        <br>\r\n        <b>'props.selected'</b> - value, as propery to bind\r\n    </span>\r\n</div>\r\n\r\n<div class=\"block\">\r\n    <b class=\"title\">hostStyles</b>\r\n    <span class=\"text\">Bind styles of root element with props. <br>\r\n        <b>width</b> - key, as css property <br>\r\n        <b>value</b>:string - property to bind <br>\r\n        <b>suffix</b>:string - for example 'px'\r\n    </span>\r\n</div>";
 
 /***/ }),
-/* 65 */
+/* 73 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -4559,7 +4944,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var _core = __webpack_require__(6);
 
-	var _docLifecycleComponent = __webpack_require__(66);
+	var _docLifecycleComponent = __webpack_require__(74);
 
 	var _docLifecycleComponent2 = _interopRequireDefault(_docLifecycleComponent);
 
@@ -4595,7 +4980,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	}(_core.Component);
 
 /***/ }),
-/* 66 */
+/* 74 */
 /***/ (function(module, exports) {
 
 	"use strict";
@@ -4603,7 +4988,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	module.exports = "<div class=\"block\">\r\n    <b class=\"title\">onAttach()</b>\r\n    <span class=\"text\">Fires when component is attached to DOM</span>\r\n</div>\r\n\r\n<div class=\"block\">\r\n    <b class=\"title\">onInit()</b>\r\n    <span class=\"text\">Fires when component is initialized</span>\r\n</div>\r\n\r\n<div class=\"block\">\r\n    <b class=\"title\">onDestroy()</b>\r\n    <span class=\"text\">Fires when component is destroyed</span>\r\n</div>\r\n\r\n<div class=\"block\">\r\n    <b class=\"title\">onUpdate()</b>\r\n    <span class=\"text\">Fires when props of component is updated</span>\r\n</div>\r\n\r\n<div class=\"section-title\">Lifecycle diagram</div>";
 
 /***/ }),
-/* 67 */
+/* 75 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -4617,7 +5002,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var _core = __webpack_require__(6);
 
-	var _docUtilsComponent = __webpack_require__(68);
+	var _docUtilsComponent = __webpack_require__(76);
 
 	var _docUtilsComponent2 = _interopRequireDefault(_docUtilsComponent);
 
@@ -4653,7 +5038,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	}(_core.Component);
 
 /***/ }),
-/* 68 */
+/* 76 */
 /***/ (function(module, exports) {
 
 	"use strict";
@@ -4661,7 +5046,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	module.exports = "<h3>Utils</h3>\r\n<div class=\"block\">\r\n    <b class=\"title\">randomInteger(min max)</b> <span class=\"text\">get random number between min and max values</span>\r\n</div>\r\n\r\n<div class=\"block\">\r\n    <b class=\"title\">addDays(date, count)</b> <span class=\"text\">add <b>count</b> days to current <b>date</b></span>\r\n</div>\r\n\r\n<div class=\"block\">\r\n    <b class=\"title\">getDateByFormat(date, format)</b>\r\n    <div class=\"text\">convert <b>date</b> with specified <b>format</b>\r\n        <br>\r\n        <b class=\"title\">Available formats: </b>\r\n        <div>\r\n            <b>yyyy-mm-dd</b><br>\r\n            <b>yyyymmdd</b><br>\r\n            <b>yyyy/mm/dd</b><br>\r\n            <b>yyyy-mm-dd hh:mm</b><br>\r\n            <b>hh:mm</b><br>\r\n            <b>dd.mm.yyyy</b>\r\n        </div>\r\n    </div>\r\n</div>\r\n<div class=\"block\">\r\n    <b class=\"title\">getDaysBetweenDates(dt1, dt2)</b> <span class=\"text\">get days count between two dates</span>\r\n</div>\r\n\r\n<div class=\"block\">\r\n    <b class=\"title\">closest(array, num)</b> <span class=\"text\">get closest value <b>num</b> from <b>array</b></span>\r\n</div>\r\n\r\n<div class=\"block\">\r\n    <b class=\"title\">insertAfter(elem, refElem)</b> <span class=\"text\">Insert <b>elem</b> after specified <b>refElem</b></span>\r\n</div>\r\n<div class=\"block\">\r\n    <b class=\"title\">isCustomElement(element)</b> <span class=\"text\">Check if specified <b>element</b> is custom element</span>\r\n</div>\r\n\r\n\r\n<div class=\"block\">\r\n    <b class=\"title\">sorting(array, params, reverse)</b> <span\r\n        class=\"text\">Sort specified <b>array</b> with <b>params(type: string, id: string)</b>\r\n    <div><b>type</b> - type of sotring, <b>id</b> - prop for sorting</div>\r\n    <div><b>reverse</b> - opposite sorting</div></span>\r\n</div>\r\n\r\n\r\n\r\n\r\n";
 
 /***/ }),
-/* 69 */
+/* 77 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -4675,7 +5060,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var _core = __webpack_require__(6);
 
-	var _directivesComponent = __webpack_require__(70);
+	var _directivesComponent = __webpack_require__(78);
 
 	var _directivesComponent2 = _interopRequireDefault(_directivesComponent);
 
@@ -4750,7 +5135,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	}(_core.Component);
 
 /***/ }),
-/* 70 */
+/* 78 */
 /***/ (function(module, exports) {
 
 	"use strict";
@@ -4758,7 +5143,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	module.exports = "<h3>Directives</h3>\r\n<div class=\"text\">Directives - special attributes with <b>ac-</b> prefix</div>\r\n<div class=\"text\">All properties of component are stored in special field called <b>props</b></div>\r\n\r\n\r\n<div class=\"block\">\r\n    <b class=\"title\">ac-value=\"props.value\"</b>\r\n    <div class=\"text\">\r\n        Bind props <b>props.value</b> with certain element\r\n        <br>\r\n        <input type=\"text\" ac-value=\"props.value\">\r\n    </div>\r\n</div>\r\n<div class=\"block\">\r\n    <b class=\"title\">ac-model=\"props.model\"</b> \r\n    <div class=\"text\">\r\n        <b>Two way data binding</b> between <b>props.model</b> and html element\r\n        <br>\r\n        <div>\r\n            <input type=\"text\" ac-model=\"props.model\">\r\n        </div>\r\n    </div>\r\n</div>\r\n<div class=\"block\">\r\n    <b class=\"title\">ac-input=\"inputData: props.selectedValue\"</b>\r\n    <div class=\"text\">Allow send <b>props.selectedValue</b> from parent component to child component <b>inputData</b>.</div>\r\n</div>\r\n<div class=\"block\">\r\n    <b class=\"title\">ac-ref=\"element\"</b>\r\n    <div class=\"text\">Add <b>element</b> to ui list. ui - is a list of reference elements</div>\r\n</div>\r\n<div class=\"block\">\r\n    <b class=\"title\">\r\n    ac-class=\"className: showClass\"\r\n    <br>\r\n    ac-class=\"@props.class\"\r\n    </b>\r\n    <div class=\"text\">Get 2 params: name of class, boolean(adds class if true). You can use\r\n        <b>comma(,)</b> symbol to specify several conditions. Also @ is available, so you can bind props to className\r\n        <br><br>\r\n        <button @click=\"changeClass\">Change class</button>\r\n        <b><span ac-class=\"@props.className\">Example</span></b>\r\n    </div>\r\n</div>\r\n<div class=\"block\">\r\n    <b class=\"title\">ac-style=\"height: props.height\"</b>\r\n    <div class=\"text\">\r\n            Binds props to css rules. Gets 2 params: <b>height</b> - css rule and <b>value</b> - value from props.\r\n            <br><br>\r\n            <button @click=\"changeSize\">Change size</button>\r\n            <br><br>\r\n            <div style=\"border: 1px solid red\" ac-style=\"height: props.height, width: props.width\"></div>\r\n     </div>\r\n</div>\r\n\r\n<div class=\"block\">\r\n    <b class=\"title\">ac-if=\"props.isVisible\"</b>\r\n    <div class=\"text\">Serve to hide or show element; Gets 1 params: <b>value</b>\r\n    <br><br>\r\n    <button @click=\"showElement\">Show</button>\r\n    <span ac-if=\"props.isVisible\">Element is shown now</span>\r\n    </div>\r\n</div>\r\n<div class=\"block\">\r\n    <b class=\"title\">ac-for=\"props.items\"</b>\r\n    <div class=\"text\">Repeater. Creates instance for every element in collection <b>props.items</b>\r\n    <br><br>\r\n    <ul>\r\n        <li ac-for=\"props.items\" ac-value=\"name\"></li>\r\n    </ul>\r\n \r\n    </div>\r\n</div>\r\n<div class=\"block\">\r\n    <b class=\"title\">ac-attr=\"src: props.image\"</b>\r\n    <div class=\"text\">Binds attr <b>src</b> with url from <b>props.image</b>\r\n    <br>\r\n    <img ac-attr=\"src: props.image\" style=\"width: 200px\">\r\n    </div>\r\n</div>\r\n<div class=\"block\">\r\n    <b class=\"title\">ac-link=\"documentation\"</b>\r\n    <div class=\"text\">Serves for navigation inside application. In this case link leads to documentation page</div>\r\n</div>\r\n\r\n<div class=\"block\">\r\n    <b class=\"title\">ac-on=\"change: onChange\"</b>\r\n    <div class=\"text\">\r\n    Add event listener to the root element of component, that listen to child events\r\n    <br><br>\r\n    <app-example-child ac-on=\"onChange: onChange\"></app-example-child>\r\n    </div>\r\n</div>\r\n\r\n<div class=\"block\">\r\n    <b class=\"title\">ac-pattern=\"[0-9]\"</b>\r\n    <div class=\"text\">\r\n    Add <b>error class</b> to the element if value is invalid(doesn't match the pattern)\r\n    <form ac-submit=\"submit\">\r\n        <input required type=\"text\" ac-pattern=\"[0-9]: Invalid\">\r\n        <button>Submit</button>\r\n    </form>\r\n    \r\n    </div>\r\n</div>\r\n<div class=\"block\">\r\n    <b class=\"title\">ac-outside=\"outsideClick\"</b>\r\n    <div class=\"text\">Trigger method <b>outsideClick</b> if user clicked beyond the element where ac-outside is specified</div>\r\n</div>";
 
 /***/ }),
-/* 71 */
+/* 79 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -4772,7 +5157,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var _core = __webpack_require__(6);
 
-	var _customDirectivesComponent = __webpack_require__(72);
+	var _customDirectivesComponent = __webpack_require__(80);
 
 	var _customDirectivesComponent2 = _interopRequireDefault(_customDirectivesComponent);
 
@@ -4808,7 +5193,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	}(_core.Component);
 
 /***/ }),
-/* 72 */
+/* 80 */
 /***/ (function(module, exports) {
 
 	"use strict";
@@ -4816,7 +5201,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	module.exports = "<h3>Custom directives</h3>\r\n\r\n\r\n\r\n<div class=\"code-block\">\r\n    <div class=\"code-header\">example.directive.js</div>\r\n    <pre>\r\n\timport {Decorators} from 'core';\r\n\r\n\t@Decorators.DirectiveDecorator({\r\n\t    selector: 'upperCase'\r\n\t})\r\n\texport default class UpperCaseDirectove {\r\n\t    constructor(elem) {\r\n\t        this.elem = elem;\r\n\t    }\r\n\r\n\t    onUpdate() {\r\n\t        this.toUpperCase();\r\n\t    }\r\n\r\n\t    toUpperCase() {\r\n\t        this.elem.innerHTML = this.elem.innerHTML.toUpperCase();\r\n\t    }\r\n\t}\r\n</pre>\r\n</div>\r\n\r\n<div class=\"block\">\r\n    <b class=\"title\">onUpdate</b>\r\n    <div class=\"text\"><div>Triggeres when component is updated</div></div>\r\n</div>\r\n\r\n\r\n\r\n<div class=\"code-block\">\r\n    <div class=\"code-header\">example.component.html</div>\r\n\t<pre><span><</span>span upperCase><span class=\"text\">test</span><span><</span>/span></pre>\r\n</div>\r\n\r\n<div class=\"text\">will be replaced with</div>\r\n\r\n<div class=\"code-block\">\r\n    <div class=\"code-header\">example.component.html</div>\r\n\t<pre><span><</span>span upperCase><span class=\"text\">TEST</span><span><</span>/span></pre>\r\n</div>\r\n\r\n";
 
 /***/ }),
-/* 73 */
+/* 81 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -4832,7 +5217,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var _core = __webpack_require__(6);
 
-	var _docInterpolationComponent = __webpack_require__(74);
+	var _docInterpolationComponent = __webpack_require__(82);
 
 	var _docInterpolationComponent2 = _interopRequireDefault(_docInterpolationComponent);
 
@@ -4864,7 +5249,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	}()) || _class);
 
 /***/ }),
-/* 74 */
+/* 82 */
 /***/ (function(module, exports) {
 
 	"use strict";
@@ -4872,7 +5257,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	module.exports = "<h3 class=\"in-development\">In development!</h3>\r\n<h3>Interpolation</h3>\r\n\r\n<div class=\"section-title\">Text interpolation</div>\r\n\r\n<div class=\"text\"><b>Interpolation</b> - is one of the ways how to bind data with tempalte</div>\r\n<div class=\"text\">We use <b>'Mustache'</b> syntax, which means value from double curly braces will be replaced with the value from props.title</div>\r\n\r\n\r\n<div class=\"code-block\">\r\n    <div class=\"code-header\">example.component.js</div>\r\n    <pre>\r\n    import { <b>Component</b> } from 'ace-js';\r\n    import <b>Tpl</b> from './example.component.html';\r\n    export class <b>ExampleComponent</b> extends Component {\r\n        constructor(params) {\r\n            super(params, {\r\n                <b>template</b>: Tpl,\r\n                <b>props</b>: {\r\n                    title: 'Some title'        \r\n                }\r\n            });\r\n        }\r\n\r\n    }\r\n</pre>\r\n</div>\r\n\r\n<div class=\"code-block\">\r\n    <div class=\"code-header\">example.component.html</div>\r\n\t<pre><span><</span>span><span class=\"text\">{{title}}</span><span><</span>/span></pre>\r\n</div>\r\n\r\n<div class=\"text\">will be replaced with props.title value</div>\r\n<div class=\"code-block\">\r\n\t<pre><span><</span>span><span class=\"text\">Some title</span><span><</span>/span></pre>\r\n</div>\r\n\r\n\r\n<div class=\"section-title\">Javascript expressions</div>\r\n<div class=\"code-block\">\r\n\t<pre><span><</span>span><span class=\"text\">{{isReady ? 'OK' : 'FAIL'}}</span><span><</span>/span></pre>\r\n</div>\r\n<div class=\"text\">This expression will be calculated as ussual js expression</div>\r\n\r\n<br>\r\n<div class=\"text\">The alturnative way is using of <b class=\"label\">ac-value</b></div>";
 
 /***/ }),
-/* 75 */
+/* 83 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -4886,7 +5271,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var _core = __webpack_require__(6);
 
-	var _docConditionalComponent = __webpack_require__(76);
+	var _docConditionalComponent = __webpack_require__(84);
 
 	var _docConditionalComponent2 = _interopRequireDefault(_docConditionalComponent);
 
@@ -4921,7 +5306,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	}(_core.Component);
 
 /***/ }),
-/* 76 */
+/* 84 */
 /***/ (function(module, exports) {
 
 	"use strict";
@@ -4929,7 +5314,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	module.exports = "<h3>Conditional rendering</h3>\r\n<div class=\"section-title\">ac-if</div>\r\n\r\n<div class=\"code-block\">\r\n\t<pre><span><</span>span <b>ac-if</b>=\"<span class=\"attr\">props.isVisible</span>\"><span class=\"text\">Something</span><span><</span>/span></pre>\r\n</div>\r\n\r\n<div class=\"text\">In this case <b>ac-if</b> directive checks <b>isVisible</b> property and if it is true element will be added to the page, otherwise will be removed</div>";
 
 /***/ }),
-/* 77 */
+/* 85 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -4945,7 +5330,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var _core = __webpack_require__(6);
 
-	var _docFormsComponent = __webpack_require__(78);
+	var _docFormsComponent = __webpack_require__(86);
 
 	var _docFormsComponent2 = _interopRequireDefault(_docFormsComponent);
 
@@ -4976,7 +5361,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	}()) || _class);
 
 /***/ }),
-/* 78 */
+/* 86 */
 /***/ (function(module, exports) {
 
 	"use strict";
@@ -4984,7 +5369,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	module.exports = "<h3>Forms</h3>\r\n\r\n<div class=\"title\">[type=\"text\"]</div>\r\n<div class=\"input\">\r\n\t<div ac-value=\"props.input\"></div>\r\n\t<input type=\"text\" ac-model=\"props.input\">\r\n</div>\r\n\r\n<div class=\"title\">[type=\"email\"]</div>\r\n<div class=\"input\">\r\n\t<div ac-value=\"props.email\"></div>\r\n\t<input type=\"email\" ac-model=\"props.email\">\r\n</div>\r\n\r\n<div class=\"title\">[type=\"password\"]</div>\r\n<div class=\"input\">\r\n\t<div ac-value=\"props.password\"></div>\r\n\t<input type=\"password\" ac-model=\"props.password\">\r\n</div>\r\n\r\n<div class=\"title\">[type=\"radio\"]</div>\r\n<div class=\"input\">\r\n\t<div ac-value=\"props.radio\"></div>\r\n\t<input type=\"radio\" ac-model=\"props.radio\" value=\"1\" name=\"radio\">\r\n\t<input type=\"radio\" ac-model=\"props.radio\" value=\"2\" name=\"radio\">\r\n</div>\r\n\r\n<div class=\"title\">[type=\"checkbox\"]</div>\r\n<div class=\"input\">\r\n\t<div ac-value=\"props.checkbox.check1\"></div>\r\n\t<div ac-value=\"props.checkbox.check2\"></div>\r\n\t<input type=\"checkbox\" ac-model=\"props.checkbox.check1\" value=\"1\">\r\n\t<input type=\"checkbox\" ac-model=\"props.checkbox.check2\" value=\"2\">\r\n</div>\r\n\r\n<div class=\"section-title\">Form validation</div>\r\n\r\n<form ac-submit=\"submit\" ac-form-validation> \r\n\t<div class=\"input\"> \r\n\t  Result: <span ac-value=\"props.form : json\"></span>\r\n\t</div>\r\n\t<div class=\"input\">\r\n\t\t<input type=\"text\" placeholder=\"name\" ac-model=\"props.form.name\" required ac-pattern=\"[0-9]\" ac-pattern-title=\"0-9\">\r\n\t</div>\r\n\t<div class=\"input\">\r\n\t\t<input type=\"email\" placeholder=\"email\"  ac-model=\"props.form.email\" required>\r\n\t</div>\r\n\t<div class=\"input\">\r\n\t\t<input type=\"checkbox\" ac-model=\"props.form.checkbox\" required>\r\n\t</div>\r\n\t\r\n\t<button>Submit</button>\r\n</form>";
 
 /***/ }),
-/* 79 */
+/* 87 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -4998,7 +5383,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var _core = __webpack_require__(6);
 
-	var _docModulesComponent = __webpack_require__(80);
+	var _docModulesComponent = __webpack_require__(88);
 
 	var _docModulesComponent2 = _interopRequireDefault(_docModulesComponent);
 
@@ -5034,7 +5419,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	}(_core.Component);
 
 /***/ }),
-/* 80 */
+/* 88 */
 /***/ (function(module, exports) {
 
 	"use strict";
@@ -5042,7 +5427,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	module.exports = "<h3>Modules</h3>\r\n<span class=\"text\">To simplify <b>app.js</b> you can split your code into modules</span>\r\n<br>\r\n<span class=\"text\">Call your module as <b>index.js</b> for easier using, so then just import <b>components/documentation</b> where index.js file is.</span>\r\n\r\n<div class=\"code-block\">\r\n    <div class=\"code-header\">index.js</div>\r\n    <pre>\r\n        import {DocumentationComponent} from './documentation.component';\r\n        import {DocQuickStartComponent} from './quick-start/doc-quick-start.component';\r\n\r\n        export default [\r\n            {c: DocumentationComponent, selector: 'app-documentation'},\r\n            {c: DocQuickStartComponent, selector: 'app-documentation-quick-start'}\r\n            ...\r\n        ]\r\n</pre>\r\n</div>\r\n\r\n\r\n<div class=\"code-block\">\r\n    <div class=\"code-header\">app.js</div>\r\n    <pre>\r\n        import Docs from './components/documentation';\r\n        Register({\r\n            ...\r\n            modules: [\r\n                Docs\r\n                ...\r\n            ]\r\n            ...\r\n        });\r\n</pre>\r\n</div>\r\n";
 
 /***/ }),
-/* 81 */
+/* 89 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -5056,7 +5441,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var _core = __webpack_require__(6);
 
-	var _docSmartObjectComponent = __webpack_require__(82);
+	var _docSmartObjectComponent = __webpack_require__(90);
 
 	var _docSmartObjectComponent2 = _interopRequireDefault(_docSmartObjectComponent);
 
@@ -5092,7 +5477,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	}(_core.Component);
 
 /***/ }),
-/* 82 */
+/* 90 */
 /***/ (function(module, exports) {
 
 	"use strict";
@@ -5100,7 +5485,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	module.exports = "<h3>Observables</h3>\r\n\r\n<div class=\"section-title\">Observable model</div>\r\n\r\n<div class=\"text\"><b>ObservableModel</b> - is a observable object with it's own methods.\r\n    <br>Every component has\r\n    <b>props</b> property which is ObservableModel.\r\n</div>\r\n<div class=\"text\">At first you should create ObservableModel with <b>new</b> operator, also you can use initial params</div>\r\n\r\n<div class=\"code-block\">\r\n    <div class=\"code-header\">user.store.js</div>\r\n    <pre>\r\n        import { ObservableModel } from 'framework/model'\r\n\r\n        class UserStore extends Store {\r\n            constructor() {\r\n                super();\r\n                this.user = new ObservableModel();\r\n            }\r\n        }\r\n</pre>\r\n</div>\r\n\r\n<div class=\"block\">\r\n    <b class=\"title\">sub(()=> {})</b>\r\n    <span class=\"text\">Creates a subscriber that watch any changes of ObservableModel</span>\r\n</div>\r\n\r\n<div class=\"block\">\r\n    <b class=\"title\">set('name', 'New value')</b>\r\n    <span class=\"text\">Set new value</span>\r\n</div>\r\n\r\n<div class=\"block\">\r\n    <b class=\"title\">get('name')</b>\r\n    <span class=\"text\">Get value from by <b>name</b> prop</span>\r\n</div>\r\n\r\n<div class=\"block\">\r\n    <b class=\"title\">save(params)</b>\r\n    <span class=\"text\">Is used for updating of object bu id</span>\r\n</div>\r\n\r\n\r\n\r\n<div class=\"section-title\">Observable collection</div>";
 
 /***/ }),
-/* 83 */
+/* 91 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -5114,7 +5499,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var _core = __webpack_require__(6);
 
-	var _docHowToComponent = __webpack_require__(84);
+	var _docHowToComponent = __webpack_require__(92);
 
 	var _docHowToComponent2 = _interopRequireDefault(_docHowToComponent);
 
@@ -5150,7 +5535,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	}(_core.Component);
 
 /***/ }),
-/* 84 */
+/* 92 */
 /***/ (function(module, exports) {
 
 	"use strict";
@@ -5158,7 +5543,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	module.exports = "<h3>How to install</h3>\r\n<div class=\"text\">To add AceJs framework to your node_modules</div>\r\n<div class=\"code-block\">\r\n    <pre>\r\n    <b>npm i ace-js</b>\r\n</pre>\r\n</div>\r\n<div class=\"text\">Now you can develop your application with AceJs</div>\r\n<div class=\"code-block\">\r\n    <pre>\r\n\tlet <b>AceJs</b> = require('ace-js');\r\n\tor\r\n\timport {...} from 'ace-js';\r\n</pre>\r\n</div>\r\n<!--     <b>npm i</b> - install all node modules\r\n    <b>npm run dev</b> - starts the dev server\r\n    <b>npm run prod</b> - creates production index.js bundle -->";
 
 /***/ }),
-/* 85 */
+/* 93 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -5172,7 +5557,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var _core = __webpack_require__(6);
 
-	var _docRouterConfigComponent = __webpack_require__(86);
+	var _docRouterConfigComponent = __webpack_require__(94);
 
 	var _docRouterConfigComponent2 = _interopRequireDefault(_docRouterConfigComponent);
 
@@ -5207,7 +5592,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	}(_core.Component);
 
 /***/ }),
-/* 86 */
+/* 94 */
 /***/ (function(module, exports) {
 
 	"use strict";
@@ -5215,7 +5600,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	module.exports = "<h3>Router config</h3>\r\n<div class=\"text\">To run router you should create <b>_router.js</b> config file, where describes rules for navigation\r\n</div>\r\n\r\n<div class=\"block\">\r\n    <b class=\"title\">path</b>\r\n    <span class=\"text\">current route compares with path, and if they match then component is rendered</span>\r\n</div>\r\n\r\n<div class=\"block\">\r\n    <b class=\"title\">component</b>\r\n    <span class=\"text\">defines what router should to show</span>\r\n</div>\r\n\r\n<div class=\"block\">\r\n    <b class=\"title\">children</b>\r\n    <span class=\"text\">specifies all the child routes activated under the current route</span>\r\n</div>\r\n\r\n\r\n<div class=\"block\">\r\n    <b class=\"title\">{path: <b>'/'</b>, component: 'app-home'}</b>\r\n    <span class=\"text\">leeds to <b>root</b> page</span>\r\n</div>\r\n\r\n<div class=\"block\">\r\n    <b class=\"title\">{path: <b>'example/:id'</b>, component: 'app-example-page'}</b>\r\n    <span class=\"text\">leeds to example page with <b>':id'</b> param</span>\r\n</div>\r\n\r\n<div class=\"block\">\r\n    <b class=\"title\"> {\r\n        path: <b>'parent'</b>,\r\n        component: 'app-parent-component'}  </b>\r\n    <span class=\"text\">leeds to page <b>parent</b> with children</span>\r\n</div>\r\n\r\n<div class=\"block\">\r\n    <b class=\"title\">\r\n        {path: <b>''</b>, component: 'app-child-root}\r\n    </b>\r\n    <span class=\"text\">root child route</span>\r\n</div>\r\n\r\n<div class=\"block\">\r\n    <b class=\"title\">\r\n        {path: <b>'child-component'</b>, component: 'app-child-one'}\r\n    </b>\r\n    <span class=\"text\">shows <b>child-component</b> component inside parent component</span>\r\n</div>\r\n\r\n<div class=\"block\">\r\n    <b class=\"title\">\r\n        {path: '404', component: <b>'app-not-found'</b>}\r\n    </b>\r\n    <span class=\"text\">leeds to <b>'not found page'</b></span>\r\n</div>\r\n\r\n<br>\r\n<div class=\"code-block\">\r\n    <div class=\"code-header\">_router.js</div>\r\n    <pre>\r\n\r\n    export let Routes = [\r\n    {path: <b>'/'</b>, component: 'app-home'},\r\n    {path: <b>'example/:id'</b>, component: 'app-example-page'},\r\n    {\r\n            path: <b>'parent'</b>,\r\n            component: 'app-parent-component',\r\n            children: [\r\n                {path: <b>'/'</b>, component: 'app-child-root},\r\n                {path: <b>'child-component'</b>, component: 'app-child-one'}\r\n            ]\r\n        },\r\n        {path: '404', component: <b>'app-not-found'</b>}\r\n    ];\r\n</pre>\r\n</div>\r\n";
 
 /***/ }),
-/* 87 */
+/* 95 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -5229,7 +5614,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var _core = __webpack_require__(6);
 
-	var _docHttpModuleComponent = __webpack_require__(88);
+	var _docHttpModuleComponent = __webpack_require__(96);
 
 	var _docHttpModuleComponent2 = _interopRequireDefault(_docHttpModuleComponent);
 
@@ -5264,7 +5649,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	}(_core.Component);
 
 /***/ }),
-/* 88 */
+/* 96 */
 /***/ (function(module, exports) {
 
 	"use strict";
@@ -5272,7 +5657,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	module.exports = "<h3>Http module</h3>\r\n\r\n<div class=\"text\"><b>Http module</b> is part <b>core</b> module.</div>\r\n<div class=\"text\">To use this module you should <b>import {Http} from 'ace-js'</b></div>";
 
 /***/ }),
-/* 89 */
+/* 97 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -5286,7 +5671,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var _core = __webpack_require__(6);
 
-	var _docHttpMethodsComponent = __webpack_require__(90);
+	var _docHttpMethodsComponent = __webpack_require__(98);
 
 	var _docHttpMethodsComponent2 = _interopRequireDefault(_docHttpMethodsComponent);
 
@@ -5330,7 +5715,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	}(_core.Component);
 
 /***/ }),
-/* 90 */
+/* 98 */
 /***/ (function(module, exports) {
 
 	"use strict";
@@ -5338,7 +5723,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	module.exports = "<h3>Http methods</h3>\r\n<div>Add <b>import {Http} from 'ace-js'</b> to your component, then</div>\r\n<div class=\"block\">\r\n    <b class=\"title\">GET</b>\r\n    <div class=\"text\">\r\n        <div>Http.get(url).then(response=>{ })</div>\r\n        <br>\r\n        Example: \r\n        <button @click=\"getWeater\">Get weater info</button>\r\n        <div ac-if=\"props.weather\"> \r\n            City: <b ac-value=\"props.weather.name\"></b>\r\n            <br>\r\n            Temp: <b ac-value=\"props.weather.main.temp\"></b> C\r\n            <br>\r\n            Wind: <b ac-value=\"props.weather.wind.speed\"></b> m/s\r\n        </div>\r\n    </div>\r\n</div>\r\n<div class=\"block\">\r\n    <b class=\"title\">POST</b>\r\n    <div class=\"text\"><div>Http.post(url, params).then(response=>{ })</div></div>\r\n</div>\r\n<div class=\"block\">\r\n    <b class=\"title\">PUT</b>\r\n    <div class=\"text\"> <div>Http.put(url, params).then(response=>{ })</div></div>\r\n</div>\r\n<div class=\"block\">\r\n    <b class=\"title\">DELETE</b>\r\n    <div class=\"text\"> <div>Http.delete(url).then(response=>{ })</div></div>\r\n</div>\r\n\r\n<div class=\"section-title\">Interceptors</div>\r\n<div class=\"text\">In your code you can use interceptors to add your own logic</div>\r\n<div class=\"code-block\">\r\n    <div class=\"code-header\">example.component.js</div>\r\n    <pre>\r\n        import { Component, Http } from 'ace-js';\r\n        import Tpl from './root.component.html';\r\n        import NotificaitonsStore from 'stores/notifications.store';\r\n        import UserStore from 'stores/user.store'\r\n        export class ExampleComponent extends Component {\r\n            constructor(params) {\r\n                super(params, {\r\n                    template: Tpl\r\n                });\r\n            }\r\n\r\n            onInit() {\r\n                Http.getCatalog('/catalog');\r\n                Http.onProgress(event => {\r\n                    console.log(event.loaded + ' / ' + event.total);\r\n                });\r\n                Http.onError(err => {\r\n                    switch (err.status) {\r\n                      case 401:\r\n                        UserStore.logout('auth');\r\n                        break;\r\n                      case 406:\r\n                        NotificaitonsStore.show({ type: 'error', text: err.response.message });\r\n                        UserStore.logout('auth');\r\n                        break;\r\n                      case 422:\r\n                        break;\r\n                      case 404:\r\n                        break;\r\n                      case 403:\r\n\r\n                        break;\r\n                      case 500:\r\n                      case 502:\r\n                        break;\r\n                      default:\r\n\r\n                        break;\r\n                    }\r\n                });\r\n            }\r\n        }\r\n    </pre>\r\n</div>";
 
 /***/ }),
-/* 91 */
+/* 99 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -5383,7 +5768,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	}(_core.Component);
 
 /***/ }),
-/* 92 */
+/* 100 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -5427,7 +5812,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	exports.default = UpperCaseDirectove;
 
 /***/ }),
-/* 93 */
+/* 101 */
 /***/ (function(module, exports) {
 
 	'use strict';
@@ -5435,7 +5820,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	Object.defineProperty(exports, "__esModule", {
 	    value: true
 	});
-	var Routes = exports.Routes = [{ path: '/', component: 'app-home' }, { path: 'plugins', component: 'app-plugins' }, {
+	var Routes = exports.Routes = [{ path: '/', component: 'app-home' }, { path: 'controls', component: 'app-controls' }, { path: 'plugins', component: 'app-plugins' }, {
 	    path: 'documentation',
 	    component: 'app-documentation',
 	    children: [{ path: '/', component: 'app-documentation-quick-start' }, { path: 'how-to-install', component: 'app-documentation-how-to-install' }, { path: 'architecture', component: 'app-documentation-architecture' }, { path: 'component', component: 'app-documentation-component' }, { path: 'lifecycle', component: 'app-documentation-lifecycle' }, { path: 'utils', component: 'app-documentation-utils' }, { path: 'interpolation', component: 'app-documentation-interpolation' }, { path: 'directives', component: 'app-documentation-directives' }, { path: 'custom-directives', component: 'app-documentation-custom-directives' }, { path: 'conditional-rendering', component: 'app-documentation-conditional' }, { path: 'forms', component: 'app-documentation-forms' }, { path: 'modules', component: 'app-documentation-modules' }, { path: 'smart-object', component: 'app-documentation-smart-object' }, { path: 'router-config', component: 'app-documentation-router-config' }, { path: 'http-module', component: 'app-documentation-http-module' }, { path: 'http-methods', component: 'app-documentation-http-methods' }]

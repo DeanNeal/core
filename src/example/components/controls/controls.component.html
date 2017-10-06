@@ -1,0 +1,23 @@
+<main>
+
+    <div class="main-content justify-space-between">
+
+        <ul class="main-list">
+            <li ac-for="props.controls">
+                <a class="list-head" ac-value="name" ac-link="{{this.route}}" ></a>
+            </li>
+        </ul>
+
+        <div class="plugins-section">
+            <!-- <child-route-switcher></child-route-switcher> -->
+        
+        	<h3>Datepicker</h3>
+            <div style="width: 200px">
+                <app-datepicker ac-model="props.date" ac-input="date: props.date"></app-datepicker>
+            </div>
+        </div>
+    </div>
+</main>
+
+
+

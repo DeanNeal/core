@@ -1,5 +1,6 @@
 export let Routes = [
     { path: '/', component: 'app-home' },
+    { path: 'controls', component: 'app-controls'},
     { path: 'plugins', component: 'app-plugins' },
     {
         path: 'documentation',

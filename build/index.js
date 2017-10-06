@@ -2,7 +2,7 @@
  * ace-js 0.3.2
  * May be freely distributed under the MIT license 
  * Author: Bogdan Zinkevich
- * Last update: 2017-10-6 15:53:36
+ * Last update: 2017-10-6 17:41:59
  * 
  */
 (function webpackUniversalModuleDefinition(root, factory) {
@@ -82,7 +82,7 @@ return /******/ (function(modules) { // webpackBootstrap
 /******/ 	}
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "ee627bb18494dd2e0427"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "e100b4706f72d5d3d6ea"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
 /******/ 	
@@ -617,7 +617,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	Object.defineProperty(exports, "__esModule", {
 	    value: true
 	});
-	exports.Store = exports.Http = exports.Plugins = exports.Utils = exports.GlobalEvents = exports.TemplateEngine = exports.RouteSwitcher = exports.Router = exports.Component = exports.Register = exports.Decorators = exports.ObservableCollection = exports.ObservableModel = undefined;
+	exports.Store = exports.Http = exports.Controls = exports.Plugins = exports.Utils = exports.GlobalEvents = exports.TemplateEngine = exports.RouteSwitcher = exports.Router = exports.Component = exports.Register = exports.Decorators = exports.ObservableCollection = exports.ObservableModel = undefined;
 
 	var _observable = __webpack_require__(7);
 
@@ -647,9 +647,13 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var Plugins = _interopRequireWildcard(_plugins);
 
-	var _http = __webpack_require__(45);
+	var _controls = __webpack_require__(45);
 
-	var _store = __webpack_require__(46);
+	var Controls = _interopRequireWildcard(_controls);
+
+	var _http = __webpack_require__(49);
+
+	var _store = __webpack_require__(50);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -666,6 +670,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	exports.GlobalEvents = _globalEvents2.default;
 	exports.Utils = _utils.Utils;
 	exports.Plugins = Plugins;
+	exports.Controls = Controls;
 	exports.Http = _http.Http;
 	exports.Store = _store.Store;
 
@@ -2662,9 +2667,13 @@ return /******/ (function(modules) { // webpackBootstrap
 	                var newCompObject = _core.Component.COMPONENTS.filter(function (r) {
 	                    return r.selector === route.component;
 	                })[0];
-	                var newComp = document.createElement(route.component);
-	                this.checkAccess(root, newComp, route);
-	                new newCompObject.c(newComp, { routeParams: params });
+	                if (newCompObject) {
+	                    var newComp = document.createElement(route.component);
+	                    this.checkAccess(root, newComp, route);
+	                    new newCompObject.c(newComp, { routeParams: params });
+	                } else {
+	                    this.appendEmpty(root);
+	                }
 	            } else {
 	                this.appendEmpty(root);
 	            }
@@ -3334,6 +3343,265 @@ return /******/ (function(modules) { // webpackBootstrap
 	Object.defineProperty(exports, "__esModule", {
 	    value: true
 	});
+	exports.DatepickerComponent = undefined;
+
+	var _datepicker = __webpack_require__(46);
+
+	exports.DatepickerComponent = _datepicker.DatepickerComponent;
+
+/***/ }),
+/* 46 */
+/***/ (function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	exports.DatepickerComponent = undefined;
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _core = __webpack_require__(6);
+
+	var _dropdown = __webpack_require__(47);
+
+	var _datepicker = __webpack_require__(48);
+
+	var _datepicker2 = _interopRequireDefault(_datepicker);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	// import Style from './modal.component.scss';
+
+
+	var daysOfWeek = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
+	var daysOfWeekShort = ['Mo', 'Tu', 'Wen', 'Th', 'Fr', 'Sat', 'Sun'];
+	var monthDefaultType = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+	var monthDefaultTypeNew = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+	var minutes = 'm';
+	var hours = 'h';
+
+	var DatepickerComponent = exports.DatepickerComponent = function (_DropdownComponent) {
+	    _inherits(DatepickerComponent, _DropdownComponent);
+
+	    function DatepickerComponent(params) {
+	        _classCallCheck(this, DatepickerComponent);
+
+	        return _possibleConstructorReturn(this, (DatepickerComponent.__proto__ || Object.getPrototypeOf(DatepickerComponent)).call(this, params, {
+	            template: _datepicker2.default
+	        }));
+	    }
+
+	    _createClass(DatepickerComponent, [{
+	        key: 'INPUT',
+	        value: function INPUT(params) {
+	            if (params.date) {
+	                this.props.set({
+	                    model: new Date(params.date),
+	                    formattedDate: _core.Utils.getDateByFormat(params.date, 'yyyy-mm-dd')
+	                });
+	                this.currentDate = new Date(params.date); // init view
+	            }
+
+	            if (params.maxDate) {
+	                this.maxDate = params.maxDate;
+	            }
+
+	            if (params.minDate) {
+	                this.minDate = params.minDate;
+	            }
+
+	            this.update();
+	        }
+	    }, {
+	        key: 'onInit',
+	        value: function onInit() {
+	            this.currentDate = new Date();
+	            this.props.set({ 'daysOfWeekShort': daysOfWeekShort, formattedDate: _core.Utils.getDateByFormat(this.currentDate, 'yyyy-mm-dd') });
+	            this.update();
+	        }
+	    }, {
+	        key: 'update',
+	        value: function update() {
+	            this.props.set({
+	                currentMonth: this.getCurrentMonth(),
+	                currentYear: this.getCurrentYear(),
+	                countOfDays: this.getCountOfDays()
+	            });
+	        }
+	    }, {
+	        key: 'select',
+	        value: function select(event, params) {
+	            if (params.inactive === false) {
+	                this.emit('modelChange', params.date);
+	                this.close();
+	            }
+	            event.stopPropagation();
+	        }
+	    }, {
+	        key: 'prev',
+	        value: function prev(e) {
+	            e.stopPropagation();
+	            this.currentDate = new Date(this.currentDate.setMonth(this.currentDate.getMonth() - 1));
+	            this.update();
+	        }
+	    }, {
+	        key: 'next',
+	        value: function next(e) {
+	            e.stopPropagation();
+	            this.currentDate = new Date(this.currentDate.setMonth(this.currentDate.getMonth() + 1));
+	            this.update();
+	        }
+	    }, {
+	        key: 'getCurrentMonth',
+	        value: function getCurrentMonth() {
+	            var a = monthDefaultType[this.currentDate.getMonth()];
+	            // this.props.set('currentMonth', a);
+	            return a;
+	        }
+	    }, {
+	        key: 'getCurrentYear',
+	        value: function getCurrentYear() {
+	            var a = this.currentDate.getFullYear();
+	            // this.props.set('currentYear', a);
+	            return a;
+	        }
+	    }, {
+	        key: 'getDays',
+	        value: function getDays(date) {
+	            date = new Date(date);
+	            var year = date.getFullYear();
+	            var month = date.getMonth();
+
+	            var monthStart = new Date(year, month, 1);
+	            var monthEnd = new Date(year, month + 1, 1);
+	            var monthLength = (monthEnd - monthStart) / (1000 * 60 * 60 * 24);
+	            var days = [];
+	            var minDate = new Date(this.minDate);
+	            var maxDate = new Date(this.maxDate);
+	            var emptyDays = monthStart.getDay() - 1; // get last dates of prev month
+
+	            monthStart = _core.Utils.addDays(monthStart, -emptyDays); // set start position
+
+	            for (var i = 1; i < monthLength + 1 + emptyDays; i++) {
+	                var _date = _core.Utils.addDays(monthStart, i - 1);
+	                var day = { index: _date.getDate(), date: _date, today: false, selected: false, inactive: false, empty: false };
+
+	                if (i <= emptyDays) {
+	                    day.empty = true;
+	                }
+
+	                if (new Date().toDateString() == day.date.toDateString()) {
+	                    day.today = true;
+	                }
+	                if (this.props.get('model') && this.props.get('model').toDateString() == day.date.toDateString()) {
+	                    day.selected = true;
+	                }
+
+	                // if (this.props.get('model') && this.props.get('model').toDateString() == day.date.toDateString()) {
+	                //     day.selected = true;
+	                // }
+
+	                if (minDate && day.date.setHours(0, 0, 0, 0) <= minDate.setHours(0, 0, 0, 0)) {
+	                    day.inactive = true;
+	                }
+	                if (maxDate && day.date.setHours(0, 0, 0, 0) >= maxDate.setHours(0, 0, 0, 0)) {
+	                    day.inactive = true;
+	                }
+	                days.push(day);
+	            }
+
+	            return days;
+	        }
+	    }, {
+	        key: 'getCountOfDays',
+	        value: function getCountOfDays() {
+	            var a = this.getDays(this.currentDate);
+	            // this.props.set('countOfDays', a);
+	            return a;
+	        }
+	    }]);
+
+	    return DatepickerComponent;
+	}(_dropdown.DropdownComponent);
+
+/***/ }),
+/* 47 */
+/***/ (function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	exports.DropdownComponent = undefined;
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _component = __webpack_require__(34);
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var DropdownComponent = exports.DropdownComponent = function (_Component) {
+	    _inherits(DropdownComponent, _Component);
+
+	    function DropdownComponent(params, options) {
+	        _classCallCheck(this, DropdownComponent);
+
+	        return _possibleConstructorReturn(this, (DropdownComponent.__proto__ || Object.getPrototypeOf(DropdownComponent)).call(this, params, options));
+	    }
+
+	    _createClass(DropdownComponent, [{
+	        key: 'openMenu',
+	        value: function openMenu(e) {
+	            if (this.getRoot().getAttribute('readonly') === null) {
+	                this.props.set('_show', !this.props.get('_show'));
+	            }
+	        }
+	    }, {
+	        key: 'outside',
+	        value: function outside() {
+	            this.close();
+	        }
+	    }, {
+	        key: 'close',
+	        value: function close() {
+	            if (this.props.get('_show')) {
+	                this.props.set('_show', false);
+	            }
+	        }
+	    }]);
+
+	    return DropdownComponent;
+	}(_component.Component);
+
+/***/ }),
+/* 48 */
+/***/ (function(module, exports) {
+
+	"use strict";
+
+	module.exports = "<div ac-outside=\"outside\" class=\"relative\">\r\n\t<div  style=\"width: 100%\">\r\n\t\t<input type=\"text\" @click=\"openMenu\" class=\"app-form__label__input full-width\" placeholder=\"\"  readonly required ac-value=\"props.formattedDate\">\r\n\t\t<!-- <img class=\"datepicker-icon\" src=\"../../assets/img/hanging-calendar.svg\" alt=\"\"> -->\r\n\t</div>\r\n\r\n\t<div class=\"j-calendar\" ac-if=\"props._show\" >\r\n\t    <div class=\"j-calendar__wrap\">\r\n\t        <div class=\"j-calendar__item\">\r\n\t            <div class=\"j-calendar__header\">\r\n\t                <div class=\"j-calendar__header__left\" @click=\"prev\">\r\n\t                    <span>prev</span>\r\n\t                </div>\r\n\t                <div class=\"j-calendar__header__center\">\r\n\t\t                <span ac-value=\"props.currentMonth\"></span>\r\n\t\t                <span style=\"margin-left: 7px;\" ac-value=\"props.currentYear\"></span>\r\n\t                </div>\r\n\t                <div class=\"j-calendar__header__right\" @click=\"next\">\r\n\t                    <span>Next</span>\r\n\t                </div>\r\n\t            </div>\r\n\t            <div class=\"j-calendar__content\">\r\n\t                <div class=\"j-calendar__days\">\r\n\t                    <div class=\"j-calendar__days__item\" ac-for=\"props.daysOfWeekShort\">\r\n\t\t\t\t\t\t\t<span ac-value=\"index\"></span>\r\n\t\t\t\t\t\t</div>\r\n\t                </div>\r\n\t                <div class=\"j-calendar__date\">\r\n\t                    <div class=\"j-calendar__date__item\" \r\n\t                    ac-class=\"j-calendar__date__item--circle:today, j-calendar__date__item--active:selected, j-calendar__date__item--inactive: inactive\"\r\n\t                    ac-for=\"props.countOfDays\"\r\n\t                    @click=\"select(this)\">\r\n\t\t\t\t\t\t\t<span ac-value=\"index\"></span>\r\n\t                    </div>\r\n\t                </div>\r\n\t            </div>\r\n\t        </div>\r\n\t    </div>\r\n\t</div>\r\n</div>\r\n";
+
+/***/ }),
+/* 49 */
+/***/ (function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
 	exports.Http = exports.Collection = exports.Model = undefined;
 
 	var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
@@ -3765,7 +4033,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	exports.Http = Http;
 
 /***/ }),
-/* 46 */
+/* 50 */
 /***/ (function(module, exports) {
 
 	"use strict";
