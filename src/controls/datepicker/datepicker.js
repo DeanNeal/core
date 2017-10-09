@@ -4,9 +4,8 @@ import {DropdownComponent} from '../dropdown';
 import Tpl from './datepicker.html';
 
 const daysOfWeek = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
-const daysOfWeekShort = ['Mo', 'Tu', 'Wen', 'Th', 'Fr', 'Sat', 'Sun'];
-const monthDefaultType = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
-const monthDefaultTypeNew = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+// const daysOfWeekShort = ['Mo', 'Tu', 'Wen', 'Th', 'Fr', 'Sat', 'Sun'];
+// const monthDefaultType = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
 const minutes = 'm';
 const hours = 'h';
 
@@ -39,7 +38,7 @@ export class DatepickerComponent extends DropdownComponent {
 
     onInit() {
         this.currentDate = new Date();
-        this.props.set({'daysOfWeekShort': daysOfWeekShort, formattedDate: Utils.getDateByFormat(this.currentDate, 'yyyy-mm-dd')});
+        this.props.set({'daysOfWeekShort': Utils.daysOfWeekShort, formattedDate: Utils.getDateByFormat(this.currentDate, 'yyyy-mm-dd')});
         this.update();
     }
 
@@ -73,7 +72,7 @@ export class DatepickerComponent extends DropdownComponent {
 
 
     getCurrentMonth() {
-        let a = monthDefaultType[this.currentDate.getMonth()]
+        let a = Utils.monthNames[this.currentDate.getMonth()]
         // this.props.set('currentMonth', a);
         return a;
     }

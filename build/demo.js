@@ -2,7 +2,7 @@
  * ace-js 0.3.3
  * May be freely distributed under the MIT license 
  * Author: Bogdan Zinkevich
- * Last update: 2017-10-6 17:47:50
+ * Last update: 2017-10-6 21:18:39
  * 
  */
 (function webpackUniversalModuleDefinition(root, factory) {
@@ -82,7 +82,7 @@ return /******/ (function(modules) { // webpackBootstrap
 /******/ 	}
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "6b169710f1018e303116"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "6ac4e6c362e398bad4a6"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
 /******/ 	
@@ -3482,11 +3482,14 @@ return /******/ (function(modules) { // webpackBootstrap
 	Object.defineProperty(exports, "__esModule", {
 	    value: true
 	});
-	exports.DatepickerComponent = undefined;
+	exports.DropdownComponent = exports.DatepickerComponent = undefined;
 
 	var _datepicker = __webpack_require__(46);
 
+	var _dropdown = __webpack_require__(47);
+
 	exports.DatepickerComponent = _datepicker.DatepickerComponent;
+	exports.DropdownComponent = _dropdown.DropdownComponent;
 
 /***/ }),
 /* 46 */

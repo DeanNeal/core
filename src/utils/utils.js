@@ -1,5 +1,11 @@
 let scrollArray = [];
+const monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+const monthNamesShort = ["Jan", "Feb", "Mar", "Apr", "May", "June", "July", "Aug", "Sept", "Oct", "Nov", "Dec"];
+const daysOfWeekShort = ['Mo', 'Tu', 'Wen', 'Th', 'Fr', 'Sat', 'Sun'];
 const Utils = {
+    monthNames: monthNames,
+    monthNamesShort: monthNamesShort,
+    daysOfWeekShort: daysOfWeekShort,
     serialize: (form) => {
         let obj = {};
         let elements = form.querySelectorAll("input, select, textarea");
@@ -54,6 +60,12 @@ const Utils = {
                 break;
             case 'dd.mm.yyyy':
                 result = day + '.' + month + '.' + year;
+                break;
+            case 'mmm dd, yyyy':
+                result = `${monthNamesShort[date.getMonth()]} ${day}, ${year}`;
+                break;
+            default: 
+                result = year + '-' + month + '-' + day;
                 break;
         }
         return result;
