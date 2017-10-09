@@ -2,7 +2,7 @@
  * ace-js 0.3.4
  * May be freely distributed under the MIT license 
  * Author: Bogdan Zinkevich
- * Last update: 2017-10-9 15:43:13
+ * Last update: 2017-10-9 20:25:13
  * 
  */
 (function webpackUniversalModuleDefinition(root, factory) {
@@ -82,7 +82,7 @@ return /******/ (function(modules) { // webpackBootstrap
 /******/ 	}
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "5677bed4939119ea4c77"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "1604497988b80d66e94b"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
 /******/ 	
@@ -2818,8 +2818,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	                })[0];
 	                if (newCompObject) {
 	                    var newComp = document.createElement(route.component);
-	                    this.checkAccess(root, newComp, route);
-	                    new newCompObject.c(newComp, { routeParams: params });
+	                    this.checkAccess(root, newComp, route, function () {
+	                        new newCompObject.c(newComp, { routeParams: params });
+	                    });
 	                } else {
 	                    this.appendEmpty(root);
 	                }
@@ -2829,16 +2830,18 @@ return /******/ (function(modules) { // webpackBootstrap
 	        }
 	    }, {
 	        key: 'checkAccess',
-	        value: function checkAccess(root, newComp, route) {
+	        value: function checkAccess(root, newComp, route, cb) {
 	            if (route.protector) {
 	                var protector = new route.protector();
 	                if (protector.check()) {
 	                    root.appendChild(newComp);
+	                    cb();
 	                } else {
-	                    this.noAccess(root);
+	                    // this.noAccess(root);
 	                }
 	            } else {
 	                root.appendChild(newComp);
+	                cb();
 	            }
 	        }
 	    }, {
@@ -2859,14 +2862,14 @@ return /******/ (function(modules) { // webpackBootstrap
 	            newComp.innerHTML = 'Please specify a component for this route <b style="color: red">' + _routerCore2.default.getCurrentFullPath().join('/') + '</b>!';
 	            root.appendChild(newComp);
 	        }
-	    }, {
-	        key: 'noAccess',
-	        value: function noAccess(root) {
-	            var newComp = document.createElement('div');
-	            newComp.innerHTML = 'You have no access to this page';
-	            newComp.className = 'no-access';
-	            root.appendChild(newComp);
-	        }
+
+	        // noAccess(root) {
+	        //     let newComp = document.createElement('div');
+	        //     newComp.innerHTML = `You have no access to this page`;
+	        //     newComp.className = 'no-access';
+	        //     root.appendChild(newComp);
+	        // }
+
 	    }]);
 
 	    return RouteSwitcher;
@@ -2902,9 +2905,10 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	            var a = _this.getCurrentRoute(_this.getFullStringPath());
 	            if (a) {
+	                _this.prevPath = a.path;
 	                a.callback();
 	                _this.runSubscribtions();
-	                _this.prevPath = a.path;
+
 	                console.log(_this.subscribtions);
 	            }
 	        });

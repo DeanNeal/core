@@ -10,9 +10,10 @@ class Router {
 
             let a = this.getCurrentRoute(this.getFullStringPath());
             if (a) {
+                this.prevPath = a.path;
                 a.callback();
                 this.runSubscribtions();
-                this.prevPath = a.path;
+
                 console.log(this.subscribtions);
             }
         });

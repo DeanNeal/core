@@ -47,8 +47,10 @@ export class RouteSwitcher {
             let newCompObject = Component.COMPONENTS.filter(r=> r.selector === route.component)[0];
             if(newCompObject){
                 let newComp = document.createElement(route.component);
-                this.checkAccess(root, newComp, route); 
-                new newCompObject.c(newComp, { routeParams: params });
+                this.checkAccess(root, newComp, route, ()=>{
+                    new newCompObject.c(newComp, { routeParams: params });
+                }); 
+                
             } else {
                 this.appendEmpty(root);
             }
@@ -58,16 +60,18 @@ export class RouteSwitcher {
         }
     }
 
-    checkAccess(root, newComp, route) {
+    checkAccess(root, newComp, route, cb) {
         if(route.protector){
             let protector = new route.protector();
             if(protector.check()){
                 root.appendChild(newComp);
+                cb();
             } else {
-                this.noAccess(root);
+               // this.noAccess(root);
             }
         } else {
             root.appendChild(newComp);
+            cb();
         }
 
     }
@@ -89,10 +93,10 @@ export class RouteSwitcher {
         root.appendChild(newComp);
     }
 
-    noAccess(root) {
-        let newComp = document.createElement('div');
-        newComp.innerHTML = `You have no access to this page`;
-        newComp.className = 'no-access';
-        root.appendChild(newComp);
-    }
+    // noAccess(root) {
+    //     let newComp = document.createElement('div');
+    //     newComp.innerHTML = `You have no access to this page`;
+    //     newComp.className = 'no-access';
+    //     root.appendChild(newComp);
+    // }
 }
