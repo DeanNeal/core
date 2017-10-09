@@ -1,8 +1,8 @@
 /*!
- * ace-js 0.3.3
+ * ace-js 0.3.4
  * May be freely distributed under the MIT license 
  * Author: Bogdan Zinkevich
- * Last update: 2017-10-6 21:18:39
+ * Last update: 2017-10-9 15:43:13
  * 
  */
 (function webpackUniversalModuleDefinition(root, factory) {
@@ -82,7 +82,7 @@ return /******/ (function(modules) { // webpackBootstrap
 /******/ 	}
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "6ac4e6c362e398bad4a6"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "5677bed4939119ea4c77"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
 /******/ 	
@@ -1310,36 +1310,46 @@ return /******/ (function(modules) { // webpackBootstrap
 	    var _this = this;
 
 	    array.forEach(function (item) {
-	        var params = _core.Utils.removeSpacesFromString(item.attr).split(':'),
-	            r = void 0;
-	        var formatter = params[1];
-	        if (formatter && formatter === 'json') {
-	            r = JSON.stringify(_this.getComponentVariable(params[0].split('.'), data));
-	        } else {
-	            r = _this.getComponentVariable(params[0].split('.'), data);
-	        }
+	        if (_core.Utils.isCustomElement(item.elem) === false) {
+	            var params = item.attr.split('|'),
+	                r = void 0;
+	            var formatter = params[1] ? _core.Utils.removeSpacesFromString(params[1]) : null;
+	            var formatterData = params[1] ? params[1].split(':') : null;
 
-	        if (_core.Utils.isCustomElement(item.elem)) {
-	            return;
-	        }
-	        //TODO rewrite with switch
-	        if (item.elem.localName === 'input') {
-	            switch (item.elem.type) {
-	                case 'checkbox':
-	                    r ? item.elem.setAttribute('checked', true) : item.elem.removeAttribute('checked');
-	                    break;
-	                case 'radio':
-	                    item.elem.value === r ? item.elem.setAttribute('checked', true) : item.elem.removeAttribute('selected');
-	                    break;
-	                case 'text':
-	                case 'email':
-	                case 'password':
-	                    item.elem.value = r;
-	                    break;
-
+	            if (formatterData) {
+	                formatter = formatterData[0].trim();
+	                formatterData = formatterData[1].trim();
 	            }
-	        } else {
-	            item.elem.innerHTML = r;
+
+	            var currentVariable = _core.Utils.removeSpacesFromString(params[0]).split('.');
+
+	            if (formatter && formatter === 'json') {
+	                r = JSON.stringify(_this.getComponentVariable(currentVariable, data));
+	            } else if (formatter && formatter === 'date') {
+	                r = _this.getComponentVariable(currentVariable, data);
+	                r = _core.Utils.getDateByFormat(r, formatterData || '');
+	            } else {
+	                r = _this.getComponentVariable(currentVariable, data);
+	            }
+
+	            if (item.elem.localName === 'input') {
+	                switch (item.elem.type) {
+	                    case 'checkbox':
+	                        r ? item.elem.setAttribute('checked', true) : item.elem.removeAttribute('checked');
+	                        break;
+	                    case 'radio':
+	                        item.elem.value === r ? item.elem.setAttribute('checked', true) : item.elem.removeAttribute('selected');
+	                        break;
+	                    case 'text':
+	                    case 'email':
+	                    case 'password':
+	                        item.elem.value = r;
+	                        break;
+
+	                }
+	            } else {
+	                item.elem.innerHTML = r;
+	            }
 	        }
 	    });
 	}
@@ -3114,13 +3124,19 @@ return /******/ (function(modules) { // webpackBootstrap
 /* 42 */
 /***/ (function(module, exports) {
 
-	'use strict';
+	"use strict";
 
 	Object.defineProperty(exports, "__esModule", {
 	    value: true
 	});
 	var scrollArray = [];
+	var monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+	var monthNamesShort = ["Jan", "Feb", "Mar", "Apr", "May", "June", "July", "Aug", "Sept", "Oct", "Nov", "Dec"];
+	var daysOfWeekShort = ['Mo', 'Tu', 'Wen', 'Th', 'Fr', 'Sat', 'Sun'];
 	var Utils = {
+	    monthNames: monthNames,
+	    monthNamesShort: monthNamesShort,
+	    daysOfWeekShort: daysOfWeekShort,
 	    serialize: function serialize(form) {
 	        var obj = {};
 	        var elements = form.querySelectorAll("input, select, textarea");
@@ -3173,6 +3189,12 @@ return /******/ (function(modules) { // webpackBootstrap
 	                break;
 	            case 'dd.mm.yyyy':
 	                result = day + '.' + month + '.' + year;
+	                break;
+	            case 'mmm dd, yyyy':
+	                result = monthNamesShort[date.getMonth()] + " " + day + ", " + year;
+	                break;
+	            default:
+	                result = year + '-' + month + '-' + day;
 	                break;
 	        }
 	        return result;
@@ -3523,9 +3545,8 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 	var daysOfWeek = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
-	var daysOfWeekShort = ['Mo', 'Tu', 'Wen', 'Th', 'Fr', 'Sat', 'Sun'];
-	var monthDefaultType = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
-	var monthDefaultTypeNew = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+	// const daysOfWeekShort = ['Mo', 'Tu', 'Wen', 'Th', 'Fr', 'Sat', 'Sun'];
+	// const monthDefaultType = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
 	var minutes = 'm';
 	var hours = 'h';
 
@@ -3565,7 +3586,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        key: 'onInit',
 	        value: function onInit() {
 	            this.currentDate = new Date();
-	            this.props.set({ 'daysOfWeekShort': daysOfWeekShort, formattedDate: _core.Utils.getDateByFormat(this.currentDate, 'yyyy-mm-dd') });
+	            this.props.set({ 'daysOfWeekShort': _core.Utils.daysOfWeekShort, formattedDate: _core.Utils.getDateByFormat(this.currentDate, 'yyyy-mm-dd') });
 	            this.update();
 	        }
 	    }, {
@@ -3603,7 +3624,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    }, {
 	        key: 'getCurrentMonth',
 	        value: function getCurrentMonth() {
-	            var a = monthDefaultType[this.currentDate.getMonth()];
+	            var a = _core.Utils.monthNames[this.currentDate.getMonth()];
 	            // this.props.set('currentMonth', a);
 	            return a;
 	        }
@@ -4639,7 +4660,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	            this.getElement('pre').forEach(function (item) {});
 
 	            this.props.set({
-	                version: ("0.3.3"),
+	                version: ("0.3.4"),
 	                'categories': [{
 	                    name: 'Getting started',
 	                    items: [{
