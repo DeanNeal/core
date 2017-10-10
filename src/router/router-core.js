@@ -4,6 +4,7 @@ class Router {
         this.subscribtions = [];
         this._id = -1;
         this.prevPath = null;
+        this.$params = undefined;
         window.addEventListener('popstate', (e) => {
             // Make sure popstate doesn't run on init -- this is a common issue with Safari and old versions of Chrome
             if (self.state && self.state.previousState === null) return false;
@@ -39,6 +40,7 @@ class Router {
             if (a[1] && a[0] === b[0]) {
                 route.params = a[1];
                 route.newPath = path;
+                this.$params = route.params;
                 return true;
             }
 
@@ -49,6 +51,10 @@ class Router {
             return route.path === '404';
         })[0];
         return match || notFound;
+    }
+
+    getParams() {
+        return this.$params;
     }
 
     getRouterState() {
