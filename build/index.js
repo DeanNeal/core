@@ -2,7 +2,7 @@
  * ace-js 0.3.6
  * May be freely distributed under the MIT license 
  * Author: Bogdan Zinkevich
- * Last update: 2017-10-10 12:45:30
+ * Last update: 2017-10-10 14:19:22
  * 
  */
 (function webpackUniversalModuleDefinition(root, factory) {
@@ -82,7 +82,7 @@ return /******/ (function(modules) { // webpackBootstrap
 /******/ 	}
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "13823ca92ecfa11ab538"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "c60e16bd201b45c361ef"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
 /******/ 	
@@ -1179,7 +1179,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	            if (formatterData) {
 	                formatter = formatterData[0].trim();
-	                formatterData = formatterData[1].trim();
+	                formatterData = formatterData[1] ? formatterData[1].trim() : null;
 	            }
 
 	            var currentVariable = _core.Utils.removeSpacesFromString(params[0]).split('.');

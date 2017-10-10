@@ -2,14 +2,13 @@ import { Utils } from '../../core';
 export function _props(array, data) {
     array.forEach(item => {
         if (Utils.isCustomElement(item.elem) === false) {
-            let params = item.attr.split('|'),
-                r;
+            let params = item.attr.split('|'), r;
             let formatter = params[1] ? Utils.removeSpacesFromString(params[1]) : null;
             let formatterData = params[1] ? params[1].split(':') : null;
 
             if (formatterData) {
                 formatter = formatterData[0].trim();
-                formatterData = formatterData[1].trim();
+                formatterData = formatterData[1] ? formatterData[1].trim() : null;
             }
 
             let currentVariable = Utils.removeSpacesFromString(params[0]).split('.');
