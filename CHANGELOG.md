@@ -1,3 +1,8 @@
+<a name="0.3.6"></a>
+# [0.3.6](https://github.com/DeanNeal/ace-js) (2017-10-10)
+### Features
+* **router:** dinamic ac-link ([#32](https://github.com/DeanNeal/ace-js/issues/32))
+
 <a name="0.3.0"></a>
 # [0.3.0](https://github.com/DeanNeal/ace-js) (2017-10-05)
 ### Features

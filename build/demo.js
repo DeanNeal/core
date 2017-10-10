@@ -1,8 +1,8 @@
 /*!
- * ace-js 0.3.5
+ * ace-js 0.3.6
  * May be freely distributed under the MIT license 
  * Author: Bogdan Zinkevich
- * Last update: 2017-10-9 20:34:09
+ * Last update: 2017-10-10 12:45:30
  * 
  */
 (function webpackUniversalModuleDefinition(root, factory) {
@@ -82,7 +82,7 @@ return /******/ (function(modules) { // webpackBootstrap
 /******/ 	}
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "a2cc384831c1515f401b"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "13823ca92ecfa11ab538"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
 /******/ 	
@@ -2019,7 +2019,16 @@ return /******/ (function(modules) { // webpackBootstrap
 	    array.forEach(function (item) {
 	        item.elem.removeEventListener('click', item.callback, false); // remove previous handler
 
-	        var route = (0, _core.TemplateEngine)(item.attr, data || _this);
+	        var route = item.attr; //TemplateEngine(item.attr, data || this);
+
+	        var regExp = /{{([^%>]+)?}}/g;
+	        var matches = item.attr.match(regExp);
+	        var params = regExp.exec(item.attr);
+	        if (params) {
+	            var r = _this.getComponentVariable(params[1].split('.'), data);
+	            route = item.attr.replace(regExp, r);
+	        }
+
 	        item.callback = function (e) {
 	            e.preventDefault();
 	            _core.Router.navigate(route);
@@ -2819,7 +2828,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	                if (newCompObject) {
 	                    var newComp = document.createElement(route.component);
 	                    this.checkAccess(root, newComp, route, function () {
-	                        new newCompObject.c(newComp, { routeParams: params });
+	                        new newCompObject.c(newComp);
 	                    });
 	                } else {
 	                    this.appendEmpty(root);
@@ -2899,6 +2908,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        this.subscribtions = [];
 	        this._id = -1;
 	        this.prevPath = null;
+	        this.$params = undefined;
 	        window.addEventListener('popstate', function (e) {
 	            // Make sure popstate doesn't run on init -- this is a common issue with Safari and old versions of Chrome
 	            if (self.state && self.state.previousState === null) return false;
@@ -2936,6 +2946,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	    }, {
 	        key: 'getCurrentRoute',
 	        value: function getCurrentRoute(path) {
+	            var _this2 = this;
+
 	            var match = this.routes.filter(function (route) {
 	                var a = path.split('/');
 	                var b = route.path.split('/');
@@ -2943,6 +2955,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	                if (a[1] && a[0] === b[0]) {
 	                    route.params = a[1];
 	                    route.newPath = path;
+	                    _this2.$params = route.params;
 	                    return true;
 	                }
 
@@ -2953,6 +2966,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	                return route.path === '404';
 	            })[0];
 	            return match || notFound;
+	        }
+	    }, {
+	        key: 'getParams',
+	        value: function getParams() {
+	            return this.$params;
 	        }
 	    }, {
 	        key: 'getRouterState',
@@ -3000,10 +3018,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	    }, {
 	        key: 'runSubscribtions',
 	        value: function runSubscribtions() {
-	            var _this2 = this;
+	            var _this3 = this;
 
 	            this.subscribtions.forEach(function (item) {
-	                item.fn.call(_this2, _this2.getCurrentPath(), _this2.getCurrentFullPath());
+	                item.fn.call(_this3, _this3.getCurrentPath(), _this3.getCurrentFullPath());
 	            });
 	        }
 	    }, {
@@ -4459,7 +4477,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	"use strict";
 
-	module.exports = "<main>\r\n\r\n    <div class=\"main-content justify-space-between\">\r\n\r\n        <ul class=\"main-list\">\r\n            <li ac-for=\"props.plugins\">\r\n                <a class=\"list-head\" ac-value=\"name\" ac-link=\"{{this.route}}\" ></a>\r\n            </li>\r\n        </ul>\r\n\r\n        <div class=\"plugins-section\">\r\n            <!-- <child-route-switcher></child-route-switcher> -->\r\n        \r\n        \t<h3>Sortable</h3>\r\n        \t<div ac-ref=\"test\">\r\n        \t    <div draggable=\"true\" style=\"border: 1px solid #ccc; padding: 5px;display: block; width: 200px\">First Item</div>\r\n        \t    <div draggable=\"true\" style=\"border: 1px solid #ccc; padding: 5px;display: block; width: 200px\">Second Item</div>\r\n        \t    <div draggable=\"true\" style=\"border: 1px solid #ccc; padding: 5px;display: block; width: 200px\">Third Item</div>\r\n        \t</div>\r\n    \r\n        </div>\r\n    </div>\r\n</main>\r\n\r\n\r\n\r\n";
+	module.exports = "<main>\r\n\r\n    <div class=\"main-content justify-space-between\">\r\n\r\n        <ul class=\"main-list\">\r\n            <li ac-for=\"props.plugins\">\r\n                <a class=\"list-head\" ac-value=\"name\" ac-link=\"{{route}}\" ></a>\r\n            </li>\r\n        </ul>\r\n\r\n        <div class=\"plugins-section\">\r\n            <!-- <child-route-switcher></child-route-switcher> -->\r\n        \r\n        \t<h3>Sortable</h3>\r\n        \t<div ac-ref=\"test\">\r\n        \t    <div draggable=\"true\" style=\"border: 1px solid #ccc; padding: 5px;display: block; width: 200px\">First Item</div>\r\n        \t    <div draggable=\"true\" style=\"border: 1px solid #ccc; padding: 5px;display: block; width: 200px\">Second Item</div>\r\n        \t    <div draggable=\"true\" style=\"border: 1px solid #ccc; padding: 5px;display: block; width: 200px\">Third Item</div>\r\n        \t</div>\r\n    \r\n        </div>\r\n    </div>\r\n</main>\r\n\r\n\r\n\r\n";
 
 /***/ }),
 /* 59 */
@@ -4521,7 +4539,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	"use strict";
 
-	module.exports = "<main>\r\n\r\n    <div class=\"main-content justify-space-between\">\r\n\r\n        <ul class=\"main-list\">\r\n            <li ac-for=\"props.controls\">\r\n                <a class=\"list-head\" ac-value=\"name\" ac-link=\"{{this.route}}\" ></a>\r\n            </li>\r\n        </ul>\r\n\r\n        <div class=\"plugins-section\">\r\n            <!-- <child-route-switcher></child-route-switcher> -->\r\n        \r\n        \t<h3>Datepicker</h3>\r\n            <div style=\"width: 200px\">\r\n                <app-datepicker ac-model=\"props.date\" ac-input=\"date: props.date\"></app-datepicker>\r\n            </div>\r\n        </div>\r\n    </div>\r\n</main>\r\n\r\n\r\n\r\n";
+	module.exports = "<main>\r\n\r\n    <div class=\"main-content justify-space-between\">\r\n\r\n        <ul class=\"main-list\">\r\n            <li ac-for=\"props.controls\">\r\n                <a class=\"list-head\" ac-value=\"name\" ac-link=\"{{route}}\" ></a>\r\n            </li>\r\n        </ul>\r\n\r\n        <div class=\"plugins-section\">\r\n            <!-- <child-route-switcher></child-route-switcher> -->\r\n        \r\n        \t<h3>Datepicker</h3>\r\n            <div style=\"width: 200px\">\r\n                <app-datepicker ac-model=\"props.date\" ac-input=\"date: props.date\"></app-datepicker>\r\n            </div>\r\n        </div>\r\n    </div>\r\n</main>\r\n\r\n\r\n\r\n";
 
 /***/ }),
 /* 61 */
@@ -4664,7 +4682,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	            this.getElement('pre').forEach(function (item) {});
 
 	            this.props.set({
-	                version: ("0.3.5"),
+	                version: ("0.3.6"),
 	                'categories': [{
 	                    name: 'Getting started',
 	                    items: [{
@@ -4773,7 +4791,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	"use strict";
 
-	module.exports = "<main>\r\n\r\n    <div class=\"main-content justify-space-between\">\r\n\r\n        <ul class=\"main-list\">\r\n            <li style=\"font-size: 14px;padding: 5px; font-weight: 300;\">\r\n                v<small ac-value=\"props.version\"></small>\r\n            </li>\r\n            <li ac-for=\"props.categories\">\r\n                <div class=\"list-head\" ac-value=\"name\"></div>\r\n                <ol class=\"list\">\r\n                    <li ac-for=\"items\">\r\n                        <a ac-value=\"name\" ac-link=\"{{this.route}}\" ac-link-exact=\"true\"></a>\r\n                    </li>\r\n                </ol>\r\n            </li>\r\n        </ul>\r\n\r\n        <div class=\"documentation-section\">\r\n            <child-route-switcher></child-route-switcher>\r\n        </div>\r\n    </div>\r\n</main>";
+	module.exports = "<main>\r\n\r\n    <div class=\"main-content justify-space-between\">\r\n\r\n        <ul class=\"main-list\">\r\n            <li style=\"font-size: 14px;padding: 5px; font-weight: 300;\">\r\n                v<small ac-value=\"props.version\"></small>\r\n            </li>\r\n            <li ac-for=\"props.categories\">\r\n                <div class=\"list-head\" ac-value=\"name\"></div>\r\n                <ol class=\"list\">\r\n                    <li ac-for=\"items\">\r\n                        <a ac-value=\"name\" ac-link=\"{{route}}\" ac-link-exact=\"true\"></a>\r\n                    </li>\r\n                </ol>\r\n            </li>\r\n        </ul>\r\n\r\n        <div class=\"documentation-section\">\r\n            <child-route-switcher></child-route-switcher>\r\n        </div>\r\n    </div>\r\n</main>";
 
 /***/ }),
 /* 66 */

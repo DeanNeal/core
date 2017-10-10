@@ -1,8 +1,8 @@
 /*!
- * ace-js 0.3.5
+ * ace-js 0.3.6
  * May be freely distributed under the MIT license 
  * Author: Bogdan Zinkevich
- * Last update: 2017-10-9 20:34:09
+ * Last update: 2017-10-10 12:45:30
  * 
  */
 (function webpackUniversalModuleDefinition(root, factory) {
@@ -82,7 +82,7 @@ return /******/ (function(modules) { // webpackBootstrap
 /******/ 	}
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "a2cc384831c1515f401b"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "13823ca92ecfa11ab538"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
 /******/ 	
@@ -1880,7 +1880,16 @@ return /******/ (function(modules) { // webpackBootstrap
 	    array.forEach(function (item) {
 	        item.elem.removeEventListener('click', item.callback, false); // remove previous handler
 
-	        var route = (0, _core.TemplateEngine)(item.attr, data || _this);
+	        var route = item.attr; //TemplateEngine(item.attr, data || this);
+
+	        var regExp = /{{([^%>]+)?}}/g;
+	        var matches = item.attr.match(regExp);
+	        var params = regExp.exec(item.attr);
+	        if (params) {
+	            var r = _this.getComponentVariable(params[1].split('.'), data);
+	            route = item.attr.replace(regExp, r);
+	        }
+
 	        item.callback = function (e) {
 	            e.preventDefault();
 	            _core.Router.navigate(route);
@@ -2680,7 +2689,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	                if (newCompObject) {
 	                    var newComp = document.createElement(route.component);
 	                    this.checkAccess(root, newComp, route, function () {
-	                        new newCompObject.c(newComp, { routeParams: params });
+	                        new newCompObject.c(newComp);
 	                    });
 	                } else {
 	                    this.appendEmpty(root);
@@ -2760,6 +2769,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        this.subscribtions = [];
 	        this._id = -1;
 	        this.prevPath = null;
+	        this.$params = undefined;
 	        window.addEventListener('popstate', function (e) {
 	            // Make sure popstate doesn't run on init -- this is a common issue with Safari and old versions of Chrome
 	            if (self.state && self.state.previousState === null) return false;
@@ -2797,6 +2807,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	    }, {
 	        key: 'getCurrentRoute',
 	        value: function getCurrentRoute(path) {
+	            var _this2 = this;
+
 	            var match = this.routes.filter(function (route) {
 	                var a = path.split('/');
 	                var b = route.path.split('/');
@@ -2804,6 +2816,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	                if (a[1] && a[0] === b[0]) {
 	                    route.params = a[1];
 	                    route.newPath = path;
+	                    _this2.$params = route.params;
 	                    return true;
 	                }
 
@@ -2814,6 +2827,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	                return route.path === '404';
 	            })[0];
 	            return match || notFound;
+	        }
+	    }, {
+	        key: 'getParams',
+	        value: function getParams() {
+	            return this.$params;
 	        }
 	    }, {
 	        key: 'getRouterState',
@@ -2861,10 +2879,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	    }, {
 	        key: 'runSubscribtions',
 	        value: function runSubscribtions() {
-	            var _this2 = this;
+	            var _this3 = this;
 
 	            this.subscribtions.forEach(function (item) {
-	                item.fn.call(_this2, _this2.getCurrentPath(), _this2.getCurrentFullPath());
+	                item.fn.call(_this3, _this3.getCurrentPath(), _this3.getCurrentFullPath());
 	            });
 	        }
 	    }, {
