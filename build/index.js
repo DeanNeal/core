@@ -1,8 +1,8 @@
 /*!
- * ace-js 0.3.7
+ * ace-js 0.3.8
  * May be freely distributed under the MIT license 
  * Author: Bogdan Zinkevich
- * Last update: 2017-10-10 14:43:31
+ * Last update: 2017-10-12 16:13:11
  * 
  */
 (function webpackUniversalModuleDefinition(root, factory) {
@@ -82,7 +82,7 @@ return /******/ (function(modules) { // webpackBootstrap
 /******/ 	}
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "ef2ab0c7305a069a03f1"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "144dc5d73a5259f9c3e4"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
 /******/ 	
@@ -1249,52 +1249,65 @@ return /******/ (function(modules) { // webpackBootstrap
 	'use strict';
 
 	Object.defineProperty(exports, "__esModule", {
-	    value: true
+	        value: true
 	});
 	exports._if = _if;
 
 	var _core = __webpack_require__(6);
 
 	function _if(array, data) {
-	    var _this = this;
+	        var _this = this;
 
-	    array.forEach(function (item) {
-	        var attr = item.attr;
-	        var conditions = attr.replace(/ +/g, "").split('&&');
+	        array.forEach(function (item) {
+	                var attr = item.attr.replace(/@+/g, "this.props."); // @ -alias of this.props
 
-	        conditions = conditions.map(function (res) {
-	            var reverse = false;
-	            // let a = eval('this.' + attr);
-	            if (res[0] === '!') {
-	                res = res.substring(1);
-	                reverse = true;
-	            }
+	                try {
+	                        var r = new Function('return ' + attr).apply(_this);
+	                        console.log(attr, r, _this.props);
+	                        if (r) {
+	                                if (!item.elem.parentNode) {
+	                                        // insert only if elem doesn't exists
+	                                        _core.Utils.insertAfter(item.cached, item.comment);
+	                                }
+	                        } else {
+	                                item.elem.remove();
+	                        }
+	                } catch (err) {
+	                        throw new Error(_this.constructor.name + '; ' + err);
+	                }
 
-	            if (res.indexOf('==') > -1 || res.indexOf('===') > -1) {
-	                var equality = res.indexOf('===') > -1 ? res.replace(/ +/g, "").split('===') : res.replace(/ +/g, "").split('==');
-	                var _r = _this.getComponentVariable(equality[0].split('.'), data);
+	                // let conditions = attr.replace(/ +/g, "").split('&&');
 
-	                return !!equality[1];
-	            }
+	                // conditions = conditions.map(res => {
+	                //     let reverse = false;
+	                //     // let a = eval('this.' + attr);
+	                //     if (res[0] === '!') {
+	                //         res = res.substring(1);
+	                //         reverse = true;
+	                //     }
 
-	            var params = res.split('.');
-	            var r = _this.getComponentVariable(params, data);
-	            r = reverse ? !r : r;
+	                //     if (res.indexOf('==') > -1 || res.indexOf('===') > -1) {
+	                //         let equality = res.indexOf('===') > -1 ? res.replace(/ +/g, "").split('===') : res.replace(/ +/g, "").split('==');
+	                //         let r = this.getComponentVariable(equality[0].split('.'), data);
 
-	            return !!r;
+	                //         return !!equality[1];
+	                //     }
+
+	                //     let params = res.split('.');
+	                //     let r = this.getComponentVariable(params, data);
+	                //     r = reverse ? !r : r;
+
+	                //     return !!r;
+	                // });
+
+	                // if (conditions.filter(item => item).length === conditions.length) {
+	                //     if (!item.elem.parentNode) { // insert only if elem doesn't exists
+	                //         Utils.insertAfter(item.cached, item.comment)
+	                //     }
+	                // } else {
+	                //     item.elem.remove()
+	                // }
 	        });
-
-	        if (conditions.filter(function (item) {
-	            return item;
-	        }).length === conditions.length) {
-	            if (!item.elem.parentNode) {
-	                // insert only if elem doesn't exists
-	                _core.Utils.insertAfter(item.cached, item.comment);
-	            }
-	        } else {
-	            item.elem.remove();
-	        }
-	    });
 	}
 
 /***/ }),
@@ -3430,8 +3443,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	var daysOfWeek = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
 	// const daysOfWeekShort = ['Mo', 'Tu', 'Wen', 'Th', 'Fr', 'Sat', 'Sun'];
 	// const monthDefaultType = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
-	var minutes = 'm';
-	var hours = 'h';
+	// const minutes = 'm';
+	// const hours = 'h';
+	var TODAY = new Date();
 
 	var DatepickerComponent = exports.DatepickerComponent = function (_DropdownComponent) {
 	    _inherits(DatepickerComponent, _DropdownComponent);
@@ -3440,7 +3454,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	        _classCallCheck(this, DatepickerComponent);
 
 	        return _possibleConstructorReturn(this, (DatepickerComponent.__proto__ || Object.getPrototypeOf(DatepickerComponent)).call(this, params, {
-	            template: _datepicker2.default
+	            template: _datepicker2.default,
+	            props: {
+	                daysOfWeekShort: _core.Utils.daysOfWeekShort,
+	                formattedDate: _core.Utils.getDateByFormat(TODAY, 'yyyy-mm-dd')
+	            }
 	        }));
 	    }
 
@@ -3468,8 +3486,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    }, {
 	        key: 'onInit',
 	        value: function onInit() {
-	            this.currentDate = new Date();
-	            this.props.set({ 'daysOfWeekShort': _core.Utils.daysOfWeekShort, formattedDate: _core.Utils.getDateByFormat(this.currentDate, 'yyyy-mm-dd') });
+	            this.currentDate = TODAY;
 	            this.update();
 	        }
 	    }, {
@@ -3637,7 +3654,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	"use strict";
 
-	module.exports = "<div ac-outside=\"outside\" class=\"relative\">\r\n\t<div  style=\"width: 100%\">\r\n\t\t<input type=\"text\" @click=\"openMenu\" class=\"app-form__label__input full-width\" placeholder=\"\"  readonly required ac-value=\"props.formattedDate\">\r\n\t\t<!-- <img class=\"datepicker-icon\" src=\"../../assets/img/hanging-calendar.svg\" alt=\"\"> -->\r\n\t</div>\r\n\r\n\t<div class=\"j-calendar\" ac-if=\"props._show\" >\r\n\t    <div class=\"j-calendar__wrap\">\r\n\t        <div class=\"j-calendar__item\">\r\n\t            <div class=\"j-calendar__header\">\r\n\t                <div class=\"j-calendar__header__left\" @click=\"prev\">\r\n\t                    <span>prev</span>\r\n\t                </div>\r\n\t                <div class=\"j-calendar__header__center\">\r\n\t\t                <span ac-value=\"props.currentMonth\"></span>\r\n\t\t                <span style=\"margin-left: 7px;\" ac-value=\"props.currentYear\"></span>\r\n\t                </div>\r\n\t                <div class=\"j-calendar__header__right\" @click=\"next\">\r\n\t                    <span>Next</span>\r\n\t                </div>\r\n\t            </div>\r\n\t            <div class=\"j-calendar__content\">\r\n\t                <div class=\"j-calendar__days\">\r\n\t                    <div class=\"j-calendar__days__item\" ac-for=\"props.daysOfWeekShort\">\r\n\t\t\t\t\t\t\t<span ac-value=\"index\"></span>\r\n\t\t\t\t\t\t</div>\r\n\t                </div>\r\n\t                <div class=\"j-calendar__date\">\r\n\t                    <div class=\"j-calendar__date__item\" \r\n\t                    ac-class=\"j-calendar__date__item--circle:today, j-calendar__date__item--active:selected, j-calendar__date__item--inactive: inactive\"\r\n\t                    ac-for=\"props.countOfDays\"\r\n\t                    @click=\"select(this)\">\r\n\t\t\t\t\t\t\t<span ac-value=\"index\"></span>\r\n\t                    </div>\r\n\t                </div>\r\n\t            </div>\r\n\t        </div>\r\n\t    </div>\r\n\t</div>\r\n</div>\r\n";
+	module.exports = "<div ac-outside=\"outside\" class=\"relative\">\r\n\t<div  style=\"width: 100%\">\r\n\t\t<input type=\"text\" @click=\"openMenu\" class=\"app-form__label__input full-width\" placeholder=\"\"  readonly required ac-value=\"props.formattedDate\">\r\n\t\t<!-- <img class=\"datepicker-icon\" src=\"../../assets/img/hanging-calendar.svg\" alt=\"\"> -->\r\n\t</div>\r\n\r\n\t<div class=\"j-calendar\" ac-if=\"@_show\" >\r\n\t    <div class=\"j-calendar__wrap\">\r\n\t        <div class=\"j-calendar__item\">\r\n\t            <div class=\"j-calendar__header\">\r\n\t                <div class=\"j-calendar__header__left\" @click=\"prev\">\r\n\t                    <span>prev</span>\r\n\t                </div>\r\n\t                <div class=\"j-calendar__header__center\">\r\n\t\t                <span ac-value=\"props.currentMonth\"></span>\r\n\t\t                <span style=\"margin-left: 7px;\" ac-value=\"props.currentYear\"></span>\r\n\t                </div>\r\n\t                <div class=\"j-calendar__header__right\" @click=\"next\">\r\n\t                    <span>Next</span>\r\n\t                </div>\r\n\t            </div>\r\n\t            <div class=\"j-calendar__content\">\r\n\t                <div class=\"j-calendar__days\">\r\n\t                    <div class=\"j-calendar__days__item\" ac-for=\"props.daysOfWeekShort\">\r\n\t\t\t\t\t\t\t<span ac-value=\"index\"></span>\r\n\t\t\t\t\t\t</div>\r\n\t                </div>\r\n\t                <div class=\"j-calendar__date\">\r\n\t                    <div class=\"j-calendar__date__item\" \r\n\t                    ac-class=\"j-calendar__date__item--circle:today, j-calendar__date__item--active:selected, j-calendar__date__item--inactive: inactive\"\r\n\t                    ac-for=\"props.countOfDays\"\r\n\t                    @click=\"select(this)\">\r\n\t\t\t\t\t\t\t<span ac-value=\"index\"></span>\r\n\t                    </div>\r\n\t                </div>\r\n\t            </div>\r\n\t        </div>\r\n\t    </div>\r\n\t</div>\r\n</div>\r\n";
 
 /***/ }),
 /* 49 */

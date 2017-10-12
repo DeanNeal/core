@@ -1,3 +1,8 @@
+<a name="0.3.8"></a>
+# [0.3.8](https://github.com/DeanNeal/ace-js) (2017-10-12)
+### Features
+* **core:** ac-if as js expression ([#34](https://github.com/DeanNeal/ace-js/issues/34))
+
 <a name="0.3.6"></a>
 # [0.3.6](https://github.com/DeanNeal/ace-js) (2017-10-10)
 ### Features
