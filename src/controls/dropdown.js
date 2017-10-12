@@ -6,7 +6,7 @@ export class DropdownComponent extends Component {
     }
 
     openMenu(e) {
-        if(this.getRoot().getAttribute('readonly') === null){
+        if (this.getRoot().getAttribute('readonly') === null) {
             this.props.set('_show', !this.props.get('_show'))
         }
     }
@@ -16,7 +16,7 @@ export class DropdownComponent extends Component {
     }
 
     close() {
-        if(this.props.get('_show')) {
+        if (this.props.get('_show')) {
             this.props.set('_show', false)
         }
     }

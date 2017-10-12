@@ -6,13 +6,17 @@ import Tpl from './datepicker.html';
 const daysOfWeek = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
 // const daysOfWeekShort = ['Mo', 'Tu', 'Wen', 'Th', 'Fr', 'Sat', 'Sun'];
 // const monthDefaultType = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
-const minutes = 'm';
-const hours = 'h';
-
+// const minutes = 'm';
+// const hours = 'h';
+const TODAY = new Date();
 export class DatepickerComponent extends DropdownComponent {
     constructor(params) {
         super(params, {
-            template: Tpl
+            template: Tpl,
+            props: {
+                daysOfWeekShort: Utils.daysOfWeekShort, 
+                formattedDate: Utils.getDateByFormat(TODAY, 'yyyy-mm-dd')
+            }
         });
     }
 
@@ -37,8 +41,7 @@ export class DatepickerComponent extends DropdownComponent {
     }
 
     onInit() {
-        this.currentDate = new Date();
-        this.props.set({'daysOfWeekShort': Utils.daysOfWeekShort, formattedDate: Utils.getDateByFormat(this.currentDate, 'yyyy-mm-dd')});
+        this.currentDate = TODAY;
         this.update();
     }
 

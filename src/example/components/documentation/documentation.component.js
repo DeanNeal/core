@@ -50,10 +50,12 @@ export class DocumentationComponent extends Component {
                 },
                 {
                     name: 'Template',
-                    items: [{
-                        name: 'Interpolation',
-                        route: 'documentation/interpolation'
-                    }, {
+                    items: [
+                    // {
+                    //     name: 'Interpolation',
+                    //     route: 'documentation/interpolation'
+                    // }, 
+                    {
                         name: 'Directives',
                         route: 'documentation/directives'
                     }, {
