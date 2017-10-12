@@ -68,6 +68,7 @@ function loadStyle(styles) {
         } else {
             style.appendChild(document.createTextNode(css));
         }
-        document.head.append(style);
+        // document.head.append(style);
+        document.getElementsByTagName('head')[0].appendChild(style);
     }
 }

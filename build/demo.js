@@ -2,7 +2,7 @@
  * ace-js 0.3.8
  * May be freely distributed under the MIT license 
  * Author: Bogdan Zinkevich
- * Last update: 2017-10-12 16:13:11
+ * Last update: 2017-10-12 18:51:25
  * 
  */
 (function webpackUniversalModuleDefinition(root, factory) {
@@ -82,7 +82,7 @@ return /******/ (function(modules) { // webpackBootstrap
 /******/ 	}
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "144dc5d73a5259f9c3e4"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "eecb04d447a95574933e"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
 /******/ 	
@@ -1388,65 +1388,82 @@ return /******/ (function(modules) { // webpackBootstrap
 	'use strict';
 
 	Object.defineProperty(exports, "__esModule", {
-	        value: true
+	    value: true
 	});
 	exports._if = _if;
 
 	var _core = __webpack_require__(6);
 
 	function _if(array, data) {
-	        var _this = this;
+	    var _this = this;
 
-	        array.forEach(function (item) {
-	                var attr = item.attr.replace(/@+/g, "this.props."); // @ -alias of this.props
+	    array.forEach(function (item) {
+	        var attr = item.attr.replace(/@+/g, "this.props."); // @ -alias of this.props
 
-	                try {
-	                        var r = new Function('return ' + attr).apply(_this);
-	                        console.log(attr, r, _this.props);
-	                        if (r) {
-	                                if (!item.elem.parentNode) {
-	                                        // insert only if elem doesn't exists
-	                                        _core.Utils.insertAfter(item.cached, item.comment);
-	                                }
-	                        } else {
-	                                item.elem.remove();
-	                        }
-	                } catch (err) {
-	                        throw new Error(_this.constructor.name + '; ' + err);
+	        try {
+	            var r = new Function('return ' + attr).apply(_this);
+	            if (r) {
+	                if (!item.elem.parentNode) {
+	                    // insert only if elem doesn't exists
+	                    if (_core.Utils.isCustomElement(item.elem)) {
+	                        _core.Component.COMPONENTS.forEach(function (comp) {
+	                            if (comp.selector === item.elem.localName) {
+	                                console.log(item);
+	                                new comp.c(item.elem);
+	                            }
+	                        });
+	                    }
+	                    _core.Utils.insertAfter(item.elem, item.comment);
+	                }
+	            } else {
+
+	                if (_core.Utils.isCustomElement(item.elem)) {
+	                    if (item.elem.COMPONENT) {
+	                        item.elem.COMPONENT.destroy();
+	                        item.elem.COMPONENT = null;
+	                        delete item.elem.COMPONENT;
+	                    }
 	                }
 
-	                // let conditions = attr.replace(/ +/g, "").split('&&');
+	                item.elem.remove();
+	            }
+	        } catch (err) {
+	            _this;
+	            throw new Error(_this.constructor.name + '; ' + err);
+	        }
 
-	                // conditions = conditions.map(res => {
-	                //     let reverse = false;
-	                //     // let a = eval('this.' + attr);
-	                //     if (res[0] === '!') {
-	                //         res = res.substring(1);
-	                //         reverse = true;
-	                //     }
+	        // let conditions = attr.replace(/ +/g, "").split('&&');
 
-	                //     if (res.indexOf('==') > -1 || res.indexOf('===') > -1) {
-	                //         let equality = res.indexOf('===') > -1 ? res.replace(/ +/g, "").split('===') : res.replace(/ +/g, "").split('==');
-	                //         let r = this.getComponentVariable(equality[0].split('.'), data);
+	        // conditions = conditions.map(res => {
+	        //     let reverse = false;
+	        //     // let a = eval('this.' + attr);
+	        //     if (res[0] === '!') {
+	        //         res = res.substring(1);
+	        //         reverse = true;
+	        //     }
 
-	                //         return !!equality[1];
-	                //     }
+	        //     if (res.indexOf('==') > -1 || res.indexOf('===') > -1) {
+	        //         let equality = res.indexOf('===') > -1 ? res.replace(/ +/g, "").split('===') : res.replace(/ +/g, "").split('==');
+	        //         let r = this.getComponentVariable(equality[0].split('.'), data);
 
-	                //     let params = res.split('.');
-	                //     let r = this.getComponentVariable(params, data);
-	                //     r = reverse ? !r : r;
+	        //         return !!equality[1];
+	        //     }
 
-	                //     return !!r;
-	                // });
+	        //     let params = res.split('.');
+	        //     let r = this.getComponentVariable(params, data);
+	        //     r = reverse ? !r : r;
 
-	                // if (conditions.filter(item => item).length === conditions.length) {
-	                //     if (!item.elem.parentNode) { // insert only if elem doesn't exists
-	                //         Utils.insertAfter(item.cached, item.comment)
-	                //     }
-	                // } else {
-	                //     item.elem.remove()
-	                // }
-	        });
+	        //     return !!r;
+	        // });
+
+	        // if (conditions.filter(item => item).length === conditions.length) {
+	        //     if (!item.elem.parentNode) { // insert only if elem doesn't exists
+	        //         Utils.insertAfter(item.cached, item.comment)
+	        //     }
+	        // } else {
+	        //     item.elem.remove()
+	        // }
+	    });
 	}
 
 /***/ }),
@@ -2001,15 +2018,16 @@ return /******/ (function(modules) { // webpackBootstrap
 	    var _this = this;
 
 	    array.forEach(function (item) {
-
-	        var array = item.attr.replace(/ +/g, "").split(',');
-	        var inputParams = {};
-	        array.forEach(function (item) {
-	            var variable = item.split(':')[0];
-	            var params = item.split(':')[1].split('.');
-	            inputParams[variable] = _this.getComponentVariable(params);
-	        });
-	        item.elem.COMPONENT.INPUT(inputParams);
+	        if (item.elem.COMPONENT) {
+	            var _array = item.attr.replace(/ +/g, "").split(',');
+	            var inputParams = {};
+	            _array.forEach(function (item) {
+	                var variable = item.split(':')[0];
+	                var params = item.split(':')[1].split('.');
+	                inputParams[variable] = _this.getComponentVariable(params);
+	            });
+	            item.elem.COMPONENT.INPUT(inputParams);
+	        }
 	    });
 	}
 
@@ -2322,12 +2340,12 @@ return /******/ (function(modules) { // webpackBootstrap
 	            var _this2 = this;
 
 	            this.props.sub(function (r) {
+	                _Directives.Directives._if.call(_this2, _private.PRIVATES.DIRECTIVES['ac-if'].get(_this2));
 	                _Directives.Directives._for.call(_this2, _private.PRIVATES.DIRECTIVES['ac-for'].get(_this2));
 	                _Directives.Directives._props.call(_this2, _private.PRIVATES.DIRECTIVES['ac-value'].get(_this2));
 	                _Directives.Directives._input.call(_this2, _private.PRIVATES.DIRECTIVES['ac-input'].get(_this2));
 	                _Directives.Directives._props.call(_this2, _private.PRIVATES.DIRECTIVES['ac-model'].get(_this2));
 	                _Directives.Directives._style.call(_this2, _private.PRIVATES.DIRECTIVES['ac-style'].get(_this2));
-	                _Directives.Directives._if.call(_this2, _private.PRIVATES.DIRECTIVES['ac-if'].get(_this2));
 	                _Directives.Directives._class.call(_this2, _private.PRIVATES.DIRECTIVES['ac-class'].get(_this2));
 	                _Directives.Directives._attr.call(_this2, _private.PRIVATES.DIRECTIVES['ac-attr'].get(_this2));
 	                _Directives.Directives._link.call(_this2, _private.PRIVATES.DIRECTIVES['ac-link'].get(_this2));
@@ -2752,7 +2770,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	        } else {
 	            style.appendChild(document.createTextNode(css));
 	        }
-	        document.head.append(style);
+	        // document.head.append(style);
+	        document.getElementsByTagName('head')[0].appendChild(style);
 	    }
 	}
 
@@ -5184,7 +5203,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    }, {
 	        key: 'showElement',
 	        value: function showElement() {
-	            this.props.set('isVisible', true);
+	            this.props.set('isVisible', !this.props.get('isVisible'));
 	        }
 	    }, {
 	        key: 'onChange',

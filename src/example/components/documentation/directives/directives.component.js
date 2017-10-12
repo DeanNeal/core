@@ -37,7 +37,7 @@ export class DocDirectivesComponent extends Component {
     }
 
     showElement() {
-        this.props.set('isVisible', true);
+        this.props.set('isVisible', !this.props.get('isVisible'));
     }
 
     onChange() {
