@@ -242,6 +242,7 @@ export class Component {
 
     destroy() {
         // remove all event listeners
+        this.onDestroy();
         Directives.removeEventListeners.call(this, PRIVATES.EVENTS.get(this));
 
         // unsubscribe from global events
@@ -258,7 +259,6 @@ export class Component {
         PRIVATES.SUBSCRIPTIONS.get(this).forEach(item => item.unsubscribe());
 
         this.root = null;
-        this.onDestroy();
     }
 
     onDestroy() {

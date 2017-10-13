@@ -2,7 +2,7 @@
  * ace-js 0.3.9
  * May be freely distributed under the MIT license 
  * Author: Bogdan Zinkevich
- * Last update: 2017-10-12 18:55:58
+ * Last update: 2017-10-13 15:15:42
  * 
  */
 (function webpackUniversalModuleDefinition(root, factory) {
@@ -82,7 +82,7 @@ return /******/ (function(modules) { // webpackBootstrap
 /******/ 	}
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "b154f42bb8b4441220c0"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "efeb4b42fad81311b791"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
 /******/ 	
@@ -2091,6 +2091,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        var attr = item.attr;
 
 	        _private.PRIVATES.GLOBAL_EVENTS.set(_this, _core.GlobalEvents.onClick(function (e) {
+	            console.log(item.elem);
 	            var ouside = _this.shadow ? item.elem.contains(e.path[0]) : item.elem.contains(e.target);
 	            if (!ouside) {
 	                _this[attr].call(_this, e);
@@ -2476,6 +2477,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        key: 'destroy',
 	        value: function destroy() {
 	            // remove all event listeners
+	            this.onDestroy();
 	            _Directives.Directives.removeEventListeners.call(this, _private.PRIVATES.EVENTS.get(this));
 
 	            // unsubscribe from global events
@@ -2494,7 +2496,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	            });
 
 	            this.root = null;
-	            this.onDestroy();
 	        }
 	    }, {
 	        key: 'onDestroy',
@@ -3135,7 +3136,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	            _this.clicksArray.forEach(function (r) {
 	                return r.cb.call(_this, e);
 	            });
-	        }, false);
+	        }, true);
 	    }
 
 	    _createClass(GlobalEvents, [{

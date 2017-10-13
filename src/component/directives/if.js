@@ -9,7 +9,8 @@ export function _if(array, data) {
                 if (!item.elem.parentNode) { // insert only if elem doesn't exists
                     if(Utils.isCustomElement(item.elem)){
                         Component.COMPONENTS.forEach(comp => {
-                            if(comp.selector === item.elem.localName){console.log(item);
+                            if(comp.selector === item.elem.localName){
+                                //console.log(item);
                                 new comp.c(item.elem);
                             }
                         });

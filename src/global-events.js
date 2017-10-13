@@ -6,7 +6,7 @@ class GlobalEvents {
 
         window.addEventListener('click', (e) => {
             this.clicksArray.forEach(r => r.cb.call(this, e));
-        }, false);
+        }, true);
     }
 
     onClick(cb, item) {
