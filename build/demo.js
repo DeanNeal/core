@@ -1,8 +1,8 @@
 /*!
- * ace-js 0.3.9
+ * ace-js 0.3.10
  * May be freely distributed under the MIT license 
  * Author: Bogdan Zinkevich
- * Last update: 2017-10-13 15:15:42
+ * Last update: 2017-10-13 15:22:50
  * 
  */
 (function webpackUniversalModuleDefinition(root, factory) {
@@ -82,7 +82,7 @@ return /******/ (function(modules) { // webpackBootstrap
 /******/ 	}
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "efeb4b42fad81311b791"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "2426a1d3cf7f7dd4509b"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
 /******/ 	
@@ -1408,7 +1408,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	                    if (_core.Utils.isCustomElement(item.elem)) {
 	                        _core.Component.COMPONENTS.forEach(function (comp) {
 	                            if (comp.selector === item.elem.localName) {
-	                                console.log(item);
+	                                //console.log(item);
 	                                new comp.c(item.elem);
 	                            }
 	                        });
@@ -2091,7 +2091,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	        var attr = item.attr;
 
 	        _private.PRIVATES.GLOBAL_EVENTS.set(_this, _core.GlobalEvents.onClick(function (e) {
-	            console.log(item.elem);
 	            var ouside = _this.shadow ? item.elem.contains(e.path[0]) : item.elem.contains(e.target);
 	            if (!ouside) {
 	                _this[attr].call(_this, e);
@@ -4718,7 +4717,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	            this.getElement('pre').forEach(function (item) {});
 
 	            this.props.set({
-	                version: ("0.3.9"),
+	                version: ("0.3.10"),
 	                'categories': [{
 	                    name: 'Getting started',
 	                    items: [{
