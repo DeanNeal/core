@@ -50,7 +50,7 @@ export function _for(array, data) {
                     // if(newComp) {
                         let newEl = document.createElement(compName);
                         this.root.appendChild(newEl);
-                        new newComp.c(newEl, Object.assign({}, array[i]));
+                        new newComp(newEl, Object.assign({}, array[i]));
                     // }
 
                     // loop through the old element's attributes and give them to the new element

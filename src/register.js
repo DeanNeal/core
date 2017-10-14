@@ -16,7 +16,12 @@ export function Register(options) {
         }
     }
 
-
+    if(options.stores instanceof Object){
+        Component.STORES = options.stores;
+    } else {
+        throw new Error('stores must be an object');
+    }
+    
     Component.COMPONENTS = options.components;
     RouteSwitcher.ROUTES = options.routes;
     Component.DIRECTIVES = []; // for custom directives
@@ -49,7 +54,7 @@ export function Register(options) {
 }
 
 function registerComponent(component) {
-    if (component.c instanceof Component.constructor) {
+    if (component instanceof Component.constructor) {
         Component.COMPONENTS.push(component);
     } else {
         console.warn('Wrong type of component');

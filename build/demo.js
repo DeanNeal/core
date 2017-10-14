@@ -2,7 +2,7 @@
  * ace-js 0.3.10
  * May be freely distributed under the MIT license 
  * Author: Bogdan Zinkevich
- * Last update: 2017-10-13 15:22:50
+ * Last update: 2017-10-15 00:02:38
  * 
  */
 (function webpackUniversalModuleDefinition(root, factory) {
@@ -82,7 +82,7 @@ return /******/ (function(modules) { // webpackBootstrap
 /******/ 	}
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "2426a1d3cf7f7dd4509b"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "e2a9c4a6d364e01fa1ea"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
 /******/ 	
@@ -1148,12 +1148,19 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	function ComponentDecorator(decoratorParams) {
 	    return function decorator(Class) {
-	        return function (root, options) {
-	            Class.prototype = Object.setPrototypeOf(Class.prototype, _core.Component.prototype);
+	        var func = function func(root, options) {
+	            var proto = _core.Component.prototype;
+	            if (decoratorParams.super) {
+	                proto = decoratorParams.super.prototype = Object.setPrototypeOf(decoratorParams.super.prototype, _core.Component.prototype);
+	            }
+	            Class.prototype = Object.setPrototypeOf(Class.prototype, proto);
 	            var instance = new Class();
 	            _core.Component.componentConstructor.call(instance, root, decoratorParams);
 	            return instance;
 	        };
+	        func.selector = decoratorParams.selector;
+
+	        return func;
 	    };
 	}
 
@@ -1409,7 +1416,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	                        _core.Component.COMPONENTS.forEach(function (comp) {
 	                            if (comp.selector === item.elem.localName) {
 	                                //console.log(item);
-	                                new comp.c(item.elem);
+	                                new comp(item.elem);
 	                            }
 	                        });
 	                    }
@@ -1602,7 +1609,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	                    // if(newComp) {
 	                    var newEl = document.createElement(compName);
 	                    _this.root.appendChild(newEl);
-	                    new newComp.c(newEl, Object.assign({}, array[_i2]));
+	                    new newComp(newEl, Object.assign({}, array[_i2]));
 	                    // }
 
 	                    // loop through the old element's attributes and give them to the new element
@@ -2368,7 +2375,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	                    components.forEach(function (r) {
 	                        if (!r.COMPONENT) {
 	                            // don't reinitialize
-	                            new comp.c(r);
+	                            new comp(r);
 	                        }
 	                    });
 	                }
@@ -2519,7 +2526,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	            });
 
 	            Object.defineProperty(this, 'tpl', { value: options.template || 'Empty template', writable: false });
-	            Object.defineProperty(this, 'props', { value: new _core.ObservableModel(options.props), writable: false });
+	            Object.defineProperty(this, 'props', { value: new _core.ObservableModel(Object.assign({}, options.props)), writable: false });
 
 	            Object.defineProperty(this, 'type', { value: options.type, writable: false });
 
@@ -2530,6 +2537,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	            this.root.COMPONENT = this;
 
 	            Component.setPrivates.call(this, options);
+	            Component.setStores.call(this, options);
 
 	            if (this.root.getAttribute('ac-for')) {
 	                // console.warn('Foor loop is detected!')
@@ -2564,6 +2572,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	            // console.log(PRIVATES.CUSTOM_DIRECTIVES, this);
 
 	            // this.$interpolationArray = [];
+	        }
+	    }, {
+	        key: 'setStores',
+	        value: function setStores(options) {
+	            this.$stores = Component.STORES;
 	        }
 	    }]);
 
@@ -2720,6 +2733,12 @@ return /******/ (function(modules) { // webpackBootstrap
 	        }
 	    }
 
+	    if (options.stores instanceof Object) {
+	        _component.Component.STORES = options.stores;
+	    } else {
+	        throw new Error('stores must be an object');
+	    }
+
 	    _component.Component.COMPONENTS = options.components;
 	    _core.RouteSwitcher.ROUTES = options.routes;
 	    _component.Component.DIRECTIVES = []; // for custom directives
@@ -2751,7 +2770,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	}
 
 	function registerComponent(component) {
-	    if (component.c instanceof _component.Component.constructor) {
+	    if (component instanceof _component.Component.constructor) {
 	        _component.Component.COMPONENTS.push(component);
 	    } else {
 	        console.warn('Wrong type of component');
@@ -2859,7 +2878,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	                if (newCompObject) {
 	                    var newComp = document.createElement(route.component);
 	                    this.checkAccess(root, newComp, route, function () {
-	                        new newCompObject.c(newComp);
+	                        new newCompObject(newComp);
 	                    });
 	                } else {
 	                    this.appendEmpty(root);
@@ -3768,17 +3787,9 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-	var DropdownComponent = exports.DropdownComponent = function (_Component) {
-	    _inherits(DropdownComponent, _Component);
-
-	    function DropdownComponent(params, options) {
+	var DropdownComponent = exports.DropdownComponent = function () {
+	    function DropdownComponent() {
 	        _classCallCheck(this, DropdownComponent);
-
-	        return _possibleConstructorReturn(this, (DropdownComponent.__proto__ || Object.getPrototypeOf(DropdownComponent)).call(this, params, options));
 	    }
 
 	    _createClass(DropdownComponent, [{
@@ -3803,7 +3814,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    }]);
 
 	    return DropdownComponent;
-	}(_component.Component);
+	}();
 
 /***/ }),
 /* 48 */

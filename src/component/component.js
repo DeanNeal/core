@@ -19,9 +19,9 @@ export class Component {
             value: Object.assign({}, options),
             writable: false
         });
-
+        
         Object.defineProperty(this, 'tpl', { value: options.template || 'Empty template', writable: false });
-        Object.defineProperty(this, 'props', { value: new ObservableModel(options.props), writable: false });
+        Object.defineProperty(this, 'props', { value: new ObservableModel(Object.assign({}, options.props)), writable: false });
 
         Object.defineProperty(this, 'type', { value: options.type, writable: false });
 
@@ -33,6 +33,7 @@ export class Component {
         this.root.COMPONENT = this;
 
         Component.setPrivates.call(this, options);
+        Component.setStores.call(this, options);
 
         if (this.root.getAttribute('ac-for')) {
             // console.warn('Foor loop is detected!')
@@ -65,6 +66,10 @@ export class Component {
         // console.log(PRIVATES.CUSTOM_DIRECTIVES, this);
         
         // this.$interpolationArray = [];
+    }
+
+    static setStores(options) {
+        this.$stores = Component.STORES;
     }
 
     render() {
@@ -151,7 +156,7 @@ export class Component {
             if (components.length) {
                 components.forEach(r => {
                     if (!r.COMPONENT) { // don't reinitialize
-                        new comp.c(r);
+                        new comp(r);
                     }
                 });
             }

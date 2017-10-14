@@ -1,10 +1,6 @@
 import { Component } from '../component/component';
 
-export class DropdownComponent extends Component {
-    constructor(params, options) {
-        super(params, options);
-    }
-
+export class DropdownComponent{
     openMenu(e) {
         if (this.getRoot().getAttribute('readonly') === null) {
             this.props.set('_show', !this.props.get('_show'))

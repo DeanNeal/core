@@ -11,7 +11,7 @@ export function _if(array, data) {
                         Component.COMPONENTS.forEach(comp => {
                             if(comp.selector === item.elem.localName){
                                 //console.log(item);
-                                new comp.c(item.elem);
+                                new comp(item.elem);
                             }
                         });
                     }

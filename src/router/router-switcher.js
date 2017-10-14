@@ -48,7 +48,7 @@ export class RouteSwitcher {
             if(newCompObject){
                 let newComp = document.createElement(route.component);
                 this.checkAccess(root, newComp, route, ()=>{
-                    new newCompObject.c(newComp);
+                    new newCompObject(newComp);
                 }); 
                 
             } else {

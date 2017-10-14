@@ -5,11 +5,18 @@ import { Directives } from '../component/Directives';
 
 export default function ComponentDecorator(decoratorParams) {
     return function decorator(Class) {
-        return (root, options) => {
-            Class.prototype = Object.setPrototypeOf(Class.prototype, Component.prototype);
+        let func = (root, options) => {
+            let proto = Component.prototype;
+            if (decoratorParams.super) {
+                proto = decoratorParams.super.prototype = Object.setPrototypeOf(decoratorParams.super.prototype, Component.prototype);
+            }
+            Class.prototype = Object.setPrototypeOf(Class.prototype, proto);
             let instance = new Class();
             Component.componentConstructor.call(instance, root, decoratorParams);
             return instance;
         };
+        func.selector = decoratorParams.selector;
+
+        return func;
     }
 }
