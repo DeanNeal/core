@@ -1,3 +1,8 @@
+<a name="0.3.11"></a>
+# [0.3.11](https://github.com/DeanNeal/ace-js) (2017-10-15)
+### Features
+* **core:** use decorators only and specify selector name in decorator params ([#33](https://github.com/DeanNeal/ace-js/issues/33))
+
 <a name="0.3.8"></a>
 # [0.3.8](https://github.com/DeanNeal/ace-js) (2017-10-12)
 ### Features
