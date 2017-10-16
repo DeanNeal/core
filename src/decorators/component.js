@@ -5,7 +5,9 @@ import { Directives } from '../component/Directives';
 
 export default function ComponentDecorator(decoratorParams) {
     return function decorator(Class) {
-        let func = (root, options) => {
+        let func = (root, props) => {
+
+            decoratorParams.props = Object.assign(decoratorParams.props || {}, props);
             let proto = Component.prototype;
             if (decoratorParams.super) {
                 proto = decoratorParams.super.prototype = Object.setPrototypeOf(decoratorParams.super.prototype, Component.prototype);

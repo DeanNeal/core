@@ -2,7 +2,7 @@
  * ace-js 0.3.11
  * May be freely distributed under the MIT license 
  * Author: Bogdan Zinkevich
- * Last update: 2017-10-15 01:17:23
+ * Last update: 2017-10-16 16:40:50
  * 
  */
 (function webpackUniversalModuleDefinition(root, factory) {
@@ -82,7 +82,7 @@ return /******/ (function(modules) { // webpackBootstrap
 /******/ 	}
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "8838ef2fbc7c584f1f8d"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "fe83d01aef5c11cf43ab"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
 /******/ 	
@@ -1148,7 +1148,9 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	function ComponentDecorator(decoratorParams) {
 	    return function decorator(Class) {
-	        var func = function func(root, options) {
+	        var func = function func(root, props) {
+
+	            decoratorParams.props = Object.assign(decoratorParams.props || {}, props);
 	            var proto = _core.Component.prototype;
 	            if (decoratorParams.super) {
 	                proto = decoratorParams.super.prototype = Object.setPrototypeOf(decoratorParams.super.prototype, _core.Component.prototype);
