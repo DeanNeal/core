@@ -1,23 +1,25 @@
-import {Utils} from 'core';
+import {Utils} from '../../utils/utils';
+import * as Decorators  from '../../decorators';
 import {DropdownComponent} from '../dropdown';
-// import Style from './modal.component.scss';
 import Tpl from './datepicker.html';
 
 const daysOfWeek = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
-// const daysOfWeekShort = ['Mo', 'Tu', 'Wen', 'Th', 'Fr', 'Sat', 'Sun'];
-// const monthDefaultType = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
-// const minutes = 'm';
-// const hours = 'h';
+
 const TODAY = new Date();
-export class DatepickerComponent extends DropdownComponent {
+
+@Decorators.ComponentDecorator({
+    selector: 'app-datepicker', 
+    template: Tpl,
+    props: {
+        daysOfWeekShort: Utils.daysOfWeekShort, 
+        formattedDate: Utils.getDateByFormat(TODAY, 'yyyy-mm-dd')
+    },
+    super: DropdownComponent
+})
+
+export class DatepickerComponent {
     constructor(params) {
-        super(params, {
-            template: Tpl,
-            props: {
-                daysOfWeekShort: Utils.daysOfWeekShort, 
-                formattedDate: Utils.getDateByFormat(TODAY, 'yyyy-mm-dd')
-            }
-        });
+
     }
 
     INPUT(params) {

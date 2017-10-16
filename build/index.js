@@ -2,7 +2,7 @@
  * ace-js 0.3.12
  * May be freely distributed under the MIT license 
  * Author: Bogdan Zinkevich
- * Last update: 2017-10-16 16:44:00
+ * Last update: 2017-10-16 18:19:05
  * 
  */
 (function webpackUniversalModuleDefinition(root, factory) {
@@ -82,7 +82,7 @@ return /******/ (function(modules) { // webpackBootstrap
 /******/ 	}
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "287e4b7e223a49b82b54"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "c3d42c89e16d7ab16543"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
 /******/ 	
@@ -3461,7 +3461,13 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-	var _core = __webpack_require__(6);
+	var _dec, _class;
+
+	var _utils = __webpack_require__(42);
+
+	var _decorators = __webpack_require__(8);
+
+	var Decorators = _interopRequireWildcard(_decorators);
 
 	var _dropdown = __webpack_require__(47);
 
@@ -3471,34 +3477,25 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+	function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
+
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-	// import Style from './modal.component.scss';
-
-
 	var daysOfWeek = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
-	// const daysOfWeekShort = ['Mo', 'Tu', 'Wen', 'Th', 'Fr', 'Sat', 'Sun'];
-	// const monthDefaultType = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
-	// const minutes = 'm';
-	// const hours = 'h';
+
 	var TODAY = new Date();
 
-	var DatepickerComponent = exports.DatepickerComponent = function (_DropdownComponent) {
-	    _inherits(DatepickerComponent, _DropdownComponent);
-
+	var DatepickerComponent = exports.DatepickerComponent = (_dec = Decorators.ComponentDecorator({
+	    selector: 'app-datepicker',
+	    template: _datepicker2.default,
+	    props: {
+	        daysOfWeekShort: _utils.Utils.daysOfWeekShort,
+	        formattedDate: _utils.Utils.getDateByFormat(TODAY, 'yyyy-mm-dd')
+	    },
+	    super: _dropdown.DropdownComponent
+	}), _dec(_class = function () {
 	    function DatepickerComponent(params) {
 	        _classCallCheck(this, DatepickerComponent);
-
-	        return _possibleConstructorReturn(this, (DatepickerComponent.__proto__ || Object.getPrototypeOf(DatepickerComponent)).call(this, params, {
-	            template: _datepicker2.default,
-	            props: {
-	                daysOfWeekShort: _core.Utils.daysOfWeekShort,
-	                formattedDate: _core.Utils.getDateByFormat(TODAY, 'yyyy-mm-dd')
-	            }
-	        }));
 	    }
 
 	    _createClass(DatepickerComponent, [{
@@ -3507,7 +3504,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	            if (params.date) {
 	                this.props.set({
 	                    model: new Date(params.date),
-	                    formattedDate: _core.Utils.getDateByFormat(params.date, 'yyyy-mm-dd')
+	                    formattedDate: _utils.Utils.getDateByFormat(params.date, 'yyyy-mm-dd')
 	                });
 	                this.currentDate = new Date(params.date); // init view
 	            }
@@ -3563,7 +3560,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    }, {
 	        key: 'getCurrentMonth',
 	        value: function getCurrentMonth() {
-	            var a = _core.Utils.monthNames[this.currentDate.getMonth()];
+	            var a = _utils.Utils.monthNames[this.currentDate.getMonth()];
 	            // this.props.set('currentMonth', a);
 	            return a;
 	        }
@@ -3589,10 +3586,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	            var maxDate = new Date(this.maxDate);
 	            var emptyDays = monthStart.getDay() - 1; // get last dates of prev month
 
-	            monthStart = _core.Utils.addDays(monthStart, -emptyDays); // set start position
+	            monthStart = _utils.Utils.addDays(monthStart, -emptyDays); // set start position
 
 	            for (var i = 1; i < monthLength + 1 + emptyDays; i++) {
-	                var _date = _core.Utils.addDays(monthStart, i - 1);
+	                var _date = _utils.Utils.addDays(monthStart, i - 1);
 	                var day = { index: _date.getDate(), date: _date, today: false, selected: false, inactive: false, empty: false };
 
 	                if (i <= emptyDays) {
@@ -3631,7 +3628,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    }]);
 
 	    return DatepickerComponent;
-	}(_dropdown.DropdownComponent);
+	}()) || _class);
 
 /***/ }),
 /* 47 */
@@ -3685,7 +3682,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	"use strict";
 
-	module.exports = "<div ac-outside=\"outside\" class=\"relative\">\r\n\t<div  style=\"width: 100%\">\r\n\t\t<input type=\"text\" @click=\"openMenu\" class=\"app-form__label__input full-width\" placeholder=\"\"  readonly required ac-value=\"props.formattedDate\">\r\n\t\t<!-- <img class=\"datepicker-icon\" src=\"../../assets/img/hanging-calendar.svg\" alt=\"\"> -->\r\n\t</div>\r\n\r\n\t<div class=\"j-calendar\" ac-if=\"@_show\" >\r\n\t    <div class=\"j-calendar__wrap\">\r\n\t        <div class=\"j-calendar__item\">\r\n\t            <div class=\"j-calendar__header\">\r\n\t                <div class=\"j-calendar__header__left\" @click=\"prev\">\r\n\t                    <span>prev</span>\r\n\t                </div>\r\n\t                <div class=\"j-calendar__header__center\">\r\n\t\t                <span ac-value=\"props.currentMonth\"></span>\r\n\t\t                <span style=\"margin-left: 7px;\" ac-value=\"props.currentYear\"></span>\r\n\t                </div>\r\n\t                <div class=\"j-calendar__header__right\" @click=\"next\">\r\n\t                    <span>Next</span>\r\n\t                </div>\r\n\t            </div>\r\n\t            <div class=\"j-calendar__content\">\r\n\t                <div class=\"j-calendar__days\">\r\n\t                    <div class=\"j-calendar__days__item\" ac-for=\"props.daysOfWeekShort\">\r\n\t\t\t\t\t\t\t<span ac-value=\"index\"></span>\r\n\t\t\t\t\t\t</div>\r\n\t                </div>\r\n\t                <div class=\"j-calendar__date\">\r\n\t                    <div class=\"j-calendar__date__item\" \r\n\t                    ac-class=\"j-calendar__date__item--circle:today, j-calendar__date__item--active:selected, j-calendar__date__item--inactive: inactive\"\r\n\t                    ac-for=\"props.countOfDays\"\r\n\t                    @click=\"select(this)\">\r\n\t\t\t\t\t\t\t<span ac-value=\"index\"></span>\r\n\t                    </div>\r\n\t                </div>\r\n\t            </div>\r\n\t        </div>\r\n\t    </div>\r\n\t</div>\r\n</div>\r\n";
+	module.exports = "<div ac-outside=\"outside\" class=\"relative\">\r\n\t<div  style=\"width: 100%\" class=\"app-form__label__input\">\r\n\t\t<input type=\"text\" @click=\"openMenu\" class=\"app-form__label__input full-width\" placeholder=\"\"  readonly required ac-value=\"props.formattedDate\">\r\n\t\t<!-- <img class=\"datepicker-icon\" src=\"../../assets/img/hanging-calendar.svg\" alt=\"\"> -->\r\n\t</div>\r\n\r\n\t<div class=\"j-calendar\" ac-if=\"@_show\" >\r\n\t    <div class=\"j-calendar__wrap\">\r\n\t        <div class=\"j-calendar__item\">\r\n\t            <div class=\"j-calendar__header\">\r\n\t                <div class=\"j-calendar__header__left\" @click=\"prev\">\r\n\t                    <span>prev</span>\r\n\t                </div>\r\n\t                <div class=\"j-calendar__header__center\">\r\n\t\t                <span ac-value=\"props.currentMonth\"></span>\r\n\t\t                <span style=\"margin-left: 7px;\" ac-value=\"props.currentYear\"></span>\r\n\t                </div>\r\n\t                <div class=\"j-calendar__header__right\" @click=\"next\">\r\n\t                    <span>Next</span>\r\n\t                </div>\r\n\t            </div>\r\n\t            <div class=\"j-calendar__content\">\r\n\t                <div class=\"j-calendar__days\">\r\n\t                    <div class=\"j-calendar__days__item\" ac-for=\"props.daysOfWeekShort\">\r\n\t\t\t\t\t\t\t<span ac-value=\"index\"></span>\r\n\t\t\t\t\t\t</div>\r\n\t                </div>\r\n\t                <div class=\"j-calendar__date\">\r\n\t                    <div class=\"j-calendar__date__item\" \r\n\t                    ac-class=\"j-calendar__date__item--circle:today, j-calendar__date__item--active:selected, j-calendar__date__item--inactive: inactive\"\r\n\t                    ac-for=\"props.countOfDays\"\r\n\t                    @click=\"select(this)\">\r\n\t\t\t\t\t\t\t<span ac-value=\"index\"></span>\r\n\t                    </div>\r\n\t                </div>\r\n\t            </div>\r\n\t        </div>\r\n\t    </div>\r\n\t</div>\r\n</div>\r\n";
 
 /***/ }),
 /* 49 */
