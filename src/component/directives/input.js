@@ -1,7 +1,9 @@
+import {Utils} from '../../core';
+
 export function _input(array) {
     array.forEach(item => {
         if(item.elem.COMPONENT){
-            let array = item.attr.replace(/ +/g, "").split(',');
+            let array = Utils.removeSpacesFromString(item.attr).split(',');
             let inputParams = {};
             array.forEach(item => {
                 let variable = item.split(':')[0];

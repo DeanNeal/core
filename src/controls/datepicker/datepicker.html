@@ -1,10 +1,10 @@
 <div ac-outside="outside" class="relative">
 	<div  style="width: 100%" class="app-form__label__input">
-		<input type="text" @click="openMenu" class="app-form__label__input full-width" placeholder=""  readonly required ac-value="props.formattedDate">
+		<input type="text" @click="openMenu" class="app-form__label__input full-width" placeholder=""  readonly required ac-value="formattedDate">
 		<!-- <img class="datepicker-icon" src="../../assets/img/hanging-calendar.svg" alt=""> -->
 	</div>
 
-	<div class="j-calendar" ac-if="@_show" >
+	<div class="j-calendar" ac-if="this._show" >
 	    <div class="j-calendar__wrap">
 	        <div class="j-calendar__item">
 	            <div class="j-calendar__header">
@@ -12,8 +12,8 @@
 	                    <span>prev</span>
 	                </div>
 	                <div class="j-calendar__header__center">
-		                <span ac-value="props.currentMonth"></span>
-		                <span style="margin-left: 7px;" ac-value="props.currentYear"></span>
+		                <span ac-value="currentMonth"></span>
+		                <span style="margin-left: 7px;" ac-value="currentYear"></span>
 	                </div>
 	                <div class="j-calendar__header__right" @click="next">
 	                    <span>Next</span>
@@ -21,14 +21,14 @@
 	            </div>
 	            <div class="j-calendar__content">
 	                <div class="j-calendar__days">
-	                    <div class="j-calendar__days__item" ac-for="props.daysOfWeekShort">
+	                    <div class="j-calendar__days__item" ac-for="daysOfWeekShort">
 							<span ac-value="index"></span>
 						</div>
 	                </div>
 	                <div class="j-calendar__date">
 	                    <div class="j-calendar__date__item" 
 	                    ac-class="j-calendar__date__item--circle:today, j-calendar__date__item--active:selected, j-calendar__date__item--inactive: inactive"
-	                    ac-for="props.countOfDays"
+	                    ac-for="countOfDays"
 	                    @click="select(this)">
 							<span ac-value="index"></span>
 	                    </div>

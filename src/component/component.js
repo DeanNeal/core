@@ -130,7 +130,7 @@ export class Component {
     }
 
     listenToPropsChanges() {
-        this.props.sub(r => {
+        this.$propsSub = this.props.sub(r => {
             Directives._if.call(this, PRIVATES.DIRECTIVES['ac-if'].get(this));
             Directives._for.call(this, PRIVATES.DIRECTIVES['ac-for'].get(this));
             Directives._props.call(this, PRIVATES.DIRECTIVES['ac-value'].get(this));
@@ -194,11 +194,11 @@ export class Component {
             } else {
                 return o[i]
             }
-        }, data || this)
+        }, data || this.props)
     }
 
     setComponentVariable(string, value) {
-        let params = string.split('.');
+        let params = ('props.' + string).split('.');
         let lastProp = params[params.length - 1];
         if (params.length > 1) {
             params.splice(-1, 1);
@@ -248,6 +248,7 @@ export class Component {
     destroy() {
         // remove all event listeners
         this.onDestroy();
+        this.$propsSub.unsubscribe();
         Directives.removeEventListeners.call(this, PRIVATES.EVENTS.get(this));
 
         // unsubscribe from global events

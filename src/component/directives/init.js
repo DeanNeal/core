@@ -37,7 +37,6 @@ export function _init(root, directive, newArray) {
         let obj = {
             elem,
             attr,
-            // comment: Utils.insertAfter(document.createComment(directive + ': ' + attr), elem),
             items: [],
             parent: elem.parentNode,
             cached: elem
