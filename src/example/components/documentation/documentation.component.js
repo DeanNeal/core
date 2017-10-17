@@ -1,11 +1,14 @@
-import { Component } from '../../../core';
+import { Component, Decorators} from '../../../core';
 import Tpl from './documentation.component.html';
 // import ProjectsStore from 'store/projects.store';
-export class DocumentationComponent extends Component {
+
+@Decorators.ComponentDecorator({
+    selector: 'app-documentation',
+    template: Tpl
+})
+export class DocumentationComponent {
     constructor(params) {
-        super(params, {
-            template: Tpl
-        });
+
     }
 
     onInit() {
@@ -90,10 +93,7 @@ export class DocumentationComponent extends Component {
                 },
                 {
                     name: 'Routing',
-                    items: [{
-                        name: 'Introduction',
-                        route: 'documentation/routing-intro'
-                    }, {
+                    items: [ {
                         name: 'Router configuration',
                         route: 'documentation/router-config'
                     }, {

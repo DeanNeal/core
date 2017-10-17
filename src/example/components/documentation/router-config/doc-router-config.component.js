@@ -1,10 +1,13 @@
-import {Component} from '../../../../core';
+import {Component, Decorators} from '../../../../core';
 import Tpl from './doc-router-config.component.html';
-export class DocRouterConfigComponent extends Component {
+
+@Decorators.ComponentDecorator({
+    selector: 'app-documentation-router-config',
+    template: Tpl
+})
+export class DocRouterConfigComponent {
     constructor(params) {
-        super(params, {
-            template: Tpl
-        });
+ 
     }
 
     onInit() {

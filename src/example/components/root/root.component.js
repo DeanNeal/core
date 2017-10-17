@@ -1,11 +1,16 @@
-import {Component, Router, Http} from 'core';
+import {Component, Router, Http, Decorators} from 'core';
 import Tpl from './root.component.html';
 
-export class RootComponent extends Component {
+
+@Decorators.ComponentDecorator({
+    selector: 'app-root',
+    template: Tpl
+})
+
+
+export class RootComponent {
     constructor(params) {
-        super(params, {
-            template: Tpl
-        });
+
     }
 
     onInit() {

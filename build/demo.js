@@ -2,7 +2,7 @@
  * ace-js 0.3.15
  * May be freely distributed under the MIT license 
  * Author: Bogdan Zinkevich
- * Last update: 2017-10-17 14:43:40
+ * Last update: 2017-10-17 19:47:07
  * 
  */
 (function webpackUniversalModuleDefinition(root, factory) {
@@ -82,7 +82,7 @@ return /******/ (function(modules) { // webpackBootstrap
 /******/ 	}
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "32eb4b7673e083c3343d"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "ae54d2b07c6b7b49d066"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
 /******/ 	
@@ -647,7 +647,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        selector: 'app-root'
 	    },
 	    styles: _main2.default,
-	    components: [{ c: _header.HeaderComponent, selector: 'app-header' }, { c: _home.HomeComponent, selector: 'app-home' }, { c: _plugins.PluginsComponent, selector: 'app-plugins' }, { c: _controls2.ControlsComponent, selector: 'app-controls' }, { c: _notFound.NotFoundComponent, selector: 'app-not-found' }, { c: _controls.DatepickerComponent, selector: 'app-datepicker' }],
+	    components: [_header.HeaderComponent, _home.HomeComponent, _plugins.PluginsComponent, _controls2.ControlsComponent, _notFound.NotFoundComponent, _controls.DatepickerComponent],
 	    directives: [_upperCaseDirective2.default],
 	    modules: [_documentation2.default],
 	    routes: _router.Routes
@@ -2342,8 +2342,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	                    var a = _this.root.querySelectorAll('[href]');
 	                    a.forEach(function (item) {
 	                        var fullRoute = _core.Router.getCurrentFullPath();
+	                        var fullPath = _core.Router.getFullStringPath();
 	                        var attr = item.getAttribute('href');
-	                        var setActive = attr === fullRoute.join('/') || fullRoute[0] === attr && !item.getAttribute('ac-link-exact');
+	                        var setActive = attr === fullPath || fullRoute[0] === attr && !item.getAttribute('ac-link-exact');
 	                        setActive ? item.classList.add('active') : item.classList.remove('active');
 	                    });
 	                });
@@ -2739,10 +2740,12 @@ return /******/ (function(modules) { // webpackBootstrap
 	        }
 	    }
 
-	    if (options.stores instanceof Object) {
-	        _component.Component.STORES = options.stores;
-	    } else {
-	        throw new Error('stores must be an object');
+	    if (options.stores) {
+	        if (options.stores instanceof Object) {
+	            _component.Component.STORES = options.stores;
+	        } else {
+	            throw new Error('stores must be an object');
+	        }
 	    }
 
 	    _component.Component.COMPONENTS = options.components;
@@ -4304,6 +4307,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	});
 	exports.HomeComponent = undefined;
 
+	var _dec, _class;
+
 	var _core = __webpack_require__(6);
 
 	var _homeComponent = __webpack_require__(52);
@@ -4314,25 +4319,12 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-	var HomeComponent = exports.HomeComponent = function (_Component) {
-	    _inherits(HomeComponent, _Component);
-
-	    function HomeComponent(params) {
-	        _classCallCheck(this, HomeComponent);
-
-	        return _possibleConstructorReturn(this, (HomeComponent.__proto__ || Object.getPrototypeOf(HomeComponent)).call(this, params, {
-	            selector: 'app-home',
-	            template: _homeComponent2.default
-	            // shadow: true
-	        }));
-	    }
-
-	    return HomeComponent;
-	}(_core.Component);
+	var HomeComponent = exports.HomeComponent = (_dec = _core.Decorators.ComponentDecorator({
+	    selector: 'app-home',
+	    template: _homeComponent2.default
+	}), _dec(_class = function HomeComponent(params) {
+	    _classCallCheck(this, HomeComponent);
+	}) || _class);
 
 /***/ }),
 /* 52 */
@@ -4355,6 +4347,8 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
+	var _dec, _class;
+
 	var _core = __webpack_require__(6);
 
 	var _rootComponent = __webpack_require__(54);
@@ -4365,19 +4359,12 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-	var RootComponent = exports.RootComponent = function (_Component) {
-	    _inherits(RootComponent, _Component);
-
+	var RootComponent = exports.RootComponent = (_dec = _core.Decorators.ComponentDecorator({
+	    selector: 'app-root',
+	    template: _rootComponent2.default
+	}), _dec(_class = function () {
 	    function RootComponent(params) {
 	        _classCallCheck(this, RootComponent);
-
-	        return _possibleConstructorReturn(this, (RootComponent.__proto__ || Object.getPrototypeOf(RootComponent)).call(this, params, {
-	            template: _rootComponent2.default
-	        }));
 	    }
 
 	    _createClass(RootComponent, [{
@@ -4388,7 +4375,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    }]);
 
 	    return RootComponent;
-	}(_core.Component);
+	}()) || _class);
 
 /***/ }),
 /* 54 */
@@ -4411,6 +4398,8 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
+	var _dec, _class;
+
 	var _core = __webpack_require__(6);
 
 	var _decorators = __webpack_require__(8);
@@ -4423,24 +4412,12 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-	// import ProjectsStore from 'stores/projects.store';
-	// import UserStore from 'stores/user.store';
-	// @ComponentDecorator({
-	//     template: Tpl
-	// })
-	var HeaderComponent = exports.HeaderComponent = function (_Component) {
-	    _inherits(HeaderComponent, _Component);
-
+	var HeaderComponent = exports.HeaderComponent = (_dec = _core.Decorators.ComponentDecorator({
+	    selector: 'app-header',
+	    template: _headerComponent2.default
+	}), _dec(_class = function () {
 	    function HeaderComponent(root) {
 	        _classCallCheck(this, HeaderComponent);
-
-	        return _possibleConstructorReturn(this, (HeaderComponent.__proto__ || Object.getPrototypeOf(HeaderComponent)).call(this, root, {
-	            template: _headerComponent2.default
-	        }));
 	    }
 
 	    _createClass(HeaderComponent, [{
@@ -4454,7 +4431,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    }]);
 
 	    return HeaderComponent;
-	}(_core.Component);
+	}()) || _class);
 
 /***/ }),
 /* 56 */
@@ -4477,6 +4454,8 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
+	var _dec, _class;
+
 	var _core = __webpack_require__(6);
 
 	var _pluginsComponent = __webpack_require__(58);
@@ -4487,19 +4466,12 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-	var PluginsComponent = exports.PluginsComponent = function (_Component) {
-	    _inherits(PluginsComponent, _Component);
-
+	var PluginsComponent = exports.PluginsComponent = (_dec = _core.Decorators.ComponentDecorator({
+	    selector: 'app-plugins',
+	    template: _pluginsComponent2.default
+	}), _dec(_class = function () {
 	    function PluginsComponent(options) {
 	        _classCallCheck(this, PluginsComponent);
-
-	        return _possibleConstructorReturn(this, (PluginsComponent.__proto__ || Object.getPrototypeOf(PluginsComponent)).call(this, options, {
-	            template: _pluginsComponent2.default
-	        }));
 	    }
 
 	    _createClass(PluginsComponent, [{
@@ -4518,7 +4490,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    }]);
 
 	    return PluginsComponent;
-	}(_core.Component);
+	}()) || _class);
 
 /***/ }),
 /* 58 */
@@ -4526,7 +4498,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	"use strict";
 
-	module.exports = "<main>\r\n\r\n    <div class=\"main-content justify-space-between\">\r\n\r\n        <ul class=\"main-list\">\r\n            <li ac-for=\"props.plugins\">\r\n                <a class=\"list-head\" ac-value=\"name\" ac-link=\"{{route}}\" ></a>\r\n            </li>\r\n        </ul>\r\n\r\n        <div class=\"plugins-section\">\r\n            <!-- <child-route-switcher></child-route-switcher> -->\r\n        \r\n        \t<h3>Sortable</h3>\r\n        \t<div ac-ref=\"test\">\r\n        \t    <div draggable=\"true\" style=\"border: 1px solid #ccc; padding: 5px;display: block; width: 200px\">First Item</div>\r\n        \t    <div draggable=\"true\" style=\"border: 1px solid #ccc; padding: 5px;display: block; width: 200px\">Second Item</div>\r\n        \t    <div draggable=\"true\" style=\"border: 1px solid #ccc; padding: 5px;display: block; width: 200px\">Third Item</div>\r\n        \t</div>\r\n    \r\n        </div>\r\n    </div>\r\n</main>\r\n\r\n\r\n\r\n";
+	module.exports = "<main>\r\n\r\n    <div class=\"main-content justify-space-between\">\r\n\r\n        <ul class=\"main-list\">\r\n            <li ac-for=\"plugins\">\r\n                <a class=\"list-head\" ac-value=\"name\" ac-link=\"{{route}}\" ></a>\r\n            </li>\r\n        </ul>\r\n\r\n        <div class=\"plugins-section\">\r\n            <!-- <child-route-switcher></child-route-switcher> -->\r\n        \r\n        \t<h3>Sortable</h3>\r\n        \t<div ac-ref=\"test\">\r\n        \t    <div draggable=\"true\" style=\"border: 1px solid #ccc; padding: 5px;display: block; width: 200px\">First Item</div>\r\n        \t    <div draggable=\"true\" style=\"border: 1px solid #ccc; padding: 5px;display: block; width: 200px\">Second Item</div>\r\n        \t    <div draggable=\"true\" style=\"border: 1px solid #ccc; padding: 5px;display: block; width: 200px\">Third Item</div>\r\n        \t</div>\r\n    \r\n        </div>\r\n    </div>\r\n</main>\r\n\r\n\r\n\r\n";
 
 /***/ }),
 /* 59 */
@@ -4541,6 +4513,8 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
+	var _dec, _class;
+
 	var _core = __webpack_require__(6);
 
 	var _controlsComponent = __webpack_require__(60);
@@ -4551,19 +4525,12 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-	var ControlsComponent = exports.ControlsComponent = function (_Component) {
-	    _inherits(ControlsComponent, _Component);
-
+	var ControlsComponent = exports.ControlsComponent = (_dec = _core.Decorators.ComponentDecorator({
+	    selector: 'app-controls',
+	    template: _controlsComponent2.default
+	}), _dec(_class = function () {
 	    function ControlsComponent(options) {
 	        _classCallCheck(this, ControlsComponent);
-
-	        return _possibleConstructorReturn(this, (ControlsComponent.__proto__ || Object.getPrototypeOf(ControlsComponent)).call(this, options, {
-	            template: _controlsComponent2.default
-	        }));
 	    }
 
 	    _createClass(ControlsComponent, [{
@@ -4580,7 +4547,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    }]);
 
 	    return ControlsComponent;
-	}(_core.Component);
+	}()) || _class);
 
 /***/ }),
 /* 60 */
@@ -4588,7 +4555,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	"use strict";
 
-	module.exports = "<main>\r\n\r\n    <div class=\"main-content justify-space-between\">\r\n\r\n        <ul class=\"main-list\">\r\n            <li ac-for=\"props.controls\">\r\n                <a class=\"list-head\" ac-value=\"name\" ac-link=\"{{route}}\" ></a>\r\n            </li>\r\n        </ul>\r\n\r\n        <div class=\"plugins-section\">\r\n            <!-- <child-route-switcher></child-route-switcher> -->\r\n        \r\n        \t<h3>Datepicker</h3>\r\n            <div style=\"width: 200px\">\r\n                <app-datepicker ac-model=\"props.date\" ac-input=\"date: props.date\"></app-datepicker>\r\n            </div>\r\n        </div>\r\n    </div>\r\n</main>\r\n\r\n\r\n\r\n";
+	module.exports = "<main>\r\n\r\n    <div class=\"main-content justify-space-between\">\r\n\r\n        <ul class=\"main-list\">\r\n            <li ac-for=\"controls\">\r\n                <a class=\"list-head\" ac-value=\"name\" ac-link=\"{{route}}\" ></a>\r\n            </li>\r\n        </ul>\r\n\r\n        <div class=\"plugins-section\">\r\n            <!-- <child-route-switcher></child-route-switcher> -->\r\n        \r\n        \t<h3>Datepicker</h3>\r\n            <div style=\"width: 200px\">\r\n                <app-datepicker ac-model=\"props.date\" ac-input=\"date: date\"></app-datepicker>\r\n            </div>\r\n        </div>\r\n    </div>\r\n</main>\r\n\r\n\r\n\r\n";
 
 /***/ }),
 /* 61 */
@@ -4601,6 +4568,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	});
 	exports.NotFoundComponent = undefined;
 
+	var _dec, _class;
+
 	var _core = __webpack_require__(6);
 
 	var _notFoundComponent = __webpack_require__(62);
@@ -4611,24 +4580,12 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-	var NotFoundComponent = exports.NotFoundComponent = function (_Component) {
-	    _inherits(NotFoundComponent, _Component);
-
-	    function NotFoundComponent(options) {
-	        _classCallCheck(this, NotFoundComponent);
-
-	        return _possibleConstructorReturn(this, (NotFoundComponent.__proto__ || Object.getPrototypeOf(NotFoundComponent)).call(this, options, {
-	            template: _notFoundComponent2.default
-	            // shadow: true
-	        }));
-	    }
-
-	    return NotFoundComponent;
-	}(_core.Component);
+	var NotFoundComponent = exports.NotFoundComponent = (_dec = _core.Decorators.ComponentDecorator({
+	    selector: 'app-not-found',
+	    template: _notFoundComponent2.default
+	}), _dec(_class = function NotFoundComponent(options) {
+	    _classCallCheck(this, NotFoundComponent);
+	}) || _class);
 
 /***/ }),
 /* 62 */
@@ -4684,7 +4641,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var _exampleChild = __webpack_require__(99);
 
-	exports.default = [{ c: _documentation.DocumentationComponent, selector: 'app-documentation' }, { c: _docQuickStart.DocQuickStartComponent, selector: 'app-documentation-quick-start' }, { c: _docArchitecture.DocArchitectureComponent, selector: 'app-documentation-architecture' }, { c: _docHowTo.DocHowToComponent, selector: 'app-documentation-how-to-install' }, { c: _docComponent.DocComponentComponent, selector: 'app-documentation-component' }, { c: _docLifecycle.DocLifecycleComponent, selector: 'app-documentation-lifecycle' }, { c: _docUtils.DocUtilsComponent, selector: 'app-documentation-utils' }, { c: _directives.DocDirectivesComponent, selector: 'app-documentation-directives' }, { c: _customDirectives.DocCustomDirectivesComponent, selector: 'app-documentation-custom-directives' }, { c: _docInterpolation.DocInterpolationComponent, selector: 'app-documentation-interpolation' }, { c: _docConditional.DocConditionalComponent, selector: 'app-documentation-conditional' }, { c: _docForms.DocFormsComponent, selector: 'app-documentation-forms' }, { c: _docModules.DocModulesComponent, selector: 'app-documentation-modules' }, { c: _docSmartObject.DocSmartObjectComponent, selector: 'app-documentation-smart-object' }, { c: _docRouterConfig.DocRouterConfigComponent, selector: 'app-documentation-router-config' }, { c: _docHttpModule.HttpModuleComponent, selector: 'app-documentation-http-module' }, { c: _docHttpMethods.HttpMethodsComponent, selector: 'app-documentation-http-methods' }, { c: _exampleChild.ExampleChildComponent, selector: 'app-example-child' }];
+	exports.default = [_documentation.DocumentationComponent, _docQuickStart.DocQuickStartComponent, _docArchitecture.DocArchitectureComponent, _docHowTo.DocHowToComponent, _docComponent.DocComponentComponent, _docLifecycle.DocLifecycleComponent, _docUtils.DocUtilsComponent, _directives.DocDirectivesComponent, _customDirectives.DocCustomDirectivesComponent, _docInterpolation.DocInterpolationComponent, _docConditional.DocConditionalComponent, _docForms.DocFormsComponent, _docModules.DocModulesComponent, _docSmartObject.DocSmartObjectComponent, _docRouterConfig.DocRouterConfigComponent, _docHttpModule.HttpModuleComponent, _docHttpMethods.HttpMethodsComponent, _exampleChild.ExampleChildComponent];
 
 /***/ }),
 /* 64 */
@@ -4699,6 +4656,8 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
+	var _dec, _class;
+
 	var _core = __webpack_require__(6);
 
 	var _documentationComponent = __webpack_require__(65);
@@ -4709,20 +4668,14 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
 	// import ProjectsStore from 'store/projects.store';
-	var DocumentationComponent = exports.DocumentationComponent = function (_Component) {
-	    _inherits(DocumentationComponent, _Component);
 
+	var DocumentationComponent = exports.DocumentationComponent = (_dec = _core.Decorators.ComponentDecorator({
+	    selector: 'app-documentation',
+	    template: _documentationComponent2.default
+	}), _dec(_class = function () {
 	    function DocumentationComponent(params) {
 	        _classCallCheck(this, DocumentationComponent);
-
-	        return _possibleConstructorReturn(this, (DocumentationComponent.__proto__ || Object.getPrototypeOf(DocumentationComponent)).call(this, params, {
-	            template: _documentationComponent2.default
-	        }));
 	    }
 
 	    _createClass(DocumentationComponent, [{
@@ -4804,9 +4757,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	                }, {
 	                    name: 'Routing',
 	                    items: [{
-	                        name: 'Introduction',
-	                        route: 'documentation/routing-intro'
-	                    }, {
 	                        name: 'Router configuration',
 	                        route: 'documentation/router-config'
 	                    }, {
@@ -4834,7 +4784,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    }]);
 
 	    return DocumentationComponent;
-	}(_core.Component);
+	}()) || _class);
 
 /***/ }),
 /* 65 */
@@ -4842,7 +4792,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	"use strict";
 
-	module.exports = "<main>\r\n\r\n    <div class=\"main-content justify-space-between\">\r\n\r\n        <ul class=\"main-list\">\r\n            <li style=\"font-size: 14px;padding: 5px; font-weight: 300;\">\r\n                v<small ac-value=\"props.version\"></small>\r\n            </li>\r\n            <li ac-for=\"props.categories\">\r\n                <div class=\"list-head\" ac-value=\"name\"></div>\r\n                <ol class=\"list\">\r\n                    <li ac-for=\"items\">\r\n                        <a ac-value=\"name\" ac-link=\"{{route}}\" ac-link-exact=\"true\"></a>\r\n                    </li>\r\n                </ol>\r\n            </li>\r\n        </ul>\r\n\r\n        <div class=\"documentation-section\">\r\n            <child-route-switcher></child-route-switcher>\r\n        </div>\r\n    </div>\r\n</main>";
+	module.exports = "<main>\r\n\r\n    <div class=\"main-content justify-space-between\">\r\n\r\n        <ul class=\"main-list\">\r\n            <li style=\"font-size: 14px;padding: 5px; font-weight: 300;\">\r\n                v<small ac-value=\"version\"></small>\r\n            </li>\r\n            <li ac-for=\"categories\">\r\n                <div class=\"list-head\" ac-value=\"name\"></div>\r\n                <ol class=\"list\">\r\n                    <li ac-for=\"items\">\r\n                        <a ac-value=\"name\" ac-link=\"{{route}}\" ac-link-exact=\"true\"></a>\r\n                    </li>\r\n                </ol>\r\n            </li>\r\n        </ul>\r\n\r\n        <div class=\"documentation-section\">\r\n            <child-route-switcher></child-route-switcher>\r\n        </div>\r\n    </div>\r\n</main>";
 
 /***/ }),
 /* 66 */
@@ -4857,6 +4807,8 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
+	var _dec, _class;
+
 	var _core = __webpack_require__(6);
 
 	var _docQuickStartComponent = __webpack_require__(67);
@@ -4867,20 +4819,14 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
 	// import ProjectsStore from 'store/projects.store';
-	var DocQuickStartComponent = exports.DocQuickStartComponent = function (_Component) {
-	    _inherits(DocQuickStartComponent, _Component);
 
+	var DocQuickStartComponent = exports.DocQuickStartComponent = (_dec = _core.Decorators.ComponentDecorator({
+	    selector: 'app-documentation-quick-start',
+	    template: _docQuickStartComponent2.default
+	}), _dec(_class = function () {
 	    function DocQuickStartComponent(params) {
 	        _classCallCheck(this, DocQuickStartComponent);
-
-	        return _possibleConstructorReturn(this, (DocQuickStartComponent.__proto__ || Object.getPrototypeOf(DocQuickStartComponent)).call(this, params, {
-	            template: _docQuickStartComponent2.default
-	        }));
 	    }
 
 	    _createClass(DocQuickStartComponent, [{
@@ -4892,7 +4838,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    }]);
 
 	    return DocQuickStartComponent;
-	}(_core.Component);
+	}()) || _class);
 
 /***/ }),
 /* 67 */
@@ -4915,6 +4861,8 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
+	var _dec, _class;
+
 	var _core = __webpack_require__(6);
 
 	var _docArchitectureComponent = __webpack_require__(69);
@@ -4925,20 +4873,14 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
 	// import ProjectsStore from 'store/projects.store';
-	var DocArchitectureComponent = exports.DocArchitectureComponent = function (_Component) {
-	    _inherits(DocArchitectureComponent, _Component);
 
+	var DocArchitectureComponent = exports.DocArchitectureComponent = (_dec = _core.Decorators.ComponentDecorator({
+	    selector: 'app-documentation-architecture',
+	    template: _docArchitectureComponent2.default
+	}), _dec(_class = function () {
 	    function DocArchitectureComponent(params) {
 	        _classCallCheck(this, DocArchitectureComponent);
-
-	        return _possibleConstructorReturn(this, (DocArchitectureComponent.__proto__ || Object.getPrototypeOf(DocArchitectureComponent)).call(this, params, {
-	            template: _docArchitectureComponent2.default
-	        }));
 	    }
 
 	    _createClass(DocArchitectureComponent, [{
@@ -4950,7 +4892,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    }]);
 
 	    return DocArchitectureComponent;
-	}(_core.Component);
+	}()) || _class);
 
 /***/ }),
 /* 69 */
@@ -4981,6 +4923,8 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
+	var _dec, _class;
+
 	var _core = __webpack_require__(6);
 
 	var _docComponentComponent = __webpack_require__(72);
@@ -4991,20 +4935,14 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
 	// import ProjectsStore from 'store/projects.store';
-	var DocComponentComponent = exports.DocComponentComponent = function (_Component) {
-	    _inherits(DocComponentComponent, _Component);
 
+	var DocComponentComponent = exports.DocComponentComponent = (_dec = _core.Decorators.ComponentDecorator({
+	    selector: 'app-documentation-component',
+	    template: _docComponentComponent2.default
+	}), _dec(_class = function () {
 	    function DocComponentComponent(params) {
 	        _classCallCheck(this, DocComponentComponent);
-
-	        return _possibleConstructorReturn(this, (DocComponentComponent.__proto__ || Object.getPrototypeOf(DocComponentComponent)).call(this, params, {
-	            template: _docComponentComponent2.default
-	        }));
 	    }
 
 	    _createClass(DocComponentComponent, [{
@@ -5016,7 +4954,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    }]);
 
 	    return DocComponentComponent;
-	}(_core.Component);
+	}()) || _class);
 
 /***/ }),
 /* 72 */
@@ -5039,6 +4977,8 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
+	var _dec, _class;
+
 	var _core = __webpack_require__(6);
 
 	var _docLifecycleComponent = __webpack_require__(74);
@@ -5049,20 +4989,12 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-	// import ProjectsStore from 'store/projects.store';
-	var DocLifecycleComponent = exports.DocLifecycleComponent = function (_Component) {
-	    _inherits(DocLifecycleComponent, _Component);
-
+	var DocLifecycleComponent = exports.DocLifecycleComponent = (_dec = _core.Decorators.ComponentDecorator({
+	    selector: 'app-documentation-lifecycle',
+	    template: _docLifecycleComponent2.default
+	}), _dec(_class = function () {
 	    function DocLifecycleComponent(params) {
 	        _classCallCheck(this, DocLifecycleComponent);
-
-	        return _possibleConstructorReturn(this, (DocLifecycleComponent.__proto__ || Object.getPrototypeOf(DocLifecycleComponent)).call(this, params, {
-	            template: _docLifecycleComponent2.default
-	        }));
 	    }
 
 	    _createClass(DocLifecycleComponent, [{
@@ -5074,7 +5006,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    }]);
 
 	    return DocLifecycleComponent;
-	}(_core.Component);
+	}()) || _class);
 
 /***/ }),
 /* 74 */
@@ -5097,6 +5029,8 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
+	var _dec, _class;
+
 	var _core = __webpack_require__(6);
 
 	var _docUtilsComponent = __webpack_require__(76);
@@ -5107,20 +5041,12 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-	// import ProjectsStore from 'store/projects.store';
-	var DocUtilsComponent = exports.DocUtilsComponent = function (_Component) {
-	    _inherits(DocUtilsComponent, _Component);
-
+	var DocUtilsComponent = exports.DocUtilsComponent = (_dec = _core.Decorators.ComponentDecorator({
+	    selector: 'app-documentation-utils',
+	    template: _docUtilsComponent2.default
+	}), _dec(_class = function () {
 	    function DocUtilsComponent(params) {
 	        _classCallCheck(this, DocUtilsComponent);
-
-	        return _possibleConstructorReturn(this, (DocUtilsComponent.__proto__ || Object.getPrototypeOf(DocUtilsComponent)).call(this, params, {
-	            template: _docUtilsComponent2.default
-	        }));
 	    }
 
 	    _createClass(DocUtilsComponent, [{
@@ -5132,7 +5058,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    }]);
 
 	    return DocUtilsComponent;
-	}(_core.Component);
+	}()) || _class);
 
 /***/ }),
 /* 76 */
@@ -5155,6 +5081,8 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
+	var _dec, _class;
+
 	var _core = __webpack_require__(6);
 
 	var _directivesComponent = __webpack_require__(78);
@@ -5165,19 +5093,12 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-	var DocDirectivesComponent = exports.DocDirectivesComponent = function (_Component) {
-	    _inherits(DocDirectivesComponent, _Component);
-
+	var DocDirectivesComponent = exports.DocDirectivesComponent = (_dec = _core.Decorators.ComponentDecorator({
+	    selector: 'app-documentation-directives',
+	    template: _directivesComponent2.default
+	}), _dec(_class = function () {
 	    function DocDirectivesComponent(params) {
 	        _classCallCheck(this, DocDirectivesComponent);
-
-	        return _possibleConstructorReturn(this, (DocDirectivesComponent.__proto__ || Object.getPrototypeOf(DocDirectivesComponent)).call(this, params, {
-	            template: _directivesComponent2.default
-	        }));
 	    }
 
 	    _createClass(DocDirectivesComponent, [{
@@ -5229,7 +5150,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    }]);
 
 	    return DocDirectivesComponent;
-	}(_core.Component);
+	}()) || _class);
 
 /***/ }),
 /* 78 */
@@ -5237,7 +5158,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	"use strict";
 
-	module.exports = "<h3>Directives</h3>\r\n<div class=\"text\">Directives - special attributes with <b>ac-</b> prefix</div>\r\n<div class=\"text\">All properties of component are stored in special field called <b>props</b></div>\r\n\r\n\r\n<div class=\"block\">\r\n    <b class=\"title\">ac-value=\"props.value\"</b>\r\n    <div class=\"text\">\r\n        Bind props <b>props.value</b> with certain element\r\n        <br>\r\n        <input type=\"text\" ac-value=\"props.value\">\r\n    </div>\r\n</div>\r\n<div class=\"block\">\r\n    <b class=\"title\">ac-model=\"props.model\"</b> \r\n    <div class=\"text\">\r\n        <b>Two way data binding</b> between <b>props.model</b> and html element\r\n        <br>\r\n        <div>\r\n            <input type=\"text\" ac-model=\"props.model\">\r\n        </div>\r\n    </div>\r\n</div>\r\n<div class=\"block\">\r\n    <b class=\"title\">ac-input=\"inputData: props.selectedValue\"</b>\r\n    <div class=\"text\">Allow send <b>props.selectedValue</b> from parent component to child component <b>inputData</b>.</div>\r\n</div>\r\n<div class=\"block\">\r\n    <b class=\"title\">ac-ref=\"element\"</b>\r\n    <div class=\"text\">Add <b>element</b> to ui list. ui - is a list of reference elements</div>\r\n</div>\r\n<div class=\"block\">\r\n    <b class=\"title\">\r\n    ac-class=\"className: showClass\"\r\n    <br>\r\n    ac-class=\"@props.class\"\r\n    </b>\r\n    <div class=\"text\">Get 2 params: name of class, boolean(adds class if true). You can use\r\n        <b>comma(,)</b> symbol to specify several conditions. Also @ is available, so you can bind props to className\r\n        <br><br>\r\n        <button @click=\"changeClass\">Change class</button>\r\n        <b><span ac-class=\"@props.className\">Example</span></b>\r\n    </div>\r\n</div>\r\n<div class=\"block\">\r\n    <b class=\"title\">ac-style=\"height: props.height\"</b>\r\n    <div class=\"text\">\r\n            Binds props to css rules. Gets 2 params: <b>height</b> - css rule and <b>value</b> - value from props.\r\n            <br><br>\r\n            <button @click=\"changeSize\">Change size</button>\r\n            <br><br>\r\n            <div style=\"border: 1px solid red\" ac-style=\"height: props.height, width: props.width\"></div>\r\n     </div>\r\n</div>\r\n\r\n<div class=\"block\">\r\n    <b class=\"title\">ac-if=\"this.isVisible\"</b>\r\n    <div class=\"text\">Serve to hide or show element; Gets 1 params: <b>value</b>\r\n    <br><br>\r\n    <button @click=\"showElement\">Show</button>\r\n    <span ac-if=\"@isVisible\">Element is shown now</span>\r\n    </div>\r\n</div>\r\n<div class=\"block\">\r\n    <b class=\"title\">ac-for=\"props.items\"</b>\r\n    <div class=\"text\">Repeater. Creates instance for every element in collection <b>props.items</b>\r\n    <br><br>\r\n    <ul>\r\n        <li ac-for=\"props.items\" ac-value=\"name\"></li>\r\n    </ul>\r\n \r\n    </div>\r\n</div>\r\n<div class=\"block\">\r\n    <b class=\"title\">ac-attr=\"src: props.image\"</b>\r\n    <div class=\"text\">Binds attr <b>src</b> with url from <b>props.image</b>\r\n    <br>\r\n    <img ac-attr=\"src: props.image\" style=\"width: 200px\">\r\n    </div>\r\n</div>\r\n<div class=\"block\">\r\n    <b class=\"title\">ac-link=\"documentation\"</b>\r\n    <div class=\"text\">Serves for navigation inside application. In this case link leads to documentation page</div>\r\n</div>\r\n\r\n<div class=\"block\">\r\n    <b class=\"title\">ac-on=\"change: onChange\"</b>\r\n    <div class=\"text\">\r\n    Add event listener to the root element of component, that listen to child events\r\n    <br><br>\r\n    <app-example-child ac-on=\"onChange: onChange\"></app-example-child>\r\n    </div>\r\n</div>\r\n\r\n<div class=\"block\">\r\n    <b class=\"title\">ac-pattern=\"[0-9]\"</b>\r\n    <div class=\"text\">\r\n    Add <b>error class</b> to the element if value is invalid(doesn't match the pattern)\r\n    <form ac-submit=\"submit\">\r\n        <input required type=\"text\" ac-pattern=\"[0-9]: Invalid\">\r\n        <button>Submit</button>\r\n    </form>\r\n    \r\n    </div>\r\n</div>\r\n<div class=\"block\">\r\n    <b class=\"title\">ac-outside=\"outsideClick\"</b>\r\n    <div class=\"text\">Trigger method <b>outsideClick</b> if user clicked beyond the element where ac-outside is specified</div>\r\n</div>";
+	module.exports = "<h3>Directives</h3>\r\n<div class=\"text\">Directives - special attributes with <b>ac-</b> prefix</div>\r\n<div class=\"text\">All properties of component are stored in special field called <b>props</b></div>\r\n\r\n\r\n<div class=\"block\">\r\n    <b class=\"title\">ac-value=\"value\"</b>\r\n    <div class=\"text\">\r\n        Bind props <b>value</b> with certain element\r\n        <br>\r\n        <input type=\"text\" ac-value=\"value\">\r\n    </div>\r\n</div>\r\n<div class=\"block\">\r\n    <b class=\"title\">ac-model=\"model\"</b> \r\n    <div class=\"text\">\r\n        <b>Two way data binding</b> between <b>model</b> and html element\r\n        <br>\r\n        <div>\r\n            <input type=\"text\" ac-model=\"model\">\r\n        </div>\r\n    </div>\r\n</div>\r\n<div class=\"block\">\r\n    <b class=\"title\">ac-input=\"inputData: selectedValue\"</b>\r\n    <div class=\"text\">Allow send <b>selectedValue</b> from parent component to child component <b>inputData</b>.</div>\r\n</div>\r\n<div class=\"block\">\r\n    <b class=\"title\">ac-ref=\"element\"</b>\r\n    <div class=\"text\">Add <b>element</b> to ui list. ui - is a list of reference elements</div>\r\n</div>\r\n<div class=\"block\">\r\n    <b class=\"title\">\r\n    ac-class=\"className: showClass\"\r\n    <br>\r\n    ac-class=\"@class\"\r\n    </b>\r\n    <div class=\"text\">Get 2 params: name of class, boolean(adds class if true). You can use\r\n        <b>comma(,)</b> symbol to specify several conditions. Also @ is available, so you can bind props to className\r\n        <br><br>\r\n        <button @click=\"changeClass\">Change class</button>\r\n        <b><span ac-class=\"@className\">Example</span></b>\r\n    </div>\r\n</div>\r\n<div class=\"block\">\r\n    <b class=\"title\">ac-style=\"height: height\"</b>\r\n    <div class=\"text\">\r\n            Binds props to css rules. Gets 2 params: <b>height</b> - css rule and <b>value</b> - value from \r\n            <br><br>\r\n            <button @click=\"changeSize\">Change size</button>\r\n            <br><br>\r\n            <div style=\"border: 1px solid red\" ac-style=\"height: height, width: width\"></div>\r\n     </div>\r\n</div>\r\n\r\n<div class=\"block\">\r\n    <b class=\"title\">ac-if=\"this.isVisible\"</b>\r\n    <div class=\"text\">Serve to hide or show element; Gets 1 params: <b>value</b>\r\n    <br><br>\r\n    <button @click=\"showElement\">Show</button>\r\n    <span ac-if=\"this.isVisible\">Element is shown now</span>\r\n    </div>\r\n</div>\r\n<div class=\"block\">\r\n    <b class=\"title\">ac-for=\"items\"</b>\r\n    <div class=\"text\">Repeater. Creates instance for every element in collection <b>items</b>\r\n    <br><br>\r\n    <ul>\r\n        <li ac-for=\"items\" ac-value=\"name\"></li>\r\n    </ul>\r\n \r\n    </div>\r\n</div>\r\n<div class=\"block\">\r\n    <b class=\"title\">ac-attr=\"src: image\"</b>\r\n    <div class=\"text\">Binds attr <b>src</b> with url from <b>image</b>\r\n    <br>\r\n    <img ac-attr=\"src: image\" style=\"width: 200px\">\r\n    </div>\r\n</div>\r\n<div class=\"block\">\r\n    <b class=\"title\">ac-link=\"documentation\"</b>\r\n    <div class=\"text\">Serves for navigation inside application. In this case link leads to documentation page</div>\r\n</div>\r\n\r\n<div class=\"block\">\r\n    <b class=\"title\">ac-on=\"change: onChange\"</b>\r\n    <div class=\"text\">\r\n    Add event listener to the root element of component, that listen to child events\r\n    <br><br>\r\n    <app-example-child ac-on=\"onChange: onChange\"></app-example-child>\r\n    </div>\r\n</div>\r\n\r\n<div class=\"block\">\r\n    <b class=\"title\">ac-pattern=\"[0-9]\"</b>\r\n    <div class=\"text\">\r\n    Add <b>error class</b> to the element if value is invalid(doesn't match the pattern)\r\n    <form ac-submit=\"submit\">\r\n        <input required type=\"text\" ac-pattern=\"[0-9]: Invalid\">\r\n        <button>Submit</button>\r\n    </form>\r\n    \r\n    </div>\r\n</div>\r\n<div class=\"block\">\r\n    <b class=\"title\">ac-outside=\"outsideClick\"</b>\r\n    <div class=\"text\">Trigger method <b>outsideClick</b> if user clicked beyond the element where ac-outside is specified</div>\r\n</div>";
 
 /***/ }),
 /* 79 */
@@ -5252,6 +5173,8 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
+	var _dec, _class;
+
 	var _core = __webpack_require__(6);
 
 	var _customDirectivesComponent = __webpack_require__(80);
@@ -5262,23 +5185,16 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-	var DocCustomDirectivesComponent = exports.DocCustomDirectivesComponent = function (_Component) {
-	    _inherits(DocCustomDirectivesComponent, _Component);
-
+	var DocCustomDirectivesComponent = exports.DocCustomDirectivesComponent = (_dec = _core.Decorators.ComponentDecorator({
+	    selector: 'app-documentation-custom-directives',
+	    template: _customDirectivesComponent2.default,
+	    props: {
+	        test: 'test',
+	        show: true
+	    }
+	}), _dec(_class = function () {
 	    function DocCustomDirectivesComponent(params) {
 	        _classCallCheck(this, DocCustomDirectivesComponent);
-
-	        return _possibleConstructorReturn(this, (DocCustomDirectivesComponent.__proto__ || Object.getPrototypeOf(DocCustomDirectivesComponent)).call(this, params, {
-	            template: _customDirectivesComponent2.default,
-	            props: {
-	                test: 'test',
-	                show: true
-	            }
-	        }));
 	    }
 
 	    _createClass(DocCustomDirectivesComponent, [{
@@ -5287,7 +5203,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    }]);
 
 	    return DocCustomDirectivesComponent;
-	}(_core.Component);
+	}()) || _class);
 
 /***/ }),
 /* 80 */
@@ -5366,6 +5282,8 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
+	var _dec, _class;
+
 	var _core = __webpack_require__(6);
 
 	var _docConditionalComponent = __webpack_require__(84);
@@ -5376,22 +5294,15 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-	var DocConditionalComponent = exports.DocConditionalComponent = function (_Component) {
-	    _inherits(DocConditionalComponent, _Component);
-
+	var DocConditionalComponent = exports.DocConditionalComponent = (_dec = _core.Decorators.ComponentDecorator({
+	    selector: 'app-documentation-conditional',
+	    template: _docConditionalComponent2.default,
+	    props: {
+	        isVisible: true
+	    }
+	}), _dec(_class = function () {
 	    function DocConditionalComponent(params) {
 	        _classCallCheck(this, DocConditionalComponent);
-
-	        return _possibleConstructorReturn(this, (DocConditionalComponent.__proto__ || Object.getPrototypeOf(DocConditionalComponent)).call(this, params, {
-	            template: _docConditionalComponent2.default,
-	            props: {
-	                isVisible: true
-	            }
-	        }));
 	    }
 
 	    _createClass(DocConditionalComponent, [{
@@ -5400,7 +5311,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    }]);
 
 	    return DocConditionalComponent;
-	}(_core.Component);
+	}()) || _class);
 
 /***/ }),
 /* 84 */
@@ -5436,6 +5347,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 	var DocFormsComponent = exports.DocFormsComponent = (_dec = _core.Decorators.ComponentDecorator({
+	    selector: 'app-documentation-forms',
 	    template: _docFormsComponent2.default,
 	    props: {
 	        checkbox: {},
@@ -5463,7 +5375,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	"use strict";
 
-	module.exports = "<h3>Forms</h3>\r\n\r\n<div class=\"title\">[type=\"text\"]</div>\r\n<div class=\"input\">\r\n\t<div ac-value=\"props.input\"></div>\r\n\t<input type=\"text\" ac-model=\"props.input\">\r\n</div>\r\n\r\n<div class=\"title\">[type=\"email\"]</div>\r\n<div class=\"input\">\r\n\t<div ac-value=\"props.email\"></div>\r\n\t<input type=\"email\" ac-model=\"props.email\">\r\n</div>\r\n\r\n<div class=\"title\">[type=\"password\"]</div>\r\n<div class=\"input\">\r\n\t<div ac-value=\"props.password\"></div>\r\n\t<input type=\"password\" ac-model=\"props.password\">\r\n</div>\r\n\r\n<div class=\"title\">[type=\"radio\"]</div>\r\n<div class=\"input\">\r\n\t<div ac-value=\"props.radio\"></div>\r\n\t<input type=\"radio\" ac-model=\"props.radio\" value=\"1\" name=\"radio\">\r\n\t<input type=\"radio\" ac-model=\"props.radio\" value=\"2\" name=\"radio\">\r\n</div>\r\n\r\n<div class=\"title\">[type=\"checkbox\"]</div>\r\n<div class=\"input\">\r\n\t<div ac-value=\"props.checkbox.check1\"></div>\r\n\t<div ac-value=\"props.checkbox.check2\"></div>\r\n\t<input type=\"checkbox\" ac-model=\"props.checkbox.check1\" value=\"1\">\r\n\t<input type=\"checkbox\" ac-model=\"props.checkbox.check2\" value=\"2\">\r\n</div>\r\n\r\n<div class=\"section-title\">Form validation</div>\r\n\r\n<form ac-submit=\"submit\" ac-form-validation> \r\n\t<div class=\"input\"> \r\n\t  Result: <span ac-value=\"props.form : json\"></span>\r\n\t</div>\r\n\t<div class=\"input\">\r\n\t\t<input type=\"text\" placeholder=\"name\" ac-model=\"props.form.name\" required ac-pattern=\"[0-9]\" ac-pattern-title=\"0-9\">\r\n\t</div>\r\n\t<div class=\"input\">\r\n\t\t<input type=\"email\" placeholder=\"email\"  ac-model=\"props.form.email\" required>\r\n\t</div>\r\n\t<div class=\"input\">\r\n\t\t<input type=\"checkbox\" ac-model=\"props.form.checkbox\" required>\r\n\t</div>\r\n\t\r\n\t<button>Submit</button>\r\n</form>";
+	module.exports = "<h3>Forms</h3>\r\n\r\n<div class=\"title\">[type=\"text\"]</div>\r\n<div class=\"input\">\r\n\t<div ac-value=\"input\"></div>\r\n\t<input type=\"text\" ac-model=\"input\">\r\n</div>\r\n\r\n<div class=\"title\">[type=\"email\"]</div>\r\n<div class=\"input\">\r\n\t<div ac-value=\"email\"></div>\r\n\t<input type=\"email\" ac-model=\"email\">\r\n</div>\r\n\r\n<div class=\"title\">[type=\"password\"]</div>\r\n<div class=\"input\">\r\n\t<div ac-value=\"password\"></div>\r\n\t<input type=\"password\" ac-model=\"password\">\r\n</div>\r\n\r\n<div class=\"title\">[type=\"radio\"]</div>\r\n<div class=\"input\">\r\n\t<div ac-value=\"radio\"></div>\r\n\t<input type=\"radio\" ac-model=\"radio\" value=\"1\" name=\"radio\">\r\n\t<input type=\"radio\" ac-model=\"radio\" value=\"2\" name=\"radio\">\r\n</div>\r\n\r\n<div class=\"title\">[type=\"checkbox\"]</div>\r\n<div class=\"input\">\r\n\t<div ac-value=\"checkbox.check1\"></div>\r\n\t<div ac-value=\"checkbox.check2\"></div>\r\n\t<input type=\"checkbox\" ac-model=\"checkbox.check1\" value=\"1\">\r\n\t<input type=\"checkbox\" ac-model=\"checkbox.check2\" value=\"2\">\r\n</div>\r\n\r\n<div class=\"section-title\">Form validation</div>\r\n\r\n<form ac-submit=\"submit\" ac-form-validation> \r\n\t<div class=\"input\"> \r\n\t  Result: <span ac-value=\"form : json\"></span>\r\n\t</div>\r\n\t<div class=\"input\">\r\n\t\t<input type=\"text\" placeholder=\"name\" ac-model=\"form.name\" required ac-pattern=\"[0-9]\" ac-pattern-title=\"0-9\">\r\n\t</div>\r\n\t<div class=\"input\">\r\n\t\t<input type=\"email\" placeholder=\"email\"  ac-model=\"form.email\" required>\r\n\t</div>\r\n\t<div class=\"input\">\r\n\t\t<input type=\"checkbox\" ac-model=\"form.checkbox\" required>\r\n\t</div>\r\n\t\r\n\t<button>Submit</button>\r\n</form>";
 
 /***/ }),
 /* 87 */
@@ -5478,6 +5390,8 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
+	var _dec, _class;
+
 	var _core = __webpack_require__(6);
 
 	var _docModulesComponent = __webpack_require__(88);
@@ -5488,20 +5402,12 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-	// import ProjectsStore from 'store/projects.store';
-	var DocModulesComponent = exports.DocModulesComponent = function (_Component) {
-	    _inherits(DocModulesComponent, _Component);
-
+	var DocModulesComponent = exports.DocModulesComponent = (_dec = _core.Decorators.ComponentDecorator({
+	    selector: 'app-documentation-modules',
+	    template: _docModulesComponent2.default
+	}), _dec(_class = function () {
 	    function DocModulesComponent(params) {
 	        _classCallCheck(this, DocModulesComponent);
-
-	        return _possibleConstructorReturn(this, (DocModulesComponent.__proto__ || Object.getPrototypeOf(DocModulesComponent)).call(this, params, {
-	            template: _docModulesComponent2.default
-	        }));
 	    }
 
 	    _createClass(DocModulesComponent, [{
@@ -5513,7 +5419,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    }]);
 
 	    return DocModulesComponent;
-	}(_core.Component);
+	}()) || _class);
 
 /***/ }),
 /* 88 */
@@ -5536,6 +5442,8 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
+	var _dec, _class;
+
 	var _core = __webpack_require__(6);
 
 	var _docSmartObjectComponent = __webpack_require__(90);
@@ -5546,20 +5454,12 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-	// import ProjectsStore from 'store/projects.store';
-	var DocSmartObjectComponent = exports.DocSmartObjectComponent = function (_Component) {
-	    _inherits(DocSmartObjectComponent, _Component);
-
+	var DocSmartObjectComponent = exports.DocSmartObjectComponent = (_dec = _core.Decorators.ComponentDecorator({
+	    selector: 'app-documentation-smart-object',
+	    template: _docSmartObjectComponent2.default
+	}), _dec(_class = function () {
 	    function DocSmartObjectComponent(params) {
 	        _classCallCheck(this, DocSmartObjectComponent);
-
-	        return _possibleConstructorReturn(this, (DocSmartObjectComponent.__proto__ || Object.getPrototypeOf(DocSmartObjectComponent)).call(this, params, {
-	            template: _docSmartObjectComponent2.default
-	        }));
 	    }
 
 	    _createClass(DocSmartObjectComponent, [{
@@ -5571,7 +5471,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    }]);
 
 	    return DocSmartObjectComponent;
-	}(_core.Component);
+	}()) || _class);
 
 /***/ }),
 /* 90 */
@@ -5594,6 +5494,8 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
+	var _dec, _class;
+
 	var _core = __webpack_require__(6);
 
 	var _docHowToComponent = __webpack_require__(92);
@@ -5604,20 +5506,14 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
 	// import ProjectsStore from 'store/projects.store';
-	var DocHowToComponent = exports.DocHowToComponent = function (_Component) {
-	    _inherits(DocHowToComponent, _Component);
 
+	var DocHowToComponent = exports.DocHowToComponent = (_dec = _core.Decorators.ComponentDecorator({
+	    selector: 'app-documentation-how-to-install',
+	    template: _docHowToComponent2.default
+	}), _dec(_class = function () {
 	    function DocHowToComponent(params) {
 	        _classCallCheck(this, DocHowToComponent);
-
-	        return _possibleConstructorReturn(this, (DocHowToComponent.__proto__ || Object.getPrototypeOf(DocHowToComponent)).call(this, params, {
-	            template: _docHowToComponent2.default
-	        }));
 	    }
 
 	    _createClass(DocHowToComponent, [{
@@ -5629,7 +5525,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    }]);
 
 	    return DocHowToComponent;
-	}(_core.Component);
+	}()) || _class);
 
 /***/ }),
 /* 92 */
@@ -5652,6 +5548,8 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
+	var _dec, _class;
+
 	var _core = __webpack_require__(6);
 
 	var _docRouterConfigComponent = __webpack_require__(94);
@@ -5662,19 +5560,12 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-	var DocRouterConfigComponent = exports.DocRouterConfigComponent = function (_Component) {
-	    _inherits(DocRouterConfigComponent, _Component);
-
+	var DocRouterConfigComponent = exports.DocRouterConfigComponent = (_dec = _core.Decorators.ComponentDecorator({
+	    selector: 'app-documentation-router-config',
+	    template: _docRouterConfigComponent2.default
+	}), _dec(_class = function () {
 	    function DocRouterConfigComponent(params) {
 	        _classCallCheck(this, DocRouterConfigComponent);
-
-	        return _possibleConstructorReturn(this, (DocRouterConfigComponent.__proto__ || Object.getPrototypeOf(DocRouterConfigComponent)).call(this, params, {
-	            template: _docRouterConfigComponent2.default
-	        }));
 	    }
 
 	    _createClass(DocRouterConfigComponent, [{
@@ -5686,7 +5577,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    }]);
 
 	    return DocRouterConfigComponent;
-	}(_core.Component);
+	}()) || _class);
 
 /***/ }),
 /* 94 */
@@ -5709,6 +5600,8 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
+	var _dec, _class;
+
 	var _core = __webpack_require__(6);
 
 	var _docHttpModuleComponent = __webpack_require__(96);
@@ -5719,19 +5612,12 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-	var HttpModuleComponent = exports.HttpModuleComponent = function (_Component) {
-	    _inherits(HttpModuleComponent, _Component);
-
+	var HttpModuleComponent = exports.HttpModuleComponent = (_dec = _core.Decorators.ComponentDecorator({
+	    selector: 'app-documentation-http-module',
+	    template: _docHttpModuleComponent2.default
+	}), _dec(_class = function () {
 	    function HttpModuleComponent(params) {
 	        _classCallCheck(this, HttpModuleComponent);
-
-	        return _possibleConstructorReturn(this, (HttpModuleComponent.__proto__ || Object.getPrototypeOf(HttpModuleComponent)).call(this, params, {
-	            template: _docHttpModuleComponent2.default
-	        }));
 	    }
 
 	    _createClass(HttpModuleComponent, [{
@@ -5743,7 +5629,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    }]);
 
 	    return HttpModuleComponent;
-	}(_core.Component);
+	}()) || _class);
 
 /***/ }),
 /* 96 */
@@ -5766,6 +5652,8 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
+	var _dec, _class;
+
 	var _core = __webpack_require__(6);
 
 	var _docHttpMethodsComponent = __webpack_require__(98);
@@ -5776,19 +5664,12 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-	var HttpMethodsComponent = exports.HttpMethodsComponent = function (_Component) {
-	    _inherits(HttpMethodsComponent, _Component);
-
+	var HttpMethodsComponent = exports.HttpMethodsComponent = (_dec = _core.Decorators.ComponentDecorator({
+	    selector: 'app-documentation-http-methods',
+	    template: _docHttpMethodsComponent2.default
+	}), _dec(_class = function () {
 	    function HttpMethodsComponent(params) {
 	        _classCallCheck(this, HttpMethodsComponent);
-
-	        return _possibleConstructorReturn(this, (HttpMethodsComponent.__proto__ || Object.getPrototypeOf(HttpMethodsComponent)).call(this, params, {
-	            template: _docHttpMethodsComponent2.default
-	        }));
 	    }
 
 	    _createClass(HttpMethodsComponent, [{
@@ -5797,10 +5678,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	    }, {
 	        key: 'getWeater',
 	        value: function getWeater() {
-	            var _this2 = this;
+	            var _this = this;
 
 	            _core.Http.makeRequest({ method: 'get', url: 'http://api.openweathermap.org/data/2.5/weather?q=London&APPID=31ff47785771280c27a522d0cc5c9cba&units=metric' }).then(function (res) {
-	                _this2.props.set('weather', res);
+	                _this.props.set('weather', res);
 	            });
 	        }
 	    }, {
@@ -5809,7 +5690,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    }]);
 
 	    return HttpMethodsComponent;
-	}(_core.Component);
+	}()) || _class);
 
 /***/ }),
 /* 98 */
@@ -5832,23 +5713,18 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
+	var _dec, _class;
+
 	var _core = __webpack_require__(6);
 
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-	var ExampleChildComponent = exports.ExampleChildComponent = function (_Component) {
-	    _inherits(ExampleChildComponent, _Component);
-
+	var ExampleChildComponent = exports.ExampleChildComponent = (_dec = _core.Decorators.ComponentDecorator({
+	    selector: 'app-example-child',
+	    template: 'Child component <button @click="trigger">Emit \'change\' event </button>'
+	}), _dec(_class = function () {
 	    function ExampleChildComponent(params) {
 	        _classCallCheck(this, ExampleChildComponent);
-
-	        return _possibleConstructorReturn(this, (ExampleChildComponent.__proto__ || Object.getPrototypeOf(ExampleChildComponent)).call(this, params, {
-	            template: 'Child component <button @click="trigger">Emit \'change\' event </button>'
-	        }));
 	    }
 
 	    _createClass(ExampleChildComponent, [{
@@ -5862,7 +5738,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    }]);
 
 	    return ExampleChildComponent;
-	}(_core.Component);
+	}()) || _class);
 
 /***/ }),
 /* 100 */

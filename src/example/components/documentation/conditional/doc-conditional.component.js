@@ -1,13 +1,16 @@
-import { Component } from '../../../../core';
+import { Component, Decorators} from '../../../../core';
 import Tpl from './doc-conditional.component.html';
-export class DocConditionalComponent extends Component {
+
+@Decorators.ComponentDecorator({
+    selector: 'app-documentation-conditional',
+    template: Tpl,
+    props: {
+        isVisible: true
+    }
+})
+export class DocConditionalComponent {
     constructor(params) {
-        super(params, {
-            template: Tpl,
-            props: {
-                isVisible: true
-            }
-        });
+
     }
 
     onInit() {

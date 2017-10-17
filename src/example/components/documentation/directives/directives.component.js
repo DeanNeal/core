@@ -1,10 +1,13 @@
-import { Component } from '../../../../core';
+import { Component, Decorators } from '../../../../core';
 import Tpl from './directives.component.html';
-export class DocDirectivesComponent extends Component {
+
+@Decorators.ComponentDecorator({
+    selector: 'app-documentation-directives',
+    template: Tpl
+})
+export class DocDirectivesComponent {
     constructor(params) {
-        super(params, {
-            template: Tpl
-        });
+
     }
 
     onInit() {

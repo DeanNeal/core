@@ -1,11 +1,14 @@
-import {Component, Plugins} from '../../../core';
+import {Component, Plugins, Decorators} from '../../../core';
 import Tpl from './plugins.component.html';
 
-export class PluginsComponent extends Component {
+
+@Decorators.ComponentDecorator({
+    selector: 'app-plugins',
+    template: Tpl
+})
+export class PluginsComponent {
     constructor(options) {
-        super(options, {
-            template: Tpl
-        });
+
     }
 
     onInit() {

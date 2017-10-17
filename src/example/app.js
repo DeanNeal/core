@@ -24,13 +24,12 @@ Register({
     },
     styles: Styles,
     components: [
-        { c: HeaderComponent, selector: 'app-header' },
-        { c: HomeComponent, selector: 'app-home' },
-        { c: PluginsComponent, selector: 'app-plugins' },
-        { c: ControlsComponent, selector: 'app-controls' },
-        { c: NotFoundComponent, selector: 'app-not-found' },
-
-        {c: DatepickerComponent, selector: 'app-datepicker'}
+       HeaderComponent,
+       HomeComponent,
+       PluginsComponent,
+       ControlsComponent,
+       NotFoundComponent,
+       DatepickerComponent
     ],
     directives: [
         UpperCaseDirective

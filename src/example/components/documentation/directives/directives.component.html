@@ -4,26 +4,26 @@
 
 
 <div class="block">
-    <b class="title">ac-value="props.value"</b>
+    <b class="title">ac-value="value"</b>
     <div class="text">
-        Bind props <b>props.value</b> with certain element
+        Bind props <b>value</b> with certain element
         <br>
-        <input type="text" ac-value="props.value">
+        <input type="text" ac-value="value">
     </div>
 </div>
 <div class="block">
-    <b class="title">ac-model="props.model"</b> 
+    <b class="title">ac-model="model"</b> 
     <div class="text">
-        <b>Two way data binding</b> between <b>props.model</b> and html element
+        <b>Two way data binding</b> between <b>model</b> and html element
         <br>
         <div>
-            <input type="text" ac-model="props.model">
+            <input type="text" ac-model="model">
         </div>
     </div>
 </div>
 <div class="block">
-    <b class="title">ac-input="inputData: props.selectedValue"</b>
-    <div class="text">Allow send <b>props.selectedValue</b> from parent component to child component <b>inputData</b>.</div>
+    <b class="title">ac-input="inputData: selectedValue"</b>
+    <div class="text">Allow send <b>selectedValue</b> from parent component to child component <b>inputData</b>.</div>
 </div>
 <div class="block">
     <b class="title">ac-ref="element"</b>
@@ -33,23 +33,23 @@
     <b class="title">
     ac-class="className: showClass"
     <br>
-    ac-class="@props.class"
+    ac-class="@class"
     </b>
     <div class="text">Get 2 params: name of class, boolean(adds class if true). You can use
         <b>comma(,)</b> symbol to specify several conditions. Also @ is available, so you can bind props to className
         <br><br>
         <button @click="changeClass">Change class</button>
-        <b><span ac-class="@props.className">Example</span></b>
+        <b><span ac-class="@className">Example</span></b>
     </div>
 </div>
 <div class="block">
-    <b class="title">ac-style="height: props.height"</b>
+    <b class="title">ac-style="height: height"</b>
     <div class="text">
-            Binds props to css rules. Gets 2 params: <b>height</b> - css rule and <b>value</b> - value from props.
+            Binds props to css rules. Gets 2 params: <b>height</b> - css rule and <b>value</b> - value from 
             <br><br>
             <button @click="changeSize">Change size</button>
             <br><br>
-            <div style="border: 1px solid red" ac-style="height: props.height, width: props.width"></div>
+            <div style="border: 1px solid red" ac-style="height: height, width: width"></div>
      </div>
 </div>
 
@@ -58,24 +58,24 @@
     <div class="text">Serve to hide or show element; Gets 1 params: <b>value</b>
     <br><br>
     <button @click="showElement">Show</button>
-    <span ac-if="@isVisible">Element is shown now</span>
+    <span ac-if="this.isVisible">Element is shown now</span>
     </div>
 </div>
 <div class="block">
-    <b class="title">ac-for="props.items"</b>
-    <div class="text">Repeater. Creates instance for every element in collection <b>props.items</b>
+    <b class="title">ac-for="items"</b>
+    <div class="text">Repeater. Creates instance for every element in collection <b>items</b>
     <br><br>
     <ul>
-        <li ac-for="props.items" ac-value="name"></li>
+        <li ac-for="items" ac-value="name"></li>
     </ul>
  
     </div>
 </div>
 <div class="block">
-    <b class="title">ac-attr="src: props.image"</b>
-    <div class="text">Binds attr <b>src</b> with url from <b>props.image</b>
+    <b class="title">ac-attr="src: image"</b>
+    <div class="text">Binds attr <b>src</b> with url from <b>image</b>
     <br>
-    <img ac-attr="src: props.image" style="width: 200px">
+    <img ac-attr="src: image" style="width: 200px">
     </div>
 </div>
 <div class="block">

@@ -16,10 +16,12 @@ export function Register(options) {
         }
     }
 
-    if(options.stores instanceof Object){
-        Component.STORES = options.stores;
-    } else {
-        throw new Error('stores must be an object');
+    if(options.stores) {    
+        if(options.stores instanceof Object){
+            Component.STORES = options.stores;
+        } else {
+            throw new Error('stores must be an object');
+        }
     }
     
     Component.COMPONENTS = options.components;

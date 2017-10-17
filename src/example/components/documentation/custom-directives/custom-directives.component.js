@@ -1,14 +1,17 @@
-import { Component } from '../../../../core';
+import { Component, Decorators} from '../../../../core';
 import Tpl from './custom-directives.component.html';
-export class DocCustomDirectivesComponent extends Component {
+
+@Decorators.ComponentDecorator({
+    selector: 'app-documentation-custom-directives',
+    template: Tpl,
+    props: {
+        test: 'test',
+        show: true
+    }
+})
+export class DocCustomDirectivesComponent {
     constructor(params) {
-        super(params, {
-            template: Tpl,
-            props: {
-            	test: 'test',
-            	show: true
-            }
-        });
+
     }
 
     onInit() {

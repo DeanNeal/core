@@ -22,27 +22,27 @@ import {HttpMethodsComponent} from './http-methods/doc-http-methods.component';
 import {ExampleChildComponent} from './directives/example-child.component';
 
 export default [
-    {c: DocumentationComponent, selector: 'app-documentation'},
-    {c: DocQuickStartComponent, selector: 'app-documentation-quick-start'},
-    {c: DocArchitectureComponent, selector: 'app-documentation-architecture'},
-    {c: DocHowToComponent, selector: 'app-documentation-how-to-install'},
-    {c: DocComponentComponent, selector: 'app-documentation-component'},
-    {c: DocLifecycleComponent, selector: 'app-documentation-lifecycle'},
-    {c: DocUtilsComponent, selector: 'app-documentation-utils'},
-    {c: DocDirectivesComponent, selector: 'app-documentation-directives'},
-    {c: DocCustomDirectivesComponent, selector: 'app-documentation-custom-directives'},
+    DocumentationComponent,
+    DocQuickStartComponent,
+    DocArchitectureComponent,
+    DocHowToComponent,
+    DocComponentComponent,
+    DocLifecycleComponent,
+    DocUtilsComponent,
+    DocDirectivesComponent,
+    DocCustomDirectivesComponent,
 
-    {c: DocInterpolationComponent, selector: 'app-documentation-interpolation'},
-    {c: DocConditionalComponent, selector: 'app-documentation-conditional'},
-    {c: DocFormsComponent, selector: 'app-documentation-forms'},
-
-
-    {c: DocModulesComponent, selector: 'app-documentation-modules'},
-    {c: DocSmartObjectComponent, selector: 'app-documentation-smart-object'},
-    {c: DocRouterConfigComponent, selector: 'app-documentation-router-config'},
-    {c: HttpModuleComponent, selector: 'app-documentation-http-module'},
-    {c: HttpMethodsComponent, selector: 'app-documentation-http-methods'},
+    DocInterpolationComponent,
+    DocConditionalComponent,
+    DocFormsComponent,
 
 
-    {c: ExampleChildComponent, selector: 'app-example-child'}
+    DocModulesComponent,
+    DocSmartObjectComponent,
+    DocRouterConfigComponent,
+    HttpModuleComponent,
+    HttpMethodsComponent,
+
+
+    ExampleChildComponent
 ]

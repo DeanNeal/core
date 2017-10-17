@@ -1,10 +1,13 @@
-import { Component, Http } from '../../../../core';
+import { Component, Http, Decorators} from '../../../../core';
 import Tpl from './doc-http-methods.component.html';
-export class HttpMethodsComponent extends Component {
+
+@Decorators.ComponentDecorator({
+    selector: 'app-documentation-http-methods',
+    template: Tpl,
+})
+export class HttpMethodsComponent{
     constructor(params) {
-        super(params, {
-            template: Tpl
-        });
+
     }
 
     onInit() {

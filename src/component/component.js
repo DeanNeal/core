@@ -115,8 +115,9 @@ export class Component {
                 let a = this.root.querySelectorAll('[href]');
                 a.forEach(item => {
                     let fullRoute = Router.getCurrentFullPath();
+                    let fullPath = Router.getFullStringPath();
                     let attr = item.getAttribute('href');
-                    let setActive = attr === fullRoute.join('/') || (fullRoute[0] === attr && !item.getAttribute('ac-link-exact'))
+                    let setActive = attr === fullPath || (fullRoute[0] === attr && !item.getAttribute('ac-link-exact'));
                     setActive ? item.classList.add('active') : item.classList.remove('active')
                 });
             });

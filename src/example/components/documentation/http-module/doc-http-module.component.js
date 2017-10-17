@@ -1,10 +1,13 @@
-import {Component} from '../../../../core';
+import {Component, Decorators} from '../../../../core';
 import Tpl from './doc-http-module.component.html';
-export class HttpModuleComponent extends Component {
+
+@Decorators.ComponentDecorator({
+    selector: 'app-documentation-http-module',
+    template: Tpl,
+})
+export class HttpModuleComponent {
     constructor(params) {
-        super(params, {
-            template: Tpl
-        });
+ 
     }
 
     onInit() {

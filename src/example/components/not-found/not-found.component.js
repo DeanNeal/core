@@ -1,11 +1,12 @@
-import {Component} from '../../../core';
+import {Component, Decorators} from '../../../core';
 import Tpl from './not-found.component.html';
 
-export class NotFoundComponent extends Component {
+@Decorators.ComponentDecorator({
+    selector: 'app-not-found',
+    template: Tpl
+})
+export class NotFoundComponent {
     constructor(options) {
-        super(options, {
-            template: Tpl
-            // shadow: true
-        });
+
     }
 }

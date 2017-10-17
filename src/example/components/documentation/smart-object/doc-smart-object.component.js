@@ -1,11 +1,13 @@
-import {Component} from '../../../../core';
+import {Component, Decorators} from '../../../../core';
 import Tpl from './doc-smart-object.component.html';
-// import ProjectsStore from 'store/projects.store';
-export class DocSmartObjectComponent extends Component {
+
+@Decorators.ComponentDecorator({
+    selector: 'app-documentation-smart-object',
+    template: Tpl
+})
+export class DocSmartObjectComponent  {
     constructor(params) {
-        super(params, {
-            template: Tpl
-        });
+
     }
 
     onInit() {

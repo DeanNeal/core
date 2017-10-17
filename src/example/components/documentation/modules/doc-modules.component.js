@@ -1,11 +1,13 @@
-import {Component} from '../../../../core';
+import {Component, Decorators} from '../../../../core';
 import Tpl from './doc-modules.component.html';
-// import ProjectsStore from 'store/projects.store';
-export class DocModulesComponent extends Component {
+
+@Decorators.ComponentDecorator({
+    selector: 'app-documentation-modules',
+    template: Tpl
+})
+export class DocModulesComponent {
     constructor(params) {
-        super(params, {
-            template: Tpl
-        });
+
     }
 
     onInit() {

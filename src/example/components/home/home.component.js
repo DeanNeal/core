@@ -1,12 +1,12 @@
-import {Component, Router} from '../../../core';
+import {Component, Router, Decorators} from '../../../core';
 import Tpl from './home.component.html';
 
-export class HomeComponent extends Component {
+@Decorators.ComponentDecorator({
+    selector: 'app-home',
+    template: Tpl
+})
+export class HomeComponent{
     constructor(params) {
-        super(params, {
-            selector: 'app-home',
-            template: Tpl
-            // shadow: true
-        });
+
     }
 }

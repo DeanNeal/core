@@ -1,9 +1,12 @@
-import { Component } from '../../../../core';
-export class ExampleChildComponent extends Component {
+import { Component, Decorators } from '../../../../core';
+
+@Decorators.ComponentDecorator({
+    selector: 'app-example-child',
+    template: 'Child component <button @click="trigger">Emit \'change\' event </button>'
+})
+export class ExampleChildComponent {
     constructor(params) {
-        super(params, {
-            template: 'Child component <button @click="trigger">Emit \'change\' event </button>'
-        });
+
     }
 
     onInit() {
