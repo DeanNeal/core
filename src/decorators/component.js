@@ -14,6 +14,13 @@ export default function ComponentDecorator(decoratorParams) {
             }
             Class.prototype = Object.setPrototypeOf(Class.prototype, proto);
             let instance = new Class();
+
+            if(decoratorParams.stores){
+                decoratorParams.stores.forEach(store=>{
+                    Object.defineProperty(instance, store + 'Store', { value: Component.STORES[store] || null, writable: false });
+                })
+            }
+
             Component.componentConstructor.call(instance, root, decoratorParams);
             return instance;
         };

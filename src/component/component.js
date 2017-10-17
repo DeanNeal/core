@@ -33,7 +33,6 @@ export class Component {
         this.root.COMPONENT = this;
 
         Component.setPrivates.call(this, options);
-        Component.setStores.call(this, options);
 
         if (this.root.getAttribute('ac-for')) {
             // console.warn('Foor loop is detected!')
@@ -68,9 +67,6 @@ export class Component {
         // this.$interpolationArray = [];
     }
 
-    static setStores(options) {
-        this.$stores = Component.STORES;
-    }
 
     render() {
         this.root.innerHTML = this.preCompileTpl(this.tpl);

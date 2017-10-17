@@ -2,7 +2,7 @@
  * ace-js 0.3.14
  * May be freely distributed under the MIT license 
  * Author: Bogdan Zinkevich
- * Last update: 2017-10-17 12:55:16
+ * Last update: 2017-10-17 14:15:08
  * 
  */
 (function webpackUniversalModuleDefinition(root, factory) {
@@ -82,7 +82,7 @@ return /******/ (function(modules) { // webpackBootstrap
 /******/ 	}
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "026df9a778c863ac57eb"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "34ac82918504f81aa2f8"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
 /******/ 	
@@ -1157,6 +1157,19 @@ return /******/ (function(modules) { // webpackBootstrap
 	            }
 	            Class.prototype = Object.setPrototypeOf(Class.prototype, proto);
 	            var instance = new Class();
+
+	            // for (let store in Component.STORES) {
+	            //     instance[store + 'Store'] = Component.STORES[store];
+	            // }
+
+	            if (decoratorParams.stores) {
+	                decoratorParams.stores.forEach(function (store) {
+	                    // instance[store + 'Store'] = Component.STORES[store];
+
+	                    Object.defineProperty(instance, store + 'Store', { value: _core.Component.STORES[store] || null, writable: false });
+	                });
+	            }
+
 	            _core.Component.componentConstructor.call(instance, root, decoratorParams);
 	            return instance;
 	        };
@@ -2286,6 +2299,12 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	    _createClass(Component, [{
 	        key: 'render',
+
+
+	        // static setStores(options) {
+	        //     this.$stores = Component.STORES;
+	        // }
+
 	        value: function render() {
 	            var _this = this;
 
@@ -2542,7 +2561,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	            this.root.COMPONENT = this;
 
 	            Component.setPrivates.call(this, options);
-	            Component.setStores.call(this, options);
+	            // Component.setStores.call(this, options);
 
 	            if (this.root.getAttribute('ac-for')) {
 	                // console.warn('Foor loop is detected!')
@@ -2577,11 +2596,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	            // console.log(PRIVATES.CUSTOM_DIRECTIVES, this);
 
 	            // this.$interpolationArray = [];
-	        }
-	    }, {
-	        key: 'setStores',
-	        value: function setStores(options) {
-	            this.$stores = Component.STORES;
 	        }
 	    }]);
 
