@@ -48,7 +48,8 @@ export function Register(options) {
 
     let rootEl = document.querySelectorAll(options.root.selector)[0];
     if(rootEl){ 
-        new options.root.c(rootEl);
+        let rootComponent = new options.root.c(rootEl);
+        rootComponent.root.setAttribute('ac-version', VERSION);
     } else {
         console.warn('There is no root component');
     }
