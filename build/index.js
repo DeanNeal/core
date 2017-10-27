@@ -1,8 +1,8 @@
 /*!
- * ace-js 0.3.17
+ * ace-js 0.3.18
  * May be freely distributed under the MIT license 
  * Author: Bogdan Zinkevich
- * Last update: 2017-10-19 14:09:16
+ * Last update: 2017-10-27 23:51:47
  * 
  */
 (function webpackUniversalModuleDefinition(root, factory) {
@@ -82,7 +82,7 @@ return /******/ (function(modules) { // webpackBootstrap
 /******/ 	}
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "c795d9c5d4a43f0c6610"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "b4254bb22b4416fd81eb"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
 /******/ 	
@@ -625,35 +625,35 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var Decorators = _interopRequireWildcard(_decorators);
 
-	var _register = __webpack_require__(37);
+	var _register = __webpack_require__(38);
 
 	var _component = __webpack_require__(34);
 
-	var _routerSwitcher = __webpack_require__(38);
+	var _routerSwitcher = __webpack_require__(39);
 
-	var _routerCore = __webpack_require__(39);
+	var _routerCore = __webpack_require__(40);
 
 	var _routerCore2 = _interopRequireDefault(_routerCore);
 
-	var _templateEngine = __webpack_require__(40);
+	var _templateEngine = __webpack_require__(41);
 
-	var _globalEvents = __webpack_require__(41);
+	var _globalEvents = __webpack_require__(42);
 
 	var _globalEvents2 = _interopRequireDefault(_globalEvents);
 
-	var _utils = __webpack_require__(42);
+	var _utils = __webpack_require__(43);
 
-	var _plugins = __webpack_require__(43);
+	var _plugins = __webpack_require__(44);
 
 	var Plugins = _interopRequireWildcard(_plugins);
 
-	var _controls = __webpack_require__(45);
+	var _controls = __webpack_require__(46);
 
 	var Controls = _interopRequireWildcard(_controls);
 
-	var _http = __webpack_require__(49);
+	var _http = __webpack_require__(50);
 
-	var _store = __webpack_require__(50);
+	var _store = __webpack_require__(51);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -693,7 +693,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var _decorators = __webpack_require__(8);
 
-	var _deepmerge = __webpack_require__(36);
+	var _deepmerge = __webpack_require__(37);
 
 	var _deepmerge2 = _interopRequireDefault(_deepmerge);
 
@@ -832,7 +832,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	    _createClass(ObservableModel, [{
 	        key: 'set',
-	        value: function set(data, value) {
+	        value: function set(data, value, silent) {
 	            if ((typeof data === 'undefined' ? 'undefined' : _typeof(data)) == 'object') {
 	                var dontMerge = function dontMerge(destination, source) {
 	                    return source;
@@ -844,7 +844,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	                this._data[data] = value;
 	            }
 
-	            this._callAll();
+	            if (!silent) {
+	                this._callAll();
+	            }
 	        }
 	    }]);
 
@@ -862,9 +864,11 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	    _createClass(ObservableCollection, [{
 	        key: 'set',
-	        value: function set(data, value) {
+	        value: function set(data, value, silent) {
 	            this._data = data;
-	            this._callAll();
+	            if (!silent) {
+	                this._callAll();
+	            }
 	        }
 	    }, {
 	        key: 'save',
@@ -930,7 +934,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var _component2 = _interopRequireDefault(_component);
 
-	var _directive = __webpack_require__(35);
+	var _directive = __webpack_require__(36);
 
 	var _directive2 = _interopRequireDefault(_directive);
 
@@ -1103,6 +1107,8 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var _customDirective2 = __webpack_require__(33);
 
+	var _computed2 = __webpack_require__(35);
+
 	var Directives = {
 	    _style: _style2._style,
 	    _props: _props2._props,
@@ -1127,7 +1133,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	    _hostClasses: _host._hostClasses,
 	    _hostStyles: _host._hostStyles,
 	    _formValidation: _formValidation2._formValidation,
-	    _customDirective: _customDirective2._customDirective
+	    _customDirective: _customDirective2._customDirective,
+	    _computed: _computed2._computed
 	};
 
 	exports.Directives = Directives;
@@ -1731,7 +1738,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	        CLASS: new WeakMap(),
 	        STYLE: new WeakMap(),
 	        EVENTS: new WeakMap()
-	    }
+	    },
+	    COMPUTED: new WeakMap()
 	}; // import { EVENTS } from './const/events';
 
 
@@ -2106,7 +2114,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	function _customDirective(array) {
 	    var _this = this;
 
-	    _component.Component.DIRECTIVES.forEach(function (directive) {
+	    _component.Component.CUSTOM_DIRECTIVES.forEach(function (directive) {
 	        var array = _private.PRIVATES.CUSTOM_DIRECTIVES[directive.params.selector].get(_this);
 	        if (array && array.length) {
 	            array.forEach(function (r) {
@@ -2179,7 +2187,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	            });
 
 	            //custom directives
-	            Component.DIRECTIVES.forEach(function (Directive) {
+	            Component.CUSTOM_DIRECTIVES.forEach(function (Directive) {
 	                var array = _Directives.Directives._init.call(_this, _this.root, Directive.params.selector, _private.PRIVATES.CUSTOM_DIRECTIVES[Directive.params.selector]);
 	                if (array) {
 	                    array.get(_this).map(function (item) {
@@ -2219,6 +2227,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	            var _this2 = this;
 
 	            this.$propsSub = this.props.sub(function (r) {
+	                _Directives.Directives._computed.call(_this2, _private.PRIVATES.COMPUTED.get(_this2)); // should go first
+
 	                _Directives.Directives._if.call(_this2, _private.PRIVATES.DIRECTIVES['ac-if'].get(_this2));
 	                _Directives.Directives._for.call(_this2, _private.PRIVATES.DIRECTIVES['ac-for'].get(_this2));
 	                _Directives.Directives._props.call(_this2, _private.PRIVATES.DIRECTIVES['ac-value'].get(_this2));
@@ -2434,8 +2444,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	            _private.PRIVATES.HOST.EVENTS.set(this, options.hostEvents);
 	            _private.PRIVATES.HOST.CLASS.set(this, options.hostClasses);
 	            _private.PRIVATES.HOST.STYLE.set(this, options.hostStyles);
+	            _private.PRIVATES.COMPUTED.set(this, options.computed);
 
-	            Component.DIRECTIVES.forEach(function (directive) {
+	            Component.CUSTOM_DIRECTIVES.forEach(function (directive) {
 	                if (!_private.PRIVATES.CUSTOM_DIRECTIVES[directive.params.selector]) {
 	                    _private.PRIVATES.CUSTOM_DIRECTIVES[directive.params.selector] = new WeakMap();
 	                }
@@ -2460,6 +2471,25 @@ return /******/ (function(modules) { // webpackBootstrap
 	Object.defineProperty(exports, "__esModule", {
 	    value: true
 	});
+	exports._computed = _computed;
+	function _computed(params) {
+	    if (params) {
+	        for (var computed in params) {
+	            var newValue = params[computed].call(this.props);
+	            this.props.set(computed, newValue, true);
+	        }
+	    }
+	}
+
+/***/ }),
+/* 36 */
+/***/ (function(module, exports) {
+
+	"use strict";
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
 	exports.default = DirectiveDecorator;
 	function DirectiveDecorator(decoratorParams) {
 	    return function decorator(Class) {
@@ -2469,7 +2499,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	}
 
 /***/ }),
-/* 36 */
+/* 37 */
 /***/ (function(module, exports) {
 
 	'use strict';
@@ -2572,7 +2602,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ }),
-/* 37 */
+/* 38 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -2611,11 +2641,11 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	    _component.Component.COMPONENTS = options.components;
 	    _core.RouteSwitcher.ROUTES = options.routes;
-	    _component.Component.DIRECTIVES = []; // for custom directives
+	    _component.Component.CUSTOM_DIRECTIVES = []; // for custom directives
 
 	    if (options.directives) {
 	        if (options.directives instanceof Array) {
-	            _component.Component.DIRECTIVES = options.directives;
+	            _component.Component.CUSTOM_DIRECTIVES = options.directives;
 	        } else {
 	            throw new Error('directives must be an array');
 	        }
@@ -2634,7 +2664,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    var rootEl = document.querySelectorAll(options.root.selector)[0];
 	    if (rootEl) {
 	        var rootComponent = new options.root.c(rootEl);
-	        rootComponent.root.setAttribute('ac-version', ("0.3.17"));
+	        rootComponent.root.setAttribute('ac-version', ("0.3.18"));
 	    } else {
 	        console.warn('There is no root component');
 	    }
@@ -2665,7 +2695,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	}
 
 /***/ }),
-/* 38 */
+/* 39 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -2677,7 +2707,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-	var _routerCore = __webpack_require__(39);
+	var _routerCore = __webpack_require__(40);
 
 	var _routerCore2 = _interopRequireDefault(_routerCore);
 
@@ -2806,7 +2836,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	}();
 
 /***/ }),
-/* 39 */
+/* 40 */
 /***/ (function(module, exports) {
 
 	'use strict';
@@ -2968,7 +2998,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	exports.default = new Router();
 
 /***/ }),
-/* 40 */
+/* 41 */
 /***/ (function(module, exports) {
 
 	'use strict';
@@ -2999,7 +3029,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	}
 
 /***/ }),
-/* 41 */
+/* 42 */
 /***/ (function(module, exports) {
 
 	'use strict';
@@ -3064,7 +3094,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	exports.default = new GlobalEvents();
 
 /***/ }),
-/* 42 */
+/* 43 */
 /***/ (function(module, exports) {
 
 	"use strict";
@@ -3277,7 +3307,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	exports.Utils = Utils;
 
 /***/ }),
-/* 43 */
+/* 44 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -3287,7 +3317,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	});
 	exports.Sortable = undefined;
 
-	var _sortable = __webpack_require__(44);
+	var _sortable = __webpack_require__(45);
 
 	var _sortable2 = _interopRequireDefault(_sortable);
 
@@ -3296,7 +3326,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	exports.Sortable = _sortable2.default;
 
 /***/ }),
-/* 44 */
+/* 45 */
 /***/ (function(module, exports) {
 
 	'use strict';
@@ -3439,7 +3469,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	exports.default = new Sortable();
 
 /***/ }),
-/* 45 */
+/* 46 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -3449,15 +3479,15 @@ return /******/ (function(modules) { // webpackBootstrap
 	});
 	exports.DropdownComponent = exports.DatepickerComponent = undefined;
 
-	var _datepicker = __webpack_require__(46);
+	var _datepicker = __webpack_require__(47);
 
-	var _dropdown = __webpack_require__(47);
+	var _dropdown = __webpack_require__(48);
 
 	exports.DatepickerComponent = _datepicker.DatepickerComponent;
 	exports.DropdownComponent = _dropdown.DropdownComponent;
 
 /***/ }),
-/* 46 */
+/* 47 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -3471,15 +3501,15 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var _dec, _class;
 
-	var _utils = __webpack_require__(42);
+	var _utils = __webpack_require__(43);
 
 	var _decorators = __webpack_require__(8);
 
 	var Decorators = _interopRequireWildcard(_decorators);
 
-	var _dropdown = __webpack_require__(47);
+	var _dropdown = __webpack_require__(48);
 
-	var _datepicker = __webpack_require__(48);
+	var _datepicker = __webpack_require__(49);
 
 	var _datepicker2 = _interopRequireDefault(_datepicker);
 
@@ -3639,7 +3669,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	}()) || _class);
 
 /***/ }),
-/* 47 */
+/* 48 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -3685,7 +3715,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	}();
 
 /***/ }),
-/* 48 */
+/* 49 */
 /***/ (function(module, exports) {
 
 	"use strict";
@@ -3693,7 +3723,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	module.exports = "<div ac-outside=\"outside\" class=\"relative\">\r\n\t<div  style=\"width: 100%\" class=\"app-form__label__input\">\r\n\t\t<input type=\"text\" @click=\"openMenu\" class=\"app-form__label__input full-width\" placeholder=\"\"  readonly required ac-value=\"formattedDate\">\r\n\t\t<!-- <img class=\"datepicker-icon\" src=\"../../assets/img/hanging-calendar.svg\" alt=\"\"> -->\r\n\t</div>\r\n\r\n\t<div class=\"j-calendar\" ac-if=\"this._show\" >\r\n\t    <div class=\"j-calendar__wrap\">\r\n\t        <div class=\"j-calendar__item\">\r\n\t            <div class=\"j-calendar__header\">\r\n\t                <div class=\"j-calendar__header__left\" @click=\"prev\">\r\n\t                    <span>prev</span>\r\n\t                </div>\r\n\t                <div class=\"j-calendar__header__center\">\r\n\t\t                <span ac-value=\"currentMonth\"></span>\r\n\t\t                <span style=\"margin-left: 7px;\" ac-value=\"currentYear\"></span>\r\n\t                </div>\r\n\t                <div class=\"j-calendar__header__right\" @click=\"next\">\r\n\t                    <span>Next</span>\r\n\t                </div>\r\n\t            </div>\r\n\t            <div class=\"j-calendar__content\">\r\n\t                <div class=\"j-calendar__days\">\r\n\t                    <div class=\"j-calendar__days__item\" ac-for=\"daysOfWeekShort\">\r\n\t\t\t\t\t\t\t<span ac-value=\"index\"></span>\r\n\t\t\t\t\t\t</div>\r\n\t                </div>\r\n\t                <div class=\"j-calendar__date\">\r\n\t                    <div class=\"j-calendar__date__item\" \r\n\t                    ac-class=\"j-calendar__date__item--circle:today, j-calendar__date__item--active:selected, j-calendar__date__item--inactive: inactive\"\r\n\t                    ac-for=\"countOfDays\"\r\n\t                    @click=\"select(this)\">\r\n\t\t\t\t\t\t\t<span ac-value=\"index\"></span>\r\n\t                    </div>\r\n\t                </div>\r\n\t            </div>\r\n\t        </div>\r\n\t    </div>\r\n\t</div>\r\n</div>\r\n";
 
 /***/ }),
-/* 49 */
+/* 50 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -4132,7 +4162,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	exports.Http = Http;
 
 /***/ }),
-/* 50 */
+/* 51 */
 /***/ (function(module, exports) {
 
 	"use strict";
