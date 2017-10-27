@@ -96,7 +96,7 @@ export class ObservableModel extends Observable {
         this._data = options || {};
     }
 
-    set(data, value) {
+    set(data, value, silent) {
         if (typeof data == 'object') {
             const dontMerge = (destination, source) => source;
             this._data = deepmerge(this._data, data, { arrayMerge: dontMerge });
@@ -106,7 +106,9 @@ export class ObservableModel extends Observable {
             this._data[data] = value;
         }
 
-        this._callAll();
+        if(!silent){
+            this._callAll();
+        }
     }
 }
 
@@ -117,9 +119,11 @@ export class ObservableCollection extends Observable {
         super(options);
     }
 
-    set(data, value) {
+    set(data, value, silent) {
         this._data = data;
-        this._callAll();
+        if(!silent){
+            this._callAll();
+        }
     }
 
     save(params) {

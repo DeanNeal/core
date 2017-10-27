@@ -11,7 +11,8 @@ const PRIVATES = {
         CLASS: new WeakMap(),
         STYLE: new WeakMap(),
         EVENTS: new WeakMap()
-    }
+    },
+    COMPUTED: new WeakMap()
 };
 
 DIRECTIVES_NAMES.forEach(directive => {

@@ -26,11 +26,11 @@ export function Register(options) {
     
     Component.COMPONENTS = options.components;
     RouteSwitcher.ROUTES = options.routes;
-    Component.DIRECTIVES = []; // for custom directives
+    Component.CUSTOM_DIRECTIVES = []; // for custom directives
 
     if(options.directives) {
         if(options.directives instanceof Array){
-            Component.DIRECTIVES = options.directives;
+            Component.CUSTOM_DIRECTIVES = options.directives;
         } else {
             throw new Error('directives must be an array');
         }

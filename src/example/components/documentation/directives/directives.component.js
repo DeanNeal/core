@@ -3,7 +3,18 @@ import Tpl from './directives.component.html';
 
 @Decorators.ComponentDecorator({
     selector: 'app-documentation-directives',
-    template: Tpl
+    template: Tpl,
+    props: {
+        value: 'value',
+        model: 'Something',
+        className: 'unclicked',
+        showClass: true,
+        isVisible: false,
+        width: '50px',
+        height: '100px',
+        items: [{name: 1}, {name: 2}, {name: 3}],
+        image: 'https://www.w3schools.com/css/img_fjords.jpg'
+    }
 })
 export class DocDirectivesComponent {
     constructor(params) {
@@ -11,17 +22,7 @@ export class DocDirectivesComponent {
     }
 
     onInit() {
-        this.props.set({
-            value: 'value',
-            model: 'Something',
-            className: 'unclicked',
-            showClass: true,
-            isVisible: false,
-            width: '50px',
-            height: '100px',
-            items: [{name: 1}, {name: 2}, {name: 3}],
-            image: 'https://www.w3schools.com/css/img_fjords.jpg'
-        })
+
     }
 
     submit(e) {

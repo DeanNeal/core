@@ -53,9 +53,9 @@ export class Component {
         PRIVATES.HOST.EVENTS.set(this, options.hostEvents);
         PRIVATES.HOST.CLASS.set(this, options.hostClasses);
         PRIVATES.HOST.STYLE.set(this, options.hostStyles);
+        PRIVATES.COMPUTED.set(this, options.computed);
 
-
-        Component.DIRECTIVES.forEach((directive) => {
+        Component.CUSTOM_DIRECTIVES.forEach((directive) => {
             if(!PRIVATES.CUSTOM_DIRECTIVES[directive.params.selector]){
                 PRIVATES.CUSTOM_DIRECTIVES[directive.params.selector] = new WeakMap();
             }
@@ -91,7 +91,7 @@ export class Component {
         });
 
         //custom directives
-        Component.DIRECTIVES.forEach((Directive) => {
+        Component.CUSTOM_DIRECTIVES.forEach((Directive) => {
             let array = Directives._init.call(this, this.root, Directive.params.selector, PRIVATES.CUSTOM_DIRECTIVES[Directive.params.selector]);
             if(array){
                 array.get(this).map(item=>{
@@ -128,6 +128,8 @@ export class Component {
 
     listenToPropsChanges() {
         this.$propsSub = this.props.sub(r => {
+            Directives._computed.call(this, PRIVATES.COMPUTED.get(this)); // should go first
+
             Directives._if.call(this, PRIVATES.DIRECTIVES['ac-if'].get(this));
             Directives._for.call(this, PRIVATES.DIRECTIVES['ac-for'].get(this));
             Directives._props.call(this, PRIVATES.DIRECTIVES['ac-value'].get(this));
@@ -139,7 +141,7 @@ export class Component {
             Directives._link.call(this, PRIVATES.DIRECTIVES['ac-link'].get(this));
             Directives._hostClasses.call(this, PRIVATES.HOST.CLASS.get(this));
             Directives._hostStyles.call(this, PRIVATES.HOST.STYLE.get(this));
-
+            
             // Interpolation.interpolationRun.call(this, this.$interpolationArray);
 
             Directives._customDirective.call(this);
