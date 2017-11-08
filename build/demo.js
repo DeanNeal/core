@@ -1,8 +1,8 @@
 /*!
- * ace-js 0.3.19
+ * ace-js 0.3.20
  * May be freely distributed under the MIT license 
  * Author: Bogdan Zinkevich
- * Last update: 2017-11-8 12:09:51
+ * Last update: 2017-11-8 16:50:42
  * 
  */
 (function webpackUniversalModuleDefinition(root, factory) {
@@ -82,7 +82,7 @@ return /******/ (function(modules) { // webpackBootstrap
 /******/ 	}
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "d4060b38ef00a33bcd44"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "3140f8d26f5c3e92333e"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
 /******/ 	
@@ -2899,7 +2899,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    var rootEl = document.querySelectorAll(options.root.selector)[0];
 	    if (rootEl) {
 	        var rootComponent = new options.root.c(rootEl);
-	        rootComponent.root.setAttribute('ac-version', ("0.3.19"));
+	        rootComponent.root.setAttribute('ac-version', ("0.3.20"));
 	    } else {
 	        console.warn('There is no root component');
 	    }
@@ -4565,7 +4565,7 @@ return /******/ (function(modules) { // webpackBootstrap
 /* 54 */
 /***/ (function(module, exports) {
 
-	'use strict';
+	"use strict";
 
 	Object.defineProperty(exports, "__esModule", {
 	    value: true
@@ -4582,19 +4582,24 @@ return /******/ (function(modules) { // webpackBootstrap
 	        this.valid = true;
 	        this.dirty = false;
 	        this.validators = params.validators;
-	        this.value = params.value || '';
-	        this.validate();
+	        this.value = null;
+
+	        if (params.value) {
+	            this.setValue(params.value);
+	        } else {
+	            this.validate();
+	        }
 	    }
 
 	    _createClass(FormControl, [{
-	        key: 'setValue',
+	        key: "setValue",
 	        value: function setValue(value) {
 	            this.value = value;
 	            this.dirty = true;
 	            this.validate();
 	        }
 	    }, {
-	        key: 'validate',
+	        key: "validate",
 	        value: function validate() {
 	            var _this = this;
 
@@ -4603,12 +4608,12 @@ return /******/ (function(modules) { // webpackBootstrap
 	            });
 	        }
 	    }, {
-	        key: 'isValid',
+	        key: "isValid",
 	        value: function isValid() {
 	            return this.valid;
 	        }
 	    }, {
-	        key: 'markAsDirty',
+	        key: "markAsDirty",
 	        value: function markAsDirty() {
 	            this.dirty = true;
 	        }
@@ -4631,7 +4636,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    }
 
 	    _createClass(FormGroup, [{
-	        key: '_getValues',
+	        key: "_getValues",
 	        value: function _getValues() {
 	            var result = {};
 	            for (var control in this.controls) {
@@ -4641,7 +4646,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	            return result;
 	        }
 	    }, {
-	        key: '_validate',
+	        key: "_validate",
 	        value: function _validate() {
 	            var valid = [];
 	            for (var control in this.controls) {
@@ -4654,7 +4659,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	            this.valid = isValid;
 	        }
 	    }, {
-	        key: 'isValid',
+	        key: "isValid",
 	        value: function isValid() {
 	            return this.valid;
 	        }
@@ -5076,7 +5081,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	            this.getElement('pre').forEach(function (item) {});
 
 	            this.props.set({
-	                version: ("0.3.19"),
+	                version: ("0.3.20"),
 	                'categories': [{
 	                    name: 'Getting started',
 	                    items: [{
@@ -5744,8 +5749,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	        checkbox: {},
 	        model: {},
 	        form: new _core.FormGroup({
-	            name: [_core.Validators.regExp('^[0-9a-zA-Z- ]+$')],
-	            number: [_core.Validators.required()]
+	            name: { value: '', validators: [_core.Validators.regExp('^[0-9a-zA-Z- ]+$')] },
+	            number: { value: '', validators: [_core.Validators.regExp('^[0-9a-zA-Z- ]+$')] }
 	        })
 
 	    }

@@ -1,3 +1,8 @@
+<a name="0.3.20"></a>
+# [0.3.20](https://github.com/DeanNeal/ace-js) (2017-11-08)
+### Features
+* **core:** reactive forms, validators ([#46](https://github.com/DeanNeal/ace-js/issues/46))
+
 <a name="0.3.11"></a>
 # [0.3.11](https://github.com/DeanNeal/ace-js) (2017-10-15)
 ### Features
