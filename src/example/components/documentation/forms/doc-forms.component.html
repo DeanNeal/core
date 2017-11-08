@@ -1,53 +1,70 @@
 <h3>Forms</h3>
-
 <div class="title">[type="text"]</div>
 <div class="input">
-	<div ac-value="input"></div>
-	<input type="text" ac-model="input">
+    <div ac-value="input"></div>
+    <input type="text" ac-model="input">
 </div>
-
 <div class="title">[type="email"]</div>
 <div class="input">
-	<div ac-value="email"></div>
-	<input type="email" ac-model="email">
+    <div ac-value="email"></div>
+    <input type="email" ac-model="email">
 </div>
-
 <div class="title">[type="password"]</div>
 <div class="input">
-	<div ac-value="password"></div>
-	<input type="password" ac-model="password">
+    <div ac-value="password"></div>
+    <input type="password" ac-model="password">
 </div>
-
 <div class="title">[type="radio"]</div>
 <div class="input">
-	<div ac-value="radio"></div>
-	<input type="radio" ac-model="radio" value="1" name="radio">
-	<input type="radio" ac-model="radio" value="2" name="radio">
+    <div ac-value="radio"></div>
+    <input type="radio" ac-model="radio" value="1" name="radio">
+    <input type="radio" ac-model="radio" value="2" name="radio">
 </div>
-
 <div class="title">[type="checkbox"]</div>
 <div class="input">
-	<div ac-value="checkbox.check1"></div>
-	<div ac-value="checkbox.check2"></div>
-	<input type="checkbox" ac-model="checkbox.check1" value="1">
-	<input type="checkbox" ac-model="checkbox.check2" value="2">
+    <div ac-value="checkbox.check1"></div>
+    <div ac-value="checkbox.check2"></div>
+    <input type="checkbox" ac-model="checkbox.check1" value="1">
+    <input type="checkbox" ac-model="checkbox.check2" value="2">
 </div>
-
 <div class="section-title">Form validation</div>
 
-<form ac-submit="submit" ac-form-validation> 
-	<div class="input"> 
-	  Result: <span ac-value="form : json"></span>
-	</div>
-	<div class="input">
-		<input type="text" placeholder="name" ac-model="form.name" required ac-pattern="[0-9]" ac-pattern-title="0-9">
-	</div>
-	<div class="input">
-		<input type="email" placeholder="email"  ac-model="form.email" required>
-	</div>
-	<div class="input">
-		<input type="checkbox" ac-model="form.checkbox" required>
-	</div>
-	
-	<button>Submit</button>
+<form ac-submit="submit" ac-form-validation>
+    <div class="input">
+        Result: <span ac-value="model : json"></span>
+    </div>
+    <div class="input">
+        <input type="text" placeholder="name" ac-model="model.name" required ac-pattern="[0-9]" ac-pattern-title="0-9">
+        <div class="input-border"></div>
+    </div>
+    <div class="input">
+        <input type="email" placeholder="email" ac-model="model.email" required>
+        <div class="input-border"></div>
+    </div>
+    <div class="input">
+        <input type="checkbox" ac-model="model.checkbox" required>
+    </div>
+    <button>Submit</button>
+</form>
+
+<div class="section-title">Reactive forms</div>
+
+<form ac-submit="submitReactive" ac-form-group="form">
+	<br>
+	Is valid: <span ac-value="form.valid"></span>
+    <div class="input">
+        <input type="text" ac-form-control="name">
+        <div class="input-border"></div>
+    </div>
+
+    <div class="input">
+        <input type="text" ac-form-control="number">
+        <div class="input-border" ></div>
+    </div>
+
+    <div class="input">
+        Result: <span ac-value="form.value | json"></span>
+    </div>
+
+    <button>Submit</button>
 </form>

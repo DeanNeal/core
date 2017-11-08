@@ -2,7 +2,7 @@
  * ace-js 0.3.19
  * May be freely distributed under the MIT license 
  * Author: Bogdan Zinkevich
- * Last update: 2017-10-28 18:32:18
+ * Last update: 2017-11-8 12:09:51
  * 
  */
 (function webpackUniversalModuleDefinition(root, factory) {
@@ -82,7 +82,7 @@ return /******/ (function(modules) { // webpackBootstrap
 /******/ 	}
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "d6e96bf1bf0e0f2659e3"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "d4060b38ef00a33bcd44"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
 /******/ 	
@@ -617,7 +617,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	Object.defineProperty(exports, "__esModule", {
 	    value: true
 	});
-	exports.Store = exports.Http = exports.Controls = exports.Plugins = exports.Utils = exports.GlobalEvents = exports.TemplateEngine = exports.RouteSwitcher = exports.Router = exports.Component = exports.Register = exports.Decorators = exports.ObservableCollection = exports.ObservableModel = undefined;
+	exports.Validators = exports.FormGroup = exports.Store = exports.Http = exports.Controls = exports.Plugins = exports.Utils = exports.GlobalEvents = exports.TemplateEngine = exports.RouteSwitcher = exports.Router = exports.Component = exports.Register = exports.Decorators = exports.ObservableCollection = exports.ObservableModel = undefined;
 
 	var _observable = __webpack_require__(7);
 
@@ -625,35 +625,39 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var Decorators = _interopRequireWildcard(_decorators);
 
-	var _register = __webpack_require__(38);
+	var _register = __webpack_require__(39);
 
-	var _component = __webpack_require__(34);
+	var _component = __webpack_require__(35);
 
-	var _routerSwitcher = __webpack_require__(39);
+	var _routerSwitcher = __webpack_require__(40);
 
-	var _routerCore = __webpack_require__(40);
+	var _routerCore = __webpack_require__(41);
 
 	var _routerCore2 = _interopRequireDefault(_routerCore);
 
-	var _templateEngine = __webpack_require__(41);
+	var _templateEngine = __webpack_require__(42);
 
-	var _globalEvents = __webpack_require__(42);
+	var _globalEvents = __webpack_require__(43);
 
 	var _globalEvents2 = _interopRequireDefault(_globalEvents);
 
-	var _utils = __webpack_require__(43);
+	var _utils = __webpack_require__(44);
 
-	var _plugins = __webpack_require__(44);
+	var _plugins = __webpack_require__(45);
 
 	var Plugins = _interopRequireWildcard(_plugins);
 
-	var _controls = __webpack_require__(46);
+	var _controls = __webpack_require__(47);
 
 	var Controls = _interopRequireWildcard(_controls);
 
-	var _http = __webpack_require__(52);
+	var _http = __webpack_require__(53);
 
-	var _store = __webpack_require__(51);
+	var _store = __webpack_require__(52);
+
+	var _formGroup = __webpack_require__(54);
+
+	var _validators = __webpack_require__(55);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -673,6 +677,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	exports.Controls = Controls;
 	exports.Http = _http.Http;
 	exports.Store = _store.Store;
+	exports.FormGroup = _formGroup.FormGroup;
+	exports.Validators = _validators.Validators;
 
 /***/ }),
 /* 7 */
@@ -693,7 +699,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var _decorators = __webpack_require__(8);
 
-	var _deepmerge = __webpack_require__(37);
+	var _deepmerge = __webpack_require__(38);
 
 	var _deepmerge2 = _interopRequireDefault(_deepmerge);
 
@@ -934,7 +940,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var _component2 = _interopRequireDefault(_component);
 
-	var _directive = __webpack_require__(36);
+	var _directive = __webpack_require__(37);
 
 	var _directive2 = _interopRequireDefault(_directive);
 
@@ -1047,7 +1053,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	Object.defineProperty(exports, "__esModule", {
 	    value: true
 	});
-	var DIRECTIVES_NAMES = exports.DIRECTIVES_NAMES = ['ac-for', 'ac-style', 'ac-value', 'ac-input', 'ac-model', 'ac-if', 'ac-class', 'ac-link', 'ac-attr', 'ac-on', 'ac-pattern', 'ac-outside', 'ac-ref', 'ac-form-validation'];
+	var DIRECTIVES_NAMES = exports.DIRECTIVES_NAMES = ['ac-for', 'ac-style', 'ac-value', 'ac-input', 'ac-model', 'ac-if', 'ac-class', 'ac-link', 'ac-attr', 'ac-on', 'ac-pattern', 'ac-outside', 'ac-ref', 'ac-form-validation', 'ac-form-group'];
 
 /***/ }),
 /* 13 */
@@ -1105,9 +1111,11 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var _formValidation2 = __webpack_require__(32);
 
-	var _customDirective2 = __webpack_require__(33);
+	var _formGroup2 = __webpack_require__(33);
 
-	var _computed2 = __webpack_require__(35);
+	var _customDirective2 = __webpack_require__(34);
+
+	var _computed2 = __webpack_require__(36);
 
 	var Directives = {
 	    _style: _style2._style,
@@ -1133,6 +1141,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    _hostClasses: _host._hostClasses,
 	    _hostStyles: _host._hostStyles,
 	    _formValidation: _formValidation2._formValidation,
+	    _formGroup: _formGroup2._formGroup,
 	    _customDirective: _customDirective2._customDirective,
 	    _computed: _computed2._computed
 	};
@@ -1364,34 +1373,63 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	    array.forEach(function (item) {
 	        var array = item.attr.split(',');
-
+	        var attr = item.attr;
 	        var root = item.elem;
+	        // array.forEach(prop => {
+	        //     if (prop[0] !== '@') {
+	        //         let reverse = false;
+	        //         let params = prop.replace(/ +/g, "").split(':');
+	        //         if (params[1][0] === '!') {
+	        //             params[1] = params[1].substring(1);
+	        //             reverse = true;
+	        //         }
+	        //         let className = params[0];
+	        //         let variable = params[1].split('.');
+	        //         let r = this.getComponentVariable(variable, data);
+	        //         r = reverse ? !r : r;
+	        //         r ? (root.classList.add(className)) : (root.classList.remove(className));
+	        //     } else {
+	        //         let params = prop.split('@');
+	        //         let variable = params[1].split('.');
+	        //         let r = this.getComponentVariable(variable, data);
+
+	        //         //remove previous class
+
+	        //         if (item.prev) {
+	        //             root.classList.remove(item.prev)
+	        //         }
+	        //         item.prev = r;
+
+	        //         root.classList.add(r)
+	        //     }
+	        // });
+
 	        array.forEach(function (prop) {
-	            if (prop[0] !== '@') {
-	                var reverse = false;
-	                var params = prop.replace(/ +/g, "").split(':');
-	                if (params[1][0] === '!') {
-	                    params[1] = params[1].substring(1);
-	                    reverse = true;
+
+	            try {
+
+	                if (prop[0] === '@') {
+	                    var params = prop.split('@');
+	                    var variable = params[1].split('.');
+	                    var r = _this.getComponentVariable(variable, data);
+
+	                    //remove previous class
+
+	                    if (item.prev) {
+	                        root.classList.remove(item.prev);
+	                    }
+	                    item.prev = r;
+
+	                    root.classList.add(r);
+	                } else {
+	                    var _params = prop.replace(/ +/g, "").split(':');
+	                    var className = _params[0];
+	                    var _r = new Function('return ' + _params[1]).apply(_this.props);
+
+	                    _r ? root.classList.add(className) : root.classList.remove(className);
 	                }
-	                var className = params[0];
-	                var variable = params[1].split('.');
-	                var r = _this.getComponentVariable(variable, data);
-	                r = reverse ? !r : r;
-	                r ? root.classList.add(className) : root.classList.remove(className);
-	            } else {
-	                var _params = prop.split('@');
-	                var _variable = _params[1].split('.');
-	                var _r = _this.getComponentVariable(_variable, data);
-
-	                //remove previous class
-
-	                if (item.prev) {
-	                    root.classList.remove(item.prev);
-	                }
-	                item.prev = _r;
-
-	                root.classList.add(_r);
+	            } catch (err) {
+	                throw new Error(_this.constructor.name + '; ' + err);
 	            }
 	        });
 	    });
@@ -2105,9 +2143,65 @@ return /******/ (function(modules) { // webpackBootstrap
 	Object.defineProperty(exports, "__esModule", {
 	    value: true
 	});
+	exports._formGroup = _formGroup;
+
+	var _core = __webpack_require__(6);
+
+	function _formGroup(array, data) {
+	    var _this = this;
+
+	    array.forEach(function (item) {
+	        // let attr = item.attr;
+
+	        item.elem.addEventListener('keyup', function (e) {
+	            var formGroup = _this.getComponentVariable(item.attr.split('.'));
+	            var attr = e.target.getAttribute('ac-form-control');
+
+	            if (attr) {
+	                formGroup.controls[attr].setValue(e.target.value);
+	                formGroup.controls[attr].markAsDirty();
+	                formGroup.controls[attr].isValid() ? e.target.classList.remove('ac-invalid') : e.target.classList.add('ac-invalid');
+	            }
+
+	            formGroup._validate();
+	            formGroup._getValues();
+
+	            _this.props._callAll();
+	        }, false);
+
+	        item.elem.addEventListener('submit', function (e) {
+	            var formGroup = _this.getComponentVariable(item.attr.split('.'));
+	            var focusState = false;
+	            var controls = e.target.querySelectorAll('[ac-form-control]');
+
+	            controls.forEach(function (target) {
+	                var attr = target.getAttribute('ac-form-control');
+	                if (formGroup.controls[attr].isValid() === false && !focusState) {
+	                    focusState = true;
+	                    formGroup.controls[attr].markAsDirty();
+	                    formGroup.controls[attr].validate();
+	                    formGroup.controls[attr].isValid() ? target.classList.remove('ac-invalid') : target.classList.add('ac-invalid');
+	                    target.focus();
+	                }
+	            });
+
+	            _this.props._callAll();
+	        });
+	    });
+	}
+
+/***/ }),
+/* 34 */
+/***/ (function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
 	exports._customDirective = _customDirective;
 
-	var _component = __webpack_require__(34);
+	var _component = __webpack_require__(35);
 
 	var _private = __webpack_require__(23);
 
@@ -2125,7 +2219,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	}
 
 /***/ }),
-/* 34 */
+/* 35 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -2204,6 +2298,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	            _Directives.Directives._events.call(this, _private.PRIVATES.EVENTS.get(this));
 	            _Directives.Directives._hostEvents.call(this, _private.PRIVATES.HOST.EVENTS.get(this));
 	            _Directives.Directives._formValidation.call(this, _private.PRIVATES.DIRECTIVES['ac-form-validation'].get(this));
+
+	            _Directives.Directives._formGroup.call(this, _private.PRIVATES.DIRECTIVES['ac-form-group'].get(this));
 
 	            //TODO rewrite
 	            if (_private.PRIVATES.DIRECTIVES['ac-link'].get(this).length || _private.PRIVATES.DIRECTIVES['ac-for'].get(this).length) {
@@ -2299,7 +2395,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        value: function getComponentVariable(variable, data) {
 	            if (data && (typeof data === 'undefined' ? 'undefined' : _typeof(data)) !== 'object') return data;
 	            return variable.reduce(function (o, i, index) {
-	                if (!o[i] && o[i] !== 0) {
+	                if (!o[i] && o[i] !== 0 && o[i] !== false) {
 	                    // in case when variable is undefined
 	                    return index === variable.length - 1 ? null : {};
 	                } else {
@@ -2463,7 +2559,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	}();
 
 /***/ }),
-/* 35 */
+/* 36 */
 /***/ (function(module, exports) {
 
 	"use strict";
@@ -2482,7 +2578,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	}
 
 /***/ }),
-/* 36 */
+/* 37 */
 /***/ (function(module, exports) {
 
 	"use strict";
@@ -2499,7 +2595,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	}
 
 /***/ }),
-/* 37 */
+/* 38 */
 /***/ (function(module, exports) {
 
 	'use strict';
@@ -2602,7 +2698,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ }),
-/* 38 */
+/* 39 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -2614,7 +2710,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var _core = __webpack_require__(6);
 
-	var _component = __webpack_require__(34);
+	var _component = __webpack_require__(35);
 
 	function Register(options) {
 	    // console.time('modules')
@@ -2695,7 +2791,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	}
 
 /***/ }),
-/* 39 */
+/* 40 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -2707,7 +2803,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-	var _routerCore = __webpack_require__(40);
+	var _routerCore = __webpack_require__(41);
 
 	var _routerCore2 = _interopRequireDefault(_routerCore);
 
@@ -2836,7 +2932,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	}();
 
 /***/ }),
-/* 40 */
+/* 41 */
 /***/ (function(module, exports) {
 
 	'use strict';
@@ -2998,7 +3094,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	exports.default = new Router();
 
 /***/ }),
-/* 41 */
+/* 42 */
 /***/ (function(module, exports) {
 
 	'use strict';
@@ -3029,7 +3125,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	}
 
 /***/ }),
-/* 42 */
+/* 43 */
 /***/ (function(module, exports) {
 
 	'use strict';
@@ -3094,7 +3190,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	exports.default = new GlobalEvents();
 
 /***/ }),
-/* 43 */
+/* 44 */
 /***/ (function(module, exports) {
 
 	"use strict";
@@ -3307,7 +3403,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	exports.Utils = Utils;
 
 /***/ }),
-/* 44 */
+/* 45 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -3317,7 +3413,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	});
 	exports.Sortable = undefined;
 
-	var _sortable = __webpack_require__(45);
+	var _sortable = __webpack_require__(46);
 
 	var _sortable2 = _interopRequireDefault(_sortable);
 
@@ -3326,7 +3422,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	exports.Sortable = _sortable2.default;
 
 /***/ }),
-/* 45 */
+/* 46 */
 /***/ (function(module, exports) {
 
 	'use strict';
@@ -3469,7 +3565,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	exports.default = new Sortable();
 
 /***/ }),
-/* 46 */
+/* 47 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -3479,11 +3575,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	});
 	exports.ModalStore = exports.ModalComponent = exports.DropdownComponent = exports.DatepickerComponent = undefined;
 
-	var _datepicker = __webpack_require__(47);
+	var _datepicker = __webpack_require__(48);
 
-	var _dropdown = __webpack_require__(48);
+	var _dropdown = __webpack_require__(49);
 
-	var _modal = __webpack_require__(50);
+	var _modal = __webpack_require__(51);
 
 	exports.DatepickerComponent = _datepicker.DatepickerComponent;
 	exports.DropdownComponent = _dropdown.DropdownComponent;
@@ -3491,7 +3587,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	exports.ModalStore = _modal.ModalStore;
 
 /***/ }),
-/* 47 */
+/* 48 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -3505,15 +3601,15 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var _dec, _class;
 
-	var _utils = __webpack_require__(43);
+	var _utils = __webpack_require__(44);
 
 	var _decorators = __webpack_require__(8);
 
 	var Decorators = _interopRequireWildcard(_decorators);
 
-	var _dropdown = __webpack_require__(48);
+	var _dropdown = __webpack_require__(49);
 
-	var _datepicker = __webpack_require__(49);
+	var _datepicker = __webpack_require__(50);
 
 	var _datepicker2 = _interopRequireDefault(_datepicker);
 
@@ -3673,7 +3769,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	}()) || _class);
 
 /***/ }),
-/* 48 */
+/* 49 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -3685,7 +3781,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-	var _component = __webpack_require__(34);
+	var _component = __webpack_require__(35);
 
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
@@ -3719,15 +3815,15 @@ return /******/ (function(modules) { // webpackBootstrap
 	}();
 
 /***/ }),
-/* 49 */
+/* 50 */
 /***/ (function(module, exports) {
 
 	"use strict";
 
-	module.exports = "<div ac-outside=\"outside\" class=\"relative\">\r\n\t<div  style=\"width: 100%\" class=\"app-form__label__input\">\r\n\t\t<input type=\"text\" @click=\"openMenu\" class=\"app-form__label__input full-width\" placeholder=\"\"  readonly required ac-value=\"formattedDate\">\r\n\t\t<!-- <img class=\"datepicker-icon\" src=\"../../assets/img/hanging-calendar.svg\" alt=\"\"> -->\r\n\t</div>\r\n\r\n\t<div class=\"j-calendar\" ac-if=\"this._show\" >\r\n\t    <div class=\"j-calendar__wrap\">\r\n\t        <div class=\"j-calendar__item\">\r\n\t            <div class=\"j-calendar__header\">\r\n\t                <div class=\"j-calendar__header__left\" @click=\"prev\">\r\n\t                    <span>prev</span>\r\n\t                </div>\r\n\t                <div class=\"j-calendar__header__center\">\r\n\t\t                <span ac-value=\"currentMonth\"></span>\r\n\t\t                <span style=\"margin-left: 7px;\" ac-value=\"currentYear\"></span>\r\n\t                </div>\r\n\t                <div class=\"j-calendar__header__right\" @click=\"next\">\r\n\t                    <span>Next</span>\r\n\t                </div>\r\n\t            </div>\r\n\t            <div class=\"j-calendar__content\">\r\n\t                <div class=\"j-calendar__days\">\r\n\t                    <div class=\"j-calendar__days__item\" ac-for=\"daysOfWeekShort\">\r\n\t\t\t\t\t\t\t<span ac-value=\"index\"></span>\r\n\t\t\t\t\t\t</div>\r\n\t                </div>\r\n\t                <div class=\"j-calendar__date\">\r\n\t                    <div class=\"j-calendar__date__item\" \r\n\t                    ac-class=\"j-calendar__date__item--circle:today, j-calendar__date__item--active:selected, j-calendar__date__item--inactive: inactive\"\r\n\t                    ac-for=\"countOfDays\"\r\n\t                    @click=\"select(this)\">\r\n\t\t\t\t\t\t\t<span ac-value=\"index\"></span>\r\n\t                    </div>\r\n\t                </div>\r\n\t            </div>\r\n\t        </div>\r\n\t    </div>\r\n\t</div>\r\n</div>\r\n";
+	module.exports = "<div ac-outside=\"outside\" class=\"relative\">\r\n\t<div  style=\"width: 100%\" class=\"app-form__label__input\">\r\n\t\t<input type=\"text\" @click=\"openMenu\" class=\"app-form__label__input full-width\" placeholder=\"\"  readonly required ac-value=\"formattedDate\">\r\n\t\t<!-- <img class=\"datepicker-icon\" src=\"../../assets/img/hanging-calendar.svg\" alt=\"\"> -->\r\n\t</div>\r\n\r\n\t<div class=\"j-calendar\" ac-if=\"this._show\" >\r\n\t    <div class=\"j-calendar__wrap\">\r\n\t        <div class=\"j-calendar__item\">\r\n\t            <div class=\"j-calendar__header\">\r\n\t                <div class=\"j-calendar__header__left\" @click=\"prev\">\r\n\t                    <span>prev</span>\r\n\t                </div>\r\n\t                <div class=\"j-calendar__header__center\">\r\n\t\t                <span ac-value=\"currentMonth\"></span>\r\n\t\t                <span style=\"margin-left: 7px;\" ac-value=\"currentYear\"></span>\r\n\t                </div>\r\n\t                <div class=\"j-calendar__header__right\" @click=\"next\">\r\n\t                    <span>Next</span>\r\n\t                </div>\r\n\t            </div>\r\n\t            <div class=\"j-calendar__content\">\r\n\t                <div class=\"j-calendar__days\">\r\n\t                    <div class=\"j-calendar__days__item\" ac-for=\"daysOfWeekShort\">\r\n\t\t\t\t\t\t\t<span ac-value=\"index\"></span>\r\n\t\t\t\t\t\t</div>\r\n\t                </div>\r\n\t                <div class=\"j-calendar__date\">\r\n\t                    <div class=\"j-calendar__date__item\" \r\n\t                    ac-class=\"j-calendar__date__item--circle:this.today, j-calendar__date__item--active:this.selected, j-calendar__date__item--inactive: this.inactive\"\r\n\t                    ac-for=\"countOfDays\"\r\n\t                    @click=\"select(this)\">\r\n\t\t\t\t\t\t\t<span ac-value=\"index\"></span>\r\n\t                    </div>\r\n\t                </div>\r\n\t            </div>\r\n\t        </div>\r\n\t    </div>\r\n\t</div>\r\n</div>\r\n";
 
 /***/ }),
-/* 50 */
+/* 51 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -3739,9 +3835,9 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-	var _utils = __webpack_require__(43);
+	var _utils = __webpack_require__(44);
 
-	var _store = __webpack_require__(51);
+	var _store = __webpack_require__(52);
 
 	var _observable = __webpack_require__(7);
 
@@ -3861,7 +3957,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	exports.ModalComponent = ModalComponent;
 
 /***/ }),
-/* 51 */
+/* 52 */
 /***/ (function(module, exports) {
 
 	"use strict";
@@ -3888,7 +3984,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	}();
 
 /***/ }),
-/* 52 */
+/* 53 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -4325,6 +4421,133 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var Http = new HttpModule();
 	exports.Http = Http;
+
+/***/ }),
+/* 54 */
+/***/ (function(module, exports) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	var FormControl = exports.FormControl = function () {
+	    function FormControl(params) {
+	        _classCallCheck(this, FormControl);
+
+	        this.valid = true;
+	        this.dirty = false;
+	        this.validators = params.validators;
+	        this.value = params.value || '';
+	        this.validate();
+	    }
+
+	    _createClass(FormControl, [{
+	        key: 'setValue',
+	        value: function setValue(value) {
+	            this.value = value;
+	            this.dirty = true;
+	            this.validate();
+	        }
+	    }, {
+	        key: 'validate',
+	        value: function validate() {
+	            var _this = this;
+
+	            this.validators.forEach(function (validator) {
+	                _this.valid = validator(_this);
+	            });
+	        }
+	    }, {
+	        key: 'isValid',
+	        value: function isValid() {
+	            return this.valid;
+	        }
+	    }, {
+	        key: 'markAsDirty',
+	        value: function markAsDirty() {
+	            this.dirty = true;
+	        }
+	    }]);
+
+	    return FormControl;
+	}();
+
+	var FormGroup = exports.FormGroup = function () {
+	    function FormGroup(controls) {
+	        _classCallCheck(this, FormGroup);
+
+	        this.valid = false;
+	        this.controls = {};
+	        this.value = {};
+
+	        for (var control in controls) {
+	            this.controls[control] = new FormControl(controls[control]);
+	        }
+	    }
+
+	    _createClass(FormGroup, [{
+	        key: '_getValues',
+	        value: function _getValues() {
+	            var result = {};
+	            for (var control in this.controls) {
+	                result[control] = this.controls[control].value;
+	            }
+	            this.value = result;
+	            return result;
+	        }
+	    }, {
+	        key: '_validate',
+	        value: function _validate() {
+	            var valid = [];
+	            for (var control in this.controls) {
+	                valid.push(this.controls[control].valid);
+	            }
+	            var isValid = valid.filter(function (r) {
+	                return r;
+	            }).length === Object.keys(this.controls).length;
+
+	            this.valid = isValid;
+	        }
+	    }, {
+	        key: 'isValid',
+	        value: function isValid() {
+	            return this.valid;
+	        }
+	    }]);
+
+	    return FormGroup;
+	}();
+
+/***/ }),
+/* 55 */
+/***/ (function(module, exports) {
+
+	"use strict";
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	var Validators = {
+	    required: function required() {
+	        return function (control) {
+	            return control.value ? true : false;
+	        };
+	    },
+	    regExp: function regExp(exp) {
+	        return function (control) {
+	            var regexp = new RegExp(exp);
+	            return regexp.test(control.value);
+	        };
+	    }
+	};
+
+	exports.Validators = Validators;
 
 /***/ })
 /******/ ])

@@ -1,16 +1,21 @@
-import {Component, Decorators} from '../../../../core';
+import { Component, Decorators, FormGroup, Validators } from '../../../../core';
 import Tpl from './doc-forms.component.html';
 
 @Decorators.ComponentDecorator({
     selector: 'app-documentation-forms',
     template: Tpl,
     props: {
-    	checkbox: {
+        checkbox: {
 
-    	},
-    	form: {
+        },
+        model: {
 
-    	}
+        },
+        form: new FormGroup({
+            name: {value: '', validators: [Validators.regExp('^[0-9a-zA-Z- ]+$')]},
+            number: {value: '', validators: [Validators.regExp('^[0-9a-zA-Z- ]+$')]}
+        })
+
     }
 })
 export class DocFormsComponent {
@@ -20,6 +25,17 @@ export class DocFormsComponent {
     }
 
     submit(e, form) {
-    	
+
     }
+
+    submitReactive(e) {
+        e.preventDefault(e);
+        if (this.props.form.isValid()) {
+            let res = this.props.form.value;
+
+        } 
+
+    }
+
+
 }

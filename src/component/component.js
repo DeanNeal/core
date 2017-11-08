@@ -109,6 +109,8 @@ export class Component {
         Directives._hostEvents.call(this, PRIVATES.HOST.EVENTS.get(this));
         Directives._formValidation.call(this, PRIVATES.DIRECTIVES['ac-form-validation'].get(this));
 
+        Directives._formGroup.call(this, PRIVATES.DIRECTIVES['ac-form-group'].get(this));
+
         //TODO rewrite
         if (PRIVATES.DIRECTIVES['ac-link'].get(this).length || PRIVATES.DIRECTIVES['ac-for'].get(this).length) {
             this.$routerSub = Router.onChange(() => {
@@ -142,6 +144,7 @@ export class Component {
             Directives._hostClasses.call(this, PRIVATES.HOST.CLASS.get(this));
             Directives._hostStyles.call(this, PRIVATES.HOST.STYLE.get(this));
             
+
             // Interpolation.interpolationRun.call(this, this.$interpolationArray);
 
             Directives._customDirective.call(this);
@@ -188,7 +191,7 @@ export class Component {
     getComponentVariable(variable, data) {
         if (data && typeof data !== 'object') return data;
         return variable.reduce((o, i, index) => {
-            if (!o[i] && o[i] !== 0) { // in case when variable is undefined
+            if (!o[i] && o[i] !== 0 && o[i] !== false) { // in case when variable is undefined
                 return index === variable.length - 1 ? null : {};
             } else {
                 return o[i]

@@ -12,6 +12,9 @@ import * as Controls from './controls';
 import { Http } from './http.js';
 import { Store } from './store.js';
 
+import {FormGroup} from 'reactive-forms/form-group';
+import {Validators} from 'reactive-forms/validators';
+
 export {
     ObservableModel,
     ObservableCollection,
@@ -26,5 +29,8 @@ export {
     Plugins,
     Controls,
     Http,
-    Store
+    Store,
+
+    FormGroup,
+    Validators
 };
