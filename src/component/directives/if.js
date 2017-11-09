@@ -4,7 +4,7 @@ export function _if(array, data) {
         let attr = item.attr;//.replace(/@+/g, "this.props."); // @ -alias of this.props
         
        try{
-            let r = new Function('return ' + attr).apply(this.props);
+            let r = new Function('return ' + attr).apply(data || this.props);
             if (r) {
                 if (!item.elem.parentNode) { // insert only if elem doesn't exists
                     if(Utils.isCustomElement(item.elem)){

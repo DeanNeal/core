@@ -2,7 +2,7 @@
  * ace-js 0.3.20
  * May be freely distributed under the MIT license 
  * Author: Bogdan Zinkevich
- * Last update: 2017-11-8 16:50:42
+ * Last update: 2017-11-10 00:41:27
  * 
  */
 (function webpackUniversalModuleDefinition(root, factory) {
@@ -82,7 +82,7 @@ return /******/ (function(modules) { // webpackBootstrap
 /******/ 	}
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "3140f8d26f5c3e92333e"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "e7d94cc8af3648244014"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
 /******/ 	
@@ -1433,7 +1433,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        var attr = item.attr; //.replace(/@+/g, "this.props."); // @ -alias of this.props
 
 	        try {
-	            var r = new Function('return ' + attr).apply(_this.props);
+	            var r = new Function('return ' + attr).apply(data || _this.props);
 	            if (r) {
 	                if (!item.elem.parentNode) {
 	                    // insert only if elem doesn't exists
@@ -1514,34 +1514,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	        var array = item.attr.split(',');
 	        var attr = item.attr;
 	        var root = item.elem;
-	        // array.forEach(prop => {
-	        //     if (prop[0] !== '@') {
-	        //         let reverse = false;
-	        //         let params = prop.replace(/ +/g, "").split(':');
-	        //         if (params[1][0] === '!') {
-	        //             params[1] = params[1].substring(1);
-	        //             reverse = true;
-	        //         }
-	        //         let className = params[0];
-	        //         let variable = params[1].split('.');
-	        //         let r = this.getComponentVariable(variable, data);
-	        //         r = reverse ? !r : r;
-	        //         r ? (root.classList.add(className)) : (root.classList.remove(className));
-	        //     } else {
-	        //         let params = prop.split('@');
-	        //         let variable = params[1].split('.');
-	        //         let r = this.getComponentVariable(variable, data);
-
-	        //         //remove previous class
-
-	        //         if (item.prev) {
-	        //             root.classList.remove(item.prev)
-	        //         }
-	        //         item.prev = r;
-
-	        //         root.classList.add(r)
-	        //     }
-	        // });
 
 	        array.forEach(function (prop) {
 
@@ -1553,7 +1525,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	                    var r = _this.getComponentVariable(variable, data);
 
 	                    //remove previous class
-
 	                    if (item.prev) {
 	                        root.classList.remove(item.prev);
 	                    }
@@ -1563,7 +1534,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	                } else {
 	                    var _params = prop.replace(/ +/g, "").split(':');
 	                    var className = _params[0];
-	                    var _r = new Function('return ' + _params[1]).apply(_this.props);
+	                    var _r = new Function('return ' + _params[1]).apply(data || _this.props);
 
 	                    _r ? root.classList.add(className) : root.classList.remove(className);
 	                }
