@@ -1,8 +1,8 @@
 /*!
- * ace-js 0.3.20
+ * ace-js 0.3.21
  * May be freely distributed under the MIT license 
  * Author: Bogdan Zinkevich
- * Last update: 2017-11-10 00:41:27
+ * Last update: 2017-11-10 00:42:06
  * 
  */
 (function webpackUniversalModuleDefinition(root, factory) {
@@ -82,7 +82,7 @@ return /******/ (function(modules) { // webpackBootstrap
 /******/ 	}
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "e7d94cc8af3648244014"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "bcf40e72980b75e78e3f"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
 /******/ 	
@@ -2870,7 +2870,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    var rootEl = document.querySelectorAll(options.root.selector)[0];
 	    if (rootEl) {
 	        var rootComponent = new options.root.c(rootEl);
-	        rootComponent.root.setAttribute('ac-version', ("0.3.20"));
+	        rootComponent.root.setAttribute('ac-version', ("0.3.21"));
 	    } else {
 	        console.warn('There is no root component');
 	    }
@@ -5052,7 +5052,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	            this.getElement('pre').forEach(function (item) {});
 
 	            this.props.set({
-	                version: ("0.3.20"),
+	                version: ("0.3.21"),
 	                'categories': [{
 	                    name: 'Getting started',
 	                    items: [{
