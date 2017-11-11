@@ -2,7 +2,7 @@
  * ace-js 0.3.22
  * May be freely distributed under the MIT license 
  * Author: Bogdan Zinkevich
- * Last update: 2017-11-11 21:56:39
+ * Last update: 2017-11-12 00:23:08
  * 
  */
 (function webpackUniversalModuleDefinition(root, factory) {
@@ -82,7 +82,7 @@ return /******/ (function(modules) { // webpackBootstrap
 /******/ 	}
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "7add0b82ba6621403e42"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "181f3a70dd6bbe3f0b1a"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
 /******/ 	
@@ -4005,14 +4005,14 @@ return /******/ (function(modules) { // webpackBootstrap
 	            this.setSubscriptions(ModalStore.modal.sub(function (r) {
 	                if (r.visible && _this3.type === r.type) {
 	                    _this3.root.style.display = 'block';
-	                    _this3.props.set(r);
 	                    _this3.onOpen();
+	                    _this3.props.set(r);
 	                } else {
 	                    if (_this3.root.style.display !== 'none') {
 	                        _this3.root.style.display = 'none';
 	                        // this.props.clear();
-	                        _this3.props.set(r);
 	                        _this3.onClose();
+	                        _this3.props.set(r);
 	                    }
 	                }
 	            }));

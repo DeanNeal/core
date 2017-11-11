@@ -47,14 +47,14 @@ class ModalComponent{
             ModalStore.modal.sub(r => {
                 if (r.visible && this.type === r.type) {
                     this.root.style.display = 'block';
-                    this.props.set(r);
                     this.onOpen();
+                    this.props.set(r);
                 } else {
                     if(this.root.style.display !== 'none'){                    
                         this.root.style.display = 'none';
                         // this.props.clear();
-                        this.props.set(r);
                         this.onClose();
+                        this.props.set(r);
                     }
                 }
             })
