@@ -98,7 +98,7 @@ export class DatepickerComponent {
         let monthEnd = new Date(year, month + 1, 1);
         let monthLength = (monthEnd - monthStart) / (1000 * 60 * 60 * 24);
         let days = [];
-        let minDate = new Date(this.minDate);
+        let minDate = new Date(this.minDate || new Date());
         let maxDate = new Date(this.maxDate);
         let emptyDays = monthStart.getDay() - 1; // get last dates of prev month
 

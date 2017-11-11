@@ -50,26 +50,7 @@ export class Observable {
         this._data = {};
         this._callAll();
     }
-
-    // set(data, value) {
-    //     if (typeof data == 'object') {
-    //         if (data.length || data.length === 0) {
-    //             this._data = data;
-    //         } else {
-    //             // for (let key in data) {
-    //             //     this._data[key] = data[key];
-    //             // }
-    //             this._data = deepmerge(this._data, data);
-    //             this.defineProperties(data);
-    //         }
-    //     } else {
-    //         this.defineProperty(data, value);
-    //         this._data[data] = value;
-    //     }
-
-    //     this._callAll();
-    // }
-
+    
     getData() {
         return this._data;
     }

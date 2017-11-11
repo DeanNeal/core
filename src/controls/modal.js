@@ -52,7 +52,8 @@ class ModalComponent{
                 } else {
                     if(this.root.style.display !== 'none'){                    
                         this.root.style.display = 'none';
-                        this.props.clear();
+                        // this.props.clear();
+                        this.props.set(r);
                         this.onClose();
                     }
                 }

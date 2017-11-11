@@ -2,7 +2,7 @@
  * ace-js 0.3.21
  * May be freely distributed under the MIT license 
  * Author: Bogdan Zinkevich
- * Last update: 2017-11-10 00:42:06
+ * Last update: 2017-11-11 20:25:04
  * 
  */
 (function webpackUniversalModuleDefinition(root, factory) {
@@ -82,7 +82,7 @@ return /******/ (function(modules) { // webpackBootstrap
 /******/ 	}
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "bcf40e72980b75e78e3f"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "168846fbc4ad21a824aa"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
 /******/ 	
@@ -917,26 +917,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	            this._data = {};
 	            this._callAll();
 	        }
-
-	        // set(data, value) {
-	        //     if (typeof data == 'object') {
-	        //         if (data.length || data.length === 0) {
-	        //             this._data = data;
-	        //         } else {
-	        //             // for (let key in data) {
-	        //             //     this._data[key] = data[key];
-	        //             // }
-	        //             this._data = deepmerge(this._data, data);
-	        //             this.defineProperties(data);
-	        //         }
-	        //     } else {
-	        //         this.defineProperty(data, value);
-	        //         this._data[data] = value;
-	        //     }
-
-	        //     this._callAll();
-	        // }
-
 	    }, {
 	        key: 'getData',
 	        value: function getData() {
@@ -2261,28 +2241,31 @@ return /******/ (function(modules) { // webpackBootstrap
 	    var _this = this;
 
 	    array.forEach(function (item) {
-	        // let attr = item.attr;
+	        var formGroup = _this.getComponentVariable(item.attr.split('.'));
+	        item.elem.querySelectorAll('[ac-form-control]').forEach(function (control) {
+	            var attr = control.getAttribute('ac-form-control');
+	            formGroup.controls[attr].setElem(control);;
+	        });
 
 	        item.elem.addEventListener('keyup', function (e) {
-	            var formGroup = _this.getComponentVariable(item.attr.split('.'));
 	            var attr = e.target.getAttribute('ac-form-control');
 
 	            if (attr) {
 	                formGroup.controls[attr].setValue(e.target.value);
 	                formGroup.controls[attr].markAsDirty();
-	                formGroup.controls[attr].isValid() ? e.target.classList.remove('ac-invalid') : e.target.classList.add('ac-invalid');
 	            }
 
 	            formGroup._validate();
-	            formGroup._getValues();
+	            formGroup.getValues();
 
 	            _this.props._callAll();
 	        }, false);
 
 	        item.elem.addEventListener('submit', function (e) {
-	            var formGroup = _this.getComponentVariable(item.attr.split('.'));
 	            var focusState = false;
 	            var controls = e.target.querySelectorAll('[ac-form-control]');
+
+	            formGroup._validate();
 
 	            controls.forEach(function (target) {
 	                var attr = target.getAttribute('ac-form-control');
@@ -2290,13 +2273,12 @@ return /******/ (function(modules) { // webpackBootstrap
 	                    focusState = true;
 	                    formGroup.controls[attr].markAsDirty();
 	                    formGroup.controls[attr].validate();
-	                    formGroup.controls[attr].isValid() ? target.classList.remove('ac-invalid') : target.classList.add('ac-invalid');
 	                    target.focus();
 	                }
 	            });
 
 	            _this.props._callAll();
-	        });
+	        }, true);
 	    });
 	}
 
@@ -3830,7 +3812,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	            var monthEnd = new Date(year, month + 1, 1);
 	            var monthLength = (monthEnd - monthStart) / (1000 * 60 * 60 * 24);
 	            var days = [];
-	            var minDate = new Date(this.minDate);
+	            var minDate = new Date(this.minDate || new Date());
 	            var maxDate = new Date(this.maxDate);
 	            var emptyDays = monthStart.getDay() - 1; // get last dates of prev month
 
@@ -3930,7 +3912,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	"use strict";
 
-	module.exports = "<div ac-outside=\"outside\" class=\"relative\">\r\n\t<div  style=\"width: 100%\" class=\"app-form__label__input\">\r\n\t\t<input type=\"text\" @click=\"openMenu\" class=\"app-form__label__input full-width\" placeholder=\"\"  readonly required ac-value=\"formattedDate\">\r\n\t\t<!-- <img class=\"datepicker-icon\" src=\"../../assets/img/hanging-calendar.svg\" alt=\"\"> -->\r\n\t</div>\r\n\r\n\t<div class=\"j-calendar\" ac-if=\"this._show\" >\r\n\t    <div class=\"j-calendar__wrap\">\r\n\t        <div class=\"j-calendar__item\">\r\n\t            <div class=\"j-calendar__header\">\r\n\t                <div class=\"j-calendar__header__left\" @click=\"prev\">\r\n\t                    <span>prev</span>\r\n\t                </div>\r\n\t                <div class=\"j-calendar__header__center\">\r\n\t\t                <span ac-value=\"currentMonth\"></span>\r\n\t\t                <span style=\"margin-left: 7px;\" ac-value=\"currentYear\"></span>\r\n\t                </div>\r\n\t                <div class=\"j-calendar__header__right\" @click=\"next\">\r\n\t                    <span>Next</span>\r\n\t                </div>\r\n\t            </div>\r\n\t            <div class=\"j-calendar__content\">\r\n\t                <div class=\"j-calendar__days\">\r\n\t                    <div class=\"j-calendar__days__item\" ac-for=\"daysOfWeekShort\">\r\n\t\t\t\t\t\t\t<span ac-value=\"index\"></span>\r\n\t\t\t\t\t\t</div>\r\n\t                </div>\r\n\t                <div class=\"j-calendar__date\">\r\n\t                    <div class=\"j-calendar__date__item\" \r\n\t                    ac-class=\"j-calendar__date__item--circle:this.today, j-calendar__date__item--active:this.selected, j-calendar__date__item--inactive: this.inactive\"\r\n\t                    ac-for=\"countOfDays\"\r\n\t                    @click=\"select(this)\">\r\n\t\t\t\t\t\t\t<span ac-value=\"index\"></span>\r\n\t                    </div>\r\n\t                </div>\r\n\t            </div>\r\n\t        </div>\r\n\t    </div>\r\n\t</div>\r\n</div>\r\n";
+	module.exports = "<div ac-outside=\"outside\" class=\"relative\">\r\n\t<div  style=\"width: 100%\" class=\"app-form__label__input\">\r\n\t\t<input type=\"text\" @click=\"openMenu\" class=\"app-form__label__input full-width\" placeholder=\"\"  readonly required ac-value=\"formattedDate\">\r\n\t\t<div class=\"app-form__border\"></div>\r\n\t\t<!-- <img class=\"datepicker-icon\" src=\"../../assets/img/hanging-calendar.svg\" alt=\"\"> -->\r\n\t</div>\r\n\r\n\t<div class=\"j-calendar\" ac-if=\"this._show\" >\r\n\t    <div class=\"j-calendar__wrap\">\r\n\t        <div class=\"j-calendar__item\">\r\n\t            <div class=\"j-calendar__header\">\r\n\t                <div class=\"j-calendar__header__left\" @click=\"prev\">\r\n\t                    <span>prev</span>\r\n\t                </div>\r\n\t                <div class=\"j-calendar__header__center\">\r\n\t\t                <span ac-value=\"currentMonth\"></span>\r\n\t\t                <span style=\"margin-left: 7px;\" ac-value=\"currentYear\"></span>\r\n\t                </div>\r\n\t                <div class=\"j-calendar__header__right\" @click=\"next\">\r\n\t                    <span>Next</span>\r\n\t                </div>\r\n\t            </div>\r\n\t            <div class=\"j-calendar__content\">\r\n\t                <div class=\"j-calendar__days\">\r\n\t                    <div class=\"j-calendar__days__item\" ac-for=\"daysOfWeekShort\">\r\n\t\t\t\t\t\t\t<span ac-value=\"index\"></span>\r\n\t\t\t\t\t\t</div>\r\n\t                </div>\r\n\t                <div class=\"j-calendar__date\">\r\n\t                    <div class=\"j-calendar__date__item\" \r\n\t                    ac-class=\"j-calendar__date__item--circle:this.today, j-calendar__date__item--active:this.selected, j-calendar__date__item--inactive: this.inactive\"\r\n\t                    ac-for=\"countOfDays\"\r\n\t                    @click=\"select(this)\">\r\n\t\t\t\t\t\t\t<span ac-value=\"index\"></span>\r\n\t                    </div>\r\n\t                </div>\r\n\t            </div>\r\n\t        </div>\r\n\t    </div>\r\n\t</div>\r\n</div>\r\n";
 
 /***/ }),
 /* 51 */
@@ -4028,7 +4010,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	                } else {
 	                    if (_this3.root.style.display !== 'none') {
 	                        _this3.root.style.display = 'none';
-	                        _this3.props.clear();
+	                        // this.props.clear();
+	                        _this3.props.set(r);
 	                        _this3.onClose();
 	                    }
 	                }
@@ -4536,7 +4519,7 @@ return /******/ (function(modules) { // webpackBootstrap
 /* 54 */
 /***/ (function(module, exports) {
 
-	"use strict";
+	'use strict';
 
 	Object.defineProperty(exports, "__esModule", {
 	    value: true
@@ -4552,41 +4535,66 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	        this.valid = true;
 	        this.dirty = false;
-	        this.validators = params.validators;
-	        this.value = null;
-
-	        if (params.value) {
-	            this.setValue(params.value);
-	        } else {
-	            this.validate();
-	        }
+	        this.value = params[0] || '';
+	        this.validators = params[1];
 	    }
 
 	    _createClass(FormControl, [{
-	        key: "setValue",
+	        key: 'setElem',
+	        value: function setElem(elem) {
+	            this.elem = elem;
+	            this.setValue(this.value);
+	        }
+	    }, {
+	        key: 'setValue',
 	        value: function setValue(value) {
 	            this.value = value;
-	            this.dirty = true;
+	            if (this.elem) {
+	                this.elem.value = value;
+	            }
 	            this.validate();
 	        }
 	    }, {
-	        key: "validate",
+	        key: 'validate',
 	        value: function validate() {
 	            var _this = this;
 
-	            this.validators.forEach(function (validator) {
-	                _this.valid = validator(_this);
-	            });
+	            if (this.validators.length) {
+	                this.valid = this.validators.filter(function (validator) {
+	                    return validator(_this);
+	                }).length === this.validators.length;
+	            } else {
+	                this.valid = true;
+	            }
+
+	            this.toggleClass();
 	        }
 	    }, {
-	        key: "isValid",
+	        key: 'toggleClass',
+	        value: function toggleClass() {
+	            if (this.elem && this.dirty) {
+	                this.valid ? this.elem.classList.remove('ac-invalid') : this.elem.classList.add('ac-invalid');
+	            }
+	        }
+	    }, {
+	        key: 'isValid',
 	        value: function isValid() {
+	            this.validate();
 	            return this.valid;
 	        }
 	    }, {
-	        key: "markAsDirty",
+	        key: 'markAsDirty',
 	        value: function markAsDirty() {
 	            this.dirty = true;
+	        }
+	    }, {
+	        key: 'refresh',
+	        value: function refresh() {
+	            this.valid = true;
+	            this.dirty = false;
+	            if (this.elem) {
+	                this.elem.classList.remove('ac-invalid');
+	            }
 	        }
 	    }]);
 
@@ -4604,11 +4612,13 @@ return /******/ (function(modules) { // webpackBootstrap
 	        for (var control in controls) {
 	            this.controls[control] = new FormControl(controls[control]);
 	        }
+	        this._validate();
+	        this.getValues();
 	    }
 
 	    _createClass(FormGroup, [{
-	        key: "_getValues",
-	        value: function _getValues() {
+	        key: 'getValues',
+	        value: function getValues() {
 	            var result = {};
 	            for (var control in this.controls) {
 	                result[control] = this.controls[control].value;
@@ -4617,10 +4627,18 @@ return /******/ (function(modules) { // webpackBootstrap
 	            return result;
 	        }
 	    }, {
-	        key: "_validate",
+	        key: 'refresh',
+	        value: function refresh() {
+	            for (var control in this.controls) {
+	                this.controls[control].refresh();
+	            }
+	        }
+	    }, {
+	        key: '_validate',
 	        value: function _validate() {
 	            var valid = [];
 	            for (var control in this.controls) {
+	                this.controls[control].validate(); // check current state
 	                valid.push(this.controls[control].valid);
 	            }
 	            var isValid = valid.filter(function (r) {
@@ -4630,8 +4648,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	            this.valid = isValid;
 	        }
 	    }, {
-	        key: "isValid",
+	        key: 'isValid',
 	        value: function isValid() {
+	            this._validate();
 	            return this.valid;
 	        }
 	    }]);
@@ -4649,10 +4668,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	    value: true
 	});
 	var Validators = {
-	    required: function required() {
-	        return function (control) {
-	            return control.value ? true : false;
-	        };
+	    required: function required(control) {
+	        return control.value ? true : false;
 	    },
 	    regExp: function regExp(exp) {
 	        return function (control) {

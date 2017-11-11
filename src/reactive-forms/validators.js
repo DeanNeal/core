@@ -1,9 +1,7 @@
 const Validators = {
 
-    required() {
-        return (control) => {
-            return control.value ? true : false;
-        }
+    required(control) {
+        return control.value ? true : false;
     },
     regExp(exp) {
         return (control) => {
