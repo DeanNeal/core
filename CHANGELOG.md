@@ -1,3 +1,10 @@
+<a name="0.4.0"></a>
+# [0.4.0](https://github.com/DeanNeal/ace-js) (2017-11-15)
+### Features
+* **forms:** email validator #54 ([#54](https://github.com/DeanNeal/ace-js/issues/54))
+* **core:**  add $attrs params to component #53 ([#54](https://github.com/DeanNeal/ace-js/issues/54))
+* **core:**  ac-input bind as string #48 ([#48](https://github.com/DeanNeal/ace-js/issues/48))
+
 <a name="0.3.20"></a>
 # [0.3.20](https://github.com/DeanNeal/ace-js) (2017-11-08)
 ### Features
