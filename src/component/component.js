@@ -15,6 +15,8 @@ export class Component {
     static componentConstructor(root, options) {
         this.root = root; //;console.log(root);
 
+        let attrs = {};
+
         Object.defineProperty(this, 'options', {
             value: Object.assign({}, options),
             writable: false
@@ -27,7 +29,12 @@ export class Component {
 
 
         Object.defineProperty(this, '$refs', { value: {}, writable: false });
-        Object.defineProperty(this, '$attrs', { value: {}, writable: false });
+
+         for (let i = 0; i < root.attributes.length; i++) {
+             attrs[root.attributes[i].nodeName] = root.attributes[i].nodeValue
+         }
+
+        Object.defineProperty(this, '$attrs', { value: attrs, writable: false });
         Object.defineProperty(this, '$routerSub', { value: null, writable: true });
 
         this.root.COMPONENT = this;

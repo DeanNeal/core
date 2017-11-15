@@ -2,7 +2,7 @@
  * ace-js 0.3.23
  * May be freely distributed under the MIT license 
  * Author: Bogdan Zinkevich
- * Last update: 2017-11-12 00:25:56
+ * Last update: 2017-11-15 18:17:10
  * 
  */
 (function webpackUniversalModuleDefinition(root, factory) {
@@ -82,7 +82,7 @@ return /******/ (function(modules) { // webpackBootstrap
 /******/ 	}
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "a2be536ae023018bb2d9"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "10400ce6b3101fb4b5dd"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
 /******/ 	
@@ -1510,7 +1510,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	                    }
 	                    item.prev = r;
 
-	                    root.classList.add(r);
+	                    if (r) {
+	                        root.classList.add(r);
+	                    }
 	                } else {
 	                    var _params = prop.replace(/ +/g, "").split(':');
 	                    var className = _params[0];
@@ -2037,8 +2039,12 @@ return /******/ (function(modules) { // webpackBootstrap
 	            var inputParams = {};
 	            _array.forEach(function (item) {
 	                var variable = item.split(':')[0];
-	                var params = item.split(':')[1].split('.');
-	                inputParams[variable] = _this.getComponentVariable(params);
+	                var params = item.split(':')[1];
+	                if (params[0] === '@') {
+	                    inputParams[variable] = _this.getComponentVariable(params.replace(/@+/g, "").split('.'));
+	                } else {
+	                    inputParams[variable] = params;
+	                }
 	            });
 	            item.elem.COMPONENT.INPUT(inputParams);
 	        }
@@ -2592,6 +2598,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	        value: function componentConstructor(root, options) {
 	            this.root = root; //;console.log(root);
 
+	            var attrs = {};
+
 	            Object.defineProperty(this, 'options', {
 	                value: Object.assign({}, options),
 	                writable: false
@@ -2603,7 +2611,12 @@ return /******/ (function(modules) { // webpackBootstrap
 	            Object.defineProperty(this, 'type', { value: options.type, writable: false });
 
 	            Object.defineProperty(this, '$refs', { value: {}, writable: false });
-	            Object.defineProperty(this, '$attrs', { value: {}, writable: false });
+
+	            for (var i = 0; i < root.attributes.length; i++) {
+	                attrs[root.attributes[i].nodeName] = root.attributes[i].nodeValue;
+	            }
+
+	            Object.defineProperty(this, '$attrs', { value: attrs, writable: false });
 	            Object.defineProperty(this, '$routerSub', { value: null, writable: true });
 
 	            this.root.COMPONENT = this;
@@ -4670,6 +4683,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	var Validators = {
 	    required: function required(control) {
 	        return control.value ? true : false;
+	    },
+	    email: function email(control) {
+	        var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+	        return re.test(control.value);
 	    },
 	    regExp: function regExp(exp) {
 	        return function (control) {

@@ -19,7 +19,9 @@ export function _class(array, data) {
                     }
                     item.prev = r;
 
-                    root.classList.add(r)
+                    if (r) {
+                        root.classList.add(r)
+                    }
                 } else {
                     let params = prop.replace(/ +/g, "").split(':');
                     let className = params[0];
