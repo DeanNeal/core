@@ -2,7 +2,7 @@
  * ace-js 0.4.0
  * May be freely distributed under the MIT license 
  * Author: Bogdan Zinkevich
- * Last update: 2017-11-15 18:27:47
+ * Last update: 2017-11-17 00:19:18
  * 
  */
 (function webpackUniversalModuleDefinition(root, factory) {
@@ -82,7 +82,7 @@ return /******/ (function(modules) { // webpackBootstrap
 /******/ 	}
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "6dd8b53ddfa4f68cb283"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "a2707614abd0c8486b12"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
 /******/ 	
@@ -2248,6 +2248,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	    array.forEach(function (item) {
 	        var formGroup = _this.getComponentVariable(item.attr.split('.'));
+	        formGroup.setComponent(_this);
 	        item.elem.querySelectorAll('[ac-form-control]').forEach(function (control) {
 	            var attr = control.getAttribute('ac-form-control');
 	            formGroup.controls[attr].setElem(control);;
@@ -4018,14 +4019,14 @@ return /******/ (function(modules) { // webpackBootstrap
 	            this.setSubscriptions(ModalStore.modal.sub(function (r) {
 	                if (r.visible && _this3.type === r.type) {
 	                    _this3.root.style.display = 'block';
-	                    _this3.onOpen();
 	                    _this3.props.set(r);
+	                    _this3.onOpen();
 	                } else {
 	                    if (_this3.root.style.display !== 'none') {
 	                        _this3.root.style.display = 'none';
 	                        // this.props.clear();
-	                        _this3.onClose();
 	                        _this3.props.set(r);
+	                        _this3.onClose();
 	                    }
 	                }
 	            }));
@@ -4621,6 +4622,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        this.valid = false;
 	        this.controls = {};
 	        this.value = {};
+	        this.component = null;
 
 	        for (var control in controls) {
 	            this.controls[control] = new FormControl(controls[control]);
@@ -4645,6 +4647,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	            for (var control in this.controls) {
 	                this.controls[control].refresh();
 	            }
+	            if (this.component) {
+	                this.component.props._callAll();
+	            }
 	        }
 	    }, {
 	        key: '_validate',
@@ -4665,6 +4670,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	        value: function isValid() {
 	            this._validate();
 	            return this.valid;
+	        }
+	    }, {
+	        key: 'setComponent',
+	        value: function setComponent(component) {
+	            this.component = component;
 	        }
 	    }]);
 

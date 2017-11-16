@@ -2,6 +2,7 @@ import { Utils } from '../../core';
 export function _formGroup(array, data) {
     array.forEach(item => {
         let formGroup = this.getComponentVariable(item.attr.split('.'));
+        formGroup.setComponent(this);
         item.elem.querySelectorAll('[ac-form-control]').forEach(control=>{
             let attr = control.getAttribute('ac-form-control');
             formGroup.controls[attr].setElem(control);;

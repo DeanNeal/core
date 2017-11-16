@@ -48,7 +48,7 @@ export class FormControl {
         this.valid = true;
         this.dirty = false;
         if (this.elem) {
-            this.elem.classList.remove('ac-invalid') 
+            this.elem.classList.remove('ac-invalid')
         }
     }
 }
@@ -58,6 +58,7 @@ export class FormGroup {
         this.valid = false;
         this.controls = {};
         this.value = {};
+        this.component = null;
 
         for (let control in controls) {
             this.controls[control] = new FormControl(controls[control]);
@@ -79,6 +80,9 @@ export class FormGroup {
         for (let control in this.controls) {
             this.controls[control].refresh();
         }
+        if (this.component) {
+            this.component.props._callAll();
+        }
     }
 
     _validate() {
@@ -95,5 +99,9 @@ export class FormGroup {
     isValid() {
         this._validate();
         return this.valid;
+    }
+
+    setComponent(component) {
+        this.component = component;
     }
 }
