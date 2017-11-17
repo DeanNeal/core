@@ -1,20 +1,27 @@
 export class FormControl {
-    constructor(params) {
+    constructor(params, parent) {
         this.valid = true;
         this.dirty = false;
         this.value = params[0] || '';
         this.validators = params[1];
+        this.parent = parent;
     }
 
     setElem(elem) {
         this.elem = elem;
-        this.setValue(this.value);
+        this.setValue(this.value, true);
     }
 
-    setValue(value) {
+    setValue(value, silent) {
         this.value = value;
         if (this.elem) {
             this.elem.value = value;
+        }
+
+        this.parent.getValues();
+        if (!silent) {
+            this.markAsDirty();
+            this.parent.onChangeCallback();
         }
         this.validate();
     }
@@ -59,12 +66,17 @@ export class FormGroup {
         this.controls = {};
         this.value = {};
         this.component = null;
+        this.onChangeCallback = () => {};
 
         for (let control in controls) {
-            this.controls[control] = new FormControl(controls[control]);
+            this.controls[control] = new FormControl(controls[control], this);
         }
         this._validate();
         this.getValues();
+    }
+
+    onChange(callback) {
+        this.onChangeCallback = callback;
     }
 
     getValues() {
@@ -94,6 +106,13 @@ export class FormGroup {
         let isValid = valid.filter(r => r).length === Object.keys(this.controls).length;
 
         this.valid = isValid;
+    }
+
+    setValue(name, value) {
+        this.controls[name].setValue(value, true);
+        this._validate();
+        this.getValues();
+        // this.onChangeCallback();
     }
 
     isValid() {

@@ -10,15 +10,9 @@ export function _formGroup(array, data) {
 
         item.elem.addEventListener('keyup', (e) => {
             let attr = e.target.getAttribute('ac-form-control');
-
             if (attr) {
                 formGroup.controls[attr].setValue(e.target.value);
-                formGroup.controls[attr].markAsDirty();
             }
-
-            formGroup._validate();
-            formGroup.getValues();
-
             this.props._callAll();
         }, false);
 

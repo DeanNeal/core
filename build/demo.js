@@ -2,7 +2,7 @@
  * ace-js 0.4.1
  * May be freely distributed under the MIT license 
  * Author: Bogdan Zinkevich
- * Last update: 2017-11-17 00:20:57
+ * Last update: 2017-11-17 12:31:20
  * 
  */
 (function webpackUniversalModuleDefinition(root, factory) {
@@ -82,7 +82,7 @@ return /******/ (function(modules) { // webpackBootstrap
 /******/ 	}
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "620d960dbfcc2551c7e6"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "491a56bdd94f3f5bab0a"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
 /******/ 	
@@ -2256,15 +2256,9 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	        item.elem.addEventListener('keyup', function (e) {
 	            var attr = e.target.getAttribute('ac-form-control');
-
 	            if (attr) {
 	                formGroup.controls[attr].setValue(e.target.value);
-	                formGroup.controls[attr].markAsDirty();
 	            }
-
-	            formGroup._validate();
-	            formGroup.getValues();
-
 	            _this.props._callAll();
 	        }, false);
 
@@ -4544,27 +4538,34 @@ return /******/ (function(modules) { // webpackBootstrap
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 	var FormControl = exports.FormControl = function () {
-	    function FormControl(params) {
+	    function FormControl(params, parent) {
 	        _classCallCheck(this, FormControl);
 
 	        this.valid = true;
 	        this.dirty = false;
 	        this.value = params[0] || '';
 	        this.validators = params[1];
+	        this.parent = parent;
 	    }
 
 	    _createClass(FormControl, [{
 	        key: 'setElem',
 	        value: function setElem(elem) {
 	            this.elem = elem;
-	            this.setValue(this.value);
+	            this.setValue(this.value, true);
 	        }
 	    }, {
 	        key: 'setValue',
-	        value: function setValue(value) {
+	        value: function setValue(value, silent) {
 	            this.value = value;
 	            if (this.elem) {
 	                this.elem.value = value;
+	            }
+
+	            this.parent.getValues();
+	            if (!silent) {
+	                this.markAsDirty();
+	                this.parent.onChangeCallback();
 	            }
 	            this.validate();
 	        }
@@ -4623,15 +4624,21 @@ return /******/ (function(modules) { // webpackBootstrap
 	        this.controls = {};
 	        this.value = {};
 	        this.component = null;
+	        this.onChangeCallback = function () {};
 
 	        for (var control in controls) {
-	            this.controls[control] = new FormControl(controls[control]);
+	            this.controls[control] = new FormControl(controls[control], this);
 	        }
 	        this._validate();
 	        this.getValues();
 	    }
 
 	    _createClass(FormGroup, [{
+	        key: 'onChange',
+	        value: function onChange(callback) {
+	            this.onChangeCallback = callback;
+	        }
+	    }, {
 	        key: 'getValues',
 	        value: function getValues() {
 	            var result = {};
@@ -4664,6 +4671,14 @@ return /******/ (function(modules) { // webpackBootstrap
 	            }).length === Object.keys(this.controls).length;
 
 	            this.valid = isValid;
+	        }
+	    }, {
+	        key: 'setValue',
+	        value: function setValue(name, value) {
+	            this.controls[name].setValue(value, true);
+	            this._validate();
+	            this.getValues();
+	            // this.onChangeCallback();
 	        }
 	    }, {
 	        key: 'isValid',
