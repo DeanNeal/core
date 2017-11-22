@@ -10,7 +10,8 @@ const PRIVATES = {
     HOST: {
         CLASS: new WeakMap(),
         STYLE: new WeakMap(),
-        EVENTS: new WeakMap()
+        EVENTS: new WeakMap(),
+        VISIBILITY: new WeakMap()
     },
     COMPUTED: new WeakMap()
 };

@@ -1,7 +1,7 @@
 import { _style } from './style';
 import { _props } from './props';
 import { _pattern } from './pattern';
-import { _if } from './if';
+import { _if, _hostVisibility} from './if';
 import { _class } from './class';
 import { _elRef } from './elRef';
 import { _for } from './for';
@@ -24,6 +24,7 @@ const Directives = {
     _props,
     _pattern,
     _if,
+    _hostVisibility,
     _class,
     _elRef,
     _for,

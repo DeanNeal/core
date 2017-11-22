@@ -16,6 +16,7 @@ export class Component {
         this.root = root; //;console.log(root);
 
         let attrs = {};
+        this.children = {};
 
         Object.defineProperty(this, 'options', {
             value: Object.assign({}, options),
@@ -60,6 +61,11 @@ export class Component {
         PRIVATES.HOST.EVENTS.set(this, options.hostEvents);
         PRIVATES.HOST.CLASS.set(this, options.hostClasses);
         PRIVATES.HOST.STYLE.set(this, options.hostStyles);
+        PRIVATES.HOST.VISIBILITY.set(this, {
+            prop: options.visibility,
+            comment: document.createComment(this.constructor.name),
+            cached: this.root
+        });
         PRIVATES.COMPUTED.set(this, options.computed);
 
         Component.CUSTOM_DIRECTIVES.forEach((directive) => {
@@ -68,7 +74,8 @@ export class Component {
             }
             PRIVATES.CUSTOM_DIRECTIVES[directive.params.selector].set(this, []);
         });
-        
+
+
         // console.log(PRIVATES.CUSTOM_DIRECTIVES, this);
         
         // this.$interpolationArray = [];
@@ -150,6 +157,7 @@ export class Component {
             Directives._link.call(this, PRIVATES.DIRECTIVES['ac-link'].get(this));
             Directives._hostClasses.call(this, PRIVATES.HOST.CLASS.get(this));
             Directives._hostStyles.call(this, PRIVATES.HOST.STYLE.get(this));
+            // Directives._hostVisibility.call(this, PRIVATES.HOST.VISIBILITY.get(this));
             
 
             // Interpolation.interpolationRun.call(this, this.$interpolationArray);
@@ -165,7 +173,11 @@ export class Component {
             if (components.length) {
                 components.forEach(r => {
                     if (!r.COMPONENT) { // don't reinitialize
-                        new comp(r);
+                        let a = new comp(r, {}, this);
+                        if(!this.children[a.constructor.name]) {
+                            this.children[a.constructor.name] = [];
+                            this.children[a.constructor.name].push(a);
+                        }
                     }
                 });
             }
@@ -175,7 +187,11 @@ export class Component {
     compileRouter() {
         let router = this.root.querySelectorAll('route-switcher')[0];
         if (router) {
-            new RouteSwitcher(router);
+            let newComp = new RouteSwitcher(router);
+            if(!this.children[newComp.constructor.name]) {
+                this.children[newComp.constructor.name] = [];
+                this.children[newComp.constructor.name].push(newComp);
+            }
         }
     }
 
@@ -257,7 +273,10 @@ export class Component {
     destroy() {
         // remove all event listeners
         this.onDestroy();
-        this.$propsSub.unsubscribe();
+        if(this.$propsSub) {
+            this.$propsSub.unsubscribe();
+        }
+        
         Directives.removeEventListeners.call(this, PRIVATES.EVENTS.get(this));
 
         // unsubscribe from global events
@@ -273,6 +292,7 @@ export class Component {
         //unsubscribe from components subscribers
         PRIVATES.SUBSCRIPTIONS.get(this).forEach(item => item.unsubscribe());
 
+        // this.root.remove();
         this.root = null;
     }
 

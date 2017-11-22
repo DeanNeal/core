@@ -5,7 +5,7 @@ import { Directives } from '../component/Directives';
 
 export default function ComponentDecorator(decoratorParams) {
     return function decorator(Class) {
-        let func = (root, props) => {
+        let func = (root, props, parent) => {
 
             decoratorParams.props = Object.assign(decoratorParams.props || {}, props);
             let proto = Component.prototype;
@@ -15,13 +15,18 @@ export default function ComponentDecorator(decoratorParams) {
             Class.prototype = Object.setPrototypeOf(Class.prototype, proto);
             let instance = new Class();
 
-            if(decoratorParams.stores){
-                decoratorParams.stores.forEach(store=>{
+            if (decoratorParams.stores) {
+                decoratorParams.stores.forEach(store => {
                     Object.defineProperty(instance, store + 'Store', { value: Component.STORES[store] || null, writable: false });
                 })
             }
 
+
             Component.componentConstructor.call(instance, root, decoratorParams);
+            if (parent) {
+                // Object.defineProperty(instance, 'parent', { value: parent, writable: false });
+                instance.parent = parent;
+            }
             return instance;
         };
         func.selector = decoratorParams.selector;

@@ -45,12 +45,14 @@ export function _for(array, data) {
                     item.remove();
                 });
                 item.items = [];
+                this.children[item.elem.COMPONENT.constructor.name] = [];
                 for (let i = 0; i <= array.length - 1; i++) {
                     let newComp = Component.COMPONENTS.filter(r=> r.selector === compName)[0];
                     // if(newComp) {
                         let newEl = document.createElement(compName);
-                        this.root.appendChild(newEl);
-                        new newComp(newEl, Object.assign({}, array[i]));
+                        // this.root.appendChild(newEl);
+                        let a = new newComp(newEl, Object.assign({}, array[i]));
+                        this.children[item.elem.COMPONENT.constructor.name].push(a);
                     // }
 
                     // loop through the old element's attributes and give them to the new element

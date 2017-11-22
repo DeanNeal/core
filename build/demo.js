@@ -2,7 +2,7 @@
  * ace-js 0.4.2
  * May be freely distributed under the MIT license 
  * Author: Bogdan Zinkevich
- * Last update: 2017-11-17 21:03:44
+ * Last update: 2017-11-22 10:49:38
  * 
  */
 (function webpackUniversalModuleDefinition(root, factory) {
@@ -82,7 +82,7 @@ return /******/ (function(modules) { // webpackBootstrap
 /******/ 	}
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "f40350fa24a6d9a33236"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "02694776fed857c21494"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
 /******/ 	
@@ -1138,7 +1138,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	function ComponentDecorator(decoratorParams) {
 	    return function decorator(Class) {
-	        var func = function func(root, props) {
+	        var func = function func(root, props, parent) {
 
 	            decoratorParams.props = Object.assign(decoratorParams.props || {}, props);
 	            var proto = _core.Component.prototype;
@@ -1155,6 +1155,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	            }
 
 	            _core.Component.componentConstructor.call(instance, root, decoratorParams);
+	            if (parent) {
+	                // Object.defineProperty(instance, 'parent', { value: parent, writable: false });
+	                instance.parent = parent;
+	            }
 	            return instance;
 	        };
 	        func.selector = decoratorParams.selector;
@@ -1241,6 +1245,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    _props: _props2._props,
 	    _pattern: _pattern2._pattern,
 	    _if: _if2._if,
+	    _hostVisibility: _if2._hostVisibility,
 	    _class: _class2._class,
 	    _elRef: _elRef2._elRef,
 	    _for: _for2._for,
@@ -1403,6 +1408,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    value: true
 	});
 	exports._if = _if;
+	exports._hostVisibility = _hostVisibility;
 
 	var _core = __webpack_require__(6);
 
@@ -1421,7 +1427,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	                        _core.Component.COMPONENTS.forEach(function (comp) {
 	                            if (comp.selector === item.elem.localName) {
 	                                //console.log(item);
-	                                new comp(item.elem);
+	                                new comp(item.elem, {}, _this);
 	                            }
 	                        });
 	                    }
@@ -1475,6 +1481,24 @@ return /******/ (function(modules) { // webpackBootstrap
 	        //     item.elem.remove()
 	        // }
 	    });
+	}
+	// childNode[4].parentNode.insertBefore(childNode[4], childNode[3]);
+
+	function _hostVisibility(params) {
+	    if (params.prop) {
+	        var r = this.getComponentVariable(params.prop.split('.'));
+	        // console.log(this);
+	        if (r) {
+	            // Utils.insertAfter(params.cached, params.comment);
+	            // params.comment.remove();
+	            params.comment.replaceWith(params.cached);
+	        } else {
+	            // Utils.insertAfter(params.comment, this.root);
+	            // this.root.remove()
+	            // child.replaceWith(span);
+	            params.cached.replaceWith(params.comment);
+	        }
+	    }
 	}
 
 /***/ }),
@@ -1609,14 +1633,16 @@ return /******/ (function(modules) { // webpackBootstrap
 	                    item.remove();
 	                });
 	                item.items = [];
+	                _this.children[item.elem.COMPONENT.constructor.name] = [];
 	                for (var _i2 = 0; _i2 <= array.length - 1; _i2++) {
 	                    var newComp = _core.Component.COMPONENTS.filter(function (r) {
 	                        return r.selector === compName;
 	                    })[0];
 	                    // if(newComp) {
 	                    var newEl = document.createElement(compName);
-	                    _this.root.appendChild(newEl);
-	                    new newComp(newEl, Object.assign({}, array[_i2]));
+	                    // this.root.appendChild(newEl);
+	                    var a = new newComp(newEl, Object.assign({}, array[_i2]));
+	                    _this.children[item.elem.COMPONENT.constructor.name].push(a);
 	                    // }
 
 	                    // loop through the old element's attributes and give them to the new element
@@ -1867,7 +1893,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	    HOST: {
 	        CLASS: new WeakMap(),
 	        STYLE: new WeakMap(),
-	        EVENTS: new WeakMap()
+	        EVENTS: new WeakMap(),
+	        VISIBILITY: new WeakMap()
 	    },
 	    COMPUTED: new WeakMap()
 	}; // import { EVENTS } from './const/events';
@@ -2429,6 +2456,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	                _Directives.Directives._link.call(_this2, _private.PRIVATES.DIRECTIVES['ac-link'].get(_this2));
 	                _Directives.Directives._hostClasses.call(_this2, _private.PRIVATES.HOST.CLASS.get(_this2));
 	                _Directives.Directives._hostStyles.call(_this2, _private.PRIVATES.HOST.STYLE.get(_this2));
+	                // Directives._hostVisibility.call(this, PRIVATES.HOST.VISIBILITY.get(this));
+
 
 	                // Interpolation.interpolationRun.call(this, this.$interpolationArray);
 
@@ -2447,7 +2476,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	                    components.forEach(function (r) {
 	                        if (!r.COMPONENT) {
 	                            // don't reinitialize
-	                            new comp(r);
+	                            var a = new comp(r, {}, _this3);
+	                            if (!_this3.children[a.constructor.name]) {
+	                                _this3.children[a.constructor.name] = [];
+	                                _this3.children[a.constructor.name].push(a);
+	                            }
 	                        }
 	                    });
 	                }
@@ -2458,7 +2491,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	        value: function compileRouter() {
 	            var router = this.root.querySelectorAll('route-switcher')[0];
 	            if (router) {
-	                new _core.RouteSwitcher(router);
+	                var newComp = new _core.RouteSwitcher(router);
+	                if (!this.children[newComp.constructor.name]) {
+	                    this.children[newComp.constructor.name] = [];
+	                    this.children[newComp.constructor.name].push(newComp);
+	                }
 	            }
 	        }
 	    }, {
@@ -2556,7 +2593,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	        value: function destroy() {
 	            // remove all event listeners
 	            this.onDestroy();
-	            this.$propsSub.unsubscribe();
+	            if (this.$propsSub) {
+	                this.$propsSub.unsubscribe();
+	            }
+
 	            _Directives.Directives.removeEventListeners.call(this, _private.PRIVATES.EVENTS.get(this));
 
 	            // unsubscribe from global events
@@ -2574,6 +2614,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	                return item.unsubscribe();
 	            });
 
+	            // this.root.remove();
 	            this.root = null;
 	        }
 	    }, {
@@ -2594,6 +2635,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	            this.root = root; //;console.log(root);
 
 	            var attrs = {};
+	            this.children = {};
 
 	            Object.defineProperty(this, 'options', {
 	                value: Object.assign({}, options),
@@ -2640,6 +2682,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	            _private.PRIVATES.HOST.EVENTS.set(this, options.hostEvents);
 	            _private.PRIVATES.HOST.CLASS.set(this, options.hostClasses);
 	            _private.PRIVATES.HOST.STYLE.set(this, options.hostStyles);
+	            _private.PRIVATES.HOST.VISIBILITY.set(this, {
+	                prop: options.visibility,
+	                comment: document.createComment(this.constructor.name),
+	                cached: this.root
+	            });
 	            _private.PRIVATES.COMPUTED.set(this, options.computed);
 
 	            Component.CUSTOM_DIRECTIVES.forEach(function (directive) {
@@ -2919,6 +2966,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	        this.routes = RouteSwitcher.ROUTES;
 	        this.root = root;
+	        this.children = {};
 	        this.onCreate();
 	    }
 
@@ -2968,6 +3016,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	    }, {
 	        key: 'renderComponent',
 	        value: function renderComponent(root, route, params) {
+	            var _this2 = this;
+
 	            if (route) {
 	                var newCompObject = _core.Component.COMPONENTS.filter(function (r) {
 	                    return r.selector === route.component;
@@ -2975,7 +3025,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	                if (newCompObject) {
 	                    var newComp = document.createElement(route.component);
 	                    this.checkAccess(root, newComp, route, function () {
-	                        new newCompObject(newComp);
+	                        var a = new newCompObject(newComp, {}, _this2);
+	                        _this2.children = {};
+	                        _this2.children[a.constructor.name] = [];
+	                        _this2.children[a.constructor.name].push(a);
 	                    });
 	                } else {
 	                    this.appendEmpty(root);
@@ -3003,13 +3056,40 @@ return /******/ (function(modules) { // webpackBootstrap
 	    }, {
 	        key: 'destroyChildren',
 	        value: function destroyChildren(root) {
-	            _core.Component.COMPONENTS.forEach(function (r) {
-	                var a = root.querySelectorAll(r.selector);
-	                a.forEach(function (r) {
-	                    r.COMPONENT.destroy();
-	                });
-	            });
+	            // Component.COMPONENTS.forEach(r=>{
+	            //     let a = root.querySelectorAll(r.selector);
+	            //     a.forEach(r=>{console.log(1);
+	            //          // r.COMPONENT.destroy();
+	            //     });
+	            // });
+	            if (this.root.childNodes[0]) {
+	                this.destroyAllChildren(this.root.childNodes[0].COMPONENT.children);
+	            }
 	            root.innerHTML = null;
+	        }
+	    }, {
+	        key: 'destroyAllChildren',
+	        value: function destroyAllChildren(children) {
+	            var _this3 = this;
+
+	            // children.forEach(child => {
+	            //     if(child.length) {
+	            //         child.forEach(r=>{
+
+	            //         });
+	            //     } else {
+	            //         this.destroyAllChildren(child.children);
+	            //         child.children = [];
+	            //     }
+	            //     child.destroy();
+	            // });
+	            for (var key in children) {
+	                children[key].forEach(function (child) {
+	                    _this3.destroyAllChildren(child.children);
+	                    child.children = [];
+	                    child.destroy();
+	                });
+	            }
 	        }
 	    }, {
 	        key: 'appendEmpty',
@@ -4009,19 +4089,15 @@ return /******/ (function(modules) { // webpackBootstrap
 	        value: function onInit() {
 	            var _this3 = this;
 
-	            this.root.className = 'modal-container';
 	            this.setSubscriptions(ModalStore.modal.sub(function (r) {
 	                if (r.visible && _this3.type === r.type) {
 	                    _this3.root.style.display = 'block';
 	                    _this3.props.set(r);
 	                    _this3.onOpen();
 	                } else {
-	                    if (_this3.root.style.display !== 'none') {
-	                        _this3.root.style.display = 'none';
-	                        // this.props.clear();
-	                        _this3.props.set(r);
-	                        _this3.onClose();
-	                    }
+	                    _this3.props.set({ visible: false });
+	                    _this3.root.style.display = 'none';
+	                    _this3.onClose();
 	                }
 	            }));
 	        }

@@ -42,7 +42,6 @@ let ModalStore = new ModalsStore();
 
 class ModalComponent{
     onInit() {
-        this.root.className = 'modal-container';
         this.setSubscriptions(
             ModalStore.modal.sub(r => {
                 if (r.visible && this.type === r.type) {
@@ -50,12 +49,9 @@ class ModalComponent{
                     this.props.set(r);
                     this.onOpen();
                 } else {
-                    if(this.root.style.display !== 'none'){                    
-                        this.root.style.display = 'none';
-                        // this.props.clear();
-                        this.props.set(r);
-                        this.onClose();
-                    }
+                    this.props.set({visible: false});
+                    this.root.style.display = 'none';
+                    this.onClose();
                 }
             })
         );
