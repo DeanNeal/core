@@ -2,7 +2,7 @@
  * ace-js 0.4.3
  * May be freely distributed under the MIT license 
  * Author: Bogdan Zinkevich
- * Last update: 2017-11-22 10:52:19
+ * Last update: 2017-11-24 01:11:46
  * 
  */
 (function webpackUniversalModuleDefinition(root, factory) {
@@ -82,7 +82,7 @@ return /******/ (function(modules) { // webpackBootstrap
 /******/ 	}
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "36173886a3f76b71dc9e"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "001277c5d22ffe6ab0a1"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
 /******/ 	
@@ -2518,7 +2518,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	                rest[_key] = arguments[_key];
 	            }
 
-	            _private.PRIVATES.SUBSCRIPTIONS.set(this, rest);
+	            _private.PRIVATES.SUBSCRIPTIONS.set(this, _private.PRIVATES.SUBSCRIPTIONS.get(this).concat(rest));
 	        }
 	    }, {
 	        key: 'getComponentVariable',

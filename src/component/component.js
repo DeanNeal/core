@@ -208,7 +208,7 @@ export class Component {
     }
 
     setSubscriptions(...rest) {
-        PRIVATES.SUBSCRIPTIONS.set(this, rest);
+        PRIVATES.SUBSCRIPTIONS.set(this, PRIVATES.SUBSCRIPTIONS.get(this).concat(rest));
     }
 
     getComponentVariable(variable, data) {
