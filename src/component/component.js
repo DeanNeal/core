@@ -57,7 +57,7 @@ export class Component {
 
         PRIVATES.EVENTS.set(this, []);
         PRIVATES.SUBSCRIPTIONS.set(this, []);
-        PRIVATES.GLOBAL_EVENTS.set(this, null);
+        // PRIVATES.GLOBAL_EVENTS.set(this, null);
         PRIVATES.HOST.EVENTS.set(this, options.hostEvents);
         PRIVATES.HOST.CLASS.set(this, options.hostClasses);
         PRIVATES.HOST.STYLE.set(this, options.hostStyles);
@@ -280,9 +280,9 @@ export class Component {
         Directives.removeEventListeners.call(this, PRIVATES.EVENTS.get(this));
 
         // unsubscribe from global events
-        if (PRIVATES.GLOBAL_EVENTS.get(this)) {
-            PRIVATES.GLOBAL_EVENTS.get(this).unsubscribe();
-        }
+        // if (PRIVATES.GLOBAL_EVENTS.get(this)) {
+        //     PRIVATES.GLOBAL_EVENTS.get(this).unsubscribe();
+        // }
         //unsubscribe from router changes
         if (this.$routerSub) {
             // console.log('destroyed', this);

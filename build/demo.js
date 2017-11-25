@@ -2,7 +2,7 @@
  * ace-js 0.4.4
  * May be freely distributed under the MIT license 
  * Author: Bogdan Zinkevich
- * Last update: 2017-11-24 01:23:26
+ * Last update: 2017-11-25 12:18:30
  * 
  */
 (function webpackUniversalModuleDefinition(root, factory) {
@@ -82,7 +82,7 @@ return /******/ (function(modules) { // webpackBootstrap
 /******/ 	}
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "03969f3be071935429c9"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "4af87162fc62b9c936d0"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
 /******/ 	
@@ -956,13 +956,20 @@ return /******/ (function(modules) { // webpackBootstrap
 	    }
 
 	    _createClass(ObservableModel, [{
+	        key: 'reset',
+	        value: function reset(data) {
+	            this._data = data;
+	            this.defineProperties(data);
+	            this._callAll();
+	        }
+	    }, {
 	        key: 'set',
 	        value: function set(data, value, silent) {
 	            if ((typeof data === 'undefined' ? 'undefined' : _typeof(data)) == 'object') {
 	                var dontMerge = function dontMerge(destination, source) {
 	                    return source;
 	                };
-	                this._data = (0, _deepmerge2.default)(this._data, data, { arrayMerge: dontMerge });
+	                this._data = (0, _deepmerge2.default)(this._data, data);
 	                this.defineProperties(data);
 	            } else {
 	                this.defineProperty(data, value);
@@ -1889,7 +1896,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    CUSTOM_DIRECTIVES: {},
 	    EVENTS: new WeakMap(),
 	    SUBSCRIPTIONS: new WeakMap(),
-	    GLOBAL_EVENTS: new WeakMap(),
+	    // GLOBAL_EVENTS: new WeakMap(),
 	    HOST: {
 	        CLASS: new WeakMap(),
 	        STYLE: new WeakMap(),
@@ -2138,12 +2145,14 @@ return /******/ (function(modules) { // webpackBootstrap
 	    array.forEach(function (item) {
 	        var attr = item.attr;
 
-	        _private.PRIVATES.GLOBAL_EVENTS.set(_this, _core.GlobalEvents.onClick(function (e) {
-	            var ouside = _this.shadow ? item.elem.contains(e.path[0]) : item.elem.contains(e.target);
-	            if (!ouside) {
-	                _this[attr].call(_this, e);
+	        _this.setSubscriptions(_core.GlobalEvents.click.sub(function (res) {
+	            if (res.e) {
+	                var ouside = _this.shadow ? item.elem.contains(res.e.path[0]) : item.elem.contains(res.e.target);
+	                if (!ouside) {
+	                    _this[attr].call(_this, res.e);
+	                }
 	            }
-	        }, item));
+	        }));
 	    });
 	}
 
@@ -2600,9 +2609,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	            _Directives.Directives.removeEventListeners.call(this, _private.PRIVATES.EVENTS.get(this));
 
 	            // unsubscribe from global events
-	            if (_private.PRIVATES.GLOBAL_EVENTS.get(this)) {
-	                _private.PRIVATES.GLOBAL_EVENTS.get(this).unsubscribe();
-	            }
+	            // if (PRIVATES.GLOBAL_EVENTS.get(this)) {
+	            //     PRIVATES.GLOBAL_EVENTS.get(this).unsubscribe();
+	            // }
 	            //unsubscribe from router changes
 	            if (this.$routerSub) {
 	                // console.log('destroyed', this);
@@ -2678,7 +2687,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	            _private.PRIVATES.EVENTS.set(this, []);
 	            _private.PRIVATES.SUBSCRIPTIONS.set(this, []);
-	            _private.PRIVATES.GLOBAL_EVENTS.set(this, null);
+	            // PRIVATES.GLOBAL_EVENTS.set(this, null);
 	            _private.PRIVATES.HOST.EVENTS.set(this, options.hostEvents);
 	            _private.PRIVATES.HOST.CLASS.set(this, options.hostClasses);
 	            _private.PRIVATES.HOST.STYLE.set(this, options.hostStyles);
@@ -3306,7 +3315,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 /***/ }),
 /* 43 */
-/***/ (function(module, exports) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
 
@@ -3314,58 +3323,20 @@ return /******/ (function(modules) { // webpackBootstrap
 	    value: true
 	});
 
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	var _observable = __webpack_require__(7);
 
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-	var GlobalEvents = function () {
-	    function GlobalEvents() {
-	        var _this = this;
+	var GlobalEvents = function GlobalEvents() {
+	    var _this = this;
 
-	        _classCallCheck(this, GlobalEvents);
+	    _classCallCheck(this, GlobalEvents);
 
-	        this.lId = 0;
-	        this.clicksArray = [];
-
-	        window.addEventListener('click', function (e) {
-	            _this.clicksArray.forEach(function (r) {
-	                return r.cb.call(_this, e);
-	            });
-	        }, true);
-	    }
-
-	    _createClass(GlobalEvents, [{
-	        key: 'onClick',
-	        value: function onClick(cb, item) {
-	            var _this2 = this;
-
-	            var a = Number(this.lId++);
-	            var obj = {
-	                cb: cb,
-	                id: a,
-	                unsubscribe: function unsubscribe() {
-	                    _this2.unsubscribe(a, item);
-	                }
-	            };
-
-	            this.clicksArray.push(obj);
-	            return obj;
-	        }
-	    }, {
-	        key: 'unsubscribe',
-	        value: function unsubscribe(id, item) {
-	            // console.log(id);
-	            this.clicksArray = this.clicksArray.filter(function (r) {
-	                var res = r.id !== id;
-	                return res;
-	            });
-
-	            // console.log(this.clicksArray.length);
-	        }
-	    }]);
-
-	    return GlobalEvents;
-	}();
+	    this.click = new _observable.ObservableModel();
+	    window.addEventListener('click', function (e) {
+	        _this.click.reset({ e: e });
+	    }, true);
+	};
 
 	exports.default = new GlobalEvents();
 

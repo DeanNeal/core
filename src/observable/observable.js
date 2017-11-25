@@ -77,10 +77,16 @@ export class ObservableModel extends Observable {
         this._data = options || {};
     }
 
+    reset(data) {
+        this._data = data;
+        this.defineProperties(data);
+        this._callAll();
+    }
+
     set(data, value, silent) {
         if (typeof data == 'object') {
             const dontMerge = (destination, source) => source;
-            this._data = deepmerge(this._data, data, { arrayMerge: dontMerge });
+            this._data = deepmerge(this._data, data);
             this.defineProperties(data);
         } else {
             this.defineProperty(data, value);
