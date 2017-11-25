@@ -2,7 +2,7 @@
  * ace-js 0.4.5
  * May be freely distributed under the MIT license 
  * Author: Bogdan Zinkevich
- * Last update: 2017-11-25 12:20:03
+ * Last update: 2017-11-25 12:38:10
  * 
  */
 (function webpackUniversalModuleDefinition(root, factory) {
@@ -82,7 +82,7 @@ return /******/ (function(modules) { // webpackBootstrap
 /******/ 	}
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "975f4330a43583420d35"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "576d3c64bde807b5765f"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
 /******/ 	
@@ -830,7 +830,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	                var dontMerge = function dontMerge(destination, source) {
 	                    return source;
 	                };
-	                this._data = (0, _deepmerge2.default)(this._data, data);
+	                this._data = (0, _deepmerge2.default)(this._data, data, { arrayMerge: dontMerge });
 	                this.defineProperties(data);
 	            } else {
 	                this.defineProperty(data, value);

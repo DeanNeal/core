@@ -86,7 +86,7 @@ export class ObservableModel extends Observable {
     set(data, value, silent) {
         if (typeof data == 'object') {
             const dontMerge = (destination, source) => source;
-            this._data = deepmerge(this._data, data);
+            this._data = deepmerge(this._data, data,  { arrayMerge: dontMerge });
             this.defineProperties(data);
         } else {
             this.defineProperty(data, value);
