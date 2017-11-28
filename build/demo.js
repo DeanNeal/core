@@ -2,7 +2,7 @@
  * ace-js 0.4.7
  * May be freely distributed under the MIT license 
  * Author: Bogdan Zinkevich
- * Last update: 2017-11-28 18:56:28
+ * Last update: 2017-11-28 22:13:59
  * 
  */
 (function webpackUniversalModuleDefinition(root, factory) {
@@ -82,7 +82,7 @@ return /******/ (function(modules) { // webpackBootstrap
 /******/ 	}
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "1c7d825c653aa9aebc2a"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "df7c79011a566f2714e7"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
 /******/ 	
@@ -4580,6 +4580,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        this.valid = true;
 	        this.dirty = false;
 	        this.value = params[0] || '';
+	        this.initValue = params[0] || '';
 	        this.validators = params[1];
 	        this.parent = parent;
 	    }
@@ -4623,8 +4624,12 @@ return /******/ (function(modules) { // webpackBootstrap
 	    }, {
 	        key: 'toggleClass',
 	        value: function toggleClass() {
-	            if (this.elem && this.dirty) {
-	                this.valid ? this.elem.classList.remove('ac-invalid') : this.elem.classList.add('ac-invalid');
+	            if (this.elem) {
+	                if (this.dirty) {
+	                    this.valid ? this.elem.classList.remove('ac-invalid') : this.elem.classList.add('ac-invalid');
+	                } else {
+	                    this.elem.classList.remove('ac-invalid');
+	                }
 	            }
 	        }
 	    }, {
@@ -4639,13 +4644,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	            this.dirty = true;
 	        }
 	    }, {
-	        key: 'refresh',
-	        value: function refresh() {
+	        key: 'reset',
+	        value: function reset() {
 	            this.valid = true;
 	            this.dirty = false;
-	            if (this.elem) {
-	                this.elem.classList.remove('ac-invalid');
-	            }
+	            this.setValue(this.initValue, true);
 	        }
 	    }]);
 
@@ -4685,10 +4688,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	            return result;
 	        }
 	    }, {
-	        key: 'refresh',
-	        value: function refresh() {
+	        key: 'reset',
+	        value: function reset() {
 	            for (var control in this.controls) {
-	                this.controls[control].refresh();
+	                this.controls[control].reset();
 	            }
 	            if (this.component) {
 	                this.component.props._callAll();

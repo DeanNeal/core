@@ -3,6 +3,7 @@ export class FormControl {
         this.valid = true;
         this.dirty = false;
         this.value = params[0] || '';
+        this.initValue = params[0] || '';
         this.validators = params[1];
         this.parent = parent;
     }
@@ -37,8 +38,12 @@ export class FormControl {
     }
 
     toggleClass() {
-        if (this.elem && this.dirty) {
-            this.valid ? this.elem.classList.remove('ac-invalid') : this.elem.classList.add('ac-invalid');
+        if(this.elem) {
+            if (this.dirty) {
+                this.valid ? this.elem.classList.remove('ac-invalid') : this.elem.classList.add('ac-invalid');
+            } else {
+                this.elem.classList.remove('ac-invalid');
+            }
         }
     }
 
@@ -51,12 +56,10 @@ export class FormControl {
         this.dirty = true;
     }
 
-    refresh() {
+    reset() {
         this.valid = true;
         this.dirty = false;
-        if (this.elem) {
-            this.elem.classList.remove('ac-invalid')
-        }
+        this.setValue(this.initValue, true);
     }
 }
 
@@ -88,9 +91,9 @@ export class FormGroup {
         return result;
     }
 
-    refresh() {
+    reset() {
         for (let control in this.controls) {
-            this.controls[control].refresh();
+            this.controls[control].reset();
         }
         if (this.component) {
             this.component.props._callAll();
