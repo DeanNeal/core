@@ -2,7 +2,7 @@
  * ace-js 0.4.8
  * May be freely distributed under the MIT license 
  * Author: Bogdan Zinkevich
- * Last update: 2017-11-28 22:18:31
+ * Last update: 2017-11-28 23:22:45
  * 
  */
 (function webpackUniversalModuleDefinition(root, factory) {
@@ -82,7 +82,7 @@ return /******/ (function(modules) { // webpackBootstrap
 /******/ 	}
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "6eb96fa6b4abcfe4e893"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "abb9ed769d6366f0ec22"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
 /******/ 	
@@ -2262,6 +2262,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    array.forEach(function (item) {
 	        var formGroup = _this.getComponentVariable(item.attr.split('.'));
 	        formGroup.setComponent(_this);
+	        item.elem.setAttribute('novalidate', 'novalidate');
 	        item.elem.querySelectorAll('[ac-form-control]').forEach(function (control) {
 	            var attr = control.getAttribute('ac-form-control');
 	            formGroup.controls[attr].setElem(control);;
