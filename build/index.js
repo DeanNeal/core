@@ -1,8 +1,8 @@
 /*!
- * ace-js 0.4.8
+ * ace-js 0.4.9
  * May be freely distributed under the MIT license 
  * Author: Bogdan Zinkevich
- * Last update: 2017-11-28 23:23:48
+ * Last update: 2017-11-28 23:27:25
  * 
  */
 (function webpackUniversalModuleDefinition(root, factory) {
@@ -82,7 +82,7 @@ return /******/ (function(modules) { // webpackBootstrap
 /******/ 	}
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "abb9ed769d6366f0ec22"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "e1d18341c512d19f1dc2"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
 /******/ 	
@@ -2751,7 +2751,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    var rootEl = document.querySelectorAll(options.root.selector)[0];
 	    if (rootEl) {
 	        var rootComponent = new options.root.c(rootEl);
-	        rootComponent.root.setAttribute('ac-version', ("0.4.8"));
+	        rootComponent.root.setAttribute('ac-version', ("0.4.9"));
 	    } else {
 	        console.warn('There is no root component');
 	    }
