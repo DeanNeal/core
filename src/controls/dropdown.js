@@ -8,7 +8,14 @@ export class DropdownComponent{
     }
 
     outside() {
-        this.close();
+        if(this.props.get('_show')) {         
+            this.onClose();
+            this.close();
+        }
+    }
+
+    onClose() {
+
     }
 
     close() {

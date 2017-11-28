@@ -279,10 +279,6 @@ export class Component {
         
         Directives.removeEventListeners.call(this, PRIVATES.EVENTS.get(this));
 
-        // unsubscribe from global events
-        // if (PRIVATES.GLOBAL_EVENTS.get(this)) {
-        //     PRIVATES.GLOBAL_EVENTS.get(this).unsubscribe();
-        // }
         //unsubscribe from router changes
         if (this.$routerSub) {
             // console.log('destroyed', this);

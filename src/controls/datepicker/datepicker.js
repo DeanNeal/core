@@ -123,7 +123,7 @@ export class DatepickerComponent {
             //     day.selected = true;
             // }
 
-            if (minDate && day.date.setHours(0, 0, 0, 0) <= minDate.setHours(0, 0, 0, 0)) {
+            if (minDate && day.date.setHours(0, 0, 0, 0) < minDate.setHours(0, 0, 0, 0)) {
                 day.inactive = true;
             }
             if (maxDate && day.date.setHours(0, 0, 0, 0) >= maxDate.setHours(0, 0, 0, 0)) {

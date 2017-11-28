@@ -2,7 +2,7 @@
  * ace-js 0.4.5
  * May be freely distributed under the MIT license 
  * Author: Bogdan Zinkevich
- * Last update: 2017-11-25 12:38:10
+ * Last update: 2017-11-28 14:31:52
  * 
  */
 (function webpackUniversalModuleDefinition(root, factory) {
@@ -82,7 +82,7 @@ return /******/ (function(modules) { // webpackBootstrap
 /******/ 	}
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "576d3c64bde807b5765f"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "e7ff37965d103bb42734"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
 /******/ 	
@@ -2608,10 +2608,6 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	            _Directives.Directives.removeEventListeners.call(this, _private.PRIVATES.EVENTS.get(this));
 
-	            // unsubscribe from global events
-	            // if (PRIVATES.GLOBAL_EVENTS.get(this)) {
-	            //     PRIVATES.GLOBAL_EVENTS.get(this).unsubscribe();
-	            // }
 	            //unsubscribe from router changes
 	            if (this.$routerSub) {
 	                // console.log('destroyed', this);
@@ -3896,7 +3892,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	                //     day.selected = true;
 	                // }
 
-	                if (minDate && day.date.setHours(0, 0, 0, 0) <= minDate.setHours(0, 0, 0, 0)) {
+	                if (minDate && day.date.setHours(0, 0, 0, 0) < minDate.setHours(0, 0, 0, 0)) {
 	                    day.inactive = true;
 	                }
 	                if (maxDate && day.date.setHours(0, 0, 0, 0) >= maxDate.setHours(0, 0, 0, 0)) {
@@ -3951,8 +3947,14 @@ return /******/ (function(modules) { // webpackBootstrap
 	    }, {
 	        key: 'outside',
 	        value: function outside() {
-	            this.close();
+	            if (this.props.get('_show')) {
+	                this.onClose();
+	                this.close();
+	            }
 	        }
+	    }, {
+	        key: 'onClose',
+	        value: function onClose() {}
 	    }, {
 	        key: 'close',
 	        value: function close() {
@@ -3971,7 +3973,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	"use strict";
 
-	module.exports = "<div ac-outside=\"outside\" class=\"relative\">\r\n\t<div  style=\"width: 100%\" class=\"app-form__label__input\">\r\n\t\t<input type=\"text\" @click=\"openMenu\" class=\"app-form__label__input full-width\" placeholder=\"\"  readonly required ac-value=\"formattedDate\">\r\n\t\t<div class=\"app-form__border\"></div>\r\n\t\t<!-- <img class=\"datepicker-icon\" src=\"../../assets/img/hanging-calendar.svg\" alt=\"\"> -->\r\n\t</div>\r\n\r\n\t<div class=\"j-calendar\" ac-if=\"this._show\" >\r\n\t    <div class=\"j-calendar__wrap\">\r\n\t        <div class=\"j-calendar__item\">\r\n\t            <div class=\"j-calendar__header\">\r\n\t                <div class=\"j-calendar__header__left\" @click=\"prev\">\r\n\t                    <span>prev</span>\r\n\t                </div>\r\n\t                <div class=\"j-calendar__header__center\">\r\n\t\t                <span ac-value=\"currentMonth\"></span>\r\n\t\t                <span style=\"margin-left: 7px;\" ac-value=\"currentYear\"></span>\r\n\t                </div>\r\n\t                <div class=\"j-calendar__header__right\" @click=\"next\">\r\n\t                    <span>Next</span>\r\n\t                </div>\r\n\t            </div>\r\n\t            <div class=\"j-calendar__content\">\r\n\t                <div class=\"j-calendar__days\">\r\n\t                    <div class=\"j-calendar__days__item\" ac-for=\"daysOfWeekShort\">\r\n\t\t\t\t\t\t\t<span ac-value=\"index\"></span>\r\n\t\t\t\t\t\t</div>\r\n\t                </div>\r\n\t                <div class=\"j-calendar__date\">\r\n\t                    <div class=\"j-calendar__date__item\" \r\n\t                    ac-class=\"j-calendar__date__item--circle:this.today, j-calendar__date__item--active:this.selected, j-calendar__date__item--inactive: this.inactive\"\r\n\t                    ac-for=\"countOfDays\"\r\n\t                    @click=\"select(this)\">\r\n\t\t\t\t\t\t\t<span ac-value=\"index\"></span>\r\n\t                    </div>\r\n\t                </div>\r\n\t            </div>\r\n\t        </div>\r\n\t    </div>\r\n\t</div>\r\n</div>\r\n";
+	module.exports = "<div ac-outside=\"outside\" class=\"relative\">\r\n\t<div  style=\"width: 100%\" class=\"app-form__label__input\">\r\n\t\t<div>\r\n\t\t\t<div>\r\n\t\t\t\t<div>\r\n\t\t\t\t\t<input type=\"text\" @click=\"openMenu\" class=\"app-form__label__input full-width\" readonly ac-value=\"formattedDate\">\r\n\t\t\t\t</div>\r\n\t\t\t</div>\r\n\t\t</div>\r\n\t\t\r\n\t\t<div class=\"app-form__border\"></div>\r\n\t\t<!-- <img class=\"datepicker-icon\" src=\"../../assets/img/hanging-calendar.svg\" alt=\"\"> -->\r\n\t</div>\r\n\r\n\t<div class=\"j-calendar\" ac-if=\"this._show\" >\r\n\t    <div class=\"j-calendar__wrap\">\r\n\t        <div class=\"j-calendar__item\">\r\n\t            <div class=\"j-calendar__header\">\r\n\t                <div class=\"j-calendar__header__left\" @click=\"prev\">\r\n\t                    <span>prev</span>\r\n\t                </div>\r\n\t                <div class=\"j-calendar__header__center\">\r\n\t\t                <span ac-value=\"currentMonth\"></span>\r\n\t\t                <span style=\"margin-left: 7px;\" ac-value=\"currentYear\"></span>\r\n\t                </div>\r\n\t                <div class=\"j-calendar__header__right\" @click=\"next\">\r\n\t                    <span>Next</span>\r\n\t                </div>\r\n\t            </div>\r\n\t            <div class=\"j-calendar__content\">\r\n\t                <div class=\"j-calendar__days\">\r\n\t                    <div class=\"j-calendar__days__item\" ac-for=\"daysOfWeekShort\">\r\n\t\t\t\t\t\t\t<span ac-value=\"index\"></span>\r\n\t\t\t\t\t\t</div>\r\n\t                </div>\r\n\t                <div class=\"j-calendar__date\">\r\n\t                    <div class=\"j-calendar__date__item\" \r\n\t                    ac-class=\"j-calendar__date__item--today:this.today, j-calendar__date__item--active:this.selected, j-calendar__date__item--inactive: this.inactive\"\r\n\t                    ac-for=\"countOfDays\"\r\n\t                    @click=\"select(this)\" ac-value=\"index\">\r\n\t\t\t\t\t\t\t<!-- <span ac-value=\"index\"></span> -->\r\n\t                    </div>\r\n\t                </div>\r\n\t            </div>\r\n\t        </div>\r\n\t    </div>\r\n\t</div>\r\n</div>\r\n";
 
 /***/ }),
 /* 51 */
