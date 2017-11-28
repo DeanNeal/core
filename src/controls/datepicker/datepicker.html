@@ -1,13 +1,6 @@
 <div ac-outside="outside" class="relative">
 	<div  style="width: 100%" class="app-form__label__input">
-		<div>
-			<div>
-				<div>
-					<input type="text" @click="openMenu" class="app-form__label__input full-width" readonly ac-value="formattedDate">
-				</div>
-			</div>
-		</div>
-		
+		<input type="text" @click="openMenu" class="app-form__label__input full-width" readonly ac-value="formattedDate">
 		<div class="app-form__border"></div>
 		<!-- <img class="datepicker-icon" src="../../assets/img/hanging-calendar.svg" alt=""> -->
 	</div>
@@ -37,9 +30,7 @@
 	                    <div class="j-calendar__date__item" 
 	                    ac-class="j-calendar__date__item--today:this.today, j-calendar__date__item--active:this.selected, j-calendar__date__item--inactive: this.inactive"
 	                    ac-for="countOfDays"
-	                    @click="select(this)" ac-value="index">
-							<!-- <span ac-value="index"></span> -->
-	                    </div>
+	                    @click="select(this)" ac-value="index"></div>
 	                </div>
 	            </div>
 	        </div>

@@ -121,7 +121,7 @@ export class Component {
         Directives._elRef.call(this, PRIVATES.DIRECTIVES['ac-ref'].get(this));
         Directives._events.call(this, PRIVATES.EVENTS.get(this));
         Directives._hostEvents.call(this, PRIVATES.HOST.EVENTS.get(this));
-        Directives._formValidation.call(this, PRIVATES.DIRECTIVES['ac-form-validation'].get(this));
+        // Directives._formValidation.call(this, PRIVATES.DIRECTIVES['ac-form-validation'].get(this));
 
         Directives._formGroup.call(this, PRIVATES.DIRECTIVES['ac-form-group'].get(this));
 

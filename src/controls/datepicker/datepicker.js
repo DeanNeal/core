@@ -47,6 +47,11 @@ export class DatepickerComponent {
         this.update();
     }
 
+    onOpen() {
+        this.currentDate = new Date(this.props.get('model'));
+        this.update();
+    }
+
     update() {
         this.props.set({
             currentMonth: this.getCurrentMonth(),
