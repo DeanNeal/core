@@ -187,7 +187,7 @@ export class Component {
     compileRouter() {
         let router = this.root.querySelectorAll('route-switcher')[0];
         if (router) {
-            let newComp = new RouteSwitcher(router);
+            let newComp = new RouteSwitcher(router, this);
             if(!this.children[newComp.constructor.name]) {
                 this.children[newComp.constructor.name] = [];
                 this.children[newComp.constructor.name].push(newComp);

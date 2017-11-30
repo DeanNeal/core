@@ -1,9 +1,11 @@
 import { DatepickerComponent } from './datepicker/datepicker';
 import { DropdownComponent } from './dropdown';
 import { ModalComponent, ModalStore } from './modal';
-export { 
+import { AceTreeComponent } from './tree/tree.component';
+export {
     DatepickerComponent,
     DropdownComponent,
     ModalComponent,
-    ModalStore
+    ModalStore,
+    AceTreeComponent
 }

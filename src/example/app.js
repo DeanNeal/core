@@ -1,7 +1,7 @@
 import Styles from './styles/main.scss';
 import { Register } from '../core';
 import {DatepickerComponent} from '../controls';
-
+import { AceTreeComponent } from '../controls';
 import { HomeComponent } from './components/home/home.component';
 import { RootComponent } from './components/root/root.component';
 import { HeaderComponent } from './components/header/header.component';
@@ -29,7 +29,9 @@ Register({
        PluginsComponent,
        ControlsComponent,
        NotFoundComponent,
-       DatepickerComponent
+       DatepickerComponent,
+
+       AceTreeComponent
     ],
     directives: [
         UpperCaseDirective

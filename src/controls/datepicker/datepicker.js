@@ -23,12 +23,12 @@ export class DatepickerComponent {
     }
 
     INPUT(params) {
-        if (params.date) {
+        if (params.model) {
             this.props.set({
-                model: new Date(params.date),
-                formattedDate: Utils.getDateByFormat(params.date, 'yyyy-mm-dd')
+                model: new Date(params.model),
+                formattedDate: Utils.getDateByFormat(params.model, 'yyyy-mm-dd')
             });
-            this.currentDate = new Date(params.date); // init view
+            this.currentDate = new Date(params.model); // init view
         }
 
         if (params.maxDate) {

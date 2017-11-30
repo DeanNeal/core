@@ -1,4 +1,4 @@
-import {Component, Plugins, Decorators} from '../../../core';
+import { Component, Plugins, Decorators } from '../../../core';
 import Tpl from './controls.component.html';
 
 @Decorators.ComponentDecorator({
@@ -11,10 +11,11 @@ export class ControlsComponent {
     }
 
     onInit() {
-        this.props.set({controls: [{
-            name: 'Datepicker',
-            route: 'controls/datepicker'
-        }],
+        this.props.set({
+            controls: [{
+                name: 'Datepicker',
+                route: 'controls/datepicker'
+            }],
 
             date: new Date()
         });

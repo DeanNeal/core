@@ -50,6 +50,7 @@ export function Register(options) {
     if(rootEl){ 
         let rootComponent = new options.root.c(rootEl);
         rootComponent.root.setAttribute('ac-version', VERSION);
+        Component.root = rootComponent;
     } else {
         console.warn('There is no root component');
     }

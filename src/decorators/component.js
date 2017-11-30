@@ -27,6 +27,7 @@ export default function ComponentDecorator(decoratorParams) {
                 // Object.defineProperty(instance, 'parent', { value: parent, writable: false });
                 instance.parent = parent;
             }
+            instance.constructorName = instance.constructor.name;
             return instance;
         };
         func.selector = decoratorParams.selector;

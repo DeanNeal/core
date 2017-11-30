@@ -1,103 +1,101 @@
-/* j-calendar
-------------------------------------------------------------------- */
-.j-calendar {
-    // .var () { @root: ~'.j-calendar'; }.var;
-    display: inline-flex;
-    flex-direction: column;
-    flex-wrap: wrap;
-    background: #fff;
-    border-bottom-left-radius: 5px;
-    border-bottom-right-radius: 5px;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.4);
-    overflow: hidden;
-    left: 0;
-    top: 100%;
-    position: absolute;
-    z-index: 1;
-    font-weight: normal;
-    &__wrap {
-        display: flex;
-    }
-
-    &__item + &__item {
-
-        .j-calendar__content {
-            border-left: 1px solid #d9d9d9;
-        }
-
-        .j-calendar__header {
-            border-left:  1px solid #d9d9d9;
-        }
-    }
-
-    &__header {
-        width: 285px;
-        height: 50px;
-        display: flex;
-        align-items: stretch;
-        justify-content: space-between;
-        font-size: 15px;
-        color: #fff;
-        background: $c-blue;;
-
-        &__center, &__left, &__right {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        &__left, &__right {
-            width: 50px;
-            cursor: pointer;
-            // .transition();
-
-            &:hover {
-                background: darken( $c-blue, 6%);
-            }
-        }
-      &__empty{
-        width:50px;
-      }
-    }
-
-    &__content {
-        width: 285px;
-        padding: 10px;
-    }
-
-    &__days {
-        display: flex;
-
-        &__item {
-            width: 14.285%;
-            font-size: 13px;
-            cursor: default;
-            text-align: center;
-
-            &--output {
-                color: $c-blue;;
-            }
-        }
-    }
-
-    &__date {
-        display: flex;
+    .j-calendar {
+        // .var () { @root: ~'.j-calendar'; }.var;
+        display: inline-flex;
+        flex-direction: column;
         flex-wrap: wrap;
-        padding-top: 5px;
-
-        &__item {
+        background: #fff;
+        border-bottom-left-radius: 5px;
+        border-bottom-right-radius: 5px;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.4);
+        overflow: hidden;
+        left: 0;
+        top: 100%;
+        position: absolute;
+        z-index: 1;
+        font-weight: normal;
+        &__wrap {
             display: flex;
-            align-items: center;
-            justify-content: center;
-            height: 30px;
-            width: 14.285%;
-            font-size: 13px;
-            position: relative;
-            &.empty{
-                opacity: 0;
-                cursor: default!important;
+        }
+
+        &__item + &__item {
+
+            .j-calendar__content {
+                border-left: 1px solid #d9d9d9;
             }
-            &:before {
+
+            .j-calendar__header {
+                border-left:  1px solid #d9d9d9;
+            }
+        }
+
+        &__header {
+            width: 285px;
+            height: 50px;
+            display: flex;
+            align-items: stretch;
+            justify-content: space-between;
+            font-size: 15px;
+            color: #fff;
+            background: $c-blue;;
+
+            &__center, &__left, &__right {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
+
+            &__left, &__right {
+                width: 50px;
+                cursor: pointer;
+                // .transition();
+
+                &:hover {
+                    background: darken( $c-blue, 6%);
+                }
+            }
+            &__empty{
+                width:50px;
+            }
+        }
+
+        &__content {
+            width: 285px;
+            padding: 10px;
+        }
+
+        &__days {
+            display: flex;
+
+            &__item {
+                width: 14.285%;
+                font-size: 13px;
+                cursor: default;
+                text-align: center;
+
+                &--output {
+                    color: $c-blue;
+                }
+            }
+        }
+
+        &__date {
+            display: flex;
+            flex-wrap: wrap;
+            padding-top: 5px;
+
+            &__item {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                height: 30px;
+                width: 14.285%;
+                font-size: 13px;
+                position: relative;
+                &.empty{
+                    opacity: 0;
+                    cursor: default!important;
+                }
+                &:before {
 
                     content: '';
                     width: 26px;
@@ -109,52 +107,51 @@
                     margin: auto;
                     position: absolute;
                     border-radius: 100%;
-                
-            }
-
-            &--active {
-                color: #fff;
-                cursor: pointer;
-
-                &:before {
-                     background:  $c-blue;;
+                    z-index: -1;
                 }
-            }
 
-            &--circle {
-                cursor: pointer;
-
-                &:before {
-                    border: 1px solid $c-blue;;
+                &:hover{
+                    color: $c-blue;
+                    cursor: pointer;
                 }
-            }
 
-            &--inactive {
-                cursor: default!important;
-                color: #b7b7b7;
-            }
+                &--active {
+                    color: #fff!important;
+                    cursor: pointer;
 
-            &--empty {
-                cursor: default;
-            }
-
-            &:not(&--empty):not(&--active):not(&--circle):hover {
-                color: $c-blue;;
-                cursor: pointer;
-
-                &:before {
-                 background: #ebecee;
+                    &:before {
+                        background:  $c-blue;
+                    }
+                    &:hover:before {
+                        background: $c-blue!important;
+                    }
                 }
-            }
 
-            span {
-                position: relative;
+                &--today {
+                    cursor: pointer;
+                    &:before {
+                        border: 1px solid $c-blue;
+                    }
+                }
+
+                &--inactive {
+                    cursor: default!important;
+                    color: #b7b7b7!important;
+                    &:hover:before {
+                        background: none!important;
+                    }
+                }
+
+                &--empty {
+                    cursor: default;
+                }
+
+
             }
         }
-    }
 
-    &__bottom {
-        margin: 15px 0;
-        text-align: center;
+        &__bottom {
+            margin: 15px 0;
+            text-align: center;
+        }
     }
-}
