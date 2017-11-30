@@ -12,8 +12,8 @@ import Tpl from './doc-forms.component.html';
 
         },
         form: new FormGroup({
-            name: ['', [Validators.regExp('^[0-9a-zA-Z- ]+$')]],
-            number: ['', [Validators.regExp('^[0-9a-zA-Z- ]+$')]]
+            name: ['', [Validators.required, Validators.regExp('^[0-9a-zA-Z- ]+$')]],
+            number: ['', [Validators.required, Validators.regExp('^[0-9a-zA-Z- ]+$')]]
         })
 
     }

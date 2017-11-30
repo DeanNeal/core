@@ -56,12 +56,15 @@
     <div class="input">
         <input type="text" ac-form-control="name">
         <div class="input-border"></div>
-        <!-- <span class="invalid-message" ac-if="!this.form.controls.name.valid && this.form.controls.name.dirty">Invalid value</span> -->
+        <span class="invalid-message" ac-if="this.form.controls.name.errors.regExp && this.form.controls.name.dirty">Invalid value</span>
+        <span class="invalid-message" ac-if="this.form.controls.name.errors.required && this.form.controls.name.dirty">Empty</span>
     </div>
 
     <div class="input">
         <input type="text" ac-form-control="number">
         <div class="input-border" ></div>
+        <span class="invalid-message" ac-if="this.form.controls.number.errors.regExp && this.form.controls.number.dirty">Invalid value</span>
+        <span class="invalid-message" ac-if="this.form.controls.number.errors.required && this.form.controls.number.dirty">Empty</span>
     </div>
 
     <div class="input">
@@ -71,9 +74,15 @@
     <button>Submit</button>
 </form>
 
-<br>
-<br>
-<br>
+
+<style>
+    .invalid-message{
+        position: absolute;
+        top: -14px;
+        font-size: 12px;
+        color: red;
+    }
+</style>
 <br>
 <br>
 <app-tree-debug></app-tree-debug>
