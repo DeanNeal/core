@@ -1,8 +1,8 @@
 /*!
- * ace-js 0.4.11
+ * ace-js 0.4.12
  * May be freely distributed under the MIT license 
  * Author: Bogdan Zinkevich
- * Last update: 2017-11-30 11:46:02
+ * Last update: 2017-11-30 15:22:20
  * 
  */
 (function webpackUniversalModuleDefinition(root, factory) {
@@ -82,7 +82,7 @@ return /******/ (function(modules) { // webpackBootstrap
 /******/ 	}
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "964dab207f3b6840c47a"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "8e2175108b2226aaf2c8"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
 /******/ 	
@@ -1133,12 +1133,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	    _hostEvents: _host._hostEvents,
 	    _hostClasses: _host._hostClasses,
 	    _hostStyles: _host._hostStyles,
-	    // _formValidation,
 	    _formGroup: _formGroup2._formGroup,
 	    _customDirective: _customDirective2._customDirective,
 	    _computed: _computed2._computed
 	};
-	// import {_formValidation} from './form-validation';
+
 	exports.Directives = Directives;
 
 /***/ }),
@@ -2752,7 +2751,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    var rootEl = document.querySelectorAll(options.root.selector)[0];
 	    if (rootEl) {
 	        var rootComponent = new options.root.c(rootEl);
-	        rootComponent.root.setAttribute('ac-version', ("0.4.11"));
+	        rootComponent.root.setAttribute('ac-version', ("0.4.12"));
 	        _component.Component.root = rootComponent;
 	    } else {
 	        console.warn('There is no root component');
@@ -4579,6 +4578,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        this.initValue = params[0] || '';
 	        this.validators = params[1];
 	        this.parent = parent;
+	        this.errors = {};
 	    }
 
 	    _createClass(FormControl, [{
@@ -4600,7 +4600,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	                this.markAsDirty();
 	                this.parent.onChangeCallback();
 	            }
-	            this.validate();
+	            // this.validate();
+	            this.parent._validate();
 	        }
 	    }, {
 	        key: 'validate',
@@ -4608,9 +4609,15 @@ return /******/ (function(modules) { // webpackBootstrap
 	            var _this = this;
 
 	            if (this.validators.length) {
-	                this.valid = this.validators.filter(function (validator) {
-	                    return validator(_this);
-	                }).length === this.validators.length;
+	                // this.valid = this.validators.filter(validator => validator(this)[1]).length === this.validators.length;
+	                this.errors = {};
+	                this.validators.forEach(function (v) {
+	                    var validator = v(_this);
+	                    if (!validator[1] && Object.keys(_this.errors).length === 0) {
+	                        _this.errors[validator[0]] = true;
+	                    }
+	                });
+	                this.valid = Object.keys(this.errors).length === 0;
 	            } else {
 	                this.valid = true;
 	            }
@@ -4701,11 +4708,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	                this.controls[control].validate(); // check current state
 	                valid.push(this.controls[control].valid);
 	            }
-	            var isValid = valid.filter(function (r) {
+
+	            this.valid = valid.filter(function (r) {
 	                return r;
 	            }).length === Object.keys(this.controls).length;
-
-	            this.valid = isValid;
 	        }
 	    }, {
 	        key: 'setValue',
@@ -4735,23 +4741,26 @@ return /******/ (function(modules) { // webpackBootstrap
 /* 56 */
 /***/ (function(module, exports) {
 
-	"use strict";
+	'use strict';
 
 	Object.defineProperty(exports, "__esModule", {
 	    value: true
 	});
 	var Validators = {
 	    required: function required(control) {
-	        return control.value ? true : false;
+	        return ['required', control.value ? true : false];
 	    },
 	    email: function email(control) {
-	        var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-	        return re.test(control.value);
+	        var exp = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+	        return function (control) {
+	            var regexp = new RegExp(exp);
+	            return ['email', regexp.test(control.value)];
+	        };
 	    },
 	    regExp: function regExp(exp) {
 	        return function (control) {
 	            var regexp = new RegExp(exp);
-	            return regexp.test(control.value);
+	            return ['regExp', regexp.test(control.value)];
 	        };
 	    }
 	};
