@@ -2,7 +2,7 @@
  * ace-js 0.4.12
  * May be freely distributed under the MIT license 
  * Author: Bogdan Zinkevich
- * Last update: 2017-11-30 15:22:20
+ * Last update: 2017-12-1 01:42:56
  * 
  */
 (function webpackUniversalModuleDefinition(root, factory) {
@@ -82,7 +82,7 @@ return /******/ (function(modules) { // webpackBootstrap
 /******/ 	}
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "8e2175108b2226aaf2c8"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "642d7de8aadb9b4bba0f"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
 /******/ 	
@@ -4748,15 +4748,18 @@ return /******/ (function(modules) { // webpackBootstrap
 	            var _this = this;
 
 	            if (this.validators.length) {
-	                // this.valid = this.validators.filter(validator => validator(this)[1]).length === this.validators.length;
+
 	                this.errors = {};
 	                this.validators.forEach(function (v) {
 	                    var validator = v(_this);
-	                    if (!validator[1] && Object.keys(_this.errors).length === 0) {
+	                    if (!validator[1] && Object.keys(_this.errors).length === 0 && _this.dirty) {
 	                        _this.errors[validator[0]] = true;
 	                    }
 	                });
-	                this.valid = Object.keys(this.errors).length === 0;
+
+	                this.valid = this.validators.filter(function (validator) {
+	                    return validator(_this)[1];
+	                }).length === this.validators.length;
 	            } else {
 	                this.valid = true;
 	            }
@@ -4891,10 +4894,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	    },
 	    email: function email(control) {
 	        var exp = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-	        return function (control) {
-	            var regexp = new RegExp(exp);
-	            return ['email', regexp.test(control.value)];
-	        };
+	        var regexp = new RegExp(exp);
+	        return ['email', regexp.test(control.value)];
 	    },
 	    regExp: function regExp(exp) {
 	        return function (control) {

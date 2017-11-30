@@ -31,15 +31,16 @@ export class FormControl {
 
     validate() {
         if (this.validators.length) {
-            // this.valid = this.validators.filter(validator => validator(this)[1]).length === this.validators.length;
+           
             this.errors = {};
             this.validators.forEach(v=>{
                 let validator = v(this);
-                if(!validator[1] && Object.keys(this.errors).length === 0) {
+                if(!validator[1] && Object.keys(this.errors).length === 0 && this.dirty) {
                     this.errors[validator[0]] = true;
                 }
             });
-            this.valid = Object.keys(this.errors).length === 0;
+
+            this.valid = this.validators.filter(validator => validator(this)[1]).length === this.validators.length;
         } else {
             this.valid = true;
         }
