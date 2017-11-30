@@ -16,7 +16,9 @@ export class AceTreeComponent {
     }
 
     load() {
+        console.time('tree')
         this.getChildren(Component.root);
+        console.timeEnd('tree')
 
         this.props.set('components', this.tree.map(r => {
             return {

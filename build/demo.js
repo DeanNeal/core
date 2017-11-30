@@ -2,7 +2,7 @@
  * ace-js 0.4.10
  * May be freely distributed under the MIT license 
  * Author: Bogdan Zinkevich
- * Last update: 2017-11-30 10:55:30
+ * Last update: 2017-11-30 11:35:31
  * 
  */
 (function webpackUniversalModuleDefinition(root, factory) {
@@ -82,7 +82,7 @@ return /******/ (function(modules) { // webpackBootstrap
 /******/ 	}
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "39af7d958a1af0194000"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "1e1b77c4c86e5e0e61c0"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
 /******/ 	
@@ -1649,7 +1649,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	                    // if(newComp) {
 	                    var newEl = document.createElement(compName);
 	                    // this.root.appendChild(newEl);
-	                    var a = new newComp(newEl, Object.assign({}, array[_i2]));
+	                    var a = new newComp(newEl, Object.assign({}, array[_i2]), _this);
 	                    _this.children[item.elem.COMPONENT.constructor.name].push(a);
 	                    // }
 
@@ -4197,7 +4197,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	    }, {
 	        key: 'load',
 	        value: function load() {
+	            console.time('tree');
 	            this.getChildren(_component.Component.root);
+	            console.timeEnd('tree');
 
 	            this.props.set('components', this.tree.map(function (r) {
 	                return {
@@ -4251,7 +4253,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	"use strict";
 
-	module.exports = "<button @click=\"load\">Load</button>\r\n\r\n<ul>\r\n\t<li ac-for=\"components\" ac-class=\"@class\">\r\n\t\t<span ac-value=\"level\"></span>\r\n\t\t<span ac-value=\"name\"></span>\r\n\t</li>\r\n</ul>\r\n\r\n<style>\r\n\t.level-1{\r\n\t\tmargin-left: 10px;\r\n\t}\r\n\t.level-2{\r\n\t\tmargin-left: 20px;\r\n\t}\r\n\t.level-3{\r\n\t\tmargin-left: 30px;\r\n\t}\r\n\t.level-4{\r\n\t\tmargin-left: 40px;\r\n\t}\r\n\t.level-5{\r\n\t\tmargin-left: 50px;\r\n\t}\r\n</style>";
+	module.exports = "<button @click=\"load\">Load</button>\r\n\r\n<ul>\r\n\t<li ac-for=\"components\" ac-class=\"@class\">\r\n\t\t<span ac-value=\"level\"></span> - <span ac-value=\"name\"></span>\r\n\t</li>\r\n</ul>\r\n\r\n<style>\r\n\t.level-1{\r\n\t\tmargin-left: 10px;\r\n\t}\r\n\t.level-2{\r\n\t\tmargin-left: 20px;\r\n\t}\r\n\t.level-3{\r\n\t\tmargin-left: 30px;\r\n\t}\r\n\t.level-4{\r\n\t\tmargin-left: 40px;\r\n\t}\r\n\t.level-5{\r\n\t\tmargin-left: 50px;\r\n\t}\r\n</style>";
 
 /***/ }),
 /* 54 */
