@@ -1,8 +1,8 @@
 /*!
- * ace-js 0.4.13
+ * ace-js 0.5.0
  * May be freely distributed under the MIT license 
  * Author: Bogdan Zinkevich
- * Last update: 2017-12-1 01:50:07
+ * Last update: 2017-12-3 23:11:21
  * 
  */
 (function webpackUniversalModuleDefinition(root, factory) {
@@ -82,7 +82,7 @@ return /******/ (function(modules) { // webpackBootstrap
 /******/ 	}
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "b124c676b39e8bca6a4b"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "3f2c0f1828dc656e5e1b"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
 /******/ 	
@@ -659,6 +659,8 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var _validators = __webpack_require__(56);
 
+	__webpack_require__(57);
+
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
@@ -994,6 +996,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	Object.defineProperty(exports, "__esModule", {
 	    value: true
 	});
+
+	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
 	exports.default = ComponentDecorator;
 
 	var _core = __webpack_require__(6);
@@ -1008,7 +1013,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    return function decorator(Class) {
 	        var func = function func(root, props, parent) {
 
-	            decoratorParams.props = Object.assign(decoratorParams.props || {}, props);
+	            decoratorParams.props = _extends(decoratorParams.props || {}, props);
 	            var proto = _core.Component.prototype;
 	            if (decoratorParams.super) {
 	                proto = decoratorParams.super.prototype = Object.setPrototypeOf(decoratorParams.super.prototype, _core.Component.prototype);
@@ -1447,6 +1452,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	Object.defineProperty(exports, "__esModule", {
 	    value: true
 	});
+
+	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
 	exports._for = _for;
 
 	var _core = __webpack_require__(6);
@@ -1509,7 +1517,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	                    // if(newComp) {
 	                    var newEl = document.createElement(compName);
 	                    // this.root.appendChild(newEl);
-	                    var a = new newComp(newEl, Object.assign({}, array[_i2]), _this);
+	                    var a = new newComp(newEl, _extends({}, array[_i2]), _this);
 	                    _this.children[item.elem.COMPONENT.constructor.name].push(a);
 	                    // }
 
@@ -1789,6 +1797,8 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var _private = __webpack_require__(23);
 
+	var _core = __webpack_require__(6);
+
 	function _events(array) {
 	    array.forEach(function (newEvent) {
 	        newEvent.el.addEventListener(newEvent.event.toLowerCase(), newEvent.f, false);
@@ -1808,6 +1818,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	    elem.removeAttribute('ac-' + event);
 	    var params = funcParams.replace(/ +/g, "").split(':');
 	    var fnName = params[0];
+	    var modifiers = elem.getAttribute('ac-mod') ? elem.getAttribute('ac-mod').replace(/ +/g, "").split(',') : [];
+	    var kModifiers = elem.getAttribute('ac-kmod') ? elem.getAttribute('ac-kmod').replace(/ +/g, "") : null;
 	    var newEvent = {
 	        fnName: fnName,
 	        event: event,
@@ -1826,9 +1838,18 @@ return /******/ (function(modules) { // webpackBootstrap
 	            }
 
 	            if (_this[functionName]) {
-	                var _functionName;
+	                callModifiers.call(_this, modifiers, e);
+	                if (kModifiers) {
+	                    callKModifiers.call(_this, e, kModifiers, function () {
+	                        var _functionName;
 
-	                (_functionName = _this[functionName]).call.apply(_functionName, [_this, e].concat(args));
+	                        (_functionName = _this[functionName]).call.apply(_functionName, [_this, e].concat(args));
+	                    });
+	                } else {
+	                    var _functionName2;
+
+	                    (_functionName2 = _this[functionName]).call.apply(_functionName2, [_this, e].concat(args));
+	                }
 	            } else {
 	                console.warn('You have no function in your component');
 	            }
@@ -1836,6 +1857,49 @@ return /******/ (function(modules) { // webpackBootstrap
 	    };
 
 	    return newEvent;
+	}
+
+	var modifierCode = {
+	    stop: stop,
+	    prevent: prevent
+	};
+
+	var keyCodes = {
+	    esc: 27,
+	    tab: 9,
+	    enter: 13,
+	    space: 32,
+	    up: 38,
+	    left: 37,
+	    right: 39,
+	    down: 40,
+	    'delete': [8, 46]
+	};
+
+	function callModifiers(modifiers, event) {
+	    var _this2 = this;
+
+	    modifiers.forEach(function (mod) {
+	        if (modifierCode[mod]) {
+	            modifierCode[mod](event);
+	        } else {
+	            throw new Error(_this2.constructor.name + '; Unknown modifier');
+	        }
+	    });
+	}
+
+	function callKModifiers(e, modifiers, cb) {
+	    if (e.keyCode === keyCodes[modifiers]) {
+	        cb.call();
+	    }
+	}
+
+	function stop(e) {
+	    e.stopPropagation();
+	}
+
+	function prevent(e) {
+	    e.preventDefault();
 	}
 
 /***/ }),
@@ -2197,6 +2261,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	});
 	exports.Component = undefined;
 
+	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
 	var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
 
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
@@ -2482,12 +2548,12 @@ return /******/ (function(modules) { // webpackBootstrap
 	            this.children = {};
 
 	            Object.defineProperty(this, 'options', {
-	                value: Object.assign({}, options),
+	                value: _extends({}, options),
 	                writable: false
 	            });
 
 	            Object.defineProperty(this, 'tpl', { value: options.template || 'Empty template', writable: false });
-	            Object.defineProperty(this, 'props', { value: new _core.ObservableModel(Object.assign({}, options.props)), writable: false });
+	            Object.defineProperty(this, 'props', { value: new _core.ObservableModel(_extends({}, options.props)), writable: false });
 
 	            Object.defineProperty(this, 'type', { value: options.type, writable: false });
 
@@ -2751,7 +2817,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    var rootEl = document.querySelectorAll(options.root.selector)[0];
 	    if (rootEl) {
 	        var rootComponent = new options.root.c(rootEl);
-	        rootComponent.root.setAttribute('ac-version', ("0.4.13"));
+	        rootComponent.root.setAttribute('ac-version', ("0.5.0"));
 	        _component.Component.root = rootComponent;
 	    } else {
 	        console.warn('There is no root component');
@@ -2921,7 +2987,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	            if (this.root.childNodes[0]) {
 	                this.destroyAllChildren(this.root.childNodes[0].COMPONENT.children);
 	            }
-	            root.innerHTML = null;
+	            root.innerHTML = '';
 	        }
 	    }, {
 	        key: 'destroyAllChildren',
@@ -3404,6 +3470,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        return -c / 2 * (t * (t - 2) - 1) + b;
 	    },
 	    removeSpacesFromString: function removeSpacesFromString(str) {
+	        str = str || '';
 	        return str.replace(/ +/g, "");
 	    }
 	};
@@ -4767,6 +4834,58 @@ return /******/ (function(modules) { // webpackBootstrap
 	};
 
 	exports.Validators = Validators;
+
+/***/ }),
+/* 57 */
+/***/ (function(module, exports) {
+
+	'use strict';
+
+	// from:https://github.com/jserz/js_piece/blob/master/DOM/ChildNode/remove()/remove().md
+	(function (arr) {
+	  arr.forEach(function (item) {
+	    if (item.hasOwnProperty('remove')) {
+	      return;
+	    }
+	    Object.defineProperty(item, 'remove', {
+	      configurable: true,
+	      enumerable: true,
+	      writable: true,
+	      value: function remove() {
+	        this.parentNode.removeChild(this);
+	      }
+	    });
+	  });
+	})([Element.prototype, CharacterData.prototype, DocumentType.prototype]);
+
+	// !window.addEventListener && (function (WindowPrototype, DocumentPrototype, ElementPrototype, addEventListener, removeEventListener, dispatchEvent, registry) {
+	//   WindowPrototype[addEventListener] = DocumentPrototype[addEventListener] = ElementPrototype[addEventListener] = function (type, listener) {
+	//     var target = this;
+
+	//     registry.unshift([target, type, listener, function (event) {
+	//       event.currentTarget = target;
+	//       event.preventDefault = function () { event.returnValue = false };
+	//       event.stopPropagation = function () { event.cancelBubble = true };
+	//       event.target = event.srcElement || target;
+
+	//       listener.call(target, event);
+	//     }]);
+
+	//     this.attachEvent("on" + type, registry[0][3]);
+	//   };
+
+	//   WindowPrototype[removeEventListener] = DocumentPrototype[removeEventListener] = ElementPrototype[removeEventListener] = function (type, listener) {
+	//     for (var index = 0, register; register = registry[index]; ++index) {
+	//       if (register[0] == this && register[1] == type && register[2] == listener) {
+	//         return this.detachEvent("on" + type, registry.splice(index, 1)[0][3]);
+	//       }
+	//     }
+	//   };
+
+	//   WindowPrototype[dispatchEvent] = DocumentPrototype[dispatchEvent] = ElementPrototype[dispatchEvent] = function (eventObject) {
+	//     return this.fireEvent("on" + eventObject.type, eventObject);
+	//   };
+	// })(Window.prototype, HTMLDocument.prototype, Element.prototype, "addEventListener", "removeEventListener", "dispatchEvent", []);
 
 /***/ })
 /******/ ])

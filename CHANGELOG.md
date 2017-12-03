@@ -1,3 +1,9 @@
+<a name="0.5.0"></a>
+# [0.5.0](https://github.com/DeanNeal/ace-js) (2017-12-03)
+### Features
+* **core:**  event modifiers #51 ([#51](https://github.com/DeanNeal/ace-js/issues/51))
+* **core:**  key modifiers #52 ([#52](https://github.com/DeanNeal/ace-js/issues/52))
+
 <a name="0.4.0"></a>
 # [0.4.0](https://github.com/DeanNeal/ace-js) (2017-11-15)
 ### Features
