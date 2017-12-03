@@ -15,6 +15,8 @@ import { Store } from './store.js';
 import {FormGroup} from 'reactive-forms/form-group';
 import {Validators} from 'reactive-forms/validators';
 
+import './polifills';
+
 export {
     ObservableModel,
     ObservableCollection,

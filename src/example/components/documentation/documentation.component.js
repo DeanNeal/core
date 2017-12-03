@@ -12,9 +12,9 @@ export class DocumentationComponent {
     }
 
     onInit() {
-        this.getElement('pre').forEach(item => {
+        // this.getElement('pre').forEach(item => {
 
-        });
+        // });
 
         this.props.set({
             version: VERSION,

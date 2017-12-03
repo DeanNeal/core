@@ -208,6 +208,7 @@ const Utils = {
     },
 
     removeSpacesFromString(str) {
+        str = str || '';
         return str.replace(/ +/g, "");
     }
 };

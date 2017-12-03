@@ -13,10 +13,18 @@ export class HeaderComponent {
     }
 
     onInit() {
-        this;
+       
     }
 
     onDestroy() {
 
+    }
+
+    test(e) {
+    	
+    }
+
+    keyup() {
+        console.log(1);
     }
 }

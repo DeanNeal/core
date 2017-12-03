@@ -33,7 +33,7 @@ module.exports = {
                 test: path.join(__dirname, 'src'),
                 query: {
                     presets: 'es2015',
-                    plugins: ['transform-decorators-legacy' ]
+                    plugins: ['transform-decorators-legacy', 'transform-object-assign']
                 }
             },
             {
