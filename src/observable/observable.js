@@ -1,5 +1,7 @@
 import { IfObject, IfArray } from '../decorators';
-import deepmerge from 'deepmerge';
+// import deepmerge from 'deepmerge';
+// import objectMerge from 'object-merge';
+import merge from 'merge';
 
 export class Observable {
     constructor(options) {
@@ -85,8 +87,7 @@ export class ObservableModel extends Observable {
 
     set(data, value, silent) {
         if (typeof data == 'object') {
-            const dontMerge = (destination, source) => source;
-            this._data = deepmerge(this._data, data,  { arrayMerge: dontMerge });
+            this._data = merge(this._data, data);
             this.defineProperties(data);
         } else {
             this.defineProperty(data, value);
