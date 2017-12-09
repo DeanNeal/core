@@ -27,6 +27,7 @@ export function Register(options) {
     Component.COMPONENTS = options.components;
     RouteSwitcher.ROUTES = options.routes;
     Component.CUSTOM_DIRECTIVES = []; // for custom directives
+    Component.root = options.root; 
 
     if(options.directives) {
         if(options.directives instanceof Array){
@@ -48,9 +49,8 @@ export function Register(options) {
 
     let rootEl = document.querySelectorAll(options.root.selector)[0];
     if(rootEl){ 
-        let rootComponent = new options.root.c(rootEl);
+        let rootComponent = new options.root(rootEl);
         rootComponent.root.setAttribute('ac-version', VERSION);
-        Component.root = rootComponent;
     } else {
         console.warn('There is no root component');
     }

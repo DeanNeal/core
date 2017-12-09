@@ -8,7 +8,7 @@ import { _for } from './for';
 import { _model } from './model';
 import { _attr } from './attr';
 import { _input } from './input';
-import { _link, setActiveLink } from './link';
+import { _link } from './link';
 import { _events, eventUnitCore, removeEventListeners } from './event';
 import { _outside } from './outside';
 import { _on } from './on';
@@ -31,7 +31,6 @@ const Directives = {
     _attr,
     _input,
     _link,
-    setActiveLink,
     _events,
     eventUnitCore,
     removeEventListeners,

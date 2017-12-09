@@ -17,13 +17,13 @@ export class AceTreeComponent {
 
     load() {
         console.time('tree')
-        this.getChildren(Component.root);
+        this.getChildren(Component.rootInstance);
         console.timeEnd('tree')
 
         this.props.set('components', this.tree.map(r => {
             return {
                 level: r.level,
-                name: r.c.constructorName,
+                name: r.c.constructor.name,//r.c.constructorName,
                 class: r.class
             };
         }));

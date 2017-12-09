@@ -8,7 +8,7 @@ export class RouteSwitcher {
         this.children = {};
         this.parent = parent;
         this.root.COMPONENT = this;
-        this.constructorName = this.constructor.name;
+        // this.constructorName = this.constructor.name;
         this.onCreate();
     }
 
@@ -45,9 +45,22 @@ export class RouteSwitcher {
                             this.prevChild = path;
                         }
                     }
+
+                    this.setActiveLink();
                 });
         });
         Router.update();
+    }
+
+    setActiveLink() {
+        let a = Component.rootInstance.root.querySelectorAll('[href]');//this.root.querySelectorAll('[href]');
+        a.forEach(item => {
+            let fullRoute = Router.getCurrentFullPath();
+            let fullPath = Router.getFullStringPath();
+            let attr = item.getAttribute('href');
+            let setActive = attr === fullPath || (fullRoute[0] === attr && !item.getAttribute('ac-link-exact'));
+            setActive ? item.classList.add('active') : item.classList.remove('active')
+        });
     }
 
     getChild(current, path) {

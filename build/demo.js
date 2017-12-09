@@ -2,7 +2,7 @@
  * ace-js 0.5.2
  * May be freely distributed under the MIT license 
  * Author: Bogdan Zinkevich
- * Last update: 2017-12-5 20:38:44
+ * Last update: 2017-12-9 23:29:23
  * 
  */
 (function webpackUniversalModuleDefinition(root, factory) {
@@ -82,7 +82,7 @@ return /******/ (function(modules) { // webpackBootstrap
 /******/ 	}
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "4203f25154d72bcd553d"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "de32e6157cd232a956c1"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
 /******/ 	
@@ -1171,11 +1171,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	                // Object.defineProperty(instance, 'parent', { value: parent, writable: false });
 	                instance.parent = parent;
 	            }
-	            instance.constructorName = instance.constructor.name;
+	            // instance.constructorName = instance.constructor.name;
 	            return instance;
 	        };
 	        func.selector = decoratorParams.selector;
-
+	        func.class = Class;
 	        return func;
 	    };
 	}
@@ -1266,7 +1266,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	    _attr: _attr2._attr,
 	    _input: _input2._input,
 	    _link: _link2._link,
-	    setActiveLink: _link2.setActiveLink,
 	    _events: _event._events,
 	    eventUnitCore: _event.eventUnitCore,
 	    removeEventListeners: _event.removeEventListeners,
@@ -2470,23 +2469,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	            _Directives.Directives._elRef.call(this, _private.PRIVATES.DIRECTIVES['ac-ref'].get(this));
 	            _Directives.Directives._events.call(this, _private.PRIVATES.EVENTS.get(this));
 	            _Directives.Directives._hostEvents.call(this, _private.PRIVATES.HOST.EVENTS.get(this));
-	            // Directives._formValidation.call(this, PRIVATES.DIRECTIVES['ac-form-validation'].get(this));
 
 	            _Directives.Directives._formGroup.call(this, _private.PRIVATES.DIRECTIVES['ac-form-group'].get(this));
-
-	            //TODO rewrite
-	            if (_private.PRIVATES.DIRECTIVES['ac-link'].get(this).length || _private.PRIVATES.DIRECTIVES['ac-for'].get(this).length) {
-	                this.$routerSub = _core.Router.onChange(function () {
-	                    var a = _this.root.querySelectorAll('[href]');
-	                    a.forEach(function (item) {
-	                        var fullRoute = _core.Router.getCurrentFullPath();
-	                        var fullPath = _core.Router.getFullStringPath();
-	                        var attr = item.getAttribute('href');
-	                        var setActive = attr === fullPath || fullRoute[0] === attr && !item.getAttribute('ac-link-exact');
-	                        setActive ? item.classList.add('active') : item.classList.remove('active');
-	                    });
-	                });
-	            }
 
 	            this.onInit();
 	        }
@@ -2706,6 +2690,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	            Object.defineProperty(this, '$routerSub', { value: null, writable: true });
 
 	            this.root.COMPONENT = this;
+
+	            if (this instanceof Component.root.class) {
+	                Component.rootInstance = this;
+	            }
 
 	            Component.setPrivates.call(this, options);
 
@@ -3028,6 +3016,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    _component.Component.COMPONENTS = options.components;
 	    _core.RouteSwitcher.ROUTES = options.routes;
 	    _component.Component.CUSTOM_DIRECTIVES = []; // for custom directives
+	    _component.Component.root = options.root;
 
 	    if (options.directives) {
 	        if (options.directives instanceof Array) {
@@ -3049,9 +3038,10 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	    var rootEl = document.querySelectorAll(options.root.selector)[0];
 	    if (rootEl) {
-	        var rootComponent = new options.root.c(rootEl);
+	        var rootComponent = new options.root(rootEl);
 	        rootComponent.root.setAttribute('ac-version', ("0.5.2"));
-	        _component.Component.root = rootComponent;
+	        // Component.root = rootComponent;
+	        // rootComponent.compileRouter();
 	    } else {
 	        console.warn('There is no root component');
 	    }
@@ -3117,7 +3107,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        this.children = {};
 	        this.parent = parent;
 	        this.root.COMPONENT = this;
-	        this.constructorName = this.constructor.name;
+	        // this.constructorName = this.constructor.name;
 	        this.onCreate();
 	    }
 
@@ -3158,9 +3148,23 @@ return /******/ (function(modules) { // webpackBootstrap
 	                            _this.prevChild = path;
 	                        }
 	                    }
+
+	                    _this.setActiveLink();
 	                });
 	            });
 	            _routerCore2.default.update();
+	        }
+	    }, {
+	        key: 'setActiveLink',
+	        value: function setActiveLink() {
+	            var a = _core.Component.rootInstance.root.querySelectorAll('[href]'); //this.root.querySelectorAll('[href]');
+	            a.forEach(function (item) {
+	                var fullRoute = _routerCore2.default.getCurrentFullPath();
+	                var fullPath = _routerCore2.default.getFullStringPath();
+	                var attr = item.getAttribute('href');
+	                var setActive = attr === fullPath || fullRoute[0] === attr && !item.getAttribute('ac-link-exact');
+	                setActive ? item.classList.add('active') : item.classList.remove('active');
+	            });
 	        }
 	    }, {
 	        key: 'getChild',
@@ -4358,13 +4362,13 @@ return /******/ (function(modules) { // webpackBootstrap
 	        key: 'load',
 	        value: function load() {
 	            console.time('tree');
-	            this.getChildren(_component.Component.root);
+	            this.getChildren(_component.Component.rootInstance);
 	            console.timeEnd('tree');
 
 	            this.props.set('components', this.tree.map(function (r) {
 	                return {
 	                    level: r.level,
-	                    name: r.c.constructorName,
+	                    name: r.c.constructor.name, //r.c.constructorName,
 	                    class: r.class
 	                };
 	            }));

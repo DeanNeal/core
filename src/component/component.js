@@ -40,6 +40,10 @@ export class Component {
 
         this.root.COMPONENT = this;
 
+        if(this instanceof Component.root.class) {
+            Component.rootInstance = this;
+        }
+
         Component.setPrivates.call(this, options);
 
         if (this.root.getAttribute('ac-for')) {
@@ -121,23 +125,8 @@ export class Component {
         Directives._elRef.call(this, PRIVATES.DIRECTIVES['ac-ref'].get(this));
         Directives._events.call(this, PRIVATES.EVENTS.get(this));
         Directives._hostEvents.call(this, PRIVATES.HOST.EVENTS.get(this));
-        // Directives._formValidation.call(this, PRIVATES.DIRECTIVES['ac-form-validation'].get(this));
 
         Directives._formGroup.call(this, PRIVATES.DIRECTIVES['ac-form-group'].get(this));
-
-        //TODO rewrite
-        if (PRIVATES.DIRECTIVES['ac-link'].get(this).length || PRIVATES.DIRECTIVES['ac-for'].get(this).length) {
-            this.$routerSub = Router.onChange(() => {
-                let a = this.root.querySelectorAll('[href]');
-                a.forEach(item => {
-                    let fullRoute = Router.getCurrentFullPath();
-                    let fullPath = Router.getFullStringPath();
-                    let attr = item.getAttribute('href');
-                    let setActive = attr === fullPath || (fullRoute[0] === attr && !item.getAttribute('ac-link-exact'));
-                    setActive ? item.classList.add('active') : item.classList.remove('active')
-                });
-            });
-        }
 
         this.onInit();
     }
