@@ -1,25 +1,31 @@
 <button @click="load">Load</button>
-
-<ul>
-	<li ac-for="components" ac-class="@class">
-		<span ac-value="level"></span> - <span ac-value="name"></span>
-	</li>
-</ul>
-
+<app-tree-item-debug ac-for="components"></app-tree-item-debug>
 <style>
-	.level-1{
-		margin-left: 10px;
-	}
-	.level-2{
-		margin-left: 20px;
-	}
-	.level-3{
-		margin-left: 30px;
-	}
-	.level-4{
-		margin-left: 40px;
-	}
-	.level-5{
-		margin-left: 50px;
-	}
+app-tree-item-debug {
+    display: block;
+    padding: 5px 0;
+}
+
+app-tree-item-debug.children {
+    padding-left: 25px;
+}
+
+.toggle-btn {
+    background: #000;
+    border-radius: 100%;
+    cursor: pointer;
+    width: 12px;
+    height: 12px;
+
+    display: inline-block;
+    position: absolute;
+    left: -22px;
+}
+
+.toggle-btn.active {
+    background: #ccc;
+}
+.has-children {
+	cursor: pointer;
+}
 </style>

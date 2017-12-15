@@ -20,43 +20,31 @@ export class AceTreeComponent {
         this.getChildren(Component.rootInstance);
         console.timeEnd('tree')
 
-        this.props.set('components', this.tree.map(r => {
-            return {
-                level: r.level,
-                name: r.c.constructor.name,//r.c.constructorName,
-                class: r.class
-            };
-        }));
+        this.props.set('components', this.tree);
     }
 
     getChildren(root) {
         this.tree = [];
         this.level = 0;
         if (root.children) {
-            this.getAllChildren(root.children);
+            this.getAllChildren(root.children, this.tree);
         }
     }
 
-    getAllChildren(children) {
-
+    getAllChildren(children, tree) {
         for (let key in children) {
-            children[key].forEach(child => {
-                let ch = child;
-                let level = 0;
-                while (ch.parent) {
-                    ch = ch.parent;
-                    level++;
-                }
-
-                this.tree.push({ c: child, level, class: 'level-'+ level});
-                this.getAllChildren(child.children);
-            })
+            if(key !== 'AceTreeComponent') {
+                let comp = { children: [], name: key };
+                children[key].forEach(child => {
+                    tree.push(comp);
+                    this.getAllChildren(child.children, comp.children);
+                });
+            }
         }
-
     }
 
     onDestroy() {
-        // debugger
+    
     }
 
 }

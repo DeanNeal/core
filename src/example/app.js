@@ -1,7 +1,7 @@
 import Styles from './styles/main.scss';
 import { Register } from '../core';
-import {DatepickerComponent} from '../controls';
-import { AceTreeComponent } from '../controls';
+import {DatepickerComponent, AceTreeItemComponent, AceTreeComponent} from '../controls';
+
 import { HomeComponent } from './components/home/home.component';
 import { RootComponent } from './components/root/root.component';
 import { HeaderComponent } from './components/header/header.component';
@@ -18,10 +18,7 @@ import UpperCaseDirective from './directives/upper-case.directive.js';
 import { Routes } from './router.js';
 
 Register({
-    root: {
-        c: RootComponent,
-        selector: 'app-root'
-    },
+    root: RootComponent,
     styles: Styles,
     components: [
        HeaderComponent,
@@ -31,7 +28,9 @@ Register({
        NotFoundComponent,
        DatepickerComponent,
 
-       AceTreeComponent
+       AceTreeComponent,
+        AceTreeItemComponent
+
     ],
     directives: [
         UpperCaseDirective

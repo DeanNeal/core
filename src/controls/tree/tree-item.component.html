@@ -1,0 +1,8 @@
+<div style="position: relative;">
+	<span @click="toggle" class="toggle-btn" ac-if="this.children.length" ac-class="active: !this.visible"></span>
+	<span @click="toggle" class="component-name" ac-class="has-children: this.children.length" ac-value="name"></span>
+</div>
+
+<div ac-class="hidden: this.visible">
+	<app-tree-item-debug ac-for="children" class="children"></app-tree-item-debug>
+</div>
