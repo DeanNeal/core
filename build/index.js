@@ -1,8 +1,8 @@
 /*!
- * ace-js 0.5.3
+ * ace-js 0.5.4
  * May be freely distributed under the MIT license 
  * Author: Bogdan Zinkevich
- * Last update: 2017-12-9 23:31:24
+ * Last update: 2017-12-15 20:10:09
  * 
  */
 (function webpackUniversalModuleDefinition(root, factory) {
@@ -82,7 +82,7 @@ return /******/ (function(modules) { // webpackBootstrap
 /******/ 	}
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "f1ba8e4020c61e778c22"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "b0903be3651fae59d0ff"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
 /******/ 	
@@ -651,15 +651,15 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var Controls = _interopRequireWildcard(_controls);
 
-	var _http = __webpack_require__(55);
+	var _http = __webpack_require__(57);
 
 	var _store = __webpack_require__(52);
 
-	var _formGroup = __webpack_require__(56);
+	var _formGroup = __webpack_require__(58);
 
-	var _validators = __webpack_require__(57);
+	var _validators = __webpack_require__(59);
 
-	__webpack_require__(58);
+	__webpack_require__(60);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -2900,7 +2900,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    var rootEl = document.querySelectorAll(options.root.selector)[0];
 	    if (rootEl) {
 	        var rootComponent = new options.root(rootEl);
-	        rootComponent.root.setAttribute('ac-version', ("0.5.3"));
+	        rootComponent.root.setAttribute('ac-version', ("0.5.4"));
 	    } else {
 	        console.warn('There is no root component');
 	    }
@@ -3744,7 +3744,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	Object.defineProperty(exports, "__esModule", {
 	    value: true
 	});
-	exports.AceTreeComponent = exports.ModalStore = exports.ModalComponent = exports.DropdownComponent = exports.DatepickerComponent = undefined;
+	exports.AceTreeItemComponent = exports.AceTreeComponent = exports.ModalStore = exports.ModalComponent = exports.DropdownComponent = exports.DatepickerComponent = undefined;
 
 	var _datepicker = __webpack_require__(48);
 
@@ -3754,11 +3754,14 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var _tree = __webpack_require__(53);
 
+	var _treeItem = __webpack_require__(55);
+
 	exports.DatepickerComponent = _datepicker.DatepickerComponent;
 	exports.DropdownComponent = _dropdown.DropdownComponent;
 	exports.ModalComponent = _modal.ModalComponent;
 	exports.ModalStore = _modal.ModalStore;
 	exports.AceTreeComponent = _tree.AceTreeComponent;
+	exports.AceTreeItemComponent = _treeItem.AceTreeItemComponent;
 
 /***/ }),
 /* 48 */
@@ -4224,13 +4227,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	            this.getChildren(_component.Component.rootInstance);
 	            console.timeEnd('tree');
 
-	            this.props.set('components', this.tree.map(function (r) {
-	                return {
-	                    level: r.level,
-	                    name: r.c.constructor.name, //r.c.constructorName,
-	                    class: r.class
-	                };
-	            }));
+	            this.props.set('components', this.tree);
 	        }
 	    }, {
 	        key: 'getChildren',
@@ -4238,33 +4235,29 @@ return /******/ (function(modules) { // webpackBootstrap
 	            this.tree = [];
 	            this.level = 0;
 	            if (root.children) {
-	                this.getAllChildren(root.children);
+	                this.getAllChildren(root.children, this.tree);
 	            }
 	        }
 	    }, {
 	        key: 'getAllChildren',
-	        value: function getAllChildren(children) {
+	        value: function getAllChildren(children, tree) {
 	            var _this = this;
 
 	            for (var key in children) {
-	                children[key].forEach(function (child) {
-	                    var ch = child;
-	                    var level = 0;
-	                    while (ch.parent) {
-	                        ch = ch.parent;
-	                        level++;
-	                    }
-
-	                    _this.tree.push({ c: child, level: level, class: 'level-' + level });
-	                    _this.getAllChildren(child.children);
-	                });
+	                if (key !== 'AceTreeComponent') {
+	                    (function () {
+	                        var comp = { children: [], name: key };
+	                        children[key].forEach(function (child) {
+	                            tree.push(comp);
+	                            _this.getAllChildren(child.children, comp.children);
+	                        });
+	                    })();
+	                }
 	            }
 	        }
 	    }, {
 	        key: 'onDestroy',
-	        value: function onDestroy() {
-	            // debugger
-	        }
+	        value: function onDestroy() {}
 	    }]);
 
 	    return AceTreeComponent;
@@ -4276,10 +4269,83 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	"use strict";
 
-	module.exports = "<button @click=\"load\">Load</button>\r\n\r\n<ul>\r\n\t<li ac-for=\"components\" ac-class=\"@class\">\r\n\t\t<span ac-value=\"level\"></span> - <span ac-value=\"name\"></span>\r\n\t</li>\r\n</ul>\r\n\r\n<style>\r\n\t.level-1{\r\n\t\tmargin-left: 10px;\r\n\t}\r\n\t.level-2{\r\n\t\tmargin-left: 20px;\r\n\t}\r\n\t.level-3{\r\n\t\tmargin-left: 30px;\r\n\t}\r\n\t.level-4{\r\n\t\tmargin-left: 40px;\r\n\t}\r\n\t.level-5{\r\n\t\tmargin-left: 50px;\r\n\t}\r\n</style>";
+	module.exports = "<button @click=\"load\">Load</button>\r\n<app-tree-item-debug ac-for=\"components\"></app-tree-item-debug>\r\n<style>\r\napp-tree-item-debug {\r\n    display: block;\r\n    padding: 5px 0;\r\n}\r\n\r\napp-tree-item-debug.children {\r\n    padding-left: 25px;\r\n}\r\n\r\n.toggle-btn {\r\n    background: #000;\r\n    border-radius: 100%;\r\n    cursor: pointer;\r\n    width: 12px;\r\n    height: 12px;\r\n\r\n    display: inline-block;\r\n    position: absolute;\r\n    left: -22px;\r\n}\r\n\r\n.toggle-btn.active {\r\n    background: #ccc;\r\n}\r\n.has-children {\r\n\tcursor: pointer;\r\n}\r\n</style>";
 
 /***/ }),
 /* 55 */
+/***/ (function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	exports.AceTreeItemComponent = undefined;
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _dec, _class;
+
+	var _decorators = __webpack_require__(8);
+
+	var Decorators = _interopRequireWildcard(_decorators);
+
+	var _component = __webpack_require__(34);
+
+	var _treeItemComponent = __webpack_require__(56);
+
+	var _treeItemComponent2 = _interopRequireDefault(_treeItemComponent);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	var AceTreeItemComponent = exports.AceTreeItemComponent = (_dec = Decorators.ComponentDecorator({
+	    selector: 'app-tree-item-debug',
+	    template: _treeItemComponent2.default,
+	    hostEvents: {
+	        click: 'toggle'
+	    },
+	    // hostClasses: {
+	    //     'hidden': 'visible'
+	    // },
+	    // visibility: 'visible',
+	    props: {
+	        visible: false
+	        // components: []
+	    }
+	}), _dec(_class = function () {
+	    function AceTreeItemComponent() {
+	        _classCallCheck(this, AceTreeItemComponent);
+	    }
+
+	    _createClass(AceTreeItemComponent, [{
+	        key: 'onInit',
+	        value: function onInit() {}
+	    }, {
+	        key: 'toggle',
+	        value: function toggle(e) {
+	            e.stopPropagation();
+
+	            this.props.set('visible', !this.props.get('visible'));
+	        }
+	    }]);
+
+	    return AceTreeItemComponent;
+	}()) || _class);
+
+/***/ }),
+/* 56 */
+/***/ (function(module, exports) {
+
+	"use strict";
+
+	module.exports = "<div style=\"position: relative;\">\r\n\t<span @click=\"toggle\" class=\"toggle-btn\" ac-if=\"this.children.length\" ac-class=\"active: !this.visible\"></span>\r\n\t<span @click=\"toggle\" class=\"component-name\" ac-class=\"has-children: this.children.length\" ac-value=\"name\"></span>\r\n</div>\r\n\r\n<div ac-class=\"hidden: this.visible\">\r\n\t<app-tree-item-debug ac-for=\"children\" class=\"children\"></app-tree-item-debug>\r\n</div>\r\n";
+
+/***/ }),
+/* 57 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -4718,7 +4784,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	exports.Http = Http;
 
 /***/ }),
-/* 56 */
+/* 58 */
 /***/ (function(module, exports) {
 
 	'use strict';
@@ -4904,7 +4970,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	}();
 
 /***/ }),
-/* 57 */
+/* 59 */
 /***/ (function(module, exports) {
 
 	'use strict';
@@ -4932,7 +4998,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	exports.Validators = Validators;
 
 /***/ }),
-/* 58 */
+/* 60 */
 /***/ (function(module, exports) {
 
 	'use strict';
