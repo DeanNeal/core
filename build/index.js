@@ -1,8 +1,8 @@
 /*!
- * ace-js 0.5.4
+ * ace-js 0.5.5
  * May be freely distributed under the MIT license 
  * Author: Bogdan Zinkevich
- * Last update: 2017-12-15 20:10:09
+ * Last update: 2017-12-16 12:19:54
  * 
  */
 (function webpackUniversalModuleDefinition(root, factory) {
@@ -82,7 +82,7 @@ return /******/ (function(modules) { // webpackBootstrap
 /******/ 	}
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "b0903be3651fae59d0ff"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "182f7c70daa7cb84bc09"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
 /******/ 	
@@ -651,15 +651,15 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var Controls = _interopRequireWildcard(_controls);
 
-	var _http = __webpack_require__(57);
+	var _http = __webpack_require__(58);
 
 	var _store = __webpack_require__(52);
 
-	var _formGroup = __webpack_require__(58);
+	var _formGroup = __webpack_require__(59);
 
-	var _validators = __webpack_require__(59);
+	var _validators = __webpack_require__(60);
 
-	__webpack_require__(60);
+	__webpack_require__(61);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -2900,7 +2900,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    var rootEl = document.querySelectorAll(options.root.selector)[0];
 	    if (rootEl) {
 	        var rootComponent = new options.root(rootEl);
-	        rootComponent.root.setAttribute('ac-version', ("0.5.4"));
+	        rootComponent.root.setAttribute('ac-version', ("0.5.5"));
 	    } else {
 	        console.warn('There is no root component');
 	    }
@@ -3744,7 +3744,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	Object.defineProperty(exports, "__esModule", {
 	    value: true
 	});
-	exports.AceTreeItemComponent = exports.AceTreeComponent = exports.ModalStore = exports.ModalComponent = exports.DropdownComponent = exports.DatepickerComponent = undefined;
+	exports.TreeDebugComponent = exports.ModalStore = exports.ModalComponent = exports.DropdownComponent = exports.DatepickerComponent = undefined;
 
 	var _datepicker = __webpack_require__(48);
 
@@ -3754,14 +3754,15 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var _tree = __webpack_require__(53);
 
-	var _treeItem = __webpack_require__(55);
+	var _tree2 = _interopRequireDefault(_tree);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	exports.DatepickerComponent = _datepicker.DatepickerComponent;
 	exports.DropdownComponent = _dropdown.DropdownComponent;
 	exports.ModalComponent = _modal.ModalComponent;
 	exports.ModalStore = _modal.ModalStore;
-	exports.AceTreeComponent = _tree.AceTreeComponent;
-	exports.AceTreeItemComponent = _treeItem.AceTreeItemComponent;
+	exports.TreeDebugComponent = _tree2.default;
 
 /***/ }),
 /* 48 */
@@ -4182,6 +4183,22 @@ return /******/ (function(modules) { // webpackBootstrap
 	Object.defineProperty(exports, "__esModule", {
 	    value: true
 	});
+
+	var _tree = __webpack_require__(54);
+
+	var _treeItem = __webpack_require__(56);
+
+	exports.default = [_tree.AceTreeComponent, _treeItem.AceTreeItemComponent];
+
+/***/ }),
+/* 54 */
+/***/ (function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
 	exports.AceTreeComponent = undefined;
 
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
@@ -4194,7 +4211,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var _component = __webpack_require__(34);
 
-	var _treeComponent = __webpack_require__(54);
+	var _treeComponent = __webpack_require__(55);
 
 	var _treeComponent2 = _interopRequireDefault(_treeComponent);
 
@@ -4264,7 +4281,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	}()) || _class);
 
 /***/ }),
-/* 54 */
+/* 55 */
 /***/ (function(module, exports) {
 
 	"use strict";
@@ -4272,7 +4289,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	module.exports = "<button @click=\"load\">Load</button>\r\n<app-tree-item-debug ac-for=\"components\"></app-tree-item-debug>\r\n<style>\r\napp-tree-item-debug {\r\n    display: block;\r\n    padding: 5px 0;\r\n}\r\n\r\napp-tree-item-debug.children {\r\n    padding-left: 25px;\r\n}\r\n\r\n.toggle-btn {\r\n    background: #000;\r\n    border-radius: 100%;\r\n    cursor: pointer;\r\n    width: 12px;\r\n    height: 12px;\r\n\r\n    display: inline-block;\r\n    position: absolute;\r\n    left: -22px;\r\n}\r\n\r\n.toggle-btn.active {\r\n    background: #ccc;\r\n}\r\n.has-children {\r\n\tcursor: pointer;\r\n}\r\n</style>";
 
 /***/ }),
-/* 55 */
+/* 56 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -4292,7 +4309,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var _component = __webpack_require__(34);
 
-	var _treeItemComponent = __webpack_require__(56);
+	var _treeItemComponent = __webpack_require__(57);
 
 	var _treeItemComponent2 = _interopRequireDefault(_treeItemComponent);
 
@@ -4337,7 +4354,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	}()) || _class);
 
 /***/ }),
-/* 56 */
+/* 57 */
 /***/ (function(module, exports) {
 
 	"use strict";
@@ -4345,7 +4362,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	module.exports = "<div style=\"position: relative;\">\r\n\t<span @click=\"toggle\" class=\"toggle-btn\" ac-if=\"this.children.length\" ac-class=\"active: !this.visible\"></span>\r\n\t<span @click=\"toggle\" class=\"component-name\" ac-class=\"has-children: this.children.length\" ac-value=\"name\"></span>\r\n</div>\r\n\r\n<div ac-class=\"hidden: this.visible\">\r\n\t<app-tree-item-debug ac-for=\"children\" class=\"children\"></app-tree-item-debug>\r\n</div>\r\n";
 
 /***/ }),
-/* 57 */
+/* 58 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -4784,7 +4801,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	exports.Http = Http;
 
 /***/ }),
-/* 58 */
+/* 59 */
 /***/ (function(module, exports) {
 
 	'use strict';
@@ -4970,7 +4987,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	}();
 
 /***/ }),
-/* 59 */
+/* 60 */
 /***/ (function(module, exports) {
 
 	'use strict';
@@ -4998,7 +5015,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	exports.Validators = Validators;
 
 /***/ }),
-/* 60 */
+/* 61 */
 /***/ (function(module, exports) {
 
 	'use strict';
