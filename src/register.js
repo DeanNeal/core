@@ -1,5 +1,5 @@
-import { RouteSwitcher, Http} from './core';
-import {Component} from './component/component';
+import { RouteSwitcher, Http } from './core';
+import { Component } from './component/component';
 
 export function Register(options) {
     // console.time('modules')
@@ -16,31 +16,31 @@ export function Register(options) {
         }
     }
 
-    if(options.stores) {    
-        if(options.stores instanceof Object){
+    if (options.stores) {
+        if (options.stores instanceof Object) {
             Component.STORES = options.stores;
         } else {
             throw new Error('stores must be an object');
         }
     }
-    
+
     Component.COMPONENTS = options.components;
     RouteSwitcher.ROUTES = options.routes;
     Component.CUSTOM_DIRECTIVES = []; // for custom directives
-    Component.root = options.root; 
+    Component.root = options.root;
 
-    if(options.directives) {
-        if(options.directives instanceof Array){
+    if (options.directives) {
+        if (options.directives instanceof Array) {
             Component.CUSTOM_DIRECTIVES = options.directives;
         } else {
             throw new Error('directives must be an array');
         }
     }
 
-    if(options.modules instanceof Array){    
+    if (options.modules instanceof Array) {
         options.modules.forEach(module => {
             module.forEach(component => {
-                 registerComponent(component);
+                registerComponent(component);
             });
         });
     } else {
@@ -48,7 +48,7 @@ export function Register(options) {
     }
 
     let rootEl = document.querySelectorAll(options.root.selector)[0];
-    if(rootEl){ 
+    if (rootEl) {
         let rootComponent = new options.root(rootEl);
         rootComponent.root.setAttribute('ac-version', VERSION);
     } else {

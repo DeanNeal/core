@@ -1,6 +1,6 @@
 import Styles from './styles/main.scss';
 import { Register } from '../core';
-import {DatepickerComponent, AceTreeItemComponent, AceTreeComponent} from '../controls';
+import {DatepickerComponent, TreeDebugComponent} from '../controls';
 
 import { HomeComponent } from './components/home/home.component';
 import { RootComponent } from './components/root/root.component';
@@ -26,16 +26,12 @@ Register({
        PluginsComponent,
        ControlsComponent,
        NotFoundComponent,
-       DatepickerComponent,
-
-       AceTreeComponent,
-        AceTreeItemComponent
-
+       DatepickerComponent
     ],
     directives: [
         UpperCaseDirective
     ],
-    modules: [Docs],
+    modules: [Docs, TreeDebugComponent],
     routes: Routes
 
 });
