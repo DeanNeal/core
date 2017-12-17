@@ -30,3 +30,15 @@ export function _hostStyles(hostStyles) {
         }
     }
 }
+
+export function _hostHidden(params) {
+    if (params.prop) {
+        let r = this.getComponentVariable(params.prop.split('.'));
+        // console.log(this);
+        if (r) {
+            params.cached.removeAttribute('hidden');
+        } else {
+            params.cached.setAttribute('hidden', true);
+        }
+    }
+}

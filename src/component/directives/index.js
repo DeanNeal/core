@@ -1,7 +1,7 @@
 import { _style } from './style';
 import { _props } from './props';
 import { _pattern } from './pattern';
-import { _if, _hostVisibility} from './if';
+import { _if } from './if';
 import { _class } from './class';
 import { _elRef } from './elRef';
 import { _for } from './for';
@@ -12,18 +12,17 @@ import { _link } from './link';
 import { _events, eventUnitCore, removeEventListeners } from './event';
 import { _outside } from './outside';
 import { _on } from './on';
-import { _init , _initEvent} from './init';
-import { _hostEvents, _hostClasses, _hostStyles } from './host';
-import {_formGroup} from './form-group';
-import {_customDirective} from './custom-directive';
-import {_computed} from './computed';
+import { _init, _initEvent } from './init';
+import { _hostEvents, _hostClasses, _hostStyles, _hostHidden } from './host';
+import { _formGroup } from './form-group';
+import { _customDirective } from './custom-directive';
+import { _computed } from './computed';
 
 const Directives = {
     _style,
     _props,
     _pattern,
     _if,
-    _hostVisibility,
     _class,
     _elRef,
     _for,
@@ -41,6 +40,7 @@ const Directives = {
     _hostEvents,
     _hostClasses,
     _hostStyles,
+    _hostHidden,
     _formGroup,
     _customDirective,
     _computed

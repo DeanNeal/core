@@ -2,7 +2,7 @@
  * ace-js 0.5.6
  * May be freely distributed under the MIT license 
  * Author: Bogdan Zinkevich
- * Last update: 2017-12-17 15:46:24
+ * Last update: 2017-12-17 15:53:20
  * 
  */
 (function webpackUniversalModuleDefinition(root, factory) {
@@ -82,7 +82,7 @@ return /******/ (function(modules) { // webpackBootstrap
 /******/ 	}
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "d5b82fc130f13e7c9725"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "b0fb6925b68752ed214c"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
 /******/ 	
@@ -1255,7 +1255,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	    _props: _props2._props,
 	    _pattern: _pattern2._pattern,
 	    _if: _if2._if,
-	    _hostVisibility: _if2._hostVisibility,
 	    _class: _class2._class,
 	    _elRef: _elRef2._elRef,
 	    _for: _for2._for,
@@ -1273,6 +1272,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    _hostEvents: _host._hostEvents,
 	    _hostClasses: _host._hostClasses,
 	    _hostStyles: _host._hostStyles,
+	    _hostHidden: _host._hostHidden,
 	    _formGroup: _formGroup2._formGroup,
 	    _customDirective: _customDirective2._customDirective,
 	    _computed: _computed2._computed
@@ -1416,7 +1416,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	    value: true
 	});
 	exports._if = _if;
-	exports._hostVisibility = _hostVisibility;
 
 	var _core = __webpack_require__(6);
 
@@ -1491,18 +1490,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	    });
 	}
 	// childNode[4].parentNode.insertBefore(childNode[4], childNode[3]);
-
-	function _hostVisibility(params) {
-	    if (params.prop) {
-	        var r = this.getComponentVariable(params.prop.split('.'));
-	        // console.log(this);
-	        if (r) {
-	            params.cached.removeAttribute('hidden');
-	        } else {
-	            params.cached.setAttribute('hidden', true);
-	        }
-	    }
-	}
 
 /***/ }),
 /* 19 */
@@ -2265,6 +2252,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	exports._hostEvents = _hostEvents;
 	exports._hostClasses = _hostClasses;
 	exports._hostStyles = _hostStyles;
+	exports._hostHidden = _hostHidden;
 	function _hostEvents(events) {
 	    for (var event in events) {
 	        var fn = this[events[event]].bind(this);
@@ -2294,6 +2282,18 @@ return /******/ (function(modules) { // webpackBootstrap
 	            this.root.style[styleName] = r + hostStyles[styleName].suffix;
 	        } else {
 	            this.root.style[styleName] = hostStyles[styleName].value + hostStyles[styleName].preffix;
+	        }
+	    }
+	}
+
+	function _hostHidden(params) {
+	    if (params.prop) {
+	        var r = this.getComponentVariable(params.prop.split('.'));
+	        // console.log(this);
+	        if (r) {
+	            params.cached.removeAttribute('hidden');
+	        } else {
+	            params.cached.setAttribute('hidden', true);
 	        }
 	    }
 	}
@@ -2485,7 +2485,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	                _Directives.Directives._link.call(_this2, _private.PRIVATES.DIRECTIVES['ac-link'].get(_this2));
 	                _Directives.Directives._hostClasses.call(_this2, _private.PRIVATES.HOST.CLASS.get(_this2));
 	                _Directives.Directives._hostStyles.call(_this2, _private.PRIVATES.HOST.STYLE.get(_this2));
-	                _Directives.Directives._hostVisibility.call(_this2, _private.PRIVATES.HOST.HIDDEN.get(_this2));
+	                _Directives.Directives._hostHidden.call(_this2, _private.PRIVATES.HOST.HIDDEN.get(_this2));
 
 	                // Interpolation.interpolationRun.call(this, this.$interpolationArray);
 

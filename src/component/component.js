@@ -146,7 +146,7 @@ export class Component {
             Directives._link.call(this, PRIVATES.DIRECTIVES['ac-link'].get(this));
             Directives._hostClasses.call(this, PRIVATES.HOST.CLASS.get(this));
             Directives._hostStyles.call(this, PRIVATES.HOST.STYLE.get(this));
-            Directives._hostVisibility.call(this, PRIVATES.HOST.HIDDEN.get(this));
+            Directives._hostHidden.call(this, PRIVATES.HOST.HIDDEN.get(this));
             
 
             // Interpolation.interpolationRun.call(this, this.$interpolationArray);

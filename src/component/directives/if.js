@@ -68,15 +68,3 @@ export function _if(array, data) {
     });
 }
 // childNode[4].parentNode.insertBefore(childNode[4], childNode[3]);
-
-export function _hostVisibility(params) {
-    if (params.prop) {
-        let r = this.getComponentVariable(params.prop.split('.'));
-        // console.log(this);
-        if (r) {
-            params.cached.removeAttribute('hidden');
-        } else {
-            params.cached.setAttribute('hidden', true);
-        }
-    }
-}
