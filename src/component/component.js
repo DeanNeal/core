@@ -36,7 +36,7 @@ export class Component {
          }
 
         Object.defineProperty(this, '$attrs', { value: attrs, writable: false });
-        Object.defineProperty(this, '$routerSub', { value: null, writable: true });
+        // Object.defineProperty(this, '$routerSub', { value: null, writable: true });
 
         this.root.COMPONENT = this;
 
@@ -65,8 +65,8 @@ export class Component {
         PRIVATES.HOST.EVENTS.set(this, options.hostEvents);
         PRIVATES.HOST.CLASS.set(this, options.hostClasses);
         PRIVATES.HOST.STYLE.set(this, options.hostStyles);
-        PRIVATES.HOST.VISIBILITY.set(this, {
-            prop: options.visibility,
+        PRIVATES.HOST.HIDDEN.set(this, {
+            prop: options.hostHidden,
             comment: document.createComment(this.constructor.name),
             cached: this.root
         });
@@ -146,7 +146,7 @@ export class Component {
             Directives._link.call(this, PRIVATES.DIRECTIVES['ac-link'].get(this));
             Directives._hostClasses.call(this, PRIVATES.HOST.CLASS.get(this));
             Directives._hostStyles.call(this, PRIVATES.HOST.STYLE.get(this));
-            // Directives._hostVisibility.call(this, PRIVATES.HOST.VISIBILITY.get(this));
+            Directives._hostVisibility.call(this, PRIVATES.HOST.HIDDEN.get(this));
             
 
             // Interpolation.interpolationRun.call(this, this.$interpolationArray);
@@ -269,10 +269,10 @@ export class Component {
         Directives.removeEventListeners.call(this, PRIVATES.EVENTS.get(this));
 
         //unsubscribe from router changes
-        if (this.$routerSub) {
-            // console.log('destroyed', this);
-            this.$routerSub.unsubscribe();
-        }
+        // if (this.$routerSub) {
+        //     // console.log('destroyed', this);
+        //     this.$routerSub.unsubscribe();
+        // }
 
         //unsubscribe from components subscribers
         PRIVATES.SUBSCRIPTIONS.get(this).forEach(item => item.unsubscribe());

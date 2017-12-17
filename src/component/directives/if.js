@@ -74,15 +74,9 @@ export function _hostVisibility(params) {
         let r = this.getComponentVariable(params.prop.split('.'));
         // console.log(this);
         if (r) {
-            // Utils.insertAfter(params.cached, params.comment);
-            // params.comment.remove();
-            params.comment.replaceWith(params.cached);
-
+            params.cached.removeAttribute('hidden');
         } else {
-            // Utils.insertAfter(params.comment, this.root);
-            // this.root.remove()
-            // child.replaceWith(span);
-            params.cached.replaceWith(params.comment);
+            params.cached.setAttribute('hidden', true);
         }
     }
 }

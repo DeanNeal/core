@@ -2,7 +2,7 @@
  * ace-js 0.5.5
  * May be freely distributed under the MIT license 
  * Author: Bogdan Zinkevich
- * Last update: 2017-12-16 12:19:54
+ * Last update: 2017-12-17 15:44:41
  * 
  */
 (function webpackUniversalModuleDefinition(root, factory) {
@@ -82,7 +82,7 @@ return /******/ (function(modules) { // webpackBootstrap
 /******/ 	}
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "182f7c70daa7cb84bc09"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "5f61bcacf46badbdab99"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
 /******/ 	
@@ -1497,14 +1497,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	        var r = this.getComponentVariable(params.prop.split('.'));
 	        // console.log(this);
 	        if (r) {
-	            // Utils.insertAfter(params.cached, params.comment);
-	            // params.comment.remove();
-	            params.comment.replaceWith(params.cached);
+	            params.cached.removeAttribute('hidden');
 	        } else {
-	            // Utils.insertAfter(params.comment, this.root);
-	            // this.root.remove()
-	            // child.replaceWith(span);
-	            params.cached.replaceWith(params.comment);
+	            params.cached.setAttribute('hidden', true);
 	        }
 	    }
 	}
@@ -1905,7 +1900,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        CLASS: new WeakMap(),
 	        STYLE: new WeakMap(),
 	        EVENTS: new WeakMap(),
-	        VISIBILITY: new WeakMap()
+	        HIDDEN: new WeakMap()
 	    },
 	    COMPUTED: new WeakMap()
 	}; // import { EVENTS } from './const/events';
@@ -2490,8 +2485,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	                _Directives.Directives._link.call(_this2, _private.PRIVATES.DIRECTIVES['ac-link'].get(_this2));
 	                _Directives.Directives._hostClasses.call(_this2, _private.PRIVATES.HOST.CLASS.get(_this2));
 	                _Directives.Directives._hostStyles.call(_this2, _private.PRIVATES.HOST.STYLE.get(_this2));
-	                // Directives._hostVisibility.call(this, PRIVATES.HOST.VISIBILITY.get(this));
-
+	                _Directives.Directives._hostVisibility.call(_this2, _private.PRIVATES.HOST.HIDDEN.get(_this2));
 
 	                // Interpolation.interpolationRun.call(this, this.$interpolationArray);
 
@@ -2634,10 +2628,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	            _Directives.Directives.removeEventListeners.call(this, _private.PRIVATES.EVENTS.get(this));
 
 	            //unsubscribe from router changes
-	            if (this.$routerSub) {
-	                // console.log('destroyed', this);
-	                this.$routerSub.unsubscribe();
-	            }
+	            // if (this.$routerSub) {
+	            //     // console.log('destroyed', this);
+	            //     this.$routerSub.unsubscribe();
+	            // }
 
 	            //unsubscribe from components subscribers
 	            _private.PRIVATES.SUBSCRIPTIONS.get(this).forEach(function (item) {
@@ -2684,7 +2678,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	            }
 
 	            Object.defineProperty(this, '$attrs', { value: attrs, writable: false });
-	            Object.defineProperty(this, '$routerSub', { value: null, writable: true });
+	            // Object.defineProperty(this, '$routerSub', { value: null, writable: true });
 
 	            this.root.COMPONENT = this;
 
@@ -2716,8 +2710,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	            _private.PRIVATES.HOST.EVENTS.set(this, options.hostEvents);
 	            _private.PRIVATES.HOST.CLASS.set(this, options.hostClasses);
 	            _private.PRIVATES.HOST.STYLE.set(this, options.hostStyles);
-	            _private.PRIVATES.HOST.VISIBILITY.set(this, {
-	                prop: options.visibility,
+	            _private.PRIVATES.HOST.HIDDEN.set(this, {
+	                prop: options.hostHidden,
 	                comment: document.createComment(this.constructor.name),
 	                cached: this.root
 	            });
@@ -4241,12 +4235,12 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	            this.setSubscriptions(ModalStore.modal.sub(function (r) {
 	                if (r.visible && _this3.type === r.type) {
-	                    _this3.root.style.display = 'block';
+	                    // this.root.style.display = 'block';
 	                    _this3.props.set(r);
 	                    _this3.onOpen();
 	                } else {
 	                    _this3.props.set({ visible: false });
-	                    _this3.root.style.display = 'none';
+	                    // this.root.style.display = 'none';
 	                    _this3.onClose();
 	                }
 	            }));
@@ -4362,7 +4356,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	    template: _treeComponent2.default,
 	    props: {
 	        components: []
-	    }
+	    },
+	    hostHidden: 'visible'
 	}), _dec(_class = function () {
 	    function AceTreeComponent() {
 	        _classCallCheck(this, AceTreeComponent);

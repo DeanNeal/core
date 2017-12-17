@@ -7,7 +7,8 @@ import Tpl from './tree.component.html';
     template: Tpl,
     props: {
         components: []
-    }
+    },
+    hostHidden: 'visible'
 })
 export class AceTreeComponent {
 

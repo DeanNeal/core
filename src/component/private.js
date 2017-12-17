@@ -11,7 +11,7 @@ const PRIVATES = {
         CLASS: new WeakMap(),
         STYLE: new WeakMap(),
         EVENTS: new WeakMap(),
-        VISIBILITY: new WeakMap()
+        HIDDEN: new WeakMap()
     },
     COMPUTED: new WeakMap()
 };
