@@ -1,8 +1,8 @@
 /*!
- * ace-js 0.5.7
+ * ace-js 0.5.8
  * May be freely distributed under the MIT license 
  * Author: Bogdan Zinkevich
- * Last update: 2017-12-17 15:55:15
+ * Last update: 2017-12-20 19:24:56
  * 
  */
 (function webpackUniversalModuleDefinition(root, factory) {
@@ -82,7 +82,7 @@ return /******/ (function(modules) { // webpackBootstrap
 /******/ 	}
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "4dfee4957d1959e0be17"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "bde09ee527fdbc0e4b01"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
 /******/ 	
@@ -633,11 +633,11 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var _documentation2 = _interopRequireDefault(_documentation);
 
-	var _upperCaseDirective = __webpack_require__(111);
+	var _upperCaseDirective = __webpack_require__(113);
 
 	var _upperCaseDirective2 = _interopRequireDefault(_upperCaseDirective);
 
-	var _router = __webpack_require__(112);
+	var _router = __webpack_require__(114);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -1908,6 +1908,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	Object.defineProperty(exports, "__esModule", {
 	    value: true
 	});
+
+	var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
+
 	exports._events = _events;
 	exports.removeEventListeners = removeEventListeners;
 	exports.createEventObject = createEventObject;
@@ -1918,14 +1921,26 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	function _events(array) {
 	    array.forEach(function (newEvent) {
-	        newEvent.el.addEventListener(newEvent.event.toLowerCase(), newEvent.f, false);
+	        var modifiers = getEventMod(newEvent.el);
+	        newEvent.el.addEventListener(newEvent.event.toLowerCase(), newEvent.f, modifiers.indexOf('capture') > -1 ? true : false);
+	        newEvent.el.removeAttribute('ac-mod');
+	        newEvent.el.removeAttribute('ac-kmod');
 	    });
 	}
 
 	function removeEventListeners(array) {
-	    array.forEach(function (eventItem, i) {
-	        eventItem.el.removeEventListener(eventItem.event, eventItem.f, false);
+	    array.forEach(function (newEvent, i) {
+	        var modifiers = getEventMod(newEvent.el);
+	        newEvent.el.removeEventListener(newEvent.event, newEvent.f, modifiers.indexOf('capture') > -1 ? true : false);
 	    });
+	}
+
+	function getEventMod(elem) {
+	    return elem.getAttribute('ac-mod') ? elem.getAttribute('ac-mod').replace(/ +/g, "").split(',') : [];
+	}
+
+	function getKeyMod(elem) {
+	    return elem.getAttribute('ac-kmod') ? elem.getAttribute('ac-kmod').replace(/ +/g, "") : null;
 	}
 
 	function createEventObject(elem, event, context) {
@@ -1935,8 +1950,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	    elem.removeAttribute('ac-' + event);
 	    var params = funcParams.replace(/ +/g, "").split(':');
 	    var fnName = params[0];
-	    var modifiers = elem.getAttribute('ac-mod') ? elem.getAttribute('ac-mod').replace(/ +/g, "").split(',') : [];
-	    var kModifiers = elem.getAttribute('ac-kmod') ? elem.getAttribute('ac-kmod').replace(/ +/g, "") : null;
+	    var modifiers = getEventMod(elem);
+	    var kModifiers = getKeyMod(elem);
+	    var once = { state: false };
+
 	    var newEvent = {
 	        fnName: fnName,
 	        event: event,
@@ -1955,18 +1972,19 @@ return /******/ (function(modules) { // webpackBootstrap
 	            }
 
 	            if (_this[functionName]) {
-	                callModifiers.call(_this, modifiers, e);
-	                if (kModifiers) {
-	                    callKModifiers.call(_this, e, kModifiers, function () {
-	                        var _functionName;
+	                callModifiers.call(_this, modifiers, e, elem, once).subscribe(function (res) {
+	                    if (kModifiers) {
+	                        callKModifiers.call(_this, e, kModifiers, function () {
+	                            var _functionName;
 
-	                        (_functionName = _this[functionName]).call.apply(_functionName, [_this, e].concat(args));
-	                    });
-	                } else {
-	                    var _functionName2;
+	                            (_functionName = _this[functionName]).call.apply(_functionName, [_this, e].concat(args));
+	                        });
+	                    } else {
+	                        var _functionName2;
 
-	                    (_functionName2 = _this[functionName]).call.apply(_functionName2, [_this, e].concat(args));
-	                }
+	                        (_functionName2 = _this[functionName]).call.apply(_functionName2, [_this, e].concat(args));
+	                    }
+	                });
 	            } else {
 	                console.warn('You have no function in your component');
 	            }
@@ -1981,6 +1999,45 @@ return /******/ (function(modules) { // webpackBootstrap
 	    prevent: prevent
 	};
 
+	function stop(e) {
+	    e.stopPropagation();
+	}
+
+	function prevent(e) {
+	    e.preventDefault();
+	}
+
+	function callModifiers(modifiers, event, elem, once) {
+	    modifiers.forEach(function (mod) {
+	        if (modifierCode[mod]) {
+	            modifierCode[mod](event, elem);
+	        }
+	        // else {
+	        //     console.warn(this.constructor.name + '; Unknown modifier');
+	        // }
+	    });
+
+	    function selfModifier(f) {
+	        if (modifiers.indexOf('self') > -1 && event.target.isEqualNode(elem)) {
+	            once.state = true; // change only when event was fired
+	            f.call(this);
+	        } else if (modifiers.indexOf('self') === -1) {
+	            once.state = true; // change only when event was fired
+	            f.call(this);
+	        }
+	    }
+
+	    return {
+	        subscribe: function subscribe(f) {
+	            if (modifiers.indexOf('once') > -1 && !once.state) {
+	                selfModifier(f);
+	            } else if (modifiers.indexOf('once') === -1) {
+	                selfModifier(f);
+	            }
+	        }
+	    };
+	}
+
 	var keyCodes = {
 	    esc: 27,
 	    tab: 9,
@@ -1993,30 +2050,12 @@ return /******/ (function(modules) { // webpackBootstrap
 	    'delete': [8, 46]
 	};
 
-	function callModifiers(modifiers, event) {
-	    var _this2 = this;
-
-	    modifiers.forEach(function (mod) {
-	        if (modifierCode[mod]) {
-	            modifierCode[mod](event);
-	        } else {
-	            throw new Error(_this2.constructor.name + '; Unknown modifier');
-	        }
-	    });
-	}
-
 	function callKModifiers(e, modifiers, cb) {
-	    if (e.keyCode === keyCodes[modifiers]) {
+	    if (typeof keyCodes[modifiers] === 'number' && e.keyCode === keyCodes[modifiers]) {
+	        cb.call();
+	    } else if (_typeof(keyCodes[modifiers]) === 'object' && keyCodes[modifiers].indexOf(e.keyCode) > -1) {
 	        cb.call();
 	    }
-	}
-
-	function stop(e) {
-	    e.stopPropagation();
-	}
-
-	function prevent(e) {
-	    e.preventDefault();
 	}
 
 /***/ }),
@@ -3030,7 +3069,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    var rootEl = document.querySelectorAll(options.root.selector)[0];
 	    if (rootEl) {
 	        var rootComponent = new options.root(rootEl);
-	        rootComponent.root.setAttribute('ac-version', ("0.5.7"));
+	        rootComponent.root.setAttribute('ac-version', ("0.5.8"));
 	    } else {
 	        console.warn('There is no root component');
 	    }
@@ -4355,7 +4394,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	    selector: 'app-tree-debug',
 	    template: _treeComponent2.default,
 	    props: {
-	        components: []
+	        components: [],
+	        visible: true
 	    },
 	    hostHidden: 'visible'
 	}), _dec(_class = function () {
@@ -4417,7 +4457,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	"use strict";
 
-	module.exports = "<button @click=\"load\">Load</button>\r\n<app-tree-item-debug ac-for=\"components\"></app-tree-item-debug>\r\n<style>\r\napp-tree-item-debug {\r\n    display: block;\r\n    padding: 5px 0;\r\n}\r\n\r\napp-tree-item-debug.children {\r\n    padding-left: 25px;\r\n}\r\n\r\n.toggle-btn {\r\n    background: #000;\r\n    border-radius: 100%;\r\n    cursor: pointer;\r\n    width: 12px;\r\n    height: 12px;\r\n\r\n    display: inline-block;\r\n    position: absolute;\r\n    left: -22px;\r\n}\r\n\r\n.toggle-btn.active {\r\n    background: #ccc;\r\n}\r\n.has-children {\r\n\tcursor: pointer;\r\n}\r\n</style>";
+	module.exports = "<button @click=\"load\">Load</button>\r\n<app-tree-item-debug ac-for=\"components\"></app-tree-item-debug>\r\n<style>\r\napp-tree-item-debug {\r\n    display: block;\r\n    padding: 5px 0;\r\n}\r\n\r\napp-tree-item-debug.children {\r\n    padding-left: 25px;\r\n}\r\n\r\n.toggle-btn {\r\n    cursor: pointer;\r\n    width: 12px;\r\n    height: 12px;\r\n    display: inline-block;\r\n    position: absolute;\r\n    left: -22px;\r\n}\r\n.toggle-btn:before {\r\n    content: '\\25B6';\r\n    color: #757575;\r\n}\r\n.toggle-btn.active:before {\r\n    content: '\\25BC';\r\n    color: #757575;\r\n}\r\n\r\n.has-children {\r\n\tcursor: pointer;\r\n}\r\n</style>";
 
 /***/ }),
 /* 56 */
@@ -5535,21 +5575,23 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var _docForms = __webpack_require__(96);
 
-	var _docModules = __webpack_require__(98);
+	var _docEvents = __webpack_require__(98);
 
-	var _docSmartObject = __webpack_require__(100);
+	var _docModules = __webpack_require__(100);
 
-	var _docHowTo = __webpack_require__(102);
+	var _docSmartObject = __webpack_require__(102);
 
-	var _docRouterConfig = __webpack_require__(104);
+	var _docHowTo = __webpack_require__(104);
 
-	var _docHttpModule = __webpack_require__(106);
+	var _docRouterConfig = __webpack_require__(106);
 
-	var _docHttpMethods = __webpack_require__(108);
+	var _docHttpModule = __webpack_require__(108);
 
-	var _exampleChild = __webpack_require__(110);
+	var _docHttpMethods = __webpack_require__(110);
 
-	exports.default = [_documentation.DocumentationComponent, _docQuickStart.DocQuickStartComponent, _docArchitecture.DocArchitectureComponent, _docHowTo.DocHowToComponent, _docComponent.DocComponentComponent, _docLifecycle.DocLifecycleComponent, _docUtils.DocUtilsComponent, _directives.DocDirectivesComponent, _customDirectives.DocCustomDirectivesComponent, _docInterpolation.DocInterpolationComponent, _docConditional.DocConditionalComponent, _docForms.DocFormsComponent, _docModules.DocModulesComponent, _docSmartObject.DocSmartObjectComponent, _docRouterConfig.DocRouterConfigComponent, _docHttpModule.HttpModuleComponent, _docHttpMethods.HttpMethodsComponent, _exampleChild.ExampleChildComponent];
+	var _exampleChild = __webpack_require__(112);
+
+	exports.default = [_documentation.DocumentationComponent, _docQuickStart.DocQuickStartComponent, _docArchitecture.DocArchitectureComponent, _docHowTo.DocHowToComponent, _docComponent.DocComponentComponent, _docLifecycle.DocLifecycleComponent, _docUtils.DocUtilsComponent, _directives.DocDirectivesComponent, _customDirectives.DocCustomDirectivesComponent, _docInterpolation.DocInterpolationComponent, _docConditional.DocConditionalComponent, _docForms.DocFormsComponent, _docEvents.DocEventsComponent, _docModules.DocModulesComponent, _docSmartObject.DocSmartObjectComponent, _docRouterConfig.DocRouterConfigComponent, _docHttpModule.HttpModuleComponent, _docHttpMethods.HttpMethodsComponent, _exampleChild.ExampleChildComponent];
 
 /***/ }),
 /* 75 */
@@ -5594,7 +5636,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	            // });
 
 	            this.props.set({
-	                version: ("0.5.7"),
+	                version: ("0.5.8"),
 	                'categories': [{
 	                    name: 'Getting started',
 	                    items: [{
@@ -6286,6 +6328,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	                var res = this.props.form.value;
 	            }
 	        }
+	    }, {
+	        key: 'keyup',
+	        value: function keyup() {
+	            console.log(213);
+	        }
 	    }]);
 
 	    return DocFormsComponent;
@@ -6308,6 +6355,45 @@ return /******/ (function(modules) { // webpackBootstrap
 	Object.defineProperty(exports, "__esModule", {
 	    value: true
 	});
+	exports.DocEventsComponent = undefined;
+
+	var _dec, _class;
+
+	var _core = __webpack_require__(6);
+
+	var _docEventsComponent = __webpack_require__(99);
+
+	var _docEventsComponent2 = _interopRequireDefault(_docEventsComponent);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	var DocEventsComponent = exports.DocEventsComponent = (_dec = _core.Decorators.ComponentDecorator({
+	    selector: 'app-documentation-events',
+	    template: _docEventsComponent2.default,
+	    props: {}
+	}), _dec(_class = function DocEventsComponent() {
+	    _classCallCheck(this, DocEventsComponent);
+	}) || _class);
+
+/***/ }),
+/* 99 */
+/***/ (function(module, exports) {
+
+	"use strict";
+
+	module.exports = "<h3>Events</h3>\r\n<div class=\"section-title\">ac-mod</div>\r\n\r\n<div class=\"code-block\">\r\n    <pre><span><</span>input <b>ac-if</b>=\"<span class=\"attr\">props.isVisible</span>\" <b>ac-mod</b>=\"<span class=\"attr\">prevent, stop, once, self, capture</span>\"><span class=\"text\"></span></pre>\r\n</div>\r\n\r\n<div class=\"block\">\r\n    <b class=\"title\">ac-key=\"stop\"</b>\r\n    <div class=\"text\">\r\n        The event's propagation <b>will be stopped </b>\r\n    </div>\r\n</div>\r\n<div class=\"block\">\r\n    <b class=\"title\">ac-key=\"prevent\"</b>\r\n    <div class=\"text\">\r\n        The submit event <b>will no longer reload the page</b>\r\n    </div>\r\n</div>\r\n<div class=\"block\">\r\n    <b class=\"title\">ac-key=\"once\"</b>\r\n    <div class=\"text\">\r\n        The event will be triggered <b>once</b>, further triggering will be ignored\r\n    </div>\r\n</div>\r\n<div class=\"block\">\r\n    <b class=\"title\">ac-key=\"self\"</b>\r\n    <div class=\"text\">\r\n        The event will be triggered if <b>event.target is the element itself</b>\r\n    </div>\r\n</div>\r\n<div class=\"block\">\r\n    <b class=\"title\">ac-key=\"capture\"</b>\r\n    <div class=\"text\">\r\n        Equals to <b>element.addEventListener('event', function(){}, true);</b>\r\n    </div>\r\n</div>\r\n\r\n<div class=\"text\"></div>\r\n\r\n<div class=\"section-title\">ac-keymod</div>\r\n\r\n<div class=\"code-block\">\r\n    <pre><span><</span>input <b>ac-if</b>=\"<span class=\"attr\">props.isVisible</span>\" <b>ac-mod</b>=\"<span class=\"attr\">prevent, stop, once, self, capture</span>\"><span class=\"text\"></span></pre>\r\n</div>\r\n\r\n<div class=\"block\">\r\n    <b class=\"title\">ac-keymod=\"enter\"</b>\r\n    <div class=\"text\">\r\n        The event's will be triggered if <b>event.keyCode = '13'</b>\r\n    </div>\r\n</div>\r\n<div class=\"text\">Full list of key modifier aliases:</div>\r\n<ol style=\"padding-left: 15px;list-style: disc\">\r\n    <li>esc</li>\r\n    <li>tab</li>\r\n    <li>enter</li>\r\n    <li>space</li>\r\n    <li>up</li>\r\n    <li>left</li>\r\n    <li>right</li>\r\n    <li>down</li>\r\n    <li>delete</li>\r\n</ol>";
+
+/***/ }),
+/* 100 */
+/***/ (function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
 	exports.DocModulesComponent = undefined;
 
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
@@ -6316,7 +6402,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var _core = __webpack_require__(6);
 
-	var _docModulesComponent = __webpack_require__(99);
+	var _docModulesComponent = __webpack_require__(101);
 
 	var _docModulesComponent2 = _interopRequireDefault(_docModulesComponent);
 
@@ -6344,7 +6430,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	}()) || _class);
 
 /***/ }),
-/* 99 */
+/* 101 */
 /***/ (function(module, exports) {
 
 	"use strict";
@@ -6352,7 +6438,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	module.exports = "<h3>Modules</h3>\r\n<span class=\"text\">To simplify <b>app.js</b> you can split your code into modules</span>\r\n<br>\r\n<span class=\"text\">Call your module as <b>index.js</b> for easier using, so then just import <b>components/documentation</b> where index.js file is.</span>\r\n\r\n<div class=\"code-block\">\r\n    <div class=\"code-header\">index.js</div>\r\n    <pre>\r\n        import {DocumentationComponent} from './documentation.component';\r\n        import {DocQuickStartComponent} from './quick-start/doc-quick-start.component';\r\n\r\n        export default [\r\n            {c: DocumentationComponent, selector: 'app-documentation'},\r\n            {c: DocQuickStartComponent, selector: 'app-documentation-quick-start'}\r\n            ...\r\n        ]\r\n</pre>\r\n</div>\r\n\r\n\r\n<div class=\"code-block\">\r\n    <div class=\"code-header\">app.js</div>\r\n    <pre>\r\n        import Docs from './components/documentation';\r\n        Register({\r\n            ...\r\n            modules: [\r\n                Docs\r\n                ...\r\n            ]\r\n            ...\r\n        });\r\n</pre>\r\n</div>\r\n";
 
 /***/ }),
-/* 100 */
+/* 102 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -6368,7 +6454,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var _core = __webpack_require__(6);
 
-	var _docSmartObjectComponent = __webpack_require__(101);
+	var _docSmartObjectComponent = __webpack_require__(103);
 
 	var _docSmartObjectComponent2 = _interopRequireDefault(_docSmartObjectComponent);
 
@@ -6396,7 +6482,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	}()) || _class);
 
 /***/ }),
-/* 101 */
+/* 103 */
 /***/ (function(module, exports) {
 
 	"use strict";
@@ -6404,7 +6490,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	module.exports = "<h3>Observables</h3>\r\n\r\n<div class=\"section-title\">Observable model</div>\r\n\r\n<div class=\"text\"><b>ObservableModel</b> - is a observable object with it's own methods.\r\n    <br>Every component has\r\n    <b>props</b> property which is ObservableModel.\r\n</div>\r\n<div class=\"text\">At first you should create ObservableModel with <b>new</b> operator, also you can use initial params</div>\r\n\r\n<div class=\"code-block\">\r\n    <div class=\"code-header\">user.store.js</div>\r\n    <pre>\r\n        import { ObservableModel } from 'framework/model'\r\n\r\n        class UserStore extends Store {\r\n            constructor() {\r\n                super();\r\n                this.user = new ObservableModel();\r\n            }\r\n        }\r\n</pre>\r\n</div>\r\n\r\n<div class=\"block\">\r\n    <b class=\"title\">sub(()=> {})</b>\r\n    <span class=\"text\">Creates a subscriber that watch any changes of ObservableModel</span>\r\n</div>\r\n\r\n<div class=\"block\">\r\n    <b class=\"title\">set('name', 'New value')</b>\r\n    <span class=\"text\">Set new value</span>\r\n</div>\r\n\r\n<div class=\"block\">\r\n    <b class=\"title\">get('name')</b>\r\n    <span class=\"text\">Get value from by <b>name</b> prop</span>\r\n</div>\r\n\r\n<div class=\"block\">\r\n    <b class=\"title\">save(params)</b>\r\n    <span class=\"text\">Is used for updating of object bu id</span>\r\n</div>\r\n\r\n\r\n\r\n<div class=\"section-title\">Observable collection</div>";
 
 /***/ }),
-/* 102 */
+/* 104 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -6420,7 +6506,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var _core = __webpack_require__(6);
 
-	var _docHowToComponent = __webpack_require__(103);
+	var _docHowToComponent = __webpack_require__(105);
 
 	var _docHowToComponent2 = _interopRequireDefault(_docHowToComponent);
 
@@ -6450,7 +6536,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	}()) || _class);
 
 /***/ }),
-/* 103 */
+/* 105 */
 /***/ (function(module, exports) {
 
 	"use strict";
@@ -6458,7 +6544,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	module.exports = "<h3>How to install</h3>\r\n<div class=\"text\">To add AceJs framework to your node_modules</div>\r\n<div class=\"code-block\">\r\n    <pre>\r\n    <b>npm i ace-js</b>\r\n</pre>\r\n</div>\r\n<div class=\"text\">Now you can develop your application with AceJs</div>\r\n<div class=\"code-block\">\r\n    <pre>\r\n\tlet <b>AceJs</b> = require('ace-js');\r\n\tor\r\n\timport {...} from 'ace-js';\r\n</pre>\r\n</div>\r\n<!--     <b>npm i</b> - install all node modules\r\n    <b>npm run dev</b> - starts the dev server\r\n    <b>npm run prod</b> - creates production index.js bundle -->";
 
 /***/ }),
-/* 104 */
+/* 106 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -6474,7 +6560,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var _core = __webpack_require__(6);
 
-	var _docRouterConfigComponent = __webpack_require__(105);
+	var _docRouterConfigComponent = __webpack_require__(107);
 
 	var _docRouterConfigComponent2 = _interopRequireDefault(_docRouterConfigComponent);
 
@@ -6502,7 +6588,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	}()) || _class);
 
 /***/ }),
-/* 105 */
+/* 107 */
 /***/ (function(module, exports) {
 
 	"use strict";
@@ -6510,7 +6596,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	module.exports = "<h3>Router config</h3>\r\n<div class=\"text\">To run router you should create <b>_router.js</b> config file, where describes rules for navigation\r\n</div>\r\n\r\n<div class=\"block\">\r\n    <b class=\"title\">path</b>\r\n    <span class=\"text\">current route compares with path, and if they match then component is rendered</span>\r\n</div>\r\n\r\n<div class=\"block\">\r\n    <b class=\"title\">component</b>\r\n    <span class=\"text\">defines what router should to show</span>\r\n</div>\r\n\r\n<div class=\"block\">\r\n    <b class=\"title\">children</b>\r\n    <span class=\"text\">specifies all the child routes activated under the current route</span>\r\n</div>\r\n\r\n\r\n<div class=\"block\">\r\n    <b class=\"title\">{path: <b>'/'</b>, component: 'app-home'}</b>\r\n    <span class=\"text\">leeds to <b>root</b> page</span>\r\n</div>\r\n\r\n<div class=\"block\">\r\n    <b class=\"title\">{path: <b>'example/:id'</b>, component: 'app-example-page'}</b>\r\n    <span class=\"text\">leeds to example page with <b>':id'</b> param</span>\r\n</div>\r\n\r\n<div class=\"block\">\r\n    <b class=\"title\"> {\r\n        path: <b>'parent'</b>,\r\n        component: 'app-parent-component'}  </b>\r\n    <span class=\"text\">leeds to page <b>parent</b> with children</span>\r\n</div>\r\n\r\n<div class=\"block\">\r\n    <b class=\"title\">\r\n        {path: <b>''</b>, component: 'app-child-root}\r\n    </b>\r\n    <span class=\"text\">root child route</span>\r\n</div>\r\n\r\n<div class=\"block\">\r\n    <b class=\"title\">\r\n        {path: <b>'child-component'</b>, component: 'app-child-one'}\r\n    </b>\r\n    <span class=\"text\">shows <b>child-component</b> component inside parent component</span>\r\n</div>\r\n\r\n<div class=\"block\">\r\n    <b class=\"title\">\r\n        {path: '404', component: <b>'app-not-found'</b>}\r\n    </b>\r\n    <span class=\"text\">leeds to <b>'not found page'</b></span>\r\n</div>\r\n\r\n<br>\r\n<div class=\"code-block\">\r\n    <div class=\"code-header\">_router.js</div>\r\n    <pre>\r\n\r\n    export let Routes = [\r\n    {path: <b>'/'</b>, component: 'app-home'},\r\n    {path: <b>'example/:id'</b>, component: 'app-example-page'},\r\n    {\r\n            path: <b>'parent'</b>,\r\n            component: 'app-parent-component',\r\n            children: [\r\n                {path: <b>'/'</b>, component: 'app-child-root},\r\n                {path: <b>'child-component'</b>, component: 'app-child-one'}\r\n            ]\r\n        },\r\n        {path: '404', component: <b>'app-not-found'</b>}\r\n    ];\r\n</pre>\r\n</div>\r\n";
 
 /***/ }),
-/* 106 */
+/* 108 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -6526,7 +6612,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var _core = __webpack_require__(6);
 
-	var _docHttpModuleComponent = __webpack_require__(107);
+	var _docHttpModuleComponent = __webpack_require__(109);
 
 	var _docHttpModuleComponent2 = _interopRequireDefault(_docHttpModuleComponent);
 
@@ -6554,7 +6640,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	}()) || _class);
 
 /***/ }),
-/* 107 */
+/* 109 */
 /***/ (function(module, exports) {
 
 	"use strict";
@@ -6562,7 +6648,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	module.exports = "<h3>Http module</h3>\r\n\r\n<div class=\"text\"><b>Http module</b> is part <b>core</b> module.</div>\r\n<div class=\"text\">To use this module you should <b>import {Http} from 'ace-js'</b></div>";
 
 /***/ }),
-/* 108 */
+/* 110 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -6578,7 +6664,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var _core = __webpack_require__(6);
 
-	var _docHttpMethodsComponent = __webpack_require__(109);
+	var _docHttpMethodsComponent = __webpack_require__(111);
 
 	var _docHttpMethodsComponent2 = _interopRequireDefault(_docHttpMethodsComponent);
 
@@ -6615,7 +6701,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	}()) || _class);
 
 /***/ }),
-/* 109 */
+/* 111 */
 /***/ (function(module, exports) {
 
 	"use strict";
@@ -6623,7 +6709,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	module.exports = "<h3>Http methods</h3>\r\n<div>Add <b>import {Http} from 'ace-js'</b> to your component, then</div>\r\n<div class=\"block\">\r\n    <b class=\"title\">GET</b>\r\n    <div class=\"text\">\r\n        <div>Http.get(url).then(response=>{ })</div>\r\n        <br>\r\n        Example: \r\n        <button @click=\"getWeater\">Get weater info</button>\r\n        <div ac-if=\"this.weather\"> \r\n            City: <b ac-value=\"props.weather.name\"></b>\r\n            <br>\r\n            Temp: <b ac-value=\"props.weather.main.temp\"></b> C\r\n            <br>\r\n            Wind: <b ac-value=\"props.weather.wind.speed\"></b> m/s\r\n        </div>\r\n    </div>\r\n</div>\r\n<div class=\"block\">\r\n    <b class=\"title\">POST</b>\r\n    <div class=\"text\"><div>Http.post(url, params).then(response=>{ })</div></div>\r\n</div>\r\n<div class=\"block\">\r\n    <b class=\"title\">PUT</b>\r\n    <div class=\"text\"> <div>Http.put(url, params).then(response=>{ })</div></div>\r\n</div>\r\n<div class=\"block\">\r\n    <b class=\"title\">DELETE</b>\r\n    <div class=\"text\"> <div>Http.delete(url).then(response=>{ })</div></div>\r\n</div>\r\n\r\n<div class=\"section-title\">Interceptors</div>\r\n<div class=\"text\">In your code you can use interceptors to add your own logic</div>\r\n<div class=\"code-block\">\r\n    <div class=\"code-header\">example.component.js</div>\r\n    <pre>\r\n        import { Component, Http } from 'ace-js';\r\n        import Tpl from './root.component.html';\r\n        import NotificaitonsStore from 'stores/notifications.store';\r\n        import UserStore from 'stores/user.store'\r\n        export class ExampleComponent extends Component {\r\n            constructor(params) {\r\n                super(params, {\r\n                    template: Tpl\r\n                });\r\n            }\r\n\r\n            onInit() {\r\n                Http.getCatalog('/catalog');\r\n                Http.onProgress(event => {\r\n                    console.log(event.loaded + ' / ' + event.total);\r\n                });\r\n                Http.onError(err => {\r\n                    switch (err.status) {\r\n                      case 401:\r\n                        UserStore.logout('auth');\r\n                        break;\r\n                      case 406:\r\n                        NotificaitonsStore.show({ type: 'error', text: err.response.message });\r\n                        UserStore.logout('auth');\r\n                        break;\r\n                      case 422:\r\n                        break;\r\n                      case 404:\r\n                        break;\r\n                      case 403:\r\n\r\n                        break;\r\n                      case 500:\r\n                      case 502:\r\n                        break;\r\n                      default:\r\n\r\n                        break;\r\n                    }\r\n                });\r\n            }\r\n        }\r\n    </pre>\r\n</div>";
 
 /***/ }),
-/* 110 */
+/* 112 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -6663,7 +6749,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	}()) || _class);
 
 /***/ }),
-/* 111 */
+/* 113 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -6707,7 +6793,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	exports.default = UpperCaseDirectove;
 
 /***/ }),
-/* 112 */
+/* 114 */
 /***/ (function(module, exports) {
 
 	'use strict';
@@ -6718,7 +6804,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	var Routes = exports.Routes = [{ path: '/', component: 'app-home' }, { path: 'controls', component: 'app-controls' }, { path: 'plugins', component: 'app-plugins' }, {
 	    path: 'documentation',
 	    component: 'app-documentation',
-	    children: [{ path: '/', component: 'app-documentation-quick-start' }, { path: 'how-to-install', component: 'app-documentation-how-to-install' }, { path: 'architecture', component: 'app-documentation-architecture' }, { path: 'component', component: 'app-documentation-component' }, { path: 'lifecycle', component: 'app-documentation-lifecycle' }, { path: 'utils', component: 'app-documentation-utils' }, { path: 'interpolation', component: 'app-documentation-interpolation' }, { path: 'directives', component: 'app-documentation-directives' }, { path: 'custom-directives', component: 'app-documentation-custom-directives' }, { path: 'conditional-rendering', component: 'app-documentation-conditional' }, { path: 'forms', component: 'app-documentation-forms' }, { path: 'modules', component: 'app-documentation-modules' }, { path: 'smart-object', component: 'app-documentation-smart-object' }, { path: 'router-config', component: 'app-documentation-router-config' }, { path: 'http-module', component: 'app-documentation-http-module' }, { path: 'http-methods', component: 'app-documentation-http-methods' }]
+	    children: [{ path: '/', component: 'app-documentation-quick-start' }, { path: 'how-to-install', component: 'app-documentation-how-to-install' }, { path: 'architecture', component: 'app-documentation-architecture' }, { path: 'component', component: 'app-documentation-component' }, { path: 'lifecycle', component: 'app-documentation-lifecycle' }, { path: 'utils', component: 'app-documentation-utils' }, { path: 'interpolation', component: 'app-documentation-interpolation' }, { path: 'directives', component: 'app-documentation-directives' }, { path: 'custom-directives', component: 'app-documentation-custom-directives' }, { path: 'conditional-rendering', component: 'app-documentation-conditional' }, { path: 'events', component: 'app-documentation-events' }, { path: 'forms', component: 'app-documentation-forms' }, { path: 'modules', component: 'app-documentation-modules' }, { path: 'smart-object', component: 'app-documentation-smart-object' }, { path: 'router-config', component: 'app-documentation-router-config' }, { path: 'http-module', component: 'app-documentation-http-module' }, { path: 'http-methods', component: 'app-documentation-http-methods' }]
 	}, { path: '404', component: 'app-not-found' // wrong route
 	}];
 

@@ -1,8 +1,8 @@
 /*!
- * ace-js 0.5.7
+ * ace-js 0.5.8
  * May be freely distributed under the MIT license 
  * Author: Bogdan Zinkevich
- * Last update: 2017-12-17 15:55:15
+ * Last update: 2017-12-20 19:24:56
  * 
  */
 (function webpackUniversalModuleDefinition(root, factory) {
@@ -82,7 +82,7 @@ return /******/ (function(modules) { // webpackBootstrap
 /******/ 	}
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "4dfee4957d1959e0be17"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "bde09ee527fdbc0e4b01"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
 /******/ 	
@@ -1772,6 +1772,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	Object.defineProperty(exports, "__esModule", {
 	    value: true
 	});
+
+	var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
+
 	exports._events = _events;
 	exports.removeEventListeners = removeEventListeners;
 	exports.createEventObject = createEventObject;
@@ -1782,14 +1785,26 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	function _events(array) {
 	    array.forEach(function (newEvent) {
-	        newEvent.el.addEventListener(newEvent.event.toLowerCase(), newEvent.f, false);
+	        var modifiers = getEventMod(newEvent.el);
+	        newEvent.el.addEventListener(newEvent.event.toLowerCase(), newEvent.f, modifiers.indexOf('capture') > -1 ? true : false);
+	        newEvent.el.removeAttribute('ac-mod');
+	        newEvent.el.removeAttribute('ac-kmod');
 	    });
 	}
 
 	function removeEventListeners(array) {
-	    array.forEach(function (eventItem, i) {
-	        eventItem.el.removeEventListener(eventItem.event, eventItem.f, false);
+	    array.forEach(function (newEvent, i) {
+	        var modifiers = getEventMod(newEvent.el);
+	        newEvent.el.removeEventListener(newEvent.event, newEvent.f, modifiers.indexOf('capture') > -1 ? true : false);
 	    });
+	}
+
+	function getEventMod(elem) {
+	    return elem.getAttribute('ac-mod') ? elem.getAttribute('ac-mod').replace(/ +/g, "").split(',') : [];
+	}
+
+	function getKeyMod(elem) {
+	    return elem.getAttribute('ac-kmod') ? elem.getAttribute('ac-kmod').replace(/ +/g, "") : null;
 	}
 
 	function createEventObject(elem, event, context) {
@@ -1799,8 +1814,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	    elem.removeAttribute('ac-' + event);
 	    var params = funcParams.replace(/ +/g, "").split(':');
 	    var fnName = params[0];
-	    var modifiers = elem.getAttribute('ac-mod') ? elem.getAttribute('ac-mod').replace(/ +/g, "").split(',') : [];
-	    var kModifiers = elem.getAttribute('ac-kmod') ? elem.getAttribute('ac-kmod').replace(/ +/g, "") : null;
+	    var modifiers = getEventMod(elem);
+	    var kModifiers = getKeyMod(elem);
+	    var once = { state: false };
+
 	    var newEvent = {
 	        fnName: fnName,
 	        event: event,
@@ -1819,18 +1836,19 @@ return /******/ (function(modules) { // webpackBootstrap
 	            }
 
 	            if (_this[functionName]) {
-	                callModifiers.call(_this, modifiers, e);
-	                if (kModifiers) {
-	                    callKModifiers.call(_this, e, kModifiers, function () {
-	                        var _functionName;
+	                callModifiers.call(_this, modifiers, e, elem, once).subscribe(function (res) {
+	                    if (kModifiers) {
+	                        callKModifiers.call(_this, e, kModifiers, function () {
+	                            var _functionName;
 
-	                        (_functionName = _this[functionName]).call.apply(_functionName, [_this, e].concat(args));
-	                    });
-	                } else {
-	                    var _functionName2;
+	                            (_functionName = _this[functionName]).call.apply(_functionName, [_this, e].concat(args));
+	                        });
+	                    } else {
+	                        var _functionName2;
 
-	                    (_functionName2 = _this[functionName]).call.apply(_functionName2, [_this, e].concat(args));
-	                }
+	                        (_functionName2 = _this[functionName]).call.apply(_functionName2, [_this, e].concat(args));
+	                    }
+	                });
 	            } else {
 	                console.warn('You have no function in your component');
 	            }
@@ -1845,6 +1863,45 @@ return /******/ (function(modules) { // webpackBootstrap
 	    prevent: prevent
 	};
 
+	function stop(e) {
+	    e.stopPropagation();
+	}
+
+	function prevent(e) {
+	    e.preventDefault();
+	}
+
+	function callModifiers(modifiers, event, elem, once) {
+	    modifiers.forEach(function (mod) {
+	        if (modifierCode[mod]) {
+	            modifierCode[mod](event, elem);
+	        }
+	        // else {
+	        //     console.warn(this.constructor.name + '; Unknown modifier');
+	        // }
+	    });
+
+	    function selfModifier(f) {
+	        if (modifiers.indexOf('self') > -1 && event.target.isEqualNode(elem)) {
+	            once.state = true; // change only when event was fired
+	            f.call(this);
+	        } else if (modifiers.indexOf('self') === -1) {
+	            once.state = true; // change only when event was fired
+	            f.call(this);
+	        }
+	    }
+
+	    return {
+	        subscribe: function subscribe(f) {
+	            if (modifiers.indexOf('once') > -1 && !once.state) {
+	                selfModifier(f);
+	            } else if (modifiers.indexOf('once') === -1) {
+	                selfModifier(f);
+	            }
+	        }
+	    };
+	}
+
 	var keyCodes = {
 	    esc: 27,
 	    tab: 9,
@@ -1857,30 +1914,12 @@ return /******/ (function(modules) { // webpackBootstrap
 	    'delete': [8, 46]
 	};
 
-	function callModifiers(modifiers, event) {
-	    var _this2 = this;
-
-	    modifiers.forEach(function (mod) {
-	        if (modifierCode[mod]) {
-	            modifierCode[mod](event);
-	        } else {
-	            throw new Error(_this2.constructor.name + '; Unknown modifier');
-	        }
-	    });
-	}
-
 	function callKModifiers(e, modifiers, cb) {
-	    if (e.keyCode === keyCodes[modifiers]) {
+	    if (typeof keyCodes[modifiers] === 'number' && e.keyCode === keyCodes[modifiers]) {
+	        cb.call();
+	    } else if (_typeof(keyCodes[modifiers]) === 'object' && keyCodes[modifiers].indexOf(e.keyCode) > -1) {
 	        cb.call();
 	    }
-	}
-
-	function stop(e) {
-	    e.stopPropagation();
-	}
-
-	function prevent(e) {
-	    e.preventDefault();
 	}
 
 /***/ }),
@@ -2894,7 +2933,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    var rootEl = document.querySelectorAll(options.root.selector)[0];
 	    if (rootEl) {
 	        var rootComponent = new options.root(rootEl);
-	        rootComponent.root.setAttribute('ac-version', ("0.5.7"));
+	        rootComponent.root.setAttribute('ac-version', ("0.5.8"));
 	    } else {
 	        console.warn('There is no root component');
 	    }
@@ -4219,7 +4258,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	    selector: 'app-tree-debug',
 	    template: _treeComponent2.default,
 	    props: {
-	        components: []
+	        components: [],
+	        visible: true
 	    },
 	    hostHidden: 'visible'
 	}), _dec(_class = function () {
@@ -4281,7 +4321,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	"use strict";
 
-	module.exports = "<button @click=\"load\">Load</button>\r\n<app-tree-item-debug ac-for=\"components\"></app-tree-item-debug>\r\n<style>\r\napp-tree-item-debug {\r\n    display: block;\r\n    padding: 5px 0;\r\n}\r\n\r\napp-tree-item-debug.children {\r\n    padding-left: 25px;\r\n}\r\n\r\n.toggle-btn {\r\n    background: #000;\r\n    border-radius: 100%;\r\n    cursor: pointer;\r\n    width: 12px;\r\n    height: 12px;\r\n\r\n    display: inline-block;\r\n    position: absolute;\r\n    left: -22px;\r\n}\r\n\r\n.toggle-btn.active {\r\n    background: #ccc;\r\n}\r\n.has-children {\r\n\tcursor: pointer;\r\n}\r\n</style>";
+	module.exports = "<button @click=\"load\">Load</button>\r\n<app-tree-item-debug ac-for=\"components\"></app-tree-item-debug>\r\n<style>\r\napp-tree-item-debug {\r\n    display: block;\r\n    padding: 5px 0;\r\n}\r\n\r\napp-tree-item-debug.children {\r\n    padding-left: 25px;\r\n}\r\n\r\n.toggle-btn {\r\n    cursor: pointer;\r\n    width: 12px;\r\n    height: 12px;\r\n    display: inline-block;\r\n    position: absolute;\r\n    left: -22px;\r\n}\r\n.toggle-btn:before {\r\n    content: '\\25B6';\r\n    color: #757575;\r\n}\r\n.toggle-btn.active:before {\r\n    content: '\\25BC';\r\n    color: #757575;\r\n}\r\n\r\n.has-children {\r\n\tcursor: pointer;\r\n}\r\n</style>";
 
 /***/ }),
 /* 56 */
