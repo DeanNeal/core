@@ -37,5 +37,9 @@ export class DocFormsComponent {
 
     }
 
+    keyup() {
+        console.log(213);
+    }
+
 
 }

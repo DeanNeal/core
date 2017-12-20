@@ -1,0 +1,64 @@
+<h3>Events</h3>
+<div class="section-title">ac-mod</div>
+
+<div class="code-block">
+    <pre><span><</span>input <b>ac-if</b>="<span class="attr">props.isVisible</span>" <b>ac-mod</b>="<span class="attr">prevent, stop, once, self, capture</span>"><span class="text"></span></pre>
+</div>
+
+<div class="block">
+    <b class="title">ac-key="stop"</b>
+    <div class="text">
+        The event's propagation <b>will be stopped </b>
+    </div>
+</div>
+<div class="block">
+    <b class="title">ac-key="prevent"</b>
+    <div class="text">
+        The submit event <b>will no longer reload the page</b>
+    </div>
+</div>
+<div class="block">
+    <b class="title">ac-key="once"</b>
+    <div class="text">
+        The event will be triggered <b>once</b>, further triggering will be ignored
+    </div>
+</div>
+<div class="block">
+    <b class="title">ac-key="self"</b>
+    <div class="text">
+        The event will be triggered if <b>event.target is the element itself</b>
+    </div>
+</div>
+<div class="block">
+    <b class="title">ac-key="capture"</b>
+    <div class="text">
+        Equals to <b>element.addEventListener('event', function(){}, true);</b>
+    </div>
+</div>
+
+<div class="text"></div>
+
+<div class="section-title">ac-keymod</div>
+
+<div class="code-block">
+    <pre><span><</span>input <b>ac-if</b>="<span class="attr">props.isVisible</span>" <b>ac-mod</b>="<span class="attr">prevent, stop, once, self, capture</span>"><span class="text"></span></pre>
+</div>
+
+<div class="block">
+    <b class="title">ac-keymod="enter"</b>
+    <div class="text">
+        The event's will be triggered if <b>event.keyCode = '13'</b>
+    </div>
+</div>
+<div class="text">Full list of key modifier aliases:</div>
+<ol style="padding-left: 15px;list-style: disc">
+    <li>esc</li>
+    <li>tab</li>
+    <li>enter</li>
+    <li>space</li>
+    <li>up</li>
+    <li>left</li>
+    <li>right</li>
+    <li>down</li>
+    <li>delete</li>
+</ol>

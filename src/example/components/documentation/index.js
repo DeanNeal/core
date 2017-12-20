@@ -11,6 +11,8 @@ import {DocCustomDirectivesComponent} from './custom-directives/custom-directive
 import {DocInterpolationComponent} from './interpolation/doc-interpolation.component';
 import {DocConditionalComponent} from './conditional/doc-conditional.component';
 import {DocFormsComponent} from './forms/doc-forms.component';
+import {DocEventsComponent} from './events/doc-events.component';
+
 
 import {DocModulesComponent} from './modules/doc-modules.component';
 import {DocSmartObjectComponent} from './smart-object/doc-smart-object.component';
@@ -35,6 +37,7 @@ export default [
     DocInterpolationComponent,
     DocConditionalComponent,
     DocFormsComponent,
+    DocEventsComponent,
 
 
     DocModulesComponent,

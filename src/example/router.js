@@ -16,6 +16,7 @@ export let Routes = [
             { path: 'directives', component: 'app-documentation-directives' },
             { path: 'custom-directives', component: 'app-documentation-custom-directives'},
             { path: 'conditional-rendering', component: 'app-documentation-conditional' },
+            { path: 'events', component: 'app-documentation-events'},
             { path: 'forms', component: 'app-documentation-forms'},
             { path: 'modules', component: 'app-documentation-modules' },
             { path: 'smart-object', component: 'app-documentation-smart-object' },

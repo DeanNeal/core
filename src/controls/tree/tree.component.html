@@ -11,20 +11,22 @@ app-tree-item-debug.children {
 }
 
 .toggle-btn {
-    background: #000;
-    border-radius: 100%;
     cursor: pointer;
     width: 12px;
     height: 12px;
-
     display: inline-block;
     position: absolute;
     left: -22px;
 }
-
-.toggle-btn.active {
-    background: #ccc;
+.toggle-btn:before {
+    content: '\25B6';
+    color: #757575;
 }
+.toggle-btn.active:before {
+    content: '\25BC';
+    color: #757575;
+}
+
 .has-children {
 	cursor: pointer;
 }

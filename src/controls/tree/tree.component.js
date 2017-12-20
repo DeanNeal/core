@@ -6,7 +6,8 @@ import Tpl from './tree.component.html';
     selector: 'app-tree-debug',
     template: Tpl,
     props: {
-        components: []
+        components: [],
+        visible: true
     },
     hostHidden: 'visible'
 })
