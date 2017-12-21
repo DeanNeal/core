@@ -22,7 +22,7 @@ export class Component {
             value: Object.assign({}, options),
             writable: false
         });
-        
+
         Object.defineProperty(this, 'tpl', { value: options.template || 'Empty template', writable: false });
         Object.defineProperty(this, 'props', { value: new ObservableModel(Object.assign({}, options.props)), writable: false });
 
@@ -31,16 +31,16 @@ export class Component {
 
         Object.defineProperty(this, '$refs', { value: {}, writable: false });
 
-         for (let i = 0; i < root.attributes.length; i++) {
-             attrs[root.attributes[i].nodeName] = root.attributes[i].nodeValue
-         }
+        for (let i = 0; i < root.attributes.length; i++) {
+            attrs[root.attributes[i].nodeName] = root.attributes[i].nodeValue
+        }
 
         Object.defineProperty(this, '$attrs', { value: attrs, writable: false });
         // Object.defineProperty(this, '$routerSub', { value: null, writable: true });
 
         this.root.COMPONENT = this;
 
-        if(this instanceof Component.root.class) {
+        if (this instanceof Component.root.class) {
             Component.rootInstance = this;
         }
 
@@ -73,7 +73,7 @@ export class Component {
         PRIVATES.COMPUTED.set(this, options.computed);
 
         Component.CUSTOM_DIRECTIVES.forEach((directive) => {
-            if(!PRIVATES.CUSTOM_DIRECTIVES[directive.params.selector]){
+            if (!PRIVATES.CUSTOM_DIRECTIVES[directive.params.selector]) {
                 PRIVATES.CUSTOM_DIRECTIVES[directive.params.selector] = new WeakMap();
             }
             PRIVATES.CUSTOM_DIRECTIVES[directive.params.selector].set(this, []);
@@ -81,7 +81,7 @@ export class Component {
 
 
         // console.log(PRIVATES.CUSTOM_DIRECTIVES, this);
-        
+
         // this.$interpolationArray = [];
     }
 
@@ -111,8 +111,8 @@ export class Component {
         //custom directives
         Component.CUSTOM_DIRECTIVES.forEach((Directive) => {
             let array = Directives._init.call(this, this.root, Directive.params.selector, PRIVATES.CUSTOM_DIRECTIVES[Directive.params.selector]);
-            if(array){
-                array.get(this).map(item=>{
+            if (array) {
+                array.get(this).map(item => {
                     item.directive = new Directive(item.elem);
                 });
             }
@@ -147,7 +147,7 @@ export class Component {
             Directives._hostClasses.call(this, PRIVATES.HOST.CLASS.get(this));
             Directives._hostStyles.call(this, PRIVATES.HOST.STYLE.get(this));
             Directives._hostHidden.call(this, PRIVATES.HOST.HIDDEN.get(this));
-            
+
 
             // Interpolation.interpolationRun.call(this, this.$interpolationArray);
 
@@ -163,7 +163,7 @@ export class Component {
                 components.forEach(r => {
                     if (!r.COMPONENT) { // don't reinitialize
                         let a = new comp(r, {}, this);
-                        if(!this.children[a.constructor.name]) {
+                        if (!this.children[a.constructor.name]) {
                             this.children[a.constructor.name] = [];
                             this.children[a.constructor.name].push(a);
                         }
@@ -177,7 +177,7 @@ export class Component {
         let router = this.root.querySelectorAll('route-switcher')[0];
         if (router) {
             let newComp = new RouteSwitcher(router, this);
-            if(!this.children[newComp.constructor.name]) {
+            if (!this.children[newComp.constructor.name]) {
                 this.children[newComp.constructor.name] = [];
                 this.children[newComp.constructor.name].push(newComp);
             }
@@ -245,7 +245,7 @@ export class Component {
 
         if (parentName) {
             this.getParentComponent(parentName).dispatchEvent(myEvent);
-        } else {
+        } else if (this.root) {
             this.root.dispatchEvent(myEvent);
         }
     }
@@ -262,10 +262,10 @@ export class Component {
     destroy() {
         // remove all event listeners
         this.onDestroy();
-        if(this.$propsSub) {
+        if (this.$propsSub) {
             this.$propsSub.unsubscribe();
         }
-        
+
         Directives.removeEventListeners.call(this, PRIVATES.EVENTS.get(this));
 
         //unsubscribe from router changes
@@ -279,6 +279,10 @@ export class Component {
 
         // this.root.remove();
         this.root = null;
+    }
+
+    INPUT() {
+
     }
 
     onDestroy() {
