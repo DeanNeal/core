@@ -1,8 +1,8 @@
 /*!
- * ace-js 0.5.8
+ * ace-js 0.5.9
  * May be freely distributed under the MIT license 
  * Author: Bogdan Zinkevich
- * Last update: 2017-12-20 19:24:56
+ * Last update: 2017-12-21 10:21:35
  * 
  */
 (function webpackUniversalModuleDefinition(root, factory) {
@@ -82,7 +82,7 @@ return /******/ (function(modules) { // webpackBootstrap
 /******/ 	}
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "bde09ee527fdbc0e4b01"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "2068b75e003504387432"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
 /******/ 	
@@ -2506,7 +2506,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	            if (parentName) {
 	                this.getParentComponent(parentName).dispatchEvent(myEvent);
-	            } else {
+	            } else if (this.root) {
 	                this.root.dispatchEvent(myEvent);
 	            }
 	        }
@@ -2544,6 +2544,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	            // this.root.remove();
 	            this.root = null;
 	        }
+	    }, {
+	        key: 'INPUT',
+	        value: function INPUT() {}
 	    }, {
 	        key: 'onDestroy',
 	        value: function onDestroy() {}
@@ -2933,7 +2936,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    var rootEl = document.querySelectorAll(options.root.selector)[0];
 	    if (rootEl) {
 	        var rootComponent = new options.root(rootEl);
-	        rootComponent.root.setAttribute('ac-version', ("0.5.8"));
+	        rootComponent.root.setAttribute('ac-version', ("0.5.9"));
 	    } else {
 	        console.warn('There is no root component');
 	    }
