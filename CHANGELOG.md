@@ -1,3 +1,10 @@
+<a name="0.6.0"></a>
+# [0.6.0](https://github.com/DeanNeal/ace-js) (2017-12-27)
+### Features
+* **charts:**  acecharts line-chart #70 ([#70](https://github.com/DeanNeal/ace-js/issues/70))
+* **core:**  params in @event([#72](https://github.com/DeanNeal/ace-js/issues/72))
+* **core:**  Directives. ac-for. Smart update for native elements([#71](https://github.com/DeanNeal/ace-js/issues/71))
+
 <a name="0.5.0"></a>
 # [0.5.0](https://github.com/DeanNeal/ace-js) (2017-12-03)
 ### Features

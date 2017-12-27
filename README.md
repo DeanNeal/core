@@ -25,7 +25,7 @@ let AceJs = require('ace-js');
 or
 import {...} from 'ace-js';
 ```
-## More details will come soon!
+## Documentation - https://ace-js-deanneal.c9users.io/
 
 
 ## License
