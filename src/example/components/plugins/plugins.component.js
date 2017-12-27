@@ -13,13 +13,14 @@ export class PluginsComponent {
 
     onInit() {
 
-    	this.props.set({plugins: [{
-    		name: 'Sortable',
-    		route: 'plugins/sortable'
-    	}]});
+        this.props.set({plugins: [{
+            name: 'Sortable',
+            route: 'plugins/sortable'
+        }, {
+            name: 'Chart',
+            route: 'plugins/chart'
+        }]});
 
-    	Plugins.Sortable.init({
-    	    el: this.$refs.test
-    	})
+
     }
 }

@@ -22,15 +22,15 @@
 	            </div>
 	            <div class="j-calendar__content">
 	                <div class="j-calendar__days">
-	                    <div class="j-calendar__days__item" ac-for="daysOfWeekShort">
+	                    <div class="j-calendar__days__item" ac-for="let item of daysOfWeekShort">
 							<span ac-value="index"></span>
 						</div>
 	                </div>
 	                <div class="j-calendar__date">
 	                    <div class="j-calendar__date__item" 
 	                    ac-class="j-calendar__date__item--today:this.today, j-calendar__date__item--active:this.selected, j-calendar__date__item--inactive: this.inactive"
-	                    ac-for="countOfDays"
-	                    @click="select(this)" ac-value="index"></div>
+	                    ac-for="let item of countOfDays"
+	                    @click="select(item)" ac-value="index"></div>
 	                </div>
 	            </div>
 	        </div>

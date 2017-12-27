@@ -8,123 +8,184 @@ export function _for(array, data) {
         //console.log(this); //console.time('modules')
         array.forEach(item => {
             let compName = item.elem.localName;
-
+            let loopIterator;
+            let collectionName;
             array = this.getComponentVariable(item.attr.split('.'), data) || [];
 
-            if (!Utils.isCustomElement(item.elem)) {
-                item.items.forEach(item => {
-                    item.remove();
-                });
-                item.items = [];
-                for (let i = 0; i <= array.length - 1; i++) {
-                    let prevContent = item.elem.cloneNode(true);
 
-                    // loop through the old element's attributes and give them to the new element
-                    for (let i = 0; i < item.elem.attributes.length; i++) {
-                        prevContent.setAttribute(item.elem.attributes[i].nodeName, item.elem.attributes[i].nodeValue);
-                    }
+            if(item.attr.indexOf('let ') > -1 && item.attr.indexOf('of ') > -1) {
+                let params1 = item.attr.split('of')[0];
+                collectionName = item.attr.split('of')[1].replace(/ +/g, "");
+                loopIterator = params1.split('let ')[1].replace(/ +/g, "");
+                let func = `for(${params1} of this.${collectionName}) { } return this.${collectionName}`;
 
-                    item.items.push(prevContent);
-                    item.parent.insertBefore(prevContent, item.comment);
-
-                    forAttachForLoop.call(this, prevContent, array[i]);
-                    bindClassForLoop.call(this, prevContent, array[i]);
-                    styleUnitForLoop.call(this, prevContent, array[i]);
-                    bindIfForLoop.call(this, prevContent, array[i]);
-                    bindPropsToViewForLoop.call(this, prevContent, array[i]);
-                    bindAttrsForLoop.call(this, prevContent, array[i]);
-                    addLinksRefsForLoop.call(this, prevContent, array[i]);
-
-                    eventsForLoop.call(this, prevContent, array[i]);
+                let arg
+                try {
+                    arg = new Function(func).apply(data || this.props);
+                } catch(e) {
+                    arg = [];
                 }
-                return;
+                 
+                array = arg;
             }
 
-            if (item.cached.length !== array.length) {
-                item.items.forEach(item => {
-                    item.remove();
+            if (!Utils.isCustomElement(item.elem)) {
+
+                if (item.cached.length !== array.length) {
+                    item.items.forEach(item => {
+                        item.remove();
+                    });
+                    item.items = [];
+                    item.directives = [];
+                    for (let i = 0; i <= array.length - 1; i++) {
+                        let prevContent = item.elem.cloneNode(true);
+
+                        // loop through the old element's attributes and give them to the new element
+                        for (let i = 0; i < item.elem.attributes.length; i++) {
+                            prevContent.setAttribute(item.elem.attributes[i].nodeName, item.elem.attributes[i].nodeValue);
+                        }
+
+                        item.items.push(prevContent);
+                        item.parent.insertBefore(prevContent, item.comment);
+
+
+                        let eventsArray = [];
+
+                        EVENTS_NAMES.forEach(directive => {
+                            eventsArray.push(Directives._initEvent.call(this, prevContent, directive, [], getCurrentProperty.bind(this, item, collectionName, data, i), loopIterator));
+                        });
+
+                        item.directives[i] = {
+                            attrs: Directives._init.call(this, prevContent, 'ac-attr'),
+                            class: Directives._init.call(this, prevContent, 'ac-class'),
+                            for: Directives._init.call(this, prevContent, 'ac-for'),
+                            style: Directives._init.call(this, prevContent, 'ac-style'),
+                            if: Directives._init.call(this, prevContent, 'ac-if'),
+                            props: Directives._init.call(this, prevContent, 'ac-value'),
+                            links: Directives._init.call(this, prevContent, 'ac-link'),
+                            events: eventsArray
+                        };
+
+                        updateElement.call(this, item, i, prevContent, array[i]); 
+                    }
+                }
+
+
+                item.items.forEach((elem, i) => {
+                    if (JSON.stringify(item.cached[i]) !== JSON.stringify(array[i])) {
+                        updateElement.call(this, item, i, elem, array[i]); 
+                    }
                 });
-                item.items = [];
-                this.children[item.elem.COMPONENT.constructor.name] = [];
-                for (let i = 0; i <= array.length - 1; i++) {
-                    let newComp = Component.COMPONENTS.filter(r=> r.selector === compName)[0];
-                    // if(newComp) {
+
+                item.cached = JSON.parse(JSON.stringify(array));
+            }
+
+
+            if (Utils.isCustomElement(item.elem)) {
+                if (item.cached.length !== array.length) {
+                    item.items.forEach(item => {
+                        item.remove();
+                    });
+                    item.items = [];
+                    this.children[item.elem.COMPONENT.constructor.name] = [];
+                    for (let i = 0; i <= array.length - 1; i++) {
+                        let newComp = Component.COMPONENTS.filter(r => r.selector === compName)[0];
+                        // if(newComp) {
                         let newEl = document.createElement(compName);
                         // this.root.appendChild(newEl);
                         let a = new newComp(newEl, Object.assign({}, array[i]), this);
                         this.children[item.elem.COMPONENT.constructor.name].push(a);
-                    // }
+                        // }
 
-                    // loop through the old element's attributes and give them to the new element
-                    for (let i = 0; i < item.elem.attributes.length; i++) {
-                        newEl.setAttribute(item.elem.attributes[i].nodeName, item.elem.attributes[i].nodeValue);
+                        // loop through the old element's attributes and give them to the new element
+                        for (let i = 0; i < item.elem.attributes.length; i++) {
+                            newEl.setAttribute(item.elem.attributes[i].nodeName, item.elem.attributes[i].nodeValue);
+                        }
+                        item.items.push(newEl);
+                        item.parent.insertBefore(newEl, item.comment);
                     }
-                    item.items.push(newEl);
-                    item.parent.insertBefore(newEl, item.comment);
+                    item.cached = []; // refresh cached array
                 }
-                item.cached = []; // refresh cached array
+
+                item.items.forEach((elem, i) => {
+                    if (JSON.stringify(item.cached[i]) !== JSON.stringify(array[i])) {
+                        if (!elem.COMPONENT) {
+                            console.warn('Please create component with name ' + compName);
+                            return
+                        }
+                        elem.COMPONENT.props.set(array[i]);
+                    }
+                });
+
+                item.cached = JSON.parse(JSON.stringify(array));
             }
 
-            item.items.forEach((elem, i) => {
-                if (JSON.stringify(item.cached[i]) !== JSON.stringify(array[i])) {
-                    if (!elem.COMPONENT) {
-                        console.warn('Please create component with name ' + compName);
-                        return
-                    }
-                    elem.COMPONENT.props.set(array[i]);
-                }
-            });
-
-            item.cached = JSON.parse(JSON.stringify(array));
         }); //console.timeEnd('modules')
 
     }
 }
 
+function updateElement(item, i, elem, data) {
+    forAttachForLoop.call(this, item.directives[i].for, elem, data);
+    bindClassForLoop.call(this, item.directives[i].class, elem, data);
+    styleUnitForLoop.call(this, item.directives[i].style, elem, data);
+    bindIfForLoop.call(this, item.directives[i].if, elem, data);
+    bindPropsToViewForLoop.call(this, item.directives[i].props, elem, data);
 
-function eventsForLoop(root, context) {
-    let array = [];
+    bindAttrsForLoop.call(this, item.directives[i].attrs, elem, data);
+    addLinksRefsForLoop.call(this, item.directives[i].links, elem, data);
+    eventsForLoop.call(this, item.directives[i].events, elem);
+}
 
-    EVENTS_NAMES.forEach(directive => {
-        array.push(Directives._initEvent.call(this, root, directive, [], context));
-    });
+function getCurrentProperty(item, collectionName, data, i) {
+    let props = this.getComponentVariable(/*item.attr.split('.')*/collectionName.split('.'), data) || [];
+    return props[i];
+}
+
+
+function eventsForLoop(array, root) {
+    // let array = [];
+
+    // EVENTS_NAMES.forEach(directive => {
+    //     array.push(Directives._initEvent.call(this, root, directive, [], context));
+    // });
 
     array = array.reduce((a, b) => a.concat(b), []);
     Directives._events.call(this, array);
 }
 
 
-function addLinksRefsForLoop(root, data) {
-    let array = Directives._init.call(this, root, 'ac-link');
+function addLinksRefsForLoop(array, root, data) {
+    // let array = Directives._init.call(this, root, 'ac-link');
     Directives._link.call(this, array, data);
 }
 
-function bindAttrsForLoop(root, data) {
-    let array = Directives._init.call(this, root, 'ac-attr');
+function bindAttrsForLoop(array, root, data) {
+    // let array = Directives._init.call(this, root, 'ac-attr');
     Directives._attr.call(this, array, data);
 }
 
-function bindIfForLoop(root, data) {
-    let array = Directives._init(root, 'ac-if');
+function bindIfForLoop(array, root, data) {
+    // let array = Directives._init(root, 'ac-if');
     Directives._if.call(this, array, data);
 }
 
-function forAttachForLoop(root, data) {
-    let array = Directives._init.call(this, root, 'ac-for');
+function forAttachForLoop(array, root, data) {
+    // let array = Directives._init.call(this, root, 'ac-for');
     Directives._for.call(this, array, data);
 }
 
-function bindPropsToViewForLoop(root, data) {
-    let array = Directives._init.call(this, root, 'ac-value');
+function bindPropsToViewForLoop(array, root, data) {
+    // let array = Directives._init.call(this, root, 'ac-value');
     Directives._props.call(this, array, data);
 }
 
-function styleUnitForLoop(root, data) {
-    let array = Directives._init.call(this, root, 'ac-style');
+function styleUnitForLoop(array, root, data) {
+    // let array = Directives._init.call(this, root, 'ac-style');
     Directives._style.call(this, array, data);
 }
 
-function bindClassForLoop(root, data) {
-    let array = Directives._init.call(this, root, 'ac-class');
+function bindClassForLoop(array, root, data) {
+    // let array = Directives._init.call(this, root, 'ac-class');
     Directives._class.call(this, array, data);
 }

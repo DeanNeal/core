@@ -2,7 +2,7 @@
  * ace-js 0.5.9
  * May be freely distributed under the MIT license 
  * Author: Bogdan Zinkevich
- * Last update: 2017-12-21 10:21:35
+ * Last update: 2017-12-27 11:01:31
  * 
  */
 (function webpackUniversalModuleDefinition(root, factory) {
@@ -82,7 +82,7 @@ return /******/ (function(modules) { // webpackBootstrap
 /******/ 	}
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "2068b75e003504387432"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "09e1fba390204ce06d59"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
 /******/ 	
@@ -615,38 +615,40 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var _core = __webpack_require__(6);
 
-	var _controls = __webpack_require__(47);
+	var _controls = __webpack_require__(48);
 
-	var _home = __webpack_require__(62);
+	var _home = __webpack_require__(65);
 
-	var _root = __webpack_require__(64);
+	var _root = __webpack_require__(67);
 
-	var _header = __webpack_require__(66);
+	var _header = __webpack_require__(69);
 
-	var _plugins = __webpack_require__(68);
+	var _controls2 = __webpack_require__(71);
 
-	var _controls2 = __webpack_require__(70);
+	var _notFound = __webpack_require__(73);
 
-	var _notFound = __webpack_require__(72);
-
-	var _documentation = __webpack_require__(74);
+	var _documentation = __webpack_require__(75);
 
 	var _documentation2 = _interopRequireDefault(_documentation);
 
-	var _upperCaseDirective = __webpack_require__(113);
+	var _plugins = __webpack_require__(114);
+
+	var _plugins2 = _interopRequireDefault(_plugins);
+
+	var _upperCaseDirective = __webpack_require__(121);
 
 	var _upperCaseDirective2 = _interopRequireDefault(_upperCaseDirective);
 
-	var _router = __webpack_require__(114);
+	var _router = __webpack_require__(122);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	(0, _core.Register)({
 	    root: _root.RootComponent,
 	    styles: _main2.default,
-	    components: [_header.HeaderComponent, _home.HomeComponent, _plugins.PluginsComponent, _controls2.ControlsComponent, _notFound.NotFoundComponent, _controls.DatepickerComponent],
+	    components: [_header.HeaderComponent, _home.HomeComponent, _controls2.ControlsComponent, _notFound.NotFoundComponent, _controls.DatepickerComponent, _controls.BarChartComponent],
 	    directives: [_upperCaseDirective2.default],
-	    modules: [_documentation2.default, _controls.TreeDebugComponent],
+	    modules: [_documentation2.default, _plugins2.default, _controls.TreeDebugComponent],
 	    routes: _router.Routes
 
 	});
@@ -662,7 +664,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	exports.i(__webpack_require__(4), "");
 
 	// module
-	exports.push([module.id, ".content--end {\n  justify-content: flex-end;\n}\n\n.content--space-between {\n  justify-content: space-between;\n}\n\n.content--center {\n  align-items: center;\n}\n\n.flex {\n  display: flex;\n}\n\n.input-file {\n  position: absolute;\n  opacity: 0;\n  width: 100%;\n  height: 100%;\n  left: 0;\n  right: 0;\n  cursor: pointer;\n}\n\n.app-container {\n  width: 1024px;\n  margin: 0 auto;\n}\n\n.app-btn {\n  border: none;\n  background: none;\n  padding: 10px 30px;\n  cursor: pointer;\n  color: white;\n  position: relative;\n  background-color: #17b6ed;\n  border-radius: 2px;\n}\n\n.app-btn.small {\n  width: 150px;\n}\n\n.app-btn input[type='file'] {\n  opacity: 0;\n  cursor: pointer;\n  height: 100%;\n  position: absolute;\n  width: 100%;\n  top: 0;\n  left: 0;\n}\n\n.app-btn:hover {\n  background-color: #46c5f1;\n}\n\nheader {\n  height: 60px;\n  border-bottom: 1px solid #ccc;\n  padding: 10px;\n  background-color: #ffffff;\n}\n\nheader .logo {\n  float: left;\n}\n\nheader .logo img {\n  width: auto;\n  height: 39px;\n}\n\nheader .logo .gantt--main-menu-item {\n  /*padding: 0 $step * 8 0 0;*/\n  height: 39px;\n  display: flex;\n  align-items: center;\n  font-size: 24px;\n  font-weight: bold;\n}\n\nheader .gantt--main-menu {\n  display: flex;\n  height: 100%;\n  float: left;\n  align-items: center;\n}\n\nheader .gantt--main-menu .gantt--main-menu-item {\n  color: #191919;\n  position: relative;\n}\n\nheader .gantt--main-menu .gantt--main-menu-item.active:after {\n  content: '';\n  position: absolute;\n  width: 100%;\n  bottom: 0;\n  left: 0;\n  border-bottom: 3px solid #f9d710;\n}\n\nheader .gantt--main-menu-item {\n  padding: 10px;\n  height: 100%;\n  display: block;\n  text-decoration: none;\n  color: #676767;\n  font-size: 16px;\n  font-weight: 300;\n}\n\nheader .gantt--main-menu-item:hover {\n  opacity: 0.8;\n}\n\nheader .right-menu {\n  float: right;\n  margin-right: 10px;\n  display: flex;\n  align-items: center;\n}\n\nheader .right-menu .search-input {\n  margin-right: 10px;\n}\n\nheader .right-menu .search-input input[type=\"text\"] {\n  height: 39px;\n  padding: 0 32px 0 12px;\n  font-size: 16px;\n  border: none;\n  border-top: 3px solid transparent;\n  border-bottom: 3px solid #f9d710;\n  box-sizing: border-box;\n}\n\nheader .right-menu .search-input input[type=\"text\"]:focus {\n  border: 3px solid #0a0a0a;\n  padding-right: 29px;\n}\n\nheader .right-menu .search-input i {\n  color: #0a0a0a;\n  position: absolute;\n  top: 0;\n  right: 8px;\n  font-size: 18px;\n  bottom: 0;\n  margin: auto;\n  width: 18px;\n  height: 18px;\n}\n\nheader .right-menu .profile-menu {\n  align-items: center;\n  justify-content: center;\n  display: flex;\n  font-size: 14px;\n  color: #191919;\n  font-weight: 500;\n  position: relative;\n  cursor: pointer;\n}\n\nheader .right-menu .profile-menu .avatar {\n  background-size: cover !important;\n  background-position: center center !important;\n  border-radius: 100%;\n  width: 40px;\n  height: 40px;\n}\n\nheader .right-menu .profile-menu .username {\n  margin-right: 10px;\n}\n\nfooter {\n  background-size: 46px;\n  background-position: 0;\n  height: 40px;\n}\n\nfooter .info-panel {\n  font-size: 0;\n  display: inline-flex;\n  justify-content: flex-start;\n  padding: 4px 8px;\n  height: 100%;\n  width: 100%;\n  background: rgba(0, 0, 0, 0.3);\n}\n\nfooter .info-panel__item {\n  font-size: 12px;\n  display: block;\n  min-width: 200px;\n  background-color: #ffffff;\n  border: 1px solid #0a0a0a;\n  text-align: right;\n  line-height: 16px;\n  padding: 8px;\n  text-transform: uppercase;\n}\n\nfooter .info-panel__item + .info-panel__item {\n  margin-left: 12px;\n}\n\napp-home {\n  display: flex;\n  flex-direction: column;\n  flex: 1;\n  justify-content: center;\n  text-align: center;\n}\n\napp-home .app-home__bottom {\n  margin-top: 90px;\n}\n\napp-not-found {\n  width: 100%;\n}\n\napp-not-found h1 {\n  display: flex;\n  /* flex-direction: column; */\n  /* flex: 1; */\n  align-items: center;\n  justify-content: center;\n  width: 100%;\n  height: calc(100% - 60px);\n  margin: 0;\n}\n\napp-documentation {\n  width: 100%;\n}\n\napp-documentation .main-content {\n  width: 100%;\n  display: flex;\n}\n\napp-documentation .main-content .main-list {\n  width: 15%;\n  border-right: 1px solid #ccc;\n  padding: 20px 40px 20px 40px;\n  overflow: auto;\n}\n\napp-documentation .main-content .main-list .list-head {\n  margin-bottom: 5px;\n}\n\napp-documentation .main-content .main-list > li {\n  margin-bottom: 10px;\n  font-size: 16px;\n  font-weight: 600;\n}\n\napp-documentation .main-content .main-list ol .active {\n  color: #17b6ed;\n}\n\napp-documentation .main-content .main-list ol li {\n  padding-left: 20px;\n  cursor: pointer;\n  font-size: 14px;\n  font-weight: 400;\n}\n\napp-documentation .main-content .main-list ol li a {\n  color: #000;\n  display: block;\n  padding: 5px;\n}\n\napp-documentation .main-content .main-list ol li a:hover {\n  background: #f5f5f5;\n}\n\napp-documentation .main-content .main-list ol li:hover {\n  text-decoration: underline;\n}\n\napp-documentation .main-content .documentation-section {\n  width: 85%;\n  padding-left: 20px;\n  overflow: auto;\n  padding: 20px 40px 20px 40px;\n}\n\napp-documentation main {\n  height: 100%;\n  display: flex;\n  flex: 1;\n  user-select: none;\n  position: relative;\n  border-bottom: 1px solid #ccc;\n}\n\napp-documentation .code-block {\n  display: block;\n  margin: 10px 0 10px;\n  font-size: 14px;\n  word-break: break-all;\n  word-wrap: break-word;\n  background-color: rgba(247, 247, 247, 0.85);\n  border: 1px solid #f3eeee;\n  border-radius: 4px;\n}\n\napp-documentation .code-block .code-header {\n  background: #ccc;\n  padding: 10px;\n}\n\napp-documentation .code-block .attr {\n  color: #17b6ed;\n}\n\napp-documentation .code-block .text {\n  font-weight: bold;\n}\n\napp-documentation .folder-structure {\n  padding: 20px;\n  width: 50%;\n}\n\napp-documentation .folder-structure .children {\n  position: relative;\n  overflow: hidden;\n  padding-left: 24px;\n}\n\napp-documentation .folder-structure .children:first-child {\n  padding: 0;\n}\n\napp-documentation .folder-structure--item {\n  padding: 5px 0px;\n  position: relative;\n}\n\napp-documentation .folder-structure--item .folder-structure--item {\n  padding-left: 30px;\n}\n\napp-documentation .folder-structure--item .folder-structure--item:before {\n  content: \"\";\n  left: 10px;\n  bottom: 15px;\n  width: 16px;\n  height: 9999px;\n  position: absolute;\n  border-width: 0 0 1px 1px;\n  border-style: solid;\n  border-color: #ccc;\n  border-radius: 0 0 0 3px;\n}\n\napp-documentation .comment {\n  display: inline-block;\n  color: #aaa;\n}\n\napp-documentation pre {\n  padding: 10px;\n}\n\napp-documentation .kwd {\n  color: #17b6ed;\n}\n\napp-documentation .str {\n  color: #d4ce10;\n}\n\napp-documentation .typ {\n  color: red;\n}\n\napp-documentation .met {\n  color: #00d400;\n}\n\napp-documentation .white {\n  color: #fff;\n}\n\napp-documentation .title {\n  font-family: 'Roboto', sans-serif;\n  margin-right: 20px;\n}\n\napp-documentation .section-title {\n  font-size: 16px;\n  margin-top: 20px;\n  border-bottom: 1px solid #ccc;\n  padding: 6px;\n}\n\napp-documentation .in-development {\n  color: red;\n}\n\napp-documentation .text {\n  width: 500px;\n  font-weight: 300;\n  margin: 10px 0;\n}\n\napp-documentation .block {\n  border-bottom: 1px solid #ccc;\n  display: flex;\n  align-items: center;\n  justify-content: space-between;\n}\n\napp-documentation .label {\n  padding: 3px 5px;\n  display: inline-block;\n  color: #17b6ed;\n  font-weight: bold;\n  font-size: 16px;\n  border-radius: 3px;\n  border: 1px solid;\n}\n\nchild-route-switcher {\n  display: block;\n  width: 60%;\n}\n\napp-documentation-directives .clicked {\n  color: green;\n}\n\napp-documentation-directives .unclicked {\n  color: red;\n}\n\napp-documentation-architecture {\n  width: 100%;\n}\n\napp-documentation-forms .ac-error[type] {\n  border: 1px solid rgba(255, 0, 0, 0.47);\n}\n\napp-documentation-forms .input {\n  margin: 10px 0px;\n}\n\napp-documentation-forms .input input {\n  border: 1px solid #ccc;\n  padding: 4px;\n}\n\napp-documentation-forms button {\n  cursor: pointer;\n  padding: 4px;\n  border: none;\n  background: #17b6ed;\n  color: #fff;\n  border-radius: 4px;\n}\n\napp-plugins,\napp-controls {\n  width: 100%;\n}\n\napp-plugins .main-content,\napp-controls .main-content {\n  width: 100%;\n  display: flex;\n}\n\napp-plugins .main-content .main-list,\napp-controls .main-content .main-list {\n  width: 15%;\n  border-right: 1px solid #ccc;\n  padding: 20px 40px 20px 40px;\n  overflow: auto;\n}\n\napp-plugins .main-content .main-list .list-head,\napp-controls .main-content .main-list .list-head {\n  margin-bottom: 5px;\n}\n\napp-plugins .main-content .plugins-section,\napp-controls .main-content .plugins-section {\n  width: 85%;\n  padding-left: 20px;\n  overflow: auto;\n  padding: 20px 40px 20px 40px;\n}\n\napp-plugins main,\napp-controls main {\n  height: 100%;\n  display: flex;\n  flex: 1;\n  user-select: none;\n  position: relative;\n  border-bottom: 1px solid #ccc;\n}\n\napp-container {\n  width: 100%;\n}\n\nh1,\nh2,\nh3,\nh4,\nh5,\nh6 {\n  margin-bottom: 20px;\n}\n\nh1 {\n  font-size: 26px;\n}\n\nh2 {\n  font-size: 24px;\n}\n\nh3 {\n  font-size: 22px;\n}\n\nh4 {\n  font-size: 20px;\n}\n\nh5 {\n  font-size: 18px;\n}\n\nh6 {\n  font-size: 16px;\n}\n\np {\n  font-size: 14px;\n  margin-bottom: 15px;\n  line-height: 2;\n}\n\na {\n  color: #17b6ed;\n  cursor: pointer;\n}\n\nimg {\n  width: 100%;\n}\n\nb {\n  font-weight: 700;\n}\n\n.hidden {\n  display: none !important;\n}\n\n.relative {\n  position: relative;\n}\n\n.full-width {\n  width: 100%;\n}\n\n.text-center {\n  text-align: center;\n}\n\n.attached-file {\n  display: flex;\n  height: 40px;\n  align-items: center;\n  margin: 5px 0px;\n  justify-content: space-between;\n}\n\n* {\n  font-family: 'Roboto', sans-serif;\n}\n\n.dropdown-container {\n  font-size: 12px;\n  font-weight: normal;\n}\n\n.dropdown {\n  position: absolute;\n  background: #fff;\n  border: 1px solid #ccc;\n  /* bottom: 0; */\n  top: 100%;\n  z-index: 1000;\n  width: 200px;\n  right: 0;\n  opacity: 0;\n  margin-top: 35px;\n  visibility: hidden;\n  transition-property: all;\n  transition-duration: 0.3s;\n  transition-timing-function: ease;\n  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);\n  border-radius: 4px;\n  overflow: hidden;\n}\n\n.dropdown ul li.active {\n  background: #f1f1f1;\n}\n\n.dropdown ul li a {\n  font-size: 12px;\n  padding: 10px;\n  display: block;\n}\n\n.dropdown ul li:hover {\n  background: #f1f1f1;\n}\n\n.dropdown.open {\n  opacity: 1;\n  visibility: visible;\n  margin-top: 0;\n}\n\napp-status-dropdown .dropdown-value {\n  cursor: pointer;\n  padding: 4px;\n  color: #fff;\n  border-radius: 4px;\n  background: #17b6ed;\n}\n\napp-status-dropdown .dropdown-value.done {\n  background: #5db95d;\n}\n\napp-status-dropdown .dropdown-value.in_progress {\n  background: #17b6ed;\n}\n\napp-status-dropdown .dropdown-value.feedback {\n  background: #c3c3c3;\n}\n\napp-color-dropdown .dropdown {\n  left: 0;\n  max-height: 200px;\n  padding: 5px;\n  overflow: auto;\n}\n\napp-color-dropdown .dropdown-item {\n  margin: 5px;\n  cursor: pointer;\n  border-radius: 100%;\n  transition: 0.2s all;\n}\n\napp-color-dropdown .dropdown-item.active {\n  transform: scale(1.2);\n}\n\napp-color-dropdown .dropdown-item:hover {\n  transform: scale(1.2);\n}\n\napp-color-dropdown .dropdown-item-color {\n  border-radius: 100%;\n  width: 30px;\n  height: 30px;\n}\n\napp-color-dropdown .dropdown ul {\n  display: flex;\n  justify-content: space-between;\n  flex-flow: row wrap;\n}\n\napp-color-dropdown .dropdown-value {\n  cursor: pointer;\n  width: 40px;\n  height: 40px;\n  border-radius: 100%;\n}\n\napp-assignee-dropdown .profile-menu {\n  align-items: center;\n  display: flex;\n}\n\napp-assignee-dropdown .avatar {\n  width: 30px;\n  display: flex;\n  margin-right: 10px;\n  background-size: cover !important;\n  background-position: center;\n  height: 30px;\n  border-radius: 100%;\n}\n\napp-common-dropdown {\n  display: inline-block;\n}\n\napp-common-dropdown .dropdown-value {\n  cursor: pointer;\n  padding: 4px;\n  color: #fff;\n  border-radius: 4px;\n  background: #cccccc;\n}\n\n.content--end {\n  justify-content: flex-end;\n}\n\n.content--space-between {\n  justify-content: space-between;\n}\n\n.content--center {\n  align-items: center;\n}\n\n.flex {\n  display: flex;\n}\n\n.input-file {\n  position: absolute;\n  opacity: 0;\n  width: 100%;\n  height: 100%;\n  left: 0;\n  right: 0;\n  cursor: pointer;\n}\n\n.app-container {\n  width: 1024px;\n  margin: 0 auto;\n}\n\n.app-btn {\n  border: none;\n  background: none;\n  padding: 10px 30px;\n  cursor: pointer;\n  color: white;\n  position: relative;\n  background-color: #17b6ed;\n  border-radius: 2px;\n}\n\n.app-btn.small {\n  width: 150px;\n}\n\n.app-btn input[type='file'] {\n  opacity: 0;\n  cursor: pointer;\n  height: 100%;\n  position: absolute;\n  width: 100%;\n  top: 0;\n  left: 0;\n}\n\n.app-btn:hover {\n  background-color: #46c5f1;\n}\n\nh1,\nh2,\nh3,\nh4,\nh5,\nh6 {\n  margin-bottom: 20px;\n}\n\nh1 {\n  font-size: 26px;\n}\n\nh2 {\n  font-size: 24px;\n}\n\nh3 {\n  font-size: 22px;\n}\n\nh4 {\n  font-size: 20px;\n}\n\nh5 {\n  font-size: 18px;\n}\n\nh6 {\n  font-size: 16px;\n}\n\np {\n  font-size: 14px;\n  margin-bottom: 15px;\n  line-height: 2;\n}\n\na {\n  color: #17b6ed;\n  cursor: pointer;\n}\n\nimg {\n  width: 100%;\n}\n\nb {\n  font-weight: 700;\n}\n\n.hidden {\n  display: none !important;\n}\n\n.relative {\n  position: relative;\n}\n\n.full-width {\n  width: 100%;\n}\n\n.text-center {\n  text-align: center;\n}\n\n.attached-file {\n  display: flex;\n  height: 40px;\n  align-items: center;\n  margin: 5px 0px;\n  justify-content: space-between;\n}\n\n* {\n  font-family: 'Roboto', sans-serif;\n}\n\n.app-form__row {\n  display: flex;\n  align-items: center;\n  margin-bottom: 15px;\n}\n\n.app-form__row.col-2 .app-form__label {\n  width: 48%;\n}\n\n.app-form__label {\n  display: flex;\n  flex-direction: column;\n  width: 100%;\n  position: relative;\n}\n\n.app-form__label__text {\n  margin-bottom: 5px;\n  color: #aaa;\n  font-weight: normal;\n}\n\n.app-form__subtitle {\n  position: absolute;\n  bottom: 11px;\n  left: 11px;\n}\n\n.app-form__subtitle + .app-form__label__input {\n  padding-left: 21px;\n}\n\n.app-form__label__input {\n  padding: 10px;\n  border-radius: 5px;\n  border: 1px solid #cccccc;\n}\n\n.app-form__label__textarea {\n  width: 100%;\n  padding: 10px;\n  border-radius: 5px;\n  border: 1px solid #cccccc;\n  resize: vertical;\n  max-height: 300px;\n}\n\n.app-form + .app-form {\n  margin-top: 30px;\n}\n\n.input.error {\n  border: 1px solid rgba(255, 0, 0, 0.47);\n}\n\n.input {\n  position: relative;\n}\n\n.input input[type=text],\n.input input[type=email],\n.input input[type=password] {\n  border: none;\n  width: 100%;\n}\n\n.input input[type=text].ac-invalid + .input-border,\n.input input[type=email].ac-invalid + .input-border,\n.input input[type=password].ac-invalid + .input-border {\n  border-color: red;\n}\n\n.input-border {\n  position: absolute;\n  top: 0;\n  right: 0;\n  bottom: 0;\n  left: 0;\n  pointer-events: none;\n  border-radius: 4px;\n  -webkit-border-radius: 4px;\n  -moz-border-radius: 4px;\n  border: 1px solid #bfbfbf;\n}\n\n.modal-container {\n  position: fixed;\n  width: 100%;\n  height: 100%;\n  top: 0;\n  background: rgba(0, 0, 0, 0.5);\n  z-index: 1000;\n}\n\n.modal-container .modal {\n  position: fixed;\n  width: 40%;\n  left: 0;\n  right: 0;\n  bottom: 0;\n  top: 0;\n  background: #fff;\n  margin: auto;\n  height: 80%;\n  box-shadow: 0px 0px 20px -2px #000;\n  padding: 30px;\n  min-width: 800px;\n  border-radius: 3px;\n  overflow: auto;\n}\n\n.modal-container .modal-bottom {\n  float: right;\n}\n\n.modal-container .modal-bottom .app-btn {\n  margin-left: 10px;\n}\n\n.modal-container .modal.crop {\n  user-select: none;\n  /*.tag_frame_inner{*/\n  /*width: 550px;*/\n  /*}*/\n}\n\n.modal-container .modal.crop .tag_faded {\n  background: #000;\n  opacity: 0.7;\n  filter: alpha(opacity=70);\n  cursor: crosshair;\n  left: 0px;\n  top: 0px;\n  width: 100%;\n  height: 100%;\n  z-index: 1030;\n  position: absolute;\n}\n\n.modal-container .modal.crop .tag_frame {\n  position: absolute;\n  cursor: move;\n  z-index: 1040;\n  left: 0;\n  top: 0;\n  width: 200px;\n  height: 200px;\n  display: block;\n  overflow: hidden;\n  text-align: left;\n  direction: ltr;\n}\n\n.modal-container .modal.crop .tag_frame_resizer {\n  position: absolute;\n  background-color: #f2f2f2;\n  width: 10px;\n  height: 10px;\n  z-index: 9999;\n  opacity: 0.3;\n  transition-property: opacity;\n  -webkit-transition-duration: 0.3s;\n  transition-duration: 0.3s;\n  -webkit-transition-timing-function: ease;\n  transition-timing-function: ease;\n}\n\n.modal-container .modal.crop .tag_frame_resizer:hover {\n  opacity: 0.9;\n}\n\n.modal-container .modal.crop .j-modal__content {\n  user-select: none;\n  -moz-user-select: none;\n  -webkit-user-select: none;\n  -ms-user-select: none;\n}\n\n.modal-container .modal.crop .j-modal__preview {\n  margin: auto;\n  display: block;\n  border-radius: 100%;\n  width: 25%;\n}\n\n.modal-container .modal.crop .j-modal__crop_container {\n  position: relative;\n  margin: 0px auto;\n  font-size: 0px;\n}\n\n.j-calendar {\n  display: inline-flex;\n  flex-direction: column;\n  flex-wrap: wrap;\n  background: #fff;\n  border-bottom-left-radius: 5px;\n  border-bottom-right-radius: 5px;\n  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.4);\n  overflow: hidden;\n  left: 0;\n  top: 100%;\n  position: absolute;\n  z-index: 1;\n  font-weight: normal;\n}\n\n.j-calendar__wrap {\n  display: flex;\n}\n\n.j-calendar__item + .j-calendar__item .j-calendar__content {\n  border-left: 1px solid #d9d9d9;\n}\n\n.j-calendar__item + .j-calendar__item .j-calendar__header {\n  border-left: 1px solid #d9d9d9;\n}\n\n.j-calendar__header {\n  width: 285px;\n  height: 50px;\n  display: flex;\n  align-items: stretch;\n  justify-content: space-between;\n  font-size: 15px;\n  color: #fff;\n  background: #17b6ed;\n}\n\n.j-calendar__header__center,\n.j-calendar__header__left,\n.j-calendar__header__right {\n  display: flex;\n  align-items: center;\n  justify-content: center;\n}\n\n.j-calendar__header__left,\n.j-calendar__header__right {\n  width: 50px;\n  cursor: pointer;\n}\n\n.j-calendar__header__left:hover,\n.j-calendar__header__right:hover {\n  background: #11a2d5;\n}\n\n.j-calendar__header__empty {\n  width: 50px;\n}\n\n.j-calendar__content {\n  width: 285px;\n  padding: 10px;\n}\n\n.j-calendar__days {\n  display: flex;\n}\n\n.j-calendar__days__item {\n  width: 14.285%;\n  font-size: 13px;\n  cursor: default;\n  text-align: center;\n}\n\n.j-calendar__days__item--output {\n  color: #17b6ed;\n}\n\n.j-calendar__date {\n  display: flex;\n  flex-wrap: wrap;\n  padding-top: 5px;\n}\n\n.j-calendar__date__item {\n  display: flex;\n  align-items: center;\n  justify-content: center;\n  height: 30px;\n  width: 14.285%;\n  font-size: 13px;\n  position: relative;\n}\n\n.j-calendar__date__item.empty {\n  opacity: 0;\n  cursor: default !important;\n}\n\n.j-calendar__date__item:before {\n  content: '';\n  width: 26px;\n  height: 26px;\n  top: 0;\n  left: 0;\n  right: 0;\n  bottom: 0;\n  margin: auto;\n  position: absolute;\n  border-radius: 100%;\n  z-index: -1;\n}\n\n.j-calendar__date__item:hover {\n  color: #17b6ed;\n  cursor: pointer;\n}\n\n.j-calendar__date__item--active {\n  color: #fff !important;\n  cursor: pointer;\n}\n\n.j-calendar__date__item--active:before {\n  background: #17b6ed;\n}\n\n.j-calendar__date__item--active:hover:before {\n  background: #17b6ed !important;\n}\n\n.j-calendar__date__item--today {\n  cursor: pointer;\n}\n\n.j-calendar__date__item--today:before {\n  border: 1px solid #17b6ed;\n}\n\n.j-calendar__date__item--inactive {\n  cursor: default !important;\n  color: #b7b7b7 !important;\n}\n\n.j-calendar__date__item--inactive:hover:before {\n  background: none !important;\n}\n\n.j-calendar__date__item--empty {\n  cursor: default;\n}\n\n.j-calendar__bottom {\n  margin: 15px 0;\n  text-align: center;\n}\n\n/*!\r\n * animate.css -http://daneden.me/animate\r\n * Version - 3.5.2\r\n * Licensed under the MIT license - http://opensource.org/licenses/MIT\r\n *\r\n * Copyright (c) 2017 Daniel Eden\r\n */\n\n.animated {\n  animation-duration: 1s;\n  animation-fill-mode: both;\n}\n\n.animated.infinite {\n  animation-iteration-count: infinite;\n}\n\n.animated.hinge {\n  animation-duration: 2s;\n}\n\n.animated.flipOutX,\n.animated.flipOutY,\n.animated.bounceIn,\n.animated.bounceOut {\n  animation-duration: .75s;\n}\n\n@keyframes bounce {\n  from, 20%, 53%, 80%, to {\n    animation-timing-function: cubic-bezier(0.215, 0.61, 0.355, 1);\n    transform: translate3d(0, 0, 0);\n  }\n\n  40%, 43% {\n    animation-timing-function: cubic-bezier(0.755, 0.05, 0.855, 0.06);\n    transform: translate3d(0, -30px, 0);\n  }\n\n  70% {\n    animation-timing-function: cubic-bezier(0.755, 0.05, 0.855, 0.06);\n    transform: translate3d(0, -15px, 0);\n  }\n\n  90% {\n    transform: translate3d(0, -4px, 0);\n  }\n}\n\n.bounce {\n  animation-name: bounce;\n  transform-origin: center bottom;\n}\n\n@keyframes flash {\n  from, 50%, to {\n    opacity: 1;\n  }\n\n  25%, 75% {\n    opacity: 0;\n  }\n}\n\n.flash {\n  animation-name: flash;\n}\n\n/* originally authored by Nick Pettit - https://github.com/nickpettit/glide */\n\n@keyframes pulse {\n  from {\n    transform: scale3d(1, 1, 1);\n  }\n\n  50% {\n    transform: scale3d(1.05, 1.05, 1.05);\n  }\n\n  to {\n    transform: scale3d(1, 1, 1);\n  }\n}\n\n.pulse {\n  animation-name: pulse;\n}\n\n@keyframes rubberBand {\n  from {\n    transform: scale3d(1, 1, 1);\n  }\n\n  30% {\n    transform: scale3d(1.25, 0.75, 1);\n  }\n\n  40% {\n    transform: scale3d(0.75, 1.25, 1);\n  }\n\n  50% {\n    transform: scale3d(1.15, 0.85, 1);\n  }\n\n  65% {\n    transform: scale3d(0.95, 1.05, 1);\n  }\n\n  75% {\n    transform: scale3d(1.05, 0.95, 1);\n  }\n\n  to {\n    transform: scale3d(1, 1, 1);\n  }\n}\n\n.rubberBand {\n  animation-name: rubberBand;\n}\n\n@keyframes shake {\n  from, to {\n    transform: translate3d(0, 0, 0);\n  }\n\n  10%, 30%, 50%, 70%, 90% {\n    transform: translate3d(-10px, 0, 0);\n  }\n\n  20%, 40%, 60%, 80% {\n    transform: translate3d(10px, 0, 0);\n  }\n}\n\n.shake {\n  animation-name: shake;\n}\n\n@keyframes headShake {\n  0% {\n    transform: translateX(0);\n  }\n\n  6.5% {\n    transform: translateX(-6px) rotateY(-9deg);\n  }\n\n  18.5% {\n    transform: translateX(5px) rotateY(7deg);\n  }\n\n  31.5% {\n    transform: translateX(-3px) rotateY(-5deg);\n  }\n\n  43.5% {\n    transform: translateX(2px) rotateY(3deg);\n  }\n\n  50% {\n    transform: translateX(0);\n  }\n}\n\n.headShake {\n  animation-timing-function: ease-in-out;\n  animation-name: headShake;\n}\n\n@keyframes swing {\n  20% {\n    transform: rotate3d(0, 0, 1, 15deg);\n  }\n\n  40% {\n    transform: rotate3d(0, 0, 1, -10deg);\n  }\n\n  60% {\n    transform: rotate3d(0, 0, 1, 5deg);\n  }\n\n  80% {\n    transform: rotate3d(0, 0, 1, -5deg);\n  }\n\n  to {\n    transform: rotate3d(0, 0, 1, 0deg);\n  }\n}\n\n.swing {\n  transform-origin: top center;\n  animation-name: swing;\n}\n\n@keyframes tada {\n  from {\n    transform: scale3d(1, 1, 1);\n  }\n\n  10%, 20% {\n    transform: scale3d(0.9, 0.9, 0.9) rotate3d(0, 0, 1, -3deg);\n  }\n\n  30%, 50%, 70%, 90% {\n    transform: scale3d(1.1, 1.1, 1.1) rotate3d(0, 0, 1, 3deg);\n  }\n\n  40%, 60%, 80% {\n    transform: scale3d(1.1, 1.1, 1.1) rotate3d(0, 0, 1, -3deg);\n  }\n\n  to {\n    transform: scale3d(1, 1, 1);\n  }\n}\n\n.tada {\n  animation-name: tada;\n}\n\n/* originally authored by Nick Pettit - https://github.com/nickpettit/glide */\n\n@keyframes wobble {\n  from {\n    transform: none;\n  }\n\n  15% {\n    transform: translate3d(-25%, 0, 0) rotate3d(0, 0, 1, -5deg);\n  }\n\n  30% {\n    transform: translate3d(20%, 0, 0) rotate3d(0, 0, 1, 3deg);\n  }\n\n  45% {\n    transform: translate3d(-15%, 0, 0) rotate3d(0, 0, 1, -3deg);\n  }\n\n  60% {\n    transform: translate3d(10%, 0, 0) rotate3d(0, 0, 1, 2deg);\n  }\n\n  75% {\n    transform: translate3d(-5%, 0, 0) rotate3d(0, 0, 1, -1deg);\n  }\n\n  to {\n    transform: none;\n  }\n}\n\n.wobble {\n  animation-name: wobble;\n}\n\n@keyframes jello {\n  from, 11.1%, to {\n    transform: none;\n  }\n\n  22.2% {\n    transform: skewX(-12.5deg) skewY(-12.5deg);\n  }\n\n  33.3% {\n    transform: skewX(6.25deg) skewY(6.25deg);\n  }\n\n  44.4% {\n    transform: skewX(-3.125deg) skewY(-3.125deg);\n  }\n\n  55.5% {\n    transform: skewX(1.5625deg) skewY(1.5625deg);\n  }\n\n  66.6% {\n    transform: skewX(-0.78125deg) skewY(-0.78125deg);\n  }\n\n  77.7% {\n    transform: skewX(0.39063deg) skewY(0.39063deg);\n  }\n\n  88.8% {\n    transform: skewX(-0.19531deg) skewY(-0.19531deg);\n  }\n}\n\n.jello {\n  animation-name: jello;\n  transform-origin: center;\n}\n\n@keyframes bounceIn {\n  from, 20%, 40%, 60%, 80%, to {\n    animation-timing-function: cubic-bezier(0.215, 0.61, 0.355, 1);\n  }\n\n  0% {\n    opacity: 0;\n    transform: scale3d(0.3, 0.3, 0.3);\n  }\n\n  20% {\n    transform: scale3d(1.1, 1.1, 1.1);\n  }\n\n  40% {\n    transform: scale3d(0.9, 0.9, 0.9);\n  }\n\n  60% {\n    opacity: 1;\n    transform: scale3d(1.03, 1.03, 1.03);\n  }\n\n  80% {\n    transform: scale3d(0.97, 0.97, 0.97);\n  }\n\n  to {\n    opacity: 1;\n    transform: scale3d(1, 1, 1);\n  }\n}\n\n.bounceIn {\n  animation-name: bounceIn;\n}\n\n@keyframes bounceInDown {\n  from, 60%, 75%, 90%, to {\n    animation-timing-function: cubic-bezier(0.215, 0.61, 0.355, 1);\n  }\n\n  0% {\n    opacity: 0;\n    transform: translate3d(0, -3000px, 0);\n  }\n\n  60% {\n    opacity: 1;\n    transform: translate3d(0, 25px, 0);\n  }\n\n  75% {\n    transform: translate3d(0, -10px, 0);\n  }\n\n  90% {\n    transform: translate3d(0, 5px, 0);\n  }\n\n  to {\n    transform: none;\n  }\n}\n\n.bounceInDown {\n  animation-name: bounceInDown;\n}\n\n@keyframes bounceInLeft {\n  from, 60%, 75%, 90%, to {\n    animation-timing-function: cubic-bezier(0.215, 0.61, 0.355, 1);\n  }\n\n  0% {\n    opacity: 0;\n    transform: translate3d(-3000px, 0, 0);\n  }\n\n  60% {\n    opacity: 1;\n    transform: translate3d(25px, 0, 0);\n  }\n\n  75% {\n    transform: translate3d(-10px, 0, 0);\n  }\n\n  90% {\n    transform: translate3d(5px, 0, 0);\n  }\n\n  to {\n    transform: none;\n  }\n}\n\n.bounceInLeft {\n  animation-name: bounceInLeft;\n}\n\n@keyframes bounceInRight {\n  from, 60%, 75%, 90%, to {\n    animation-timing-function: cubic-bezier(0.215, 0.61, 0.355, 1);\n  }\n\n  from {\n    opacity: 0;\n    transform: translate3d(3000px, 0, 0);\n  }\n\n  60% {\n    opacity: 1;\n    transform: translate3d(-25px, 0, 0);\n  }\n\n  75% {\n    transform: translate3d(10px, 0, 0);\n  }\n\n  90% {\n    transform: translate3d(-5px, 0, 0);\n  }\n\n  to {\n    transform: none;\n  }\n}\n\n.bounceInRight {\n  animation-name: bounceInRight;\n}\n\n@keyframes bounceInUp {\n  from, 60%, 75%, 90%, to {\n    animation-timing-function: cubic-bezier(0.215, 0.61, 0.355, 1);\n  }\n\n  from {\n    opacity: 0;\n    transform: translate3d(0, 3000px, 0);\n  }\n\n  60% {\n    opacity: 1;\n    transform: translate3d(0, -20px, 0);\n  }\n\n  75% {\n    transform: translate3d(0, 10px, 0);\n  }\n\n  90% {\n    transform: translate3d(0, -5px, 0);\n  }\n\n  to {\n    transform: translate3d(0, 0, 0);\n  }\n}\n\n.bounceInUp {\n  animation-name: bounceInUp;\n}\n\n@keyframes bounceOut {\n  20% {\n    transform: scale3d(0.9, 0.9, 0.9);\n  }\n\n  50%, 55% {\n    opacity: 1;\n    transform: scale3d(1.1, 1.1, 1.1);\n  }\n\n  to {\n    opacity: 0;\n    transform: scale3d(0.3, 0.3, 0.3);\n  }\n}\n\n.bounceOut {\n  animation-name: bounceOut;\n}\n\n@keyframes bounceOutDown {\n  20% {\n    transform: translate3d(0, 10px, 0);\n  }\n\n  40%, 45% {\n    opacity: 1;\n    transform: translate3d(0, -20px, 0);\n  }\n\n  to {\n    opacity: 0;\n    transform: translate3d(0, 2000px, 0);\n  }\n}\n\n.bounceOutDown {\n  animation-name: bounceOutDown;\n}\n\n@keyframes bounceOutLeft {\n  20% {\n    opacity: 1;\n    transform: translate3d(20px, 0, 0);\n  }\n\n  to {\n    opacity: 0;\n    transform: translate3d(-2000px, 0, 0);\n  }\n}\n\n.bounceOutLeft {\n  animation-name: bounceOutLeft;\n}\n\n@keyframes bounceOutRight {\n  20% {\n    opacity: 1;\n    transform: translate3d(-20px, 0, 0);\n  }\n\n  to {\n    opacity: 0;\n    transform: translate3d(2000px, 0, 0);\n  }\n}\n\n.bounceOutRight {\n  animation-name: bounceOutRight;\n}\n\n@keyframes bounceOutUp {\n  20% {\n    transform: translate3d(0, -10px, 0);\n  }\n\n  40%, 45% {\n    opacity: 1;\n    transform: translate3d(0, 20px, 0);\n  }\n\n  to {\n    opacity: 0;\n    transform: translate3d(0, -2000px, 0);\n  }\n}\n\n.bounceOutUp {\n  animation-name: bounceOutUp;\n}\n\n@keyframes fadeIn {\n  from {\n    opacity: 0;\n  }\n\n  to {\n    opacity: 1;\n  }\n}\n\n.fadeIn {\n  animation-name: fadeIn;\n}\n\n@keyframes fadeInDown {\n  from {\n    opacity: 0;\n    transform: translate3d(0, -100%, 0);\n  }\n\n  to {\n    opacity: 1;\n    transform: none;\n  }\n}\n\n.fadeInDown {\n  animation-name: fadeInDown;\n}\n\n@keyframes fadeInDownBig {\n  from {\n    opacity: 0;\n    transform: translate3d(0, -2000px, 0);\n  }\n\n  to {\n    opacity: 1;\n    transform: none;\n  }\n}\n\n.fadeInDownBig {\n  animation-name: fadeInDownBig;\n}\n\n@keyframes fadeInLeft {\n  from {\n    opacity: 0;\n    transform: translate3d(-100%, 0, 0);\n  }\n\n  to {\n    opacity: 1;\n    transform: none;\n  }\n}\n\n.fadeInLeft {\n  animation-name: fadeInLeft;\n}\n\n@keyframes fadeInLeftBig {\n  from {\n    opacity: 0;\n    transform: translate3d(-2000px, 0, 0);\n  }\n\n  to {\n    opacity: 1;\n    transform: none;\n  }\n}\n\n.fadeInLeftBig {\n  animation-name: fadeInLeftBig;\n}\n\n@keyframes fadeInRight {\n  from {\n    opacity: 0;\n    transform: translate3d(100%, 0, 0);\n  }\n\n  to {\n    opacity: 1;\n    transform: none;\n  }\n}\n\n.fadeInRight {\n  animation-name: fadeInRight;\n}\n\n@keyframes fadeInRightBig {\n  from {\n    opacity: 0;\n    transform: translate3d(2000px, 0, 0);\n  }\n\n  to {\n    opacity: 1;\n    transform: none;\n  }\n}\n\n.fadeInRightBig {\n  animation-name: fadeInRightBig;\n}\n\n@keyframes fadeInUp {\n  from {\n    opacity: 0;\n    transform: translate3d(0, 100%, 0);\n  }\n\n  to {\n    opacity: 1;\n    transform: none;\n  }\n}\n\n.fadeInUp {\n  animation-name: fadeInUp;\n}\n\n@keyframes fadeInUpBig {\n  from {\n    opacity: 0;\n    transform: translate3d(0, 2000px, 0);\n  }\n\n  to {\n    opacity: 1;\n    transform: none;\n  }\n}\n\n.fadeInUpBig {\n  animation-name: fadeInUpBig;\n}\n\n@keyframes fadeOut {\n  from {\n    opacity: 1;\n  }\n\n  to {\n    opacity: 0;\n  }\n}\n\n.fadeOut {\n  animation-name: fadeOut;\n}\n\n@keyframes fadeOutDown {\n  from {\n    opacity: 1;\n  }\n\n  to {\n    opacity: 0;\n    transform: translate3d(0, 100%, 0);\n  }\n}\n\n.fadeOutDown {\n  animation-name: fadeOutDown;\n}\n\n@keyframes fadeOutDownBig {\n  from {\n    opacity: 1;\n  }\n\n  to {\n    opacity: 0;\n    transform: translate3d(0, 2000px, 0);\n  }\n}\n\n.fadeOutDownBig {\n  animation-name: fadeOutDownBig;\n}\n\n@keyframes fadeOutLeft {\n  from {\n    opacity: 1;\n  }\n\n  to {\n    opacity: 0;\n    transform: translate3d(-100%, 0, 0);\n  }\n}\n\n.fadeOutLeft {\n  animation-name: fadeOutLeft;\n}\n\n@keyframes fadeOutLeftBig {\n  from {\n    opacity: 1;\n  }\n\n  to {\n    opacity: 0;\n    transform: translate3d(-2000px, 0, 0);\n  }\n}\n\n.fadeOutLeftBig {\n  animation-name: fadeOutLeftBig;\n}\n\n@keyframes fadeOutRight {\n  from {\n    opacity: 1;\n  }\n\n  to {\n    opacity: 0;\n    transform: translate3d(100%, 0, 0);\n  }\n}\n\n.fadeOutRight {\n  animation-name: fadeOutRight;\n}\n\n@keyframes fadeOutRightBig {\n  from {\n    opacity: 1;\n  }\n\n  to {\n    opacity: 0;\n    transform: translate3d(2000px, 0, 0);\n  }\n}\n\n.fadeOutRightBig {\n  animation-name: fadeOutRightBig;\n}\n\n@keyframes fadeOutUp {\n  from {\n    opacity: 1;\n  }\n\n  to {\n    opacity: 0;\n    transform: translate3d(0, -100%, 0);\n  }\n}\n\n.fadeOutUp {\n  animation-name: fadeOutUp;\n}\n\n@keyframes fadeOutUpBig {\n  from {\n    opacity: 1;\n  }\n\n  to {\n    opacity: 0;\n    transform: translate3d(0, -2000px, 0);\n  }\n}\n\n.fadeOutUpBig {\n  animation-name: fadeOutUpBig;\n}\n\n@keyframes flip {\n  from {\n    transform: perspective(400px) rotate3d(0, 1, 0, -360deg);\n    animation-timing-function: ease-out;\n  }\n\n  40% {\n    transform: perspective(400px) translate3d(0, 0, 150px) rotate3d(0, 1, 0, -190deg);\n    animation-timing-function: ease-out;\n  }\n\n  50% {\n    transform: perspective(400px) translate3d(0, 0, 150px) rotate3d(0, 1, 0, -170deg);\n    animation-timing-function: ease-in;\n  }\n\n  80% {\n    transform: perspective(400px) scale3d(0.95, 0.95, 0.95);\n    animation-timing-function: ease-in;\n  }\n\n  to {\n    transform: perspective(400px);\n    animation-timing-function: ease-in;\n  }\n}\n\n.animated.flip {\n  -webkit-backface-visibility: visible;\n  backface-visibility: visible;\n  animation-name: flip;\n}\n\n@keyframes flipInX {\n  from {\n    transform: perspective(400px) rotate3d(1, 0, 0, 90deg);\n    animation-timing-function: ease-in;\n    opacity: 0;\n  }\n\n  40% {\n    transform: perspective(400px) rotate3d(1, 0, 0, -20deg);\n    animation-timing-function: ease-in;\n  }\n\n  60% {\n    transform: perspective(400px) rotate3d(1, 0, 0, 10deg);\n    opacity: 1;\n  }\n\n  80% {\n    transform: perspective(400px) rotate3d(1, 0, 0, -5deg);\n  }\n\n  to {\n    transform: perspective(400px);\n  }\n}\n\n.flipInX {\n  -webkit-backface-visibility: visible !important;\n  backface-visibility: visible !important;\n  animation-name: flipInX;\n}\n\n@keyframes flipInY {\n  from {\n    transform: perspective(400px) rotate3d(0, 1, 0, 90deg);\n    animation-timing-function: ease-in;\n    opacity: 0;\n  }\n\n  40% {\n    transform: perspective(400px) rotate3d(0, 1, 0, -20deg);\n    animation-timing-function: ease-in;\n  }\n\n  60% {\n    transform: perspective(400px) rotate3d(0, 1, 0, 10deg);\n    opacity: 1;\n  }\n\n  80% {\n    transform: perspective(400px) rotate3d(0, 1, 0, -5deg);\n  }\n\n  to {\n    transform: perspective(400px);\n  }\n}\n\n.flipInY {\n  -webkit-backface-visibility: visible !important;\n  backface-visibility: visible !important;\n  animation-name: flipInY;\n}\n\n@keyframes flipOutX {\n  from {\n    transform: perspective(400px);\n  }\n\n  30% {\n    transform: perspective(400px) rotate3d(1, 0, 0, -20deg);\n    opacity: 1;\n  }\n\n  to {\n    transform: perspective(400px) rotate3d(1, 0, 0, 90deg);\n    opacity: 0;\n  }\n}\n\n.flipOutX {\n  animation-name: flipOutX;\n  -webkit-backface-visibility: visible !important;\n  backface-visibility: visible !important;\n}\n\n@keyframes flipOutY {\n  from {\n    transform: perspective(400px);\n  }\n\n  30% {\n    transform: perspective(400px) rotate3d(0, 1, 0, -15deg);\n    opacity: 1;\n  }\n\n  to {\n    transform: perspective(400px) rotate3d(0, 1, 0, 90deg);\n    opacity: 0;\n  }\n}\n\n.flipOutY {\n  -webkit-backface-visibility: visible !important;\n  backface-visibility: visible !important;\n  animation-name: flipOutY;\n}\n\n@keyframes lightSpeedIn {\n  from {\n    transform: translate3d(100%, 0, 0) skewX(-30deg);\n    opacity: 0;\n  }\n\n  60% {\n    transform: skewX(20deg);\n    opacity: 1;\n  }\n\n  80% {\n    transform: skewX(-5deg);\n    opacity: 1;\n  }\n\n  to {\n    transform: none;\n    opacity: 1;\n  }\n}\n\n.lightSpeedIn {\n  animation-name: lightSpeedIn;\n  animation-timing-function: ease-out;\n}\n\n@keyframes lightSpeedOut {\n  from {\n    opacity: 1;\n  }\n\n  to {\n    transform: translate3d(100%, 0, 0) skewX(30deg);\n    opacity: 0;\n  }\n}\n\n.lightSpeedOut {\n  animation-name: lightSpeedOut;\n  animation-timing-function: ease-in;\n}\n\n@keyframes rotateIn {\n  from {\n    transform-origin: center;\n    transform: rotate3d(0, 0, 1, -200deg);\n    opacity: 0;\n  }\n\n  to {\n    transform-origin: center;\n    transform: none;\n    opacity: 1;\n  }\n}\n\n.rotateIn {\n  animation-name: rotateIn;\n}\n\n@keyframes rotateInDownLeft {\n  from {\n    transform-origin: left bottom;\n    transform: rotate3d(0, 0, 1, -45deg);\n    opacity: 0;\n  }\n\n  to {\n    transform-origin: left bottom;\n    transform: none;\n    opacity: 1;\n  }\n}\n\n.rotateInDownLeft {\n  animation-name: rotateInDownLeft;\n}\n\n@keyframes rotateInDownRight {\n  from {\n    transform-origin: right bottom;\n    transform: rotate3d(0, 0, 1, 45deg);\n    opacity: 0;\n  }\n\n  to {\n    transform-origin: right bottom;\n    transform: none;\n    opacity: 1;\n  }\n}\n\n.rotateInDownRight {\n  animation-name: rotateInDownRight;\n}\n\n@keyframes rotateInUpLeft {\n  from {\n    transform-origin: left bottom;\n    transform: rotate3d(0, 0, 1, 45deg);\n    opacity: 0;\n  }\n\n  to {\n    transform-origin: left bottom;\n    transform: none;\n    opacity: 1;\n  }\n}\n\n.rotateInUpLeft {\n  animation-name: rotateInUpLeft;\n}\n\n@keyframes rotateInUpRight {\n  from {\n    transform-origin: right bottom;\n    transform: rotate3d(0, 0, 1, -90deg);\n    opacity: 0;\n  }\n\n  to {\n    transform-origin: right bottom;\n    transform: none;\n    opacity: 1;\n  }\n}\n\n.rotateInUpRight {\n  animation-name: rotateInUpRight;\n}\n\n@keyframes rotateOut {\n  from {\n    transform-origin: center;\n    opacity: 1;\n  }\n\n  to {\n    transform-origin: center;\n    transform: rotate3d(0, 0, 1, 200deg);\n    opacity: 0;\n  }\n}\n\n.rotateOut {\n  animation-name: rotateOut;\n}\n\n@keyframes rotateOutDownLeft {\n  from {\n    transform-origin: left bottom;\n    opacity: 1;\n  }\n\n  to {\n    transform-origin: left bottom;\n    transform: rotate3d(0, 0, 1, 45deg);\n    opacity: 0;\n  }\n}\n\n.rotateOutDownLeft {\n  animation-name: rotateOutDownLeft;\n}\n\n@keyframes rotateOutDownRight {\n  from {\n    transform-origin: right bottom;\n    opacity: 1;\n  }\n\n  to {\n    transform-origin: right bottom;\n    transform: rotate3d(0, 0, 1, -45deg);\n    opacity: 0;\n  }\n}\n\n.rotateOutDownRight {\n  animation-name: rotateOutDownRight;\n}\n\n@keyframes rotateOutUpLeft {\n  from {\n    transform-origin: left bottom;\n    opacity: 1;\n  }\n\n  to {\n    transform-origin: left bottom;\n    transform: rotate3d(0, 0, 1, -45deg);\n    opacity: 0;\n  }\n}\n\n.rotateOutUpLeft {\n  animation-name: rotateOutUpLeft;\n}\n\n@keyframes rotateOutUpRight {\n  from {\n    transform-origin: right bottom;\n    opacity: 1;\n  }\n\n  to {\n    transform-origin: right bottom;\n    transform: rotate3d(0, 0, 1, 90deg);\n    opacity: 0;\n  }\n}\n\n.rotateOutUpRight {\n  animation-name: rotateOutUpRight;\n}\n\n@keyframes hinge {\n  0% {\n    transform-origin: top left;\n    animation-timing-function: ease-in-out;\n  }\n\n  20%, 60% {\n    transform: rotate3d(0, 0, 1, 80deg);\n    transform-origin: top left;\n    animation-timing-function: ease-in-out;\n  }\n\n  40%, 80% {\n    transform: rotate3d(0, 0, 1, 60deg);\n    transform-origin: top left;\n    animation-timing-function: ease-in-out;\n    opacity: 1;\n  }\n\n  to {\n    transform: translate3d(0, 700px, 0);\n    opacity: 0;\n  }\n}\n\n.hinge {\n  animation-name: hinge;\n}\n\n@keyframes jackInTheBox {\n  from {\n    opacity: 0;\n    transform: scale(0.1) rotate(30deg);\n    transform-origin: center bottom;\n  }\n\n  50% {\n    transform: rotate(-10deg);\n  }\n\n  70% {\n    transform: rotate(3deg);\n  }\n\n  to {\n    opacity: 1;\n    transform: scale(1);\n  }\n}\n\n.jackInTheBox {\n  animation-name: jackInTheBox;\n}\n\n/* originally authored by Nick Pettit - https://github.com/nickpettit/glide */\n\n@keyframes rollIn {\n  from {\n    opacity: 0;\n    transform: translate3d(-100%, 0, 0) rotate3d(0, 0, 1, -120deg);\n  }\n\n  to {\n    opacity: 1;\n    transform: none;\n  }\n}\n\n.rollIn {\n  animation-name: rollIn;\n}\n\n/* originally authored by Nick Pettit - https://github.com/nickpettit/glide */\n\n@keyframes rollOut {\n  from {\n    opacity: 1;\n  }\n\n  to {\n    opacity: 0;\n    transform: translate3d(100%, 0, 0) rotate3d(0, 0, 1, 120deg);\n  }\n}\n\n.rollOut {\n  animation-name: rollOut;\n}\n\n@keyframes zoomIn {\n  from {\n    opacity: 0;\n    transform: scale3d(0.3, 0.3, 0.3);\n  }\n\n  50% {\n    opacity: 1;\n  }\n}\n\n.zoomIn {\n  animation-name: zoomIn;\n}\n\n@keyframes zoomInDown {\n  from {\n    opacity: 0;\n    transform: scale3d(0.1, 0.1, 0.1) translate3d(0, -1000px, 0);\n    animation-timing-function: cubic-bezier(0.55, 0.055, 0.675, 0.19);\n  }\n\n  60% {\n    opacity: 1;\n    transform: scale3d(0.475, 0.475, 0.475) translate3d(0, 60px, 0);\n    animation-timing-function: cubic-bezier(0.175, 0.885, 0.32, 1);\n  }\n}\n\n.zoomInDown {\n  animation-name: zoomInDown;\n}\n\n@keyframes zoomInLeft {\n  from {\n    opacity: 0;\n    transform: scale3d(0.1, 0.1, 0.1) translate3d(-1000px, 0, 0);\n    animation-timing-function: cubic-bezier(0.55, 0.055, 0.675, 0.19);\n  }\n\n  60% {\n    opacity: 1;\n    transform: scale3d(0.475, 0.475, 0.475) translate3d(10px, 0, 0);\n    animation-timing-function: cubic-bezier(0.175, 0.885, 0.32, 1);\n  }\n}\n\n.zoomInLeft {\n  animation-name: zoomInLeft;\n}\n\n@keyframes zoomInRight {\n  from {\n    opacity: 0;\n    transform: scale3d(0.1, 0.1, 0.1) translate3d(1000px, 0, 0);\n    animation-timing-function: cubic-bezier(0.55, 0.055, 0.675, 0.19);\n  }\n\n  60% {\n    opacity: 1;\n    transform: scale3d(0.475, 0.475, 0.475) translate3d(-10px, 0, 0);\n    animation-timing-function: cubic-bezier(0.175, 0.885, 0.32, 1);\n  }\n}\n\n.zoomInRight {\n  animation-name: zoomInRight;\n}\n\n@keyframes zoomInUp {\n  from {\n    opacity: 0;\n    transform: scale3d(0.1, 0.1, 0.1) translate3d(0, 1000px, 0);\n    animation-timing-function: cubic-bezier(0.55, 0.055, 0.675, 0.19);\n  }\n\n  60% {\n    opacity: 1;\n    transform: scale3d(0.475, 0.475, 0.475) translate3d(0, -60px, 0);\n    animation-timing-function: cubic-bezier(0.175, 0.885, 0.32, 1);\n  }\n}\n\n.zoomInUp {\n  animation-name: zoomInUp;\n}\n\n@keyframes zoomOut {\n  from {\n    opacity: 1;\n  }\n\n  50% {\n    opacity: 0;\n    transform: scale3d(0.3, 0.3, 0.3);\n  }\n\n  to {\n    opacity: 0;\n  }\n}\n\n.zoomOut {\n  animation-name: zoomOut;\n}\n\n@keyframes zoomOutDown {\n  40% {\n    opacity: 1;\n    transform: scale3d(0.475, 0.475, 0.475) translate3d(0, -60px, 0);\n    animation-timing-function: cubic-bezier(0.55, 0.055, 0.675, 0.19);\n  }\n\n  to {\n    opacity: 0;\n    transform: scale3d(0.1, 0.1, 0.1) translate3d(0, 2000px, 0);\n    transform-origin: center bottom;\n    animation-timing-function: cubic-bezier(0.175, 0.885, 0.32, 1);\n  }\n}\n\n.zoomOutDown {\n  animation-name: zoomOutDown;\n}\n\n@keyframes zoomOutLeft {\n  40% {\n    opacity: 1;\n    transform: scale3d(0.475, 0.475, 0.475) translate3d(42px, 0, 0);\n  }\n\n  to {\n    opacity: 0;\n    transform: scale(0.1) translate3d(-2000px, 0, 0);\n    transform-origin: left center;\n  }\n}\n\n.zoomOutLeft {\n  animation-name: zoomOutLeft;\n}\n\n@keyframes zoomOutRight {\n  40% {\n    opacity: 1;\n    transform: scale3d(0.475, 0.475, 0.475) translate3d(-42px, 0, 0);\n  }\n\n  to {\n    opacity: 0;\n    transform: scale(0.1) translate3d(2000px, 0, 0);\n    transform-origin: right center;\n  }\n}\n\n.zoomOutRight {\n  animation-name: zoomOutRight;\n}\n\n@keyframes zoomOutUp {\n  40% {\n    opacity: 1;\n    transform: scale3d(0.475, 0.475, 0.475) translate3d(0, 60px, 0);\n    animation-timing-function: cubic-bezier(0.55, 0.055, 0.675, 0.19);\n  }\n\n  to {\n    opacity: 0;\n    transform: scale3d(0.1, 0.1, 0.1) translate3d(0, -2000px, 0);\n    transform-origin: center bottom;\n    animation-timing-function: cubic-bezier(0.175, 0.885, 0.32, 1);\n  }\n}\n\n.zoomOutUp {\n  animation-name: zoomOutUp;\n}\n\n@keyframes slideInDown {\n  from {\n    transform: translate3d(0, -100%, 0);\n    visibility: visible;\n  }\n\n  to {\n    transform: translate3d(0, 0, 0);\n  }\n}\n\n.slideInDown {\n  animation-name: slideInDown;\n}\n\n@keyframes slideInLeft {\n  from {\n    transform: translate3d(-100%, 0, 0);\n    visibility: visible;\n  }\n\n  to {\n    transform: translate3d(0, 0, 0);\n  }\n}\n\n.slideInLeft {\n  animation-name: slideInLeft;\n}\n\n@keyframes slideInRight {\n  from {\n    transform: translate3d(100%, 0, 0);\n    visibility: visible;\n  }\n\n  to {\n    transform: translate3d(0, 0, 0);\n  }\n}\n\n.slideInRight {\n  animation-name: slideInRight;\n}\n\n@keyframes slideInUp {\n  from {\n    transform: translate3d(0, 100%, 0);\n    visibility: visible;\n  }\n\n  to {\n    transform: translate3d(0, 0, 0);\n  }\n}\n\n.slideInUp {\n  animation-name: slideInUp;\n}\n\n@keyframes slideOutDown {\n  from {\n    transform: translate3d(0, 0, 0);\n  }\n\n  to {\n    visibility: hidden;\n    transform: translate3d(0, 100%, 0);\n  }\n}\n\n.slideOutDown {\n  animation-name: slideOutDown;\n}\n\n@keyframes slideOutLeft {\n  from {\n    transform: translate3d(0, 0, 0);\n  }\n\n  to {\n    visibility: hidden;\n    transform: translate3d(-100%, 0, 0);\n  }\n}\n\n.slideOutLeft {\n  animation-name: slideOutLeft;\n}\n\n@keyframes slideOutRight {\n  from {\n    transform: translate3d(0, 0, 0);\n  }\n\n  to {\n    visibility: hidden;\n    transform: translate3d(100%, 0, 0);\n  }\n}\n\n.slideOutRight {\n  animation-name: slideOutRight;\n}\n\n@keyframes slideOutUp {\n  from {\n    transform: translate3d(0, 0, 0);\n  }\n\n  to {\n    visibility: hidden;\n    transform: translate3d(0, -100%, 0);\n  }\n}\n\n.slideOutUp {\n  animation-name: slideOutUp;\n}", ""]);
+	exports.push([module.id, ".content--end {\n  justify-content: flex-end;\n}\n\n.content--space-between {\n  justify-content: space-between;\n}\n\n.content--center {\n  align-items: center;\n}\n\n.flex {\n  display: flex;\n}\n\n.input-file {\n  position: absolute;\n  opacity: 0;\n  width: 100%;\n  height: 100%;\n  left: 0;\n  right: 0;\n  cursor: pointer;\n}\n\n.app-container {\n  width: 1024px;\n  margin: 0 auto;\n}\n\n.app-btn {\n  border: none;\n  background: none;\n  padding: 10px 30px;\n  cursor: pointer;\n  color: white;\n  position: relative;\n  background-color: #17b6ed;\n  border-radius: 2px;\n}\n\n.app-btn.small {\n  width: 150px;\n}\n\n.app-btn input[type='file'] {\n  opacity: 0;\n  cursor: pointer;\n  height: 100%;\n  position: absolute;\n  width: 100%;\n  top: 0;\n  left: 0;\n}\n\n.app-btn:hover {\n  background-color: #46c5f1;\n}\n\nheader {\n  height: 60px;\n  border-bottom: 1px solid #ccc;\n  padding: 10px;\n  background-color: #ffffff;\n}\n\nheader .logo {\n  float: left;\n}\n\nheader .logo img {\n  width: auto;\n  height: 39px;\n}\n\nheader .logo .gantt--main-menu-item {\n  /*padding: 0 $step * 8 0 0;*/\n  height: 39px;\n  display: flex;\n  align-items: center;\n  font-size: 24px;\n  font-weight: bold;\n}\n\nheader .gantt--main-menu {\n  display: flex;\n  height: 100%;\n  float: left;\n  align-items: center;\n}\n\nheader .gantt--main-menu .gantt--main-menu-item {\n  color: #191919;\n  position: relative;\n}\n\nheader .gantt--main-menu .gantt--main-menu-item.active:after {\n  content: '';\n  position: absolute;\n  width: 100%;\n  bottom: 0;\n  left: 0;\n  border-bottom: 3px solid #f9d710;\n}\n\nheader .gantt--main-menu-item {\n  padding: 10px;\n  height: 100%;\n  display: block;\n  text-decoration: none;\n  color: #676767;\n  font-size: 16px;\n  font-weight: 300;\n}\n\nheader .gantt--main-menu-item:hover {\n  opacity: 0.8;\n}\n\nheader .right-menu {\n  float: right;\n  margin-right: 10px;\n  display: flex;\n  align-items: center;\n}\n\nheader .right-menu .search-input {\n  margin-right: 10px;\n}\n\nheader .right-menu .search-input input[type=\"text\"] {\n  height: 39px;\n  padding: 0 32px 0 12px;\n  font-size: 16px;\n  border: none;\n  border-top: 3px solid transparent;\n  border-bottom: 3px solid #f9d710;\n  box-sizing: border-box;\n}\n\nheader .right-menu .search-input input[type=\"text\"]:focus {\n  border: 3px solid #0a0a0a;\n  padding-right: 29px;\n}\n\nheader .right-menu .search-input i {\n  color: #0a0a0a;\n  position: absolute;\n  top: 0;\n  right: 8px;\n  font-size: 18px;\n  bottom: 0;\n  margin: auto;\n  width: 18px;\n  height: 18px;\n}\n\nheader .right-menu .profile-menu {\n  align-items: center;\n  justify-content: center;\n  display: flex;\n  font-size: 14px;\n  color: #191919;\n  font-weight: 500;\n  position: relative;\n  cursor: pointer;\n}\n\nheader .right-menu .profile-menu .avatar {\n  background-size: cover !important;\n  background-position: center center !important;\n  border-radius: 100%;\n  width: 40px;\n  height: 40px;\n}\n\nheader .right-menu .profile-menu .username {\n  margin-right: 10px;\n}\n\nfooter {\n  background-size: 46px;\n  background-position: 0;\n  height: 40px;\n}\n\nfooter .info-panel {\n  font-size: 0;\n  display: inline-flex;\n  justify-content: flex-start;\n  padding: 4px 8px;\n  height: 100%;\n  width: 100%;\n  background: rgba(0, 0, 0, 0.3);\n}\n\nfooter .info-panel__item {\n  font-size: 12px;\n  display: block;\n  min-width: 200px;\n  background-color: #ffffff;\n  border: 1px solid #0a0a0a;\n  text-align: right;\n  line-height: 16px;\n  padding: 8px;\n  text-transform: uppercase;\n}\n\nfooter .info-panel__item + .info-panel__item {\n  margin-left: 12px;\n}\n\napp-home {\n  display: flex;\n  flex-direction: column;\n  flex: 1;\n  justify-content: center;\n  text-align: center;\n}\n\napp-home .app-home__bottom {\n  margin-top: 90px;\n}\n\napp-not-found {\n  width: 100%;\n}\n\napp-not-found h1 {\n  display: flex;\n  /* flex-direction: column; */\n  /* flex: 1; */\n  align-items: center;\n  justify-content: center;\n  width: 100%;\n  height: calc(100% - 60px);\n  margin: 0;\n}\n\napp-documentation {\n  width: 100%;\n}\n\napp-documentation .main-content {\n  width: 100%;\n  display: flex;\n}\n\napp-documentation .main-content .main-list {\n  width: 15%;\n  border-right: 1px solid #ccc;\n  padding: 20px 40px 20px 40px;\n  overflow: auto;\n}\n\napp-documentation .main-content .main-list .list-head {\n  margin-bottom: 5px;\n}\n\napp-documentation .main-content .main-list > li {\n  margin-bottom: 10px;\n  font-size: 16px;\n  font-weight: 600;\n}\n\napp-documentation .main-content .main-list ol .active {\n  color: #17b6ed;\n}\n\napp-documentation .main-content .main-list ol li {\n  padding-left: 20px;\n  cursor: pointer;\n  font-size: 14px;\n  font-weight: 400;\n}\n\napp-documentation .main-content .main-list ol li a {\n  color: #000;\n  display: block;\n  padding: 5px;\n}\n\napp-documentation .main-content .main-list ol li a:hover {\n  background: #f5f5f5;\n}\n\napp-documentation .main-content .main-list ol li:hover {\n  text-decoration: underline;\n}\n\napp-documentation .main-content .documentation-section {\n  width: 85%;\n  padding-left: 20px;\n  overflow: auto;\n  padding: 20px 40px 20px 40px;\n}\n\napp-documentation main {\n  height: 100%;\n  display: flex;\n  flex: 1;\n  user-select: none;\n  position: relative;\n  border-bottom: 1px solid #ccc;\n}\n\napp-documentation .code-block {\n  display: block;\n  margin: 10px 0 10px;\n  font-size: 14px;\n  word-break: break-all;\n  word-wrap: break-word;\n  background-color: rgba(247, 247, 247, 0.85);\n  border: 1px solid #f3eeee;\n  border-radius: 4px;\n}\n\napp-documentation .code-block .code-header {\n  background: #ccc;\n  padding: 10px;\n}\n\napp-documentation .code-block .attr {\n  color: #17b6ed;\n}\n\napp-documentation .code-block .text {\n  font-weight: bold;\n}\n\napp-documentation .folder-structure {\n  padding: 20px;\n  width: 50%;\n}\n\napp-documentation .folder-structure .children {\n  position: relative;\n  overflow: hidden;\n  padding-left: 24px;\n}\n\napp-documentation .folder-structure .children:first-child {\n  padding: 0;\n}\n\napp-documentation .folder-structure--item {\n  padding: 5px 0px;\n  position: relative;\n}\n\napp-documentation .folder-structure--item .folder-structure--item {\n  padding-left: 30px;\n}\n\napp-documentation .folder-structure--item .folder-structure--item:before {\n  content: \"\";\n  left: 10px;\n  bottom: 15px;\n  width: 16px;\n  height: 9999px;\n  position: absolute;\n  border-width: 0 0 1px 1px;\n  border-style: solid;\n  border-color: #ccc;\n  border-radius: 0 0 0 3px;\n}\n\napp-documentation .comment {\n  display: inline-block;\n  color: #aaa;\n}\n\napp-documentation pre {\n  padding: 10px;\n}\n\napp-documentation .kwd {\n  color: #17b6ed;\n}\n\napp-documentation .str {\n  color: #d4ce10;\n}\n\napp-documentation .typ {\n  color: red;\n}\n\napp-documentation .met {\n  color: #00d400;\n}\n\napp-documentation .white {\n  color: #fff;\n}\n\napp-documentation .title {\n  font-family: 'Roboto', sans-serif;\n  margin-right: 20px;\n}\n\napp-documentation .section-title {\n  font-size: 16px;\n  margin-top: 20px;\n  border-bottom: 1px solid #ccc;\n  padding: 6px;\n}\n\napp-documentation .in-development {\n  color: red;\n}\n\napp-documentation .text {\n  width: 500px;\n  font-weight: 300;\n  margin: 10px 0;\n}\n\napp-documentation .block {\n  border-bottom: 1px solid #ccc;\n  display: flex;\n  align-items: center;\n  justify-content: space-between;\n}\n\napp-documentation .label {\n  padding: 3px 5px;\n  display: inline-block;\n  color: #17b6ed;\n  font-weight: bold;\n  font-size: 16px;\n  border-radius: 3px;\n  border: 1px solid;\n}\n\nchild-route-switcher {\n  display: block;\n  width: 60%;\n}\n\napp-documentation-directives .clicked {\n  color: green;\n}\n\napp-documentation-directives .unclicked {\n  color: red;\n}\n\napp-documentation-architecture {\n  width: 100%;\n}\n\napp-documentation-forms .ac-error[type] {\n  border: 1px solid rgba(255, 0, 0, 0.47);\n}\n\napp-documentation-forms .input {\n  margin: 10px 0px;\n}\n\napp-documentation-forms .input input {\n  border: 1px solid #ccc;\n  padding: 4px;\n}\n\napp-documentation-forms button {\n  cursor: pointer;\n  padding: 4px;\n  border: none;\n  background: #17b6ed;\n  color: #fff;\n  border-radius: 4px;\n}\n\napp-plugins,\napp-controls {\n  width: 100%;\n}\n\napp-plugins .main-content,\napp-controls .main-content {\n  width: 100%;\n  display: flex;\n}\n\napp-plugins .main-content .main-list,\napp-controls .main-content .main-list {\n  width: 15%;\n  border-right: 1px solid #ccc;\n  padding: 20px 40px 20px 40px;\n  overflow: auto;\n}\n\napp-plugins .main-content .main-list .list-head,\napp-controls .main-content .main-list .list-head {\n  margin-bottom: 5px;\n}\n\napp-plugins .main-content .main-list .active,\napp-controls .main-content .main-list .active {\n  color: #17b6ed;\n}\n\napp-plugins .main-content .main-list li,\napp-controls .main-content .main-list li {\n  cursor: pointer;\n  font-size: 14px;\n  font-weight: 400;\n  margin-bottom: 10px;\n  font-size: 16px;\n  font-weight: 600;\n}\n\napp-plugins .main-content .main-list li a,\napp-controls .main-content .main-list li a {\n  color: #000;\n  display: block;\n  padding: 5px;\n}\n\napp-plugins .main-content .main-list li a:hover,\napp-controls .main-content .main-list li a:hover {\n  color: #17b6ed;\n  background: #f5f5f5;\n}\n\napp-plugins .main-content .plugins-section,\napp-controls .main-content .plugins-section {\n  width: 85%;\n  padding-left: 20px;\n  overflow: auto;\n  padding: 20px 40px 20px 40px;\n}\n\napp-plugins main,\napp-controls main {\n  height: 100%;\n  display: flex;\n  flex: 1;\n  user-select: none;\n  position: relative;\n  border-bottom: 1px solid #ccc;\n}\n\napp-container {\n  width: 100%;\n}\n\nh1,\nh2,\nh3,\nh4,\nh5,\nh6 {\n  margin-bottom: 20px;\n}\n\nh1 {\n  font-size: 26px;\n}\n\nh2 {\n  font-size: 24px;\n}\n\nh3 {\n  font-size: 22px;\n}\n\nh4 {\n  font-size: 20px;\n}\n\nh5 {\n  font-size: 18px;\n}\n\nh6 {\n  font-size: 16px;\n}\n\np {\n  font-size: 14px;\n  margin-bottom: 15px;\n  line-height: 2;\n}\n\na {\n  color: #17b6ed;\n  cursor: pointer;\n}\n\nimg {\n  width: 100%;\n}\n\nb {\n  font-weight: 700;\n}\n\n.hidden {\n  display: none !important;\n}\n\n.relative {\n  position: relative;\n}\n\n.full-width {\n  width: 100%;\n}\n\n.text-center {\n  text-align: center;\n}\n\n.attached-file {\n  display: flex;\n  height: 40px;\n  align-items: center;\n  margin: 5px 0px;\n  justify-content: space-between;\n}\n\n* {\n  font-family: 'Roboto', sans-serif;\n}\n\n.dropdown-container {\n  font-size: 12px;\n  font-weight: normal;\n}\n\n.dropdown {\n  position: absolute;\n  background: #fff;\n  border: 1px solid #ccc;\n  /* bottom: 0; */\n  top: 100%;\n  z-index: 1000;\n  width: 200px;\n  right: 0;\n  opacity: 0;\n  margin-top: 35px;\n  visibility: hidden;\n  transition-property: all;\n  transition-duration: 0.3s;\n  transition-timing-function: ease;\n  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);\n  border-radius: 4px;\n  overflow: hidden;\n}\n\n.dropdown ul li.active {\n  background: #f1f1f1;\n}\n\n.dropdown ul li a {\n  font-size: 12px;\n  padding: 10px;\n  display: block;\n}\n\n.dropdown ul li:hover {\n  background: #f1f1f1;\n}\n\n.dropdown.open {\n  opacity: 1;\n  visibility: visible;\n  margin-top: 0;\n}\n\napp-status-dropdown .dropdown-value {\n  cursor: pointer;\n  padding: 4px;\n  color: #fff;\n  border-radius: 4px;\n  background: #17b6ed;\n}\n\napp-status-dropdown .dropdown-value.done {\n  background: #5db95d;\n}\n\napp-status-dropdown .dropdown-value.in_progress {\n  background: #17b6ed;\n}\n\napp-status-dropdown .dropdown-value.feedback {\n  background: #c3c3c3;\n}\n\napp-color-dropdown .dropdown {\n  left: 0;\n  max-height: 200px;\n  padding: 5px;\n  overflow: auto;\n}\n\napp-color-dropdown .dropdown-item {\n  margin: 5px;\n  cursor: pointer;\n  border-radius: 100%;\n  transition: 0.2s all;\n}\n\napp-color-dropdown .dropdown-item.active {\n  transform: scale(1.2);\n}\n\napp-color-dropdown .dropdown-item:hover {\n  transform: scale(1.2);\n}\n\napp-color-dropdown .dropdown-item-color {\n  border-radius: 100%;\n  width: 30px;\n  height: 30px;\n}\n\napp-color-dropdown .dropdown ul {\n  display: flex;\n  justify-content: space-between;\n  flex-flow: row wrap;\n}\n\napp-color-dropdown .dropdown-value {\n  cursor: pointer;\n  width: 40px;\n  height: 40px;\n  border-radius: 100%;\n}\n\napp-assignee-dropdown .profile-menu {\n  align-items: center;\n  display: flex;\n}\n\napp-assignee-dropdown .avatar {\n  width: 30px;\n  display: flex;\n  margin-right: 10px;\n  background-size: cover !important;\n  background-position: center;\n  height: 30px;\n  border-radius: 100%;\n}\n\napp-common-dropdown {\n  display: inline-block;\n}\n\napp-common-dropdown .dropdown-value {\n  cursor: pointer;\n  padding: 4px;\n  color: #fff;\n  border-radius: 4px;\n  background: #cccccc;\n}\n\n.content--end {\n  justify-content: flex-end;\n}\n\n.content--space-between {\n  justify-content: space-between;\n}\n\n.content--center {\n  align-items: center;\n}\n\n.flex {\n  display: flex;\n}\n\n.input-file {\n  position: absolute;\n  opacity: 0;\n  width: 100%;\n  height: 100%;\n  left: 0;\n  right: 0;\n  cursor: pointer;\n}\n\n.app-container {\n  width: 1024px;\n  margin: 0 auto;\n}\n\n.app-btn {\n  border: none;\n  background: none;\n  padding: 10px 30px;\n  cursor: pointer;\n  color: white;\n  position: relative;\n  background-color: #17b6ed;\n  border-radius: 2px;\n}\n\n.app-btn.small {\n  width: 150px;\n}\n\n.app-btn input[type='file'] {\n  opacity: 0;\n  cursor: pointer;\n  height: 100%;\n  position: absolute;\n  width: 100%;\n  top: 0;\n  left: 0;\n}\n\n.app-btn:hover {\n  background-color: #46c5f1;\n}\n\nh1,\nh2,\nh3,\nh4,\nh5,\nh6 {\n  margin-bottom: 20px;\n}\n\nh1 {\n  font-size: 26px;\n}\n\nh2 {\n  font-size: 24px;\n}\n\nh3 {\n  font-size: 22px;\n}\n\nh4 {\n  font-size: 20px;\n}\n\nh5 {\n  font-size: 18px;\n}\n\nh6 {\n  font-size: 16px;\n}\n\np {\n  font-size: 14px;\n  margin-bottom: 15px;\n  line-height: 2;\n}\n\na {\n  color: #17b6ed;\n  cursor: pointer;\n}\n\nimg {\n  width: 100%;\n}\n\nb {\n  font-weight: 700;\n}\n\n.hidden {\n  display: none !important;\n}\n\n.relative {\n  position: relative;\n}\n\n.full-width {\n  width: 100%;\n}\n\n.text-center {\n  text-align: center;\n}\n\n.attached-file {\n  display: flex;\n  height: 40px;\n  align-items: center;\n  margin: 5px 0px;\n  justify-content: space-between;\n}\n\n* {\n  font-family: 'Roboto', sans-serif;\n}\n\n.app-form__row {\n  display: flex;\n  align-items: center;\n  margin-bottom: 15px;\n}\n\n.app-form__row.col-2 .app-form__label {\n  width: 48%;\n}\n\n.app-form__label {\n  display: flex;\n  flex-direction: column;\n  width: 100%;\n  position: relative;\n}\n\n.app-form__label__text {\n  margin-bottom: 5px;\n  color: #aaa;\n  font-weight: normal;\n}\n\n.app-form__subtitle {\n  position: absolute;\n  bottom: 11px;\n  left: 11px;\n}\n\n.app-form__subtitle + .app-form__label__input {\n  padding-left: 21px;\n}\n\n.app-form__label__input {\n  padding: 10px;\n  border-radius: 5px;\n  border: 1px solid #cccccc;\n}\n\n.app-form__label__textarea {\n  width: 100%;\n  padding: 10px;\n  border-radius: 5px;\n  border: 1px solid #cccccc;\n  resize: vertical;\n  max-height: 300px;\n}\n\n.app-form + .app-form {\n  margin-top: 30px;\n}\n\n.input.error {\n  border: 1px solid rgba(255, 0, 0, 0.47);\n}\n\n.input {\n  position: relative;\n}\n\n.input input[type=text],\n.input input[type=email],\n.input input[type=password] {\n  border: none;\n  width: 100%;\n}\n\n.input input[type=text].ac-invalid + .input-border,\n.input input[type=email].ac-invalid + .input-border,\n.input input[type=password].ac-invalid + .input-border {\n  border-color: red;\n}\n\n.input-border {\n  position: absolute;\n  top: 0;\n  right: 0;\n  bottom: 0;\n  left: 0;\n  pointer-events: none;\n  border-radius: 4px;\n  -webkit-border-radius: 4px;\n  -moz-border-radius: 4px;\n  border: 1px solid #bfbfbf;\n}\n\n.modal-container {\n  position: fixed;\n  width: 100%;\n  height: 100%;\n  top: 0;\n  background: rgba(0, 0, 0, 0.5);\n  z-index: 1000;\n}\n\n.modal-container .modal {\n  position: fixed;\n  width: 40%;\n  left: 0;\n  right: 0;\n  bottom: 0;\n  top: 0;\n  background: #fff;\n  margin: auto;\n  height: 80%;\n  box-shadow: 0px 0px 20px -2px #000;\n  padding: 30px;\n  min-width: 800px;\n  border-radius: 3px;\n  overflow: auto;\n}\n\n.modal-container .modal-bottom {\n  float: right;\n}\n\n.modal-container .modal-bottom .app-btn {\n  margin-left: 10px;\n}\n\n.modal-container .modal.crop {\n  user-select: none;\n  /*.tag_frame_inner{*/\n  /*width: 550px;*/\n  /*}*/\n}\n\n.modal-container .modal.crop .tag_faded {\n  background: #000;\n  opacity: 0.7;\n  filter: alpha(opacity=70);\n  cursor: crosshair;\n  left: 0px;\n  top: 0px;\n  width: 100%;\n  height: 100%;\n  z-index: 1030;\n  position: absolute;\n}\n\n.modal-container .modal.crop .tag_frame {\n  position: absolute;\n  cursor: move;\n  z-index: 1040;\n  left: 0;\n  top: 0;\n  width: 200px;\n  height: 200px;\n  display: block;\n  overflow: hidden;\n  text-align: left;\n  direction: ltr;\n}\n\n.modal-container .modal.crop .tag_frame_resizer {\n  position: absolute;\n  background-color: #f2f2f2;\n  width: 10px;\n  height: 10px;\n  z-index: 9999;\n  opacity: 0.3;\n  transition-property: opacity;\n  -webkit-transition-duration: 0.3s;\n  transition-duration: 0.3s;\n  -webkit-transition-timing-function: ease;\n  transition-timing-function: ease;\n}\n\n.modal-container .modal.crop .tag_frame_resizer:hover {\n  opacity: 0.9;\n}\n\n.modal-container .modal.crop .j-modal__content {\n  user-select: none;\n  -moz-user-select: none;\n  -webkit-user-select: none;\n  -ms-user-select: none;\n}\n\n.modal-container .modal.crop .j-modal__preview {\n  margin: auto;\n  display: block;\n  border-radius: 100%;\n  width: 25%;\n}\n\n.modal-container .modal.crop .j-modal__crop_container {\n  position: relative;\n  margin: 0px auto;\n  font-size: 0px;\n}\n\n.j-calendar {\n  display: inline-flex;\n  flex-direction: column;\n  flex-wrap: wrap;\n  background: #fff;\n  border-bottom-left-radius: 5px;\n  border-bottom-right-radius: 5px;\n  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.4);\n  overflow: hidden;\n  left: 0;\n  top: 100%;\n  position: absolute;\n  z-index: 1;\n  font-weight: normal;\n}\n\n.j-calendar__wrap {\n  display: flex;\n}\n\n.j-calendar__item + .j-calendar__item .j-calendar__content {\n  border-left: 1px solid #d9d9d9;\n}\n\n.j-calendar__item + .j-calendar__item .j-calendar__header {\n  border-left: 1px solid #d9d9d9;\n}\n\n.j-calendar__header {\n  width: 285px;\n  height: 50px;\n  display: flex;\n  align-items: stretch;\n  justify-content: space-between;\n  font-size: 15px;\n  color: #fff;\n  background: #17b6ed;\n}\n\n.j-calendar__header__center,\n.j-calendar__header__left,\n.j-calendar__header__right {\n  display: flex;\n  align-items: center;\n  justify-content: center;\n}\n\n.j-calendar__header__left,\n.j-calendar__header__right {\n  width: 50px;\n  cursor: pointer;\n}\n\n.j-calendar__header__left:hover,\n.j-calendar__header__right:hover {\n  background: #11a2d5;\n}\n\n.j-calendar__header__empty {\n  width: 50px;\n}\n\n.j-calendar__content {\n  width: 285px;\n  padding: 10px;\n}\n\n.j-calendar__days {\n  display: flex;\n}\n\n.j-calendar__days__item {\n  width: 14.285%;\n  font-size: 13px;\n  cursor: default;\n  text-align: center;\n}\n\n.j-calendar__days__item--output {\n  color: #17b6ed;\n}\n\n.j-calendar__date {\n  display: flex;\n  flex-wrap: wrap;\n  padding-top: 5px;\n}\n\n.j-calendar__date__item {\n  display: flex;\n  align-items: center;\n  justify-content: center;\n  height: 30px;\n  width: 14.285%;\n  font-size: 13px;\n  position: relative;\n}\n\n.j-calendar__date__item.empty {\n  opacity: 0;\n  cursor: default !important;\n}\n\n.j-calendar__date__item:before {\n  content: '';\n  width: 26px;\n  height: 26px;\n  top: 0;\n  left: 0;\n  right: 0;\n  bottom: 0;\n  margin: auto;\n  position: absolute;\n  border-radius: 100%;\n  z-index: -1;\n}\n\n.j-calendar__date__item:hover {\n  color: #17b6ed;\n  cursor: pointer;\n}\n\n.j-calendar__date__item--active {\n  color: #fff !important;\n  cursor: pointer;\n}\n\n.j-calendar__date__item--active:before {\n  background: #17b6ed;\n}\n\n.j-calendar__date__item--active:hover:before {\n  background: #17b6ed !important;\n}\n\n.j-calendar__date__item--today {\n  cursor: pointer;\n}\n\n.j-calendar__date__item--today:before {\n  border: 1px solid #17b6ed;\n}\n\n.j-calendar__date__item--inactive {\n  cursor: default !important;\n  color: #b7b7b7 !important;\n}\n\n.j-calendar__date__item--inactive:hover:before {\n  background: none !important;\n}\n\n.j-calendar__date__item--empty {\n  cursor: default;\n}\n\n.j-calendar__bottom {\n  margin: 15px 0;\n  text-align: center;\n}\n\n/*!\r\n * animate.css -http://daneden.me/animate\r\n * Version - 3.5.2\r\n * Licensed under the MIT license - http://opensource.org/licenses/MIT\r\n *\r\n * Copyright (c) 2017 Daniel Eden\r\n */\n\n.animated {\n  animation-duration: 1s;\n  animation-fill-mode: both;\n}\n\n.animated.infinite {\n  animation-iteration-count: infinite;\n}\n\n.animated.hinge {\n  animation-duration: 2s;\n}\n\n.animated.flipOutX,\n.animated.flipOutY,\n.animated.bounceIn,\n.animated.bounceOut {\n  animation-duration: .75s;\n}\n\n@keyframes bounce {\n  from, 20%, 53%, 80%, to {\n    animation-timing-function: cubic-bezier(0.215, 0.61, 0.355, 1);\n    transform: translate3d(0, 0, 0);\n  }\n\n  40%, 43% {\n    animation-timing-function: cubic-bezier(0.755, 0.05, 0.855, 0.06);\n    transform: translate3d(0, -30px, 0);\n  }\n\n  70% {\n    animation-timing-function: cubic-bezier(0.755, 0.05, 0.855, 0.06);\n    transform: translate3d(0, -15px, 0);\n  }\n\n  90% {\n    transform: translate3d(0, -4px, 0);\n  }\n}\n\n.bounce {\n  animation-name: bounce;\n  transform-origin: center bottom;\n}\n\n@keyframes flash {\n  from, 50%, to {\n    opacity: 1;\n  }\n\n  25%, 75% {\n    opacity: 0;\n  }\n}\n\n.flash {\n  animation-name: flash;\n}\n\n/* originally authored by Nick Pettit - https://github.com/nickpettit/glide */\n\n@keyframes pulse {\n  from {\n    transform: scale3d(1, 1, 1);\n  }\n\n  50% {\n    transform: scale3d(1.05, 1.05, 1.05);\n  }\n\n  to {\n    transform: scale3d(1, 1, 1);\n  }\n}\n\n.pulse {\n  animation-name: pulse;\n}\n\n@keyframes rubberBand {\n  from {\n    transform: scale3d(1, 1, 1);\n  }\n\n  30% {\n    transform: scale3d(1.25, 0.75, 1);\n  }\n\n  40% {\n    transform: scale3d(0.75, 1.25, 1);\n  }\n\n  50% {\n    transform: scale3d(1.15, 0.85, 1);\n  }\n\n  65% {\n    transform: scale3d(0.95, 1.05, 1);\n  }\n\n  75% {\n    transform: scale3d(1.05, 0.95, 1);\n  }\n\n  to {\n    transform: scale3d(1, 1, 1);\n  }\n}\n\n.rubberBand {\n  animation-name: rubberBand;\n}\n\n@keyframes shake {\n  from, to {\n    transform: translate3d(0, 0, 0);\n  }\n\n  10%, 30%, 50%, 70%, 90% {\n    transform: translate3d(-10px, 0, 0);\n  }\n\n  20%, 40%, 60%, 80% {\n    transform: translate3d(10px, 0, 0);\n  }\n}\n\n.shake {\n  animation-name: shake;\n}\n\n@keyframes headShake {\n  0% {\n    transform: translateX(0);\n  }\n\n  6.5% {\n    transform: translateX(-6px) rotateY(-9deg);\n  }\n\n  18.5% {\n    transform: translateX(5px) rotateY(7deg);\n  }\n\n  31.5% {\n    transform: translateX(-3px) rotateY(-5deg);\n  }\n\n  43.5% {\n    transform: translateX(2px) rotateY(3deg);\n  }\n\n  50% {\n    transform: translateX(0);\n  }\n}\n\n.headShake {\n  animation-timing-function: ease-in-out;\n  animation-name: headShake;\n}\n\n@keyframes swing {\n  20% {\n    transform: rotate3d(0, 0, 1, 15deg);\n  }\n\n  40% {\n    transform: rotate3d(0, 0, 1, -10deg);\n  }\n\n  60% {\n    transform: rotate3d(0, 0, 1, 5deg);\n  }\n\n  80% {\n    transform: rotate3d(0, 0, 1, -5deg);\n  }\n\n  to {\n    transform: rotate3d(0, 0, 1, 0deg);\n  }\n}\n\n.swing {\n  transform-origin: top center;\n  animation-name: swing;\n}\n\n@keyframes tada {\n  from {\n    transform: scale3d(1, 1, 1);\n  }\n\n  10%, 20% {\n    transform: scale3d(0.9, 0.9, 0.9) rotate3d(0, 0, 1, -3deg);\n  }\n\n  30%, 50%, 70%, 90% {\n    transform: scale3d(1.1, 1.1, 1.1) rotate3d(0, 0, 1, 3deg);\n  }\n\n  40%, 60%, 80% {\n    transform: scale3d(1.1, 1.1, 1.1) rotate3d(0, 0, 1, -3deg);\n  }\n\n  to {\n    transform: scale3d(1, 1, 1);\n  }\n}\n\n.tada {\n  animation-name: tada;\n}\n\n/* originally authored by Nick Pettit - https://github.com/nickpettit/glide */\n\n@keyframes wobble {\n  from {\n    transform: none;\n  }\n\n  15% {\n    transform: translate3d(-25%, 0, 0) rotate3d(0, 0, 1, -5deg);\n  }\n\n  30% {\n    transform: translate3d(20%, 0, 0) rotate3d(0, 0, 1, 3deg);\n  }\n\n  45% {\n    transform: translate3d(-15%, 0, 0) rotate3d(0, 0, 1, -3deg);\n  }\n\n  60% {\n    transform: translate3d(10%, 0, 0) rotate3d(0, 0, 1, 2deg);\n  }\n\n  75% {\n    transform: translate3d(-5%, 0, 0) rotate3d(0, 0, 1, -1deg);\n  }\n\n  to {\n    transform: none;\n  }\n}\n\n.wobble {\n  animation-name: wobble;\n}\n\n@keyframes jello {\n  from, 11.1%, to {\n    transform: none;\n  }\n\n  22.2% {\n    transform: skewX(-12.5deg) skewY(-12.5deg);\n  }\n\n  33.3% {\n    transform: skewX(6.25deg) skewY(6.25deg);\n  }\n\n  44.4% {\n    transform: skewX(-3.125deg) skewY(-3.125deg);\n  }\n\n  55.5% {\n    transform: skewX(1.5625deg) skewY(1.5625deg);\n  }\n\n  66.6% {\n    transform: skewX(-0.78125deg) skewY(-0.78125deg);\n  }\n\n  77.7% {\n    transform: skewX(0.39063deg) skewY(0.39063deg);\n  }\n\n  88.8% {\n    transform: skewX(-0.19531deg) skewY(-0.19531deg);\n  }\n}\n\n.jello {\n  animation-name: jello;\n  transform-origin: center;\n}\n\n@keyframes bounceIn {\n  from, 20%, 40%, 60%, 80%, to {\n    animation-timing-function: cubic-bezier(0.215, 0.61, 0.355, 1);\n  }\n\n  0% {\n    opacity: 0;\n    transform: scale3d(0.3, 0.3, 0.3);\n  }\n\n  20% {\n    transform: scale3d(1.1, 1.1, 1.1);\n  }\n\n  40% {\n    transform: scale3d(0.9, 0.9, 0.9);\n  }\n\n  60% {\n    opacity: 1;\n    transform: scale3d(1.03, 1.03, 1.03);\n  }\n\n  80% {\n    transform: scale3d(0.97, 0.97, 0.97);\n  }\n\n  to {\n    opacity: 1;\n    transform: scale3d(1, 1, 1);\n  }\n}\n\n.bounceIn {\n  animation-name: bounceIn;\n}\n\n@keyframes bounceInDown {\n  from, 60%, 75%, 90%, to {\n    animation-timing-function: cubic-bezier(0.215, 0.61, 0.355, 1);\n  }\n\n  0% {\n    opacity: 0;\n    transform: translate3d(0, -3000px, 0);\n  }\n\n  60% {\n    opacity: 1;\n    transform: translate3d(0, 25px, 0);\n  }\n\n  75% {\n    transform: translate3d(0, -10px, 0);\n  }\n\n  90% {\n    transform: translate3d(0, 5px, 0);\n  }\n\n  to {\n    transform: none;\n  }\n}\n\n.bounceInDown {\n  animation-name: bounceInDown;\n}\n\n@keyframes bounceInLeft {\n  from, 60%, 75%, 90%, to {\n    animation-timing-function: cubic-bezier(0.215, 0.61, 0.355, 1);\n  }\n\n  0% {\n    opacity: 0;\n    transform: translate3d(-3000px, 0, 0);\n  }\n\n  60% {\n    opacity: 1;\n    transform: translate3d(25px, 0, 0);\n  }\n\n  75% {\n    transform: translate3d(-10px, 0, 0);\n  }\n\n  90% {\n    transform: translate3d(5px, 0, 0);\n  }\n\n  to {\n    transform: none;\n  }\n}\n\n.bounceInLeft {\n  animation-name: bounceInLeft;\n}\n\n@keyframes bounceInRight {\n  from, 60%, 75%, 90%, to {\n    animation-timing-function: cubic-bezier(0.215, 0.61, 0.355, 1);\n  }\n\n  from {\n    opacity: 0;\n    transform: translate3d(3000px, 0, 0);\n  }\n\n  60% {\n    opacity: 1;\n    transform: translate3d(-25px, 0, 0);\n  }\n\n  75% {\n    transform: translate3d(10px, 0, 0);\n  }\n\n  90% {\n    transform: translate3d(-5px, 0, 0);\n  }\n\n  to {\n    transform: none;\n  }\n}\n\n.bounceInRight {\n  animation-name: bounceInRight;\n}\n\n@keyframes bounceInUp {\n  from, 60%, 75%, 90%, to {\n    animation-timing-function: cubic-bezier(0.215, 0.61, 0.355, 1);\n  }\n\n  from {\n    opacity: 0;\n    transform: translate3d(0, 3000px, 0);\n  }\n\n  60% {\n    opacity: 1;\n    transform: translate3d(0, -20px, 0);\n  }\n\n  75% {\n    transform: translate3d(0, 10px, 0);\n  }\n\n  90% {\n    transform: translate3d(0, -5px, 0);\n  }\n\n  to {\n    transform: translate3d(0, 0, 0);\n  }\n}\n\n.bounceInUp {\n  animation-name: bounceInUp;\n}\n\n@keyframes bounceOut {\n  20% {\n    transform: scale3d(0.9, 0.9, 0.9);\n  }\n\n  50%, 55% {\n    opacity: 1;\n    transform: scale3d(1.1, 1.1, 1.1);\n  }\n\n  to {\n    opacity: 0;\n    transform: scale3d(0.3, 0.3, 0.3);\n  }\n}\n\n.bounceOut {\n  animation-name: bounceOut;\n}\n\n@keyframes bounceOutDown {\n  20% {\n    transform: translate3d(0, 10px, 0);\n  }\n\n  40%, 45% {\n    opacity: 1;\n    transform: translate3d(0, -20px, 0);\n  }\n\n  to {\n    opacity: 0;\n    transform: translate3d(0, 2000px, 0);\n  }\n}\n\n.bounceOutDown {\n  animation-name: bounceOutDown;\n}\n\n@keyframes bounceOutLeft {\n  20% {\n    opacity: 1;\n    transform: translate3d(20px, 0, 0);\n  }\n\n  to {\n    opacity: 0;\n    transform: translate3d(-2000px, 0, 0);\n  }\n}\n\n.bounceOutLeft {\n  animation-name: bounceOutLeft;\n}\n\n@keyframes bounceOutRight {\n  20% {\n    opacity: 1;\n    transform: translate3d(-20px, 0, 0);\n  }\n\n  to {\n    opacity: 0;\n    transform: translate3d(2000px, 0, 0);\n  }\n}\n\n.bounceOutRight {\n  animation-name: bounceOutRight;\n}\n\n@keyframes bounceOutUp {\n  20% {\n    transform: translate3d(0, -10px, 0);\n  }\n\n  40%, 45% {\n    opacity: 1;\n    transform: translate3d(0, 20px, 0);\n  }\n\n  to {\n    opacity: 0;\n    transform: translate3d(0, -2000px, 0);\n  }\n}\n\n.bounceOutUp {\n  animation-name: bounceOutUp;\n}\n\n@keyframes fadeIn {\n  from {\n    opacity: 0;\n  }\n\n  to {\n    opacity: 1;\n  }\n}\n\n.fadeIn {\n  animation-name: fadeIn;\n}\n\n@keyframes fadeInDown {\n  from {\n    opacity: 0;\n    transform: translate3d(0, -100%, 0);\n  }\n\n  to {\n    opacity: 1;\n    transform: none;\n  }\n}\n\n.fadeInDown {\n  animation-name: fadeInDown;\n}\n\n@keyframes fadeInDownBig {\n  from {\n    opacity: 0;\n    transform: translate3d(0, -2000px, 0);\n  }\n\n  to {\n    opacity: 1;\n    transform: none;\n  }\n}\n\n.fadeInDownBig {\n  animation-name: fadeInDownBig;\n}\n\n@keyframes fadeInLeft {\n  from {\n    opacity: 0;\n    transform: translate3d(-100%, 0, 0);\n  }\n\n  to {\n    opacity: 1;\n    transform: none;\n  }\n}\n\n.fadeInLeft {\n  animation-name: fadeInLeft;\n}\n\n@keyframes fadeInLeftBig {\n  from {\n    opacity: 0;\n    transform: translate3d(-2000px, 0, 0);\n  }\n\n  to {\n    opacity: 1;\n    transform: none;\n  }\n}\n\n.fadeInLeftBig {\n  animation-name: fadeInLeftBig;\n}\n\n@keyframes fadeInRight {\n  from {\n    opacity: 0;\n    transform: translate3d(100%, 0, 0);\n  }\n\n  to {\n    opacity: 1;\n    transform: none;\n  }\n}\n\n.fadeInRight {\n  animation-name: fadeInRight;\n}\n\n@keyframes fadeInRightBig {\n  from {\n    opacity: 0;\n    transform: translate3d(2000px, 0, 0);\n  }\n\n  to {\n    opacity: 1;\n    transform: none;\n  }\n}\n\n.fadeInRightBig {\n  animation-name: fadeInRightBig;\n}\n\n@keyframes fadeInUp {\n  from {\n    opacity: 0;\n    transform: translate3d(0, 100%, 0);\n  }\n\n  to {\n    opacity: 1;\n    transform: none;\n  }\n}\n\n.fadeInUp {\n  animation-name: fadeInUp;\n}\n\n@keyframes fadeInUpBig {\n  from {\n    opacity: 0;\n    transform: translate3d(0, 2000px, 0);\n  }\n\n  to {\n    opacity: 1;\n    transform: none;\n  }\n}\n\n.fadeInUpBig {\n  animation-name: fadeInUpBig;\n}\n\n@keyframes fadeOut {\n  from {\n    opacity: 1;\n  }\n\n  to {\n    opacity: 0;\n  }\n}\n\n.fadeOut {\n  animation-name: fadeOut;\n}\n\n@keyframes fadeOutDown {\n  from {\n    opacity: 1;\n  }\n\n  to {\n    opacity: 0;\n    transform: translate3d(0, 100%, 0);\n  }\n}\n\n.fadeOutDown {\n  animation-name: fadeOutDown;\n}\n\n@keyframes fadeOutDownBig {\n  from {\n    opacity: 1;\n  }\n\n  to {\n    opacity: 0;\n    transform: translate3d(0, 2000px, 0);\n  }\n}\n\n.fadeOutDownBig {\n  animation-name: fadeOutDownBig;\n}\n\n@keyframes fadeOutLeft {\n  from {\n    opacity: 1;\n  }\n\n  to {\n    opacity: 0;\n    transform: translate3d(-100%, 0, 0);\n  }\n}\n\n.fadeOutLeft {\n  animation-name: fadeOutLeft;\n}\n\n@keyframes fadeOutLeftBig {\n  from {\n    opacity: 1;\n  }\n\n  to {\n    opacity: 0;\n    transform: translate3d(-2000px, 0, 0);\n  }\n}\n\n.fadeOutLeftBig {\n  animation-name: fadeOutLeftBig;\n}\n\n@keyframes fadeOutRight {\n  from {\n    opacity: 1;\n  }\n\n  to {\n    opacity: 0;\n    transform: translate3d(100%, 0, 0);\n  }\n}\n\n.fadeOutRight {\n  animation-name: fadeOutRight;\n}\n\n@keyframes fadeOutRightBig {\n  from {\n    opacity: 1;\n  }\n\n  to {\n    opacity: 0;\n    transform: translate3d(2000px, 0, 0);\n  }\n}\n\n.fadeOutRightBig {\n  animation-name: fadeOutRightBig;\n}\n\n@keyframes fadeOutUp {\n  from {\n    opacity: 1;\n  }\n\n  to {\n    opacity: 0;\n    transform: translate3d(0, -100%, 0);\n  }\n}\n\n.fadeOutUp {\n  animation-name: fadeOutUp;\n}\n\n@keyframes fadeOutUpBig {\n  from {\n    opacity: 1;\n  }\n\n  to {\n    opacity: 0;\n    transform: translate3d(0, -2000px, 0);\n  }\n}\n\n.fadeOutUpBig {\n  animation-name: fadeOutUpBig;\n}\n\n@keyframes flip {\n  from {\n    transform: perspective(400px) rotate3d(0, 1, 0, -360deg);\n    animation-timing-function: ease-out;\n  }\n\n  40% {\n    transform: perspective(400px) translate3d(0, 0, 150px) rotate3d(0, 1, 0, -190deg);\n    animation-timing-function: ease-out;\n  }\n\n  50% {\n    transform: perspective(400px) translate3d(0, 0, 150px) rotate3d(0, 1, 0, -170deg);\n    animation-timing-function: ease-in;\n  }\n\n  80% {\n    transform: perspective(400px) scale3d(0.95, 0.95, 0.95);\n    animation-timing-function: ease-in;\n  }\n\n  to {\n    transform: perspective(400px);\n    animation-timing-function: ease-in;\n  }\n}\n\n.animated.flip {\n  -webkit-backface-visibility: visible;\n  backface-visibility: visible;\n  animation-name: flip;\n}\n\n@keyframes flipInX {\n  from {\n    transform: perspective(400px) rotate3d(1, 0, 0, 90deg);\n    animation-timing-function: ease-in;\n    opacity: 0;\n  }\n\n  40% {\n    transform: perspective(400px) rotate3d(1, 0, 0, -20deg);\n    animation-timing-function: ease-in;\n  }\n\n  60% {\n    transform: perspective(400px) rotate3d(1, 0, 0, 10deg);\n    opacity: 1;\n  }\n\n  80% {\n    transform: perspective(400px) rotate3d(1, 0, 0, -5deg);\n  }\n\n  to {\n    transform: perspective(400px);\n  }\n}\n\n.flipInX {\n  -webkit-backface-visibility: visible !important;\n  backface-visibility: visible !important;\n  animation-name: flipInX;\n}\n\n@keyframes flipInY {\n  from {\n    transform: perspective(400px) rotate3d(0, 1, 0, 90deg);\n    animation-timing-function: ease-in;\n    opacity: 0;\n  }\n\n  40% {\n    transform: perspective(400px) rotate3d(0, 1, 0, -20deg);\n    animation-timing-function: ease-in;\n  }\n\n  60% {\n    transform: perspective(400px) rotate3d(0, 1, 0, 10deg);\n    opacity: 1;\n  }\n\n  80% {\n    transform: perspective(400px) rotate3d(0, 1, 0, -5deg);\n  }\n\n  to {\n    transform: perspective(400px);\n  }\n}\n\n.flipInY {\n  -webkit-backface-visibility: visible !important;\n  backface-visibility: visible !important;\n  animation-name: flipInY;\n}\n\n@keyframes flipOutX {\n  from {\n    transform: perspective(400px);\n  }\n\n  30% {\n    transform: perspective(400px) rotate3d(1, 0, 0, -20deg);\n    opacity: 1;\n  }\n\n  to {\n    transform: perspective(400px) rotate3d(1, 0, 0, 90deg);\n    opacity: 0;\n  }\n}\n\n.flipOutX {\n  animation-name: flipOutX;\n  -webkit-backface-visibility: visible !important;\n  backface-visibility: visible !important;\n}\n\n@keyframes flipOutY {\n  from {\n    transform: perspective(400px);\n  }\n\n  30% {\n    transform: perspective(400px) rotate3d(0, 1, 0, -15deg);\n    opacity: 1;\n  }\n\n  to {\n    transform: perspective(400px) rotate3d(0, 1, 0, 90deg);\n    opacity: 0;\n  }\n}\n\n.flipOutY {\n  -webkit-backface-visibility: visible !important;\n  backface-visibility: visible !important;\n  animation-name: flipOutY;\n}\n\n@keyframes lightSpeedIn {\n  from {\n    transform: translate3d(100%, 0, 0) skewX(-30deg);\n    opacity: 0;\n  }\n\n  60% {\n    transform: skewX(20deg);\n    opacity: 1;\n  }\n\n  80% {\n    transform: skewX(-5deg);\n    opacity: 1;\n  }\n\n  to {\n    transform: none;\n    opacity: 1;\n  }\n}\n\n.lightSpeedIn {\n  animation-name: lightSpeedIn;\n  animation-timing-function: ease-out;\n}\n\n@keyframes lightSpeedOut {\n  from {\n    opacity: 1;\n  }\n\n  to {\n    transform: translate3d(100%, 0, 0) skewX(30deg);\n    opacity: 0;\n  }\n}\n\n.lightSpeedOut {\n  animation-name: lightSpeedOut;\n  animation-timing-function: ease-in;\n}\n\n@keyframes rotateIn {\n  from {\n    transform-origin: center;\n    transform: rotate3d(0, 0, 1, -200deg);\n    opacity: 0;\n  }\n\n  to {\n    transform-origin: center;\n    transform: none;\n    opacity: 1;\n  }\n}\n\n.rotateIn {\n  animation-name: rotateIn;\n}\n\n@keyframes rotateInDownLeft {\n  from {\n    transform-origin: left bottom;\n    transform: rotate3d(0, 0, 1, -45deg);\n    opacity: 0;\n  }\n\n  to {\n    transform-origin: left bottom;\n    transform: none;\n    opacity: 1;\n  }\n}\n\n.rotateInDownLeft {\n  animation-name: rotateInDownLeft;\n}\n\n@keyframes rotateInDownRight {\n  from {\n    transform-origin: right bottom;\n    transform: rotate3d(0, 0, 1, 45deg);\n    opacity: 0;\n  }\n\n  to {\n    transform-origin: right bottom;\n    transform: none;\n    opacity: 1;\n  }\n}\n\n.rotateInDownRight {\n  animation-name: rotateInDownRight;\n}\n\n@keyframes rotateInUpLeft {\n  from {\n    transform-origin: left bottom;\n    transform: rotate3d(0, 0, 1, 45deg);\n    opacity: 0;\n  }\n\n  to {\n    transform-origin: left bottom;\n    transform: none;\n    opacity: 1;\n  }\n}\n\n.rotateInUpLeft {\n  animation-name: rotateInUpLeft;\n}\n\n@keyframes rotateInUpRight {\n  from {\n    transform-origin: right bottom;\n    transform: rotate3d(0, 0, 1, -90deg);\n    opacity: 0;\n  }\n\n  to {\n    transform-origin: right bottom;\n    transform: none;\n    opacity: 1;\n  }\n}\n\n.rotateInUpRight {\n  animation-name: rotateInUpRight;\n}\n\n@keyframes rotateOut {\n  from {\n    transform-origin: center;\n    opacity: 1;\n  }\n\n  to {\n    transform-origin: center;\n    transform: rotate3d(0, 0, 1, 200deg);\n    opacity: 0;\n  }\n}\n\n.rotateOut {\n  animation-name: rotateOut;\n}\n\n@keyframes rotateOutDownLeft {\n  from {\n    transform-origin: left bottom;\n    opacity: 1;\n  }\n\n  to {\n    transform-origin: left bottom;\n    transform: rotate3d(0, 0, 1, 45deg);\n    opacity: 0;\n  }\n}\n\n.rotateOutDownLeft {\n  animation-name: rotateOutDownLeft;\n}\n\n@keyframes rotateOutDownRight {\n  from {\n    transform-origin: right bottom;\n    opacity: 1;\n  }\n\n  to {\n    transform-origin: right bottom;\n    transform: rotate3d(0, 0, 1, -45deg);\n    opacity: 0;\n  }\n}\n\n.rotateOutDownRight {\n  animation-name: rotateOutDownRight;\n}\n\n@keyframes rotateOutUpLeft {\n  from {\n    transform-origin: left bottom;\n    opacity: 1;\n  }\n\n  to {\n    transform-origin: left bottom;\n    transform: rotate3d(0, 0, 1, -45deg);\n    opacity: 0;\n  }\n}\n\n.rotateOutUpLeft {\n  animation-name: rotateOutUpLeft;\n}\n\n@keyframes rotateOutUpRight {\n  from {\n    transform-origin: right bottom;\n    opacity: 1;\n  }\n\n  to {\n    transform-origin: right bottom;\n    transform: rotate3d(0, 0, 1, 90deg);\n    opacity: 0;\n  }\n}\n\n.rotateOutUpRight {\n  animation-name: rotateOutUpRight;\n}\n\n@keyframes hinge {\n  0% {\n    transform-origin: top left;\n    animation-timing-function: ease-in-out;\n  }\n\n  20%, 60% {\n    transform: rotate3d(0, 0, 1, 80deg);\n    transform-origin: top left;\n    animation-timing-function: ease-in-out;\n  }\n\n  40%, 80% {\n    transform: rotate3d(0, 0, 1, 60deg);\n    transform-origin: top left;\n    animation-timing-function: ease-in-out;\n    opacity: 1;\n  }\n\n  to {\n    transform: translate3d(0, 700px, 0);\n    opacity: 0;\n  }\n}\n\n.hinge {\n  animation-name: hinge;\n}\n\n@keyframes jackInTheBox {\n  from {\n    opacity: 0;\n    transform: scale(0.1) rotate(30deg);\n    transform-origin: center bottom;\n  }\n\n  50% {\n    transform: rotate(-10deg);\n  }\n\n  70% {\n    transform: rotate(3deg);\n  }\n\n  to {\n    opacity: 1;\n    transform: scale(1);\n  }\n}\n\n.jackInTheBox {\n  animation-name: jackInTheBox;\n}\n\n/* originally authored by Nick Pettit - https://github.com/nickpettit/glide */\n\n@keyframes rollIn {\n  from {\n    opacity: 0;\n    transform: translate3d(-100%, 0, 0) rotate3d(0, 0, 1, -120deg);\n  }\n\n  to {\n    opacity: 1;\n    transform: none;\n  }\n}\n\n.rollIn {\n  animation-name: rollIn;\n}\n\n/* originally authored by Nick Pettit - https://github.com/nickpettit/glide */\n\n@keyframes rollOut {\n  from {\n    opacity: 1;\n  }\n\n  to {\n    opacity: 0;\n    transform: translate3d(100%, 0, 0) rotate3d(0, 0, 1, 120deg);\n  }\n}\n\n.rollOut {\n  animation-name: rollOut;\n}\n\n@keyframes zoomIn {\n  from {\n    opacity: 0;\n    transform: scale3d(0.3, 0.3, 0.3);\n  }\n\n  50% {\n    opacity: 1;\n  }\n}\n\n.zoomIn {\n  animation-name: zoomIn;\n}\n\n@keyframes zoomInDown {\n  from {\n    opacity: 0;\n    transform: scale3d(0.1, 0.1, 0.1) translate3d(0, -1000px, 0);\n    animation-timing-function: cubic-bezier(0.55, 0.055, 0.675, 0.19);\n  }\n\n  60% {\n    opacity: 1;\n    transform: scale3d(0.475, 0.475, 0.475) translate3d(0, 60px, 0);\n    animation-timing-function: cubic-bezier(0.175, 0.885, 0.32, 1);\n  }\n}\n\n.zoomInDown {\n  animation-name: zoomInDown;\n}\n\n@keyframes zoomInLeft {\n  from {\n    opacity: 0;\n    transform: scale3d(0.1, 0.1, 0.1) translate3d(-1000px, 0, 0);\n    animation-timing-function: cubic-bezier(0.55, 0.055, 0.675, 0.19);\n  }\n\n  60% {\n    opacity: 1;\n    transform: scale3d(0.475, 0.475, 0.475) translate3d(10px, 0, 0);\n    animation-timing-function: cubic-bezier(0.175, 0.885, 0.32, 1);\n  }\n}\n\n.zoomInLeft {\n  animation-name: zoomInLeft;\n}\n\n@keyframes zoomInRight {\n  from {\n    opacity: 0;\n    transform: scale3d(0.1, 0.1, 0.1) translate3d(1000px, 0, 0);\n    animation-timing-function: cubic-bezier(0.55, 0.055, 0.675, 0.19);\n  }\n\n  60% {\n    opacity: 1;\n    transform: scale3d(0.475, 0.475, 0.475) translate3d(-10px, 0, 0);\n    animation-timing-function: cubic-bezier(0.175, 0.885, 0.32, 1);\n  }\n}\n\n.zoomInRight {\n  animation-name: zoomInRight;\n}\n\n@keyframes zoomInUp {\n  from {\n    opacity: 0;\n    transform: scale3d(0.1, 0.1, 0.1) translate3d(0, 1000px, 0);\n    animation-timing-function: cubic-bezier(0.55, 0.055, 0.675, 0.19);\n  }\n\n  60% {\n    opacity: 1;\n    transform: scale3d(0.475, 0.475, 0.475) translate3d(0, -60px, 0);\n    animation-timing-function: cubic-bezier(0.175, 0.885, 0.32, 1);\n  }\n}\n\n.zoomInUp {\n  animation-name: zoomInUp;\n}\n\n@keyframes zoomOut {\n  from {\n    opacity: 1;\n  }\n\n  50% {\n    opacity: 0;\n    transform: scale3d(0.3, 0.3, 0.3);\n  }\n\n  to {\n    opacity: 0;\n  }\n}\n\n.zoomOut {\n  animation-name: zoomOut;\n}\n\n@keyframes zoomOutDown {\n  40% {\n    opacity: 1;\n    transform: scale3d(0.475, 0.475, 0.475) translate3d(0, -60px, 0);\n    animation-timing-function: cubic-bezier(0.55, 0.055, 0.675, 0.19);\n  }\n\n  to {\n    opacity: 0;\n    transform: scale3d(0.1, 0.1, 0.1) translate3d(0, 2000px, 0);\n    transform-origin: center bottom;\n    animation-timing-function: cubic-bezier(0.175, 0.885, 0.32, 1);\n  }\n}\n\n.zoomOutDown {\n  animation-name: zoomOutDown;\n}\n\n@keyframes zoomOutLeft {\n  40% {\n    opacity: 1;\n    transform: scale3d(0.475, 0.475, 0.475) translate3d(42px, 0, 0);\n  }\n\n  to {\n    opacity: 0;\n    transform: scale(0.1) translate3d(-2000px, 0, 0);\n    transform-origin: left center;\n  }\n}\n\n.zoomOutLeft {\n  animation-name: zoomOutLeft;\n}\n\n@keyframes zoomOutRight {\n  40% {\n    opacity: 1;\n    transform: scale3d(0.475, 0.475, 0.475) translate3d(-42px, 0, 0);\n  }\n\n  to {\n    opacity: 0;\n    transform: scale(0.1) translate3d(2000px, 0, 0);\n    transform-origin: right center;\n  }\n}\n\n.zoomOutRight {\n  animation-name: zoomOutRight;\n}\n\n@keyframes zoomOutUp {\n  40% {\n    opacity: 1;\n    transform: scale3d(0.475, 0.475, 0.475) translate3d(0, 60px, 0);\n    animation-timing-function: cubic-bezier(0.55, 0.055, 0.675, 0.19);\n  }\n\n  to {\n    opacity: 0;\n    transform: scale3d(0.1, 0.1, 0.1) translate3d(0, -2000px, 0);\n    transform-origin: center bottom;\n    animation-timing-function: cubic-bezier(0.175, 0.885, 0.32, 1);\n  }\n}\n\n.zoomOutUp {\n  animation-name: zoomOutUp;\n}\n\n@keyframes slideInDown {\n  from {\n    transform: translate3d(0, -100%, 0);\n    visibility: visible;\n  }\n\n  to {\n    transform: translate3d(0, 0, 0);\n  }\n}\n\n.slideInDown {\n  animation-name: slideInDown;\n}\n\n@keyframes slideInLeft {\n  from {\n    transform: translate3d(-100%, 0, 0);\n    visibility: visible;\n  }\n\n  to {\n    transform: translate3d(0, 0, 0);\n  }\n}\n\n.slideInLeft {\n  animation-name: slideInLeft;\n}\n\n@keyframes slideInRight {\n  from {\n    transform: translate3d(100%, 0, 0);\n    visibility: visible;\n  }\n\n  to {\n    transform: translate3d(0, 0, 0);\n  }\n}\n\n.slideInRight {\n  animation-name: slideInRight;\n}\n\n@keyframes slideInUp {\n  from {\n    transform: translate3d(0, 100%, 0);\n    visibility: visible;\n  }\n\n  to {\n    transform: translate3d(0, 0, 0);\n  }\n}\n\n.slideInUp {\n  animation-name: slideInUp;\n}\n\n@keyframes slideOutDown {\n  from {\n    transform: translate3d(0, 0, 0);\n  }\n\n  to {\n    visibility: hidden;\n    transform: translate3d(0, 100%, 0);\n  }\n}\n\n.slideOutDown {\n  animation-name: slideOutDown;\n}\n\n@keyframes slideOutLeft {\n  from {\n    transform: translate3d(0, 0, 0);\n  }\n\n  to {\n    visibility: hidden;\n    transform: translate3d(-100%, 0, 0);\n  }\n}\n\n.slideOutLeft {\n  animation-name: slideOutLeft;\n}\n\n@keyframes slideOutRight {\n  from {\n    transform: translate3d(0, 0, 0);\n  }\n\n  to {\n    visibility: hidden;\n    transform: translate3d(100%, 0, 0);\n  }\n}\n\n.slideOutRight {\n  animation-name: slideOutRight;\n}\n\n@keyframes slideOutUp {\n  from {\n    transform: translate3d(0, 0, 0);\n  }\n\n  to {\n    visibility: hidden;\n    transform: translate3d(0, -100%, 0);\n  }\n}\n\n.slideOutUp {\n  animation-name: slideOutUp;\n}", ""]);
 
 	// exports
 
@@ -783,19 +785,19 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var Plugins = _interopRequireWildcard(_plugins);
 
-	var _controls = __webpack_require__(47);
+	var _controls = __webpack_require__(48);
 
 	var Controls = _interopRequireWildcard(_controls);
 
-	var _http = __webpack_require__(58);
+	var _http = __webpack_require__(61);
 
-	var _store = __webpack_require__(52);
+	var _store = __webpack_require__(53);
 
-	var _formGroup = __webpack_require__(59);
+	var _formGroup = __webpack_require__(62);
 
-	var _validators = __webpack_require__(60);
+	var _validators = __webpack_require__(63);
 
-	__webpack_require__(61);
+	__webpack_require__(64);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -1199,7 +1201,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	Object.defineProperty(exports, "__esModule", {
 	  value: true
 	});
-	var EVENTS_NAMES = exports.EVENTS_NAMES = ['click', 'keyup', 'change', 'mouseover', 'mouseout', 'mousedown', 'mouseup', 'scroll', 'mousewheel', 'submit', 'focus', 'blur', 'dragstart'];
+	var EVENTS_NAMES = exports.EVENTS_NAMES = ['click', 'keyup', 'change', 'mouseout', 'mouseover', 'mouseenter', 'mouseleave', 'mousedown', 'mouseup', 'scroll', 'mousewheel', 'submit', 'focus', 'blur', 'dragstart'];
 
 /***/ }),
 /* 14 */
@@ -1589,88 +1591,147 @@ return /******/ (function(modules) { // webpackBootstrap
 	        //console.log(this); //console.time('modules')
 	        array.forEach(function (item) {
 	            var compName = item.elem.localName;
-
+	            var loopIterator = void 0;
+	            var collectionName = void 0;
 	            array = _this.getComponentVariable(item.attr.split('.'), data) || [];
 
+	            if (item.attr.indexOf('let ') > -1 && item.attr.indexOf('of ') > -1) {
+	                var params1 = item.attr.split('of')[0];
+	                collectionName = item.attr.split('of')[1].replace(/ +/g, "");
+	                loopIterator = params1.split('let ')[1].replace(/ +/g, "");
+	                var func = 'for(' + params1 + ' of this.' + collectionName + ') { } return this.' + collectionName;
+
+	                var arg = void 0; //= new Function(func).apply(data || this.props); 
+	                try {
+	                    arg = new Function(func).apply(data || _this.props);
+	                } catch (e) {
+	                    arg = [];
+	                }
+
+	                array = arg;
+	            }
+
 	            if (!_core.Utils.isCustomElement(item.elem)) {
-	                item.items.forEach(function (item) {
-	                    item.remove();
-	                });
-	                item.items = [];
-	                for (var i = 0; i <= array.length - 1; i++) {
-	                    var prevContent = item.elem.cloneNode(true);
 
-	                    // loop through the old element's attributes and give them to the new element
-	                    for (var _i = 0; _i < item.elem.attributes.length; _i++) {
-	                        prevContent.setAttribute(item.elem.attributes[_i].nodeName, item.elem.attributes[_i].nodeValue);
+	                if (item.cached.length !== array.length) {
+	                    item.items.forEach(function (item) {
+	                        item.remove();
+	                    });
+	                    item.items = [];
+	                    item.directives = [];
+
+	                    var _loop = function _loop(i) {
+	                        var prevContent = item.elem.cloneNode(true);
+
+	                        // loop through the old element's attributes and give them to the new element
+	                        for (var _i = 0; _i < item.elem.attributes.length; _i++) {
+	                            prevContent.setAttribute(item.elem.attributes[_i].nodeName, item.elem.attributes[_i].nodeValue);
+	                        }
+
+	                        item.items.push(prevContent);
+	                        item.parent.insertBefore(prevContent, item.comment);
+
+	                        var eventsArray = [];
+
+	                        _events.EVENTS_NAMES.forEach(function (directive) {
+	                            eventsArray.push(_index.Directives._initEvent.call(_this, prevContent, directive, [], getCurrentProperty.bind(_this, item, collectionName, data, i), loopIterator));
+	                        });
+
+	                        item.directives[i] = {
+	                            attrs: _index.Directives._init.call(_this, prevContent, 'ac-attr'),
+	                            class: _index.Directives._init.call(_this, prevContent, 'ac-class'),
+	                            for: _index.Directives._init.call(_this, prevContent, 'ac-for'),
+	                            style: _index.Directives._init.call(_this, prevContent, 'ac-style'),
+	                            if: _index.Directives._init.call(_this, prevContent, 'ac-if'),
+	                            props: _index.Directives._init.call(_this, prevContent, 'ac-value'),
+	                            links: _index.Directives._init.call(_this, prevContent, 'ac-link'),
+	                            events: eventsArray
+	                        };
+
+	                        updateElement.call(_this, item, i, prevContent, array[i]);
+	                    };
+
+	                    for (var i = 0; i <= array.length - 1; i++) {
+	                        _loop(i);
 	                    }
-
-	                    item.items.push(prevContent);
-	                    item.parent.insertBefore(prevContent, item.comment);
-
-	                    forAttachForLoop.call(_this, prevContent, array[i]);
-	                    bindClassForLoop.call(_this, prevContent, array[i]);
-	                    styleUnitForLoop.call(_this, prevContent, array[i]);
-	                    bindIfForLoop.call(_this, prevContent, array[i]);
-	                    bindPropsToViewForLoop.call(_this, prevContent, array[i]);
-	                    bindAttrsForLoop.call(_this, prevContent, array[i]);
-	                    addLinksRefsForLoop.call(_this, prevContent, array[i]);
-
-	                    eventsForLoop.call(_this, prevContent, array[i]);
 	                }
-	                return;
+
+	                item.items.forEach(function (elem, i) {
+	                    if (JSON.stringify(item.cached[i]) !== JSON.stringify(array[i])) {
+	                        updateElement.call(_this, item, i, elem, array[i]);
+	                    }
+	                });
+
+	                item.cached = JSON.parse(JSON.stringify(array));
 	            }
 
-	            if (item.cached.length !== array.length) {
-	                item.items.forEach(function (item) {
-	                    item.remove();
+	            if (_core.Utils.isCustomElement(item.elem)) {
+	                if (item.cached.length !== array.length) {
+	                    item.items.forEach(function (item) {
+	                        item.remove();
+	                    });
+	                    item.items = [];
+	                    _this.children[item.elem.COMPONENT.constructor.name] = [];
+	                    for (var i = 0; i <= array.length - 1; i++) {
+	                        var newComp = _core.Component.COMPONENTS.filter(function (r) {
+	                            return r.selector === compName;
+	                        })[0];
+	                        // if(newComp) {
+	                        var newEl = document.createElement(compName);
+	                        // this.root.appendChild(newEl);
+	                        var a = new newComp(newEl, _extends({}, array[i]), _this);
+	                        _this.children[item.elem.COMPONENT.constructor.name].push(a);
+	                        // }
+
+	                        // loop through the old element's attributes and give them to the new element
+	                        for (var _i2 = 0; _i2 < item.elem.attributes.length; _i2++) {
+	                            newEl.setAttribute(item.elem.attributes[_i2].nodeName, item.elem.attributes[_i2].nodeValue);
+	                        }
+	                        item.items.push(newEl);
+	                        item.parent.insertBefore(newEl, item.comment);
+	                    }
+	                    item.cached = []; // refresh cached array
+	                }
+
+	                item.items.forEach(function (elem, i) {
+	                    if (JSON.stringify(item.cached[i]) !== JSON.stringify(array[i])) {
+	                        if (!elem.COMPONENT) {
+	                            console.warn('Please create component with name ' + compName);
+	                            return;
+	                        }
+	                        elem.COMPONENT.props.set(array[i]);
+	                    }
 	                });
-	                item.items = [];
-	                _this.children[item.elem.COMPONENT.constructor.name] = [];
-	                for (var _i2 = 0; _i2 <= array.length - 1; _i2++) {
-	                    var newComp = _core.Component.COMPONENTS.filter(function (r) {
-	                        return r.selector === compName;
-	                    })[0];
-	                    // if(newComp) {
-	                    var newEl = document.createElement(compName);
-	                    // this.root.appendChild(newEl);
-	                    var a = new newComp(newEl, _extends({}, array[_i2]), _this);
-	                    _this.children[item.elem.COMPONENT.constructor.name].push(a);
-	                    // }
 
-	                    // loop through the old element's attributes and give them to the new element
-	                    for (var _i3 = 0; _i3 < item.elem.attributes.length; _i3++) {
-	                        newEl.setAttribute(item.elem.attributes[_i3].nodeName, item.elem.attributes[_i3].nodeValue);
-	                    }
-	                    item.items.push(newEl);
-	                    item.parent.insertBefore(newEl, item.comment);
-	                }
-	                item.cached = []; // refresh cached array
+	                item.cached = JSON.parse(JSON.stringify(array));
 	            }
-
-	            item.items.forEach(function (elem, i) {
-	                if (JSON.stringify(item.cached[i]) !== JSON.stringify(array[i])) {
-	                    if (!elem.COMPONENT) {
-	                        console.warn('Please create component with name ' + compName);
-	                        return;
-	                    }
-	                    elem.COMPONENT.props.set(array[i]);
-	                }
-	            });
-
-	            item.cached = JSON.parse(JSON.stringify(array));
 	        }); //console.timeEnd('modules')
 	    }
 	}
 
-	function eventsForLoop(root, context) {
-	    var _this2 = this;
+	function updateElement(item, i, elem, data) {
+	    forAttachForLoop.call(this, item.directives[i].for, elem, data);
+	    bindClassForLoop.call(this, item.directives[i].class, elem, data);
+	    styleUnitForLoop.call(this, item.directives[i].style, elem, data);
+	    bindIfForLoop.call(this, item.directives[i].if, elem, data);
+	    bindPropsToViewForLoop.call(this, item.directives[i].props, elem, data);
 
-	    var array = [];
+	    bindAttrsForLoop.call(this, item.directives[i].attrs, elem, data);
+	    addLinksRefsForLoop.call(this, item.directives[i].links, elem, data);
+	    eventsForLoop.call(this, item.directives[i].events, elem);
+	}
 
-	    _events.EVENTS_NAMES.forEach(function (directive) {
-	        array.push(_index.Directives._initEvent.call(_this2, root, directive, [], context));
-	    });
+	function getCurrentProperty(item, collectionName, data, i) {
+	    var props = this.getComponentVariable( /*item.attr.split('.')*/collectionName.split('.'), data) || [];
+	    return props[i];
+	}
+
+	function eventsForLoop(array, root) {
+	    // let array = [];
+
+	    // EVENTS_NAMES.forEach(directive => {
+	    //     array.push(Directives._initEvent.call(this, root, directive, [], context));
+	    // });
 
 	    array = array.reduce(function (a, b) {
 	        return a.concat(b);
@@ -1678,38 +1739,38 @@ return /******/ (function(modules) { // webpackBootstrap
 	    _index.Directives._events.call(this, array);
 	}
 
-	function addLinksRefsForLoop(root, data) {
-	    var array = _index.Directives._init.call(this, root, 'ac-link');
+	function addLinksRefsForLoop(array, root, data) {
+	    // let array = Directives._init.call(this, root, 'ac-link');
 	    _index.Directives._link.call(this, array, data);
 	}
 
-	function bindAttrsForLoop(root, data) {
-	    var array = _index.Directives._init.call(this, root, 'ac-attr');
+	function bindAttrsForLoop(array, root, data) {
+	    // let array = Directives._init.call(this, root, 'ac-attr');
 	    _index.Directives._attr.call(this, array, data);
 	}
 
-	function bindIfForLoop(root, data) {
-	    var array = _index.Directives._init(root, 'ac-if');
+	function bindIfForLoop(array, root, data) {
+	    // let array = Directives._init(root, 'ac-if');
 	    _index.Directives._if.call(this, array, data);
 	}
 
-	function forAttachForLoop(root, data) {
-	    var array = _index.Directives._init.call(this, root, 'ac-for');
+	function forAttachForLoop(array, root, data) {
+	    // let array = Directives._init.call(this, root, 'ac-for');
 	    _index.Directives._for.call(this, array, data);
 	}
 
-	function bindPropsToViewForLoop(root, data) {
-	    var array = _index.Directives._init.call(this, root, 'ac-value');
+	function bindPropsToViewForLoop(array, root, data) {
+	    // let array = Directives._init.call(this, root, 'ac-value');
 	    _index.Directives._props.call(this, array, data);
 	}
 
-	function styleUnitForLoop(root, data) {
-	    var array = _index.Directives._init.call(this, root, 'ac-style');
+	function styleUnitForLoop(array, root, data) {
+	    // let array = Directives._init.call(this, root, 'ac-style');
 	    _index.Directives._style.call(this, array, data);
 	}
 
-	function bindClassForLoop(root, data) {
-	    var array = _index.Directives._init.call(this, root, 'ac-class');
+	function bindClassForLoop(array, root, data) {
+	    // let array = Directives._init.call(this, root, 'ac-class');
 	    _index.Directives._class.call(this, array, data);
 	}
 
@@ -1827,11 +1888,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	    return array;
 	}
 
-	function _initEvent(root, directive, newArray, context) {
+	function _initEvent(root, directive, newArray, context, loopIterator) {
 	    var array = newArray || [];
 	    var targets = root.querySelectorAll('[ac-' + directive + ']');
 	    if (root.getAttribute('ac-' + directive)) {
-	        var obj = _event.createEventObject.call(this, root, directive, context);
+	        var obj = _event.createEventObject.call(this, root, directive, context, loopIterator);
 	        array.get ? array.get(this).push(obj) : array.push(obj);
 	    }
 
@@ -1843,7 +1904,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        for (var _iterator3 = targets[Symbol.iterator](), _step3; !(_iteratorNormalCompletion3 = (_step3 = _iterator3.next()).done); _iteratorNormalCompletion3 = true) {
 	            var _elem2 = _step3.value;
 
-	            var _obj2 = _event.createEventObject.call(this, _elem2, directive, context);
+	            var _obj2 = _event.createEventObject.call(this, _elem2, directive, context, loopIterator);
 	            array.get ? array.get(this).push(_obj2) : array.push(_obj2);
 	        }
 	    } catch (err) {
@@ -1943,32 +2004,42 @@ return /******/ (function(modules) { // webpackBootstrap
 	    return elem.getAttribute('ac-kmod') ? elem.getAttribute('ac-kmod').replace(/ +/g, "") : null;
 	}
 
-	function createEventObject(elem, event, context) {
+	function createEventObject(elem, event, context, loopIterator) {
 	    var _this = this;
 
 	    var funcParams = elem.getAttribute('ac-' + event);
 	    elem.removeAttribute('ac-' + event);
-	    var params = funcParams.replace(/ +/g, "").split(':');
-	    var fnName = params[0];
+	    var fnName = funcParams.replace(/ +/g, "");
 	    var modifiers = getEventMod(elem);
 	    var kModifiers = getKeyMod(elem);
 	    var once = { state: false };
 
+	    var regExp = /\(([^)]+)\)|\(()\)/;
+	    var fnParams = regExp.exec(fnName); // get value between brackets
+
+	    var functionName = fnName.replace(regExp, ''); // remove everything between brackets
+
 	    var newEvent = {
-	        fnName: fnName,
+	        fnName: functionName,
 	        event: event,
 	        el: elem,
 	        f: function f(e) {
-	            var regExp = /\(([^)]+)\)/;
-	            var fnParams = regExp.exec(fnName); // get value between brackets
 	            var args = [];
-	            var functionName = fnName.replace(regExp, ''); // remove everything between brackets
 
 	            if (fnParams) {
-	                fnParams[1].replace(/ +/g, "").split(',').forEach(function (res) {
-	                    var arg = new Function('return ' + res).apply(context || _this);
-	                    args.push(arg);
-	                });
+	                if (fnParams[1]) {
+	                    fnParams[1].replace(/ +/g, "").split(',').forEach(function (res) {
+	                        var arg = void 0;
+	                        if (res === loopIterator) {
+	                            arg = context();
+	                        } else {
+	                            arg = getInputArgs(res);
+	                        }
+	                        args.push(arg);
+	                    });
+	                } else {
+	                    args.push(undefined);
+	                }
 	            }
 
 	            if (_this[functionName]) {
@@ -1992,6 +2063,23 @@ return /******/ (function(modules) { // webpackBootstrap
 	    };
 
 	    return newEvent;
+	}
+
+	function getInputArgs(res) {
+	    var type = void 0;
+	    var arg = void 0;
+	    try {
+	        type = _typeof(new Function('return ' + res).apply(this));
+	    } catch (e) {
+	        type = undefined;
+	    }
+
+	    if (type === 'string' || type === 'number' || type === 'object') {
+	        arg = new Function('return ' + res).apply(this);
+	    } else {
+	        arg = new Function('return this.' + res).apply(this);
+	    }
+	    return arg;
 	}
 
 	var modifierCode = {
@@ -3754,15 +3842,20 @@ return /******/ (function(modules) { // webpackBootstrap
 	Object.defineProperty(exports, "__esModule", {
 		value: true
 	});
-	exports.Sortable = undefined;
+	exports.Chart = exports.Sortable = undefined;
 
 	var _sortable = __webpack_require__(46);
 
 	var _sortable2 = _interopRequireDefault(_sortable);
 
+	var _aceChart = __webpack_require__(47);
+
+	var _aceChart2 = _interopRequireDefault(_aceChart);
+
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	exports.Sortable = _sortable2.default;
+	exports.Chart = _aceChart2.default;
 
 /***/ }),
 /* 46 */
@@ -3851,15 +3944,25 @@ return /******/ (function(modules) { // webpackBootstrap
 	            evt.dataTransfer.dropEffect = 'move';
 	            var target = this.target = evt.target;
 
-	            if (target && target !== this.dragEl && target.nodeName === this.dragEl.nodeName && target.parentNode === this.dragEl.parentNode) {
-	                if (target.nextElementSibling === this.dragEl) {
-	                    this.root.insertBefore(this.dragEl, target);
-	                } else if (!target.nextElementSibling) {
-	                    this.insertAfter(this.dragEl, target);
+	            var targetElem = target.closest('[draggable]');
+	            if (this.dragEl !== targetElem) {
+	                if (targetElem.nextElementSibling === this.dragEl) {
+	                    this.root.insertBefore(this.dragEl, targetElem);
+	                } else if (!targetElem.nextElementSibling) {
+	                    this.insertAfter(this.dragEl, targetElem);
 	                } else {
-	                    this.root.insertBefore(this.dragEl, target.nextElementSibling);
+	                    this.root.insertBefore(this.dragEl, targetElem.nextElementSibling);
 	                }
 	            }
+	            // if (target && target !== this.dragEl && target.nodeName === this.dragEl.nodeName /*&& target.parentNode === this.dragEl.parentNode*/) {
+	            //     if (target.nextElementSibling === this.dragEl) {
+	            //         this.root.insertBefore(this.dragEl, target);
+	            //     } else if (!target.nextElementSibling) {
+	            //         this.insertAfter(this.dragEl, target);
+	            //     } else {
+	            //         this.root.insertBefore(this.dragEl, target.nextElementSibling);
+	            //     }
+	            // }
 	        }
 	    }, {
 	        key: '_onDragEnd',
@@ -3909,6 +4012,224 @@ return /******/ (function(modules) { // webpackBootstrap
 
 /***/ }),
 /* 47 */
+/***/ (function(module, exports) {
+
+	"use strict";
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	var colorsTheme = ["#7cb5ec", "#434348", "#90ed7d", "#f7a35c", "#8085e9", "#f15c80", "#e4d354", "#2b908f", "#f45b5b", "#91e8e1", "#7cb5ec", "#434348"];
+
+	var BarChart = function () {
+	    function BarChart(options) {
+	        _classCallCheck(this, BarChart);
+
+	        this.options = options;
+	        this.height = options.height || 250;
+	        this.width = options.width || 250;
+	        this.resultData = null;
+	        this.onChangeCallback = function () {};
+	    }
+
+	    _createClass(BarChart, [{
+	        key: "draw",
+	        value: function draw() {
+	            var svgHeight = this.getSvgHeight();
+	            var svgWidth = this.getSvgWidth();
+
+	            var chartData = this.getChartData(svgHeight, svgWidth);
+	            var xLabels = this.getXLabels(svgHeight, svgWidth);
+	            var xGroupLabels = this.getXGroupLabels(chartData, svgHeight, svgWidth);
+	            var yLabels = this.getYLabels(svgHeight);
+
+	            var xGrid = this.getXGrid(svgHeight);
+
+	            this.onChangeCallback.call(this, { chartData: chartData, yLabels: yLabels, xLabels: xLabels, xGrid: xGrid, xGroupLabels: xGroupLabels });
+	        }
+	    }, {
+	        key: "getSvgHeight",
+	        value: function getSvgHeight() {
+	            return this.height - 100;
+	        }
+	    }, {
+	        key: "getSvgWidth",
+	        value: function getSvgWidth() {
+	            return this.width - 100;
+	        }
+	    }, {
+	        key: "getXGrid",
+	        value: function getXGrid(svgHeight) {
+	            var xGrid = [];
+	            var maxVal = this.getMaxValue(this.options.data.map(function (r) {
+	                return r.value;
+	            }));
+	            var count = this.options.stepCount || this.getModulo(maxVal);
+	            var stepHeight = svgHeight / count;
+
+	            for (var i = 0; i <= count; i++) {
+	                xGrid.push({
+	                    x1: 40,
+	                    x2: this.width - 40,
+	                    y1: 50 + i * stepHeight,
+	                    y2: 50 + i * stepHeight
+	                });
+	            }
+	            return xGrid;
+	        }
+	    }, {
+	        key: "getYLabels",
+	        value: function getYLabels(svgHeight) {
+	            var result = [];
+	            var maxVal = this.getMaxValue(this.options.data.map(function (r) {
+	                return r.value;
+	            }));
+	            var count = this.options.stepCount || this.getModulo(maxVal);
+	            var stepHeight = svgHeight / count;
+
+	            for (var i = 0; i <= count; i++) {
+	                result.push({
+	                    x: 30,
+	                    y: 50 + i * stepHeight + 4, //svgHeight - i * stepHeight + 4,
+	                    name: Math.abs(maxVal / count * (i - count)).toFixed(1)
+	                });
+	            }
+
+	            return result;
+	        }
+	    }, {
+	        key: "getChartData",
+	        value: function getChartData(svgHeight, svgWidth) {
+	            var _this = this;
+
+	            var maxVal = this.getMaxValue(this.options.data.map(function (r) {
+	                return r.value;
+	            }));
+	            var count = this.options.stepCount || this.getModulo(maxVal);
+	            var stepHeight = svgHeight / (count + 1);
+
+	            return this.options.data.map(function (r, i) {
+	                return {
+	                    x: i * (svgWidth / _this.options.data.length) + 50,
+	                    y: svgHeight - svgHeight * (r.value / maxVal) + 50,
+	                    // stroke: '#ffffff',
+	                    stroeWidth: 1,
+	                    fill: colorsTheme[i] || '#5699dc',
+	                    width: 30,
+	                    height: svgHeight * (r.value / maxVal),
+	                    value: r.value
+	                };
+	            });
+	        }
+	    }, {
+	        key: "getXLabels",
+	        value: function getXLabels(svgHeight, svgWidth) {
+	            var _this2 = this;
+
+	            svgWidth = svgWidth - 40;
+	            return this.options.data.map(function (r, i) {
+	                return {
+	                    x: i * (svgWidth / _this2.options.data.length) + 20,
+	                    y: svgHeight + 15,
+	                    name: r.value
+	                };
+	            });
+	        }
+	    }, {
+	        key: "getXGroupLabels",
+	        value: function getXGroupLabels(array, svgHeight, svgWidth) {
+	            return array.map(function (r, i) {
+	                return {
+	                    x: r.x + 10,
+	                    y: r.y - 4,
+	                    name: r.value
+	                };
+	            });
+	        }
+	    }, {
+	        key: "getModulo",
+	        value: function getModulo(maxVal) {
+	            var modulo = void 0;
+
+	            switch (true) {
+	                case maxVal % 6 === 0:
+	                    console.log(6);
+	                    modulo = 6;
+	                    break;
+	                case maxVal % 5 === 0:
+	                    console.log(5);
+	                    modulo = 5;
+	                    break;
+	                case maxVal % 4 === 0:
+	                    console.log(4);
+	                    modulo = 4;
+	                    break;
+	                case maxVal % 3 === 0:
+	                    console.log(3);
+	                    modulo = 3;
+	                    break;
+	                case maxVal % 2 === 0:
+	                    console.log(2);
+	                    modulo = 2;
+	                    break;
+	                default:
+	                    modulo = 2;
+	                    break;
+	            }
+
+	            return modulo;
+	        }
+	    }, {
+	        key: "getMaxValue",
+	        value: function getMaxValue(array) {
+	            return Math.max.apply(null, array);
+	        }
+	    }, {
+	        key: "onChange",
+	        value: function onChange(f) {
+	            this.onChangeCallback = f;
+	        }
+	    }, {
+	        key: "setData",
+	        value: function setData(data) {
+	            this.options.data = [{ name: '4', value: 10 }, { name: '5', value: 15 }, { name: '6', value: 25 }];
+
+	            var svgHeight = this.getSvgHeight();
+	            var svgWidth = this.getSvgWidth();
+	            var maxVal = this.getMaxValue(this.options.data.map(function (r) {
+	                return r.value;
+	            }));
+
+	            var chartData = this.getChartData(svgHeight, svgWidth, maxVal);
+	            // this.draw();
+	            var xGrid = [];
+
+	            for (var i = 0; i <= 5; i++) {
+	                xGrid.push({ x1: 40, x2: this.width - 40, y1: svgHeight - i * 40, y2: svgHeight - i * 40 });
+	            }
+
+	            this.onChangeCallback.call(this, { chartData: chartData, yLabels: yLabels, xLabels: xLabels, xGrid: xGrid });
+	        }
+	    }, {
+	        key: "append",
+	        value: function append(tag) {
+	            var elem = void 0;
+	            return elem;
+	        }
+	    }]);
+
+	    return BarChart;
+	}();
+
+	exports.default = BarChart;
+
+/***/ }),
+/* 48 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -3916,17 +4237,19 @@ return /******/ (function(modules) { // webpackBootstrap
 	Object.defineProperty(exports, "__esModule", {
 	    value: true
 	});
-	exports.TreeDebugComponent = exports.ModalStore = exports.ModalComponent = exports.DropdownComponent = exports.DatepickerComponent = undefined;
+	exports.BarChartComponent = exports.TreeDebugComponent = exports.ModalStore = exports.ModalComponent = exports.DropdownComponent = exports.DatepickerComponent = undefined;
 
-	var _datepicker = __webpack_require__(48);
+	var _datepicker = __webpack_require__(49);
 
-	var _dropdown = __webpack_require__(49);
+	var _dropdown = __webpack_require__(50);
 
-	var _modal = __webpack_require__(51);
+	var _modal = __webpack_require__(52);
 
-	var _tree = __webpack_require__(53);
+	var _tree = __webpack_require__(54);
 
 	var _tree2 = _interopRequireDefault(_tree);
+
+	var _barChart = __webpack_require__(59);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -3935,9 +4258,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	exports.ModalComponent = _modal.ModalComponent;
 	exports.ModalStore = _modal.ModalStore;
 	exports.TreeDebugComponent = _tree2.default;
+	exports.BarChartComponent = _barChart.BarChartComponent;
 
 /***/ }),
-/* 48 */
+/* 49 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -3957,9 +4281,9 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var Decorators = _interopRequireWildcard(_decorators);
 
-	var _dropdown = __webpack_require__(49);
+	var _dropdown = __webpack_require__(50);
 
-	var _datepicker = __webpack_require__(50);
+	var _datepicker = __webpack_require__(51);
 
 	var _datepicker2 = _interopRequireDefault(_datepicker);
 
@@ -4125,7 +4449,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	}()) || _class);
 
 /***/ }),
-/* 49 */
+/* 50 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -4181,15 +4505,15 @@ return /******/ (function(modules) { // webpackBootstrap
 	}();
 
 /***/ }),
-/* 50 */
+/* 51 */
 /***/ (function(module, exports) {
 
 	"use strict";
 
-	module.exports = "<div ac-outside=\"outside\" class=\"relative\">\r\n\t<div  style=\"width: 100%\" class=\"app-form__label__input\">\r\n\t\t<input type=\"text\" @click=\"openMenu\" class=\"app-form__label__input full-width\" readonly ac-value=\"formattedDate\">\r\n\t\t<div class=\"app-form__border\"></div>\r\n\t\t<!-- <img class=\"datepicker-icon\" src=\"../../assets/img/hanging-calendar.svg\" alt=\"\"> -->\r\n\t</div>\r\n\r\n\t<div class=\"j-calendar\" ac-if=\"this._show\" >\r\n\t    <div class=\"j-calendar__wrap\">\r\n\t        <div class=\"j-calendar__item\">\r\n\t            <div class=\"j-calendar__header\">\r\n\t                <div class=\"j-calendar__header__left\" @click=\"prev\">\r\n\t                    <span>prev</span>\r\n\t                </div>\r\n\t                <div class=\"j-calendar__header__center\">\r\n\t\t                <span ac-value=\"currentMonth\"></span>\r\n\t\t                <span style=\"margin-left: 7px;\" ac-value=\"currentYear\"></span>\r\n\t                </div>\r\n\t                <div class=\"j-calendar__header__right\" @click=\"next\">\r\n\t                    <span>Next</span>\r\n\t                </div>\r\n\t            </div>\r\n\t            <div class=\"j-calendar__content\">\r\n\t                <div class=\"j-calendar__days\">\r\n\t                    <div class=\"j-calendar__days__item\" ac-for=\"daysOfWeekShort\">\r\n\t\t\t\t\t\t\t<span ac-value=\"index\"></span>\r\n\t\t\t\t\t\t</div>\r\n\t                </div>\r\n\t                <div class=\"j-calendar__date\">\r\n\t                    <div class=\"j-calendar__date__item\" \r\n\t                    ac-class=\"j-calendar__date__item--today:this.today, j-calendar__date__item--active:this.selected, j-calendar__date__item--inactive: this.inactive\"\r\n\t                    ac-for=\"countOfDays\"\r\n\t                    @click=\"select(this)\" ac-value=\"index\"></div>\r\n\t                </div>\r\n\t            </div>\r\n\t        </div>\r\n\t    </div>\r\n\t</div>\r\n</div>\r\n";
+	module.exports = "<div ac-outside=\"outside\" class=\"relative\">\r\n\t<div  style=\"width: 100%\" class=\"app-form__label__input\">\r\n\t\t<input type=\"text\" @click=\"openMenu\" class=\"app-form__label__input full-width\" readonly ac-value=\"formattedDate\">\r\n\t\t<div class=\"app-form__border\"></div>\r\n\t\t<!-- <img class=\"datepicker-icon\" src=\"../../assets/img/hanging-calendar.svg\" alt=\"\"> -->\r\n\t</div>\r\n\r\n\t<div class=\"j-calendar\" ac-if=\"this._show\" >\r\n\t    <div class=\"j-calendar__wrap\">\r\n\t        <div class=\"j-calendar__item\">\r\n\t            <div class=\"j-calendar__header\">\r\n\t                <div class=\"j-calendar__header__left\" @click=\"prev\">\r\n\t                    <span>prev</span>\r\n\t                </div>\r\n\t                <div class=\"j-calendar__header__center\">\r\n\t\t                <span ac-value=\"currentMonth\"></span>\r\n\t\t                <span style=\"margin-left: 7px;\" ac-value=\"currentYear\"></span>\r\n\t                </div>\r\n\t                <div class=\"j-calendar__header__right\" @click=\"next\">\r\n\t                    <span>Next</span>\r\n\t                </div>\r\n\t            </div>\r\n\t            <div class=\"j-calendar__content\">\r\n\t                <div class=\"j-calendar__days\">\r\n\t                    <div class=\"j-calendar__days__item\" ac-for=\"let item of daysOfWeekShort\">\r\n\t\t\t\t\t\t\t<span ac-value=\"index\"></span>\r\n\t\t\t\t\t\t</div>\r\n\t                </div>\r\n\t                <div class=\"j-calendar__date\">\r\n\t                    <div class=\"j-calendar__date__item\" \r\n\t                    ac-class=\"j-calendar__date__item--today:this.today, j-calendar__date__item--active:this.selected, j-calendar__date__item--inactive: this.inactive\"\r\n\t                    ac-for=\"let item of countOfDays\"\r\n\t                    @click=\"select(item)\" ac-value=\"index\"></div>\r\n\t                </div>\r\n\t            </div>\r\n\t        </div>\r\n\t    </div>\r\n\t</div>\r\n</div>\r\n";
 
 /***/ }),
-/* 51 */
+/* 52 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -4203,7 +4527,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var _utils = __webpack_require__(44);
 
-	var _store = __webpack_require__(52);
+	var _store = __webpack_require__(53);
 
 	var _observable = __webpack_require__(7);
 
@@ -4320,7 +4644,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	exports.ModalComponent = ModalComponent;
 
 /***/ }),
-/* 52 */
+/* 53 */
 /***/ (function(module, exports) {
 
 	"use strict";
@@ -4347,7 +4671,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	}();
 
 /***/ }),
-/* 53 */
+/* 54 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -4356,14 +4680,14 @@ return /******/ (function(modules) { // webpackBootstrap
 	    value: true
 	});
 
-	var _tree = __webpack_require__(54);
+	var _tree = __webpack_require__(55);
 
-	var _treeItem = __webpack_require__(56);
+	var _treeItem = __webpack_require__(57);
 
 	exports.default = [_tree.AceTreeComponent, _treeItem.AceTreeItemComponent];
 
 /***/ }),
-/* 54 */
+/* 55 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -4383,7 +4707,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var _component = __webpack_require__(34);
 
-	var _treeComponent = __webpack_require__(55);
+	var _treeComponent = __webpack_require__(56);
 
 	var _treeComponent2 = _interopRequireDefault(_treeComponent);
 
@@ -4455,7 +4779,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	}()) || _class);
 
 /***/ }),
-/* 55 */
+/* 56 */
 /***/ (function(module, exports) {
 
 	"use strict";
@@ -4463,7 +4787,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	module.exports = "<button @click=\"load\">Load</button>\r\n<app-tree-item-debug ac-for=\"components\"></app-tree-item-debug>\r\n<style>\r\napp-tree-item-debug {\r\n    display: block;\r\n    padding: 5px 0;\r\n}\r\n\r\napp-tree-item-debug.children {\r\n    padding-left: 25px;\r\n}\r\n\r\n.toggle-btn {\r\n    cursor: pointer;\r\n    width: 12px;\r\n    height: 12px;\r\n    display: inline-block;\r\n    position: absolute;\r\n    left: -22px;\r\n}\r\n.toggle-btn:before {\r\n    content: '\\25B6';\r\n    color: #757575;\r\n}\r\n.toggle-btn.active:before {\r\n    content: '\\25BC';\r\n    color: #757575;\r\n}\r\n\r\n.has-children {\r\n\tcursor: pointer;\r\n}\r\n</style>";
 
 /***/ }),
-/* 56 */
+/* 57 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -4483,7 +4807,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var _component = __webpack_require__(34);
 
-	var _treeItemComponent = __webpack_require__(57);
+	var _treeItemComponent = __webpack_require__(58);
 
 	var _treeItemComponent2 = _interopRequireDefault(_treeItemComponent);
 
@@ -4528,15 +4852,323 @@ return /******/ (function(modules) { // webpackBootstrap
 	}()) || _class);
 
 /***/ }),
-/* 57 */
+/* 58 */
 /***/ (function(module, exports) {
 
 	"use strict";
 
-	module.exports = "<div style=\"position: relative;\">\r\n\t<span @click=\"toggle\" class=\"toggle-btn\" ac-if=\"this.children.length\" ac-class=\"active: !this.visible\"></span>\r\n\t<span @click=\"toggle\" class=\"component-name\" ac-class=\"has-children: this.children.length\" ac-value=\"name\"></span>\r\n</div>\r\n\r\n<div ac-class=\"hidden: this.visible\">\r\n\t<app-tree-item-debug ac-for=\"children\" class=\"children\"></app-tree-item-debug>\r\n</div>\r\n";
+	module.exports = "<div style=\"position: relative;\">\r\n\t<span @click=\"toggle\" class=\"toggle-btn\" ac-if=\"this.children.length\" ac-class=\"active: !this.visible\"></span>\r\n\t<span @click=\"toggle\" class=\"component-name\" ac-class=\"has-children: this.children.length\" ac-value=\"name\"></span>\r\n</div>\r\n\r\n<div ac-class=\"hidden: this.visible\">\r\n\t<app-tree-item-debug ac-for=\"let item of children\" class=\"children\"></app-tree-item-debug>\r\n</div>\r\n";
 
 /***/ }),
-/* 58 */
+/* 59 */
+/***/ (function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	exports.BarChartComponent = undefined;
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _dec, _class;
+
+	var _decorators = __webpack_require__(8);
+
+	var Decorators = _interopRequireWildcard(_decorators);
+
+	var _barChart = __webpack_require__(60);
+
+	var _barChart2 = _interopRequireDefault(_barChart);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	var colorsTheme = ["#7cb5ec", "#434348", "#90ed7d", "#f7a35c", "#8085e9", "#f15c80", "#e4d354", "#2b908f", "#f45b5b", "#91e8e1", "#7cb5ec", "#434348"];
+	var xOffset = 140;
+	var yOffset = 100;
+	var barWidth = 30;
+	var BarChartComponent = exports.BarChartComponent = (_dec = Decorators.ComponentDecorator({
+	    selector: 'ace-bar-chart',
+	    template: _barChart2.default,
+	    props: {
+	        tooltipCoords: {
+	            x: 0,
+	            y: 0
+	        },
+	        xGrid: [],
+	        xGroupLabels: [],
+	        yLabels: [],
+	        tooltipIsShown: false,
+	        title: 'test chart',
+	        colors: [],
+	        background: '#eee',
+	        yAxis: {
+	            // min: 0,
+	            label: ''
+	        },
+	        stepCount: 5,
+	        series: [],
+	        height: 300,
+	        width: 600
+	    }
+	}), _dec(_class = function () {
+	    function BarChartComponent() {
+	        _classCallCheck(this, BarChartComponent);
+	    }
+
+	    _createClass(BarChartComponent, [{
+	        key: 'INPUT',
+	        value: function INPUT(params) {
+	            var newParams = {};
+	            for (var key in this.props.getData()) {
+	                if (params.data[key]) {
+	                    newParams[key] = params.data[key];
+	                }
+	            }
+
+	            this.props.set(newParams);
+	            this.draw();
+	        }
+	    }, {
+	        key: 'onInit',
+	        value: function onInit() {
+	            // setInterval(()=>{
+	            //     let series = this.props.get('series');
+	            //     series[0].value = 10 * Math.random();
+
+	            //     let svgHeight = this.getSvgHeight();
+	            //     let svgWidth = this.getSvgWidth();
+
+	            //     series = this.getChartData(svgHeight, svgWidth);
+
+	            //     this.props.set({
+	            //         series: series
+	            //     });
+	            // },2000)
+	        }
+	    }, {
+	        key: 'mouseenter',
+	        value: function mouseenter(e, item) {
+	            clearTimeout(this._tooltipInterval);
+	            this.props.set({
+	                tooltipIsShown: true,
+	                tooltipCoords: { x: item.x - 40 + 'px', y: item.y - 80 + 'px' },
+	                tooltipSelected: {
+	                    value: (item.value / this.props.get('series').reduce(function (a, b) {
+	                        return a + b.value;
+	                    }, 0) * 100).toFixed(2)
+	                }
+	            });
+	        }
+	    }, {
+	        key: 'mouseleave',
+	        value: function mouseleave(e) {
+	            var _this = this;
+
+	            if (this._tooltipInterval) {
+	                clearTimeout(this._tooltipInterval);
+	            }
+	            this._tooltipInterval = setTimeout(function () {
+	                _this.props.set({ 'tooltipIsShown': false });
+	            }, 200);
+	        }
+	    }, {
+	        key: 'draw',
+	        value: function draw() {
+	            var svgHeight = this.getSvgHeight();
+	            var svgWidth = this.getSvgWidth();
+
+	            var series = this.getChartData(svgHeight, svgWidth);
+	            // let xLabels = this.getXLabels(svgHeight, svgWidth);
+	            var xGroupLabels = this.getXGroupLabels(series, svgHeight, svgWidth);
+	            var yLabels = this.getYLabels(svgHeight);
+
+	            var xGrid = this.getXGrid(svgHeight, svgWidth);
+
+	            this.props.set({
+	                series: series,
+	                // xLabels: xLabels,
+	                xGroupLabels: xGroupLabels,
+	                yLabels: yLabels,
+	                xGrid: xGrid,
+	                yLabelX: 30,
+	                yLabelY: this.props.get('height') / 2,
+	                yLabelTransform: 'translate(0,0) rotate(270 26.140625 ' + this.props.get('height') / 2 + ')',
+	                labelX: this.props.get('width') / 2
+	            });
+	        }
+	    }, {
+	        key: 'getSvgHeight',
+	        value: function getSvgHeight() {
+	            return this.props.get('height') - yOffset;
+	        }
+	    }, {
+	        key: 'getSvgWidth',
+	        value: function getSvgWidth() {
+	            return this.props.get('width') - xOffset;
+	        }
+	    }, {
+	        key: 'getXGrid',
+	        value: function getXGrid(svgHeight, svgWidth) {
+	            var xGrid = [];
+	            var maxVal = this.getMaxValue(this.props.get('series').map(function (r) {
+	                return r.value;
+	            }));
+	            var count = this.props.get('stepCount') || this.getModulo(maxVal);
+	            var stepHeight = svgHeight / count;
+
+	            for (var i = 0; i <= count; i++) {
+	                xGrid.push({
+	                    x1: xOffset / 2,
+	                    x2: this.props.get('width') - xOffset / 2,
+	                    y1: yOffset / 2 + i * stepHeight,
+	                    y2: yOffset / 2 + i * stepHeight
+	                });
+	            }
+	            return xGrid;
+	        }
+	    }, {
+	        key: 'getYLabels',
+	        value: function getYLabels(svgHeight) {
+	            var result = [];
+	            var maxVal = this.getMaxValue(this.props.get('series').map(function (r) {
+	                return r.value;
+	            }));
+	            var count = this.props.get('stepCount') || this.getModulo(maxVal);
+	            var stepHeight = svgHeight / count;
+
+	            for (var i = 0; i <= count; i++) {
+	                result.push({
+	                    x: xOffset / 2 - 10,
+	                    y: yOffset / 2 + i * stepHeight + 4, //svgHeight - i * stepHeight + 4,
+	                    name: Math.abs(maxVal / count * (i - count)).toFixed(1)
+	                });
+	            }
+
+	            return result;
+	        }
+	    }, {
+	        key: 'getChartData',
+	        value: function getChartData(svgHeight, svgWidth) {
+	            var _this2 = this;
+
+	            var maxVal = this.getMaxValue(this.props.get('series').map(function (r) {
+	                return r.value;
+	            }));
+	            var count = this.props.get('stepCount') || this.getModulo(maxVal);
+	            var stepHeight = svgHeight / (count + 1);
+
+	            return this.props.get('series').map(function (r, i) {
+	                // let a = ((svgWidth) / this.props.get('series').length) / (this.props.get('series').length);
+	                var length = _this2.props.get('series').length - 1;
+	                return {
+	                    x: i * (svgWidth / length - barWidth / length) + xOffset / 2,
+	                    y: svgHeight - svgHeight * (r.value / maxVal) + yOffset / 2,
+	                    // stroke: '#ffffff',
+	                    stroeWidth: 1,
+	                    fill: colorsTheme[i] || '#5699dc',
+	                    width: barWidth,
+	                    height: svgHeight * (r.value / maxVal),
+	                    value: r.value
+	                };
+	            });
+	        }
+
+	        // getXLabels(svgHeight, svgWidth) {
+	        //     svgWidth = svgWidth - 40;
+	        //     return this.props.get('series').map((r, i) => {
+	        //         return {
+	        //             x: i * (svgWidth / this.props.get('series').length) + 20,
+	        //             y: svgHeight + 15,
+	        //             name: r.value
+	        //         };
+	        //     });
+	        // }
+
+	    }, {
+	        key: 'getXGroupLabels',
+	        value: function getXGroupLabels(series, svgHeight, svgWidth) {
+	            return series.map(function (r, i) {
+	                return {
+	                    x: r.x + 10,
+	                    y: r.y - 4,
+	                    name: r.value
+	                };
+	            });
+	        }
+	    }, {
+	        key: 'getModulo',
+	        value: function getModulo(maxVal) {
+	            var modulo = void 0;
+
+	            switch (true) {
+	                case maxVal % 6 === 0:
+	                    console.log(6);
+	                    modulo = 6;
+	                    break;
+	                case maxVal % 5 === 0:
+	                    console.log(5);
+	                    modulo = 5;
+	                    break;
+	                case maxVal % 4 === 0:
+	                    console.log(4);
+	                    modulo = 4;
+	                    break;
+	                case maxVal % 3 === 0:
+	                    console.log(3);
+	                    modulo = 3;
+	                    break;
+	                case maxVal % 2 === 0:
+	                    console.log(2);
+	                    modulo = 2;
+	                    break;
+	                default:
+	                    modulo = 2;
+	                    break;
+	            }
+
+	            return modulo;
+	        }
+	    }, {
+	        key: 'getMaxValue',
+	        value: function getMaxValue(array) {
+	            return Math.max.apply(null, array);
+	        }
+
+	        // onChange(f) {
+	        //     this.onChangeCallback = f;
+	        // }
+
+	        // setData(data) {
+
+	        // }
+
+	        // append(tag) {
+	        //     let elem;
+	        //     return elem;
+	        // }
+
+
+	    }]);
+
+	    return BarChartComponent;
+	}()) || _class);
+
+/***/ }),
+/* 60 */
+/***/ (function(module, exports) {
+
+	"use strict";
+
+	module.exports = "<svg ac-ref=\"svg\" ac-attr=\"height: height, width: width\" ac-if=\"this.series.length\">\r\n    <rect class=\"highcharts-background\" x=\"0\" y=\"0\" ac-attr=\"height: height, width: width, fill: background\" rx=\"0\" ry=\"0\"></rect>\r\n    <text ac-attr=\"x: labelX\" text-anchor=\"middle\" class=\"acechart-title\" y=\"24\">\r\n        <tspan ac-value=\"title\"></tspan>\r\n    </text>\r\n    <text ac-attr=\"x: yLabelX, y: yLabelY, transform: yLabelTransform\" text-anchor=\"middle\" class=\"acecharts-axis-title\">\r\n        <tspan ac-value=\"yAxis.label\"></tspan>\r\n    </text>\r\n    <g class=\"acechart-grid acechart-yaxis-grid \">\r\n        <line ac-for=\"let item of xGrid\" ac-attr=\"x1: x1, x2: x2, y1: y1, y2: y2\" stroke=\"black\" stroke-width=\"1\" shape-rendering=\"crispEdges\" />\r\n    </g>\r\n    <g class=\"acechart-group\">\r\n        <rect ac-for=\"let item of series\" @mouseenter=\"mouseenter(item)\" @mouseleave=\"mouseleave\" ac-attr=\"x: x, y: y, stroke: stroke, fill: fill, stroke-width: strokeWidth, width: width, height: height\"></rect>\r\n    </g>\r\n    <!--     <g class=\"acechart-axis-labels acechart-xaxis-labels \" transform=\"translate(40,0) scale(1 1)\">\r\n        <text ac-for=\"xLabels\" ac-attr=\"x: x, y: y\" text-anchor=\"start\" transform=\"translate(0,0)\">\r\n            <tspan ac-value=\"name\"></tspan>\r\n        </text>\r\n    </g> -->\r\n    <g class=\"acechart-axis-labels acechart-xaxis-labels \">\r\n        <text ac-for=\"let item of xGroupLabels\" ac-attr=\"x: x, y: y\" text-anchor=\"start\" transform=\"translate(0,0)\">\r\n            <tspan ac-value=\"name\"></tspan>\r\n        </text>\r\n    </g>\r\n    <g class=\"acechart-axis-labels acechart-yaxis-labels \">\r\n        <text ac-for=\"let item of yLabels\" ac-attr=\"x: x, y: y\" text-anchor=\"end\" transform=\"translate(0,0)\">\r\n            <tspan ac-value=\"name\"></tspan>\r\n        </text>\r\n    </g>\r\n</svg>\r\n<div class=\"acecharts-tooltip\" ac-class=\"open: this.tooltipIsShown\" ac-style=\"top: tooltipCoords.y, left: tooltipCoords.x\">\r\n    <div style=\"font-size: 12px;\">Languages</div>\r\n    <br>\r\n    <span ac-value=\"tooltipSelected.name\"></span>\r\n    <b ac-value=\"tooltipSelected.value\"></b>% of total\r\n</div>\r\n<div ac-if=\"!this.series.length\">Bar chart. There is no data to show</div>\r\n<style>\r\nace-bar-chart {\r\n    display: inline-block;\r\n    position: relative;\r\n}\r\n\r\n.acecharts-tooltip.open {\r\n    opacity: 1;\r\n    visibility: visible;\r\n}\r\n\r\n\r\n\r\n.acecharts-tooltip {\r\n    position: absolute;\r\n    background: #fbf5f5c9;\r\n    /*width: 200px;*/\r\n    top: 0;\r\n    /*height: 100px;*/\r\n    transition: 0.2s;\r\n    opacity: 0;\r\n    visibility: hidden;\r\n    padding: 10px;\r\n    border: 1px solid #ddddde;\r\n    border-radius: 2px;\r\n}\r\n\r\n.acecharts-tooltip:after, .acecharts-tooltip:before {\r\n    top: 100%;\r\n    left: 50%;\r\n    border: solid transparent;\r\n    content: \" \";\r\n    height: 0;\r\n    width: 0;\r\n    position: absolute;\r\n    pointer-events: none;\r\n}\r\n\r\n.acecharts-tooltip:after {\r\n    border-color: rgba(247, 247, 247, 0);\r\n    border-top-color: #f7f7f7;\r\n    border-width: 10px;\r\n    margin-left: -10px;\r\n}\r\n.acecharts-tooltip:before {\r\n    border-color: rgba(221, 221, 222, 0);\r\n    border-top-color: #ddddde;\r\n    border-width: 11px;\r\n    margin-left: -11px;\r\n}\r\n\r\n.acechart-group rect {\r\n    /*fill: #5699dc;*/\r\n    transition: 0.5s;\r\n}\r\n\r\n.acechart-group rect:hover {\r\n    /*fill: #3e6a96;*/\r\n    opacity: 0.7;\r\n}\r\n\r\n.acechart-xaxis-labels text {\r\n    cursor: default;\r\n    font-size: 11px;\r\n    font-family: Verdana, sans-serif;\r\n    fill: #666666;\r\n    transition: 0.5s;\r\n}\r\n\r\n.acecharts-axis-title {\r\n    cursor: default;\r\n    font-size: 12px;\r\n    font-family: Verdana, sans-serif;\r\n    fill: #666666;\r\n}\r\n\r\n.acechart-title {\r\n    cursor: default;\r\n    font-size: 16px;\r\n    font-family: Verdana, sans-serif;\r\n    fill: #666666;\r\n    transition: 0.5s;\r\n}\r\n\r\n.acechart-yaxis-labels text {\r\n    cursor: default;\r\n    font-size: 11px;\r\n    font-family: Verdana, sans-serif;\r\n    fill: #666666;\r\n}\r\n\r\n.acechart-yaxis-grid line {\r\n    stroke: #ccc;\r\n}\r\n\r\n.acechart-group {}\r\n</style>";
+
+/***/ }),
+/* 61 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -4975,7 +5607,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	exports.Http = Http;
 
 /***/ }),
-/* 59 */
+/* 62 */
 /***/ (function(module, exports) {
 
 	'use strict';
@@ -5161,7 +5793,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	}();
 
 /***/ }),
-/* 60 */
+/* 63 */
 /***/ (function(module, exports) {
 
 	'use strict';
@@ -5189,7 +5821,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	exports.Validators = Validators;
 
 /***/ }),
-/* 61 */
+/* 64 */
 /***/ (function(module, exports) {
 
 	'use strict';
@@ -5241,7 +5873,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	// })(Window.prototype, HTMLDocument.prototype, Element.prototype, "addEventListener", "removeEventListener", "dispatchEvent", []);
 
 /***/ }),
-/* 62 */
+/* 65 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -5255,7 +5887,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var _core = __webpack_require__(6);
 
-	var _homeComponent = __webpack_require__(63);
+	var _homeComponent = __webpack_require__(66);
 
 	var _homeComponent2 = _interopRequireDefault(_homeComponent);
 
@@ -5271,7 +5903,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	}) || _class);
 
 /***/ }),
-/* 63 */
+/* 66 */
 /***/ (function(module, exports) {
 
 	"use strict";
@@ -5279,7 +5911,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	module.exports = "<div class=\"app-container\">\r\n  <h1>ACE JS</h1>\r\n  <p><b>AceJs</b> - is a front-end framework based on web components technology.</p>\r\n  <button type=\"\" ac-link=\"documentation\" class=\"app-btn\">GET STARTED</button>\r\n</div>\r\n";
 
 /***/ }),
-/* 64 */
+/* 67 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -5295,7 +5927,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var _core = __webpack_require__(6);
 
-	var _rootComponent = __webpack_require__(65);
+	var _rootComponent = __webpack_require__(68);
 
 	var _rootComponent2 = _interopRequireDefault(_rootComponent);
 
@@ -5322,7 +5954,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	}()) || _class);
 
 /***/ }),
-/* 65 */
+/* 68 */
 /***/ (function(module, exports) {
 
 	"use strict";
@@ -5330,7 +5962,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	module.exports = "<app-header></app-header>\r\n<route-switcher></route-switcher>\r\n<!-- <app-footer></app-footer> -->\r\n<!-- <app-notifications></app-notifications>\r\n<app-confirm-modal></app-confirm-modal> -->";
 
 /***/ }),
-/* 66 */
+/* 69 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -5348,7 +5980,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var _decorators = __webpack_require__(8);
 
-	var _headerComponent = __webpack_require__(67);
+	var _headerComponent = __webpack_require__(70);
 
 	var _headerComponent2 = _interopRequireDefault(_headerComponent);
 
@@ -5384,74 +6016,15 @@ return /******/ (function(modules) { // webpackBootstrap
 	}()) || _class);
 
 /***/ }),
-/* 67 */
-/***/ (function(module, exports) {
-
-	"use strict";
-
-	module.exports = "<header>\r\n    <!-- <span @click=\"test\" ac-emod=\"stop, prevent, enter\">1234</span> -->\r\n    <!-- <input @keyup=\"keyup\" ac-kmod=\"enter\" type=\"text\"> -->\r\n    <div class=\"logo\">\r\n        <a class=\"gantt--main-menu-item\" ac-link=\"/\">\r\n            ACE JS\r\n        </a>\r\n    </div>\r\n    <ul class=\"gantt--main-menu\">\r\n        <li><a class=\"gantt--main-menu-item\" ac-link=\"documentation\">Documentation</a></li>\r\n        <li><a class=\"gantt--main-menu-item\" ac-link=\"controls\">Controls</a></li>\r\n        <li><a class=\"gantt--main-menu-item\" ac-link=\"plugins\">Plugins</a></li>\r\n        <!-- <li><a class=\"gantt--main-menu-item\" ac-link=\"todo\">TODO MVVM</a></li> -->\r\n    </ul>\r\n</header>";
-
-/***/ }),
-/* 68 */
-/***/ (function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
-	    value: true
-	});
-	exports.PluginsComponent = undefined;
-
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-	var _dec, _class;
-
-	var _core = __webpack_require__(6);
-
-	var _pluginsComponent = __webpack_require__(69);
-
-	var _pluginsComponent2 = _interopRequireDefault(_pluginsComponent);
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-	var PluginsComponent = exports.PluginsComponent = (_dec = _core.Decorators.ComponentDecorator({
-	    selector: 'app-plugins',
-	    template: _pluginsComponent2.default
-	}), _dec(_class = function () {
-	    function PluginsComponent(options) {
-	        _classCallCheck(this, PluginsComponent);
-	    }
-
-	    _createClass(PluginsComponent, [{
-	        key: 'onInit',
-	        value: function onInit() {
-
-	            this.props.set({ plugins: [{
-	                    name: 'Sortable',
-	                    route: 'plugins/sortable'
-	                }] });
-
-	            _core.Plugins.Sortable.init({
-	                el: this.$refs.test
-	            });
-	        }
-	    }]);
-
-	    return PluginsComponent;
-	}()) || _class);
-
-/***/ }),
-/* 69 */
-/***/ (function(module, exports) {
-
-	"use strict";
-
-	module.exports = "<main>\r\n\r\n    <div class=\"main-content justify-space-between\">\r\n\r\n        <ul class=\"main-list\">\r\n            <li ac-for=\"plugins\">\r\n                <a class=\"list-head\" ac-value=\"name\" ac-link=\"{{route}}\" ></a>\r\n            </li>\r\n        </ul>\r\n\r\n        <div class=\"plugins-section\">\r\n            <!-- <child-route-switcher></child-route-switcher> -->\r\n        \r\n        \t<h3>Sortable</h3>\r\n        \t<div ac-ref=\"test\">\r\n        \t    <div draggable=\"true\" style=\"border: 1px solid #ccc; padding: 5px;display: block; width: 200px\">First Item</div>\r\n        \t    <div draggable=\"true\" style=\"border: 1px solid #ccc; padding: 5px;display: block; width: 200px\">Second Item</div>\r\n        \t    <div draggable=\"true\" style=\"border: 1px solid #ccc; padding: 5px;display: block; width: 200px\">Third Item</div>\r\n        \t</div>\r\n    \r\n        </div>\r\n    </div>\r\n</main>\r\n\r\n\r\n\r\n";
-
-/***/ }),
 /* 70 */
+/***/ (function(module, exports) {
+
+	"use strict";
+
+	module.exports = "<header>\r\n    <!-- <span @click=\"test\" ac-emod=\"stop, prevent, enter\">1234</span> -->\r\n    <!-- <input @keyup=\"keyup\" ac-kmod=\"enter\" type=\"text\"> -->\r\n    <div class=\"logo\">\r\n        <a class=\"gantt--main-menu-item\" ac-link=\"/\">\r\n            ACE JS\r\n        </a>\r\n    </div>\r\n    <ul class=\"gantt--main-menu\">\r\n        <li><a class=\"gantt--main-menu-item\" ac-link=\"documentation\">Documentation</a></li>\r\n        <li><a class=\"gantt--main-menu-item\" ac-link=\"controls\">Controls</a></li>\r\n        <li><a class=\"gantt--main-menu-item\" ac-link=\"plugins/sortable\">Plugins</a></li>\r\n        <!-- <li><a class=\"gantt--main-menu-item\" ac-link=\"todo\">TODO MVVM</a></li> -->\r\n    </ul>\r\n</header>";
+
+/***/ }),
+/* 71 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -5467,7 +6040,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var _core = __webpack_require__(6);
 
-	var _controlsComponent = __webpack_require__(71);
+	var _controlsComponent = __webpack_require__(72);
 
 	var _controlsComponent2 = _interopRequireDefault(_controlsComponent);
 
@@ -5501,15 +6074,15 @@ return /******/ (function(modules) { // webpackBootstrap
 	}()) || _class);
 
 /***/ }),
-/* 71 */
+/* 72 */
 /***/ (function(module, exports) {
 
 	"use strict";
 
-	module.exports = "<main>\r\n\r\n    <div class=\"main-content justify-space-between\">\r\n\r\n        <ul class=\"main-list\">\r\n            <li ac-for=\"controls\">\r\n                <a class=\"list-head\" ac-value=\"name\" ac-link=\"{{route}}\" ></a>\r\n            </li>\r\n        </ul>\r\n\r\n        <div class=\"plugins-section\">\r\n            <!-- <child-route-switcher></child-route-switcher> -->\r\n        \r\n        \t<h3>Datepicker</h3>\r\n            <div style=\"width: 200px\">\r\n                <app-datepicker ac-model=\"date\" ac-input=\"model: @date\"></app-datepicker>\r\n            </div>\r\n        </div>\r\n    </div>\r\n</main>\r\n\r\n\r\n\r\n";
+	module.exports = "<main>\r\n\r\n    <div class=\"main-content justify-space-between\">\r\n\r\n        <ul class=\"main-list\">\r\n            <li ac-for=\"let item of controls\">\r\n                <a class=\"list-head\" ac-value=\"name\" ac-link=\"{{route}}\" ></a>\r\n            </li>\r\n        </ul>\r\n\r\n        <div class=\"plugins-section\">\r\n            <!-- <child-route-switcher></child-route-switcher> -->\r\n        \r\n        \t<h3>Datepicker</h3>\r\n            <div style=\"width: 200px\">\r\n                <app-datepicker ac-model=\"date\" ac-input=\"model: @date\"></app-datepicker>\r\n            </div>\r\n        </div>\r\n    </div>\r\n</main>\r\n\r\n\r\n\r\n";
 
 /***/ }),
-/* 72 */
+/* 73 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -5523,7 +6096,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var _core = __webpack_require__(6);
 
-	var _notFoundComponent = __webpack_require__(73);
+	var _notFoundComponent = __webpack_require__(74);
 
 	var _notFoundComponent2 = _interopRequireDefault(_notFoundComponent);
 
@@ -5539,7 +6112,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	}) || _class);
 
 /***/ }),
-/* 73 */
+/* 74 */
 /***/ (function(module, exports) {
 
 	"use strict";
@@ -5547,7 +6120,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	module.exports = "<!-- <app-header></app-header> -->\r\n<h1 style=\"text-align: center\">Page not found</h1>";
 
 /***/ }),
-/* 74 */
+/* 75 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -5556,48 +6129,48 @@ return /******/ (function(modules) { // webpackBootstrap
 	    value: true
 	});
 
-	var _documentation = __webpack_require__(75);
+	var _documentation = __webpack_require__(76);
 
-	var _docQuickStart = __webpack_require__(77);
+	var _docQuickStart = __webpack_require__(78);
 
-	var _docArchitecture = __webpack_require__(79);
+	var _docArchitecture = __webpack_require__(80);
 
-	var _docComponent = __webpack_require__(82);
+	var _docComponent = __webpack_require__(83);
 
-	var _docLifecycle = __webpack_require__(84);
+	var _docLifecycle = __webpack_require__(85);
 
-	var _docUtils = __webpack_require__(86);
+	var _docUtils = __webpack_require__(87);
 
-	var _directives = __webpack_require__(88);
+	var _directives = __webpack_require__(89);
 
-	var _customDirectives = __webpack_require__(90);
+	var _customDirectives = __webpack_require__(91);
 
-	var _docInterpolation = __webpack_require__(92);
+	var _docInterpolation = __webpack_require__(93);
 
-	var _docConditional = __webpack_require__(94);
+	var _docConditional = __webpack_require__(95);
 
-	var _docForms = __webpack_require__(96);
+	var _docForms = __webpack_require__(97);
 
-	var _docEvents = __webpack_require__(98);
+	var _docEvents = __webpack_require__(99);
 
-	var _docModules = __webpack_require__(100);
+	var _docModules = __webpack_require__(101);
 
-	var _docSmartObject = __webpack_require__(102);
+	var _docSmartObject = __webpack_require__(103);
 
-	var _docHowTo = __webpack_require__(104);
+	var _docHowTo = __webpack_require__(105);
 
-	var _docRouterConfig = __webpack_require__(106);
+	var _docRouterConfig = __webpack_require__(107);
 
-	var _docHttpModule = __webpack_require__(108);
+	var _docHttpModule = __webpack_require__(109);
 
-	var _docHttpMethods = __webpack_require__(110);
+	var _docHttpMethods = __webpack_require__(111);
 
-	var _exampleChild = __webpack_require__(112);
+	var _exampleChild = __webpack_require__(113);
 
 	exports.default = [_documentation.DocumentationComponent, _docQuickStart.DocQuickStartComponent, _docArchitecture.DocArchitectureComponent, _docHowTo.DocHowToComponent, _docComponent.DocComponentComponent, _docLifecycle.DocLifecycleComponent, _docUtils.DocUtilsComponent, _directives.DocDirectivesComponent, _customDirectives.DocCustomDirectivesComponent, _docInterpolation.DocInterpolationComponent, _docConditional.DocConditionalComponent, _docForms.DocFormsComponent, _docEvents.DocEventsComponent, _docModules.DocModulesComponent, _docSmartObject.DocSmartObjectComponent, _docRouterConfig.DocRouterConfigComponent, _docHttpModule.HttpModuleComponent, _docHttpMethods.HttpMethodsComponent, _exampleChild.ExampleChildComponent];
 
 /***/ }),
-/* 75 */
+/* 76 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -5613,7 +6186,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var _core = __webpack_require__(6);
 
-	var _documentationComponent = __webpack_require__(76);
+	var _documentationComponent = __webpack_require__(77);
 
 	var _documentationComponent2 = _interopRequireDefault(_documentationComponent);
 
@@ -5742,15 +6315,15 @@ return /******/ (function(modules) { // webpackBootstrap
 	}()) || _class);
 
 /***/ }),
-/* 76 */
+/* 77 */
 /***/ (function(module, exports) {
 
 	"use strict";
 
-	module.exports = "<main>\r\n\r\n    <div class=\"main-content justify-space-between\">\r\n\r\n        <ul class=\"main-list\">\r\n            <li style=\"font-size: 14px;padding: 5px; font-weight: 300;\">\r\n                v<small ac-value=\"version\"></small>\r\n            </li>\r\n            <li ac-for=\"categories\">\r\n                <div class=\"list-head\" ac-value=\"name\"></div>\r\n                <ol class=\"list\">\r\n                    <li ac-for=\"items\">\r\n                        <a ac-value=\"name\" ac-link=\"{{route}}\" ac-link-exact=\"true\"></a>\r\n                    </li>\r\n                </ol>\r\n            </li>\r\n        </ul>\r\n\r\n        <div class=\"documentation-section\">\r\n            <child-route-switcher></child-route-switcher>\r\n        </div>\r\n    </div>\r\n</main>";
+	module.exports = "<main>\r\n\r\n    <div class=\"main-content justify-space-between\">\r\n\r\n        <ul class=\"main-list\">\r\n            <li style=\"font-size: 14px;padding: 5px; font-weight: 300;\">\r\n                v<small ac-value=\"version\"></small>\r\n            </li>\r\n            <li ac-for=\"let item of categories\">\r\n                <div class=\"list-head\" ac-value=\"name\"></div>\r\n                <ol class=\"list\">\r\n                    <li ac-for=\"let item of items\">\r\n                        <a ac-value=\"name\" ac-link=\"{{route}}\" ac-link-exact=\"true\"></a>\r\n                    </li>\r\n                </ol>\r\n            </li>\r\n        </ul>\r\n\r\n        <div class=\"documentation-section\">\r\n            <child-route-switcher></child-route-switcher>\r\n        </div>\r\n    </div>\r\n</main>";
 
 /***/ }),
-/* 77 */
+/* 78 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -5766,7 +6339,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var _core = __webpack_require__(6);
 
-	var _docQuickStartComponent = __webpack_require__(78);
+	var _docQuickStartComponent = __webpack_require__(79);
 
 	var _docQuickStartComponent2 = _interopRequireDefault(_docQuickStartComponent);
 
@@ -5796,7 +6369,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	}()) || _class);
 
 /***/ }),
-/* 78 */
+/* 79 */
 /***/ (function(module, exports) {
 
 	"use strict";
@@ -5804,7 +6377,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	module.exports = "<h3>Tutorial</h3>\r\n<span class=\"text\">This tutorial will help you to create your first app based on our framework</span>";
 
 /***/ }),
-/* 79 */
+/* 80 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -5820,7 +6393,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var _core = __webpack_require__(6);
 
-	var _docArchitectureComponent = __webpack_require__(80);
+	var _docArchitectureComponent = __webpack_require__(81);
 
 	var _docArchitectureComponent2 = _interopRequireDefault(_docArchitectureComponent);
 
@@ -5850,15 +6423,15 @@ return /******/ (function(modules) { // webpackBootstrap
 	}()) || _class);
 
 /***/ }),
-/* 80 */
+/* 81 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	"use strict";
 
-	module.exports = "<h3>Architecture</h3>\r\n<b>Please follow this file structure:</b>\r\n<br>\r\n<div class=\"code-block folder-structure\">\r\n    <div class=\"folder-structure--item\">\r\n        AceJs project\r\n        <div class=\"children\">\r\n            <div class=\"folder-structure--item\">\r\n                dev\r\n            </div>\r\n            <div class=\"children\">\r\n                <div class=\"folder-structure--item\">components</div>\r\n                <div class=\"children\">\r\n                \t<div class=\"folder-structure--item\">component-one</div>\r\n                \t<div class=\"children\">\r\n                \t\t<div class=\"folder-structure--item\">component-one.component.js</div>\r\n                \t\t<div class=\"folder-structure--item\">component-one.component.html</div>\r\n                \t</div>\r\n                \t<div class=\"folder-structure--item\">component-two</div>\r\n                \t<div class=\"folder-structure--item\">component ...</div>\r\n                </div>\r\n                <div class=\"folder-structure--item\">stores</div>\r\n                <div class=\"folder-structure--item\">protectors</div>\r\n                <div class=\"folder-structure--item\">styles</div>\r\n                <div class=\"folder-structure--item\">app.js</div>\r\n                <div class=\"folder-structure--item\">assets\r\n                </div>\r\n                <div class=\"children\">\r\n                    <div class=\"folder-structure--item\">img</div>\r\n                    <div class=\"folder-structure--item\">fonts</div>\r\n                </div>\r\n                <div class=\"folder-structure--item\">routes.js</div>\r\n            </div>\r\n            <div class=\"folder-structure--item\">index.html</div>\r\n            <div class=\"folder-structure--item\">node_modules</div>\r\n            <div class=\"folder-structure--item\">package.json</div>\r\n            <div class=\"folder-structure--item\">webpack.config.js</div>\r\n        </div>\r\n    </div>\r\n</div>\r\n\r\n<br>\r\n<b>You can see basic principles of AceJs on following picture: </b>\r\n<img src=\"" + __webpack_require__(81) + "\">\r\n\r\n\r\n<br><br>\r\n<div class=\"code-block\">\r\n    <div class=\"code-header\">app.js</div>\r\n    <pre>\r\n        import Styles from './styles/main.scss';\r\n        import { Register } from '../core';\r\n        import { RootComponent } from './components/root/root.component';\r\n        import { HomeComponent } from './components/home/home.component';\r\n        import { HeaderComponent } from './components/header/header.component';\r\n\r\n        import Docs from './components/documentation';\r\n\r\n        import { Routes } from './router.js';\r\n        <b>Register</b>({\r\n            <b>root</b>: {\r\n                c: RootComponent, selector: 'app-root'\r\n            },\r\n            <b>components</b>: [\r\n                { c: HomeComponent, selector: 'app-home' },\r\n                { c: HeaderComponent, selector: 'app-header' }\r\n            ],\r\n            <b>modules</b>: [\r\n                Docs\r\n            ],\r\n            <b>serverUrl</b>: \"\",\r\n            <b>routes</b>: Routes,\r\n            <b>styles</b>: Styles\r\n        });\r\n    </pre>\r\n</div>";
+	module.exports = "<h3>Architecture</h3>\r\n<b>Please follow this file structure:</b>\r\n<br>\r\n<div class=\"code-block folder-structure\">\r\n    <div class=\"folder-structure--item\">\r\n        AceJs project\r\n        <div class=\"children\">\r\n            <div class=\"folder-structure--item\">\r\n                dev\r\n            </div>\r\n            <div class=\"children\">\r\n                <div class=\"folder-structure--item\">components</div>\r\n                <div class=\"children\">\r\n                \t<div class=\"folder-structure--item\">component-one</div>\r\n                \t<div class=\"children\">\r\n                \t\t<div class=\"folder-structure--item\">component-one.component.js</div>\r\n                \t\t<div class=\"folder-structure--item\">component-one.component.html</div>\r\n                \t</div>\r\n                \t<div class=\"folder-structure--item\">component-two</div>\r\n                \t<div class=\"folder-structure--item\">component ...</div>\r\n                </div>\r\n                <div class=\"folder-structure--item\">stores</div>\r\n                <div class=\"folder-structure--item\">protectors</div>\r\n                <div class=\"folder-structure--item\">styles</div>\r\n                <div class=\"folder-structure--item\">app.js</div>\r\n                <div class=\"folder-structure--item\">assets\r\n                </div>\r\n                <div class=\"children\">\r\n                    <div class=\"folder-structure--item\">img</div>\r\n                    <div class=\"folder-structure--item\">fonts</div>\r\n                </div>\r\n                <div class=\"folder-structure--item\">routes.js</div>\r\n            </div>\r\n            <div class=\"folder-structure--item\">index.html</div>\r\n            <div class=\"folder-structure--item\">node_modules</div>\r\n            <div class=\"folder-structure--item\">package.json</div>\r\n            <div class=\"folder-structure--item\">webpack.config.js</div>\r\n        </div>\r\n    </div>\r\n</div>\r\n\r\n<br>\r\n<b>You can see basic principles of AceJs on following picture: </b>\r\n<img src=\"" + __webpack_require__(82) + "\">\r\n\r\n\r\n<br><br>\r\n<div class=\"code-block\">\r\n    <div class=\"code-header\">app.js</div>\r\n    <pre>\r\n        import Styles from './styles/main.scss';\r\n        import { Register } from '../core';\r\n        import { RootComponent } from './components/root/root.component';\r\n        import { HomeComponent } from './components/home/home.component';\r\n        import { HeaderComponent } from './components/header/header.component';\r\n\r\n        import Docs from './components/documentation';\r\n\r\n        import { Routes } from './router.js';\r\n        <b>Register</b>({\r\n            <b>root</b>: {\r\n                c: RootComponent, selector: 'app-root'\r\n            },\r\n            <b>components</b>: [\r\n                { c: HomeComponent, selector: 'app-home' },\r\n                { c: HeaderComponent, selector: 'app-header' }\r\n            ],\r\n            <b>modules</b>: [\r\n                Docs\r\n            ],\r\n            <b>serverUrl</b>: \"\",\r\n            <b>routes</b>: Routes,\r\n            <b>styles</b>: Styles\r\n        });\r\n    </pre>\r\n</div>";
 
 /***/ }),
-/* 81 */
+/* 82 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -5866,7 +6439,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	module.exports = __webpack_require__.p + "src/example/img/ace-brand.svg";
 
 /***/ }),
-/* 82 */
+/* 83 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -5882,7 +6455,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var _core = __webpack_require__(6);
 
-	var _docComponentComponent = __webpack_require__(83);
+	var _docComponentComponent = __webpack_require__(84);
 
 	var _docComponentComponent2 = _interopRequireDefault(_docComponentComponent);
 
@@ -5912,7 +6485,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	}()) || _class);
 
 /***/ }),
-/* 83 */
+/* 84 */
 /***/ (function(module, exports) {
 
 	"use strict";
@@ -5920,7 +6493,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	module.exports = "<h3>Example component</h3>\r\n\r\n<div class=\"code-block\">\r\n    <div class=\"code-header\">example.component.js</div>\r\n    <pre>\r\n    import { <b>Component</b> } from 'ace-js';\r\n    import <b>Tpl</b> from './example.component.html';\r\n    export class <b>ExampleComponent</b> extends Component {\r\n        constructor(params) {\r\n            super(params, {\r\n                <b>template</b>: Tpl,\r\n                <b>props</b>: {\r\n                    title: 'Some title'        \r\n                }\r\n                \r\n                <b>hostEvents</b>: {\r\n                    click: 'rootClick'\r\n                },\r\n                <b>hostClasses</b>: {\r\n                    selected: 'props.selected',\r\n                    hidden: '!props.visible'\r\n                },\r\n                <b>hostStyles</b>: {\r\n                    width: {value: 'props.width', suffix: 'px'}\r\n                }\r\n            });\r\n        }\r\n\r\n        onInit() {\r\n        \r\n        }\r\n    }\r\n</pre>\r\n</div>\r\n\r\n<div class=\"text\">or with decorator</div>\r\n\r\n<div class=\"code-block\">\r\n    <div class=\"code-header\">example.component.js</div>\r\n    <pre>\r\n        import { <b>Component, Decorators</b> } from '../../../../core';\r\n\r\n        import <b>Tpl</b> from './doc-interpolation.component.html';\r\n\r\n\r\n        <b>@Decorators.ComponentDecorator</b>({\r\n            <b>template</b>: Tpl,\r\n            <b>props</b>: {\r\n                isVisible: true,\r\n                title: 'test'\r\n            }\r\n            <b>computed:</b> {\r\n                com\r\n            }\r\n        })\r\n        export class <b>ExampleComponent</b> {\r\n            onInit() {\r\n            \r\n            }\r\n        }\r\n</pre>\r\n</div>\r\n\r\n<div class=\"block\">\r\n    <b class=\"title\">template</b>\r\n    <span class=\"text\">Specifies <b>Tpl</b> template for current component </span>\r\n</div>\r\n\r\n<div class=\"block\">\r\n    <b class=\"title\">props</b>\r\n    <span class=\"text\">Initial properties of component</span>\r\n</div>\r\n\r\n<div class=\"block\">\r\n    <b class=\"title\">hostEvents</b>\r\n    <span class=\"text\">Add <b>event listeners</b> to root element of component</span>\r\n</div>\r\n\r\n<div class=\"block\">\r\n    <b class=\"title\">hostClasses</b>\r\n    <span class=\"text\">Bind <b>classList</b> of root element with props. <br>\r\n        <b>selected</b> - key, as class name\r\n        <br>\r\n        <b>'props.selected'</b> - value, as propery to bind\r\n    </span>\r\n</div>\r\n\r\n<div class=\"block\">\r\n    <b class=\"title\">hostStyles</b>\r\n    <span class=\"text\">Bind styles of root element with props. <br>\r\n        <b>width</b> - key, as css property <br>\r\n        <b>value</b>:string - property to bind <br>\r\n        <b>suffix</b>:string - for example 'px'\r\n    </span>\r\n</div>\r\n\r\n<div class=\"block\">\r\n    <b class=\"title\">computed</b>\r\n    <span class=\"text\">Bind props with other props by one-way binding <br>\r\n    </span>\r\n</div>";
 
 /***/ }),
-/* 84 */
+/* 85 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -5936,7 +6509,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var _core = __webpack_require__(6);
 
-	var _docLifecycleComponent = __webpack_require__(85);
+	var _docLifecycleComponent = __webpack_require__(86);
 
 	var _docLifecycleComponent2 = _interopRequireDefault(_docLifecycleComponent);
 
@@ -5964,7 +6537,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	}()) || _class);
 
 /***/ }),
-/* 85 */
+/* 86 */
 /***/ (function(module, exports) {
 
 	"use strict";
@@ -5972,7 +6545,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	module.exports = "<div class=\"block\">\r\n    <b class=\"title\">onAttach()</b>\r\n    <span class=\"text\">Fires when component is attached to DOM</span>\r\n</div>\r\n\r\n<div class=\"block\">\r\n    <b class=\"title\">onInit()</b>\r\n    <span class=\"text\">Fires when component is initialized</span>\r\n</div>\r\n\r\n<div class=\"block\">\r\n    <b class=\"title\">onDestroy()</b>\r\n    <span class=\"text\">Fires when component is destroyed</span>\r\n</div>\r\n\r\n<div class=\"block\">\r\n    <b class=\"title\">onUpdate()</b>\r\n    <span class=\"text\">Fires when props of component is updated</span>\r\n</div>\r\n\r\n<div class=\"section-title\">Lifecycle diagram</div>";
 
 /***/ }),
-/* 86 */
+/* 87 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -5988,7 +6561,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var _core = __webpack_require__(6);
 
-	var _docUtilsComponent = __webpack_require__(87);
+	var _docUtilsComponent = __webpack_require__(88);
 
 	var _docUtilsComponent2 = _interopRequireDefault(_docUtilsComponent);
 
@@ -6016,7 +6589,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	}()) || _class);
 
 /***/ }),
-/* 87 */
+/* 88 */
 /***/ (function(module, exports) {
 
 	"use strict";
@@ -6024,7 +6597,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	module.exports = "<h3>Utils</h3>\r\n<div class=\"block\">\r\n    <b class=\"title\">randomInteger(min max)</b> <span class=\"text\">get random number between min and max values</span>\r\n</div>\r\n\r\n<div class=\"block\">\r\n    <b class=\"title\">addDays(date, count)</b> <span class=\"text\">add <b>count</b> days to current <b>date</b></span>\r\n</div>\r\n\r\n<div class=\"block\">\r\n    <b class=\"title\">getDateByFormat(date, format)</b>\r\n    <div class=\"text\">convert <b>date</b> with specified <b>format</b>\r\n        <br>\r\n        <b class=\"title\">Available formats: </b>\r\n        <div>\r\n            <b>yyyy-mm-dd</b><br>\r\n            <b>yyyymmdd</b><br>\r\n            <b>yyyy/mm/dd</b><br>\r\n            <b>yyyy-mm-dd hh:mm</b><br>\r\n            <b>hh:mm</b><br>\r\n            <b>dd.mm.yyyy</b>\r\n        </div>\r\n    </div>\r\n</div>\r\n<div class=\"block\">\r\n    <b class=\"title\">getDaysBetweenDates(dt1, dt2)</b> <span class=\"text\">get days count between two dates</span>\r\n</div>\r\n\r\n<div class=\"block\">\r\n    <b class=\"title\">closest(array, num)</b> <span class=\"text\">get closest value <b>num</b> from <b>array</b></span>\r\n</div>\r\n\r\n<div class=\"block\">\r\n    <b class=\"title\">insertAfter(elem, refElem)</b> <span class=\"text\">Insert <b>elem</b> after specified <b>refElem</b></span>\r\n</div>\r\n<div class=\"block\">\r\n    <b class=\"title\">isCustomElement(element)</b> <span class=\"text\">Check if specified <b>element</b> is custom element</span>\r\n</div>\r\n\r\n\r\n<div class=\"block\">\r\n    <b class=\"title\">sorting(array, params, reverse)</b> <span\r\n        class=\"text\">Sort specified <b>array</b> with <b>params(type: string, id: string)</b>\r\n    <div><b>type</b> - type of sotring, <b>id</b> - prop for sorting</div>\r\n    <div><b>reverse</b> - opposite sorting</div></span>\r\n</div>\r\n\r\n\r\n\r\n\r\n";
 
 /***/ }),
-/* 88 */
+/* 89 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -6040,7 +6613,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var _core = __webpack_require__(6);
 
-	var _directivesComponent = __webpack_require__(89);
+	var _directivesComponent = __webpack_require__(90);
 
 	var _directivesComponent2 = _interopRequireDefault(_directivesComponent);
 
@@ -6107,15 +6680,15 @@ return /******/ (function(modules) { // webpackBootstrap
 	}()) || _class);
 
 /***/ }),
-/* 89 */
+/* 90 */
 /***/ (function(module, exports) {
 
 	"use strict";
 
-	module.exports = "<h3>Directives</h3>\r\n<div class=\"text\">Directives - special attributes with <b>ac-</b> prefix</div>\r\n<div class=\"text\">All properties of component are stored in special field called <b>props</b></div>\r\n\r\n<div class=\"block\">\r\n    <b class=\"title\">ac-value=\"value\"</b>\r\n    <div class=\"text\">\r\n        Bind props <b>value</b> with certain element\r\n        <br>\r\n        <input type=\"text\" ac-value=\"value\">\r\n    </div>\r\n</div>\r\n<div class=\"block\">\r\n    <b class=\"title\">ac-model=\"model\"</b> \r\n    <div class=\"text\">\r\n        <b>Two way data binding</b> between <b>model</b> and html element\r\n        <br>\r\n        <div>\r\n            <input type=\"text\" ac-model=\"model\">\r\n        </div>\r\n    </div>\r\n</div>\r\n<div class=\"block\">\r\n    <b class=\"title\">ac-input=\"inputData: selectedValue\"</b>\r\n    <div class=\"text\">Allow send <b>selectedValue</b> from parent component to child component <b>inputData</b>.</div>\r\n</div>\r\n<div class=\"block\">\r\n    <b class=\"title\">ac-ref=\"element\"</b>\r\n    <div class=\"text\">Add <b>element</b> to ui list. ui - is a list of reference elements</div>\r\n</div>\r\n<div class=\"block\">\r\n    <b class=\"title\">\r\n    ac-class=\"className: showClass\"\r\n    <br>\r\n    ac-class=\"@class\"\r\n    </b>\r\n    <div class=\"text\">Get 2 params: name of class, boolean(adds class if true). You can use\r\n        <b>comma(,)</b> symbol to specify several conditions. Also @ is available, so you can bind props to className\r\n        <br><br>\r\n        <button @click=\"changeClass\">Change class</button>\r\n        <b><span ac-class=\"@className\">Example</span></b>\r\n    </div>\r\n</div>\r\n<div class=\"block\">\r\n    <b class=\"title\">ac-style=\"height: height\"</b>\r\n    <div class=\"text\">\r\n            Binds props to css rules. Gets 2 params: <b>height</b> - css rule and <b>value</b> - value from \r\n            <br><br>\r\n            <button @click=\"changeSize\">Change size</button>\r\n            <br><br>\r\n            <div style=\"border: 1px solid red\" ac-style=\"height: height, width: width\"></div>\r\n     </div>\r\n</div>\r\n\r\n<div class=\"block\">\r\n    <b class=\"title\">ac-if=\"this.isVisible\"</b>\r\n    <div class=\"text\">Serve to hide or show element; Gets 1 params: <b>value</b>\r\n    <br><br>\r\n    <button @click=\"showElement\">Show</button>\r\n    <span ac-if=\"this.isVisible\">Element is shown now</span>\r\n    </div>\r\n</div>\r\n<div class=\"block\">\r\n    <b class=\"title\">ac-for=\"items\"</b>\r\n    <div class=\"text\">Repeater. Creates instance for every element in collection <b>items</b>\r\n    <br><br>\r\n    <ul>\r\n        <li ac-for=\"items\" ac-value=\"name\"></li>\r\n    </ul>\r\n \r\n    </div>\r\n</div>\r\n<div class=\"block\">\r\n    <b class=\"title\">ac-attr=\"src: image\"</b>\r\n    <div class=\"text\">Binds attr <b>src</b> with url from <b>image</b>\r\n    <br>\r\n    <img ac-attr=\"src: image\" style=\"width: 200px\">\r\n    </div>\r\n</div>\r\n<div class=\"block\">\r\n    <b class=\"title\">ac-link=\"documentation\"</b>\r\n    <div class=\"text\">Serves for navigation inside application. In this case link leads to documentation page</div>\r\n</div>\r\n\r\n<div class=\"block\">\r\n    <b class=\"title\">ac-on=\"change: onChange\"</b>\r\n    <div class=\"text\">\r\n    Add event listener to the root element of component, that listen to child events\r\n    <br><br>\r\n    <app-example-child ac-on=\"onChange: onChange\"></app-example-child>\r\n    </div>\r\n</div>\r\n\r\n<div class=\"block\">\r\n    <b class=\"title\">ac-pattern=\"[0-9]\"</b>\r\n    <div class=\"text\">\r\n    Add <b>error class</b> to the element if value is invalid(doesn't match the pattern)\r\n    <form ac-submit=\"submit\">\r\n        <input required type=\"text\" ac-pattern=\"[0-9]: Invalid\">\r\n        <button>Submit</button>\r\n    </form>\r\n    \r\n    </div>\r\n</div>\r\n<div class=\"block\">\r\n    <b class=\"title\">ac-outside=\"outsideClick\"</b>\r\n    <div class=\"text\">Trigger method <b>outsideClick</b> if user clicked beyond the element where ac-outside is specified</div>\r\n</div>";
+	module.exports = "<h3>Directives</h3>\r\n<div class=\"text\">Directives - special attributes with <b>ac-</b> prefix</div>\r\n<div class=\"text\">All properties of component are stored in special field called <b>props</b></div>\r\n\r\n<div class=\"block\">\r\n    <b class=\"title\">ac-value=\"value\"</b>\r\n    <div class=\"text\">\r\n        Bind props <b>value</b> with certain element\r\n        <br>\r\n        <input type=\"text\" ac-value=\"value\">\r\n    </div>\r\n</div>\r\n<div class=\"block\">\r\n    <b class=\"title\">ac-model=\"model\"</b> \r\n    <div class=\"text\">\r\n        <b>Two way data binding</b> between <b>model</b> and html element\r\n        <br>\r\n        <div>\r\n            <input type=\"text\" ac-model=\"model\">\r\n        </div>\r\n    </div>\r\n</div>\r\n<div class=\"block\">\r\n    <b class=\"title\">ac-input=\"inputData: selectedValue\"</b>\r\n    <div class=\"text\">Allow send <b>selectedValue</b> from parent component to child component <b>inputData</b>.</div>\r\n</div>\r\n<div class=\"block\">\r\n    <b class=\"title\">ac-ref=\"element\"</b>\r\n    <div class=\"text\">Add <b>element</b> to ui list. ui - is a list of reference elements</div>\r\n</div>\r\n<div class=\"block\">\r\n    <b class=\"title\">\r\n    ac-class=\"className: showClass\"\r\n    <br>\r\n    ac-class=\"@class\"\r\n    </b>\r\n    <div class=\"text\">Get 2 params: name of class, boolean(adds class if true). You can use\r\n        <b>comma(,)</b> symbol to specify several conditions. Also @ is available, so you can bind props to className\r\n        <br><br>\r\n        <button @click=\"changeClass\">Change class</button>\r\n        <b><span ac-class=\"@className\">Example</span></b>\r\n    </div>\r\n</div>\r\n<div class=\"block\">\r\n    <b class=\"title\">ac-style=\"height: height\"</b>\r\n    <div class=\"text\">\r\n            Binds props to css rules. Gets 2 params: <b>height</b> - css rule and <b>value</b> - value from \r\n            <br><br>\r\n            <button @click=\"changeSize\">Change size</button>\r\n            <br><br>\r\n            <div style=\"border: 1px solid red\" ac-style=\"height: height, width: width\"></div>\r\n     </div>\r\n</div>\r\n\r\n<div class=\"block\">\r\n    <b class=\"title\">ac-if=\"this.isVisible\"</b>\r\n    <div class=\"text\">Serve to hide or show element; Gets 1 params: <b>value</b>\r\n    <br><br>\r\n    <button @click=\"showElement\">Show</button>\r\n    <span ac-if=\"this.isVisible\">Element is shown now</span>\r\n    </div>\r\n</div>\r\n<div class=\"block\">\r\n    <b class=\"title\">ac-for=\"items\"</b>\r\n    <div class=\"text\">Repeater. Creates instance for every element in collection <b>items</b>\r\n    <br><br>\r\n    <ul>\r\n        <li ac-for=\"let item of items\" ac-value=\"name\"></li>\r\n    </ul>\r\n \r\n    </div>\r\n</div>\r\n<div class=\"block\">\r\n    <b class=\"title\">ac-attr=\"src: image\"</b>\r\n    <div class=\"text\">Binds attr <b>src</b> with url from <b>image</b>\r\n    <br>\r\n    <img ac-attr=\"src: image\" style=\"width: 200px\">\r\n    </div>\r\n</div>\r\n<div class=\"block\">\r\n    <b class=\"title\">ac-link=\"documentation\"</b>\r\n    <div class=\"text\">Serves for navigation inside application. In this case link leads to documentation page</div>\r\n</div>\r\n\r\n<div class=\"block\">\r\n    <b class=\"title\">ac-on=\"change: onChange\"</b>\r\n    <div class=\"text\">\r\n    Add event listener to the root element of component, that listen to child events\r\n    <br><br>\r\n    <app-example-child ac-on=\"onChange: onChange\"></app-example-child>\r\n    </div>\r\n</div>\r\n\r\n<div class=\"block\">\r\n    <b class=\"title\">ac-pattern=\"[0-9]\"</b>\r\n    <div class=\"text\">\r\n    Add <b>error class</b> to the element if value is invalid(doesn't match the pattern)\r\n    <form ac-submit=\"submit\">\r\n        <input required type=\"text\" ac-pattern=\"[0-9]: Invalid\">\r\n        <button>Submit</button>\r\n    </form>\r\n    \r\n    </div>\r\n</div>\r\n<div class=\"block\">\r\n    <b class=\"title\">ac-outside=\"outsideClick\"</b>\r\n    <div class=\"text\">Trigger method <b>outsideClick</b> if user clicked beyond the element where ac-outside is specified</div>\r\n</div>";
 
 /***/ }),
-/* 90 */
+/* 91 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -6131,7 +6704,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var _core = __webpack_require__(6);
 
-	var _customDirectivesComponent = __webpack_require__(91);
+	var _customDirectivesComponent = __webpack_require__(92);
 
 	var _customDirectivesComponent2 = _interopRequireDefault(_customDirectivesComponent);
 
@@ -6160,7 +6733,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	}()) || _class);
 
 /***/ }),
-/* 91 */
+/* 92 */
 /***/ (function(module, exports) {
 
 	"use strict";
@@ -6168,7 +6741,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	module.exports = "<h3>Custom directives</h3>\r\n\r\n\r\n\r\n<div class=\"code-block\">\r\n    <div class=\"code-header\">example.directive.js</div>\r\n    <pre>\r\n\timport {Decorators} from 'core';\r\n\r\n\t@Decorators.DirectiveDecorator({\r\n\t    selector: 'upperCase'\r\n\t})\r\n\texport default class UpperCaseDirectove {\r\n\t    constructor(elem) {\r\n\t        this.elem = elem;\r\n\t    }\r\n\r\n\t    onUpdate() {\r\n\t        this.toUpperCase();\r\n\t    }\r\n\r\n\t    toUpperCase() {\r\n\t        this.elem.innerHTML = this.elem.innerHTML.toUpperCase();\r\n\t    }\r\n\t}\r\n</pre>\r\n</div>\r\n\r\n<div class=\"block\">\r\n    <b class=\"title\">onUpdate</b>\r\n    <div class=\"text\"><div>Triggeres when component is updated</div></div>\r\n</div>\r\n\r\n\r\n\r\n<div class=\"code-block\">\r\n    <div class=\"code-header\">example.component.html</div>\r\n\t<pre><span><</span>span upperCase><span class=\"text\">test</span><span><</span>/span></pre>\r\n</div>\r\n\r\n<div class=\"text\">will be replaced with</div>\r\n\r\n<div class=\"code-block\">\r\n    <div class=\"code-header\">example.component.html</div>\r\n\t<pre><span><</span>span upperCase><span class=\"text\">TEST</span><span><</span>/span></pre>\r\n</div>\r\n\r\n";
 
 /***/ }),
-/* 92 */
+/* 93 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -6184,7 +6757,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var _core = __webpack_require__(6);
 
-	var _docInterpolationComponent = __webpack_require__(93);
+	var _docInterpolationComponent = __webpack_require__(94);
 
 	var _docInterpolationComponent2 = _interopRequireDefault(_docInterpolationComponent);
 
@@ -6216,7 +6789,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	}()) || _class);
 
 /***/ }),
-/* 93 */
+/* 94 */
 /***/ (function(module, exports) {
 
 	"use strict";
@@ -6224,7 +6797,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	module.exports = "<h3 class=\"in-development\">In development!</h3>\r\n<h3>Interpolation</h3>\r\n\r\n<div class=\"section-title\">Text interpolation</div>\r\n\r\n<div class=\"text\"><b>Interpolation</b> - is one of the ways how to bind data with tempalte</div>\r\n<div class=\"text\">We use <b>'Mustache'</b> syntax, which means value from double curly braces will be replaced with the value from props.title</div>\r\n\r\n\r\n<div class=\"code-block\">\r\n    <div class=\"code-header\">example.component.js</div>\r\n    <pre>\r\n    import { <b>Component</b> } from 'ace-js';\r\n    import <b>Tpl</b> from './example.component.html';\r\n    export class <b>ExampleComponent</b> extends Component {\r\n        constructor(params) {\r\n            super(params, {\r\n                <b>template</b>: Tpl,\r\n                <b>props</b>: {\r\n                    title: 'Some title'        \r\n                }\r\n            });\r\n        }\r\n\r\n    }\r\n</pre>\r\n</div>\r\n\r\n<div class=\"code-block\">\r\n    <div class=\"code-header\">example.component.html</div>\r\n\t<pre><span><</span>span><span class=\"text\">{{title}}</span><span><</span>/span></pre>\r\n</div>\r\n\r\n<div class=\"text\">will be replaced with props.title value</div>\r\n<div class=\"code-block\">\r\n\t<pre><span><</span>span><span class=\"text\">Some title</span><span><</span>/span></pre>\r\n</div>\r\n\r\n\r\n<div class=\"section-title\">Javascript expressions</div>\r\n<div class=\"code-block\">\r\n\t<pre><span><</span>span><span class=\"text\">{{isReady ? 'OK' : 'FAIL'}}</span><span><</span>/span></pre>\r\n</div>\r\n<div class=\"text\">This expression will be calculated as ussual js expression</div>\r\n\r\n<br>\r\n<div class=\"text\">The alturnative way is using of <b class=\"label\">ac-value</b></div>";
 
 /***/ }),
-/* 94 */
+/* 95 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -6240,7 +6813,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var _core = __webpack_require__(6);
 
-	var _docConditionalComponent = __webpack_require__(95);
+	var _docConditionalComponent = __webpack_require__(96);
 
 	var _docConditionalComponent2 = _interopRequireDefault(_docConditionalComponent);
 
@@ -6268,7 +6841,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	}()) || _class);
 
 /***/ }),
-/* 95 */
+/* 96 */
 /***/ (function(module, exports) {
 
 	"use strict";
@@ -6276,7 +6849,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	module.exports = "<h3>Conditional rendering</h3>\r\n<div class=\"section-title\">ac-if</div>\r\n\r\n<div class=\"code-block\">\r\n\t<pre><span><</span>span <b>ac-if</b>=\"<span class=\"attr\">props.isVisible</span>\"><span class=\"text\">Something</span><span><</span>/span></pre>\r\n</div>\r\n\r\n<div class=\"text\">In this case <b>ac-if</b> directive checks <b>isVisible</b> property and if it is true element will be added to the page, otherwise will be removed</div>";
 
 /***/ }),
-/* 96 */
+/* 97 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -6292,7 +6865,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var _core = __webpack_require__(6);
 
-	var _docFormsComponent = __webpack_require__(97);
+	var _docFormsComponent = __webpack_require__(98);
 
 	var _docFormsComponent2 = _interopRequireDefault(_docFormsComponent);
 
@@ -6342,7 +6915,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	}()) || _class);
 
 /***/ }),
-/* 97 */
+/* 98 */
 /***/ (function(module, exports) {
 
 	"use strict";
@@ -6350,7 +6923,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	module.exports = "<h3>Forms</h3>\r\n<div class=\"title\">[type=\"text\"]</div>\r\n    <div ac-value=\"input\"></div>\r\n<div class=\"input\">\r\n    <input type=\"text\" ac-model=\"input\">\r\n    <div class=\"input-border\"></div>\r\n</div>\r\n<div class=\"title\">[type=\"email\"]</div>\r\n    <div ac-value=\"email\"></div>\r\n<div class=\"input\">\r\n    <input type=\"email\" ac-model=\"email\">\r\n    <div class=\"input-border\"></div>\r\n</div>\r\n<div class=\"title\">[type=\"password\"]</div>\r\n    <div ac-value=\"password\"></div>\r\n<div class=\"input\">\r\n    <input type=\"password\" ac-model=\"password\">\r\n    <div class=\"input-border\"></div>\r\n</div>\r\n<div class=\"title\">[type=\"radio\"]</div>\r\n<div class=\"input\">\r\n    <div ac-value=\"radio\"></div>\r\n    <input type=\"radio\" ac-model=\"radio\" value=\"1\" name=\"radio\">\r\n    <input type=\"radio\" ac-model=\"radio\" value=\"2\" name=\"radio\">\r\n</div>\r\n<div class=\"title\">[type=\"checkbox\"]</div>\r\n<div class=\"input\">\r\n    <div ac-value=\"checkbox.check1\"></div>\r\n    <div ac-value=\"checkbox.check2\"></div>\r\n    <input type=\"checkbox\" ac-model=\"checkbox.check1\" value=\"1\">\r\n    <input type=\"checkbox\" ac-model=\"checkbox.check2\" value=\"2\">\r\n</div>\r\n\r\n<!-- <div class=\"section-title\">Form validation</div>\r\n\r\n<form ac-submit=\"submit\" ac-form-validation>\r\n    <div class=\"input\">\r\n        Result: <span ac-value=\"model : json\"></span>\r\n    </div>\r\n    <div class=\"input\">\r\n        <input type=\"text\" placeholder=\"name\" ac-model=\"model.name\" required ac-pattern=\"[0-9]\" ac-pattern-title=\"0-9\">\r\n        <div class=\"input-border\"></div>\r\n    </div>\r\n    <div class=\"input\">\r\n        <input type=\"email\" placeholder=\"email\" ac-model=\"model.email\" required>\r\n        <div class=\"input-border\"></div>\r\n    </div>\r\n    <div class=\"input\">\r\n        <input type=\"checkbox\" ac-model=\"model.checkbox\" required>\r\n    </div>\r\n    <button>Submit</button>\r\n</form> -->\r\n\r\n<div class=\"section-title\">Reactive forms</div>\r\n\r\n<form ac-submit=\"submitReactive\" ac-form-group=\"form\">\r\n\t<br>\r\n\tIs valid: <span ac-value=\"form.valid\"></span>\r\n    <div class=\"input\">\r\n        <input type=\"text\" ac-form-control=\"name\">\r\n        <div class=\"input-border\"></div>\r\n        <span class=\"invalid-message\" ac-if=\"this.form.controls.name.errors.regExp && this.form.controls.name.dirty\">Invalid value</span>\r\n        <span class=\"invalid-message\" ac-if=\"this.form.controls.name.errors.required && this.form.controls.name.dirty\">Empty</span>\r\n    </div>\r\n\r\n    <div class=\"input\">\r\n        <input type=\"text\" ac-form-control=\"number\">\r\n        <div class=\"input-border\" ></div>\r\n        <span class=\"invalid-message\" ac-if=\"this.form.controls.number.errors.regExp && this.form.controls.number.dirty\">Invalid value</span>\r\n        <span class=\"invalid-message\" ac-if=\"this.form.controls.number.errors.required && this.form.controls.number.dirty\">Empty</span>\r\n    </div>\r\n\r\n    <div class=\"input\">\r\n        Result: <span ac-value=\"form.value | json\"></span>\r\n    </div>\r\n\r\n    <button>Submit</button>\r\n</form>\r\n\r\n\r\n<style>\r\n    .invalid-message{\r\n        position: absolute;\r\n        top: -14px;\r\n        font-size: 12px;\r\n        color: red;\r\n    }\r\n</style>\r\n<br>\r\n<br>\r\n<app-tree-debug></app-tree-debug>";
 
 /***/ }),
-/* 98 */
+/* 99 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -6364,7 +6937,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var _core = __webpack_require__(6);
 
-	var _docEventsComponent = __webpack_require__(99);
+	var _docEventsComponent = __webpack_require__(100);
 
 	var _docEventsComponent2 = _interopRequireDefault(_docEventsComponent);
 
@@ -6381,7 +6954,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	}) || _class);
 
 /***/ }),
-/* 99 */
+/* 100 */
 /***/ (function(module, exports) {
 
 	"use strict";
@@ -6389,7 +6962,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	module.exports = "<h3>Events</h3>\r\n<div class=\"section-title\">ac-mod</div>\r\n\r\n<div class=\"code-block\">\r\n    <pre><span><</span>input <b>ac-if</b>=\"<span class=\"attr\">props.isVisible</span>\" <b>ac-mod</b>=\"<span class=\"attr\">prevent, stop, once, self, capture</span>\"><span class=\"text\"></span></pre>\r\n</div>\r\n\r\n<div class=\"block\">\r\n    <b class=\"title\">ac-key=\"stop\"</b>\r\n    <div class=\"text\">\r\n        The event's propagation <b>will be stopped </b>\r\n    </div>\r\n</div>\r\n<div class=\"block\">\r\n    <b class=\"title\">ac-key=\"prevent\"</b>\r\n    <div class=\"text\">\r\n        The submit event <b>will no longer reload the page</b>\r\n    </div>\r\n</div>\r\n<div class=\"block\">\r\n    <b class=\"title\">ac-key=\"once\"</b>\r\n    <div class=\"text\">\r\n        The event will be triggered <b>once</b>, further triggering will be ignored\r\n    </div>\r\n</div>\r\n<div class=\"block\">\r\n    <b class=\"title\">ac-key=\"self\"</b>\r\n    <div class=\"text\">\r\n        The event will be triggered if <b>event.target is the element itself</b>\r\n    </div>\r\n</div>\r\n<div class=\"block\">\r\n    <b class=\"title\">ac-key=\"capture\"</b>\r\n    <div class=\"text\">\r\n        Equals to <b>element.addEventListener('event', function(){}, true);</b>\r\n    </div>\r\n</div>\r\n\r\n<div class=\"text\"></div>\r\n\r\n<div class=\"section-title\">ac-keymod</div>\r\n\r\n<div class=\"code-block\">\r\n    <pre><span><</span>input <b>ac-if</b>=\"<span class=\"attr\">props.isVisible</span>\" <b>ac-mod</b>=\"<span class=\"attr\">prevent, stop, once, self, capture</span>\"><span class=\"text\"></span></pre>\r\n</div>\r\n\r\n<div class=\"block\">\r\n    <b class=\"title\">ac-keymod=\"enter\"</b>\r\n    <div class=\"text\">\r\n        The event's will be triggered if <b>event.keyCode = '13'</b>\r\n    </div>\r\n</div>\r\n<div class=\"text\">Full list of key modifier aliases:</div>\r\n<ol style=\"padding-left: 15px;list-style: disc\">\r\n    <li>esc</li>\r\n    <li>tab</li>\r\n    <li>enter</li>\r\n    <li>space</li>\r\n    <li>up</li>\r\n    <li>left</li>\r\n    <li>right</li>\r\n    <li>down</li>\r\n    <li>delete</li>\r\n</ol>";
 
 /***/ }),
-/* 100 */
+/* 101 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -6405,7 +6978,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var _core = __webpack_require__(6);
 
-	var _docModulesComponent = __webpack_require__(101);
+	var _docModulesComponent = __webpack_require__(102);
 
 	var _docModulesComponent2 = _interopRequireDefault(_docModulesComponent);
 
@@ -6433,7 +7006,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	}()) || _class);
 
 /***/ }),
-/* 101 */
+/* 102 */
 /***/ (function(module, exports) {
 
 	"use strict";
@@ -6441,7 +7014,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	module.exports = "<h3>Modules</h3>\r\n<span class=\"text\">To simplify <b>app.js</b> you can split your code into modules</span>\r\n<br>\r\n<span class=\"text\">Call your module as <b>index.js</b> for easier using, so then just import <b>components/documentation</b> where index.js file is.</span>\r\n\r\n<div class=\"code-block\">\r\n    <div class=\"code-header\">index.js</div>\r\n    <pre>\r\n        import {DocumentationComponent} from './documentation.component';\r\n        import {DocQuickStartComponent} from './quick-start/doc-quick-start.component';\r\n\r\n        export default [\r\n            {c: DocumentationComponent, selector: 'app-documentation'},\r\n            {c: DocQuickStartComponent, selector: 'app-documentation-quick-start'}\r\n            ...\r\n        ]\r\n</pre>\r\n</div>\r\n\r\n\r\n<div class=\"code-block\">\r\n    <div class=\"code-header\">app.js</div>\r\n    <pre>\r\n        import Docs from './components/documentation';\r\n        Register({\r\n            ...\r\n            modules: [\r\n                Docs\r\n                ...\r\n            ]\r\n            ...\r\n        });\r\n</pre>\r\n</div>\r\n";
 
 /***/ }),
-/* 102 */
+/* 103 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -6457,7 +7030,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var _core = __webpack_require__(6);
 
-	var _docSmartObjectComponent = __webpack_require__(103);
+	var _docSmartObjectComponent = __webpack_require__(104);
 
 	var _docSmartObjectComponent2 = _interopRequireDefault(_docSmartObjectComponent);
 
@@ -6485,7 +7058,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	}()) || _class);
 
 /***/ }),
-/* 103 */
+/* 104 */
 /***/ (function(module, exports) {
 
 	"use strict";
@@ -6493,7 +7066,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	module.exports = "<h3>Observables</h3>\r\n\r\n<div class=\"section-title\">Observable model</div>\r\n\r\n<div class=\"text\"><b>ObservableModel</b> - is a observable object with it's own methods.\r\n    <br>Every component has\r\n    <b>props</b> property which is ObservableModel.\r\n</div>\r\n<div class=\"text\">At first you should create ObservableModel with <b>new</b> operator, also you can use initial params</div>\r\n\r\n<div class=\"code-block\">\r\n    <div class=\"code-header\">user.store.js</div>\r\n    <pre>\r\n        import { ObservableModel } from 'framework/model'\r\n\r\n        class UserStore extends Store {\r\n            constructor() {\r\n                super();\r\n                this.user = new ObservableModel();\r\n            }\r\n        }\r\n</pre>\r\n</div>\r\n\r\n<div class=\"block\">\r\n    <b class=\"title\">sub(()=> {})</b>\r\n    <span class=\"text\">Creates a subscriber that watch any changes of ObservableModel</span>\r\n</div>\r\n\r\n<div class=\"block\">\r\n    <b class=\"title\">set('name', 'New value')</b>\r\n    <span class=\"text\">Set new value</span>\r\n</div>\r\n\r\n<div class=\"block\">\r\n    <b class=\"title\">get('name')</b>\r\n    <span class=\"text\">Get value from by <b>name</b> prop</span>\r\n</div>\r\n\r\n<div class=\"block\">\r\n    <b class=\"title\">save(params)</b>\r\n    <span class=\"text\">Is used for updating of object bu id</span>\r\n</div>\r\n\r\n\r\n\r\n<div class=\"section-title\">Observable collection</div>";
 
 /***/ }),
-/* 104 */
+/* 105 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -6509,7 +7082,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var _core = __webpack_require__(6);
 
-	var _docHowToComponent = __webpack_require__(105);
+	var _docHowToComponent = __webpack_require__(106);
 
 	var _docHowToComponent2 = _interopRequireDefault(_docHowToComponent);
 
@@ -6539,7 +7112,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	}()) || _class);
 
 /***/ }),
-/* 105 */
+/* 106 */
 /***/ (function(module, exports) {
 
 	"use strict";
@@ -6547,7 +7120,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	module.exports = "<h3>How to install</h3>\r\n<div class=\"text\">To add AceJs framework to your node_modules</div>\r\n<div class=\"code-block\">\r\n    <pre>\r\n    <b>npm i ace-js</b>\r\n</pre>\r\n</div>\r\n<div class=\"text\">Now you can develop your application with AceJs</div>\r\n<div class=\"code-block\">\r\n    <pre>\r\n\tlet <b>AceJs</b> = require('ace-js');\r\n\tor\r\n\timport {...} from 'ace-js';\r\n</pre>\r\n</div>\r\n<!--     <b>npm i</b> - install all node modules\r\n    <b>npm run dev</b> - starts the dev server\r\n    <b>npm run prod</b> - creates production index.js bundle -->";
 
 /***/ }),
-/* 106 */
+/* 107 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -6563,7 +7136,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var _core = __webpack_require__(6);
 
-	var _docRouterConfigComponent = __webpack_require__(107);
+	var _docRouterConfigComponent = __webpack_require__(108);
 
 	var _docRouterConfigComponent2 = _interopRequireDefault(_docRouterConfigComponent);
 
@@ -6591,7 +7164,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	}()) || _class);
 
 /***/ }),
-/* 107 */
+/* 108 */
 /***/ (function(module, exports) {
 
 	"use strict";
@@ -6599,7 +7172,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	module.exports = "<h3>Router config</h3>\r\n<div class=\"text\">To run router you should create <b>_router.js</b> config file, where describes rules for navigation\r\n</div>\r\n\r\n<div class=\"block\">\r\n    <b class=\"title\">path</b>\r\n    <span class=\"text\">current route compares with path, and if they match then component is rendered</span>\r\n</div>\r\n\r\n<div class=\"block\">\r\n    <b class=\"title\">component</b>\r\n    <span class=\"text\">defines what router should to show</span>\r\n</div>\r\n\r\n<div class=\"block\">\r\n    <b class=\"title\">children</b>\r\n    <span class=\"text\">specifies all the child routes activated under the current route</span>\r\n</div>\r\n\r\n\r\n<div class=\"block\">\r\n    <b class=\"title\">{path: <b>'/'</b>, component: 'app-home'}</b>\r\n    <span class=\"text\">leeds to <b>root</b> page</span>\r\n</div>\r\n\r\n<div class=\"block\">\r\n    <b class=\"title\">{path: <b>'example/:id'</b>, component: 'app-example-page'}</b>\r\n    <span class=\"text\">leeds to example page with <b>':id'</b> param</span>\r\n</div>\r\n\r\n<div class=\"block\">\r\n    <b class=\"title\"> {\r\n        path: <b>'parent'</b>,\r\n        component: 'app-parent-component'}  </b>\r\n    <span class=\"text\">leeds to page <b>parent</b> with children</span>\r\n</div>\r\n\r\n<div class=\"block\">\r\n    <b class=\"title\">\r\n        {path: <b>''</b>, component: 'app-child-root}\r\n    </b>\r\n    <span class=\"text\">root child route</span>\r\n</div>\r\n\r\n<div class=\"block\">\r\n    <b class=\"title\">\r\n        {path: <b>'child-component'</b>, component: 'app-child-one'}\r\n    </b>\r\n    <span class=\"text\">shows <b>child-component</b> component inside parent component</span>\r\n</div>\r\n\r\n<div class=\"block\">\r\n    <b class=\"title\">\r\n        {path: '404', component: <b>'app-not-found'</b>}\r\n    </b>\r\n    <span class=\"text\">leeds to <b>'not found page'</b></span>\r\n</div>\r\n\r\n<br>\r\n<div class=\"code-block\">\r\n    <div class=\"code-header\">_router.js</div>\r\n    <pre>\r\n\r\n    export let Routes = [\r\n    {path: <b>'/'</b>, component: 'app-home'},\r\n    {path: <b>'example/:id'</b>, component: 'app-example-page'},\r\n    {\r\n            path: <b>'parent'</b>,\r\n            component: 'app-parent-component',\r\n            children: [\r\n                {path: <b>'/'</b>, component: 'app-child-root},\r\n                {path: <b>'child-component'</b>, component: 'app-child-one'}\r\n            ]\r\n        },\r\n        {path: '404', component: <b>'app-not-found'</b>}\r\n    ];\r\n</pre>\r\n</div>\r\n";
 
 /***/ }),
-/* 108 */
+/* 109 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -6615,7 +7188,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var _core = __webpack_require__(6);
 
-	var _docHttpModuleComponent = __webpack_require__(109);
+	var _docHttpModuleComponent = __webpack_require__(110);
 
 	var _docHttpModuleComponent2 = _interopRequireDefault(_docHttpModuleComponent);
 
@@ -6643,7 +7216,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	}()) || _class);
 
 /***/ }),
-/* 109 */
+/* 110 */
 /***/ (function(module, exports) {
 
 	"use strict";
@@ -6651,7 +7224,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	module.exports = "<h3>Http module</h3>\r\n\r\n<div class=\"text\"><b>Http module</b> is part <b>core</b> module.</div>\r\n<div class=\"text\">To use this module you should <b>import {Http} from 'ace-js'</b></div>";
 
 /***/ }),
-/* 110 */
+/* 111 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -6667,7 +7240,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var _core = __webpack_require__(6);
 
-	var _docHttpMethodsComponent = __webpack_require__(111);
+	var _docHttpMethodsComponent = __webpack_require__(112);
 
 	var _docHttpMethodsComponent2 = _interopRequireDefault(_docHttpMethodsComponent);
 
@@ -6704,7 +7277,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	}()) || _class);
 
 /***/ }),
-/* 111 */
+/* 112 */
 /***/ (function(module, exports) {
 
 	"use strict";
@@ -6712,7 +7285,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	module.exports = "<h3>Http methods</h3>\r\n<div>Add <b>import {Http} from 'ace-js'</b> to your component, then</div>\r\n<div class=\"block\">\r\n    <b class=\"title\">GET</b>\r\n    <div class=\"text\">\r\n        <div>Http.get(url).then(response=>{ })</div>\r\n        <br>\r\n        Example: \r\n        <button @click=\"getWeater\">Get weater info</button>\r\n        <div ac-if=\"this.weather\"> \r\n            City: <b ac-value=\"props.weather.name\"></b>\r\n            <br>\r\n            Temp: <b ac-value=\"props.weather.main.temp\"></b> C\r\n            <br>\r\n            Wind: <b ac-value=\"props.weather.wind.speed\"></b> m/s\r\n        </div>\r\n    </div>\r\n</div>\r\n<div class=\"block\">\r\n    <b class=\"title\">POST</b>\r\n    <div class=\"text\"><div>Http.post(url, params).then(response=>{ })</div></div>\r\n</div>\r\n<div class=\"block\">\r\n    <b class=\"title\">PUT</b>\r\n    <div class=\"text\"> <div>Http.put(url, params).then(response=>{ })</div></div>\r\n</div>\r\n<div class=\"block\">\r\n    <b class=\"title\">DELETE</b>\r\n    <div class=\"text\"> <div>Http.delete(url).then(response=>{ })</div></div>\r\n</div>\r\n\r\n<div class=\"section-title\">Interceptors</div>\r\n<div class=\"text\">In your code you can use interceptors to add your own logic</div>\r\n<div class=\"code-block\">\r\n    <div class=\"code-header\">example.component.js</div>\r\n    <pre>\r\n        import { Component, Http } from 'ace-js';\r\n        import Tpl from './root.component.html';\r\n        import NotificaitonsStore from 'stores/notifications.store';\r\n        import UserStore from 'stores/user.store'\r\n        export class ExampleComponent extends Component {\r\n            constructor(params) {\r\n                super(params, {\r\n                    template: Tpl\r\n                });\r\n            }\r\n\r\n            onInit() {\r\n                Http.getCatalog('/catalog');\r\n                Http.onProgress(event => {\r\n                    console.log(event.loaded + ' / ' + event.total);\r\n                });\r\n                Http.onError(err => {\r\n                    switch (err.status) {\r\n                      case 401:\r\n                        UserStore.logout('auth');\r\n                        break;\r\n                      case 406:\r\n                        NotificaitonsStore.show({ type: 'error', text: err.response.message });\r\n                        UserStore.logout('auth');\r\n                        break;\r\n                      case 422:\r\n                        break;\r\n                      case 404:\r\n                        break;\r\n                      case 403:\r\n\r\n                        break;\r\n                      case 500:\r\n                      case 502:\r\n                        break;\r\n                      default:\r\n\r\n                        break;\r\n                    }\r\n                });\r\n            }\r\n        }\r\n    </pre>\r\n</div>";
 
 /***/ }),
-/* 112 */
+/* 113 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -6752,7 +7325,215 @@ return /******/ (function(modules) { // webpackBootstrap
 	}()) || _class);
 
 /***/ }),
-/* 113 */
+/* 114 */
+/***/ (function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+
+	var _plugins = __webpack_require__(115);
+
+	var _chart = __webpack_require__(117);
+
+	var _sortable = __webpack_require__(119);
+
+	exports.default = [_plugins.PluginsComponent, _chart.PluginsChartComponent, _sortable.PluginsSortableComponent];
+
+/***/ }),
+/* 115 */
+/***/ (function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	exports.PluginsComponent = undefined;
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _dec, _class;
+
+	var _core = __webpack_require__(6);
+
+	var _pluginsComponent = __webpack_require__(116);
+
+	var _pluginsComponent2 = _interopRequireDefault(_pluginsComponent);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	var PluginsComponent = exports.PluginsComponent = (_dec = _core.Decorators.ComponentDecorator({
+	    selector: 'app-plugins',
+	    template: _pluginsComponent2.default
+	}), _dec(_class = function () {
+	    function PluginsComponent(options) {
+	        _classCallCheck(this, PluginsComponent);
+	    }
+
+	    _createClass(PluginsComponent, [{
+	        key: 'onInit',
+	        value: function onInit() {
+
+	            this.props.set({ plugins: [{
+	                    name: 'Sortable',
+	                    route: 'plugins/sortable'
+	                }, {
+	                    name: 'Chart',
+	                    route: 'plugins/chart'
+	                }] });
+	        }
+	    }]);
+
+	    return PluginsComponent;
+	}()) || _class);
+
+/***/ }),
+/* 116 */
+/***/ (function(module, exports) {
+
+	"use strict";
+
+	module.exports = "<main>\r\n\r\n    <div class=\"main-content justify-space-between\">\r\n\r\n        <ol class=\"main-list\">\r\n            <li ac-for=\"let item of plugins\">\r\n                <a class=\"list-head\" ac-value=\"name\" ac-link=\"{{route}}\"  ac-link-exact=\"true\"></a>\r\n            </li>\r\n        </ol>\r\n\r\n        <div class=\"plugins-section\">\r\n            <child-route-switcher></child-route-switcher>\r\n        </div>\r\n    </div>\r\n</main>\r\n\r\n\r\n\r\n";
+
+/***/ }),
+/* 117 */
+/***/ (function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	exports.PluginsChartComponent = undefined;
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _dec, _class;
+
+	var _core = __webpack_require__(6);
+
+	var _chartComponent = __webpack_require__(118);
+
+	var _chartComponent2 = _interopRequireDefault(_chartComponent);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	var PluginsChartComponent = exports.PluginsChartComponent = (_dec = _core.Decorators.ComponentDecorator({
+	    selector: 'app-plugins-chart',
+	    template: _chartComponent2.default,
+	    props: {
+	        chartData: {
+	            title: 'Programming languages',
+	            yAxis: {
+	                // min: 0,
+	                label: 'Popularity'
+	            },
+	            background: '#f0f0f0',
+	            series: [{ name: 'JS', value: 6 }, { name: 'JAVA', value: 5 }, { name: 'PHP', value: 8 }, { name: 'PYTHON', value: 10 }, { name: 'C', value: 15 }, { name: 'PERl', value: 5 }, { name: 'C#', value: 20 }],
+	            height: 300,
+	            width: 600,
+	            labelX: 300
+	        }
+	    }
+	}), _dec(_class = function () {
+	    function PluginsChartComponent() {
+	        _classCallCheck(this, PluginsChartComponent);
+	    }
+
+	    _createClass(PluginsChartComponent, [{
+	        key: 'onInit',
+	        value: function onInit() {
+
+	            // setInterval(() => {
+	            //     let data = this.props.get('chartData');
+
+	            //     data.series = [
+	            //         { name: '1', value: Math.ceil(11 * Math.random()) },
+	            //         { name: '2', value: Math.ceil(26 * Math.random()) },
+	            //         { name: '3', value: Math.ceil(8 * Math.random()) },
+	            //         { name: '4', value: Math.ceil(13 * Math.random()) },
+	            //         { name: '5', value: Math.ceil(15 * Math.random()) },
+	            //         { name: '1', value: Math.ceil(5 * Math.random()) },
+	            //         { name: '2', value: Math.ceil(30 * Math.random()) }
+	            //     ];
+	            //     this.props.set('chartData', data);
+	            // }, 1000);
+	        }
+	    }]);
+
+	    return PluginsChartComponent;
+	}()) || _class);
+
+/***/ }),
+/* 118 */
+/***/ (function(module, exports) {
+
+	"use strict";
+
+	module.exports = "<h3>Bar chart</h3>\r\n<ace-bar-chart ac-input=\"data: @chartData\"></ace-bar-chart>\r\n";
+
+/***/ }),
+/* 119 */
+/***/ (function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	exports.PluginsSortableComponent = undefined;
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _dec, _class;
+
+	var _core = __webpack_require__(6);
+
+	var _sortableComponent = __webpack_require__(120);
+
+	var _sortableComponent2 = _interopRequireDefault(_sortableComponent);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	var PluginsSortableComponent = exports.PluginsSortableComponent = (_dec = _core.Decorators.ComponentDecorator({
+	    selector: 'app-plugins-sortable',
+	    template: _sortableComponent2.default
+	}), _dec(_class = function () {
+	    function PluginsSortableComponent(options) {
+	        _classCallCheck(this, PluginsSortableComponent);
+	    }
+
+	    _createClass(PluginsSortableComponent, [{
+	        key: 'onInit',
+	        value: function onInit() {
+	            _core.Plugins.Sortable.init({
+	                el: this.$refs.test
+	            });
+	        }
+	    }]);
+
+	    return PluginsSortableComponent;
+	}()) || _class);
+
+/***/ }),
+/* 120 */
+/***/ (function(module, exports) {
+
+	"use strict";
+
+	module.exports = "<h3>Sortable</h3>\r\n<div ac-ref=\"test\">\r\n    <div draggable=\"true\" style=\"border: 1px solid #ccc; padding: 5px;display: block; width: 200px\">First Item</div>\r\n    <div draggable=\"true\" style=\"border: 1px solid #ccc; padding: 5px;display: block; width: 200px\">Second Item</div>\r\n    <div draggable=\"true\" style=\"border: 1px solid #ccc; padding: 5px;display: block; width: 200px\">Third Item</div>\r\n</div>";
+
+/***/ }),
+/* 121 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -6796,7 +7577,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	exports.default = UpperCaseDirectove;
 
 /***/ }),
-/* 114 */
+/* 122 */
 /***/ (function(module, exports) {
 
 	'use strict';
@@ -6804,7 +7585,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	Object.defineProperty(exports, "__esModule", {
 	    value: true
 	});
-	var Routes = exports.Routes = [{ path: '/', component: 'app-home' }, { path: 'controls', component: 'app-controls' }, { path: 'plugins', component: 'app-plugins' }, {
+	var Routes = exports.Routes = [{ path: '/', component: 'app-home' }, { path: 'controls', component: 'app-controls' }, {
+	    path: 'plugins',
+	    component: 'app-plugins',
+	    children: [{ path: 'sortable', component: 'app-plugins-sortable' }, { path: 'chart', component: 'app-plugins-chart' }]
+	}, {
 	    path: 'documentation',
 	    component: 'app-documentation',
 	    children: [{ path: '/', component: 'app-documentation-quick-start' }, { path: 'how-to-install', component: 'app-documentation-how-to-install' }, { path: 'architecture', component: 'app-documentation-architecture' }, { path: 'component', component: 'app-documentation-component' }, { path: 'lifecycle', component: 'app-documentation-lifecycle' }, { path: 'utils', component: 'app-documentation-utils' }, { path: 'interpolation', component: 'app-documentation-interpolation' }, { path: 'directives', component: 'app-documentation-directives' }, { path: 'custom-directives', component: 'app-documentation-custom-directives' }, { path: 'conditional-rendering', component: 'app-documentation-conditional' }, { path: 'events', component: 'app-documentation-events' }, { path: 'forms', component: 'app-documentation-forms' }, { path: 'modules', component: 'app-documentation-modules' }, { path: 'smart-object', component: 'app-documentation-smart-object' }, { path: 'router-config', component: 'app-documentation-router-config' }, { path: 'http-module', component: 'app-documentation-http-module' }, { path: 'http-methods', component: 'app-documentation-http-methods' }]

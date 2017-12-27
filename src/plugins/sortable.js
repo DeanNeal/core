@@ -26,7 +26,7 @@ class Sortable {
     }
 
     addInexes() {
-        [].forEach.call(this.root.children, (el, i)=>{
+        [].forEach.call(this.root.children, (el, i) => {
             el.setAttribute('data-index', i);
         });
 
@@ -61,15 +61,25 @@ class Sortable {
         evt.dataTransfer.dropEffect = 'move';
         let target = this.target = evt.target;
 
-        if (target && target !== this.dragEl && target.nodeName === this.dragEl.nodeName && target.parentNode === this.dragEl.parentNode) {
-            if (target.nextElementSibling === this.dragEl) {
-                this.root.insertBefore(this.dragEl, target);
-            } else if (!target.nextElementSibling) {
-                this.insertAfter(this.dragEl, target);
+        let targetElem = target.closest('[draggable]');
+        if (this.dragEl !== targetElem) {
+            if (targetElem.nextElementSibling === this.dragEl) {
+                this.root.insertBefore(this.dragEl, targetElem);
+            } else if (!targetElem.nextElementSibling) {
+                this.insertAfter(this.dragEl, targetElem);
             } else {
-                this.root.insertBefore(this.dragEl, target.nextElementSibling);
+                this.root.insertBefore(this.dragEl, targetElem.nextElementSibling);
             }
         }
+        // if (target && target !== this.dragEl && target.nodeName === this.dragEl.nodeName /*&& target.parentNode === this.dragEl.parentNode*/) {
+        //     if (target.nextElementSibling === this.dragEl) {
+        //         this.root.insertBefore(this.dragEl, target);
+        //     } else if (!target.nextElementSibling) {
+        //         this.insertAfter(this.dragEl, target);
+        //     } else {
+        //         this.root.insertBefore(this.dragEl, target.nextElementSibling);
+        //     }
+        // }
     }
 
     _onDragEnd(e) {

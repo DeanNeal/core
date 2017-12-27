@@ -1,7 +1,14 @@
 export let Routes = [
     { path: '/', component: 'app-home' },
-    { path: 'controls', component: 'app-controls'},
-    { path: 'plugins', component: 'app-plugins' },
+    { path: 'controls', component: 'app-controls' },
+    {
+        path: 'plugins',
+        component: 'app-plugins',
+        children: [
+            { path: 'sortable', component: 'app-plugins-sortable' },
+            { path: 'chart', component: 'app-plugins-chart' }
+        ]
+    },
     {
         path: 'documentation',
         component: 'app-documentation',
@@ -14,10 +21,10 @@ export let Routes = [
             { path: 'utils', component: 'app-documentation-utils' },
             { path: 'interpolation', component: 'app-documentation-interpolation' },
             { path: 'directives', component: 'app-documentation-directives' },
-            { path: 'custom-directives', component: 'app-documentation-custom-directives'},
+            { path: 'custom-directives', component: 'app-documentation-custom-directives' },
             { path: 'conditional-rendering', component: 'app-documentation-conditional' },
-            { path: 'events', component: 'app-documentation-events'},
-            { path: 'forms', component: 'app-documentation-forms'},
+            { path: 'events', component: 'app-documentation-events' },
+            { path: 'forms', component: 'app-documentation-forms' },
             { path: 'modules', component: 'app-documentation-modules' },
             { path: 'smart-object', component: 'app-documentation-smart-object' },
             { path: 'router-config', component: 'app-documentation-router-config' },

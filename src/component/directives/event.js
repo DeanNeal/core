@@ -25,30 +25,40 @@ function getKeyMod(elem) {
     return elem.getAttribute('ac-kmod') ? elem.getAttribute('ac-kmod').replace(/ +/g, "") : null;
 }
 
-export function createEventObject(elem, event, context) {
+export function createEventObject(elem, event, context, loopIterator) {
     let funcParams = elem.getAttribute(`ac-${event}`);
     elem.removeAttribute(`ac-${event}`);
-    let params = funcParams.replace(/ +/g, "").split(':');
-    let fnName = params[0];
+    let fnName = funcParams.replace(/ +/g, "");
     let modifiers = getEventMod(elem);
     let kModifiers = getKeyMod(elem);
     let once = { state: false };
 
+    let regExp = /\(([^)]+)\)|\(()\)/;
+    let fnParams = regExp.exec(fnName); // get value between brackets
+    
+    let functionName = fnName.replace(regExp, ''); // remove everything between brackets
+
     let newEvent = {
-        fnName: fnName,
+        fnName: functionName,
         event: event,
         el: elem,
         f: (e) => {
-            let regExp = /\(([^)]+)\)/;
-            let fnParams = regExp.exec(fnName); // get value between brackets
             let args = [];
-            let functionName = fnName.replace(regExp, ''); // remove everything between brackets
 
             if (fnParams) {
-                fnParams[1].replace(/ +/g, "").split(',').forEach(res => {
-                    let arg = new Function('return ' + res).apply(context || this);
-                    args.push(arg);
-                });
+                if(fnParams[1]) {
+                    fnParams[1].replace(/ +/g, "").split(',').forEach(res => {
+                        let arg;
+                        if(res === loopIterator) {
+                            arg = context();
+                        } else {
+                            arg = getInputArgs(res);
+                        }
+                        args.push(arg);
+                    });
+                } else {
+                    args.push(undefined);
+                }
             }
 
             if (this[functionName]) {
@@ -68,6 +78,24 @@ export function createEventObject(elem, event, context) {
     };
 
     return newEvent;
+}
+
+
+function getInputArgs(res) {
+    let type;
+    let arg;
+    try {
+        type = typeof new Function('return ' + res).apply(this);
+    } catch(e) {
+        type = undefined;
+    }
+
+    if(type === 'string' || type === 'number' || type === 'object'){
+        arg = new Function('return ' + res).apply(this);
+    } else {
+        arg = new Function('return this.' + res).apply(this);
+    }
+    return arg;
 }
 
 var modifierCode = {

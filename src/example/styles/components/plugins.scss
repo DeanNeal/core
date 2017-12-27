@@ -1,6 +1,7 @@
-app-plugins, app-controls {
+app-plugins,
+app-controls {
     width: 100%;
- 
+
     .main-content {
         width: 100%;
         display: flex;
@@ -11,6 +12,31 @@ app-plugins, app-controls {
             overflow: auto;
             .list-head {
                 margin-bottom: 5px;
+            } // >li {
+            //     margin-bottom: 10px;
+            //     font-size: 16px;
+            //     font-weight: 600;
+            // }
+            //display: none;
+            .active {
+                color: #17b6ed;
+            }
+            li {
+                cursor: pointer;
+                font-size: 14px;
+                font-weight: 400;
+                margin-bottom: 10px;
+                font-size: 16px;
+                font-weight: 600;
+                a {
+                    color: #000;
+                    display: block;
+                    padding: 5px;
+                    &:hover {
+                        color: #17b6ed;
+                        background: #f5f5f5;
+                    }
+                }
             }
         }
         .plugins-section {
@@ -30,6 +56,4 @@ app-plugins, app-controls {
         position: relative;
         border-bottom: 1px solid #ccc;
     }
-
 }
-

@@ -6,10 +6,10 @@
             <li style="font-size: 14px;padding: 5px; font-weight: 300;">
                 v<small ac-value="version"></small>
             </li>
-            <li ac-for="categories">
+            <li ac-for="let item of categories">
                 <div class="list-head" ac-value="name"></div>
                 <ol class="list">
-                    <li ac-for="items">
+                    <li ac-for="let item of items">
                         <a ac-value="name" ac-link="{{route}}" ac-link-exact="true"></a>
                     </li>
                 </ol>
