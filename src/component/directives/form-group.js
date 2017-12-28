@@ -12,16 +12,13 @@ export function _formGroup(array, data) {
         item.elem.addEventListener('keyup', (e) => {
             let attr = e.target.getAttribute('ac-form-control');
             if (attr) {
-                formGroup.controls[attr].setValue(e.target.value);
+                formGroup.setValue(attr, e.target.value);
             }
-            this.props._callAll();
         }, false);
 
         item.elem.addEventListener('submit', (e) => {
             let focusState = false;
             let controls = e.target.querySelectorAll('[ac-form-control]');
-
-            formGroup._validate();
 
             controls.forEach(target => {
                 let attr = target.getAttribute('ac-form-control');
@@ -33,7 +30,7 @@ export function _formGroup(array, data) {
                 }
             });
 
-            this.props._callAll();
+            formGroup._validate();
         }, true);
     });
 }

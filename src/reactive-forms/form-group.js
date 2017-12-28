@@ -119,13 +119,15 @@ export class FormGroup {
         }
 
         this.valid = valid.filter(r => r).length === Object.keys(this.controls).length;
+        
+        if (this.component) {
+            this.component.props._callAll();
+        }
     }
 
     setValue(name, value) {
-        this.controls[name].setValue(value, true);
-        this._validate();
+        this.controls[name].setValue(value);
         this.getValues();
-        // this.onChangeCallback();
     }
 
     isValid() {
