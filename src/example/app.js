@@ -1,6 +1,6 @@
 import Styles from './styles/main.scss';
 import { Register } from '../core';
-import {DatepickerComponent, TreeDebugComponent, BarChartComponent} from '../controls';
+import {DatepickerComponent, TreeDebugComponent, BarChartComponent, LineChartComponent} from '../controls';
 
 import { HomeComponent } from './components/home/home.component';
 import { RootComponent } from './components/root/root.component';
@@ -28,7 +28,8 @@ Register({
        ControlsComponent,
        NotFoundComponent,
        DatepickerComponent,
-       BarChartComponent
+       BarChartComponent,
+       LineChartComponent
     ],
     directives: [
         UpperCaseDirective

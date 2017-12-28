@@ -6,7 +6,7 @@ import Tpl from './chart.component.html';
     selector: 'app-plugins-chart',
     template: Tpl,
     props: {
-        chartData: {
+        barChartData: {
             title: 'Programming languages',
             yAxis: {
                 // min: 0,
@@ -20,8 +20,36 @@ import Tpl from './chart.component.html';
                 { name: 'PYTHON', value: 10 },
                 { name: 'C', value: 15 },
                 { name: 'PERl', value: 5 },
+                { name: 'C#', value: 20 },
+                { name: 'C#', value: 20 },
+                { name: 'C#', value: 20 },
+                { name: 'C#', value: 20 },
+                { name: 'C#', value: 20 },
                 { name: 'C#', value: 20 }
             ],
+            height: 300,
+            width: 600,
+            labelX: 300
+        },
+        lineChartData: {
+            title: 'Programming languages',
+            yAxis: {
+                // min: 0,
+                label: 'Popularity'
+            },
+            background: '#f0f0f0',
+            series: [
+                { name: 'JS', value: [1,20,300,50,200] },
+                { name: 'JAVA', value: [10,60,200,100,300, 500, 100, 7000] },
+                // { name: 'PHP', value: [100,200,300,400] },
+                // { name: 'PYTHON', value: [100,200,300,400] },
+                // { name: 'C', value: [100,200,300,400] },
+                // { name: 'PERl', value: [100,200,300,400] },
+                // { name: 'C#', value:  [100,200,300,400] }
+            ],
+            xAxis: {
+                   categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
+            },
             height: 300,
             width: 600,
             labelX: 300

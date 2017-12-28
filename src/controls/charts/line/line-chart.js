@@ -1,12 +1,12 @@
-import * as Decorators from '../../decorators';
-import Tpl from './bar-chart.html';
+import * as Decorators from '../../../decorators';
+import Tpl from './line-chart.html';
 
 const colorsTheme = ["#7cb5ec", "#434348", "#90ed7d", "#f7a35c", "#8085e9", "#f15c80", "#e4d354", "#2b908f", "#f45b5b", "#91e8e1", "#7cb5ec", "#434348"];
 const xOffset = 140;
 const yOffset = 100;
 const barWidth = 30;
 @Decorators.ComponentDecorator({
-    selector: 'ace-bar-chart',
+    selector: 'ace-line-chart',
     template: Tpl,
     props: {
         tooltipCoords: {
@@ -16,6 +16,7 @@ const barWidth = 30;
         xGrid: [],
         xGroupLabels: [],
         yLabels: [],
+        xLabels: [],
         tooltipIsShown: false,
         title: 'test chart',
         colors: [],
@@ -26,11 +27,14 @@ const barWidth = 30;
         },
         stepCount: 5,
         series: [],
+        xAxis: {
+               categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
+        },
         height: 300,
         width: 600
     }
 })
-export class BarChartComponent {
+export class LineChartComponent {
     INPUT(params) {
         let newParams = {};
         for (let key in this.props.getData()) {
@@ -57,21 +61,72 @@ export class BarChartComponent {
         //         series: series
         //     });
         // },2000)
+
+
+    }
+
+    // createFakeData() {
+    //     // This function creates data that doesn't look entirely random
+    //     const data = []
+    //     for (let x = 0; x <= 30; x++) {
+    //         const random = Math.random();
+    //         const temp = data.length > 0 ? data[data.length - 1].y : 50;
+    //         const y = random >= .45 ? temp + Math.floor(random * 20) : temp - Math.floor(random * 20);
+    //         data.push({ x, y })
+    //     }
+    //     return data;
+    // }
+
+    makePath(qwerty) {
+        const data = qwerty; //this.qwerty;
+
+        let pathD = "M " + data[0].x + " " + (this.getSvgY(data[0].y, qwerty) + yOffset/2) + " ";
+        pathD += data.map((point, i) => {
+            return "L " + point.x + " " + (this.getSvgY(point.y, qwerty) +  yOffset/2) + " ";
+        });
+        return pathD;
+    }
+
+    // getSvgX(x, qwerty) {
+    //     return x //(x / this.getMaxX(qwerty) * (this.props.get('width') - xOffset));
+    // }
+    getSvgY(y, qwerty) {
+        const svgHeight = this.props.get('height') - yOffset;
+        return svgHeight - (y / this.getMaxY(qwerty) * svgHeight);
+    }
+
+    // GET MAX & MIN X
+    // getMinX() {
+    //     const data = this.qwerty;
+    //     return data[0].x;
+    // }
+    getMaxX(qwerty) {
+        const data = qwerty;
+        return data[data.length - 1].x;
+    }
+    // GET MAX & MIN Y
+    getMinY() {
+        const data = this.qwerty;
+        return data.reduce((min, p) => p.y < min ? p.y : min, data[0].y);
+    }
+    getMaxY(qwerty) {
+        const data = qwerty;
+        return data.reduce((max, p) => p.y > max ? p.y : max, data[0].y);
     }
 
     mouseenter(e, item) {
         clearTimeout(this._tooltipInterval);
-        this.props.set({ 
-            tooltipIsShown: true, 
-            tooltipCoords: { x: item.x - 40 + 'px', y: item.y - 80  + 'px' },
+        this.props.set({
+            tooltipIsShown: true,
+            tooltipCoords: { x: item.x - 40 + 'px', y: item.y - 80 + 'px' },
             tooltipSelected: {
-                value:  ((item.value / this.props.get('series').reduce((a,b) => a + b.value, 0)) * 100).toFixed(2)
+                value: ((item.value / this.props.get('series').reduce((a, b) => a + b.value, 0)) * 100).toFixed(2)
             }
         });
     }
 
     mouseleave(e) {
-        if(this._tooltipInterval) {
+        if (this._tooltipInterval) {
             clearTimeout(this._tooltipInterval);
         }
         this._tooltipInterval = setTimeout(() => {
@@ -83,17 +138,17 @@ export class BarChartComponent {
         let svgHeight = this.getSvgHeight();
         let svgWidth = this.getSvgWidth();
 
-        let series = this.getChartData(svgHeight, svgWidth);
-        // let xLabels = this.getXLabels(svgHeight, svgWidth);
-        let xGroupLabels = this.getXGroupLabels(series, svgHeight, svgWidth);
+        // let series = this.getChartData(svgHeight, svgWidth);
+        let xLabels = this.getXLabels(svgHeight, svgWidth);
+        // let xGroupLabels = this.getXGroupLabels(series, svgHeight, svgWidth);
         let yLabels = this.getYLabels(svgHeight);
 
         let xGrid = this.getXGrid(svgHeight, svgWidth);
 
         this.props.set({
-            series: series,
-            // xLabels: xLabels,
-            xGroupLabels: xGroupLabels,
+            // series: series,
+            xLabels: xLabels,
+            // xGroupLabels: xGroupLabels,
             yLabels: yLabels,
             xGrid: xGrid,
             yLabelX: 30,
@@ -101,6 +156,15 @@ export class BarChartComponent {
             yLabelTransform: `translate(0,0) rotate(270 26.140625 ${this.props.get('height') / 2})`,
             labelX: this.props.get('width') / 2
         });
+
+
+        let qwerty = this.getChartData(svgHeight, svgWidth);//this.createFakeData(); 
+        // console.log(qwerty);
+        // let path = this.makePath(qwerty);
+        
+        let series =  qwerty.map(r=> this.makePath(r));
+        
+        this.props.set(/*'d', path*/ 'series', series);
     }
 
     getSvgHeight() {
@@ -130,9 +194,13 @@ export class BarChartComponent {
 
     getYLabels(svgHeight) {
         let result = [];
-        let maxVal = this.getMaxValue(this.props.get('series').map(r => r.value));
+        // let maxVal = this.getMaxValue(this.props.get('series').map(r => r.value));
         let count = this.props.get('stepCount') || this.getModulo(maxVal);
         let stepHeight = svgHeight / count;
+
+
+        let maxVal = this.getMaxSeriesVal();
+        let min = this.getMinSeriesVal();
 
         for (var i = 0; i <= count; i++) {
             result.push({
@@ -145,38 +213,50 @@ export class BarChartComponent {
         return result;
     }
 
+    getMaxSeriesVal() {
+        const array = this.props.get('series').map(r=> r.value).reduce((a,b)=> a.concat(b), []);
+        return Math.max(...array);
+    }
+
+    getMinSeriesVal() {
+        const array = this.props.get('series').map(r=> r.value).reduce((a,b)=> a.concat(b), []);
+        return Math.min(...array);
+    }
+
     getChartData(svgHeight, svgWidth) {
-        let maxVal = this.getMaxValue(this.props.get('series').map(r => r.value));
-        let count = this.props.get('stepCount') || this.getModulo(maxVal);
-        let stepHeight = svgHeight / (count + 1);
+        let max = this.getMaxSeriesVal();
+        let min = this.getMinSeriesVal();
+        let array = this.props.get('xAxis').categories;
+        let length = array.length - 1;
+        // return this.props.get('series')[0].value.map((r, i)=>{
+            
+        //     return {
+        //         x: i * (svgWidth / length - barWidth / length) + xOffset / 2 ,
+        //         y: r/max
+        //     };
+        // });
+        return this.props.get('series').map(r =>{
+            return r.value.map((r,i)=>{
+                return {                
+                    x: i * (svgWidth / length - barWidth / length) + xOffset / 2 ,
+                    y: r/max
+                }
+            });
+        });
+     
+    }
 
-
-        return this.props.get('series').map((r, i) => {
-            // let a = ((svgWidth) / this.props.get('series').length) / (this.props.get('series').length);
-            let length = this.props.get('series').length - 1;
+    getXLabels(svgHeight, svgWidth) {
+        let array = this.props.get('xAxis').categories;
+        let length = array.length - 1;
+        return array.map((r, i) => {
             return {
-                x: i * (svgWidth / length - barWidth / length) + xOffset / 2,
-                y: svgHeight - svgHeight * (r.value / maxVal) + yOffset / 2,
-                // stroke: '#ffffff',
-                stroeWidth: 1,
-                fill: colorsTheme[i] || '#5699dc',
-                width: barWidth,
-                height: svgHeight * (r.value / maxVal),
-                value: r.value
+                x: i * (svgWidth / length - barWidth / length) + xOffset / 2 ,
+                y: svgHeight + yOffset /2 + 20,
+                name: r
             };
         });
     }
-
-    // getXLabels(svgHeight, svgWidth) {
-    //     svgWidth = svgWidth - 40;
-    //     return this.props.get('series').map((r, i) => {
-    //         return {
-    //             x: i * (svgWidth / this.props.get('series').length) + 20,
-    //             y: svgHeight + 15,
-    //             name: r.value
-    //         };
-    //     });
-    // }
 
     getXGroupLabels(series, svgHeight, svgWidth) {
         return series.map((r, i) => {
