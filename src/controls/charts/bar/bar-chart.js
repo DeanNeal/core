@@ -1,10 +1,7 @@
 import * as Decorators from '../../../decorators';
 import Tpl from './bar-chart.html';
+import {Chart} from './../chart';
 
-const colorsTheme = ["#7cb5ec", "#434348", "#90ed7d", "#f7a35c", "#8085e9", "#f15c80", "#e4d354", "#2b908f", "#f45b5b", "#91e8e1", "#7cb5ec", "#434348"];
-const xOffset = 140;
-const yOffset = 100;
-const barWidth = 30;
 @Decorators.ComponentDecorator({
     selector: 'ace-bar-chart',
     template: Tpl,
@@ -28,7 +25,8 @@ const barWidth = 30;
         series: [],
         height: 300,
         width: 600
-    }
+    },
+    super: Chart
 })
 export class BarChartComponent {
     INPUT(params) {
@@ -44,19 +42,7 @@ export class BarChartComponent {
     }
 
     onInit() {
-        // setInterval(()=>{
-        //     let series = this.props.get('series');
-        //     series[0].value = 10 * Math.random();
 
-        //     let svgHeight = this.getSvgHeight();
-        //     let svgWidth = this.getSvgWidth();
-
-        //     series = this.getChartData(svgHeight, svgWidth);
-
-        //     this.props.set({
-        //         series: series
-        //     });
-        // },2000)
     }
 
     mouseenter(e, item) {
@@ -103,14 +89,6 @@ export class BarChartComponent {
         });
     }
 
-    getSvgHeight() {
-        return this.props.get('height') - yOffset;
-    }
-
-    getSvgWidth() {
-        return this.props.get('width') - xOffset;
-    }
-
     getXGrid(svgHeight, svgWidth) {
         let xGrid = [];
         let maxVal = this.getMaxValue(this.props.get('series').map(r => r.value));
@@ -119,10 +97,10 @@ export class BarChartComponent {
 
         for (var i = 0; i <= count; i++) {
             xGrid.push({
-                x1: xOffset / 2,
-                x2: this.props.get('width') - xOffset / 2,
-                y1: yOffset / 2 + i * stepHeight,
-                y2: yOffset / 2 + i * stepHeight
+                x1: Chart.xOffset / 2,
+                x2: this.props.get('width') - Chart.xOffset / 2,
+                y1: Chart.yOffset / 2 + i * stepHeight,
+                y2: Chart.yOffset / 2 + i * stepHeight
             });
         }
         return xGrid;
@@ -136,9 +114,9 @@ export class BarChartComponent {
 
         for (var i = 0; i <= count; i++) {
             result.push({
-                x: xOffset / 2 - 10,
-                y: yOffset / 2 + i * stepHeight + 4, //svgHeight - i * stepHeight + 4,
-                name: Math.abs((maxVal / count) * (i - count)).toFixed(1)
+                x: Chart.xOffset / 2 - 10,
+                y: Chart.yOffset / 2 + i * stepHeight + 4, //svgHeight - i * stepHeight + 4,
+                name: this.getTrueLabelName(Math.abs((maxVal / count) * (i - count)))
             });
         }
 
@@ -155,12 +133,12 @@ export class BarChartComponent {
         return this.props.get('series').map((r, i) => {
             // let a = ((svgWidth) / this.props.get('series').length) / (this.props.get('series').length);
             return {
-                x: i * (svgWidth / length - barWidth / length) + xOffset / 2,
-                y: svgHeight - svgHeight * (r.value / maxVal) + yOffset / 2,
+                x: i * (svgWidth / length - Chart.barWidth / length) + Chart.xOffset / 2,
+                y: svgHeight - svgHeight * (r.value / maxVal) + Chart.yOffset / 2,
                 // stroke: '#ffffff',
                 stroeWidth: 1,
-                fill: colorsTheme[i] || '#5699dc',
-                width: barWidth,
+                fill: Chart.colorsTheme[i] || '#5699dc',
+                width: Chart.barWidth,
                 height: svgHeight * (r.value / maxVal),
                 value: r.value
             };
@@ -181,63 +159,11 @@ export class BarChartComponent {
     getXGroupLabels(series, svgHeight, svgWidth) {
         return series.map((r, i) => {
             return {
-                x: r.x + 10,
+                x: r.x + 0,
                 y: r.y - 4,
-                name: r.value
+                name: ((r.value / this.props.get('series').reduce((a,b) => a + b.value, 0)) * 100).toFixed(2) + '%'
             };
         });
     }
-
-
-    getModulo(maxVal) {
-        let modulo;
-
-        switch (true) {
-            case (maxVal % 6) === 0:
-                console.log(6);
-                modulo = 6;
-                break;
-            case (maxVal % 5) === 0:
-                console.log(5);
-                modulo = 5;
-                break;
-            case (maxVal % 4) === 0:
-                console.log(4);
-                modulo = 4;
-                break;
-            case (maxVal % 3) === 0:
-                console.log(3);
-                modulo = 3;
-                break;
-            case (maxVal % 2) === 0:
-                console.log(2);
-                modulo = 2;
-                break;
-            default:
-                modulo = 2;
-                break;
-        }
-
-        return modulo;
-    }
-
-    getMaxValue(array) {
-        return Math.max.apply(null, array);
-    }
-
-    // onChange(f) {
-    //     this.onChangeCallback = f;
-    // }
-
-    // setData(data) {
-
-    // }
-
-    // append(tag) {
-    //     let elem;
-    //     return elem;
-    // }
-
-
 
 }

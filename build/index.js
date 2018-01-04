@@ -2,7 +2,7 @@
  * ace-js 0.6.2
  * May be freely distributed under the MIT license 
  * Author: Bogdan Zinkevich
- * Last update: 2017-12-28 15:26:26
+ * Last update: 2018-1-4 17:12:01
  * 
  */
 (function webpackUniversalModuleDefinition(root, factory) {
@@ -82,7 +82,7 @@ return /******/ (function(modules) { // webpackBootstrap
 /******/ 	}
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "066c578bb1a7099fd45c"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "cc7f80b43dadc79a28ed"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
 /******/ 	
@@ -651,15 +651,15 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var Controls = _interopRequireWildcard(_controls);
 
-	var _http = __webpack_require__(61);
+	var _http = __webpack_require__(64);
 
 	var _store = __webpack_require__(53);
 
-	var _formGroup = __webpack_require__(62);
+	var _formGroup = __webpack_require__(65);
 
-	var _validators = __webpack_require__(63);
+	var _validators = __webpack_require__(66);
 
-	__webpack_require__(64);
+	__webpack_require__(67);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -1684,53 +1684,39 @@ return /******/ (function(modules) { // webpackBootstrap
 	            var _attr = _elem.getAttribute(directive);
 
 	            // exclude inner loops
+	            // if (directive === 'ac-for' && elem.querySelectorAll('[ac-for]').length) {console.log(elem);
+	            //     for (let innerElem of elem.querySelectorAll(`[ac-for]`)) {
+	            //         innerElem.setAttribute('ac-inner-loop', true);
+	            //     }
+	            // }
+
+	            // if (directive === 'ac-for' && elem.getAttribute('ac-inner-loop')) {
+	            //     elem.removeAttribute('ac-inner-loop');
+	            //     return;
+	            // }
+
 	            if (directive === 'ac-for' && _elem.querySelectorAll('[ac-for]').length) {
-	                var _iteratorNormalCompletion2 = true;
-	                var _didIteratorError2 = false;
-	                var _iteratorError2 = undefined;
+	                // debugger
+	            } else {
 
-	                try {
-	                    for (var _iterator2 = _elem.querySelectorAll('[ac-for]')[Symbol.iterator](), _step2; !(_iteratorNormalCompletion2 = (_step2 = _iterator2.next()).done); _iteratorNormalCompletion2 = true) {
-	                        var innerElem = _step2.value;
+	                var _obj = {
+	                    elem: _elem,
+	                    attr: _attr,
+	                    items: [],
+	                    parent: _elem.parentNode,
+	                    cached: _elem
+	                };
 
-	                        innerElem.setAttribute('ac-inner-loop', true);
-	                    }
-	                } catch (err) {
-	                    _didIteratorError2 = true;
-	                    _iteratorError2 = err;
-	                } finally {
-	                    try {
-	                        if (!_iteratorNormalCompletion2 && _iterator2.return) {
-	                            _iterator2.return();
-	                        }
-	                    } finally {
-	                        if (_didIteratorError2) {
-	                            throw _iteratorError2;
-	                        }
-	                    }
+	                // only for certain directives
+	                if (directive === 'ac-for' || directive === 'ac-if') {
+	                    _obj.comment = _core.Utils.insertAfter(document.createComment(directive + ': ' + _attr), _elem);
+	                }
+	                array.get ? array.get(this).push(_obj) : array.push(_obj);
+	                _elem.removeAttribute(directive);
+	                if (directive === 'ac-for') {
+	                    _elem.remove();
 	                }
 	            }
-
-	            if (directive === 'ac-for' && _elem.getAttribute('ac-inner-loop')) {
-	                _elem.removeAttribute('ac-inner-loop');
-	                return;
-	            }
-
-	            var _obj = {
-	                elem: _elem,
-	                attr: _attr,
-	                items: [],
-	                parent: _elem.parentNode,
-	                cached: _elem
-	            };
-
-	            // only for certain directives
-	            if (directive === 'ac-for' || directive === 'ac-if') {
-	                _obj.comment = _core.Utils.insertAfter(document.createComment(directive + ': ' + _attr), _elem);
-	            }
-	            array.get ? array.get(this).push(_obj) : array.push(_obj);
-	            _elem.removeAttribute(directive);
-	            if (directive === 'ac-for') _elem.remove();
 	        }
 	    } catch (err) {
 	        _didIteratorError = true;
@@ -1758,28 +1744,28 @@ return /******/ (function(modules) { // webpackBootstrap
 	        array.get ? array.get(this).push(obj) : array.push(obj);
 	    }
 
-	    var _iteratorNormalCompletion3 = true;
-	    var _didIteratorError3 = false;
-	    var _iteratorError3 = undefined;
+	    var _iteratorNormalCompletion2 = true;
+	    var _didIteratorError2 = false;
+	    var _iteratorError2 = undefined;
 
 	    try {
-	        for (var _iterator3 = targets[Symbol.iterator](), _step3; !(_iteratorNormalCompletion3 = (_step3 = _iterator3.next()).done); _iteratorNormalCompletion3 = true) {
-	            var _elem2 = _step3.value;
+	        for (var _iterator2 = targets[Symbol.iterator](), _step2; !(_iteratorNormalCompletion2 = (_step2 = _iterator2.next()).done); _iteratorNormalCompletion2 = true) {
+	            var _elem2 = _step2.value;
 
 	            var _obj2 = _event.createEventObject.call(this, _elem2, directive, context, loopIterator);
 	            array.get ? array.get(this).push(_obj2) : array.push(_obj2);
 	        }
 	    } catch (err) {
-	        _didIteratorError3 = true;
-	        _iteratorError3 = err;
+	        _didIteratorError2 = true;
+	        _iteratorError2 = err;
 	    } finally {
 	        try {
-	            if (!_iteratorNormalCompletion3 && _iterator3.return) {
-	                _iterator3.return();
+	            if (!_iteratorNormalCompletion2 && _iterator2.return) {
+	                _iterator2.return();
 	            }
 	        } finally {
-	            if (_didIteratorError3) {
-	                throw _iteratorError3;
+	            if (_didIteratorError2) {
+	                throw _iteratorError2;
 	            }
 	        }
 	    }
@@ -3104,8 +3090,13 @@ return /******/ (function(modules) { // webpackBootstrap
 	                        _this.prevPage = route.path;
 	                    }
 
-	                    var childComp = _this.children[Object.keys(_this.children)[0]][0];
-	                    var router = childComp.root.querySelectorAll('child-route-switcher')[0];
+	                    var childComp = void 0;
+	                    var router = void 0;
+
+	                    if (Object.keys(_this.children).length) {
+	                        childComp = _this.children[Object.keys(_this.children)[0]][0];
+	                        router = childComp.root.querySelectorAll('child-route-switcher')[0];
+	                    }
 
 	                    if (router) {
 	                        _this.destroyChildren(router);
@@ -4096,7 +4087,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	Object.defineProperty(exports, "__esModule", {
 	    value: true
 	});
-	exports.BarChartComponent = exports.TreeDebugComponent = exports.ModalStore = exports.ModalComponent = exports.DropdownComponent = exports.DatepickerComponent = undefined;
+	exports.LineChartComponent = exports.BarChartComponent = exports.TreeDebugComponent = exports.ModalStore = exports.ModalComponent = exports.DropdownComponent = exports.DatepickerComponent = undefined;
 
 	var _datepicker = __webpack_require__(49);
 
@@ -4110,6 +4101,8 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var _barChart = __webpack_require__(59);
 
+	var _lineChart = __webpack_require__(62);
+
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	exports.DatepickerComponent = _datepicker.DatepickerComponent;
@@ -4118,6 +4111,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	exports.ModalStore = _modal.ModalStore;
 	exports.TreeDebugComponent = _tree2.default;
 	exports.BarChartComponent = _barChart.BarChartComponent;
+	exports.LineChartComponent = _lineChart.LineChartComponent;
 
 /***/ }),
 /* 49 */
@@ -4741,16 +4735,14 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var _barChart2 = _interopRequireDefault(_barChart);
 
+	var _chart = __webpack_require__(61);
+
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-	var colorsTheme = ["#7cb5ec", "#434348", "#90ed7d", "#f7a35c", "#8085e9", "#f15c80", "#e4d354", "#2b908f", "#f45b5b", "#91e8e1", "#7cb5ec", "#434348"];
-	var xOffset = 140;
-	var yOffset = 100;
-	var barWidth = 30;
 	var BarChartComponent = exports.BarChartComponent = (_dec = Decorators.ComponentDecorator({
 	    selector: 'ace-bar-chart',
 	    template: _barChart2.default,
@@ -4774,7 +4766,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	        series: [],
 	        height: 300,
 	        width: 600
-	    }
+	    },
+	    super: _chart.Chart
 	}), _dec(_class = function () {
 	    function BarChartComponent() {
 	        _classCallCheck(this, BarChartComponent);
@@ -4795,21 +4788,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        }
 	    }, {
 	        key: 'onInit',
-	        value: function onInit() {
-	            // setInterval(()=>{
-	            //     let series = this.props.get('series');
-	            //     series[0].value = 10 * Math.random();
-
-	            //     let svgHeight = this.getSvgHeight();
-	            //     let svgWidth = this.getSvgWidth();
-
-	            //     series = this.getChartData(svgHeight, svgWidth);
-
-	            //     this.props.set({
-	            //         series: series
-	            //     });
-	            // },2000)
-	        }
+	        value: function onInit() {}
 	    }, {
 	        key: 'mouseenter',
 	        value: function mouseenter(e, item) {
@@ -4862,16 +4841,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	            });
 	        }
 	    }, {
-	        key: 'getSvgHeight',
-	        value: function getSvgHeight() {
-	            return this.props.get('height') - yOffset;
-	        }
-	    }, {
-	        key: 'getSvgWidth',
-	        value: function getSvgWidth() {
-	            return this.props.get('width') - xOffset;
-	        }
-	    }, {
 	        key: 'getXGrid',
 	        value: function getXGrid(svgHeight, svgWidth) {
 	            var xGrid = [];
@@ -4883,10 +4852,10 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	            for (var i = 0; i <= count; i++) {
 	                xGrid.push({
-	                    x1: xOffset / 2,
-	                    x2: this.props.get('width') - xOffset / 2,
-	                    y1: yOffset / 2 + i * stepHeight,
-	                    y2: yOffset / 2 + i * stepHeight
+	                    x1: _chart.Chart.xOffset / 2,
+	                    x2: this.props.get('width') - _chart.Chart.xOffset / 2,
+	                    y1: _chart.Chart.yOffset / 2 + i * stepHeight,
+	                    y2: _chart.Chart.yOffset / 2 + i * stepHeight
 	                });
 	            }
 	            return xGrid;
@@ -4903,9 +4872,9 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	            for (var i = 0; i <= count; i++) {
 	                result.push({
-	                    x: xOffset / 2 - 10,
-	                    y: yOffset / 2 + i * stepHeight + 4, //svgHeight - i * stepHeight + 4,
-	                    name: Math.abs(maxVal / count * (i - count)).toFixed(1)
+	                    x: _chart.Chart.xOffset / 2 - 10,
+	                    y: _chart.Chart.yOffset / 2 + i * stepHeight + 4, //svgHeight - i * stepHeight + 4,
+	                    name: this.getTrueLabelName(Math.abs(maxVal / count * (i - count)))
 	                });
 	            }
 
@@ -4914,24 +4883,22 @@ return /******/ (function(modules) { // webpackBootstrap
 	    }, {
 	        key: 'getChartData',
 	        value: function getChartData(svgHeight, svgWidth) {
-	            var _this2 = this;
-
 	            var maxVal = this.getMaxValue(this.props.get('series').map(function (r) {
 	                return r.value;
 	            }));
 	            var count = this.props.get('stepCount') || this.getModulo(maxVal);
 	            var stepHeight = svgHeight / (count + 1);
 
+	            var length = this.props.get('series').length - 1;
 	            return this.props.get('series').map(function (r, i) {
 	                // let a = ((svgWidth) / this.props.get('series').length) / (this.props.get('series').length);
-	                var length = _this2.props.get('series').length - 1;
 	                return {
-	                    x: i * (svgWidth / length - barWidth / length) + xOffset / 2,
-	                    y: svgHeight - svgHeight * (r.value / maxVal) + yOffset / 2,
+	                    x: i * (svgWidth / length - _chart.Chart.barWidth / length) + _chart.Chart.xOffset / 2,
+	                    y: svgHeight - svgHeight * (r.value / maxVal) + _chart.Chart.yOffset / 2,
 	                    // stroke: '#ffffff',
 	                    stroeWidth: 1,
-	                    fill: colorsTheme[i] || '#5699dc',
-	                    width: barWidth,
+	                    fill: _chart.Chart.colorsTheme[i] || '#5699dc',
+	                    width: _chart.Chart.barWidth,
 	                    height: svgHeight * (r.value / maxVal),
 	                    value: r.value
 	                };
@@ -4952,16 +4919,52 @@ return /******/ (function(modules) { // webpackBootstrap
 	    }, {
 	        key: 'getXGroupLabels',
 	        value: function getXGroupLabels(series, svgHeight, svgWidth) {
+	            var _this2 = this;
+
 	            return series.map(function (r, i) {
 	                return {
-	                    x: r.x + 10,
+	                    x: r.x + 0,
 	                    y: r.y - 4,
-	                    name: r.value
+	                    name: (r.value / _this2.props.get('series').reduce(function (a, b) {
+	                        return a + b.value;
+	                    }, 0) * 100).toFixed(2) + '%'
 	                };
 	            });
 	        }
-	    }, {
-	        key: 'getModulo',
+	    }]);
+
+	    return BarChartComponent;
+	}()) || _class);
+
+/***/ }),
+/* 60 */
+/***/ (function(module, exports) {
+
+	"use strict";
+
+	module.exports = "<svg ac-ref=\"svg\" ac-attr=\"height: height, width: width\" ac-if=\"this.series.length\">\r\n    <rect class=\"highcharts-background\" x=\"0\" y=\"0\" ac-attr=\"height: height, width: width, fill: background\" rx=\"0\" ry=\"0\"></rect>\r\n    <text ac-attr=\"x: labelX\" text-anchor=\"middle\" class=\"acechart-title\" y=\"24\">\r\n        <tspan ac-value=\"title\"></tspan>\r\n    </text>\r\n    <text ac-attr=\"x: yLabelX, y: yLabelY, transform: yLabelTransform\" text-anchor=\"middle\" class=\"acecharts-axis-title\">\r\n        <tspan ac-value=\"yAxis.label\"></tspan>\r\n    </text>\r\n    <g class=\"acechart-grid acechart-yaxis-grid \">\r\n        <line ac-for=\"let item of xGrid\" ac-attr=\"x1: x1, x2: x2, y1: y1, y2: y2\" stroke=\"black\" stroke-width=\"1\" shape-rendering=\"crispEdges\" />\r\n    </g>\r\n    <g class=\"acechart-group\">\r\n        <rect ac-for=\"let item of series\" @mouseenter=\"mouseenter(item)\" @mouseleave=\"mouseleave\" ac-attr=\"x: x, y: y, stroke: stroke, fill: fill, stroke-width: strokeWidth, width: width, height: height\"></rect>\r\n    </g>\r\n    <!--     <g class=\"acechart-axis-labels acechart-xaxis-labels \" transform=\"translate(40,0) scale(1 1)\">\r\n        <text ac-for=\"xLabels\" ac-attr=\"x: x, y: y\" text-anchor=\"start\" transform=\"translate(0,0)\">\r\n            <tspan ac-value=\"name\"></tspan>\r\n        </text>\r\n    </g> -->\r\n    <g class=\"acechart-axis-labels acechart-xaxis-labels \">\r\n        <text ac-for=\"let item of xGroupLabels\" ac-attr=\"x: x, y: y\" text-anchor=\"start\" transform=\"translate(0,0)\">\r\n            <tspan ac-value=\"name\"></tspan>\r\n        </text>\r\n    </g>\r\n    <g class=\"acechart-axis-labels acechart-yaxis-labels \">\r\n        <text ac-for=\"let item of yLabels\" ac-attr=\"x: x, y: y\" text-anchor=\"end\" transform=\"translate(0,0)\">\r\n            <tspan ac-value=\"name\"></tspan>\r\n        </text>\r\n    </g>\r\n</svg>\r\n<div class=\"acecharts-tooltip\" ac-class=\"open: this.tooltipIsShown\" ac-style=\"top: tooltipCoords.y, left: tooltipCoords.x\">\r\n    <div style=\"font-size: 12px;\">Languages</div>\r\n    <br>\r\n    <span ac-value=\"tooltipSelected.name\"></span>\r\n    <b ac-value=\"tooltipSelected.value\"></b>% of total\r\n</div>\r\n<div ac-if=\"!this.series.length\">Bar chart. There is no data to show</div>\r\n<style>\r\nace-bar-chart {\r\n    display: inline-block;\r\n    position: relative;\r\n}\r\n\r\n.acecharts-tooltip.open {\r\n    opacity: 1;\r\n    visibility: visible;\r\n}\r\n\r\n\r\n\r\n.acecharts-tooltip {\r\n    position: absolute;\r\n    background: #fbf5f5c9;\r\n    /*width: 200px;*/\r\n    top: 0;\r\n    /*height: 100px;*/\r\n    transition: 0.2s;\r\n    opacity: 0;\r\n    visibility: hidden;\r\n    padding: 10px;\r\n    border: 1px solid #ddddde;\r\n    border-radius: 2px;\r\n}\r\n\r\n.acecharts-tooltip:after, .acecharts-tooltip:before {\r\n    top: 100%;\r\n    left: 50%;\r\n    border: solid transparent;\r\n    content: \" \";\r\n    height: 0;\r\n    width: 0;\r\n    position: absolute;\r\n    pointer-events: none;\r\n}\r\n\r\n.acecharts-tooltip:after {\r\n    border-color: rgba(247, 247, 247, 0);\r\n    border-top-color: #f7f7f7;\r\n    border-width: 10px;\r\n    margin-left: -10px;\r\n}\r\n.acecharts-tooltip:before {\r\n    border-color: rgba(221, 221, 222, 0);\r\n    border-top-color: #ddddde;\r\n    border-width: 11px;\r\n    margin-left: -11px;\r\n}\r\n\r\n.acechart-group rect {\r\n    /*fill: #5699dc;*/\r\n    transition: 0.5s;\r\n}\r\n\r\n.acechart-group rect:hover {\r\n    /*fill: #3e6a96;*/\r\n    opacity: 0.7;\r\n}\r\n\r\n.acechart-xaxis-labels text {\r\n    cursor: default;\r\n    font-size: 11px;\r\n    font-family: Verdana, sans-serif;\r\n    fill: #666666;\r\n    transition: 0.5s;\r\n}\r\n\r\n.acecharts-axis-title {\r\n    cursor: default;\r\n    font-size: 12px;\r\n    font-family: Verdana, sans-serif;\r\n    fill: #666666;\r\n}\r\n\r\n.acechart-title {\r\n    cursor: default;\r\n    font-size: 16px;\r\n    font-family: Verdana, sans-serif;\r\n    fill: #666666;\r\n    transition: 0.5s;\r\n}\r\n\r\n.acechart-yaxis-labels text {\r\n    cursor: default;\r\n    font-size: 11px;\r\n    font-family: Verdana, sans-serif;\r\n    fill: #666666;\r\n}\r\n\r\n.acechart-yaxis-grid line {\r\n    stroke: #ccc;\r\n}\r\n\r\n.acechart-group {}\r\n</style>";
+
+/***/ }),
+/* 61 */
+/***/ (function(module, exports) {
+
+	"use strict";
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	var Chart = function () {
+	    function Chart() {
+	        _classCallCheck(this, Chart);
+	    }
+
+	    _createClass(Chart, [{
+	        key: "getModulo",
 	        value: function getModulo(maxVal) {
 	            var modulo = void 0;
 
@@ -4994,40 +4997,380 @@ return /******/ (function(modules) { // webpackBootstrap
 	            return modulo;
 	        }
 	    }, {
-	        key: 'getMaxValue',
+	        key: "getTrueLabelName",
+	        value: function getTrueLabelName(value) {
+	            var label = void 0;
+
+	            switch (true) {
+	                case value >= 1000000000:
+	                    label = (value / 1000000000).toFixed(1) + 'G';
+	                    break;
+	                case value >= 1000000:
+	                    label = (value / 1000000).toFixed(1) + 'M';
+	                    break;
+	                case value >= 1000:
+	                    label = (value / 1000).toFixed(1) + 'K';
+	                    break;
+	                default:
+	                    label = value.toFixed(1);
+	                    break;
+	            }
+
+	            return label;
+	        }
+	    }, {
+	        key: "getMaxValue",
 	        value: function getMaxValue(array) {
 	            return Math.max.apply(null, array);
 	        }
+	    }, {
+	        key: "getSvgHeight",
+	        value: function getSvgHeight() {
+	            return this.props.get('height') - Chart.yOffset;
+	        }
+	    }, {
+	        key: "getSvgWidth",
+	        value: function getSvgWidth() {
+	            return this.props.get('width') - Chart.xOffset;
+	        }
+	    }], [{
+	        key: "colorsTheme",
+	        get: function get() {
+	            return ["#7cb5ec", "#434348", "#90ed7d", "#f7a35c", "#8085e9", "#f15c80", "#e4d354", "#2b908f", "#f45b5b", "#91e8e1", "#7cb5ec", "#434348"];
+	        }
+	    }, {
+	        key: "xOffset",
+	        get: function get() {
+	            return 140;
+	        }
+	    }, {
+	        key: "yOffset",
+	        get: function get() {
+	            return 100;
+	        }
+	    }, {
+	        key: "barWidth",
+	        get: function get() {
+	            return 30;
+	        }
+	    }]);
 
-	        // onChange(f) {
-	        //     this.onChangeCallback = f;
+	    return Chart;
+	}();
+
+	exports.Chart = Chart;
+
+/***/ }),
+/* 62 */
+/***/ (function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	exports.LineChartComponent = undefined;
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _dec, _class;
+
+	var _decorators = __webpack_require__(8);
+
+	var Decorators = _interopRequireWildcard(_decorators);
+
+	var _lineChart = __webpack_require__(63);
+
+	var _lineChart2 = _interopRequireDefault(_lineChart);
+
+	var _chart = __webpack_require__(61);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
+
+	function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	var LineChartComponent = exports.LineChartComponent = (_dec = Decorators.ComponentDecorator({
+	    selector: 'ace-line-chart',
+	    template: _lineChart2.default,
+	    props: {
+	        tooltipCoords: {
+	            x: 0,
+	            y: 0
+	        },
+	        xGrid: [],
+	        xGroupLabels: [],
+	        yLabels: [],
+	        xLabels: [],
+	        tooltipIsShown: false,
+	        title: 'test chart',
+	        colors: [],
+	        background: '#eee',
+	        yAxis: {
+	            // min: 0,
+	            label: ''
+	        },
+	        stepCount: 5,
+	        series: [],
+	        xAxis: {
+	            categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
+	        },
+	        height: 300,
+	        width: 600
+	    },
+	    super: _chart.Chart
+	}), _dec(_class = function () {
+	    function LineChartComponent() {
+	        _classCallCheck(this, LineChartComponent);
+	    }
+
+	    _createClass(LineChartComponent, [{
+	        key: 'INPUT',
+	        value: function INPUT(params) {
+	            var newParams = {};
+	            for (var key in this.props.getData()) {
+	                if (params.data[key]) {
+	                    newParams[key] = params.data[key];
+	                }
+	            }
+
+	            this.props.set(newParams);
+	            this.draw();
+	        }
+	    }, {
+	        key: 'onInit',
+	        value: function onInit() {}
+	    }, {
+	        key: 'makePath',
+	        value: function makePath(series) {
+	            var _this = this;
+
+	            var pathD = "M " + series[0].x + " " + (this.getSvgY(series[0].y) + _chart.Chart.yOffset / 2) + " ";
+	            pathD += series.map(function (point, i) {
+	                return "L " + point.x + " " + (_this.getSvgY(point.y) + _chart.Chart.yOffset / 2) + " ";
+	            });
+
+	            return pathD;
+	        }
+	    }, {
+	        key: 'getSvgY',
+	        value: function getSvgY(y, maxVal) {
+	            var svgHeight = this.props.get('height') - _chart.Chart.yOffset;
+	            // console.log(y);
+	            return svgHeight - y * svgHeight;
+	        }
+	    }, {
+	        key: 'getMaxX',
+	        value: function getMaxX(series) {
+	            var data = series;
+	            return data[data.length - 1].x;
+	        }
+	    }, {
+	        key: 'getMaxY',
+	        value: function getMaxY(series) {
+	            return series.reduce(function (max, p) {
+	                return p.y > max ? p.y : max;
+	            }, series[0].y);
+	        }
+	    }, {
+	        key: 'mouseenter',
+	        value: function mouseenter(e, item) {
+	            clearTimeout(this._tooltipInterval);
+	            this.props.set({
+	                tooltipIsShown: true,
+	                tooltipCoords: { x: item.x - 40 + 'px', y: item.y - 80 + 'px' },
+	                tooltipSelected: {
+	                    value: (item.value / this.props.get('series').reduce(function (a, b) {
+	                        return a + b.value;
+	                    }, 0) * 100).toFixed(2)
+	                }
+	            });
+	        }
+	    }, {
+	        key: 'mouseleave',
+	        value: function mouseleave(e) {
+	            var _this2 = this;
+
+	            if (this._tooltipInterval) {
+	                clearTimeout(this._tooltipInterval);
+	            }
+	            this._tooltipInterval = setTimeout(function () {
+	                _this2.props.set({ 'tooltipIsShown': false });
+	            }, 200);
+	        }
+	    }, {
+	        key: 'draw',
+	        value: function draw() {
+	            var svgHeight = this.getSvgHeight();
+	            var svgWidth = this.getSvgWidth();
+
+	            var xLabels = this.getXLabels(svgHeight, svgWidth);
+	            // let xGroupLabels = this.getXGroupLabels(series, svgHeight, svgWidth);
+	            var yLabels = this.getYLabels(svgHeight);
+
+	            var xGrid = this.getXGrid(svgHeight, svgWidth);
+
+	            var series = this.getChartData(svgHeight, svgWidth);
+	            var markers = this.getMarkers(svgHeight, svgWidth);
+	            // this.props.set('series', series);
+
+	            this.props.set({
+	                series: series,
+	                xLabels: xLabels,
+	                // xGroupLabels: xGroupLabels,
+	                yLabels: yLabels,
+	                xGrid: xGrid,
+	                yLabelX: 30,
+	                markers: markers,
+	                yLabelY: this.props.get('height') / 2,
+	                yLabelTransform: 'translate(0,0) rotate(270 26.140625 ' + this.props.get('height') / 2 + ')',
+	                labelX: this.props.get('width') / 2
+	            });
+	        }
+	    }, {
+	        key: 'getXGrid',
+	        value: function getXGrid(svgHeight, svgWidth) {
+	            var xGrid = [];
+	            var maxVal = this.getMaxValue(this.props.get('series').map(function (r) {
+	                return r.value;
+	            }));
+	            var count = this.props.get('stepCount') || this.getModulo(maxVal);
+	            var stepHeight = svgHeight / count;
+
+	            for (var i = 0; i <= count; i++) {
+	                xGrid.push({
+	                    x1: _chart.Chart.xOffset / 2,
+	                    x2: this.props.get('width') - _chart.Chart.xOffset / 2,
+	                    y1: _chart.Chart.yOffset / 2 + i * stepHeight,
+	                    y2: _chart.Chart.yOffset / 2 + i * stepHeight
+	                });
+	            }
+	            return xGrid;
+	        }
+	    }, {
+	        key: 'getYLabels',
+	        value: function getYLabels(svgHeight) {
+	            var result = [];
+	            var count = this.props.get('stepCount') || this.getModulo(maxVal);
+	            var stepHeight = svgHeight / count;
+
+	            var maxVal = this.getMaxSeriesVal();
+	            var min = this.getMinXSeriesVal();
+
+	            for (var i = 0; i <= count; i++) {
+	                result.push({
+	                    x: _chart.Chart.xOffset / 2 - 10,
+	                    y: _chart.Chart.yOffset / 2 + i * stepHeight + 4,
+	                    name: this.getTrueLabelName(Math.abs(maxVal / count * (i - count))) //Math.abs((maxVal / count) * (i - count)).toFixed(1)
+	                });
+	            }
+
+	            return result;
+	        }
+	    }, {
+	        key: 'getMaxSeriesVal',
+	        value: function getMaxSeriesVal() {
+	            var array = this.props.get('series').map(function (r) {
+	                return r.value;
+	            }).reduce(function (a, b) {
+	                return a.concat(b);
+	            }, []);
+	            return Math.max.apply(Math, _toConsumableArray(array));
+	        }
+	    }, {
+	        key: 'getMinXSeriesVal',
+	        value: function getMinXSeriesVal() {
+	            var array = this.props.get('series').map(function (r) {
+	                return r.value;
+	            }).reduce(function (a, b) {
+	                return a.concat(b);
+	            }, []);
+	            return Math.min.apply(Math, _toConsumableArray(array));
+	        }
+	    }, {
+	        key: 'getChartData',
+	        value: function getChartData(svgHeight, svgWidth) {
+	            var _this3 = this;
+
+	            var max = this.getMaxSeriesVal();
+	            var min = this.getMinXSeriesVal();
+	            var array = this.props.get('xAxis').categories;
+	            var length = array.length - 1;
+
+	            return this.props.get('series').map(function (seria, index) {
+	                var series = seria.value.map(function (r, i) {
+	                    return {
+	                        x: i * (svgWidth / length - _chart.Chart.barWidth / length) + _chart.Chart.xOffset / 2,
+	                        y: r / max
+	                    };
+	                });
+	                return {
+	                    d: _this3.makePath(series),
+	                    stroke: _chart.Chart.colorsTheme[index]
+	                };
+	            });
+	        }
+	    }, {
+	        key: 'getMarkers',
+	        value: function getMarkers(svgHeight, svgWidth) {
+	            var max = this.getMaxSeriesVal();
+	            var min = this.getMinXSeriesVal();
+	            var array = this.props.get('xAxis').categories;
+	            var length = array.length - 1;
+	            return this.props.get('series').map(function (seria, i) {
+	                return { items: seria.value.map(function (r, i) {
+	                        return {
+	                            x: i * (svgWidth / length - _chart.Chart.barWidth / length) + _chart.Chart.xOffset / 2,
+	                            y: 10,
+	                            height: 10,
+	                            width: 10,
+	                            fill: '#666'
+	                        };
+	                    }) };
+	            });
+	        }
+	    }, {
+	        key: 'getXLabels',
+	        value: function getXLabels(svgHeight, svgWidth) {
+	            var array = this.props.get('xAxis').categories;
+	            var length = array.length - 1;
+	            return array.map(function (r, i) {
+	                return {
+	                    x: i * (svgWidth / length - _chart.Chart.barWidth / length) + _chart.Chart.xOffset / 2,
+	                    y: svgHeight + _chart.Chart.yOffset / 2 + 20,
+	                    name: r
+	                };
+	            });
+	        }
+
+	        // getXGroupLabels(series, svgHeight, svgWidth) {
+	        //     return series.map((r, i) => {
+	        //         return {
+	        //             x: r.x + 10,
+	        //             y: r.y - 4,
+	        //             name: r.value
+	        //         };
+	        //     });
 	        // }
-
-	        // setData(data) {
-
-	        // }
-
-	        // append(tag) {
-	        //     let elem;
-	        //     return elem;
-	        // }
-
 
 	    }]);
 
-	    return BarChartComponent;
+	    return LineChartComponent;
 	}()) || _class);
 
 /***/ }),
-/* 60 */
+/* 63 */
 /***/ (function(module, exports) {
 
 	"use strict";
 
-	module.exports = "<svg ac-ref=\"svg\" ac-attr=\"height: height, width: width\" ac-if=\"this.series.length\">\r\n    <rect class=\"highcharts-background\" x=\"0\" y=\"0\" ac-attr=\"height: height, width: width, fill: background\" rx=\"0\" ry=\"0\"></rect>\r\n    <text ac-attr=\"x: labelX\" text-anchor=\"middle\" class=\"acechart-title\" y=\"24\">\r\n        <tspan ac-value=\"title\"></tspan>\r\n    </text>\r\n    <text ac-attr=\"x: yLabelX, y: yLabelY, transform: yLabelTransform\" text-anchor=\"middle\" class=\"acecharts-axis-title\">\r\n        <tspan ac-value=\"yAxis.label\"></tspan>\r\n    </text>\r\n    <g class=\"acechart-grid acechart-yaxis-grid \">\r\n        <line ac-for=\"let item of xGrid\" ac-attr=\"x1: x1, x2: x2, y1: y1, y2: y2\" stroke=\"black\" stroke-width=\"1\" shape-rendering=\"crispEdges\" />\r\n    </g>\r\n    <g class=\"acechart-group\">\r\n        <rect ac-for=\"let item of series\" @mouseenter=\"mouseenter(item)\" @mouseleave=\"mouseleave\" ac-attr=\"x: x, y: y, stroke: stroke, fill: fill, stroke-width: strokeWidth, width: width, height: height\"></rect>\r\n    </g>\r\n    <!--     <g class=\"acechart-axis-labels acechart-xaxis-labels \" transform=\"translate(40,0) scale(1 1)\">\r\n        <text ac-for=\"xLabels\" ac-attr=\"x: x, y: y\" text-anchor=\"start\" transform=\"translate(0,0)\">\r\n            <tspan ac-value=\"name\"></tspan>\r\n        </text>\r\n    </g> -->\r\n    <g class=\"acechart-axis-labels acechart-xaxis-labels \">\r\n        <text ac-for=\"let item of xGroupLabels\" ac-attr=\"x: x, y: y\" text-anchor=\"start\" transform=\"translate(0,0)\">\r\n            <tspan ac-value=\"name\"></tspan>\r\n        </text>\r\n    </g>\r\n    <g class=\"acechart-axis-labels acechart-yaxis-labels \">\r\n        <text ac-for=\"let item of yLabels\" ac-attr=\"x: x, y: y\" text-anchor=\"end\" transform=\"translate(0,0)\">\r\n            <tspan ac-value=\"name\"></tspan>\r\n        </text>\r\n    </g>\r\n</svg>\r\n<div class=\"acecharts-tooltip\" ac-class=\"open: this.tooltipIsShown\" ac-style=\"top: tooltipCoords.y, left: tooltipCoords.x\">\r\n    <div style=\"font-size: 12px;\">Languages</div>\r\n    <br>\r\n    <span ac-value=\"tooltipSelected.name\"></span>\r\n    <b ac-value=\"tooltipSelected.value\"></b>% of total\r\n</div>\r\n<div ac-if=\"!this.series.length\">Bar chart. There is no data to show</div>\r\n<style>\r\nace-bar-chart {\r\n    display: inline-block;\r\n    position: relative;\r\n}\r\n\r\n.acecharts-tooltip.open {\r\n    opacity: 1;\r\n    visibility: visible;\r\n}\r\n\r\n\r\n\r\n.acecharts-tooltip {\r\n    position: absolute;\r\n    background: #fbf5f5c9;\r\n    /*width: 200px;*/\r\n    top: 0;\r\n    /*height: 100px;*/\r\n    transition: 0.2s;\r\n    opacity: 0;\r\n    visibility: hidden;\r\n    padding: 10px;\r\n    border: 1px solid #ddddde;\r\n    border-radius: 2px;\r\n}\r\n\r\n.acecharts-tooltip:after, .acecharts-tooltip:before {\r\n    top: 100%;\r\n    left: 50%;\r\n    border: solid transparent;\r\n    content: \" \";\r\n    height: 0;\r\n    width: 0;\r\n    position: absolute;\r\n    pointer-events: none;\r\n}\r\n\r\n.acecharts-tooltip:after {\r\n    border-color: rgba(247, 247, 247, 0);\r\n    border-top-color: #f7f7f7;\r\n    border-width: 10px;\r\n    margin-left: -10px;\r\n}\r\n.acecharts-tooltip:before {\r\n    border-color: rgba(221, 221, 222, 0);\r\n    border-top-color: #ddddde;\r\n    border-width: 11px;\r\n    margin-left: -11px;\r\n}\r\n\r\n.acechart-group rect {\r\n    /*fill: #5699dc;*/\r\n    transition: 0.5s;\r\n}\r\n\r\n.acechart-group rect:hover {\r\n    /*fill: #3e6a96;*/\r\n    opacity: 0.7;\r\n}\r\n\r\n.acechart-xaxis-labels text {\r\n    cursor: default;\r\n    font-size: 11px;\r\n    font-family: Verdana, sans-serif;\r\n    fill: #666666;\r\n    transition: 0.5s;\r\n}\r\n\r\n.acecharts-axis-title {\r\n    cursor: default;\r\n    font-size: 12px;\r\n    font-family: Verdana, sans-serif;\r\n    fill: #666666;\r\n}\r\n\r\n.acechart-title {\r\n    cursor: default;\r\n    font-size: 16px;\r\n    font-family: Verdana, sans-serif;\r\n    fill: #666666;\r\n    transition: 0.5s;\r\n}\r\n\r\n.acechart-yaxis-labels text {\r\n    cursor: default;\r\n    font-size: 11px;\r\n    font-family: Verdana, sans-serif;\r\n    fill: #666666;\r\n}\r\n\r\n.acechart-yaxis-grid line {\r\n    stroke: #ccc;\r\n}\r\n\r\n.acechart-group {}\r\n</style>";
+	module.exports = "<svg ac-ref=\"svg\" ac-attr=\"height: height, width: width\" ac-if=\"this.series.length\">\r\n    <!-- <rect class=\"acechart-background\" x=\"0\" y=\"0\" ac-attr=\"height: height, width: width, fill: background\" rx=\"0\" ry=\"0\"></rect> -->\r\n<!--     <text ac-attr=\"x: labelX\" text-anchor=\"middle\" class=\"acechart-title\" y=\"24\">\r\n        <tspan ac-value=\"title\"></tspan>\r\n    </text>\r\n    <g class=\"acechart-grid acechart-yaxis-grid \">\r\n        <line ac-for=\"let item of xGrid\" ac-attr=\"x1: x1, x2: x2, y1: y1, y2: y2\" stroke=\"black\" stroke-width=\"1\" shape-rendering=\"crispEdges\" />\r\n    </g>\r\n    <text ac-attr=\"x: yLabelX, y: yLabelY, transform: yLabelTransform\" text-anchor=\"middle\" class=\"acecharts-axis-title\">\r\n        <tspan ac-value=\"yAxis.label\"></tspan>\r\n    </text>\r\n    <g class=\"acechart-axis-labels acechart-yaxis-labels \">\r\n        <text ac-for=\"let item of yLabels\" ac-attr=\"x: x, y: y\" text-anchor=\"end\" transform=\"translate(0,0)\">\r\n            <tspan ac-value=\"name\"></tspan>\r\n        </text>\r\n    </g>\r\n    <g class=\"acechart-series\">\r\n        <path ac-for=\"let item of series\" fill=\"none\" ac-attr=\"d: d, stroke: stroke\" class=\"acechart-graph\" stroke-width=\"2\" stroke-linejoin=\"round\" stroke-linecap=\"round\"></path>\r\n    </g> -->\r\n\r\n    <g class=\"acechart-markers\">\r\n        <g ac-for=\"let item of markers\"> \r\n            <rect ac-for=\"let item of items\" @mouseenter=\"mouseenter(item)\" @mouseleave=\"mouseleave\" ac-attr=\"x: x, y: y, fill: fill, width: width, height: height\" >\r\n            \r\n            </rect>\r\n        </g>\r\n    </g>\r\n<!-- \r\n    <g class=\"acechart-axis-labels acechart-xaxis-labels \">\r\n        <text ac-for=\"xLabels\" ac-attr=\"x: x, y: y\" text-anchor=\"start\">\r\n            <tspan ac-value=\"name\"></tspan>\r\n        </text>\r\n    </g>\r\n -->\r\n</svg>\r\n<div class=\"acecharts-tooltip\" ac-class=\"open: this.tooltipIsShown\" ac-style=\"top: tooltipCoords.y, left: tooltipCoords.x\">\r\n    <div style=\"font-size: 12px;\">Languages</div>\r\n    <br>\r\n    <span ac-value=\"tooltipSelected.name\"></span>\r\n    <b ac-value=\"tooltipSelected.value\"></b>% of total\r\n</div>\r\n<div ac-if=\"!this.series.length\">Bar chart. There is no data to show</div>\r\n<style>\r\nace-line-chart {\r\n    display: inline-block;\r\n    position: relative;\r\n}\r\n\r\n.acecharts-tooltip.open {\r\n    opacity: 1;\r\n    visibility: visible;\r\n}\r\n\r\n.acechart-series path {\r\n    transition: 0.5s;\r\n}\r\n\r\n.acecharts-tooltip {\r\n    position: absolute;\r\n    background: #fbf5f5c9;\r\n    /*width: 200px;*/\r\n    top: 0;\r\n    /*height: 100px;*/\r\n    transition: 0.2s;\r\n    opacity: 0;\r\n    visibility: hidden;\r\n    padding: 10px;\r\n    border: 1px solid #ddddde;\r\n    border-radius: 2px;\r\n}\r\n\r\n.acecharts-tooltip:after,\r\n.acecharts-tooltip:before {\r\n    top: 100%;\r\n    left: 50%;\r\n    border: solid transparent;\r\n    content: \" \";\r\n    height: 0;\r\n    width: 0;\r\n    position: absolute;\r\n    pointer-events: none;\r\n}\r\n\r\n.acecharts-tooltip:after {\r\n    border-color: rgba(247, 247, 247, 0);\r\n    border-top-color: #f7f7f7;\r\n    border-width: 10px;\r\n    margin-left: -10px;\r\n}\r\n\r\n.acecharts-tooltip:before {\r\n    border-color: rgba(221, 221, 222, 0);\r\n    border-top-color: #ddddde;\r\n    border-width: 11px;\r\n    margin-left: -11px;\r\n}\r\n\r\n.acechart-group rect {\r\n    /*fill: #5699dc;*/\r\n    transition: 0.5s;\r\n}\r\n\r\n.acechart-group rect:hover {\r\n    /*fill: #3e6a96;*/\r\n    opacity: 0.7;\r\n}\r\n\r\n.acechart-xaxis-labels text {\r\n    cursor: default;\r\n    font-size: 11px;\r\n    font-family: Verdana, sans-serif;\r\n    fill: #666666;\r\n    transition: 0.5s;\r\n}\r\n\r\n.acecharts-axis-title {\r\n    cursor: default;\r\n    font-size: 12px;\r\n    font-family: Verdana, sans-serif;\r\n    fill: #666666;\r\n}\r\n\r\n.acechart-title {\r\n    cursor: default;\r\n    font-size: 16px;\r\n    font-family: Verdana, sans-serif;\r\n    fill: #666666;\r\n    transition: 0.5s;\r\n}\r\n\r\n.acechart-yaxis-labels text {\r\n    cursor: default;\r\n    font-size: 11px;\r\n    font-family: Verdana, sans-serif;\r\n    fill: #666666;\r\n}\r\n\r\n.acechart-yaxis-grid line {\r\n    stroke: #ccc;\r\n}\r\n\r\n.acechart-group {}\r\n</style>";
 
 /***/ }),
-/* 61 */
+/* 64 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -5466,7 +5809,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	exports.Http = Http;
 
 /***/ }),
-/* 62 */
+/* 65 */
 /***/ (function(module, exports) {
 
 	'use strict';
@@ -5654,7 +5997,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	}();
 
 /***/ }),
-/* 63 */
+/* 66 */
 /***/ (function(module, exports) {
 
 	'use strict';
@@ -5682,7 +6025,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	exports.Validators = Validators;
 
 /***/ }),
-/* 64 */
+/* 67 */
 /***/ (function(module, exports) {
 
 	'use strict';

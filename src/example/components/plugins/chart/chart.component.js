@@ -20,11 +20,6 @@ import Tpl from './chart.component.html';
                 { name: 'PYTHON', value: 10 },
                 { name: 'C', value: 15 },
                 { name: 'PERl', value: 5 },
-                { name: 'C#', value: 20 },
-                { name: 'C#', value: 20 },
-                { name: 'C#', value: 20 },
-                { name: 'C#', value: 20 },
-                { name: 'C#', value: 20 },
                 { name: 'C#', value: 20 }
             ],
             height: 300,
@@ -39,16 +34,12 @@ import Tpl from './chart.component.html';
             },
             background: '#f0f0f0',
             series: [
-                { name: 'JS', value: [1,20,300,50,200] },
-                { name: 'JAVA', value: [10,60,200,100,300, 500, 100, 7000] },
-                // { name: 'PHP', value: [100,200,300,400] },
-                // { name: 'PYTHON', value: [100,200,300,400] },
-                // { name: 'C', value: [100,200,300,400] },
-                // { name: 'PERl', value: [100,200,300,400] },
-                // { name: 'C#', value:  [100,200,300,400] }
+                { name: 'JS', value: [10, 20, 300, 50, 30] },
+                { name: 'JAVA', value: [100, 200, 300, 500, 300] },
+                { name: 'PHP', value: [1000, 500, 500, 400, 20] }
             ],
             xAxis: {
-                   categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
+                categories: ['2010', '2011', '2012', '2013', '2014']
             },
             height: 300,
             width: 600,
@@ -56,23 +47,30 @@ import Tpl from './chart.component.html';
         }
     }
 })
-export class PluginsChartComponent { 
+export class PluginsChartComponent {
     onInit() {
 
 
-        // setInterval(() => {
-        //     let data = this.props.get('chartData');
+            // setInterval(() => {
+            //     let barChartData = this.props.get('barChartData');
+            //     let lineChartData = this.props.get('lineChartData');
 
-        //     data.series = [
-        //         { name: '1', value: Math.ceil(11 * Math.random()) },
-        //         { name: '2', value: Math.ceil(26 * Math.random()) },
-        //         { name: '3', value: Math.ceil(8 * Math.random()) },
-        //         { name: '4', value: Math.ceil(13 * Math.random()) },
-        //         { name: '5', value: Math.ceil(15 * Math.random()) },
-        //         { name: '1', value: Math.ceil(5 * Math.random()) },
-        //         { name: '2', value: Math.ceil(30 * Math.random()) }
-        //     ];
-        //     this.props.set('chartData', data);
-        // }, 1000);
+            //     barChartData.series = [
+            //         { name: 'JS', value: 6 * Math.random()},
+            //         { name: 'JAVA', value: 5 * Math.random()},
+            //         { name: 'PHP', value: 8 * Math.random()},
+            //         { name: 'PYTHON', value: 10 * Math.random()},
+            //         { name: 'C', value: 15 * Math.random()},
+            //         { name: 'PERl', value: 5 * Math.random()},
+            //         { name: 'C#', value: 20 * Math.random()}
+            //     ];
+
+            //     lineChartData.series = [
+            //         { name: 'JS', value: [10 * Math.random(), 20 * Math.random(),300 * Math.random(), 50 * Math.random(), 300 * Math.random()] },
+            //         { name: 'JAVA', value: [100 * Math.random(), 200 * Math.random(), 300 * Math.random(), 500 * Math.random(), 300 * Math.random()] },
+            //         { name: 'PHP', value: [2000 * Math.random(),500 * Math.random(),500 * Math.random(),400 * Math.random(),20 * Math.random()] }
+            //     ];
+            //     this.props.set({lineChartData, barChartData});
+            // }, 2000);
     }
 }

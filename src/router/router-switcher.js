@@ -24,9 +24,13 @@ export class RouteSwitcher {
                     }
 
 
-                    let childComp = this.children[Object.keys(this.children)[0]][0];
-                    let router = childComp.root.querySelectorAll('child-route-switcher')[0];
+                    let childComp;
+                    let router;
 
+                    if(Object.keys(this.children).length) {
+                        childComp = this.children[Object.keys(this.children)[0]][0];
+                        router = childComp.root.querySelectorAll('child-route-switcher')[0];
+                    }
 
                     if (router) {
                         this.destroyChildren(router);
