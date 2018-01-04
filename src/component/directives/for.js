@@ -49,22 +49,23 @@ export function _for(array, data) {
                         item.parent.insertBefore(prevContent, item.comment);
 
 
+                        item.directives[i] = {
+                            for: Directives._init.call(this, prevContent, 'ac-for'), // should go first for correct work
+                            class: Directives._init.call(this, prevContent, 'ac-class'),
+                            style: Directives._init.call(this, prevContent, 'ac-style'),
+                            attrs: Directives._init.call(this, prevContent, 'ac-attr'),
+                            if: Directives._init.call(this, prevContent, 'ac-if'),
+                            props: Directives._init.call(this, prevContent, 'ac-value'),
+                            links: Directives._init.call(this, prevContent, 'ac-link'),
+                            // events: eventsArray
+                        };
+
                         let eventsArray = [];
 
                         EVENTS_NAMES.forEach(directive => {
                             eventsArray.push(Directives._initEvent.call(this, prevContent, directive, [], getCurrentProperty.bind(this, item, collectionName, data, i), loopIterator));
                         });
-
-                        item.directives[i] = {
-                            attrs: Directives._init.call(this, prevContent, 'ac-attr'),
-                            class: Directives._init.call(this, prevContent, 'ac-class'),
-                            for: Directives._init.call(this, prevContent, 'ac-for'),
-                            style: Directives._init.call(this, prevContent, 'ac-style'),
-                            if: Directives._init.call(this, prevContent, 'ac-if'),
-                            props: Directives._init.call(this, prevContent, 'ac-value'),
-                            links: Directives._init.call(this, prevContent, 'ac-link'),
-                            events: eventsArray
-                        };
+                        item.directives[i].events = eventsArray;
 
                         updateElement.call(this, item, i, prevContent, array[i]); 
                     }

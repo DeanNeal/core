@@ -65,7 +65,7 @@ module.exports = {
             VERSION: JSON.stringify(packageJSON.version)
         }),
         new ExtractTextPlugin("[name].css", { allChunks: true }),
-        new webpack.HotModuleReplacementPlugin(),
+        // new webpack.HotModuleReplacementPlugin(),
         new CopyWebpackPlugin([{
             context: 'src/example/img',
             from: '**/*',

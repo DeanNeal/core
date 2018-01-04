@@ -1,8 +1,8 @@
 /*!
- * ace-js 0.6.2
+ * ace-js 0.6.3
  * May be freely distributed under the MIT license 
  * Author: Bogdan Zinkevich
- * Last update: 2018-1-4 17:12:01
+ * Last update: 2018-1-4 20:37:22
  * 
  */
 (function webpackUniversalModuleDefinition(root, factory) {
@@ -16,539 +16,6 @@
 		root["demo"] = factory();
 })(this, function() {
 return /******/ (function(modules) { // webpackBootstrap
-/******/ 	var parentHotUpdateCallback = this["webpackHotUpdate_name_"];
-/******/ 	this["webpackHotUpdate_name_"] = 
-/******/ 	function webpackHotUpdateCallback(chunkId, moreModules) { // eslint-disable-line no-unused-vars
-/******/ 		hotAddUpdateChunk(chunkId, moreModules);
-/******/ 		if(parentHotUpdateCallback) parentHotUpdateCallback(chunkId, moreModules);
-/******/ 	}
-/******/ 	
-/******/ 	function hotDownloadUpdateChunk(chunkId) { // eslint-disable-line no-unused-vars
-/******/ 		var head = document.getElementsByTagName("head")[0];
-/******/ 		var script = document.createElement("script");
-/******/ 		script.type = "text/javascript";
-/******/ 		script.charset = "utf-8";
-/******/ 		script.src = __webpack_require__.p + "" + chunkId + "." + hotCurrentHash + ".hot-update.js";
-/******/ 		head.appendChild(script);
-/******/ 	}
-/******/ 	
-/******/ 	function hotDownloadManifest(callback) { // eslint-disable-line no-unused-vars
-/******/ 		if(typeof XMLHttpRequest === "undefined")
-/******/ 			return callback(new Error("No browser support"));
-/******/ 		try {
-/******/ 			var request = new XMLHttpRequest();
-/******/ 			var requestPath = __webpack_require__.p + "" + hotCurrentHash + ".hot-update.json";
-/******/ 			request.open("GET", requestPath, true);
-/******/ 			request.timeout = 10000;
-/******/ 			request.send(null);
-/******/ 		} catch(err) {
-/******/ 			return callback(err);
-/******/ 		}
-/******/ 		request.onreadystatechange = function() {
-/******/ 			if(request.readyState !== 4) return;
-/******/ 			if(request.status === 0) {
-/******/ 				// timeout
-/******/ 				callback(new Error("Manifest request to " + requestPath + " timed out."));
-/******/ 			} else if(request.status === 404) {
-/******/ 				// no update available
-/******/ 				callback();
-/******/ 			} else if(request.status !== 200 && request.status !== 304) {
-/******/ 				// other failure
-/******/ 				callback(new Error("Manifest request to " + requestPath + " failed."));
-/******/ 			} else {
-/******/ 				// success
-/******/ 				try {
-/******/ 					var update = JSON.parse(request.responseText);
-/******/ 				} catch(e) {
-/******/ 					callback(e);
-/******/ 					return;
-/******/ 				}
-/******/ 				callback(null, update);
-/******/ 			}
-/******/ 		};
-/******/ 	}
-
-/******/ 	
-/******/ 	
-/******/ 	// Copied from https://github.com/facebook/react/blob/bef45b0/src/shared/utils/canDefineProperty.js
-/******/ 	var canDefineProperty = false;
-/******/ 	try {
-/******/ 		Object.defineProperty({}, "x", {
-/******/ 			get: function() {}
-/******/ 		});
-/******/ 		canDefineProperty = true;
-/******/ 	} catch(x) {
-/******/ 		// IE will fail on defineProperty
-/******/ 	}
-/******/ 	
-/******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "cc7f80b43dadc79a28ed"; // eslint-disable-line no-unused-vars
-/******/ 	var hotCurrentModuleData = {};
-/******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
-/******/ 	
-/******/ 	function hotCreateRequire(moduleId) { // eslint-disable-line no-unused-vars
-/******/ 		var me = installedModules[moduleId];
-/******/ 		if(!me) return __webpack_require__;
-/******/ 		var fn = function(request) {
-/******/ 			if(me.hot.active) {
-/******/ 				if(installedModules[request]) {
-/******/ 					if(installedModules[request].parents.indexOf(moduleId) < 0)
-/******/ 						installedModules[request].parents.push(moduleId);
-/******/ 					if(me.children.indexOf(request) < 0)
-/******/ 						me.children.push(request);
-/******/ 				} else hotCurrentParents = [moduleId];
-/******/ 			} else {
-/******/ 				console.warn("[HMR] unexpected require(" + request + ") from disposed module " + moduleId);
-/******/ 				hotCurrentParents = [];
-/******/ 			}
-/******/ 			return __webpack_require__(request);
-/******/ 		};
-/******/ 		for(var name in __webpack_require__) {
-/******/ 			if(Object.prototype.hasOwnProperty.call(__webpack_require__, name)) {
-/******/ 				if(canDefineProperty) {
-/******/ 					Object.defineProperty(fn, name, (function(name) {
-/******/ 						return {
-/******/ 							configurable: true,
-/******/ 							enumerable: true,
-/******/ 							get: function() {
-/******/ 								return __webpack_require__[name];
-/******/ 							},
-/******/ 							set: function(value) {
-/******/ 								__webpack_require__[name] = value;
-/******/ 							}
-/******/ 						};
-/******/ 					}(name)));
-/******/ 				} else {
-/******/ 					fn[name] = __webpack_require__[name];
-/******/ 				}
-/******/ 			}
-/******/ 		}
-/******/ 	
-/******/ 		function ensure(chunkId, callback) {
-/******/ 			if(hotStatus === "ready")
-/******/ 				hotSetStatus("prepare");
-/******/ 			hotChunksLoading++;
-/******/ 			__webpack_require__.e(chunkId, function() {
-/******/ 				try {
-/******/ 					callback.call(null, fn);
-/******/ 				} finally {
-/******/ 					finishChunkLoading();
-/******/ 				}
-/******/ 	
-/******/ 				function finishChunkLoading() {
-/******/ 					hotChunksLoading--;
-/******/ 					if(hotStatus === "prepare") {
-/******/ 						if(!hotWaitingFilesMap[chunkId]) {
-/******/ 							hotEnsureUpdateChunk(chunkId);
-/******/ 						}
-/******/ 						if(hotChunksLoading === 0 && hotWaitingFiles === 0) {
-/******/ 							hotUpdateDownloaded();
-/******/ 						}
-/******/ 					}
-/******/ 				}
-/******/ 			});
-/******/ 		}
-/******/ 		if(canDefineProperty) {
-/******/ 			Object.defineProperty(fn, "e", {
-/******/ 				enumerable: true,
-/******/ 				value: ensure
-/******/ 			});
-/******/ 		} else {
-/******/ 			fn.e = ensure;
-/******/ 		}
-/******/ 		return fn;
-/******/ 	}
-/******/ 	
-/******/ 	function hotCreateModule(moduleId) { // eslint-disable-line no-unused-vars
-/******/ 		var hot = {
-/******/ 			// private stuff
-/******/ 			_acceptedDependencies: {},
-/******/ 			_declinedDependencies: {},
-/******/ 			_selfAccepted: false,
-/******/ 			_selfDeclined: false,
-/******/ 			_disposeHandlers: [],
-/******/ 	
-/******/ 			// Module API
-/******/ 			active: true,
-/******/ 			accept: function(dep, callback) {
-/******/ 				if(typeof dep === "undefined")
-/******/ 					hot._selfAccepted = true;
-/******/ 				else if(typeof dep === "function")
-/******/ 					hot._selfAccepted = dep;
-/******/ 				else if(typeof dep === "object")
-/******/ 					for(var i = 0; i < dep.length; i++)
-/******/ 						hot._acceptedDependencies[dep[i]] = callback;
-/******/ 				else
-/******/ 					hot._acceptedDependencies[dep] = callback;
-/******/ 			},
-/******/ 			decline: function(dep) {
-/******/ 				if(typeof dep === "undefined")
-/******/ 					hot._selfDeclined = true;
-/******/ 				else if(typeof dep === "number")
-/******/ 					hot._declinedDependencies[dep] = true;
-/******/ 				else
-/******/ 					for(var i = 0; i < dep.length; i++)
-/******/ 						hot._declinedDependencies[dep[i]] = true;
-/******/ 			},
-/******/ 			dispose: function(callback) {
-/******/ 				hot._disposeHandlers.push(callback);
-/******/ 			},
-/******/ 			addDisposeHandler: function(callback) {
-/******/ 				hot._disposeHandlers.push(callback);
-/******/ 			},
-/******/ 			removeDisposeHandler: function(callback) {
-/******/ 				var idx = hot._disposeHandlers.indexOf(callback);
-/******/ 				if(idx >= 0) hot._disposeHandlers.splice(idx, 1);
-/******/ 			},
-/******/ 	
-/******/ 			// Management API
-/******/ 			check: hotCheck,
-/******/ 			apply: hotApply,
-/******/ 			status: function(l) {
-/******/ 				if(!l) return hotStatus;
-/******/ 				hotStatusHandlers.push(l);
-/******/ 			},
-/******/ 			addStatusHandler: function(l) {
-/******/ 				hotStatusHandlers.push(l);
-/******/ 			},
-/******/ 			removeStatusHandler: function(l) {
-/******/ 				var idx = hotStatusHandlers.indexOf(l);
-/******/ 				if(idx >= 0) hotStatusHandlers.splice(idx, 1);
-/******/ 			},
-/******/ 	
-/******/ 			//inherit from previous dispose call
-/******/ 			data: hotCurrentModuleData[moduleId]
-/******/ 		};
-/******/ 		return hot;
-/******/ 	}
-/******/ 	
-/******/ 	var hotStatusHandlers = [];
-/******/ 	var hotStatus = "idle";
-/******/ 	
-/******/ 	function hotSetStatus(newStatus) {
-/******/ 		hotStatus = newStatus;
-/******/ 		for(var i = 0; i < hotStatusHandlers.length; i++)
-/******/ 			hotStatusHandlers[i].call(null, newStatus);
-/******/ 	}
-/******/ 	
-/******/ 	// while downloading
-/******/ 	var hotWaitingFiles = 0;
-/******/ 	var hotChunksLoading = 0;
-/******/ 	var hotWaitingFilesMap = {};
-/******/ 	var hotRequestedFilesMap = {};
-/******/ 	var hotAvailibleFilesMap = {};
-/******/ 	var hotCallback;
-/******/ 	
-/******/ 	// The update info
-/******/ 	var hotUpdate, hotUpdateNewHash;
-/******/ 	
-/******/ 	function toModuleId(id) {
-/******/ 		var isNumber = (+id) + "" === id;
-/******/ 		return isNumber ? +id : id;
-/******/ 	}
-/******/ 	
-/******/ 	function hotCheck(apply, callback) {
-/******/ 		if(hotStatus !== "idle") throw new Error("check() is only allowed in idle status");
-/******/ 		if(typeof apply === "function") {
-/******/ 			hotApplyOnUpdate = false;
-/******/ 			callback = apply;
-/******/ 		} else {
-/******/ 			hotApplyOnUpdate = apply;
-/******/ 			callback = callback || function(err) {
-/******/ 				if(err) throw err;
-/******/ 			};
-/******/ 		}
-/******/ 		hotSetStatus("check");
-/******/ 		hotDownloadManifest(function(err, update) {
-/******/ 			if(err) return callback(err);
-/******/ 			if(!update) {
-/******/ 				hotSetStatus("idle");
-/******/ 				callback(null, null);
-/******/ 				return;
-/******/ 			}
-/******/ 	
-/******/ 			hotRequestedFilesMap = {};
-/******/ 			hotAvailibleFilesMap = {};
-/******/ 			hotWaitingFilesMap = {};
-/******/ 			for(var i = 0; i < update.c.length; i++)
-/******/ 				hotAvailibleFilesMap[update.c[i]] = true;
-/******/ 			hotUpdateNewHash = update.h;
-/******/ 	
-/******/ 			hotSetStatus("prepare");
-/******/ 			hotCallback = callback;
-/******/ 			hotUpdate = {};
-/******/ 			var chunkId = 0;
-/******/ 			{ // eslint-disable-line no-lone-blocks
-/******/ 				/*globals chunkId */
-/******/ 				hotEnsureUpdateChunk(chunkId);
-/******/ 			}
-/******/ 			if(hotStatus === "prepare" && hotChunksLoading === 0 && hotWaitingFiles === 0) {
-/******/ 				hotUpdateDownloaded();
-/******/ 			}
-/******/ 		});
-/******/ 	}
-/******/ 	
-/******/ 	function hotAddUpdateChunk(chunkId, moreModules) { // eslint-disable-line no-unused-vars
-/******/ 		if(!hotAvailibleFilesMap[chunkId] || !hotRequestedFilesMap[chunkId])
-/******/ 			return;
-/******/ 		hotRequestedFilesMap[chunkId] = false;
-/******/ 		for(var moduleId in moreModules) {
-/******/ 			if(Object.prototype.hasOwnProperty.call(moreModules, moduleId)) {
-/******/ 				hotUpdate[moduleId] = moreModules[moduleId];
-/******/ 			}
-/******/ 		}
-/******/ 		if(--hotWaitingFiles === 0 && hotChunksLoading === 0) {
-/******/ 			hotUpdateDownloaded();
-/******/ 		}
-/******/ 	}
-/******/ 	
-/******/ 	function hotEnsureUpdateChunk(chunkId) {
-/******/ 		if(!hotAvailibleFilesMap[chunkId]) {
-/******/ 			hotWaitingFilesMap[chunkId] = true;
-/******/ 		} else {
-/******/ 			hotRequestedFilesMap[chunkId] = true;
-/******/ 			hotWaitingFiles++;
-/******/ 			hotDownloadUpdateChunk(chunkId);
-/******/ 		}
-/******/ 	}
-/******/ 	
-/******/ 	function hotUpdateDownloaded() {
-/******/ 		hotSetStatus("ready");
-/******/ 		var callback = hotCallback;
-/******/ 		hotCallback = null;
-/******/ 		if(!callback) return;
-/******/ 		if(hotApplyOnUpdate) {
-/******/ 			hotApply(hotApplyOnUpdate, callback);
-/******/ 		} else {
-/******/ 			var outdatedModules = [];
-/******/ 			for(var id in hotUpdate) {
-/******/ 				if(Object.prototype.hasOwnProperty.call(hotUpdate, id)) {
-/******/ 					outdatedModules.push(toModuleId(id));
-/******/ 				}
-/******/ 			}
-/******/ 			callback(null, outdatedModules);
-/******/ 		}
-/******/ 	}
-/******/ 	
-/******/ 	function hotApply(options, callback) {
-/******/ 		if(hotStatus !== "ready") throw new Error("apply() is only allowed in ready status");
-/******/ 		if(typeof options === "function") {
-/******/ 			callback = options;
-/******/ 			options = {};
-/******/ 		} else if(options && typeof options === "object") {
-/******/ 			callback = callback || function(err) {
-/******/ 				if(err) throw err;
-/******/ 			};
-/******/ 		} else {
-/******/ 			options = {};
-/******/ 			callback = callback || function(err) {
-/******/ 				if(err) throw err;
-/******/ 			};
-/******/ 		}
-/******/ 	
-/******/ 		function getAffectedStuff(module) {
-/******/ 			var outdatedModules = [module];
-/******/ 			var outdatedDependencies = {};
-/******/ 	
-/******/ 			var queue = outdatedModules.slice();
-/******/ 			while(queue.length > 0) {
-/******/ 				var moduleId = queue.pop();
-/******/ 				var module = installedModules[moduleId];
-/******/ 				if(!module || module.hot._selfAccepted)
-/******/ 					continue;
-/******/ 				if(module.hot._selfDeclined) {
-/******/ 					return new Error("Aborted because of self decline: " + moduleId);
-/******/ 				}
-/******/ 				if(moduleId === 0) {
-/******/ 					return;
-/******/ 				}
-/******/ 				for(var i = 0; i < module.parents.length; i++) {
-/******/ 					var parentId = module.parents[i];
-/******/ 					var parent = installedModules[parentId];
-/******/ 					if(parent.hot._declinedDependencies[moduleId]) {
-/******/ 						return new Error("Aborted because of declined dependency: " + moduleId + " in " + parentId);
-/******/ 					}
-/******/ 					if(outdatedModules.indexOf(parentId) >= 0) continue;
-/******/ 					if(parent.hot._acceptedDependencies[moduleId]) {
-/******/ 						if(!outdatedDependencies[parentId])
-/******/ 							outdatedDependencies[parentId] = [];
-/******/ 						addAllToSet(outdatedDependencies[parentId], [moduleId]);
-/******/ 						continue;
-/******/ 					}
-/******/ 					delete outdatedDependencies[parentId];
-/******/ 					outdatedModules.push(parentId);
-/******/ 					queue.push(parentId);
-/******/ 				}
-/******/ 			}
-/******/ 	
-/******/ 			return [outdatedModules, outdatedDependencies];
-/******/ 		}
-/******/ 	
-/******/ 		function addAllToSet(a, b) {
-/******/ 			for(var i = 0; i < b.length; i++) {
-/******/ 				var item = b[i];
-/******/ 				if(a.indexOf(item) < 0)
-/******/ 					a.push(item);
-/******/ 			}
-/******/ 		}
-/******/ 	
-/******/ 		// at begin all updates modules are outdated
-/******/ 		// the "outdated" status can propagate to parents if they don't accept the children
-/******/ 		var outdatedDependencies = {};
-/******/ 		var outdatedModules = [];
-/******/ 		var appliedUpdate = {};
-/******/ 		for(var id in hotUpdate) {
-/******/ 			if(Object.prototype.hasOwnProperty.call(hotUpdate, id)) {
-/******/ 				var moduleId = toModuleId(id);
-/******/ 				var result = getAffectedStuff(moduleId);
-/******/ 				if(!result) {
-/******/ 					if(options.ignoreUnaccepted)
-/******/ 						continue;
-/******/ 					hotSetStatus("abort");
-/******/ 					return callback(new Error("Aborted because " + moduleId + " is not accepted"));
-/******/ 				}
-/******/ 				if(result instanceof Error) {
-/******/ 					hotSetStatus("abort");
-/******/ 					return callback(result);
-/******/ 				}
-/******/ 				appliedUpdate[moduleId] = hotUpdate[moduleId];
-/******/ 				addAllToSet(outdatedModules, result[0]);
-/******/ 				for(var moduleId in result[1]) {
-/******/ 					if(Object.prototype.hasOwnProperty.call(result[1], moduleId)) {
-/******/ 						if(!outdatedDependencies[moduleId])
-/******/ 							outdatedDependencies[moduleId] = [];
-/******/ 						addAllToSet(outdatedDependencies[moduleId], result[1][moduleId]);
-/******/ 					}
-/******/ 				}
-/******/ 			}
-/******/ 		}
-/******/ 	
-/******/ 		// Store self accepted outdated modules to require them later by the module system
-/******/ 		var outdatedSelfAcceptedModules = [];
-/******/ 		for(var i = 0; i < outdatedModules.length; i++) {
-/******/ 			var moduleId = outdatedModules[i];
-/******/ 			if(installedModules[moduleId] && installedModules[moduleId].hot._selfAccepted)
-/******/ 				outdatedSelfAcceptedModules.push({
-/******/ 					module: moduleId,
-/******/ 					errorHandler: installedModules[moduleId].hot._selfAccepted
-/******/ 				});
-/******/ 		}
-/******/ 	
-/******/ 		// Now in "dispose" phase
-/******/ 		hotSetStatus("dispose");
-/******/ 		var queue = outdatedModules.slice();
-/******/ 		while(queue.length > 0) {
-/******/ 			var moduleId = queue.pop();
-/******/ 			var module = installedModules[moduleId];
-/******/ 			if(!module) continue;
-/******/ 	
-/******/ 			var data = {};
-/******/ 	
-/******/ 			// Call dispose handlers
-/******/ 			var disposeHandlers = module.hot._disposeHandlers;
-/******/ 			for(var j = 0; j < disposeHandlers.length; j++) {
-/******/ 				var cb = disposeHandlers[j];
-/******/ 				cb(data);
-/******/ 			}
-/******/ 			hotCurrentModuleData[moduleId] = data;
-/******/ 	
-/******/ 			// disable module (this disables requires from this module)
-/******/ 			module.hot.active = false;
-/******/ 	
-/******/ 			// remove module from cache
-/******/ 			delete installedModules[moduleId];
-/******/ 	
-/******/ 			// remove "parents" references from all children
-/******/ 			for(var j = 0; j < module.children.length; j++) {
-/******/ 				var child = installedModules[module.children[j]];
-/******/ 				if(!child) continue;
-/******/ 				var idx = child.parents.indexOf(moduleId);
-/******/ 				if(idx >= 0) {
-/******/ 					child.parents.splice(idx, 1);
-/******/ 				}
-/******/ 			}
-/******/ 		}
-/******/ 	
-/******/ 		// remove outdated dependency from module children
-/******/ 		for(var moduleId in outdatedDependencies) {
-/******/ 			if(Object.prototype.hasOwnProperty.call(outdatedDependencies, moduleId)) {
-/******/ 				var module = installedModules[moduleId];
-/******/ 				var moduleOutdatedDependencies = outdatedDependencies[moduleId];
-/******/ 				for(var j = 0; j < moduleOutdatedDependencies.length; j++) {
-/******/ 					var dependency = moduleOutdatedDependencies[j];
-/******/ 					var idx = module.children.indexOf(dependency);
-/******/ 					if(idx >= 0) module.children.splice(idx, 1);
-/******/ 				}
-/******/ 			}
-/******/ 		}
-/******/ 	
-/******/ 		// Not in "apply" phase
-/******/ 		hotSetStatus("apply");
-/******/ 	
-/******/ 		hotCurrentHash = hotUpdateNewHash;
-/******/ 	
-/******/ 		// insert new code
-/******/ 		for(var moduleId in appliedUpdate) {
-/******/ 			if(Object.prototype.hasOwnProperty.call(appliedUpdate, moduleId)) {
-/******/ 				modules[moduleId] = appliedUpdate[moduleId];
-/******/ 			}
-/******/ 		}
-/******/ 	
-/******/ 		// call accept handlers
-/******/ 		var error = null;
-/******/ 		for(var moduleId in outdatedDependencies) {
-/******/ 			if(Object.prototype.hasOwnProperty.call(outdatedDependencies, moduleId)) {
-/******/ 				var module = installedModules[moduleId];
-/******/ 				var moduleOutdatedDependencies = outdatedDependencies[moduleId];
-/******/ 				var callbacks = [];
-/******/ 				for(var i = 0; i < moduleOutdatedDependencies.length; i++) {
-/******/ 					var dependency = moduleOutdatedDependencies[i];
-/******/ 					var cb = module.hot._acceptedDependencies[dependency];
-/******/ 					if(callbacks.indexOf(cb) >= 0) continue;
-/******/ 					callbacks.push(cb);
-/******/ 				}
-/******/ 				for(var i = 0; i < callbacks.length; i++) {
-/******/ 					var cb = callbacks[i];
-/******/ 					try {
-/******/ 						cb(outdatedDependencies);
-/******/ 					} catch(err) {
-/******/ 						if(!error)
-/******/ 							error = err;
-/******/ 					}
-/******/ 				}
-/******/ 			}
-/******/ 		}
-/******/ 	
-/******/ 		// Load self accepted modules
-/******/ 		for(var i = 0; i < outdatedSelfAcceptedModules.length; i++) {
-/******/ 			var item = outdatedSelfAcceptedModules[i];
-/******/ 			var moduleId = item.module;
-/******/ 			hotCurrentParents = [moduleId];
-/******/ 			try {
-/******/ 				__webpack_require__(moduleId);
-/******/ 			} catch(err) {
-/******/ 				if(typeof item.errorHandler === "function") {
-/******/ 					try {
-/******/ 						item.errorHandler(err);
-/******/ 					} catch(err) {
-/******/ 						if(!error)
-/******/ 							error = err;
-/******/ 					}
-/******/ 				} else if(!error)
-/******/ 					error = err;
-/******/ 			}
-/******/ 		}
-/******/ 	
-/******/ 		// handle errors in accept handlers and self accepted module load
-/******/ 		if(error) {
-/******/ 			hotSetStatus("fail");
-/******/ 			return callback(error);
-/******/ 		}
-/******/ 	
-/******/ 		hotSetStatus("idle");
-/******/ 		callback(null, outdatedModules);
-/******/ 	}
-
 /******/ 	// The module cache
 /******/ 	var installedModules = {};
 
@@ -563,14 +30,11 @@ return /******/ (function(modules) { // webpackBootstrap
 /******/ 		var module = installedModules[moduleId] = {
 /******/ 			exports: {},
 /******/ 			id: moduleId,
-/******/ 			loaded: false,
-/******/ 			hot: hotCreateModule(moduleId),
-/******/ 			parents: hotCurrentParents,
-/******/ 			children: []
+/******/ 			loaded: false
 /******/ 		};
 
 /******/ 		// Execute the module function
-/******/ 		modules[moduleId].call(module.exports, module, module.exports, hotCreateRequire(moduleId));
+/******/ 		modules[moduleId].call(module.exports, module, module.exports, __webpack_require__);
 
 /******/ 		// Flag the module as loaded
 /******/ 		module.loaded = true;
@@ -589,11 +53,8 @@ return /******/ (function(modules) { // webpackBootstrap
 /******/ 	// __webpack_public_path__
 /******/ 	__webpack_require__.p = "build";
 
-/******/ 	// __webpack_hash__
-/******/ 	__webpack_require__.h = function() { return hotCurrentHash; };
-
 /******/ 	// Load entry module and return exports
-/******/ 	return hotCreateRequire(0)(0);
+/******/ 	return __webpack_require__(0);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -1638,10 +1099,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	                        });
 
 	                        item.directives[i] = {
-	                            attrs: _index.Directives._init.call(_this, prevContent, 'ac-attr'),
-	                            class: _index.Directives._init.call(_this, prevContent, 'ac-class'),
 	                            for: _index.Directives._init.call(_this, prevContent, 'ac-for'),
+	                            class: _index.Directives._init.call(_this, prevContent, 'ac-class'),
 	                            style: _index.Directives._init.call(_this, prevContent, 'ac-style'),
+	                            attrs: _index.Directives._init.call(_this, prevContent, 'ac-attr'),
 	                            if: _index.Directives._init.call(_this, prevContent, 'ac-if'),
 	                            props: _index.Directives._init.call(_this, prevContent, 'ac-value'),
 	                            links: _index.Directives._init.call(_this, prevContent, 'ac-link'),
@@ -1808,7 +1269,10 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	        array.get ? array.get(this).push(obj) : array.push(obj);
 	        root.removeAttribute(directive);
-	        if (directive === 'ac-for') elem.remove();
+	        if (directive === 'ac-for') {
+	            console.log(root, directive);
+	            elem.remove();
+	        }
 	    }
 
 	    var _iteratorNormalCompletion = true;
@@ -1822,39 +1286,53 @@ return /******/ (function(modules) { // webpackBootstrap
 	            var _attr = _elem.getAttribute(directive);
 
 	            // exclude inner loops
-	            // if (directive === 'ac-for' && elem.querySelectorAll('[ac-for]').length) {console.log(elem);
-	            //     for (let innerElem of elem.querySelectorAll(`[ac-for]`)) {
-	            //         innerElem.setAttribute('ac-inner-loop', true);
-	            //     }
-	            // }
-
-	            // if (directive === 'ac-for' && elem.getAttribute('ac-inner-loop')) {
-	            //     elem.removeAttribute('ac-inner-loop');
-	            //     return;
-	            // }
-
 	            if (directive === 'ac-for' && _elem.querySelectorAll('[ac-for]').length) {
-	                // debugger
-	            } else {
+	                var _iteratorNormalCompletion2 = true;
+	                var _didIteratorError2 = false;
+	                var _iteratorError2 = undefined;
 
-	                var _obj = {
-	                    elem: _elem,
-	                    attr: _attr,
-	                    items: [],
-	                    parent: _elem.parentNode,
-	                    cached: _elem
-	                };
+	                try {
+	                    for (var _iterator2 = _elem.querySelectorAll('[ac-for]')[Symbol.iterator](), _step2; !(_iteratorNormalCompletion2 = (_step2 = _iterator2.next()).done); _iteratorNormalCompletion2 = true) {
+	                        var innerElem = _step2.value;
 
-	                // only for certain directives
-	                if (directive === 'ac-for' || directive === 'ac-if') {
-	                    _obj.comment = _core.Utils.insertAfter(document.createComment(directive + ': ' + _attr), _elem);
-	                }
-	                array.get ? array.get(this).push(_obj) : array.push(_obj);
-	                _elem.removeAttribute(directive);
-	                if (directive === 'ac-for') {
-	                    _elem.remove();
+	                        innerElem.setAttribute('ac-inner-loop', true);
+	                    }
+	                } catch (err) {
+	                    _didIteratorError2 = true;
+	                    _iteratorError2 = err;
+	                } finally {
+	                    try {
+	                        if (!_iteratorNormalCompletion2 && _iterator2.return) {
+	                            _iterator2.return();
+	                        }
+	                    } finally {
+	                        if (_didIteratorError2) {
+	                            throw _iteratorError2;
+	                        }
+	                    }
 	                }
 	            }
+
+	            if (directive === 'ac-for' && _elem.getAttribute('ac-inner-loop')) {
+	                _elem.removeAttribute('ac-inner-loop');
+	                return;
+	            }
+
+	            var _obj = {
+	                elem: _elem,
+	                attr: _attr,
+	                items: [],
+	                parent: _elem.parentNode,
+	                cached: _elem
+	            };
+
+	            // only for certain directives
+	            if (directive === 'ac-for' || directive === 'ac-if') {
+	                _obj.comment = _core.Utils.insertAfter(document.createComment(directive + ': ' + _attr), _elem);
+	            }
+	            array.get ? array.get(this).push(_obj) : array.push(_obj);
+	            _elem.removeAttribute(directive);
+	            if (directive === 'ac-for') _elem.remove();
 	        }
 	    } catch (err) {
 	        _didIteratorError = true;
@@ -1882,28 +1360,28 @@ return /******/ (function(modules) { // webpackBootstrap
 	        array.get ? array.get(this).push(obj) : array.push(obj);
 	    }
 
-	    var _iteratorNormalCompletion2 = true;
-	    var _didIteratorError2 = false;
-	    var _iteratorError2 = undefined;
+	    var _iteratorNormalCompletion3 = true;
+	    var _didIteratorError3 = false;
+	    var _iteratorError3 = undefined;
 
 	    try {
-	        for (var _iterator2 = targets[Symbol.iterator](), _step2; !(_iteratorNormalCompletion2 = (_step2 = _iterator2.next()).done); _iteratorNormalCompletion2 = true) {
-	            var _elem2 = _step2.value;
+	        for (var _iterator3 = targets[Symbol.iterator](), _step3; !(_iteratorNormalCompletion3 = (_step3 = _iterator3.next()).done); _iteratorNormalCompletion3 = true) {
+	            var _elem2 = _step3.value;
 
 	            var _obj2 = _event.createEventObject.call(this, _elem2, directive, context, loopIterator);
 	            array.get ? array.get(this).push(_obj2) : array.push(_obj2);
 	        }
 	    } catch (err) {
-	        _didIteratorError2 = true;
-	        _iteratorError2 = err;
+	        _didIteratorError3 = true;
+	        _iteratorError3 = err;
 	    } finally {
 	        try {
-	            if (!_iteratorNormalCompletion2 && _iterator2.return) {
-	                _iterator2.return();
+	            if (!_iteratorNormalCompletion3 && _iterator3.return) {
+	                _iterator3.return();
 	            }
 	        } finally {
-	            if (_didIteratorError2) {
-	                throw _iteratorError2;
+	            if (_didIteratorError3) {
+	                throw _iteratorError3;
 	            }
 	        }
 	    }
@@ -3143,7 +2621,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    var rootEl = document.querySelectorAll(options.root.selector)[0];
 	    if (rootEl) {
 	        var rootComponent = new options.root(rootEl);
-	        rootComponent.root.setAttribute('ac-version', ("0.6.2"));
+	        rootComponent.root.setAttribute('ac-version', ("0.6.3"));
 	    } else {
 	        console.warn('There is no root component');
 	    }
@@ -5177,6 +4655,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	            return ["#7cb5ec", "#434348", "#90ed7d", "#f7a35c", "#8085e9", "#f15c80", "#e4d354", "#2b908f", "#f45b5b", "#91e8e1", "#7cb5ec", "#434348"];
 	        }
 	    }, {
+	        key: "markerSize",
+	        get: function get() {
+	            return 8;
+	        }
+	    }, {
 	        key: "xOffset",
 	        get: function get() {
 	            return 140;
@@ -5458,14 +4941,15 @@ return /******/ (function(modules) { // webpackBootstrap
 	            var min = this.getMinXSeriesVal();
 	            var array = this.props.get('xAxis').categories;
 	            var length = array.length - 1;
+
 	            return this.props.get('series').map(function (seria, i) {
 	                return { items: seria.value.map(function (r, i) {
 	                        return {
-	                            x: i * (svgWidth / length - _chart.Chart.barWidth / length) + _chart.Chart.xOffset / 2,
-	                            y: 10,
-	                            height: 10,
-	                            width: 10,
-	                            fill: '#666'
+	                            x: i * (svgWidth / length - _chart.Chart.barWidth / length) + _chart.Chart.xOffset / 2 - _chart.Chart.markerSize / 2,
+	                            y: svgHeight - r / max * svgHeight + _chart.Chart.yOffset / 2 - _chart.Chart.markerSize / 2,
+	                            height: _chart.Chart.markerSize,
+	                            width: _chart.Chart.markerSize,
+	                            fill: '#aaa'
 	                        };
 	                    }) };
 	            });
@@ -5505,7 +4989,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	"use strict";
 
-	module.exports = "<svg ac-ref=\"svg\" ac-attr=\"height: height, width: width\" ac-if=\"this.series.length\">\r\n    <!-- <rect class=\"acechart-background\" x=\"0\" y=\"0\" ac-attr=\"height: height, width: width, fill: background\" rx=\"0\" ry=\"0\"></rect> -->\r\n<!--     <text ac-attr=\"x: labelX\" text-anchor=\"middle\" class=\"acechart-title\" y=\"24\">\r\n        <tspan ac-value=\"title\"></tspan>\r\n    </text>\r\n    <g class=\"acechart-grid acechart-yaxis-grid \">\r\n        <line ac-for=\"let item of xGrid\" ac-attr=\"x1: x1, x2: x2, y1: y1, y2: y2\" stroke=\"black\" stroke-width=\"1\" shape-rendering=\"crispEdges\" />\r\n    </g>\r\n    <text ac-attr=\"x: yLabelX, y: yLabelY, transform: yLabelTransform\" text-anchor=\"middle\" class=\"acecharts-axis-title\">\r\n        <tspan ac-value=\"yAxis.label\"></tspan>\r\n    </text>\r\n    <g class=\"acechart-axis-labels acechart-yaxis-labels \">\r\n        <text ac-for=\"let item of yLabels\" ac-attr=\"x: x, y: y\" text-anchor=\"end\" transform=\"translate(0,0)\">\r\n            <tspan ac-value=\"name\"></tspan>\r\n        </text>\r\n    </g>\r\n    <g class=\"acechart-series\">\r\n        <path ac-for=\"let item of series\" fill=\"none\" ac-attr=\"d: d, stroke: stroke\" class=\"acechart-graph\" stroke-width=\"2\" stroke-linejoin=\"round\" stroke-linecap=\"round\"></path>\r\n    </g> -->\r\n\r\n    <g class=\"acechart-markers\">\r\n        <g ac-for=\"let item of markers\"> \r\n            <rect ac-for=\"let item of items\" @mouseenter=\"mouseenter(item)\" @mouseleave=\"mouseleave\" ac-attr=\"x: x, y: y, fill: fill, width: width, height: height\" >\r\n            \r\n            </rect>\r\n        </g>\r\n    </g>\r\n<!-- \r\n    <g class=\"acechart-axis-labels acechart-xaxis-labels \">\r\n        <text ac-for=\"xLabels\" ac-attr=\"x: x, y: y\" text-anchor=\"start\">\r\n            <tspan ac-value=\"name\"></tspan>\r\n        </text>\r\n    </g>\r\n -->\r\n</svg>\r\n<div class=\"acecharts-tooltip\" ac-class=\"open: this.tooltipIsShown\" ac-style=\"top: tooltipCoords.y, left: tooltipCoords.x\">\r\n    <div style=\"font-size: 12px;\">Languages</div>\r\n    <br>\r\n    <span ac-value=\"tooltipSelected.name\"></span>\r\n    <b ac-value=\"tooltipSelected.value\"></b>% of total\r\n</div>\r\n<div ac-if=\"!this.series.length\">Bar chart. There is no data to show</div>\r\n<style>\r\nace-line-chart {\r\n    display: inline-block;\r\n    position: relative;\r\n}\r\n\r\n.acecharts-tooltip.open {\r\n    opacity: 1;\r\n    visibility: visible;\r\n}\r\n\r\n.acechart-series path {\r\n    transition: 0.5s;\r\n}\r\n\r\n.acecharts-tooltip {\r\n    position: absolute;\r\n    background: #fbf5f5c9;\r\n    /*width: 200px;*/\r\n    top: 0;\r\n    /*height: 100px;*/\r\n    transition: 0.2s;\r\n    opacity: 0;\r\n    visibility: hidden;\r\n    padding: 10px;\r\n    border: 1px solid #ddddde;\r\n    border-radius: 2px;\r\n}\r\n\r\n.acecharts-tooltip:after,\r\n.acecharts-tooltip:before {\r\n    top: 100%;\r\n    left: 50%;\r\n    border: solid transparent;\r\n    content: \" \";\r\n    height: 0;\r\n    width: 0;\r\n    position: absolute;\r\n    pointer-events: none;\r\n}\r\n\r\n.acecharts-tooltip:after {\r\n    border-color: rgba(247, 247, 247, 0);\r\n    border-top-color: #f7f7f7;\r\n    border-width: 10px;\r\n    margin-left: -10px;\r\n}\r\n\r\n.acecharts-tooltip:before {\r\n    border-color: rgba(221, 221, 222, 0);\r\n    border-top-color: #ddddde;\r\n    border-width: 11px;\r\n    margin-left: -11px;\r\n}\r\n\r\n.acechart-group rect {\r\n    /*fill: #5699dc;*/\r\n    transition: 0.5s;\r\n}\r\n\r\n.acechart-group rect:hover {\r\n    /*fill: #3e6a96;*/\r\n    opacity: 0.7;\r\n}\r\n\r\n.acechart-xaxis-labels text {\r\n    cursor: default;\r\n    font-size: 11px;\r\n    font-family: Verdana, sans-serif;\r\n    fill: #666666;\r\n    transition: 0.5s;\r\n}\r\n\r\n.acecharts-axis-title {\r\n    cursor: default;\r\n    font-size: 12px;\r\n    font-family: Verdana, sans-serif;\r\n    fill: #666666;\r\n}\r\n\r\n.acechart-title {\r\n    cursor: default;\r\n    font-size: 16px;\r\n    font-family: Verdana, sans-serif;\r\n    fill: #666666;\r\n    transition: 0.5s;\r\n}\r\n\r\n.acechart-yaxis-labels text {\r\n    cursor: default;\r\n    font-size: 11px;\r\n    font-family: Verdana, sans-serif;\r\n    fill: #666666;\r\n}\r\n\r\n.acechart-yaxis-grid line {\r\n    stroke: #ccc;\r\n}\r\n\r\n.acechart-group {}\r\n</style>";
+	module.exports = "<svg ac-ref=\"svg\" ac-attr=\"height: height, width: width\" ac-if=\"this.series.length\">\r\n    <rect class=\"acechart-background\" x=\"0\" y=\"0\" ac-attr=\"height: height, width: width, fill: background\" rx=\"0\" ry=\"0\"></rect>\r\n    <text ac-attr=\"x: labelX\" text-anchor=\"middle\" class=\"acechart-title\" y=\"24\">\r\n        <tspan ac-value=\"title\"></tspan>\r\n    </text>\r\n    <g class=\"acechart-grid acechart-yaxis-grid \">\r\n        <line ac-for=\"let item of xGrid\" ac-attr=\"x1: x1, x2: x2, y1: y1, y2: y2\" stroke=\"black\" stroke-width=\"1\" shape-rendering=\"crispEdges\" />\r\n    </g>\r\n    <text ac-attr=\"x: yLabelX, y: yLabelY, transform: yLabelTransform\" text-anchor=\"middle\" class=\"acecharts-axis-title\">\r\n        <tspan ac-value=\"yAxis.label\"></tspan>\r\n    </text>\r\n    <g class=\"acechart-axis-labels acechart-yaxis-labels \">\r\n        <text ac-for=\"let item of yLabels\" ac-attr=\"x: x, y: y\" text-anchor=\"end\" transform=\"translate(0,0)\">\r\n            <tspan ac-value=\"name\"></tspan>\r\n        </text>\r\n    </g>\r\n    <g class=\"acechart-series\">\r\n        <path ac-for=\"let item of series\" fill=\"none\" ac-attr=\"d: d, stroke: stroke\" class=\"acechart-graph\" stroke-width=\"2\" stroke-linejoin=\"round\" stroke-linecap=\"round\"></path>\r\n    </g>\r\n\r\n    <g class=\"acechart-markers\">\r\n        <g ac-for=\"let item of markers\"> \r\n            <rect ac-for=\"let item of items\" @mouseenter=\"mouseenter(item)\" @mouseleave=\"mouseleave\" ac-attr=\"x: x, y: y, fill: fill, width: width, height: height\" ></rect>\r\n        </g>\r\n    </g>\r\n<!-- \r\n    <g class=\"acechart-axis-labels acechart-xaxis-labels \">\r\n        <text ac-for=\"xLabels\" ac-attr=\"x: x, y: y\" text-anchor=\"start\">\r\n            <tspan ac-value=\"name\"></tspan>\r\n        </text>\r\n    </g>\r\n -->\r\n</svg>\r\n<div class=\"acecharts-tooltip\" ac-class=\"open: this.tooltipIsShown\" ac-style=\"top: tooltipCoords.y, left: tooltipCoords.x\">\r\n    <div style=\"font-size: 12px;\">Languages</div>\r\n    <br>\r\n    <span ac-value=\"tooltipSelected.name\"></span>\r\n    <b ac-value=\"tooltipSelected.value\"></b>% of total\r\n</div>\r\n<div ac-if=\"!this.series.length\">Bar chart. There is no data to show</div>\r\n<style>\r\nace-line-chart {\r\n    display: inline-block;\r\n    position: relative;\r\n}\r\n\r\n.acecharts-tooltip.open {\r\n    opacity: 1;\r\n    visibility: visible;\r\n}\r\n\r\n.acechart-series path , .acechart-markers rect{\r\n    transition: 0.5s;\r\n}\r\n\r\n.acecharts-tooltip {\r\n    position: absolute;\r\n    background: #fbf5f5c9;\r\n    /*width: 200px;*/\r\n    top: 0;\r\n    /*height: 100px;*/\r\n    transition: 0.2s;\r\n    opacity: 0;\r\n    visibility: hidden;\r\n    padding: 10px;\r\n    border: 1px solid #ddddde;\r\n    border-radius: 2px;\r\n}\r\n\r\n.acecharts-tooltip:after,\r\n.acecharts-tooltip:before {\r\n    top: 100%;\r\n    left: 50%;\r\n    border: solid transparent;\r\n    content: \" \";\r\n    height: 0;\r\n    width: 0;\r\n    position: absolute;\r\n    pointer-events: none;\r\n}\r\n\r\n.acecharts-tooltip:after {\r\n    border-color: rgba(247, 247, 247, 0);\r\n    border-top-color: #f7f7f7;\r\n    border-width: 10px;\r\n    margin-left: -10px;\r\n}\r\n\r\n.acecharts-tooltip:before {\r\n    border-color: rgba(221, 221, 222, 0);\r\n    border-top-color: #ddddde;\r\n    border-width: 11px;\r\n    margin-left: -11px;\r\n}\r\n\r\n.acechart-group rect {\r\n    /*fill: #5699dc;*/\r\n    transition: 0.5s;\r\n}\r\n\r\n.acechart-group rect:hover {\r\n    /*fill: #3e6a96;*/\r\n    opacity: 0.7;\r\n}\r\n\r\n.acechart-xaxis-labels text {\r\n    cursor: default;\r\n    font-size: 11px;\r\n    font-family: Verdana, sans-serif;\r\n    fill: #666666;\r\n    transition: 0.5s;\r\n}\r\n\r\n.acecharts-axis-title {\r\n    cursor: default;\r\n    font-size: 12px;\r\n    font-family: Verdana, sans-serif;\r\n    fill: #666666;\r\n}\r\n\r\n.acechart-title {\r\n    cursor: default;\r\n    font-size: 16px;\r\n    font-family: Verdana, sans-serif;\r\n    fill: #666666;\r\n    transition: 0.5s;\r\n}\r\n\r\n.acechart-yaxis-labels text {\r\n    cursor: default;\r\n    font-size: 11px;\r\n    font-family: Verdana, sans-serif;\r\n    fill: #666666;\r\n}\r\n\r\n.acechart-yaxis-grid line {\r\n    stroke: #ccc;\r\n}\r\n\r\n.acechart-group {}\r\n</style>";
 
 /***/ }),
 /* 64 */
@@ -6554,7 +6038,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	            // });
 
 	            this.props.set({
-	                version: ("0.6.2"),
+	                version: ("0.6.3"),
 	                'categories': [{
 	                    name: 'Getting started',
 	                    items: [{
@@ -7807,28 +7291,17 @@ return /******/ (function(modules) { // webpackBootstrap
 	    _createClass(PluginsChartComponent, [{
 	        key: 'onInit',
 	        value: function onInit() {
+	            var _this = this;
 
-	            // setInterval(() => {
-	            //     let barChartData = this.props.get('barChartData');
-	            //     let lineChartData = this.props.get('lineChartData');
+	            setInterval(function () {
+	                var barChartData = _this.props.get('barChartData');
+	                var lineChartData = _this.props.get('lineChartData');
 
-	            //     barChartData.series = [
-	            //         { name: 'JS', value: 6 * Math.random()},
-	            //         { name: 'JAVA', value: 5 * Math.random()},
-	            //         { name: 'PHP', value: 8 * Math.random()},
-	            //         { name: 'PYTHON', value: 10 * Math.random()},
-	            //         { name: 'C', value: 15 * Math.random()},
-	            //         { name: 'PERl', value: 5 * Math.random()},
-	            //         { name: 'C#', value: 20 * Math.random()}
-	            //     ];
+	                barChartData.series = [{ name: 'JS', value: 6 * Math.random() }, { name: 'JAVA', value: 5 * Math.random() }, { name: 'PHP', value: 8 * Math.random() }, { name: 'PYTHON', value: 10 * Math.random() }, { name: 'C', value: 15 * Math.random() }, { name: 'PERl', value: 5 * Math.random() }, { name: 'C#', value: 20 * Math.random() }];
 
-	            //     lineChartData.series = [
-	            //         { name: 'JS', value: [10 * Math.random(), 20 * Math.random(),300 * Math.random(), 50 * Math.random(), 300 * Math.random()] },
-	            //         { name: 'JAVA', value: [100 * Math.random(), 200 * Math.random(), 300 * Math.random(), 500 * Math.random(), 300 * Math.random()] },
-	            //         { name: 'PHP', value: [2000 * Math.random(),500 * Math.random(),500 * Math.random(),400 * Math.random(),20 * Math.random()] }
-	            //     ];
-	            //     this.props.set({lineChartData, barChartData});
-	            // }, 2000);
+	                lineChartData.series = [{ name: 'JS', value: [10 * Math.random(), 20 * Math.random(), 300 * Math.random(), 50 * Math.random(), 300 * Math.random()] }, { name: 'JAVA', value: [100 * Math.random(), 200 * Math.random(), 300 * Math.random(), 500 * Math.random(), 300 * Math.random()] }, { name: 'PHP', value: [2000 * Math.random(), 500 * Math.random(), 500 * Math.random(), 400 * Math.random(), 20 * Math.random()] }];
+	                _this.props.set({ lineChartData: lineChartData, barChartData: barChartData });
+	            }, 2000);
 	        }
 	    }]);
 
@@ -7841,7 +7314,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	"use strict";
 
-	module.exports = "<!-- <h3>Bar chart</h3>\r\n<ace-bar-chart ac-input=\"data: @barChartData\"></ace-bar-chart> -->\r\n\r\n<br>\r\n<br>\r\n\r\n<h3>Line chart</h3>\r\n<ace-line-chart ac-input=\"data: @lineChartData\"></ace-line-chart>";
+	module.exports = "<h3>Bar chart</h3>\r\n<ace-bar-chart ac-input=\"data: @barChartData\"></ace-bar-chart>\r\n\r\n<br>\r\n<br>\r\n\r\n<h3>Line chart</h3>\r\n<ace-line-chart ac-input=\"data: @lineChartData\"></ace-line-chart>";
 
 /***/ }),
 /* 122 */

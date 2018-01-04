@@ -1,6 +1,6 @@
 <svg ac-ref="svg" ac-attr="height: height, width: width" ac-if="this.series.length">
-    <!-- <rect class="acechart-background" x="0" y="0" ac-attr="height: height, width: width, fill: background" rx="0" ry="0"></rect> -->
-<!--     <text ac-attr="x: labelX" text-anchor="middle" class="acechart-title" y="24">
+    <rect class="acechart-background" x="0" y="0" ac-attr="height: height, width: width, fill: background" rx="0" ry="0"></rect>
+    <text ac-attr="x: labelX" text-anchor="middle" class="acechart-title" y="24">
         <tspan ac-value="title"></tspan>
     </text>
     <g class="acechart-grid acechart-yaxis-grid ">
@@ -16,28 +16,20 @@
     </g>
     <g class="acechart-series">
         <path ac-for="let item of series" fill="none" ac-attr="d: d, stroke: stroke" class="acechart-graph" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"></path>
-    </g> -->
+    </g>
 
     <g class="acechart-markers">
         <g ac-for="let item of markers"> 
-            <rect ac-for="let item of items" @mouseenter="mouseenter(item)" @mouseleave="mouseleave" ac-attr="x: x, y: y, fill: fill, width: width, height: height" >
-            
-            </rect>
+            <rect ac-for="let item of items" @mouseenter="mouseenter(item)" @mouseleave="mouseleave" ac-attr="x: x, y: y, fill: fill, width: width, height: height" ></rect>
         </g>
     </g>
-<!-- 
-    <g class="acechart-axis-labels acechart-xaxis-labels ">
-        <text ac-for="xLabels" ac-attr="x: x, y: y" text-anchor="start">
-            <tspan ac-value="name"></tspan>
-        </text>
-    </g>
- -->
+
 </svg>
 <div class="acecharts-tooltip" ac-class="open: this.tooltipIsShown" ac-style="top: tooltipCoords.y, left: tooltipCoords.x">
     <div style="font-size: 12px;">Languages</div>
     <br>
     <span ac-value="tooltipSelected.name"></span>
-    <b ac-value="tooltipSelected.value"></b>% of total
+    <b ac-value="tooltipSelected.value"></b>
 </div>
 <div ac-if="!this.series.length">Bar chart. There is no data to show</div>
 <style>
@@ -51,7 +43,7 @@ ace-line-chart {
     visibility: visible;
 }
 
-.acechart-series path {
+.acechart-series path , .acechart-markers rect{
     transition: 0.5s;
 }
 

@@ -16,7 +16,7 @@ export function _init(root, directive, newArray) {
 
         array.get ? array.get(this).push(obj) : array.push(obj);
         root.removeAttribute(directive);
-        if (directive === 'ac-for') elem.remove();
+        // if (directive === 'ac-for') elem.remove();
     }
 
     for (let elem of root.querySelectorAll(`[${directive}]`)) {

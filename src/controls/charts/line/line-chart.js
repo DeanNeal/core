@@ -11,7 +11,7 @@ import {Chart} from './../chart';
             y: 0
         },
         xGrid: [],
-        xGroupLabels: [],
+
         yLabels: [],
         xLabels: [],
         tooltipIsShown: false,
@@ -75,17 +75,17 @@ export class LineChartComponent {
 
     mouseenter(e, item) {
         clearTimeout(this._tooltipInterval);
-        this.props.set({
-            tooltipIsShown: true,
-            tooltipCoords: { x: item.x - 40 + 'px', y: item.y - 80 + 'px' },
+        this.props.set({ 
+            tooltipIsShown: true, 
+            tooltipCoords: { x: item.x - 40 + 'px', y: item.y - 80  + 'px' },
             tooltipSelected: {
-                value: ((item.value / this.props.get('series').reduce((a, b) => a + b.value, 0)) * 100).toFixed(2)
+                value: item.value.toFixed(2)
             }
         });
     }
 
     mouseleave(e) {
-        if (this._tooltipInterval) {
+        if(this._tooltipInterval) {
             clearTimeout(this._tooltipInterval);
         }
         this._tooltipInterval = setTimeout(() => {
@@ -99,19 +99,14 @@ export class LineChartComponent {
 
 
         let xLabels = this.getXLabels(svgHeight, svgWidth);
-        // let xGroupLabels = this.getXGroupLabels(series, svgHeight, svgWidth);
         let yLabels = this.getYLabels(svgHeight);
-
         let xGrid = this.getXGrid(svgHeight, svgWidth);
-
         let series = this.getChartData(svgHeight, svgWidth);
         let markers = this.getMarkers(svgHeight, svgWidth);
-        // this.props.set('series', series);
 
         this.props.set({
             series: series,
             xLabels: xLabels,
-            // xGroupLabels: xGroupLabels,
             yLabels: yLabels,
             xGrid: xGrid,
             yLabelX: 30,
@@ -198,14 +193,16 @@ export class LineChartComponent {
         let min = this.getMinXSeriesVal();
         let array = this.props.get('xAxis').categories;
         let length = array.length - 1;
+
        return this.props.get('series').map((seria, i) =>{
             return {items: seria.value.map((r,i)=>{
                 return {                
-                    x:  i * (svgWidth / length - Chart.barWidth / length) + Chart.xOffset / 2 ,
-                    y: 10,
-                    height: 10,
-                    width: 10,
-                    fill: '#666'
+                    x:  i * (svgWidth / length - Chart.barWidth / length) + Chart.xOffset / 2 - Chart.markerSize/2,
+                    y: svgHeight - (r/max * svgHeight) + Chart.yOffset/2 - Chart.markerSize/2,
+                    height: Chart.markerSize,
+                    width: Chart.markerSize,
+                    fill: '#aaa',
+                    value: r
                 }
             })};
         });
@@ -222,15 +219,5 @@ export class LineChartComponent {
             };
         });
     }
-
-    // getXGroupLabels(series, svgHeight, svgWidth) {
-    //     return series.map((r, i) => {
-    //         return {
-    //             x: r.x + 10,
-    //             y: r.y - 4,
-    //             name: r.value
-    //         };
-    //     });
-    // }
 
 }
