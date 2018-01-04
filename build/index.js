@@ -1,8 +1,8 @@
 /*!
- * ace-js 0.6.3
+ * ace-js 0.6.4
  * May be freely distributed under the MIT license 
  * Author: Bogdan Zinkevich
- * Last update: 2018-1-4 20:37:22
+ * Last update: 2018-1-4 21:16:28
  * 
  */
 (function webpackUniversalModuleDefinition(root, factory) {
@@ -954,22 +954,23 @@ return /******/ (function(modules) { // webpackBootstrap
 	                        item.items.push(prevContent);
 	                        item.parent.insertBefore(prevContent, item.comment);
 
-	                        var eventsArray = [];
-
-	                        _events.EVENTS_NAMES.forEach(function (directive) {
-	                            eventsArray.push(_index.Directives._initEvent.call(_this, prevContent, directive, [], getCurrentProperty.bind(_this, item, collectionName, data, i), loopIterator));
-	                        });
-
 	                        item.directives[i] = {
-	                            for: _index.Directives._init.call(_this, prevContent, 'ac-for'),
+	                            for: _index.Directives._init.call(_this, prevContent, 'ac-for'), // should go first for correct work
 	                            class: _index.Directives._init.call(_this, prevContent, 'ac-class'),
 	                            style: _index.Directives._init.call(_this, prevContent, 'ac-style'),
 	                            attrs: _index.Directives._init.call(_this, prevContent, 'ac-attr'),
 	                            if: _index.Directives._init.call(_this, prevContent, 'ac-if'),
 	                            props: _index.Directives._init.call(_this, prevContent, 'ac-value'),
-	                            links: _index.Directives._init.call(_this, prevContent, 'ac-link'),
-	                            events: eventsArray
+	                            links: _index.Directives._init.call(_this, prevContent, 'ac-link')
+	                            // events: eventsArray
 	                        };
+
+	                        var eventsArray = [];
+
+	                        _events.EVENTS_NAMES.forEach(function (directive) {
+	                            eventsArray.push(_index.Directives._initEvent.call(_this, prevContent, directive, [], getCurrentProperty.bind(_this, item, collectionName, data, i), loopIterator));
+	                        });
+	                        item.directives[i].events = eventsArray;
 
 	                        updateElement.call(_this, item, i, prevContent, array[i]);
 	                    };
@@ -1131,10 +1132,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	        array.get ? array.get(this).push(obj) : array.push(obj);
 	        root.removeAttribute(directive);
-	        if (directive === 'ac-for') {
-	            console.log(root, directive);
-	            elem.remove();
-	        }
+	        // if (directive === 'ac-for') elem.remove();
 	    }
 
 	    var _iteratorNormalCompletion = true;
@@ -1143,18 +1141,18 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	    try {
 	        for (var _iterator = root.querySelectorAll('[' + directive + ']')[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
-	            var _elem = _step.value;
+	            var elem = _step.value;
 
-	            var _attr = _elem.getAttribute(directive);
+	            var _attr = elem.getAttribute(directive);
 
 	            // exclude inner loops
-	            if (directive === 'ac-for' && _elem.querySelectorAll('[ac-for]').length) {
+	            if (directive === 'ac-for' && elem.querySelectorAll('[ac-for]').length) {
 	                var _iteratorNormalCompletion2 = true;
 	                var _didIteratorError2 = false;
 	                var _iteratorError2 = undefined;
 
 	                try {
-	                    for (var _iterator2 = _elem.querySelectorAll('[ac-for]')[Symbol.iterator](), _step2; !(_iteratorNormalCompletion2 = (_step2 = _iterator2.next()).done); _iteratorNormalCompletion2 = true) {
+	                    for (var _iterator2 = elem.querySelectorAll('[ac-for]')[Symbol.iterator](), _step2; !(_iteratorNormalCompletion2 = (_step2 = _iterator2.next()).done); _iteratorNormalCompletion2 = true) {
 	                        var innerElem = _step2.value;
 
 	                        innerElem.setAttribute('ac-inner-loop', true);
@@ -1175,26 +1173,26 @@ return /******/ (function(modules) { // webpackBootstrap
 	                }
 	            }
 
-	            if (directive === 'ac-for' && _elem.getAttribute('ac-inner-loop')) {
-	                _elem.removeAttribute('ac-inner-loop');
+	            if (directive === 'ac-for' && elem.getAttribute('ac-inner-loop')) {
+	                elem.removeAttribute('ac-inner-loop');
 	                return;
 	            }
 
 	            var _obj = {
-	                elem: _elem,
+	                elem: elem,
 	                attr: _attr,
 	                items: [],
-	                parent: _elem.parentNode,
-	                cached: _elem
+	                parent: elem.parentNode,
+	                cached: elem
 	            };
 
 	            // only for certain directives
 	            if (directive === 'ac-for' || directive === 'ac-if') {
-	                _obj.comment = _core.Utils.insertAfter(document.createComment(directive + ': ' + _attr), _elem);
+	                _obj.comment = _core.Utils.insertAfter(document.createComment(directive + ': ' + _attr), elem);
 	            }
 	            array.get ? array.get(this).push(_obj) : array.push(_obj);
-	            _elem.removeAttribute(directive);
-	            if (directive === 'ac-for') _elem.remove();
+	            elem.removeAttribute(directive);
+	            if (directive === 'ac-for') elem.remove();
 	        }
 	    } catch (err) {
 	        _didIteratorError = true;
@@ -1228,9 +1226,9 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	    try {
 	        for (var _iterator3 = targets[Symbol.iterator](), _step3; !(_iteratorNormalCompletion3 = (_step3 = _iterator3.next()).done); _iteratorNormalCompletion3 = true) {
-	            var _elem2 = _step3.value;
+	            var elem = _step3.value;
 
-	            var _obj2 = _event.createEventObject.call(this, _elem2, directive, context, loopIterator);
+	            var _obj2 = _event.createEventObject.call(this, elem, directive, context, loopIterator);
 	            array.get ? array.get(this).push(_obj2) : array.push(_obj2);
 	        }
 	    } catch (err) {
@@ -2483,7 +2481,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    var rootEl = document.querySelectorAll(options.root.selector)[0];
 	    if (rootEl) {
 	        var rootComponent = new options.root(rootEl);
-	        rootComponent.root.setAttribute('ac-version', ("0.6.3"));
+	        rootComponent.root.setAttribute('ac-version', ("0.6.4"));
 	    } else {
 	        console.warn('There is no root component');
 	    }
@@ -4585,7 +4583,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	            y: 0
 	        },
 	        xGrid: [],
-	        xGroupLabels: [],
+
 	        yLabels: [],
 	        xLabels: [],
 	        tooltipIsShown: false,
@@ -4666,9 +4664,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	                tooltipIsShown: true,
 	                tooltipCoords: { x: item.x - 40 + 'px', y: item.y - 80 + 'px' },
 	                tooltipSelected: {
-	                    value: (item.value / this.props.get('series').reduce(function (a, b) {
-	                        return a + b.value;
-	                    }, 0) * 100).toFixed(2)
+	                    value: item.value.toFixed(2)
 	                }
 	            });
 	        }
@@ -4691,19 +4687,14 @@ return /******/ (function(modules) { // webpackBootstrap
 	            var svgWidth = this.getSvgWidth();
 
 	            var xLabels = this.getXLabels(svgHeight, svgWidth);
-	            // let xGroupLabels = this.getXGroupLabels(series, svgHeight, svgWidth);
 	            var yLabels = this.getYLabels(svgHeight);
-
 	            var xGrid = this.getXGrid(svgHeight, svgWidth);
-
 	            var series = this.getChartData(svgHeight, svgWidth);
 	            var markers = this.getMarkers(svgHeight, svgWidth);
-	            // this.props.set('series', series);
 
 	            this.props.set({
 	                series: series,
 	                xLabels: xLabels,
-	                // xGroupLabels: xGroupLabels,
 	                yLabels: yLabels,
 	                xGrid: xGrid,
 	                yLabelX: 30,
@@ -4811,7 +4802,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	                            y: svgHeight - r / max * svgHeight + _chart.Chart.yOffset / 2 - _chart.Chart.markerSize / 2,
 	                            height: _chart.Chart.markerSize,
 	                            width: _chart.Chart.markerSize,
-	                            fill: '#aaa'
+	                            fill: '#aaa',
+	                            value: r
 	                        };
 	                    }) };
 	            });
@@ -4829,17 +4821,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	                };
 	            });
 	        }
-
-	        // getXGroupLabels(series, svgHeight, svgWidth) {
-	        //     return series.map((r, i) => {
-	        //         return {
-	        //             x: r.x + 10,
-	        //             y: r.y - 4,
-	        //             name: r.value
-	        //         };
-	        //     });
-	        // }
-
 	    }]);
 
 	    return LineChartComponent;
@@ -4851,7 +4832,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	"use strict";
 
-	module.exports = "<svg ac-ref=\"svg\" ac-attr=\"height: height, width: width\" ac-if=\"this.series.length\">\r\n    <rect class=\"acechart-background\" x=\"0\" y=\"0\" ac-attr=\"height: height, width: width, fill: background\" rx=\"0\" ry=\"0\"></rect>\r\n    <text ac-attr=\"x: labelX\" text-anchor=\"middle\" class=\"acechart-title\" y=\"24\">\r\n        <tspan ac-value=\"title\"></tspan>\r\n    </text>\r\n    <g class=\"acechart-grid acechart-yaxis-grid \">\r\n        <line ac-for=\"let item of xGrid\" ac-attr=\"x1: x1, x2: x2, y1: y1, y2: y2\" stroke=\"black\" stroke-width=\"1\" shape-rendering=\"crispEdges\" />\r\n    </g>\r\n    <text ac-attr=\"x: yLabelX, y: yLabelY, transform: yLabelTransform\" text-anchor=\"middle\" class=\"acecharts-axis-title\">\r\n        <tspan ac-value=\"yAxis.label\"></tspan>\r\n    </text>\r\n    <g class=\"acechart-axis-labels acechart-yaxis-labels \">\r\n        <text ac-for=\"let item of yLabels\" ac-attr=\"x: x, y: y\" text-anchor=\"end\" transform=\"translate(0,0)\">\r\n            <tspan ac-value=\"name\"></tspan>\r\n        </text>\r\n    </g>\r\n    <g class=\"acechart-series\">\r\n        <path ac-for=\"let item of series\" fill=\"none\" ac-attr=\"d: d, stroke: stroke\" class=\"acechart-graph\" stroke-width=\"2\" stroke-linejoin=\"round\" stroke-linecap=\"round\"></path>\r\n    </g>\r\n\r\n    <g class=\"acechart-markers\">\r\n        <g ac-for=\"let item of markers\"> \r\n            <rect ac-for=\"let item of items\" @mouseenter=\"mouseenter(item)\" @mouseleave=\"mouseleave\" ac-attr=\"x: x, y: y, fill: fill, width: width, height: height\" ></rect>\r\n        </g>\r\n    </g>\r\n<!-- \r\n    <g class=\"acechart-axis-labels acechart-xaxis-labels \">\r\n        <text ac-for=\"xLabels\" ac-attr=\"x: x, y: y\" text-anchor=\"start\">\r\n            <tspan ac-value=\"name\"></tspan>\r\n        </text>\r\n    </g>\r\n -->\r\n</svg>\r\n<div class=\"acecharts-tooltip\" ac-class=\"open: this.tooltipIsShown\" ac-style=\"top: tooltipCoords.y, left: tooltipCoords.x\">\r\n    <div style=\"font-size: 12px;\">Languages</div>\r\n    <br>\r\n    <span ac-value=\"tooltipSelected.name\"></span>\r\n    <b ac-value=\"tooltipSelected.value\"></b>% of total\r\n</div>\r\n<div ac-if=\"!this.series.length\">Bar chart. There is no data to show</div>\r\n<style>\r\nace-line-chart {\r\n    display: inline-block;\r\n    position: relative;\r\n}\r\n\r\n.acecharts-tooltip.open {\r\n    opacity: 1;\r\n    visibility: visible;\r\n}\r\n\r\n.acechart-series path , .acechart-markers rect{\r\n    transition: 0.5s;\r\n}\r\n\r\n.acecharts-tooltip {\r\n    position: absolute;\r\n    background: #fbf5f5c9;\r\n    /*width: 200px;*/\r\n    top: 0;\r\n    /*height: 100px;*/\r\n    transition: 0.2s;\r\n    opacity: 0;\r\n    visibility: hidden;\r\n    padding: 10px;\r\n    border: 1px solid #ddddde;\r\n    border-radius: 2px;\r\n}\r\n\r\n.acecharts-tooltip:after,\r\n.acecharts-tooltip:before {\r\n    top: 100%;\r\n    left: 50%;\r\n    border: solid transparent;\r\n    content: \" \";\r\n    height: 0;\r\n    width: 0;\r\n    position: absolute;\r\n    pointer-events: none;\r\n}\r\n\r\n.acecharts-tooltip:after {\r\n    border-color: rgba(247, 247, 247, 0);\r\n    border-top-color: #f7f7f7;\r\n    border-width: 10px;\r\n    margin-left: -10px;\r\n}\r\n\r\n.acecharts-tooltip:before {\r\n    border-color: rgba(221, 221, 222, 0);\r\n    border-top-color: #ddddde;\r\n    border-width: 11px;\r\n    margin-left: -11px;\r\n}\r\n\r\n.acechart-group rect {\r\n    /*fill: #5699dc;*/\r\n    transition: 0.5s;\r\n}\r\n\r\n.acechart-group rect:hover {\r\n    /*fill: #3e6a96;*/\r\n    opacity: 0.7;\r\n}\r\n\r\n.acechart-xaxis-labels text {\r\n    cursor: default;\r\n    font-size: 11px;\r\n    font-family: Verdana, sans-serif;\r\n    fill: #666666;\r\n    transition: 0.5s;\r\n}\r\n\r\n.acecharts-axis-title {\r\n    cursor: default;\r\n    font-size: 12px;\r\n    font-family: Verdana, sans-serif;\r\n    fill: #666666;\r\n}\r\n\r\n.acechart-title {\r\n    cursor: default;\r\n    font-size: 16px;\r\n    font-family: Verdana, sans-serif;\r\n    fill: #666666;\r\n    transition: 0.5s;\r\n}\r\n\r\n.acechart-yaxis-labels text {\r\n    cursor: default;\r\n    font-size: 11px;\r\n    font-family: Verdana, sans-serif;\r\n    fill: #666666;\r\n}\r\n\r\n.acechart-yaxis-grid line {\r\n    stroke: #ccc;\r\n}\r\n\r\n.acechart-group {}\r\n</style>";
+	module.exports = "<svg ac-ref=\"svg\" ac-attr=\"height: height, width: width\" ac-if=\"this.series.length\">\r\n    <rect class=\"acechart-background\" x=\"0\" y=\"0\" ac-attr=\"height: height, width: width, fill: background\" rx=\"0\" ry=\"0\"></rect>\r\n    <text ac-attr=\"x: labelX\" text-anchor=\"middle\" class=\"acechart-title\" y=\"24\">\r\n        <tspan ac-value=\"title\"></tspan>\r\n    </text>\r\n    <g class=\"acechart-grid acechart-yaxis-grid \">\r\n        <line ac-for=\"let item of xGrid\" ac-attr=\"x1: x1, x2: x2, y1: y1, y2: y2\" stroke=\"black\" stroke-width=\"1\" shape-rendering=\"crispEdges\" />\r\n    </g>\r\n    <text ac-attr=\"x: yLabelX, y: yLabelY, transform: yLabelTransform\" text-anchor=\"middle\" class=\"acecharts-axis-title\">\r\n        <tspan ac-value=\"yAxis.label\"></tspan>\r\n    </text>\r\n    <g class=\"acechart-axis-labels acechart-yaxis-labels \">\r\n        <text ac-for=\"let item of yLabels\" ac-attr=\"x: x, y: y\" text-anchor=\"end\" transform=\"translate(0,0)\">\r\n            <tspan ac-value=\"name\"></tspan>\r\n        </text>\r\n    </g>\r\n    <g class=\"acechart-series\">\r\n        <path ac-for=\"let item of series\" fill=\"none\" ac-attr=\"d: d, stroke: stroke\" class=\"acechart-graph\" stroke-width=\"2\" stroke-linejoin=\"round\" stroke-linecap=\"round\"></path>\r\n    </g>\r\n\r\n    <g class=\"acechart-markers\">\r\n        <g ac-for=\"let item of markers\"> \r\n            <rect ac-for=\"let item of items\" @mouseenter=\"mouseenter(item)\" @mouseleave=\"mouseleave\" ac-attr=\"x: x, y: y, fill: fill, width: width, height: height\" ></rect>\r\n        </g>\r\n    </g>\r\n\r\n</svg>\r\n<div class=\"acecharts-tooltip\" ac-class=\"open: this.tooltipIsShown\" ac-style=\"top: tooltipCoords.y, left: tooltipCoords.x\">\r\n    <div style=\"font-size: 12px;\">Languages</div>\r\n    <br>\r\n    <span ac-value=\"tooltipSelected.name\"></span>\r\n    <b ac-value=\"tooltipSelected.value\"></b>\r\n</div>\r\n<div ac-if=\"!this.series.length\">Bar chart. There is no data to show</div>\r\n<style>\r\nace-line-chart {\r\n    display: inline-block;\r\n    position: relative;\r\n}\r\n\r\n.acecharts-tooltip.open {\r\n    opacity: 1;\r\n    visibility: visible;\r\n}\r\n\r\n.acechart-series path , .acechart-markers rect{\r\n    transition: 0.5s;\r\n}\r\n\r\n.acecharts-tooltip {\r\n    position: absolute;\r\n    background: #fbf5f5c9;\r\n    /*width: 200px;*/\r\n    top: 0;\r\n    /*height: 100px;*/\r\n    transition: 0.2s;\r\n    opacity: 0;\r\n    visibility: hidden;\r\n    padding: 10px;\r\n    border: 1px solid #ddddde;\r\n    border-radius: 2px;\r\n}\r\n\r\n.acecharts-tooltip:after,\r\n.acecharts-tooltip:before {\r\n    top: 100%;\r\n    left: 50%;\r\n    border: solid transparent;\r\n    content: \" \";\r\n    height: 0;\r\n    width: 0;\r\n    position: absolute;\r\n    pointer-events: none;\r\n}\r\n\r\n.acecharts-tooltip:after {\r\n    border-color: rgba(247, 247, 247, 0);\r\n    border-top-color: #f7f7f7;\r\n    border-width: 10px;\r\n    margin-left: -10px;\r\n}\r\n\r\n.acecharts-tooltip:before {\r\n    border-color: rgba(221, 221, 222, 0);\r\n    border-top-color: #ddddde;\r\n    border-width: 11px;\r\n    margin-left: -11px;\r\n}\r\n\r\n.acechart-group rect {\r\n    /*fill: #5699dc;*/\r\n    transition: 0.5s;\r\n}\r\n\r\n.acechart-group rect:hover {\r\n    /*fill: #3e6a96;*/\r\n    opacity: 0.7;\r\n}\r\n\r\n.acechart-xaxis-labels text {\r\n    cursor: default;\r\n    font-size: 11px;\r\n    font-family: Verdana, sans-serif;\r\n    fill: #666666;\r\n    transition: 0.5s;\r\n}\r\n\r\n.acecharts-axis-title {\r\n    cursor: default;\r\n    font-size: 12px;\r\n    font-family: Verdana, sans-serif;\r\n    fill: #666666;\r\n}\r\n\r\n.acechart-title {\r\n    cursor: default;\r\n    font-size: 16px;\r\n    font-family: Verdana, sans-serif;\r\n    fill: #666666;\r\n    transition: 0.5s;\r\n}\r\n\r\n.acechart-yaxis-labels text {\r\n    cursor: default;\r\n    font-size: 11px;\r\n    font-family: Verdana, sans-serif;\r\n    fill: #666666;\r\n}\r\n\r\n.acechart-yaxis-grid line {\r\n    stroke: #ccc;\r\n}\r\n\r\n.acechart-group {}\r\n</style>";
 
 /***/ }),
 /* 64 */
