@@ -1,8 +1,8 @@
 /*!
- * ace-js 0.6.4
+ * ace-js 0.6.5
  * May be freely distributed under the MIT license 
  * Author: Bogdan Zinkevich
- * Last update: 2018-1-4 21:16:28
+ * Last update: 2018-1-5 23:29:03
  * 
  */
 (function webpackUniversalModuleDefinition(root, factory) {
@@ -2455,14 +2455,21 @@ return /******/ (function(modules) { // webpackBootstrap
 	        }
 	    }
 
-	    _component.Component.COMPONENTS = options.components;
-	    _core.RouteSwitcher.ROUTES = options.routes;
+	    _component.Component.COMPONENTS = [];
 	    _component.Component.CUSTOM_DIRECTIVES = []; // for custom directives
+	    _core.RouteSwitcher.ROUTES = options.routes;
 	    _component.Component.root = options.root;
+
+	    options.components.forEach(function (c) {
+	        return registerComponent(c);
+	    });
 
 	    if (options.directives) {
 	        if (options.directives instanceof Array) {
-	            _component.Component.CUSTOM_DIRECTIVES = options.directives;
+	            // Component.CUSTOM_DIRECTIVES = options.directives;
+	            options.directives.forEach(function (d) {
+	                return registerDirective(d);
+	            });
 	        } else {
 	            throw new Error('directives must be an array');
 	        }
@@ -2481,18 +2488,37 @@ return /******/ (function(modules) { // webpackBootstrap
 	    var rootEl = document.querySelectorAll(options.root.selector)[0];
 	    if (rootEl) {
 	        var rootComponent = new options.root(rootEl);
-	        rootComponent.root.setAttribute('ac-version', ("0.6.4"));
+	        rootComponent.root.setAttribute('ac-version', ("0.6.5"));
 	    } else {
 	        console.warn('There is no root component');
 	    }
 	}
 
 	function registerComponent(component) {
+	    //avoid repeated components
+	    if (_component.Component.COMPONENTS.map(function (r) {
+	        return r.selector;
+	    }).indexOf(component.selector) > -1) {
+	        throw new Error('Duplicate declaration; ' + component.selector);
+	    }
+
 	    if (component instanceof _component.Component.constructor) {
 	        _component.Component.COMPONENTS.push(component);
 	    } else {
 	        console.warn('Wrong type of component');
 	    }
+	}
+
+	function registerDirective(directive) {
+	    //avoid repeated directives
+	    directive.params.selector;
+	    if (_component.Component.CUSTOM_DIRECTIVES.map(function (r) {
+	        return r.params.selector;
+	    }).indexOf(directive.params.selector) > -1) {
+	        throw new Error('Duplicate declaration; ' + directive.params.selector);
+	    }
+
+	    _component.Component.CUSTOM_DIRECTIVES.push(directive);
 	}
 
 	function loadStyle(styles) {
