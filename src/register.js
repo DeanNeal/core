@@ -24,14 +24,18 @@ export function Register(options) {
         }
     }
 
-    Component.COMPONENTS = options.components;
-    RouteSwitcher.ROUTES = options.routes;
+    Component.COMPONENTS = [];
     Component.CUSTOM_DIRECTIVES = []; // for custom directives
+    RouteSwitcher.ROUTES = options.routes;
     Component.root = options.root;
+
+
+    options.components.forEach(c=> registerComponent(c));
 
     if (options.directives) {
         if (options.directives instanceof Array) {
-            Component.CUSTOM_DIRECTIVES = options.directives;
+            // Component.CUSTOM_DIRECTIVES = options.directives;
+            options.directives.forEach(d=> registerDirective(d));
         } else {
             throw new Error('directives must be an array');
         }
@@ -58,11 +62,26 @@ export function Register(options) {
 }
 
 function registerComponent(component) {
+    //avoid repeated components
+    if(Component.COMPONENTS.map(r=>r.selector).indexOf(component.selector) > -1) {
+         throw new Error('Duplicate declaration; ' + component.selector);
+    }
+
     if (component instanceof Component.constructor) {
         Component.COMPONENTS.push(component);
     } else {
         console.warn('Wrong type of component');
     }
+}
+
+function registerDirective(directive) {
+    //avoid repeated directives
+    directive.params.selector;
+    if(Component.CUSTOM_DIRECTIVES.map(r=>r.params.selector).indexOf(directive.params.selector) > -1) {
+         throw new Error('Duplicate declaration; ' + directive.params.selector);
+    }
+
+    Component.CUSTOM_DIRECTIVES.push(directive);
 }
 
 
