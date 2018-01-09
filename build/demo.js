@@ -2,7 +2,7 @@
  * ace-js 0.6.5
  * May be freely distributed under the MIT license 
  * Author: Bogdan Zinkevich
- * Last update: 2018-1-5 23:29:03
+ * Last update: 2018-1-9 14:49:13
  * 
  */
 (function webpackUniversalModuleDefinition(root, factory) {
@@ -1905,36 +1905,38 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	    array.forEach(function (item) {
 	        var formGroup = _this.getComponentVariable(item.attr.split('.'));
-	        formGroup.setComponent(_this);
-	        item.elem.setAttribute('novalidate', 'novalidate');
-	        item.elem.querySelectorAll('[ac-form-control]').forEach(function (control) {
-	            var attr = control.getAttribute('ac-form-control');
-	            formGroup.controls[attr].setElem(control);;
-	        });
-
-	        item.elem.addEventListener('keyup', function (e) {
-	            var attr = e.target.getAttribute('ac-form-control');
-	            if (attr) {
-	                formGroup.setValue(attr, e.target.value);
-	            }
-	        }, false);
-
-	        item.elem.addEventListener('submit', function (e) {
-	            var focusState = false;
-	            var controls = e.target.querySelectorAll('[ac-form-control]');
-
-	            controls.forEach(function (target) {
-	                var attr = target.getAttribute('ac-form-control');
-	                if (formGroup.controls[attr].isValid() === false && !focusState) {
-	                    focusState = true;
-	                    formGroup.controls[attr].markAsDirty();
-	                    formGroup.controls[attr].validate();
-	                    target.focus();
-	                }
+	        if (formGroup) {
+	            formGroup.setComponent(_this);
+	            item.elem.setAttribute('novalidate', 'novalidate');
+	            item.elem.querySelectorAll('[ac-form-control]').forEach(function (control) {
+	                var attr = control.getAttribute('ac-form-control');
+	                formGroup.controls[attr].setElem(control);;
 	            });
 
-	            formGroup._validate();
-	        }, true);
+	            item.elem.addEventListener('keyup', function (e) {
+	                var attr = e.target.getAttribute('ac-form-control');
+	                if (attr) {
+	                    formGroup.setValue(attr, e.target.value);
+	                }
+	            }, false);
+
+	            item.elem.addEventListener('submit', function (e) {
+	                var focusState = false;
+	                var controls = e.target.querySelectorAll('[ac-form-control]');
+
+	                controls.forEach(function (target) {
+	                    var attr = target.getAttribute('ac-form-control');
+	                    if (formGroup.controls[attr].isValid() === false && !focusState) {
+	                        focusState = true;
+	                        formGroup.controls[attr].markAsDirty();
+	                        formGroup.controls[attr].validate();
+	                        target.focus();
+	                    }
+	                });
+
+	                formGroup._validate();
+	            }, true);
+	        }
 	    });
 	}
 
@@ -2831,7 +2833,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	        key: 'destroyChildren',
 	        value: function destroyChildren(root) {
 	            if (this.root.childNodes[0]) {
-	                this.destroyAllChildren(this.root.childNodes[0].COMPONENT.children);
+	                if (this.root.childNodes[0].COMPONENT) {
+	                    this.destroyAllChildren(this.root.childNodes[0].COMPONENT.children);
+	                }
 	            }
 	            root.innerHTML = '';
 	        }
@@ -5007,7 +5011,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	Object.defineProperty(exports, "__esModule", {
 	    value: true
 	});
-	exports.Http = exports.Collection = exports.Model = undefined;
+	exports.Http = undefined;
 
 	var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
 
@@ -5015,113 +5019,81 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var _observable = __webpack_require__(7);
 
-	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 	var methods = ['get', 'post', 'put', 'delete'];
 
-	var Model = exports.Model = function () {
-	    function Model(res) {
-	        _classCallCheck(this, Model);
+	// export class Model {
+	//     constructor(res) {
+	//         this.links = {};
+	//         this.data = res.data;
+	//         this.collection = null;
+	//     }
 
-	        this.links = {};
-	        this.data = res.data;
-	        this.collection = null;
-	    }
+	//     remove() {
+	//         this.collection.remove(this);
+	//     }
 
-	    _createClass(Model, [{
-	        key: 'remove',
-	        value: function remove() {
-	            this.collection.remove(this);
-	        }
-	    }, {
-	        key: 'set',
-	        value: function set(key, value) {
-	            this.data[key] = value;
-	        }
-	    }, {
-	        key: 'get',
-	        value: function get(key) {
-	            return this.data[key];
-	        }
-	    }]);
+	//     set(key, value) {
+	//         this.data[key] = value;
+	//     }
 
-	    return Model;
-	}();
+	//     get(key) {
+	//         return this.data[key];
+	//     }
+	// }
 
-	var Collection = exports.Collection = function () {
-	    function Collection() {
-	        var _this = this;
 
-	        var options = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : [];
+	// export class Collection {
+	//     constructor(options = []) {
+	//         this.links = {};
+	//         this.models = options.map(model => {
+	//             model.collection = this;
+	//             return model;
+	//         });
+	//     }
 
-	        _classCallCheck(this, Collection);
+	//     first() {
+	//         return this.models[0] ? this.models[0] : null;
+	//     }
 
-	        this.links = {};
-	        this.models = options.map(function (model) {
-	            model.collection = _this;
-	            return model;
-	        });
-	    }
+	//     // add model to collection
+	//     add(model) {
+	//         this.models.push(model);
+	//     }
 
-	    _createClass(Collection, [{
-	        key: 'first',
-	        value: function first() {
-	            return this.models[0] ? this.models[0] : null;
-	        }
+	//     unshift(model) {
+	//         this.models.unshift(model);
+	//     }
 
-	        // add model to collection
+	//     remove(model) {
+	//         this.models.forEach((item, i) => {
+	//             if (model === item) {
+	//                 this.models.splice(i, 1);
+	//             }
+	//         });
+	//     }
 
-	    }, {
-	        key: 'add',
-	        value: function add(model) {
-	            this.models.push(model);
-	        }
-	    }, {
-	        key: 'unshift',
-	        value: function unshift(model) {
-	            this.models.unshift(model);
-	        }
-	    }, {
-	        key: 'remove',
-	        value: function remove(model) {
-	            var _this2 = this;
+	//     find(id) {
+	//         const model = this.models.filter(item => {
+	//             return item.data._id == id;
+	//         })[0];
+	//         return model;
+	//     }
 
-	            this.models.forEach(function (item, i) {
-	                if (model === item) {
-	                    _this2.models.splice(i, 1);
-	                }
-	            });
-	        }
-	    }, {
-	        key: 'find',
-	        value: function find(id) {
-	            var model = this.models.filter(function (item) {
-	                return item.data._id == id;
-	            })[0];
-	            return model;
-	        }
-	    }, {
-	        key: 'findBy',
-	        value: function findBy(name, id) {
-	            return this.models.filter(function (item) {
-	                return item.data[name] == id;
-	            })[0] || {};
-	        }
-	    }, {
-	        key: 'findAllBy',
-	        value: function findAllBy(name, id) {
-	            return this.models.filter(function (item) {
-	                return item.data[name] == id;
-	            }) || [];
-	        }
-	    }]);
+	//     findBy(name, id) {
+	//         return this.models.filter(item => {
+	//             return item.data[name] == id;
+	//         })[0] || {};
+	//     }
 
-	    return Collection;
-	}();
+	//     findAllBy(name, id) {
+	//         return this.models.filter(item => {
+	//             return item.data[name] == id;
+	//         }) || [];
+	//     }
+	// }
+
 
 	var HttpModule = function () {
 	    function HttpModule() {
@@ -5152,15 +5124,15 @@ return /******/ (function(modules) { // webpackBootstrap
 	    }, {
 	        key: 'makeRequest',
 	        value: function makeRequest(opts) {
-	            var _this3 = this;
+	            var _this = this;
 
 	            return new Promise(function (resolve, reject) {
 	                var xhr = new XMLHttpRequest();
 
-	                xhr.open(opts.method, _this3.server + opts.url);
+	                xhr.open(opts.method, _this.server + opts.url);
 	                xhr.onprogress = function (event) {
-	                    if (_this3.onprogressCallback) {
-	                        _this3.onprogressCallback.call(_this3, event);
+	                    if (_this.onprogressCallback) {
+	                        _this.onprogressCallback.call(_this, event);
 	                    }
 	                };
 	                xhr.onload = function () {
@@ -5225,16 +5197,17 @@ return /******/ (function(modules) { // webpackBootstrap
 	                xhr.send(params);
 	            });
 	        }
-	    }, {
-	        key: 'getParams',
-	        value: function getParams(params) {
-	            if (params && (typeof params === 'undefined' ? 'undefined' : _typeof(params)) === 'object') {
-	                params = Object.keys(params).map(function (key) {
-	                    return encodeURIComponent(key) + '=' + encodeURIComponent(params[key]);
-	                }).join('&');
-	            }
-	            return params;
-	        }
+
+	        // getParams(params) {
+	        //     if (params && typeof params === 'object') {
+	        //         params = Object.keys(params).map(function(key) {
+	        //             return encodeURIComponent(key) + '=' + encodeURIComponent(params[key]);
+	        //         }).join('&');
+	        //     }
+	        //     return params;
+	        // }
+
+
 	    }, {
 	        key: 'get',
 	        value: function get(url, params, headers) {
@@ -5267,168 +5240,128 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 	        // get entry point
+	        // getCatalog(url) {
+	        //     return this.hMRequest('get', url)
+	        //         .then(res => {
+	        //             this.catalog.set(res);
+	        //             return res;
+	        //         });
+	        // }
 
-	    }, {
-	        key: 'getCatalog',
-	        value: function getCatalog(url) {
-	            var _this4 = this;
+	        // getModel(response) {
+	        //     const context = this;
+	        //     class FactoryModel extends Model {
+	        //         constructor(options) {
+	        //             super(options);
+	        //             if (response.links) {
+	        //                 response.links.map(link => {
+	        //                     this.links[`${link.rel}`] = link.href; // for access to raw link
+	        //                     methods.forEach(method => {
+	        //                         if (link.href) {
+	        //                             this[`${method}_${link.rel}`] = (params, id) => {
+	        //                                 return context.hMRequest(method, link.href, params, id);
+	        //                             };
+	        //                         }
+	        //                     });
+	        //                 });
+	        //             }
 
-	            return this.hMRequest('get', url).then(function (res) {
-	                _this4.catalog.set(res);
-	                return res;
-	            });
-	        }
-	    }, {
-	        key: 'getModel',
-	        value: function getModel(response) {
-	            var context = this;
+	        //         }
+	        //     }
 
-	            var FactoryModel = function (_Model) {
-	                _inherits(FactoryModel, _Model);
+	        //     return new FactoryModel(response);
+	        // }
 
-	                function FactoryModel(options) {
-	                    _classCallCheck(this, FactoryModel);
+	        // // creates new collection
+	        // getCollection(response) {
+	        //     const models = response.map(model => this.getModel(model));
+	        //     class FactoryCollection extends Collection {
+	        //         constructor(models) {
+	        //             super(models);
+	        //         }
+	        //     }
 
-	                    var _this5 = _possibleConstructorReturn(this, (FactoryModel.__proto__ || Object.getPrototypeOf(FactoryModel)).call(this, options));
+	        //     return new FactoryCollection(models);
+	        // }
 
-	                    if (response.links) {
-	                        response.links.map(function (link) {
-	                            _this5.links['' + link.rel] = link.href; // for access to raw link
-	                            methods.forEach(function (method) {
-	                                if (link.href) {
-	                                    _this5[method + '_' + link.rel] = function (params, id) {
-	                                        return context.hMRequest(method, link.href, params, id);
-	                                    };
-	                                }
-	                            });
-	                        });
-	                    }
+	        // // makes request with current params
+	        // hMRequest(method, url, args = {}, id = '') {
+	        //     let sub;
+	        //     const context = this;
 
-	                    return _this5;
-	                }
+	        //     if(id) {
+	        //         url += '/' + id
+	        //     }
 
-	                return FactoryModel;
-	            }(Model);
+	        //     switch (method) {
+	        //         case 'get':
+	        //             sub = this.middleware(this[method](url, args, this.getGetHeaders()));
+	        //             break;
+	        //         case 'post':
+	        //             sub = this.middleware(this[method](url, args, this.getHeaders()));
+	        //             break;
+	        //         case 'put':
+	        //             sub = this.middleware(this[method](url, args, this.getHeaders()));
+	        //             break;
+	        //         case 'delete':
+	        //             sub = this.middleware(this[method](url, this.getHeaders()));
+	        //             break;
+	        //     }
 
-	            return new FactoryModel(response);
-	        }
 
-	        // creates new collection
+	        //     return sub;
+	        // }
 
-	    }, {
-	        key: 'getCollection',
-	        value: function getCollection(response) {
-	            var _this6 = this;
+	        // // 
+	        // middleware(response) {
+	        //     return response
+	        //         // .then(res => JSON.parse(res))
+	        //         .then(res => this.createEntity(res))
+	        //         .catch(err => {
+	        //             if(this.onerrorCallback) {
+	        //                 this.onerrorCallback.call(this, err);
+	        //             }
+	        //             if(err.status === 0) {
+	        //                 throw new Error('Server error');
+	        //             } else {
+	        //                 return Promise.reject(err)
+	        //             }
+	        //         });
+	        // }
 
-	            var models = response.map(function (model) {
-	                return _this6.getModel(model);
-	            });
+	        // getHeaders() {
+	        //     const headers = new Headers();
+	        //     let token = localStorage.getItem('token');
+	        //     headers.append('Content-Type', `application/json`);
+	        //     if (token) {
+	        //         headers.append('Authorization', `Bearer ${token}`);
+	        //     }
+	        //     return headers;
+	        // }
 
-	            var FactoryCollection = function (_Collection) {
-	                _inherits(FactoryCollection, _Collection);
+	        // getGetHeaders() {
+	        //     const headers = new Headers();
+	        //     headers.append('Content-Type', `application/json`);
+	        //     return headers;
+	        // }
 
-	                function FactoryCollection(models) {
-	                    _classCallCheck(this, FactoryCollection);
+	        // createEntity(response) {
+	        //     let result;
+	        //     if (response instanceof Array) {
+	        //         if (response[0] && response[0].data) {
+	        //             result = this.getCollection(response);
+	        //         } else {
+	        //             result = new Collection();
+	        //             response.forEach(item => {
+	        //                 result.add({ label: item, id: item });
+	        //             });
+	        //         }
+	        //     } else if (response.data) {
+	        //         result = this.getModel(response);
+	        //     }
+	        //     return result;
+	        // }
 
-	                    return _possibleConstructorReturn(this, (FactoryCollection.__proto__ || Object.getPrototypeOf(FactoryCollection)).call(this, models));
-	                }
-
-	                return FactoryCollection;
-	            }(Collection);
-
-	            return new FactoryCollection(models);
-	        }
-
-	        // makes request with current params
-
-	    }, {
-	        key: 'hMRequest',
-	        value: function hMRequest(method, url) {
-	            var args = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : {};
-	            var id = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : '';
-
-	            var sub = void 0;
-	            var context = this;
-
-	            if (id) {
-	                url += '/' + id;
-	            }
-
-	            switch (method) {
-	                case 'get':
-	                    sub = this.middleware(this[method](url, args, this.getGetHeaders()));
-	                    break;
-	                case 'post':
-	                    sub = this.middleware(this[method](url, args, this.getHeaders()));
-	                    break;
-	                case 'put':
-	                    sub = this.middleware(this[method](url, args, this.getHeaders()));
-	                    break;
-	                case 'delete':
-	                    sub = this.middleware(this[method](url, this.getHeaders()));
-	                    break;
-	            }
-
-	            return sub;
-	        }
-
-	        // 
-
-	    }, {
-	        key: 'middleware',
-	        value: function middleware(response) {
-	            var _this8 = this;
-
-	            return response
-	            // .then(res => JSON.parse(res))
-	            .then(function (res) {
-	                return _this8.createEntity(res);
-	            }).catch(function (err) {
-	                if (_this8.onerrorCallback) {
-	                    _this8.onerrorCallback.call(_this8, err);
-	                }
-	                if (err.status === 0) {
-	                    throw new Error('Server error');
-	                } else {
-	                    return Promise.reject(err);
-	                }
-	            });
-	        }
-	    }, {
-	        key: 'getHeaders',
-	        value: function getHeaders() {
-	            var headers = new Headers();
-	            var token = localStorage.getItem('token');
-	            headers.append('Content-Type', 'application/json');
-	            if (token) {
-	                headers.append('Authorization', 'Bearer ' + token);
-	            }
-	            return headers;
-	        }
-	    }, {
-	        key: 'getGetHeaders',
-	        value: function getGetHeaders() {
-	            var headers = new Headers();
-	            return headers;
-	        }
-	    }, {
-	        key: 'createEntity',
-	        value: function createEntity(response) {
-	            var result = void 0;
-	            if (response instanceof Array) {
-	                if (response[0] && response[0].data) {
-	                    result = this.getCollection(response);
-	                } else {
-	                    result = new Collection();
-	                    response.forEach(function (item) {
-	                        result.add({ label: item, id: item });
-	                    });
-	                }
-	            } else if (response.data) {
-	                result = this.getModel(response);
-	            }
-	            return result;
-	        }
 	    }]);
 
 	    return HttpModule;

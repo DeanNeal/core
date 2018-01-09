@@ -116,7 +116,9 @@ export class RouteSwitcher {
 
     destroyChildren(root) {
         if (this.root.childNodes[0]) {
-            this.destroyAllChildren(this.root.childNodes[0].COMPONENT.children);
+            if(this.root.childNodes[0].COMPONENT) {
+                this.destroyAllChildren(this.root.childNodes[0].COMPONENT.children);
+            }
         }
         root.innerHTML = '';
     }
