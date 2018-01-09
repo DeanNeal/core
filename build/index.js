@@ -1,8 +1,8 @@
 /*!
- * ace-js 0.6.5
+ * ace-js 0.6.6
  * May be freely distributed under the MIT license 
  * Author: Bogdan Zinkevich
- * Last update: 2018-1-9 14:49:13
+ * Last update: 2018-1-9 15:53:56
  * 
  */
 (function webpackUniversalModuleDefinition(root, factory) {
@@ -2490,7 +2490,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    var rootEl = document.querySelectorAll(options.root.selector)[0];
 	    if (rootEl) {
 	        var rootComponent = new options.root(rootEl);
-	        rootComponent.root.setAttribute('ac-version', ("0.6.5"));
+	        rootComponent.root.setAttribute('ac-version', ("0.6.6"));
 	    } else {
 	        console.warn('There is no root component');
 	    }
@@ -4883,85 +4883,10 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-	var methods = ['get', 'post', 'put', 'delete'];
-
-	// export class Model {
-	//     constructor(res) {
-	//         this.links = {};
-	//         this.data = res.data;
-	//         this.collection = null;
-	//     }
-
-	//     remove() {
-	//         this.collection.remove(this);
-	//     }
-
-	//     set(key, value) {
-	//         this.data[key] = value;
-	//     }
-
-	//     get(key) {
-	//         return this.data[key];
-	//     }
-	// }
-
-
-	// export class Collection {
-	//     constructor(options = []) {
-	//         this.links = {};
-	//         this.models = options.map(model => {
-	//             model.collection = this;
-	//             return model;
-	//         });
-	//     }
-
-	//     first() {
-	//         return this.models[0] ? this.models[0] : null;
-	//     }
-
-	//     // add model to collection
-	//     add(model) {
-	//         this.models.push(model);
-	//     }
-
-	//     unshift(model) {
-	//         this.models.unshift(model);
-	//     }
-
-	//     remove(model) {
-	//         this.models.forEach((item, i) => {
-	//             if (model === item) {
-	//                 this.models.splice(i, 1);
-	//             }
-	//         });
-	//     }
-
-	//     find(id) {
-	//         const model = this.models.filter(item => {
-	//             return item.data._id == id;
-	//         })[0];
-	//         return model;
-	//     }
-
-	//     findBy(name, id) {
-	//         return this.models.filter(item => {
-	//             return item.data[name] == id;
-	//         })[0] || {};
-	//     }
-
-	//     findAllBy(name, id) {
-	//         return this.models.filter(item => {
-	//             return item.data[name] == id;
-	//         }) || [];
-	//     }
-	// }
-
-
 	var HttpModule = function () {
 	    function HttpModule() {
 	        _classCallCheck(this, HttpModule);
 
-	        this.catalog = new _observable.ObservableModel();
 	        this.server = '';
 	    }
 
@@ -5097,133 +5022,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	        }
 	    }, {
 	        key: 'setInterceptor',
-	        value: function setInterceptor() {}
-	        //TODO
-
-
-	        // get entry point
-	        // getCatalog(url) {
-	        //     return this.hMRequest('get', url)
-	        //         .then(res => {
-	        //             this.catalog.set(res);
-	        //             return res;
-	        //         });
-	        // }
-
-	        // getModel(response) {
-	        //     const context = this;
-	        //     class FactoryModel extends Model {
-	        //         constructor(options) {
-	        //             super(options);
-	        //             if (response.links) {
-	        //                 response.links.map(link => {
-	        //                     this.links[`${link.rel}`] = link.href; // for access to raw link
-	        //                     methods.forEach(method => {
-	        //                         if (link.href) {
-	        //                             this[`${method}_${link.rel}`] = (params, id) => {
-	        //                                 return context.hMRequest(method, link.href, params, id);
-	        //                             };
-	        //                         }
-	        //                     });
-	        //                 });
-	        //             }
-
-	        //         }
-	        //     }
-
-	        //     return new FactoryModel(response);
-	        // }
-
-	        // // creates new collection
-	        // getCollection(response) {
-	        //     const models = response.map(model => this.getModel(model));
-	        //     class FactoryCollection extends Collection {
-	        //         constructor(models) {
-	        //             super(models);
-	        //         }
-	        //     }
-
-	        //     return new FactoryCollection(models);
-	        // }
-
-	        // // makes request with current params
-	        // hMRequest(method, url, args = {}, id = '') {
-	        //     let sub;
-	        //     const context = this;
-
-	        //     if(id) {
-	        //         url += '/' + id
-	        //     }
-
-	        //     switch (method) {
-	        //         case 'get':
-	        //             sub = this.middleware(this[method](url, args, this.getGetHeaders()));
-	        //             break;
-	        //         case 'post':
-	        //             sub = this.middleware(this[method](url, args, this.getHeaders()));
-	        //             break;
-	        //         case 'put':
-	        //             sub = this.middleware(this[method](url, args, this.getHeaders()));
-	        //             break;
-	        //         case 'delete':
-	        //             sub = this.middleware(this[method](url, this.getHeaders()));
-	        //             break;
-	        //     }
-
-
-	        //     return sub;
-	        // }
-
-	        // // 
-	        // middleware(response) {
-	        //     return response
-	        //         // .then(res => JSON.parse(res))
-	        //         .then(res => this.createEntity(res))
-	        //         .catch(err => {
-	        //             if(this.onerrorCallback) {
-	        //                 this.onerrorCallback.call(this, err);
-	        //             }
-	        //             if(err.status === 0) {
-	        //                 throw new Error('Server error');
-	        //             } else {
-	        //                 return Promise.reject(err)
-	        //             }
-	        //         });
-	        // }
-
-	        // getHeaders() {
-	        //     const headers = new Headers();
-	        //     let token = localStorage.getItem('token');
-	        //     headers.append('Content-Type', `application/json`);
-	        //     if (token) {
-	        //         headers.append('Authorization', `Bearer ${token}`);
-	        //     }
-	        //     return headers;
-	        // }
-
-	        // getGetHeaders() {
-	        //     const headers = new Headers();
-	        //     headers.append('Content-Type', `application/json`);
-	        //     return headers;
-	        // }
-
-	        // createEntity(response) {
-	        //     let result;
-	        //     if (response instanceof Array) {
-	        //         if (response[0] && response[0].data) {
-	        //             result = this.getCollection(response);
-	        //         } else {
-	        //             result = new Collection();
-	        //             response.forEach(item => {
-	        //                 result.add({ label: item, id: item });
-	        //             });
-	        //         }
-	        //     } else if (response.data) {
-	        //         result = this.getModel(response);
-	        //     }
-	        //     return result;
-	        // }
-
+	        value: function setInterceptor() {
+	            //TODO
+	        }
 	    }]);
 
 	    return HttpModule;
