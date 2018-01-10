@@ -55,6 +55,7 @@ export function _for(array, data) {
                             style: Directives._init.call(this, prevContent, 'ac-style'),
                             attrs: Directives._init.call(this, prevContent, 'ac-attr'),
                             if: Directives._init.call(this, prevContent, 'ac-if'),
+                            model: Directives._init.call(this, prevContent, 'ac-model'),
                             props: Directives._init.call(this, prevContent, 'ac-value'),
                             links: Directives._init.call(this, prevContent, 'ac-link'),
                             // events: eventsArray
@@ -67,14 +68,19 @@ export function _for(array, data) {
                         });
                         item.directives[i].events = eventsArray;
 
-                        updateElement.call(this, item, i, prevContent, array[i]); 
+                        updateElement.call(this, item, i, prevContent, array[i], collectionName); 
+                        bindModelToViewForLoop.call(this, item.directives[i].model, prevContent, loopIterator, collectionName, array[i]);
                     }
+                    // if(item.attr === 'let item of smartModel'){
+
+                    //    console.log(item.directives);
+                    // }
                 }
 
 
                 item.items.forEach((elem, i) => {
                     if (JSON.stringify(item.cached[i]) !== JSON.stringify(array[i])) {
-                        updateElement.call(this, item, i, elem, array[i]); 
+                        updateElement.call(this, item, i, elem, array[i], collectionName); 
                     }
                 });
 
@@ -126,12 +132,14 @@ export function _for(array, data) {
     }
 }
 
-function updateElement(item, i, elem, data) {
+function updateElement(item, i, elem, data, collectionName) {
     forAttachForLoop.call(this, item.directives[i].for, elem, data);
     bindClassForLoop.call(this, item.directives[i].class, elem, data);
     styleUnitForLoop.call(this, item.directives[i].style, elem, data);
     bindIfForLoop.call(this, item.directives[i].if, elem, data);
     bindPropsToViewForLoop.call(this, item.directives[i].props, elem, data);
+    // bindModelToViewForLoop.call(this, item.directives[i].model, elem, collectionName, data);
+    // bindPropsToViewForLoop.call(this, item.directives[i].model, elem, data);
 
     bindAttrsForLoop.call(this, item.directives[i].attrs, elem, data);
     addLinksRefsForLoop.call(this, item.directives[i].links, elem, data);
@@ -174,6 +182,11 @@ function bindIfForLoop(array, root, data) {
 function forAttachForLoop(array, root, data) {
     // let array = Directives._init.call(this, root, 'ac-for');
     Directives._for.call(this, array, data);
+}
+
+function bindModelToViewForLoop(array, root, loopIterator, collectionName, data) {
+    // let array = Directives._init.call(this, root, 'ac-value');
+    Directives._model.call(this, array, loopIterator, collectionName, data);
 }
 
 function bindPropsToViewForLoop(array, root, data) {

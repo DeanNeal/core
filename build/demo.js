@@ -2,7 +2,7 @@
  * ace-js 0.6.6
  * May be freely distributed under the MIT license 
  * Author: Bogdan Zinkevich
- * Last update: 2018-1-9 15:53:56
+ * Last update: 2018-1-10 11:31:04
  * 
  */
 (function webpackUniversalModuleDefinition(root, factory) {
@@ -1098,6 +1098,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	                            style: _index.Directives._init.call(_this, prevContent, 'ac-style'),
 	                            attrs: _index.Directives._init.call(_this, prevContent, 'ac-attr'),
 	                            if: _index.Directives._init.call(_this, prevContent, 'ac-if'),
+	                            model: _index.Directives._init.call(_this, prevContent, 'ac-model'),
 	                            props: _index.Directives._init.call(_this, prevContent, 'ac-value'),
 	                            links: _index.Directives._init.call(_this, prevContent, 'ac-link')
 	                            // events: eventsArray
@@ -1110,17 +1111,22 @@ return /******/ (function(modules) { // webpackBootstrap
 	                        });
 	                        item.directives[i].events = eventsArray;
 
-	                        updateElement.call(_this, item, i, prevContent, array[i]);
+	                        updateElement.call(_this, item, i, prevContent, array[i], collectionName);
+	                        bindModelToViewForLoop.call(_this, item.directives[i].model, prevContent, loopIterator, collectionName, array[i]);
 	                    };
 
 	                    for (var i = 0; i <= array.length - 1; i++) {
 	                        _loop(i);
 	                    }
+	                    // if(item.attr === 'let item of smartModel'){
+
+	                    //    console.log(item.directives);
+	                    // }
 	                }
 
 	                item.items.forEach(function (elem, i) {
 	                    if (JSON.stringify(item.cached[i]) !== JSON.stringify(array[i])) {
-	                        updateElement.call(_this, item, i, elem, array[i]);
+	                        updateElement.call(_this, item, i, elem, array[i], collectionName);
 	                    }
 	                });
 
@@ -1171,12 +1177,14 @@ return /******/ (function(modules) { // webpackBootstrap
 	    }
 	}
 
-	function updateElement(item, i, elem, data) {
+	function updateElement(item, i, elem, data, collectionName) {
 	    forAttachForLoop.call(this, item.directives[i].for, elem, data);
 	    bindClassForLoop.call(this, item.directives[i].class, elem, data);
 	    styleUnitForLoop.call(this, item.directives[i].style, elem, data);
 	    bindIfForLoop.call(this, item.directives[i].if, elem, data);
 	    bindPropsToViewForLoop.call(this, item.directives[i].props, elem, data);
+	    // bindModelToViewForLoop.call(this, item.directives[i].model, elem, collectionName, data);
+	    // bindPropsToViewForLoop.call(this, item.directives[i].model, elem, data);
 
 	    bindAttrsForLoop.call(this, item.directives[i].attrs, elem, data);
 	    addLinksRefsForLoop.call(this, item.directives[i].links, elem, data);
@@ -1219,6 +1227,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	function forAttachForLoop(array, root, data) {
 	    // let array = Directives._init.call(this, root, 'ac-for');
 	    _index.Directives._for.call(this, array, data);
+	}
+
+	function bindModelToViewForLoop(array, root, loopIterator, collectionName, data) {
+	    // let array = Directives._init.call(this, root, 'ac-value');
+	    _index.Directives._model.call(this, array, loopIterator, collectionName, data);
 	}
 
 	function bindPropsToViewForLoop(array, root, data) {
@@ -1618,11 +1631,14 @@ return /******/ (function(modules) { // webpackBootstrap
 	    value: true
 	});
 	exports._model = _model;
-	function _model(array) {
+	function _model(array, loopIterator, collectionName, data) {
 	    var _this = this;
 
 	    array.forEach(function (item) {
 
+	        if (item.attr === loopIterator) {
+	            throw new Error('Cannot assign to a reference or variable; ' + _this.constructor.name + '; ' + collectionName);
+	        }
 	        if (item.elem.localName === 'input') {
 
 	            switch (item.elem.type) {
@@ -1640,10 +1656,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	                case 'email':
 	                case 'password':
 	                    item.elem.addEventListener('keydown', function (e) {
-	                        _this.setComponentVariable(item.attr, e.currentTarget.value);
+	                        _this.setComponentVariable(item.attr, e.currentTarget.value, loopIterator, collectionName, data);
 	                    }, false);
 	                    item.elem.addEventListener('keyup', function (e) {
-	                        _this.setComponentVariable(item.attr, e.currentTarget.value);
+	                        _this.setComponentVariable(item.attr, e.currentTarget.value, loopIterator, collectionName, data);
 	                    }, false);
 	                    break;
 	            }
@@ -1910,7 +1926,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	            item.elem.setAttribute('novalidate', 'novalidate');
 	            item.elem.querySelectorAll('[ac-form-control]').forEach(function (control) {
 	                var attr = control.getAttribute('ac-form-control');
-	                formGroup.controls[attr].setElem(control);;
+	                if (formGroup.controls[attr]) {
+	                    formGroup.controls[attr].setElem(control);;
+	                } else {
+	                    throw new Error('Control doesn\'t exist; ' + attr);
+	                }
 	            });
 
 	            item.elem.addEventListener('keyup', function (e) {
@@ -2140,6 +2160,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	        key: 'getComponentVariable',
 	        value: function getComponentVariable(variable, data) {
 	            if (data && (typeof data === 'undefined' ? 'undefined' : _typeof(data)) !== 'object') return data;
+	            if (variable.length === 1 && variable[0] === 'this') return data || this.props.getData(); // entire props
+
 	            return variable.reduce(function (o, i, index) {
 	                if (!o[i] && o[i] !== 0 && o[i] !== false) {
 	                    // in case when variable is undefined
@@ -2149,25 +2171,52 @@ return /******/ (function(modules) { // webpackBootstrap
 	                }
 	            }, data || this.props);
 	        }
+
+	        // setComponentVariable(string, value) {
+	        //     let params = ('props.' + string).split('.');
+	        //     let lastProp = params[params.length - 1];
+	        //     if (params.length > 1) {
+	        //         params.splice(-1, 1);
+	        //     }
+
+	        //     let target = params.reduce((o, i) => o[i], this);
+	        //     if (target === this.props) { // use instanceof
+	        //         // target._data[lastProp] = value;
+	        //         this.props.set(lastProp, value);
+	        //     } else {
+	        //         target[lastProp] = value;
+	        //         this.props.set(this.props.getData());
+	        //     }
+	        // }
+
 	    }, {
 	        key: 'setComponentVariable',
-	        value: function setComponentVariable(string, value) {
-	            var params = ('props.' + string).split('.');
+	        value: function setComponentVariable(string, value, loopIterator, collectionName, data) {
+	            var params = string.split('.'); /*data ? string.split('.') : ('props.' + string).split('.');*/
 	            var lastProp = params[params.length - 1];
-	            if (params.length > 1) {
-	                params.splice(-1, 1);
-	            }
 
-	            var target = params.reduce(function (o, i) {
-	                return o[i];
-	            }, this);
-	            if (target === this.props) {
-	                // use instanceof
-	                // target._data[lastProp] = value;
-	                this.props.set(lastProp, value);
+	            if (params[0] === loopIterator) {
+	                if (params.length > 1) {
+	                    data[lastProp] = value;
+	                    this.props._callAll();
+	                }
 	            } else {
-	                target[lastProp] = value;
-	                this.props.set(this.props.getData());
+	                var _params = ('props.' + string).split('.');
+	                if (_params.length > 1) {
+	                    _params.splice(-1, 1);
+	                }
+
+	                var target = _params.reduce(function (o, i) {
+	                    return o[i];
+	                }, this);
+	                if (target === this.props) {
+	                    // use instanceof
+	                    // target._data[lastProp] = value;
+	                    this.props.set(lastProp, value);
+	                } else {
+	                    target[lastProp] = value;
+	                    this.props.set(this.props.getData());
+	                }
 	            }
 	        }
 	    }, {
@@ -2833,8 +2882,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	        key: 'destroyChildren',
 	        value: function destroyChildren(root) {
 	            if (this.root.childNodes[0]) {
-	                if (this.root.childNodes[0].COMPONENT) {
-	                    this.destroyAllChildren(this.root.childNodes[0].COMPONENT.children);
+	                var currentChild = this.root.childNodes[0].COMPONENT;
+	                if (currentChild) {
+	                    this.destroyAllChildren(currentChild.children);
+	                    currentChild.children = [];
+	                    currentChild.destroy();
 	                }
 	            }
 	            root.innerHTML = '';

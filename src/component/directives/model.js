@@ -1,6 +1,9 @@
-export function _model(array) {
+export function _model(array, loopIterator, collectionName, data) {
     array.forEach(item => {
 
+        if(item.attr === loopIterator) {
+            throw new Error('Cannot assign to a reference or variable; ' + this.constructor.name + '; ' + collectionName);
+        }
         if (item.elem.localName === 'input') {
 
             switch (item.elem.type) {
@@ -18,10 +21,10 @@ export function _model(array) {
                 case 'email':
                 case 'password':
                     item.elem.addEventListener('keydown', (e) => {
-                        this.setComponentVariable(item.attr, e.currentTarget.value);
+                        this.setComponentVariable(item.attr, e.currentTarget.value, loopIterator, collectionName, data);
                     }, false);
                     item.elem.addEventListener('keyup', (e) => {
-                        this.setComponentVariable(item.attr, e.currentTarget.value);
+                        this.setComponentVariable(item.attr, e.currentTarget.value, loopIterator, collectionName, data);
                     }, false);
                     break;
             }

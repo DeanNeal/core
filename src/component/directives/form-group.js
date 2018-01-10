@@ -7,7 +7,11 @@ export function _formGroup(array, data) {
             item.elem.setAttribute('novalidate', 'novalidate');
             item.elem.querySelectorAll('[ac-form-control]').forEach(control=>{
                 let attr = control.getAttribute('ac-form-control');
-                formGroup.controls[attr].setElem(control);;
+                if(formGroup.controls[attr]) {
+                    formGroup.controls[attr].setElem(control);;
+                }  else {
+                    throw new Error('Control doesn\'t exist; ' + attr);
+                }
             });
 
             item.elem.addEventListener('keyup', (e) => {

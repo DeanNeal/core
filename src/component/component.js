@@ -202,6 +202,8 @@ export class Component {
 
     getComponentVariable(variable, data) {
         if (data && typeof data !== 'object') return data;
+        if(variable.length === 1 && variable[0] === 'this') return data || this.props.getData(); // entire props
+
         return variable.reduce((o, i, index) => {
             if (!o[i] && o[i] !== 0 && o[i] !== false) { // in case when variable is undefined
                 return index === variable.length - 1 ? null : {};
@@ -211,21 +213,48 @@ export class Component {
         }, data || this.props)
     }
 
-    setComponentVariable(string, value) {
-        let params = ('props.' + string).split('.');
+    // setComponentVariable(string, value) {
+    //     let params = ('props.' + string).split('.');
+    //     let lastProp = params[params.length - 1];
+    //     if (params.length > 1) {
+    //         params.splice(-1, 1);
+    //     }
+
+    //     let target = params.reduce((o, i) => o[i], this);
+    //     if (target === this.props) { // use instanceof
+    //         // target._data[lastProp] = value;
+    //         this.props.set(lastProp, value);
+    //     } else {
+    //         target[lastProp] = value;
+    //         this.props.set(this.props.getData());
+    //     }
+    // }
+    setComponentVariable(string, value, loopIterator, collectionName, data) {
+        let params = string.split('.'); /*data ? string.split('.') : ('props.' + string).split('.');*/
         let lastProp = params[params.length - 1];
-        if (params.length > 1) {
-            params.splice(-1, 1);
+
+
+        if(params[0] === loopIterator) {
+            if(params.length > 1){
+                data[lastProp] = value;
+                this.props._callAll();
+            } 
+        } else {
+            let params = ('props.' + string).split('.');
+            if (params.length > 1) {
+                params.splice(-1, 1);
+            }
+
+           let target = params.reduce((o, i) => o[i], this);
+           if (target === this.props) { // use instanceof
+               // target._data[lastProp] = value;
+               this.props.set(lastProp, value);
+           } else {
+               target[lastProp] = value;
+               this.props.set(this.props.getData());
+           } 
         }
 
-        let target = params.reduce((o, i) => o[i], this);
-        if (target === this.props) { // use instanceof
-            // target._data[lastProp] = value;
-            this.props.set(lastProp, value);
-        } else {
-            target[lastProp] = value;
-            this.props.set(this.props.getData());
-        }
     }
 
     getElement(target) {
