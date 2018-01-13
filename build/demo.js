@@ -2,7 +2,7 @@
  * ace-js 0.7.0
  * May be freely distributed under the MIT license 
  * Author: Bogdan Zinkevich
- * Last update: 2018-1-13 12:51:18
+ * Last update: 2018-1-13 14:43:57
  * 
  */
 (function webpackUniversalModuleDefinition(root, factory) {
@@ -315,10 +315,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    }
 
 	    if (options.services.length) {
-	        // options.services.forEach(service=>{
-	        //     API.injector(service);
-	        // });
-	        _api2.default._SERVICES = options.services;
+	        _api2.default.setServices(options.services);
 	    }
 
 	    _core.RouteSwitcher.ROUTES = options.routes;
@@ -1802,8 +1799,28 @@ return /******/ (function(modules) { // webpackBootstrap
 		}
 
 		_createClass(API, [{
+			key: 'setServices',
+			value: function setServices(options) {
+				var _this = this;
+
+				options.forEach(function (r) {
+					if (Array.isArray(r)) {
+						r.forEach(function (r) {
+							_this._SERVICES.push(r);
+						});
+					} else {
+						_this._SERVICES.push(r);
+					}
+				});
+			}
+		}, {
 			key: 'injectorGet',
-			value: function injectorGet(service) {
+			value: function injectorGet(service, Class) {
+				var instanceName = Class ? Class.name : '';
+				if (typeof service !== 'function') {
+					throw new Error('Is not a service; ' + instanceName);
+				}
+
 				var injectedService = this._SERVICES.filter(function (r) {
 					return r === service;
 				})[0];
@@ -1813,13 +1830,12 @@ return /******/ (function(modules) { // webpackBootstrap
 				if (readyService.length) {
 					return readyService[0];
 				} else {
-					console.log('SERVICE INIT');
 					if (injectedService) {
 						var _readyService = new injectedService();
 						this._READY_SERVICES.push(_readyService);
 						return _readyService;
 					} else {
-						throw new Error('Service doesn\'t exist; ' + service.class.name);
+						throw new Error('Service doesn\'t exist; ' + service.class.name + '; ' + instanceName);
 					}
 				}
 			}
@@ -2236,7 +2252,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	            if (_typeof(decoratorParams.services) === 'object') {
 	                var _loop2 = function _loop2(key) {
 	                    if (decoratorParams.services.hasOwnProperty(key) && decoratorParams.services[key]) {
-	                        var injectedService = _api2.default.injectorGet(decoratorParams.services[key]);
+	                        var injectedService = _api2.default.injectorGet(decoratorParams.services[key], Class);
 	                        if (injectedService) {
 
 	                            Object.defineProperty(instance, key, {
@@ -2311,7 +2327,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	            var injected = [];
 	            for (var key in decoratorParams) {
 	                if (decoratorParams.hasOwnProperty(key) && decoratorParams[key]) {
-	                    var injectedService = _api2.default.injectorGet(decoratorParams[key]);
+	                    var injectedService = _api2.default.injectorGet(decoratorParams[key], Class);
 	                    injected.push(injectedService);
 	                }
 	            }
@@ -2320,7 +2336,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	            return instance;
 	        };
 
-	        func.class = Class; //.prototype = Object.setPrototypeOf(func.prototype, Class.prototype);
+	        func.class = Class;
 
 	        return func;
 	    };

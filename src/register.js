@@ -15,12 +15,8 @@ export function Register(options) {
         }
     }
 
-
     if(options.services.length) {
-        // options.services.forEach(service=>{
-        //     API.injector(service);
-        // });
-        API._SERVICES = options.services;
+        API.setServices(options.services);
     }
 
     RouteSwitcher.ROUTES = options.routes;

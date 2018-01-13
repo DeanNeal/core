@@ -6,7 +6,7 @@ export default function Inject(decoratorParams) {
             let injected = [];
             for(let key in decoratorParams) {
                 if(decoratorParams.hasOwnProperty(key) && decoratorParams[key]){
-                    let injectedService = API.injectorGet(decoratorParams[key]);
+                    let injectedService = API.injectorGet(decoratorParams[key], Class);
                     injected.push(injectedService);
                 }
             }    
@@ -15,7 +15,7 @@ export default function Inject(decoratorParams) {
             return instance;
         };
 
-        func.class = Class;//.prototype = Object.setPrototypeOf(func.prototype, Class.prototype);
+        func.class = Class;
         
         return func;
     }

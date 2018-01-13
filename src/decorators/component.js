@@ -30,7 +30,7 @@ export default function ComponentDecorator(decoratorParams) {
             if(typeof decoratorParams.services === 'object') {
                 for(let key in decoratorParams.services) {
                     if(decoratorParams.services.hasOwnProperty(key) && decoratorParams.services[key]){
-                        let injectedService = API.injectorGet(decoratorParams.services[key]);
+                        let injectedService = API.injectorGet(decoratorParams.services[key], Class);
                         if(injectedService){
 
                           Object.defineProperty(instance, key, {
