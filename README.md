@@ -18,6 +18,11 @@ Using npm:
 npm i -S ace-js
 ```
 
+Get lastest version of ace-js:
+```
+npm i ace-js@latest
+```
+
 In your code:
 
 ```bash
