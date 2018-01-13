@@ -7,15 +7,15 @@ export function Register(options) {
 
     loadStyle(options.styles);
 
-    if (options.serverUrl) {
-        if (typeof options.serverUrl === 'string') {
-            Http.setServerUrl(options.serverUrl);
-        } else {
-            throw new Error('directives must be a string');
-        }
-    }
+    // if (options.serverUrl) {
+    //     if (typeof options.serverUrl === 'string') {
+    //         Http.setServerUrl(options.serverUrl);
+    //     } else {
+    //         throw new Error('directives must be a string');
+    //     }
+    // }
 
-    if(options.services.length) {
+    if(options.services && options.services.length) {
         API.setServices(options.services);
     }
 

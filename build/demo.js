@@ -2,7 +2,7 @@
  * ace-js 0.7.1
  * May be freely distributed under the MIT license 
  * Author: Bogdan Zinkevich
- * Last update: 2018-1-13 14:48:12
+ * Last update: 2018-1-13 23:00:39
  * 
  */
 (function webpackUniversalModuleDefinition(root, factory) {
@@ -306,13 +306,13 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	    loadStyle(options.styles);
 
-	    if (options.serverUrl) {
-	        if (typeof options.serverUrl === 'string') {
-	            _core.Http.setServerUrl(options.serverUrl);
-	        } else {
-	            throw new Error('directives must be a string');
-	        }
-	    }
+	    // if (options.serverUrl) {
+	    //     if (typeof options.serverUrl === 'string') {
+	    //         Http.setServerUrl(options.serverUrl);
+	    //     } else {
+	    //         throw new Error('directives must be a string');
+	    //     }
+	    // }
 
 	    if (options.services.length) {
 	        _api2.default.setServices(options.services);
@@ -1825,6 +1825,7 @@ return /******/ (function(modules) { // webpackBootstrap
 					return r === service;
 				})[0];
 				var readyService = this._READY_SERVICES.filter(function (r) {
+					if (!service.class) throw new Error(service.name + ' service must be injected; See ' + instanceName);
 					return r instanceof service.class;
 				});
 				if (readyService.length) {
@@ -1835,7 +1836,11 @@ return /******/ (function(modules) { // webpackBootstrap
 						this._READY_SERVICES.push(_readyService);
 						return _readyService;
 					} else {
-						throw new Error('Service doesn\'t exist; ' + service.class.name + '; ' + instanceName);
+						if (service.class) {
+							throw new Error('Service doesn\'t exist; ' + service.class.name + '; See ' + instanceName);
+						} else {
+							throw new Error(service.name + ' service must be injected; See ' + instanceName);
+						}
 					}
 				}
 			}
@@ -2250,28 +2255,23 @@ return /******/ (function(modules) { // webpackBootstrap
 	            }
 
 	            if (_typeof(decoratorParams.services) === 'object') {
-	                var _loop2 = function _loop2(key) {
+	                for (var key in decoratorParams.services) {
 	                    if (decoratorParams.services.hasOwnProperty(key) && decoratorParams.services[key]) {
 	                        var injectedService = _api2.default.injectorGet(decoratorParams.services[key], Class);
 	                        if (injectedService) {
 
 	                            Object.defineProperty(instance, key, {
-	                                set: function set(value) {
-	                                    return instance.props.set(key, value);
-	                                },
-	                                get: function get() {
-	                                    return instance.props.get(key);
-	                                },
-	                                configurable: false
+	                                value: injectedService,
+	                                writable: false
 	                            });
-
-	                            instance[key] = injectedService;
+	                            Object.defineProperty(instance.props, key, {
+	                                value: injectedService,
+	                                writable: false
+	                            });
+	                            // instance.props.set(key, injectedService);
+	                            // instance[key] = injectedService;
 	                        }
 	                    }
-	                };
-
-	                for (var key in decoratorParams.services) {
-	                    _loop2(key);
 	                }
 	            }
 
@@ -5251,8 +5251,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	var HttpModule = function () {
 	    function HttpModule() {
 	        _classCallCheck(this, HttpModule);
-
-	        this.server = '';
 	    }
 
 	    _createClass(HttpModule, [{
@@ -5281,7 +5279,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	            return new Promise(function (resolve, reject) {
 	                var xhr = new XMLHttpRequest();
 
-	                xhr.open(opts.method, _this.server + opts.url);
+	                xhr.open(opts.method, opts.url);
 	                xhr.onprogress = function (event) {
 	                    if (_this.onprogressCallback) {
 	                        _this.onprogressCallback.call(_this, event);
@@ -5384,11 +5382,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	        value: function _delete(url, params, headers) {
 	            return this.makeRequest({ method: 'delete', url: url, params: {}, headers: headers });
 	        }
-	    }, {
-	        key: 'setServerUrl',
-	        value: function setServerUrl(url) {
-	            this.server = url;
-	        }
+
+	        // setServerUrl(url) {
+	        //     this.server = url;
+	        // }
+
 	    }, {
 	        key: 'setInterceptor',
 	        value: function setInterceptor() {

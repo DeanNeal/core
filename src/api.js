@@ -29,7 +29,10 @@ class API {
 		}
 
 		let injectedService = this._SERVICES.filter(r=> r === service)[0];
-		let readyService = this._READY_SERVICES.filter(r=> r instanceof service.class);
+		let readyService = this._READY_SERVICES.filter(r=> {
+			if(!service.class) throw new Error(service.name + ' service must be injected; See ' + instanceName);
+			return r instanceof service.class;
+		});
 		if(readyService.length) {
 			return readyService[0];
 		} else {
@@ -38,7 +41,12 @@ class API {
 				this._READY_SERVICES.push(readyService);
 				return readyService
 			} else {
-				throw new Error('Service doesn\'t exist; ' + service.class.name + '; ' + instanceName);
+				if(service.class){
+					throw new Error('Service doesn\'t exist; ' + service.class.name + '; See ' + instanceName);
+				} else {
+					throw new Error(service.name + ' service must be injected; See ' + instanceName);
+				}
+				
 			}
 		}
 	}

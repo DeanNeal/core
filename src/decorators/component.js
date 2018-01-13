@@ -34,12 +34,13 @@ export default function ComponentDecorator(decoratorParams) {
                         if(injectedService){
 
                           Object.defineProperty(instance, key, {
-                              set: value => instance.props.set(key, value),
-                              get: () => instance.props.get(key),
-                              configurable: false
+                            value: injectedService,
+                              writable: false
                           });
-
-                          instance[key] = injectedService;
+                          Object.defineProperty(instance.props, key, {
+                            value: injectedService,
+                              writable: false
+                          });
                         }
                     }
                 }    

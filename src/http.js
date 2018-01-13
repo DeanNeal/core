@@ -2,7 +2,7 @@
 import { ObservableModel} from './core';
 class HttpModule {
     constructor() {
-        this.server = '';
+        
     }
 
     onProgress(f) {
@@ -25,7 +25,7 @@ class HttpModule {
         return new Promise((resolve, reject) => {
             let xhr = new XMLHttpRequest();
 
-            xhr.open(opts.method, this.server + opts.url);
+            xhr.open(opts.method, opts.url);
             xhr.onprogress = (event)=> {
                 if(this.onprogressCallback){
                     this.onprogressCallback.call(this, event)
@@ -103,9 +103,9 @@ class HttpModule {
         return this.makeRequest({ method: 'delete', url, params: {}, headers });
     }
 
-    setServerUrl(url) {
-        this.server = url;
-    }
+    // setServerUrl(url) {
+    //     this.server = url;
+    // }
 
     setInterceptor() {
         //TODO
