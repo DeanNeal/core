@@ -1,6 +1,6 @@
-import { ObservableModel, ObservableCollection } from './observable/observable';
-import * as Decorators from './decorators';
 import { Register } from './register';
+import { ObservableModel, ObservableCollection, ObservableBoolean} from './observable/observable';
+import * as Decorators from './decorators';
 import { Component } from './component/component';
 import { RouteSwitcher } from './router/router-switcher';
 import Router from './router/router-core';
@@ -10,7 +10,7 @@ import { Utils } from './utils/utils';
 import * as Plugins from './plugins';
 import * as Controls from './controls';
 import { Http } from './http.js';
-import { Store } from './store.js';
+// import API from './api';
 
 import {FormGroup} from 'reactive-forms/form-group';
 import {Validators} from 'reactive-forms/validators';
@@ -18,10 +18,11 @@ import {Validators} from 'reactive-forms/validators';
 import './polifills';
 
 export {
+    Register,
     ObservableModel,
     ObservableCollection,
+    ObservableBoolean,
     Decorators,
-    Register,
     Component,
     Router,
     RouteSwitcher,
@@ -31,7 +32,7 @@ export {
     Plugins,
     Controls,
     Http,
-    Store,
+    // API,
 
     FormGroup,
     Validators

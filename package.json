@@ -6,7 +6,7 @@
   "repository": "https://github.com/DeanNeal/ace-js.git",
   "scripts": {
     "watch": "webpack --watch",
-    "dev": "webpack-dev-server --progress --colors --hot --display-modules --display-reasons --profile",
+    "dev": "webpack-dev-server --progress --colors --inline --display-modules --display-reasons --profile",
     "prod": "cross-env NODE_ENV=prod webpack --config webpack.config.js --progress --colors"
   },
   "devDependencies": {

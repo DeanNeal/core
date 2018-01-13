@@ -3,7 +3,7 @@ import { IfObject, IfArray } from '../decorators';
 // import objectMerge from 'object-merge';
 import merge from 'merge';
 
-export class Observable {
+class Observable {
     constructor(options) {
         this.lId = -1;
         if (options) {
@@ -63,9 +63,9 @@ export class Observable {
 
     _callAll() {
         this.callbacksArray.forEach(r => {
-            if (this._data) {
+            // if (this._data) {
                 r.f.call(this, this._data)
-            }
+            // }
         });
     }
 }
@@ -143,4 +143,25 @@ export class ObservableCollection extends Observable {
         this._callAll();
     }
 
+}
+
+export class ObservableBoolean extends Observable {
+    constructor(options) {
+        super(options);
+        this._data = options || false;
+    } 
+
+    set(data, silent) {
+        if (typeof data == 'boolean') {
+            // this._data = merge(this._data, data);
+            // this.defineProperties(data);
+            this._data = data;
+        } else {
+            console.warn('Only boolean');
+        }
+
+        if(!silent){
+            this._callAll();
+        }
+    }
 }

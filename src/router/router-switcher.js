@@ -1,5 +1,6 @@
 import Router from './router-core';
-import { Component, GlobalData } from './../core';
+import { Component, GlobalData} from './../core';
+import API from'./../api';
 
 export class RouteSwitcher {
     constructor(root, parent) {
@@ -29,7 +30,9 @@ export class RouteSwitcher {
 
                     if(Object.keys(this.children).length) {
                         childComp = this.children[Object.keys(this.children)[0]][0];
-                        router = childComp.root.querySelectorAll('child-route-switcher')[0];
+                        if(childComp.root) {
+                            router = childComp.root.querySelectorAll('child-route-switcher')[0];
+                        }   
                     }
 
                     if (router) {
@@ -73,7 +76,7 @@ export class RouteSwitcher {
     }
 
     getComponentName(route) {
-        return Component.COMPONENTS.filter(r => r.selector === route.component)[0];
+        return API.COMPONENTS.filter(r => r.selector === route.component)[0];
     }
 
     renderComponent(component, route, params) {
@@ -99,7 +102,8 @@ export class RouteSwitcher {
 
     checkAccess(root, newComp, route, cb) {
         if (route.protector) {
-            let protector = new route.protector();
+
+            let protector = API.injectorGet(route.protector);//new route.protector();
             if (protector.check()) {
                 root.appendChild(newComp);
                 cb();

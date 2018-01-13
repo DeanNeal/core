@@ -1,7 +1,8 @@
-import { Component, Utils } from '../../core';
+import { Component, Utils} from '../../core';
 import { Directives } from './index';
 import { _init } from './init';
 import { EVENTS_NAMES } from '../const/events';
+import API from'./../../api';
 
 export function _for(array, data) {
     if (array.length) {
@@ -96,7 +97,7 @@ export function _for(array, data) {
                     item.items = [];
                     this.children[item.elem.COMPONENT.constructor.name] = [];
                     for (let i = 0; i <= array.length - 1; i++) {
-                        let newComp = Component.COMPONENTS.filter(r => r.selector === compName)[0];
+                        let newComp = API.COMPONENTS.filter(r => r.selector === compName)[0];
                         // if(newComp) {
                         let newEl = document.createElement(compName);
                         // this.root.appendChild(newEl);

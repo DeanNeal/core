@@ -1,4 +1,4 @@
-import { Utils, Component } from '../../core';
+import { Utils, Component, API} from '../../core';
 export function _if(array, data) {
     array.forEach(item => {
         let attr = item.attr; //.replace(/@+/g, "this.props."); // @ -alias of this.props
@@ -8,7 +8,7 @@ export function _if(array, data) {
             if (r) {
                 if (!item.elem.parentNode) { // insert only if elem doesn't exists
                     if (Utils.isCustomElement(item.elem)) {
-                        Component.COMPONENTS.forEach(comp => {
+                        API.COMPONENTS.forEach(comp => {
                             if (comp.selector === item.elem.localName) {
                                 //console.log(item);
                                 new comp(item.elem, {}, this);

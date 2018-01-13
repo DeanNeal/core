@@ -1,10 +1,11 @@
-import { Router, RouteSwitcher, ObservableModel, TemplateEngine, Utils } from '../core';
+import { Router, RouteSwitcher, ObservableBoolean, ObservableModel, TemplateEngine, Utils} from '../core';
+
 import { PRIVATES } from '../component/private';
 // import Interpolation from './interpolation/interpolation';
 import { Directives } from '../component/Directives';
 import { DIRECTIVES_NAMES } from '../component/const/directives';
 import { EVENTS_NAMES } from '../component/const/events';
-
+import API from'./../api';
 
 export class Component {
 
@@ -24,7 +25,7 @@ export class Component {
         });
 
         Object.defineProperty(this, 'tpl', { value: options.template || 'Empty template', writable: false });
-        Object.defineProperty(this, 'props', { value: new ObservableModel(Object.assign({}, options.props)), writable: false });
+        // Object.defineProperty(this, 'props', { value: new ObservableModel(Object.assign({}, {}/*options.props*/)), writable: false });
 
         Object.defineProperty(this, 'type', { value: options.type, writable: false });
 
@@ -36,7 +37,6 @@ export class Component {
         }
 
         Object.defineProperty(this, '$attrs', { value: attrs, writable: false });
-        // Object.defineProperty(this, '$routerSub', { value: null, writable: true });
 
         this.root.COMPONENT = this;
 
@@ -72,7 +72,7 @@ export class Component {
         });
         PRIVATES.COMPUTED.set(this, options.computed);
 
-        Component.CUSTOM_DIRECTIVES.forEach((directive) => {
+        API.CUSTOM_DIRECTIVES.forEach((directive) => {
             if (!PRIVATES.CUSTOM_DIRECTIVES[directive.params.selector]) {
                 PRIVATES.CUSTOM_DIRECTIVES[directive.params.selector] = new WeakMap();
             }
@@ -109,7 +109,7 @@ export class Component {
         });
 
         //custom directives
-        Component.CUSTOM_DIRECTIVES.forEach((Directive) => {
+        API.CUSTOM_DIRECTIVES.forEach((Directive) => {
             let array = Directives._init.call(this, this.root, Directive.params.selector, PRIVATES.CUSTOM_DIRECTIVES[Directive.params.selector]);
             if (array) {
                 array.get(this).map(item => {
@@ -157,7 +157,7 @@ export class Component {
     }
 
     compile() {
-        Component.COMPONENTS.forEach(comp => {
+        API.COMPONENTS.forEach(comp => {
             let components = this.root.querySelectorAll(comp.selector);
             if (components.length) {
                 components.forEach(r => {
@@ -296,12 +296,6 @@ export class Component {
         }
 
         Directives.removeEventListeners.call(this, PRIVATES.EVENTS.get(this));
-
-        //unsubscribe from router changes
-        // if (this.$routerSub) {
-        //     // console.log('destroyed', this);
-        //     this.$routerSub.unsubscribe();
-        // }
 
         //unsubscribe from components subscribers
         PRIVATES.SUBSCRIPTIONS.get(this).forEach(item => item.unsubscribe());

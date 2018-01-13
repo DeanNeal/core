@@ -1,5 +1,5 @@
-import { ObservableModel } from './observable/observable';
-
+// import { ObservableModel } from './observable/observable';
+import { ObservableModel} from './core';
 class HttpModule {
     constructor() {
         this.server = '';
@@ -35,11 +35,15 @@ class HttpModule {
                 if (this.status >= 200 && this.status < 300) {
                     resolve(JSON.parse(xhr.response));
                 } else {
-                    reject({
-                        status: this.status,
-                        statusText: xhr.statusText,
-                        response: JSON.parse(xhr.response)
-                    });
+                    try {
+                        reject({
+                            status: this.status,
+                            statusText: xhr.statusText,
+                            response: JSON.parse(xhr.response)
+                        });
+                    } catch (err) {
+                        console.warn('Server error');
+                    }
                 }
             };
             xhr.onerror = function() {

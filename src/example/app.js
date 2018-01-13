@@ -34,7 +34,7 @@ Register({
     directives: [
         UpperCaseDirective
     ],
-    modules: [Docs, Plugins, TreeDebugComponent],
+    import: [Docs, Plugins, TreeDebugComponent],
     routes: Routes
 
 });
