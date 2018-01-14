@@ -101,7 +101,7 @@ export function _for(array, data) {
                         // if(newComp) {
                         let newEl = document.createElement(compName);
                         // this.root.appendChild(newEl);
-                        let a = new newComp(newEl, Object.assign({}, array[i]), this);
+                        let a = new newComp(newEl, array[i], this);
                         this.children[item.elem.COMPONENT.constructor.name].push(a);
                         // }
 

@@ -7,8 +7,13 @@ import API from'./../api';
 export default function ComponentDecorator(decoratorParams) {
     return function decorator(Class) {
         let func = (root, props, parent) => {
+            let newProps = Object.assign({}, props);
+            try{
+                newProps = decoratorParams.props ? decoratorParams.props() : {};
+            } catch(err) {
+                throw new Error('props is not a function; ' + Class.name)
+            }
 
-            decoratorParams.props = Object.assign(decoratorParams.props || {}, props);
             let proto = Component.prototype;
             if (decoratorParams.super) {
                 proto = decoratorParams.super.prototype = Object.setPrototypeOf(decoratorParams.super.prototype, Component.prototype);
@@ -17,9 +22,9 @@ export default function ComponentDecorator(decoratorParams) {
 
             let instance = new Class();
 
-            Object.defineProperty(instance, 'props', { value: new ObservableModel(Object.assign({}, decoratorParams.props)), writable: false });
+            Object.defineProperty(instance, 'props', { value: new ObservableModel(newProps), writable: false });
 
-            for(let key in decoratorParams.props) {
+            for(let key in newProps) {
                 Object.defineProperty(instance, key, {
                     set: value => instance.props.set(key, value),
                     get: () => instance.props.get(key),

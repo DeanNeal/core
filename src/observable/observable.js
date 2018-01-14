@@ -1,7 +1,7 @@
 import { IfObject, IfArray } from '../decorators';
 // import deepmerge from 'deepmerge';
 // import objectMerge from 'object-merge';
-import merge from 'merge';
+// import merge from 'merge';
 
 class Observable {
     constructor(options) {
@@ -34,6 +34,7 @@ class Observable {
 
         let a = Number(this.lId);
         return {
+            listeners: this.callbacksArray,
             unsubscribe: () => {
                 // console.log(this.callbacksArray.length);
                 this.unsubscribe(a);
@@ -87,7 +88,7 @@ export class ObservableModel extends Observable {
 
     set(data, value, silent) {
         if (typeof data == 'object') {
-            this._data = merge(this._data, data);
+            this._data = Object.assign({}, this._data, data);
             this.defineProperties(data);
         } else {
             this.defineProperty(data, value);

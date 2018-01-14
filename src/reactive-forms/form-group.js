@@ -5,7 +5,8 @@ export class FormControl {
         this.value = params[0] || '';
         this.initValue = params[0] || '';
         this.validators = params[1];
-        this.parent = parent;
+        // this.parent = parent;
+        Object.defineProperty(this, 'parent', {value: parent, writable: false})
         this.errors = {};
     }
 

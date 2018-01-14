@@ -10,9 +10,11 @@ const TODAY = new Date();
 @Decorators.ComponentDecorator({
     selector: 'app-datepicker', 
     template: Tpl,
-    props: {
-        daysOfWeekShort: Utils.daysOfWeekShort, 
-        formattedDate: Utils.getDateByFormat(TODAY, 'yyyy-mm-dd')
+    props: () => {
+        return {        
+            daysOfWeekShort: Utils.daysOfWeekShort, 
+            formattedDate: Utils.getDateByFormat(TODAY, 'yyyy-mm-dd')
+        }
     },
     super: DropdownComponent
 })

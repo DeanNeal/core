@@ -16,8 +16,8 @@ export class Component {
     static componentConstructor(root, options) {
         this.root = root; //;console.log(root);
 
-        let attrs = {};
-        this.children = {};
+        // this.children = {};
+        Object.defineProperty(this, 'children', { value: {}, writable: false });
 
         // Object.defineProperty(this, 'options', {
         //     value: Object.assign({}, options),
@@ -28,6 +28,8 @@ export class Component {
         // Object.defineProperty(this, 'props', { value: new ObservableModel(Object.assign({}, {}/*options.props*/)), writable: false });
 
         Object.defineProperty(this, '$refs', { value: {}, writable: false });
+
+        let attrs = {};
 
         for (let i = 0; i < root.attributes.length; i++) {
             attrs[root.attributes[i].nodeName] = root.attributes[i].nodeValue
@@ -129,7 +131,7 @@ export class Component {
     }
 
     listenToPropsChanges() {
-        this.$propsSub = this.props.sub(r => {
+        let $propsSub = this.props.sub(r => {
             Directives._computed.call(this, PRIVATES.COMPUTED.get(this)); // should go first
 
             Directives._if.call(this, PRIVATES.DIRECTIVES['ac-if'].get(this));
@@ -151,6 +153,8 @@ export class Component {
             Directives._customDirective.call(this);
             this.onUpdate();
         });
+
+        Object.defineProperty(this, '$propsSub', { value: $propsSub, writable: false });
     }
 
     compile() {
@@ -291,6 +295,7 @@ export class Component {
         if (this.$propsSub) {
             this.$propsSub.unsubscribe();
         }
+        // this.props.clear();
 
         Directives.removeEventListeners.call(this, PRIVATES.EVENTS.get(this));
 
