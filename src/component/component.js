@@ -19,16 +19,13 @@ export class Component {
         let attrs = {};
         this.children = {};
 
-        Object.defineProperty(this, 'options', {
-            value: Object.assign({}, options),
-            writable: false
-        });
+        // Object.defineProperty(this, 'options', {
+        //     value: Object.assign({}, options),
+        //     writable: false
+        // });
 
         Object.defineProperty(this, 'tpl', { value: options.template || 'Empty template', writable: false });
         // Object.defineProperty(this, 'props', { value: new ObservableModel(Object.assign({}, {}/*options.props*/)), writable: false });
-
-        Object.defineProperty(this, 'type', { value: options.type, writable: false });
-
 
         Object.defineProperty(this, '$refs', { value: {}, writable: false });
 

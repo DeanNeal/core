@@ -2,7 +2,7 @@
  * ace-js 0.7.3
  * May be freely distributed under the MIT license 
  * Author: Bogdan Zinkevich
- * Last update: 2018-1-14 13:40:41
+ * Last update: 2018-1-14 15:13:07
  * 
  */
 (function webpackUniversalModuleDefinition(root, factory) {
@@ -410,8 +410,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	});
 	exports.Component = undefined;
 
-	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
-
 	var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
 
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
@@ -712,15 +710,13 @@ return /******/ (function(modules) { // webpackBootstrap
 	            var attrs = {};
 	            this.children = {};
 
-	            Object.defineProperty(this, 'options', {
-	                value: _extends({}, options),
-	                writable: false
-	            });
+	            // Object.defineProperty(this, 'options', {
+	            //     value: Object.assign({}, options),
+	            //     writable: false
+	            // });
 
 	            Object.defineProperty(this, 'tpl', { value: options.template || 'Empty template', writable: false });
 	            // Object.defineProperty(this, 'props', { value: new ObservableModel(Object.assign({}, {}/*options.props*/)), writable: false });
-
-	            Object.defineProperty(this, 'type', { value: options.type, writable: false });
 
 	            Object.defineProperty(this, '$refs', { value: {}, writable: false });
 
@@ -4352,12 +4348,10 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	            this.setSubscriptions(ModalStore.modal.sub(function (r) {
 	                if (r.visible && _this2.type === r.type) {
-	                    // this.root.style.display = 'block';
 	                    _this2.props.set(r);
 	                    _this2.onOpen();
 	                } else {
 	                    _this2.props.set({ visible: false });
-	                    // this.root.style.display = 'none';
 	                    _this2.onClose();
 	                }
 	            }));
