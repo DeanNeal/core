@@ -1,8 +1,8 @@
 /*!
- * ace-js 0.7.1
+ * ace-js 0.7.2
  * May be freely distributed under the MIT license 
  * Author: Bogdan Zinkevich
- * Last update: 2018-1-13 23:00:39
+ * Last update: 2018-1-14 13:16:43
  * 
  */
 (function webpackUniversalModuleDefinition(root, factory) {
@@ -314,7 +314,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    //     }
 	    // }
 
-	    if (options.services.length) {
+	    if (options.services && options.services.length) {
 	        _api2.default.setServices(options.services);
 	    }
 
@@ -348,7 +348,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    var rootEl = document.querySelectorAll(options.root.selector)[0];
 	    if (rootEl) {
 	        var rootComponent = new options.root(rootEl);
-	        rootComponent.root.setAttribute('ac-version', ("0.7.1"));
+	        rootComponent.root.setAttribute('ac-version', ("0.7.2"));
 	    } else {
 	        console.warn('There is no root component');
 	    }
@@ -2268,8 +2268,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	                                value: injectedService,
 	                                writable: false
 	                            });
-	                            // instance.props.set(key, injectedService);
-	                            // instance[key] = injectedService;
 	                        }
 	                    }
 	                }
@@ -2573,10 +2571,13 @@ return /******/ (function(modules) { // webpackBootstrap
 	                case 'text':
 	                case 'email':
 	                case 'password':
-	                    item.elem.addEventListener('keydown', function (e) {
-	                        _this.setComponentVariable(item.attr, e.currentTarget.value, loopIterator, collectionName, data);
-	                    }, false);
-	                    item.elem.addEventListener('keyup', function (e) {
+	                    // item.elem.addEventListener('keydown', (e) => {
+	                    //     this.setComponentVariable(item.attr, e.currentTarget.value, loopIterator, collectionName, data);
+	                    // }, false);
+	                    // item.elem.addEventListener('keyup', (e) => {
+	                    //     this.setComponentVariable(item.attr, e.currentTarget.value, loopIterator, collectionName, data);
+	                    // }, false);
+	                    item.elem.addEventListener('input', function (e) {
 	                        _this.setComponentVariable(item.attr, e.currentTarget.value, loopIterator, collectionName, data);
 	                    }, false);
 	                    break;
@@ -2851,7 +2852,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	                }
 	            });
 
-	            item.elem.addEventListener('keyup', function (e) {
+	            item.elem.addEventListener('input', function (e) {
 	                var attr = e.target.getAttribute('ac-form-control');
 	                if (attr) {
 	                    formGroup.setValue(attr, e.target.value);
@@ -6010,7 +6011,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	            // });
 
 	            this.props.set({
-	                version: ("0.7.1"),
+	                version: ("0.7.2"),
 	                'categories': [{
 	                    name: 'Getting started',
 	                    items: [{

@@ -14,7 +14,7 @@ export function _formGroup(array, data) {
                 }
             });
 
-            item.elem.addEventListener('keyup', (e) => {
+            item.elem.addEventListener('input', (e) => {
                 let attr = e.target.getAttribute('ac-form-control');
                 if (attr) {
                     formGroup.setValue(attr, e.target.value);

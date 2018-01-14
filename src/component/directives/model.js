@@ -20,10 +20,13 @@ export function _model(array, loopIterator, collectionName, data) {
                 case 'text':
                 case 'email':
                 case 'password':
-                    item.elem.addEventListener('keydown', (e) => {
-                        this.setComponentVariable(item.attr, e.currentTarget.value, loopIterator, collectionName, data);
-                    }, false);
-                    item.elem.addEventListener('keyup', (e) => {
+                    // item.elem.addEventListener('keydown', (e) => {
+                    //     this.setComponentVariable(item.attr, e.currentTarget.value, loopIterator, collectionName, data);
+                    // }, false);
+                    // item.elem.addEventListener('keyup', (e) => {
+                    //     this.setComponentVariable(item.attr, e.currentTarget.value, loopIterator, collectionName, data);
+                    // }, false);
+                    item.elem.addEventListener('input', (e) => {
                         this.setComponentVariable(item.attr, e.currentTarget.value, loopIterator, collectionName, data);
                     }, false);
                     break;
