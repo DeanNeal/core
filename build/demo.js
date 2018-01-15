@@ -1,8 +1,8 @@
 /*!
- * ace-js 0.7.5
+ * ace-js 0.7.6
  * May be freely distributed under the MIT license 
  * Author: Bogdan Zinkevich
- * Last update: 2018-1-14 21:08:39
+ * Last update: 2018-1-15 10:17:47
  * 
  */
 (function webpackUniversalModuleDefinition(root, factory) {
@@ -348,7 +348,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    var rootEl = document.querySelectorAll(options.root.selector)[0];
 	    if (rootEl) {
 	        var rootComponent = new options.root(rootEl);
-	        rootComponent.root.setAttribute('ac-version', ("0.7.5"));
+	        rootComponent.root.setAttribute('ac-version', ("0.7.6"));
 	    } else {
 	        console.warn('There is no root component');
 	    }
@@ -2721,7 +2721,7 @@ return /******/ (function(modules) { // webpackBootstrap
 /* 39 */
 /***/ (function(module, exports) {
 
-	"use strict";
+	'use strict';
 
 	Object.defineProperty(exports, "__esModule", {
 	    value: true
@@ -2730,8 +2730,12 @@ return /******/ (function(modules) { // webpackBootstrap
 	function _computed(params) {
 	    if (params) {
 	        for (var computed in params) {
-	            var newValue = params[computed].call(this.props);
-	            this.props.set(computed, newValue, true);
+	            try {
+	                var newValue = params[computed].call(this);
+	                this.props.set(computed, newValue, true);
+	            } catch (err) {
+	                throw new Error('computed prop must be a function; ' + this.constructor.name);
+	            }
 	        }
 	    }
 	}
@@ -2902,7 +2906,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	                var currentChild = this.root.childNodes[0].COMPONENT;
 	                if (currentChild) {
 	                    this.destroyAllChildren(currentChild.children);
-	                    currentChild.children = [];
+	                    // currentChild.children = [];
 	                    currentChild.destroy();
 	                }
 	            }
@@ -2916,7 +2920,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	            for (var key in children) {
 	                children[key].forEach(function (child) {
 	                    _this2.destroyAllChildren(child.children);
-	                    child.children = [];
+	                    // child.children = [];
 	                    // console.log(child);
 	                    child.destroy();
 	                });
@@ -5816,7 +5820,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	            // });
 
 	            this.props.set({
-	                version: ("0.7.5"),
+	                version: ("0.7.6"),
 	                'categories': [{
 	                    name: 'Getting started',
 	                    items: [{
