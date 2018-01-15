@@ -123,7 +123,7 @@ export class RouteSwitcher {
             let currentChild = this.root.childNodes[0].COMPONENT;
             if(currentChild) {
                 this.destroyAllChildren(currentChild.children);
-                currentChild.children = [];
+                // currentChild.children = [];
                 currentChild.destroy();
             }
         }
@@ -134,7 +134,7 @@ export class RouteSwitcher {
         for (let key in children) {
             children[key].forEach(child => {
                 this.destroyAllChildren(child.children);
-                child.children = [];
+                // child.children = [];
                 // console.log(child);
                 child.destroy();
             })
