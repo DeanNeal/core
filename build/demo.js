@@ -2,7 +2,7 @@
  * ace-js 0.7.6
  * May be freely distributed under the MIT license 
  * Author: Bogdan Zinkevich
- * Last update: 2018-1-15 10:17:47
+ * Last update: 2018-1-17 00:44:10
  * 
  */
 (function webpackUniversalModuleDefinition(root, factory) {
@@ -1318,8 +1318,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	                        // if(newComp) {
 	                        var newEl = document.createElement(compName);
 	                        // this.root.appendChild(newEl);
-	                        var a = new newComp(newEl, array[i], _this);
-	                        _this.children[item.elem.COMPONENT.constructor.name].push(a);
+	                        var instance = new newComp(newEl, array[i], _this);
+	                        _this.children[item.elem.COMPONENT.constructor.name].push(instance);
 	                        // }
 
 	                        // loop through the old element's attributes and give them to the new element
@@ -1333,11 +1333,17 @@ return /******/ (function(modules) { // webpackBootstrap
 	                }
 
 	                item.items.forEach(function (elem, i) {
+	                    if (_core.Utils.indexInParent(elem) !== i) {
+	                        // check if order was changed
+	                        elem.parentNode.insertBefore(elem, elem.parentNode.children.item(i));
+	                    }
+
 	                    if (JSON.stringify(item.cached[i]) !== JSON.stringify(array[i])) {
 	                        if (!elem.COMPONENT) {
 	                            console.warn('Please create component with name ' + compName);
 	                            return;
 	                        }
+	                        // console.log(elem.COMPONENT._id);
 	                        elem.COMPONENT.props.set(array[i]);
 	                    }
 	                });
@@ -2416,7 +2422,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	            var variable = params[1].split('.');
 	            var r = _this.getComponentVariable(variable, data);
 
-	            r ? item.elem.setAttribute(attrName, r) : item.elem.removeAttribute(attrName);
+	            r || r === 0 ? item.elem.setAttribute(attrName, r) : item.elem.removeAttribute(attrName);
 	        });
 	    });
 	}
@@ -3395,6 +3401,15 @@ return /******/ (function(modules) { // webpackBootstrap
 	    removeSpacesFromString: function removeSpacesFromString(str) {
 	        str = str || '';
 	        return str.replace(/ +/g, "");
+	    },
+	    indexInParent: function indexInParent(node) {
+	        var children = node.parentNode.childNodes;
+	        var num = 0;
+	        for (var i = 0; i < children.length; i++) {
+	            if (children[i] == node) return num;
+	            if (children[i].nodeType == 1) num++;
+	        }
+	        return -1;
 	    }
 	};
 
@@ -3538,7 +3553,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	            this.dragEl.classList.remove('ghost');
 
 	            if (this.onDragEnd) {
-	                this.onDragEnd.call(this, this.root.children);
+	                this.onDragEnd.call(this, this.root.querySelectorAll('[draggable]'));
 	            }
 
 	            this.root.removeEventListener('dragover', this._onDragOver, false);

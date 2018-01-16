@@ -4,6 +4,8 @@ import { _init } from './init';
 import { EVENTS_NAMES } from '../const/events';
 import API from'./../../api';
 
+
+
 export function _for(array, data) {
     if (array.length) {
         //console.log(this); //console.time('modules')
@@ -101,8 +103,8 @@ export function _for(array, data) {
                         // if(newComp) {
                         let newEl = document.createElement(compName);
                         // this.root.appendChild(newEl);
-                        let a = new newComp(newEl, array[i], this);
-                        this.children[item.elem.COMPONENT.constructor.name].push(a);
+                        let instance = new newComp(newEl, array[i], this);
+                        this.children[item.elem.COMPONENT.constructor.name].push(instance);
                         // }
 
                         // loop through the old element's attributes and give them to the new element
@@ -116,11 +118,16 @@ export function _for(array, data) {
                 }
 
                 item.items.forEach((elem, i) => {
+                    if (Utils.indexInParent(elem) !== i) { // check if order was changed
+                        elem.parentNode.insertBefore(elem, elem.parentNode.children.item(i));
+                    }
+                    
                     if (JSON.stringify(item.cached[i]) !== JSON.stringify(array[i])) {
                         if (!elem.COMPONENT) {
                             console.warn('Please create component with name ' + compName);
                             return
                         }
+                        // console.log(elem.COMPONENT._id);
                         elem.COMPONENT.props.set(array[i]);
                     }
                 });

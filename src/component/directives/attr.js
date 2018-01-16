@@ -8,7 +8,7 @@ export function _attr(array, data) {
             let variable = params[1].split('.');
             let r = this.getComponentVariable(variable, data);
 
-            r ? item.elem.setAttribute(attrName, r) : item.elem.removeAttribute(attrName);
+            (r || r === 0) ? item.elem.setAttribute(attrName, r) : item.elem.removeAttribute(attrName);
         });
     });
 }

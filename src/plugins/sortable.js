@@ -87,7 +87,7 @@ class Sortable {
         this.dragEl.classList.remove('ghost');
 
         if (this.onDragEnd) {
-            this.onDragEnd.call(this, this.root.children);
+            this.onDragEnd.call(this, this.root.querySelectorAll('[draggable]'));
         }
 
         this.root.removeEventListener('dragover', this._onDragOver, false);
