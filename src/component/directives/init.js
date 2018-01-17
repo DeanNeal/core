@@ -45,6 +45,7 @@ export function _init(root, directive, newArray) {
         // only for certain directives
         if(directive === 'ac-for' || directive === 'ac-if') { 
             obj.comment = Utils.insertAfter(document.createComment(directive + ': ' + attr), elem);
+            obj.cachedIndexes = [];
         }
         array.get ? array.get(this).push(obj) : array.push(obj);
         elem.removeAttribute(directive);

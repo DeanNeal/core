@@ -115,10 +115,11 @@ export function _for(array, data) {
                         item.parent.insertBefore(newEl, item.comment);
                     }
                     item.cached = []; // refresh cached array
+                    item.cachedIndexes = item.items.map(r=> Utils.indexInParent(r))
                 }
 
                 item.items.forEach((elem, i) => {
-                    if (Utils.indexInParent(elem) !== i) { // check if order was changed
+                    if (Utils.indexInParent(elem) !== item.cachedIndexes[i]) { // check if order was changed
                         elem.parentNode.insertBefore(elem, elem.parentNode.children.item(i));
                     }
                     
@@ -127,12 +128,12 @@ export function _for(array, data) {
                             console.warn('Please create component with name ' + compName);
                             return
                         }
-                        // console.log(elem.COMPONENT._id);
                         elem.COMPONENT.props.set(array[i]);
                     }
                 });
 
                 item.cached = JSON.parse(JSON.stringify(array));
+                item.cachedIndexes = item.items.map(r=> Utils.indexInParent(r))
             }
 
         }); //console.timeEnd('modules')

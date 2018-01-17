@@ -2,7 +2,7 @@
  * ace-js 0.7.7
  * May be freely distributed under the MIT license 
  * Author: Bogdan Zinkevich
- * Last update: 2018-1-17 00:49:47
+ * Last update: 2018-1-17 23:27:46
  * 
  */
 (function webpackUniversalModuleDefinition(root, factory) {
@@ -1330,11 +1330,15 @@ return /******/ (function(modules) { // webpackBootstrap
 	                        item.parent.insertBefore(newEl, item.comment);
 	                    }
 	                    item.cached = []; // refresh cached array
+	                    item.cachedIndexes = item.items.map(function (r) {
+	                        return _core.Utils.indexInParent(r);
+	                    });
 	                }
 
 	                item.items.forEach(function (elem, i) {
-	                    if (_core.Utils.indexInParent(elem) !== i) {
+	                    if (_core.Utils.indexInParent(elem) !== item.cachedIndexes[i]) {
 	                        // check if order was changed
+	                        console.log(i);
 	                        elem.parentNode.insertBefore(elem, elem.parentNode.children.item(i));
 	                    }
 
@@ -1349,6 +1353,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	                });
 
 	                item.cached = JSON.parse(JSON.stringify(array));
+	                item.cachedIndexes = item.items.map(function (r) {
+	                    return _core.Utils.indexInParent(r);
+	                });
 	            }
 	        }); //console.timeEnd('modules')
 	    }
@@ -1517,6 +1524,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	            // only for certain directives
 	            if (directive === 'ac-for' || directive === 'ac-if') {
 	                _obj.comment = _core.Utils.insertAfter(document.createComment(directive + ': ' + _attr), elem);
+	                _obj.cachedIndexes = [];
 	            }
 	            array.get ? array.get(this).push(_obj) : array.push(_obj);
 	            elem.removeAttribute(directive);
