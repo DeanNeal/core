@@ -1,5 +1,5 @@
 import { Utils } from '../../core';
-export function _props(array, data) {
+export function _props(array, data, loopIterator) {
     array.forEach(item => {
         if (Utils.isCustomElement(item.elem) === false) {
             let params = item.attr.split('|'), r;
@@ -11,15 +11,18 @@ export function _props(array, data) {
                 formatterData = formatterData[1] ? formatterData[1].trim() : null;
             }
 
-            let currentVariable = Utils.removeSpacesFromString(params[0]).split('.');
-
+            r = this.getPropsByScope(params[0], data, loopIterator);
+            
             if (formatter && formatter === 'json') {
-                r = JSON.stringify(this.getComponentVariable(currentVariable, data));
+                r = JSON.stringify(r);
             } else if (formatter && formatter === 'date') {
-                r = this.getComponentVariable(currentVariable, data);
                 r = Utils.getDateByFormat(r, formatterData || '');
             } else {
-                r = this.getComponentVariable(currentVariable, data);
+                r = r;
+            }
+
+            if(!r) {
+                r = '';
             }
 
             if (item.elem.localName === 'input') {

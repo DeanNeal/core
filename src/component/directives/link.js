@@ -1,6 +1,6 @@
 import { Component, Router, TemplateEngine } from '../../core';
 
-export function _link(array, data) {
+export function _link(array, data, loopIterator) {
     array.forEach(item => {
         item.elem.removeEventListener('click', item.callback, false); // remove previous handler
 
@@ -10,7 +10,12 @@ export function _link(array, data) {
         let matches = item.attr.match(regExp);
         let params = regExp.exec(item.attr)
         if (params) {
-            let r = this.getComponentVariable(params[1].split('.'), data);
+            
+            let r;//= this.getComponentVariable(params[1].split('.'), data);
+            // let variable = params[1].split('.');
+            
+            r = this.getPropsByScope(params[1], data, loopIterator);
+
             route = item.attr.replace(regExp, r);
         }
 

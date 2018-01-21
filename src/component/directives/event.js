@@ -49,10 +49,12 @@ export function createEventObject(elem, event, context, loopIterator) {
                 if(fnParams[1]) {
                     fnParams[1].replace(/ +/g, "").split(',').forEach(res => {
                         let arg;
-                        if(res === loopIterator) {
-                            arg = context();
+                        if(res.split('.')[0] === loopIterator) {
+                            arg = context(res);
+                        } else if(res === '$event') {
+                            arg = e;
                         } else {
-                            arg = getInputArgs(res);
+                            arg = getInputArgs(res, context ? context(res) : null);
                         }
                         args.push(arg);
                     });
@@ -65,10 +67,10 @@ export function createEventObject(elem, event, context, loopIterator) {
                 callModifiers.call(this, modifiers, e, elem, once).subscribe(res => {
                     if (kModifiers) {
                         callKModifiers.call(this, e, kModifiers, () => {
-                            this[functionName].call(this, e, ...args);
+                            this[functionName].call(this, ...args);
                         });
                     } else {
-                        this[functionName].call(this, e, ...args);
+                        this[functionName].call(this, ...args);
                     }
                 });
             } else {
@@ -81,7 +83,7 @@ export function createEventObject(elem, event, context, loopIterator) {
 }
 
 
-function getInputArgs(res) {
+function getInputArgs(res, context) {
     let type;
     let arg;
     try {
@@ -90,11 +92,19 @@ function getInputArgs(res) {
         type = undefined;
     }
 
-    if(type === 'string' || type === 'number' || type === 'object'){
-        arg = new Function('return ' + res).apply(this);
-    } else {
-        arg = new Function('return this.' + res).apply(this);
+    switch(type) {
+        case 'boolean':
+        case 'string':
+        case 'number':
+        case 'object':
+            arg = new Function('return ' + res).apply(this);
+        break;
+
+        default:
+            arg = context;
+        break;
     }
+
     return arg;
 }
 

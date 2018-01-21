@@ -2,17 +2,19 @@ import { Component, ObservableModel } from '../core';
 import { DIRECTIVES_NAMES } from '../component/const/directives';
 import { EVENTS_NAMES } from '../component/const/events';
 import { Directives } from '../component/Directives';
-import API from'./../api';
+import API from './../api';
 
 export default function ComponentDecorator(decoratorParams) {
     return function decorator(Class) {
         let func = (root, props, parent) => {
-            let newProps = Object.assign({}, props);
-            try{
+            let newProps = {};
+            try {
                 newProps = decoratorParams.props ? decoratorParams.props() : {};
-            } catch(err) {
-                throw new Error('props is not a function; ' + Class.name)
+            } catch (err) {
+                throw new Error(err + '; props is not a function; ' + Class.name)
             }
+
+            newProps = Object.assign(newProps, props);
 
             let proto = Component.prototype;
             if (decoratorParams.super) {
@@ -22,9 +24,22 @@ export default function ComponentDecorator(decoratorParams) {
 
             let instance = new Class();
 
+            let qwerty = [];
+            if (typeof decoratorParams.services === 'object') {
+                for (let key in decoratorParams.services) {
+                    if (decoratorParams.services.hasOwnProperty(key) && decoratorParams.services[key]) {
+                        let injectedService = API.injectorGet(decoratorParams.services[key], Class);
+                        if (injectedService) {
+                            newProps[key] = injectedService;
+                            qwerty.push({ key, injectedService });
+                        }
+                    }
+                }
+            }
+
             Object.defineProperty(instance, 'props', { value: new ObservableModel(newProps), writable: false });
 
-            for(let key in newProps) {
+            for (let key in newProps) {
                 Object.defineProperty(instance, key, {
                     set: value => instance.props.set(key, value),
                     get: () => instance.props.get(key),
@@ -32,25 +47,17 @@ export default function ComponentDecorator(decoratorParams) {
                 });
             }
 
-            if(typeof decoratorParams.services === 'object') {
-                for(let key in decoratorParams.services) {
-                    if(decoratorParams.services.hasOwnProperty(key) && decoratorParams.services[key]){
-                        let injectedService = API.injectorGet(decoratorParams.services[key], Class);
-                        if(injectedService){
+            qwerty.forEach(res => {
+                Object.defineProperty(instance, res.key, {
+                    value: res.injectedService,
+                    writable: false
+                });
+                Object.defineProperty(instance.props, res.key, {
+                    value: res.injectedService,
+                    writable: false
+                });
+            })
 
-                          Object.defineProperty(instance, key, {
-                            value: injectedService,
-                              writable: false
-                          });
-                          Object.defineProperty(instance.props, key, {
-                            value: injectedService,
-                              writable: false
-                          });
-                        }
-                    }
-                }    
-            }
-            
             Component.componentConstructor.call(instance, root, decoratorParams);
             if (parent) {
                 instance.parent = parent;

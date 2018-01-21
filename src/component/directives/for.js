@@ -53,11 +53,11 @@ export function _for(array, data) {
 
 
                         item.directives[i] = {
-                            for: Directives._init.call(this, prevContent, 'ac-for'), // should go first for correct work
+                            for:   Directives._init.call(this, prevContent, 'ac-for'), // should go first for correct work
                             class: Directives._init.call(this, prevContent, 'ac-class'),
                             style: Directives._init.call(this, prevContent, 'ac-style'),
                             attrs: Directives._init.call(this, prevContent, 'ac-attr'),
-                            if: Directives._init.call(this, prevContent, 'ac-if'),
+                            if:    Directives._init.call(this, prevContent, 'ac-if'),
                             model: Directives._init.call(this, prevContent, 'ac-model'),
                             props: Directives._init.call(this, prevContent, 'ac-value'),
                             links: Directives._init.call(this, prevContent, 'ac-link'),
@@ -67,27 +67,27 @@ export function _for(array, data) {
                         let eventsArray = [];
 
                         EVENTS_NAMES.forEach(directive => {
-                            eventsArray.push(Directives._initEvent.call(this, prevContent, directive, [], getCurrentProperty.bind(this, item, collectionName, data, i), loopIterator));
+                            let prop = getCurrentProperty.bind(this, item, collectionName, array[i], loopIterator);
+                            eventsArray.push(Directives._initEvent.call(this, prevContent, directive, [], prop, loopIterator));
                         });
                         item.directives[i].events = eventsArray;
 
-                        updateElement.call(this, item, i, prevContent, array[i], collectionName); 
+                        updateElement.call(this, item, i, prevContent, array[i], collectionName, loopIterator); 
                         bindModelToViewForLoop.call(this, item.directives[i].model, prevContent, loopIterator, collectionName, array[i]);
                     }
-                    // if(item.attr === 'let item of smartModel'){
-
-                    //    console.log(item.directives);
-                    // }
                 }
 
+                let curRootProps = JSONStr(this.props.getData());
 
                 item.items.forEach((elem, i) => {
-                    if (JSON.stringify(item.cached[i]) !== JSON.stringify(array[i])) {
-                        updateElement.call(this, item, i, elem, array[i], collectionName); 
+                    // if current or root prop has been changed 
+                    if (JSONStr(item.cached[i]) !== JSONStr(array[i]) ||  curRootProps !== item.rootCached ) {
+                        updateElement.call(this, item, i, elem, array[i], collectionName, loopIterator); 
                     }
                 });
 
-                item.cached = JSON.parse(JSON.stringify(array));
+                item.rootCached = JSONStr(this.props.getData());
+                item.cached = JSON.parse(JSONStr(array));
             }
 
 
@@ -123,7 +123,7 @@ export function _for(array, data) {
                         elem.parentNode.insertBefore(elem, elem.parentNode.children.item(i));
                     }
                     
-                    if (JSON.stringify(item.cached[i]) !== JSON.stringify(array[i])) {
+                    if (JSONStr(item.cached[i]) !== JSONStr(array[i])) {
                         if (!elem.COMPONENT) {
                             console.warn('Please create component with name ' + compName);
                             return
@@ -132,7 +132,7 @@ export function _for(array, data) {
                     }
                 });
 
-                item.cached = JSON.parse(JSON.stringify(array));
+                item.cached = JSON.parse(JSONStr(array));
                 item.cachedIndexes = item.items.map(r=> Utils.indexInParent(r))
             }
 
@@ -141,23 +141,41 @@ export function _for(array, data) {
     }
 }
 
-function updateElement(item, i, elem, data, collectionName) {
+// check for cyclic object references before stringifying
+function JSONStr(obj) {
+    let seen = []; 
+
+    var replacer = function(key, value) {
+      if (value != null && typeof value == "object") {
+        if (seen.indexOf(value) >= 0) {
+          return;
+        }
+        seen.push(value);
+      }
+      return value;
+    };
+
+    return JSON.stringify(obj, replacer); 
+}
+
+function updateElement(item, i, elem, data, collectionName, loopIterator) {
     forAttachForLoop.call(this, item.directives[i].for, elem, data);
-    bindClassForLoop.call(this, item.directives[i].class, elem, data);
-    styleUnitForLoop.call(this, item.directives[i].style, elem, data);
-    bindIfForLoop.call(this, item.directives[i].if, elem, data);
-    bindPropsToViewForLoop.call(this, item.directives[i].props, elem, data);
+
+    bindClassForLoop.call(this, item.directives[i].class, elem, data, loopIterator);
+    styleUnitForLoop.call(this, item.directives[i].style, elem, data, loopIterator);
+    bindIfForLoop.call(this, item.directives[i].if, elem, data, loopIterator);
+    bindPropsToViewForLoop.call(this, item.directives[i].props, elem, data, loopIterator);
     // bindModelToViewForLoop.call(this, item.directives[i].model, elem, collectionName, data);
     // bindPropsToViewForLoop.call(this, item.directives[i].model, elem, data);
 
-    bindAttrsForLoop.call(this, item.directives[i].attrs, elem, data);
-    addLinksRefsForLoop.call(this, item.directives[i].links, elem, data);
+    bindAttrsForLoop.call(this, item.directives[i].attrs, elem, data, loopIterator);
+    addLinksRefsForLoop.call(this, item.directives[i].links, elem, data, loopIterator);
     eventsForLoop.call(this, item.directives[i].events, elem);
 }
 
-function getCurrentProperty(item, collectionName, data, i) {
-    let props = this.getComponentVariable(/*item.attr.split('.')*/collectionName.split('.'), data) || [];
-    return props[i];
+function getCurrentProperty(item, collectionName, data, loopIterator, variable) {
+    let props = this.getPropsByScope(variable, data, loopIterator);
+    return props;
 }
 
 
@@ -173,14 +191,14 @@ function eventsForLoop(array, root) {
 }
 
 
-function addLinksRefsForLoop(array, root, data) {
+function addLinksRefsForLoop(array, root, data, loopIterator) {
     // let array = Directives._init.call(this, root, 'ac-link');
-    Directives._link.call(this, array, data);
+    Directives._link.call(this, array, data, loopIterator);
 }
 
-function bindAttrsForLoop(array, root, data) {
+function bindAttrsForLoop(array, root, data, loopIterator) {
     // let array = Directives._init.call(this, root, 'ac-attr');
-    Directives._attr.call(this, array, data);
+    Directives._attr.call(this, array, data, loopIterator);
 }
 
 function bindIfForLoop(array, root, data) {
@@ -198,17 +216,21 @@ function bindModelToViewForLoop(array, root, loopIterator, collectionName, data)
     Directives._model.call(this, array, loopIterator, collectionName, data);
 }
 
-function bindPropsToViewForLoop(array, root, data) {
+function bindPropsToViewForLoop(array, root, data, loopIterator) {
     // let array = Directives._init.call(this, root, 'ac-value');
-    Directives._props.call(this, array, data);
+    Directives._props.call(this, array, data, loopIterator);
 }
 
-function styleUnitForLoop(array, root, data) {
+function styleUnitForLoop(array, root, data, loopIterator) {
     // let array = Directives._init.call(this, root, 'ac-style');
-    Directives._style.call(this, array, data);
+    Directives._style.call(this, array, data, loopIterator);
 }
 
-function bindClassForLoop(array, root, data) {
+function bindClassForLoop(array, root, data, loopIterator) {
     // let array = Directives._init.call(this, root, 'ac-class');
-    Directives._class.call(this, array, data);
+    Directives._class.call(this, array, data, loopIterator);
+}
+
+function bindIfForLoop(array, root, data, loopIterator) {
+    Directives._if.call(this, array, data, loopIterator);
 }

@@ -214,22 +214,31 @@ export class Component {
         }, data || this.props)
     }
 
-    // setComponentVariable(string, value) {
-    //     let params = ('props.' + string).split('.');
-    //     let lastProp = params[params.length - 1];
-    //     if (params.length > 1) {
-    //         params.splice(-1, 1);
-    //     }
+    getAllVariables() {
+        return  Object.keys(this.props.getData());
+    }
 
-    //     let target = params.reduce((o, i) => o[i], this);
-    //     if (target === this.props) { // use instanceof
-    //         // target._data[lastProp] = value;
-    //         this.props.set(lastProp, value);
-    //     } else {
-    //         target[lastProp] = value;
-    //         this.props.set(this.props.getData());
-    //     }
-    // }
+    getPropsByScope(value, scope, loopIterator) {
+        let r;
+        let variable = value.split('.')
+        let listOfVariables = this.getAllVariables();
+        let listOfVariablesValues = listOfVariables.map(r=> this.props.get(r));
+        
+        if(loopIterator) {
+            listOfVariables.push(loopIterator);
+            listOfVariablesValues.push(scope);
+        }
+
+        try {
+            r = new Function(listOfVariables, 'return ' + value).apply(this, listOfVariablesValues);
+        } catch(err) {
+            // throw new Error(err + '; ' + this);
+            // console.warn(err + '; ' + this);
+        }
+
+        return r;
+    }
+
     setComponentVariable(string, value, loopIterator, collectionName, data) {
         let params = string.split('.'); /*data ? string.split('.') : ('props.' + string).split('.');*/
         let lastProp = params[params.length - 1];

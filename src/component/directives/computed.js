@@ -5,7 +5,7 @@ export function _computed(params) {
                 let newValue = params[computed].call(this);
                 this.props.set(computed, newValue, true)
             } catch (err) {
-                throw new Error('computed prop must be a function; ' + this.constructor.name);
+                throw new Error(err + '; ' + this.constructor.name);
             }
         }
     }

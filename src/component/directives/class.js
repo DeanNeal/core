@@ -1,22 +1,24 @@
-export function _class(array, data) {
+export function _class(array, data, loopIterator) {
     array.forEach((item) => {
-        let array = item.attr.split(',');
+        let array = item.attr.replace(/ +/g, "").split(',');
         let attr = item.attr;
         let root = item.elem;
 
         array.forEach(prop => {
-
             try {
-
                 if (prop[0] === '@') {
                     let params = prop.split('@');
-                    let variable = params[1].split('.');
-                    let r = this.getComponentVariable(variable, data);
+                    // let variable = params[1].split('.');
+                    let r;// = this.getComponentVariable(variable, data);
 
-                    //remove previous class
                     if (item.prev) {
                         root.classList.remove(item.prev)
                     }
+
+                    // inside ac-for
+                    r = this.getPropsByScope(params[1], data, loopIterator);
+
+                    //remove previous class
                     item.prev = r;
 
                     if (r) {
@@ -25,7 +27,11 @@ export function _class(array, data) {
                 } else {
                     let params = prop.replace(/ +/g, "").split(':');
                     let className = params[0];
-                    let r = new Function('return ' + params[1]).apply(data || this.props);
+                    // let variable = params[1].split('.');
+                    let r;
+
+                    // inside ac-for
+                    r = this.getPropsByScope(params[1], data, loopIterator);
 
                     r ? (root.classList.add(className)) : (root.classList.remove(className));
                 }

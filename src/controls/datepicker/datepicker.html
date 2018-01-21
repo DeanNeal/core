@@ -9,28 +9,28 @@
 	    <div class="j-calendar__wrap">
 	        <div class="j-calendar__item">
 	            <div class="j-calendar__header">
-	                <div class="j-calendar__header__left" @click="prev">
+	                <div class="j-calendar__header__left" @click="prev($event)">
 	                    <span>prev</span>
 	                </div>
 	                <div class="j-calendar__header__center">
 		                <span ac-value="currentMonth"></span>
 		                <span style="margin-left: 7px;" ac-value="currentYear"></span>
 	                </div>
-	                <div class="j-calendar__header__right" @click="next">
+	                <div class="j-calendar__header__right" @click="next($event)">
 	                    <span>Next</span>
 	                </div>
 	            </div>
 	            <div class="j-calendar__content">
 	                <div class="j-calendar__days">
 	                    <div class="j-calendar__days__item" ac-for="let item of daysOfWeekShort">
-							<span ac-value="index"></span>
+							<span ac-value="item.index"></span>
 						</div>
 	                </div>
 	                <div class="j-calendar__date">
 	                    <div class="j-calendar__date__item" 
-	                    ac-class="j-calendar__date__item--today:this.today, j-calendar__date__item--active:this.selected, j-calendar__date__item--inactive: this.inactive"
+	                    ac-class="j-calendar__date__item--today:item.today, j-calendar__date__item--active:item.selected, j-calendar__date__item--inactive: item.inactive"
 	                    ac-for="let item of countOfDays"
-	                    @click="select(item)" ac-value="index"></div>
+	                    @click="select($event, item)" ac-value="item.index"></div>
 	                </div>
 	            </div>
 	        </div>

@@ -49,11 +49,6 @@ class Observable {
         // console.log(this.callbacksArray);
     }
 
-    clear() {
-        this._data = {};
-        this._callAll();
-    }
-    
     getData() {
         return this._data;
     }

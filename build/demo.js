@@ -2,7 +2,7 @@
  * ace-js 0.7.8
  * May be freely distributed under the MIT license 
  * Author: Bogdan Zinkevich
- * Last update: 2018-1-17 23:40:22
+ * Last update: 2018-1-21 22:05:04
  * 
  */
 (function webpackUniversalModuleDefinition(root, factory) {
@@ -220,9 +220,9 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var _register = __webpack_require__(7);
 
-	var _observable = __webpack_require__(23);
+	var _observable = __webpack_require__(17);
 
-	var _decorators = __webpack_require__(24);
+	var _decorators = __webpack_require__(18);
 
 	var Decorators = _interopRequireWildcard(_decorators);
 
@@ -295,7 +295,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var _component = __webpack_require__(8);
 
-	var _api = __webpack_require__(22);
+	var _api = __webpack_require__(16);
 
 	var _api2 = _interopRequireDefault(_api);
 
@@ -424,9 +424,9 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var _directives = __webpack_require__(10);
 
-	var _events = __webpack_require__(21);
+	var _events = __webpack_require__(22);
 
-	var _api = __webpack_require__(22);
+	var _api = __webpack_require__(16);
 
 	var _api2 = _interopRequireDefault(_api);
 
@@ -588,24 +588,37 @@ return /******/ (function(modules) { // webpackBootstrap
 	                }
 	            }, data || this.props);
 	        }
+	    }, {
+	        key: 'getAllVariables',
+	        value: function getAllVariables() {
+	            return Object.keys(this.props.getData());
+	        }
+	    }, {
+	        key: 'getPropsByScope',
+	        value: function getPropsByScope(value, scope, loopIterator) {
+	            var _this4 = this;
 
-	        // setComponentVariable(string, value) {
-	        //     let params = ('props.' + string).split('.');
-	        //     let lastProp = params[params.length - 1];
-	        //     if (params.length > 1) {
-	        //         params.splice(-1, 1);
-	        //     }
+	            var r = void 0;
+	            var variable = value.split('.');
+	            var listOfVariables = this.getAllVariables();
+	            var listOfVariablesValues = listOfVariables.map(function (r) {
+	                return _this4.props.get(r);
+	            });
 
-	        //     let target = params.reduce((o, i) => o[i], this);
-	        //     if (target === this.props) { // use instanceof
-	        //         // target._data[lastProp] = value;
-	        //         this.props.set(lastProp, value);
-	        //     } else {
-	        //         target[lastProp] = value;
-	        //         this.props.set(this.props.getData());
-	        //     }
-	        // }
+	            if (loopIterator) {
+	                listOfVariables.push(loopIterator);
+	                listOfVariablesValues.push(scope);
+	            }
 
+	            try {
+	                r = new Function(listOfVariables, 'return ' + value).apply(this, listOfVariablesValues);
+	            } catch (err) {
+	                // throw new Error(err + '; ' + this);
+	                // console.warn(err + '; ' + this);
+	            }
+
+	            return r;
+	        }
 	    }, {
 	        key: 'setComponentVariable',
 	        value: function setComponentVariable(string, value, loopIterator, collectionName, data) {
@@ -749,7 +762,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    }, {
 	        key: 'setPrivates',
 	        value: function setPrivates(options) {
-	            var _this4 = this;
+	            var _this5 = this;
 
 	            for (var array in _private.PRIVATES.DIRECTIVES) {
 	                _private.PRIVATES.DIRECTIVES[array].set(this, []);
@@ -772,7 +785,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	                if (!_private.PRIVATES.CUSTOM_DIRECTIVES[directive.params.selector]) {
 	                    _private.PRIVATES.CUSTOM_DIRECTIVES[directive.params.selector] = new WeakMap();
 	                }
-	                _private.PRIVATES.CUSTOM_DIRECTIVES[directive.params.selector].set(_this4, []);
+	                _private.PRIVATES.CUSTOM_DIRECTIVES[directive.params.selector].set(_this5, []);
 	            });
 
 	            // console.log(PRIVATES.CUSTOM_DIRECTIVES, this);
@@ -851,11 +864,11 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var _if2 = __webpack_require__(15);
 
-	var _class2 = __webpack_require__(16);
+	var _class2 = __webpack_require__(25);
 
-	var _elRef2 = __webpack_require__(17);
+	var _elRef2 = __webpack_require__(26);
 
-	var _for2 = __webpack_require__(18);
+	var _for2 = __webpack_require__(27);
 
 	var _model2 = __webpack_require__(30);
 
@@ -865,13 +878,13 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var _link2 = __webpack_require__(33);
 
-	var _event = __webpack_require__(20);
+	var _event = __webpack_require__(29);
 
 	var _outside2 = __webpack_require__(34);
 
 	var _on2 = __webpack_require__(35);
 
-	var _init2 = __webpack_require__(19);
+	var _init2 = __webpack_require__(28);
 
 	var _host = __webpack_require__(36);
 
@@ -921,17 +934,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	    value: true
 	});
 	exports._style = _style;
-	function _style(array, data) {
+	function _style(array, data, loopIterator) {
 	    var _this = this;
 
 	    array.forEach(function (item) {
 	        var array = item.attr.split(',');
-
-	        // for objects
-	        // let a=  new Function('return ' + array).apply(this.props._data);
-	        // for(let key in a){
-	        //     item.elem.style[key] = a[key];
-	        // }
 
 	        array.forEach(function (prop) {
 	            var minus = false;
@@ -941,9 +948,12 @@ return /******/ (function(modules) { // webpackBootstrap
 	                params[1] = params[1].substr(1);
 	                minus = true;
 	            }
-	            var variable = params[1].split('.');
-	            var r = _this.getComponentVariable(variable, data);
+	            // let variable = params[1].split('.');
+	            var r = void 0;
+
+	            r = _this.getPropsByScope(params[1], data, loopIterator);
 	            r = minus ? '-' + r : r;
+
 	            r ? item.elem.style[styleName] = r : item.elem.style[styleName] = '';
 	        });
 	    });
@@ -962,7 +972,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var _core = __webpack_require__(6);
 
-	function _props(array, data) {
+	function _props(array, data, loopIterator) {
 	    var _this = this;
 
 	    array.forEach(function (item) {
@@ -977,15 +987,18 @@ return /******/ (function(modules) { // webpackBootstrap
 	                formatterData = formatterData[1] ? formatterData[1].trim() : null;
 	            }
 
-	            var currentVariable = _core.Utils.removeSpacesFromString(params[0]).split('.');
+	            r = _this.getPropsByScope(params[0], data, loopIterator);
 
 	            if (formatter && formatter === 'json') {
-	                r = JSON.stringify(_this.getComponentVariable(currentVariable, data));
+	                r = JSON.stringify(r);
 	            } else if (formatter && formatter === 'date') {
-	                r = _this.getComponentVariable(currentVariable, data);
 	                r = _core.Utils.getDateByFormat(r, formatterData || '');
 	            } else {
-	                r = _this.getComponentVariable(currentVariable, data);
+	                r = r;
+	            }
+
+	            if (!r) {
+	                r = '';
 	            }
 
 	            if (item.elem.localName === 'input') {
@@ -1050,19 +1063,25 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var _core = __webpack_require__(6);
 
-	function _if(array, data) {
+	var _api = __webpack_require__(16);
+
+	var _api2 = _interopRequireDefault(_api);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _if(array, data, loopIterator) {
 	    var _this = this;
 
 	    array.forEach(function (item) {
-	        var attr = item.attr; //.replace(/@+/g, "this.props."); // @ -alias of this.props
+	        var params = item.attr; //.replace(/@+/g, "this.props."); // @ -alias of this.props
 
 	        try {
-	            var r = new Function('return ' + attr).apply(data || _this.props);
+	            var r = _this.getPropsByScope(params, data, loopIterator); //new Function('return ' + attr).apply(data || this.props);
 	            if (r) {
 	                if (!item.elem.parentNode) {
 	                    // insert only if elem doesn't exists
 	                    if (_core.Utils.isCustomElement(item.elem)) {
-	                        _core.API.COMPONENTS.forEach(function (comp) {
+	                        _api2.default.COMPONENTS.forEach(function (comp) {
 	                            if (comp.selector === item.elem.localName) {
 	                                //console.log(item);
 	                                new comp(item.elem, {}, _this);
@@ -1086,702 +1105,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	        } catch (err) {
 	            throw new Error(_this.constructor.name + '; ' + err);
 	        }
-
-	        // let conditions = attr.replace(/ +/g, "").split('&&');
-
-	        // conditions = conditions.map(res => {
-	        //     let reverse = false;
-	        //     // let a = eval('this.' + attr);
-	        //     if (res[0] === '!') {
-	        //         res = res.substring(1);
-	        //         reverse = true;
-	        //     }
-
-	        //     if (res.indexOf('==') > -1 || res.indexOf('===') > -1) {
-	        //         let equality = res.indexOf('===') > -1 ? res.replace(/ +/g, "").split('===') : res.replace(/ +/g, "").split('==');
-	        //         let r = this.getComponentVariable(equality[0].split('.'), data);
-
-	        //         return !!equality[1];
-	        //     }
-
-	        //     let params = res.split('.');
-	        //     let r = this.getComponentVariable(params, data);
-	        //     r = reverse ? !r : r;
-
-	        //     return !!r;
-	        // });
-
-	        // if (conditions.filter(item => item).length === conditions.length) {
-	        //     if (!item.elem.parentNode) { // insert only if elem doesn't exists
-	        //         Utils.insertAfter(item.cached, item.comment)
-	        //     }
-	        // } else {
-	        //     item.elem.remove()
-	        // }
 	    });
 	}
-	// childNode[4].parentNode.insertBefore(childNode[4], childNode[3]);
 
 /***/ }),
 /* 16 */
-/***/ (function(module, exports) {
-
-	'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
-	    value: true
-	});
-	exports._class = _class;
-	function _class(array, data) {
-	    var _this = this;
-
-	    array.forEach(function (item) {
-	        var array = item.attr.split(',');
-	        var attr = item.attr;
-	        var root = item.elem;
-
-	        array.forEach(function (prop) {
-
-	            try {
-
-	                if (prop[0] === '@') {
-	                    var params = prop.split('@');
-	                    var variable = params[1].split('.');
-	                    var r = _this.getComponentVariable(variable, data);
-
-	                    //remove previous class
-	                    if (item.prev) {
-	                        root.classList.remove(item.prev);
-	                    }
-	                    item.prev = r;
-
-	                    if (r) {
-	                        root.classList.add(r);
-	                    }
-	                } else {
-	                    var _params = prop.replace(/ +/g, "").split(':');
-	                    var className = _params[0];
-	                    var _r = new Function('return ' + _params[1]).apply(data || _this.props);
-
-	                    _r ? root.classList.add(className) : root.classList.remove(className);
-	                }
-	            } catch (err) {
-	                throw new Error(_this.constructor.name + '; ' + err);
-	            }
-	        });
-	    });
-	}
-
-/***/ }),
-/* 17 */
-/***/ (function(module, exports) {
-
-	"use strict";
-
-	Object.defineProperty(exports, "__esModule", {
-	    value: true
-	});
-	exports._elRef = _elRef;
-	function _elRef(array) {
-	    var _this = this;
-
-	    array.forEach(function (item) {
-	        var attr = item.attr;
-	        _this.$refs[attr] = item.elem;
-	    });
-	}
-
-/***/ }),
-/* 18 */
-/***/ (function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
-	    value: true
-	});
-	exports._for = _for;
-
-	var _core = __webpack_require__(6);
-
-	var _index = __webpack_require__(11);
-
-	var _init2 = __webpack_require__(19);
-
-	var _events = __webpack_require__(21);
-
-	var _api = __webpack_require__(22);
-
-	var _api2 = _interopRequireDefault(_api);
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-	function _for(array, data) {
-	    var _this = this;
-
-	    if (array.length) {
-	        //console.log(this); //console.time('modules')
-	        array.forEach(function (item) {
-	            var compName = item.elem.localName;
-	            var loopIterator = void 0;
-	            var collectionName = void 0;
-	            array = _this.getComponentVariable(item.attr.split('.'), data) || [];
-
-	            if (item.attr.indexOf('let ') > -1 && item.attr.indexOf('of ') > -1) {
-	                var params1 = item.attr.split('of')[0];
-	                collectionName = item.attr.split('of')[1].replace(/ +/g, "");
-	                loopIterator = params1.split('let ')[1].replace(/ +/g, "");
-	                var func = 'for(' + params1 + ' of this.' + collectionName + ') { } return this.' + collectionName;
-
-	                var arg = void 0;
-	                try {
-	                    arg = new Function(func).apply(data || _this.props);
-	                } catch (e) {
-	                    arg = [];
-	                }
-
-	                array = arg;
-	            }
-
-	            if (!_core.Utils.isCustomElement(item.elem)) {
-
-	                if (item.cached.length !== array.length) {
-	                    item.items.forEach(function (item) {
-	                        item.remove();
-	                    });
-	                    item.items = [];
-	                    item.directives = [];
-
-	                    var _loop = function _loop(i) {
-	                        var prevContent = item.elem.cloneNode(true);
-
-	                        // loop through the old element's attributes and give them to the new element
-	                        for (var _i = 0; _i < item.elem.attributes.length; _i++) {
-	                            prevContent.setAttribute(item.elem.attributes[_i].nodeName, item.elem.attributes[_i].nodeValue);
-	                        }
-
-	                        item.items.push(prevContent);
-	                        item.parent.insertBefore(prevContent, item.comment);
-
-	                        item.directives[i] = {
-	                            for: _index.Directives._init.call(_this, prevContent, 'ac-for'), // should go first for correct work
-	                            class: _index.Directives._init.call(_this, prevContent, 'ac-class'),
-	                            style: _index.Directives._init.call(_this, prevContent, 'ac-style'),
-	                            attrs: _index.Directives._init.call(_this, prevContent, 'ac-attr'),
-	                            if: _index.Directives._init.call(_this, prevContent, 'ac-if'),
-	                            model: _index.Directives._init.call(_this, prevContent, 'ac-model'),
-	                            props: _index.Directives._init.call(_this, prevContent, 'ac-value'),
-	                            links: _index.Directives._init.call(_this, prevContent, 'ac-link')
-	                            // events: eventsArray
-	                        };
-
-	                        var eventsArray = [];
-
-	                        _events.EVENTS_NAMES.forEach(function (directive) {
-	                            eventsArray.push(_index.Directives._initEvent.call(_this, prevContent, directive, [], getCurrentProperty.bind(_this, item, collectionName, data, i), loopIterator));
-	                        });
-	                        item.directives[i].events = eventsArray;
-
-	                        updateElement.call(_this, item, i, prevContent, array[i], collectionName);
-	                        bindModelToViewForLoop.call(_this, item.directives[i].model, prevContent, loopIterator, collectionName, array[i]);
-	                    };
-
-	                    for (var i = 0; i <= array.length - 1; i++) {
-	                        _loop(i);
-	                    }
-	                    // if(item.attr === 'let item of smartModel'){
-
-	                    //    console.log(item.directives);
-	                    // }
-	                }
-
-	                item.items.forEach(function (elem, i) {
-	                    if (JSON.stringify(item.cached[i]) !== JSON.stringify(array[i])) {
-	                        updateElement.call(_this, item, i, elem, array[i], collectionName);
-	                    }
-	                });
-
-	                item.cached = JSON.parse(JSON.stringify(array));
-	            }
-
-	            if (_core.Utils.isCustomElement(item.elem)) {
-	                if (item.cached.length !== array.length) {
-	                    item.items.forEach(function (item) {
-	                        item.remove();
-	                    });
-	                    item.items = [];
-	                    _this.children[item.elem.COMPONENT.constructor.name] = [];
-	                    for (var i = 0; i <= array.length - 1; i++) {
-	                        var newComp = _api2.default.COMPONENTS.filter(function (r) {
-	                            return r.selector === compName;
-	                        })[0];
-	                        // if(newComp) {
-	                        var newEl = document.createElement(compName);
-	                        // this.root.appendChild(newEl);
-	                        var instance = new newComp(newEl, array[i], _this);
-	                        _this.children[item.elem.COMPONENT.constructor.name].push(instance);
-	                        // }
-
-	                        // loop through the old element's attributes and give them to the new element
-	                        for (var _i2 = 0; _i2 < item.elem.attributes.length; _i2++) {
-	                            newEl.setAttribute(item.elem.attributes[_i2].nodeName, item.elem.attributes[_i2].nodeValue);
-	                        }
-	                        item.items.push(newEl);
-	                        item.parent.insertBefore(newEl, item.comment);
-	                    }
-	                    item.cached = []; // refresh cached array
-	                    item.cachedIndexes = item.items.map(function (r) {
-	                        return _core.Utils.indexInParent(r);
-	                    });
-	                }
-
-	                item.items.forEach(function (elem, i) {
-	                    if (_core.Utils.indexInParent(elem) !== item.cachedIndexes[i]) {
-	                        // check if order was changed
-	                        elem.parentNode.insertBefore(elem, elem.parentNode.children.item(i));
-	                    }
-
-	                    if (JSON.stringify(item.cached[i]) !== JSON.stringify(array[i])) {
-	                        if (!elem.COMPONENT) {
-	                            console.warn('Please create component with name ' + compName);
-	                            return;
-	                        }
-	                        elem.COMPONENT.props.set(array[i]);
-	                    }
-	                });
-
-	                item.cached = JSON.parse(JSON.stringify(array));
-	                item.cachedIndexes = item.items.map(function (r) {
-	                    return _core.Utils.indexInParent(r);
-	                });
-	            }
-	        }); //console.timeEnd('modules')
-	    }
-	}
-
-	function updateElement(item, i, elem, data, collectionName) {
-	    forAttachForLoop.call(this, item.directives[i].for, elem, data);
-	    bindClassForLoop.call(this, item.directives[i].class, elem, data);
-	    styleUnitForLoop.call(this, item.directives[i].style, elem, data);
-	    bindIfForLoop.call(this, item.directives[i].if, elem, data);
-	    bindPropsToViewForLoop.call(this, item.directives[i].props, elem, data);
-	    // bindModelToViewForLoop.call(this, item.directives[i].model, elem, collectionName, data);
-	    // bindPropsToViewForLoop.call(this, item.directives[i].model, elem, data);
-
-	    bindAttrsForLoop.call(this, item.directives[i].attrs, elem, data);
-	    addLinksRefsForLoop.call(this, item.directives[i].links, elem, data);
-	    eventsForLoop.call(this, item.directives[i].events, elem);
-	}
-
-	function getCurrentProperty(item, collectionName, data, i) {
-	    var props = this.getComponentVariable( /*item.attr.split('.')*/collectionName.split('.'), data) || [];
-	    return props[i];
-	}
-
-	function eventsForLoop(array, root) {
-	    // let array = [];
-
-	    // EVENTS_NAMES.forEach(directive => {
-	    //     array.push(Directives._initEvent.call(this, root, directive, [], context));
-	    // });
-
-	    array = array.reduce(function (a, b) {
-	        return a.concat(b);
-	    }, []);
-	    _index.Directives._events.call(this, array);
-	}
-
-	function addLinksRefsForLoop(array, root, data) {
-	    // let array = Directives._init.call(this, root, 'ac-link');
-	    _index.Directives._link.call(this, array, data);
-	}
-
-	function bindAttrsForLoop(array, root, data) {
-	    // let array = Directives._init.call(this, root, 'ac-attr');
-	    _index.Directives._attr.call(this, array, data);
-	}
-
-	function bindIfForLoop(array, root, data) {
-	    // let array = Directives._init(root, 'ac-if');
-	    _index.Directives._if.call(this, array, data);
-	}
-
-	function forAttachForLoop(array, root, data) {
-	    // let array = Directives._init.call(this, root, 'ac-for');
-	    _index.Directives._for.call(this, array, data);
-	}
-
-	function bindModelToViewForLoop(array, root, loopIterator, collectionName, data) {
-	    // let array = Directives._init.call(this, root, 'ac-value');
-	    _index.Directives._model.call(this, array, loopIterator, collectionName, data);
-	}
-
-	function bindPropsToViewForLoop(array, root, data) {
-	    // let array = Directives._init.call(this, root, 'ac-value');
-	    _index.Directives._props.call(this, array, data);
-	}
-
-	function styleUnitForLoop(array, root, data) {
-	    // let array = Directives._init.call(this, root, 'ac-style');
-	    _index.Directives._style.call(this, array, data);
-	}
-
-	function bindClassForLoop(array, root, data) {
-	    // let array = Directives._init.call(this, root, 'ac-class');
-	    _index.Directives._class.call(this, array, data);
-	}
-
-/***/ }),
-/* 19 */
-/***/ (function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
-	    value: true
-	});
-	exports._init = _init;
-	exports._initEvent = _initEvent;
-
-	var _private = __webpack_require__(9);
-
-	var _core = __webpack_require__(6);
-
-	var _event = __webpack_require__(20);
-
-	function _init(root, directive, newArray) {
-	    var array = newArray || [];
-
-	    var attr = root.getAttribute(directive);
-	    if (attr && !_core.Utils.isCustomElement(root)) {
-	        // only for loops
-	        var obj = {
-	            elem: root,
-	            attr: attr,
-	            items: [],
-	            parent: root.parentNode,
-	            cached: root
-	        };
-
-	        array.get ? array.get(this).push(obj) : array.push(obj);
-	        root.removeAttribute(directive);
-	        // if (directive === 'ac-for') elem.remove();
-	    }
-
-	    var _iteratorNormalCompletion = true;
-	    var _didIteratorError = false;
-	    var _iteratorError = undefined;
-
-	    try {
-	        for (var _iterator = root.querySelectorAll('[' + directive + ']')[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
-	            var elem = _step.value;
-
-	            var _attr = elem.getAttribute(directive);
-
-	            // exclude inner loops
-	            if (directive === 'ac-for' && elem.querySelectorAll('[ac-for]').length) {
-	                var _iteratorNormalCompletion2 = true;
-	                var _didIteratorError2 = false;
-	                var _iteratorError2 = undefined;
-
-	                try {
-	                    for (var _iterator2 = elem.querySelectorAll('[ac-for]')[Symbol.iterator](), _step2; !(_iteratorNormalCompletion2 = (_step2 = _iterator2.next()).done); _iteratorNormalCompletion2 = true) {
-	                        var innerElem = _step2.value;
-
-	                        innerElem.setAttribute('ac-inner-loop', true);
-	                    }
-	                } catch (err) {
-	                    _didIteratorError2 = true;
-	                    _iteratorError2 = err;
-	                } finally {
-	                    try {
-	                        if (!_iteratorNormalCompletion2 && _iterator2.return) {
-	                            _iterator2.return();
-	                        }
-	                    } finally {
-	                        if (_didIteratorError2) {
-	                            throw _iteratorError2;
-	                        }
-	                    }
-	                }
-	            }
-
-	            if (directive === 'ac-for' && elem.getAttribute('ac-inner-loop')) {
-	                elem.removeAttribute('ac-inner-loop');
-	                return;
-	            }
-
-	            var _obj = {
-	                elem: elem,
-	                attr: _attr,
-	                items: [],
-	                parent: elem.parentNode,
-	                cached: elem
-	            };
-
-	            // only for certain directives
-	            if (directive === 'ac-for' || directive === 'ac-if') {
-	                _obj.comment = _core.Utils.insertAfter(document.createComment(directive + ': ' + _attr), elem);
-	                _obj.cachedIndexes = [];
-	            }
-	            array.get ? array.get(this).push(_obj) : array.push(_obj);
-	            elem.removeAttribute(directive);
-	            if (directive === 'ac-for') elem.remove();
-	        }
-	    } catch (err) {
-	        _didIteratorError = true;
-	        _iteratorError = err;
-	    } finally {
-	        try {
-	            if (!_iteratorNormalCompletion && _iterator.return) {
-	                _iterator.return();
-	            }
-	        } finally {
-	            if (_didIteratorError) {
-	                throw _iteratorError;
-	            }
-	        }
-	    }
-
-	    return array;
-	}
-
-	function _initEvent(root, directive, newArray, context, loopIterator) {
-	    var array = newArray || [];
-	    var targets = root.querySelectorAll('[ac-' + directive + ']');
-	    if (root.getAttribute('ac-' + directive)) {
-	        var obj = _event.createEventObject.call(this, root, directive, context, loopIterator);
-	        array.get ? array.get(this).push(obj) : array.push(obj);
-	    }
-
-	    var _iteratorNormalCompletion3 = true;
-	    var _didIteratorError3 = false;
-	    var _iteratorError3 = undefined;
-
-	    try {
-	        for (var _iterator3 = targets[Symbol.iterator](), _step3; !(_iteratorNormalCompletion3 = (_step3 = _iterator3.next()).done); _iteratorNormalCompletion3 = true) {
-	            var elem = _step3.value;
-
-	            var _obj2 = _event.createEventObject.call(this, elem, directive, context, loopIterator);
-	            array.get ? array.get(this).push(_obj2) : array.push(_obj2);
-	        }
-	    } catch (err) {
-	        _didIteratorError3 = true;
-	        _iteratorError3 = err;
-	    } finally {
-	        try {
-	            if (!_iteratorNormalCompletion3 && _iterator3.return) {
-	                _iterator3.return();
-	            }
-	        } finally {
-	            if (_didIteratorError3) {
-	                throw _iteratorError3;
-	            }
-	        }
-	    }
-
-	    return array;
-	}
-
-/***/ }),
-/* 20 */
-/***/ (function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
-	    value: true
-	});
-
-	var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
-
-	exports._events = _events;
-	exports.removeEventListeners = removeEventListeners;
-	exports.createEventObject = createEventObject;
-
-	var _private = __webpack_require__(9);
-
-	var _core = __webpack_require__(6);
-
-	function _events(array) {
-	    array.forEach(function (newEvent) {
-	        var modifiers = getEventMod(newEvent.el);
-	        newEvent.el.addEventListener(newEvent.event.toLowerCase(), newEvent.f, modifiers.indexOf('capture') > -1 ? true : false);
-	        newEvent.el.removeAttribute('ac-mod');
-	        newEvent.el.removeAttribute('ac-kmod');
-	    });
-	}
-
-	function removeEventListeners(array) {
-	    array.forEach(function (newEvent, i) {
-	        var modifiers = getEventMod(newEvent.el);
-	        newEvent.el.removeEventListener(newEvent.event, newEvent.f, modifiers.indexOf('capture') > -1 ? true : false);
-	    });
-	}
-
-	function getEventMod(elem) {
-	    return elem.getAttribute('ac-mod') ? elem.getAttribute('ac-mod').replace(/ +/g, "").split(',') : [];
-	}
-
-	function getKeyMod(elem) {
-	    return elem.getAttribute('ac-kmod') ? elem.getAttribute('ac-kmod').replace(/ +/g, "") : null;
-	}
-
-	function createEventObject(elem, event, context, loopIterator) {
-	    var _this = this;
-
-	    var funcParams = elem.getAttribute('ac-' + event);
-	    elem.removeAttribute('ac-' + event);
-	    var fnName = funcParams.replace(/ +/g, "");
-	    var modifiers = getEventMod(elem);
-	    var kModifiers = getKeyMod(elem);
-	    var once = { state: false };
-
-	    var regExp = /\(([^)]+)\)|\(()\)/;
-	    var fnParams = regExp.exec(fnName); // get value between brackets
-
-	    var functionName = fnName.replace(regExp, ''); // remove everything between brackets
-
-	    var newEvent = {
-	        fnName: functionName,
-	        event: event,
-	        el: elem,
-	        f: function f(e) {
-	            var args = [];
-
-	            if (fnParams) {
-	                if (fnParams[1]) {
-	                    fnParams[1].replace(/ +/g, "").split(',').forEach(function (res) {
-	                        var arg = void 0;
-	                        if (res === loopIterator) {
-	                            arg = context();
-	                        } else {
-	                            arg = getInputArgs(res);
-	                        }
-	                        args.push(arg);
-	                    });
-	                } else {
-	                    args.push(undefined);
-	                }
-	            }
-
-	            if (_this[functionName]) {
-	                callModifiers.call(_this, modifiers, e, elem, once).subscribe(function (res) {
-	                    if (kModifiers) {
-	                        callKModifiers.call(_this, e, kModifiers, function () {
-	                            var _functionName;
-
-	                            (_functionName = _this[functionName]).call.apply(_functionName, [_this, e].concat(args));
-	                        });
-	                    } else {
-	                        var _functionName2;
-
-	                        (_functionName2 = _this[functionName]).call.apply(_functionName2, [_this, e].concat(args));
-	                    }
-	                });
-	            } else {
-	                console.warn('You have no function in your component');
-	            }
-	        }
-	    };
-
-	    return newEvent;
-	}
-
-	function getInputArgs(res) {
-	    var type = void 0;
-	    var arg = void 0;
-	    try {
-	        type = _typeof(new Function('return ' + res).apply(this));
-	    } catch (e) {
-	        type = undefined;
-	    }
-
-	    if (type === 'string' || type === 'number' || type === 'object') {
-	        arg = new Function('return ' + res).apply(this);
-	    } else {
-	        arg = new Function('return this.' + res).apply(this);
-	    }
-	    return arg;
-	}
-
-	var modifierCode = {
-	    stop: stop,
-	    prevent: prevent
-	};
-
-	function stop(e) {
-	    e.stopPropagation();
-	}
-
-	function prevent(e) {
-	    e.preventDefault();
-	}
-
-	function callModifiers(modifiers, event, elem, once) {
-	    modifiers.forEach(function (mod) {
-	        if (modifierCode[mod]) {
-	            modifierCode[mod](event, elem);
-	        }
-	        // else {
-	        //     console.warn(this.constructor.name + '; Unknown modifier');
-	        // }
-	    });
-
-	    function selfModifier(f) {
-	        if (modifiers.indexOf('self') > -1 && event.target.isEqualNode(elem)) {
-	            once.state = true; // change only when event was fired
-	            f.call(this);
-	        } else if (modifiers.indexOf('self') === -1) {
-	            once.state = true; // change only when event was fired
-	            f.call(this);
-	        }
-	    }
-
-	    return {
-	        subscribe: function subscribe(f) {
-	            if (modifiers.indexOf('once') > -1 && !once.state) {
-	                selfModifier(f);
-	            } else if (modifiers.indexOf('once') === -1) {
-	                selfModifier(f);
-	            }
-	        }
-	    };
-	}
-
-	var keyCodes = {
-	    esc: 27,
-	    tab: 9,
-	    enter: 13,
-	    space: 32,
-	    up: 38,
-	    left: 37,
-	    right: 39,
-	    down: 40,
-	    'delete': [8, 46]
-	};
-
-	function callKModifiers(e, modifiers, cb) {
-	    if (typeof keyCodes[modifiers] === 'number' && e.keyCode === keyCodes[modifiers]) {
-	        cb.call();
-	    } else if (_typeof(keyCodes[modifiers]) === 'object' && keyCodes[modifiers].indexOf(e.keyCode) > -1) {
-	        cb.call();
-	    }
-	}
-
-/***/ }),
-/* 21 */
-/***/ (function(module, exports) {
-
-	'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-	var EVENTS_NAMES = exports.EVENTS_NAMES = ['click', 'keyup', 'change', 'mouseout', 'mouseover', 'mouseenter', 'mouseleave', 'mousedown', 'mouseup', 'scroll', 'mousewheel', 'submit', 'focus', 'blur', 'dragstart'];
-
-/***/ }),
-/* 22 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -1792,7 +1120,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-	var _observable = __webpack_require__(23);
+	var _observable = __webpack_require__(17);
 
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
@@ -1862,7 +1190,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	exports.default = new API();
 
 /***/ }),
-/* 23 */
+/* 17 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -1880,7 +1208,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-	var _decorators = __webpack_require__(24);
+	var _decorators = __webpack_require__(18);
 
 	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
 
@@ -1953,12 +1281,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	                return r.id !== id;
 	            });
 	            // console.log(this.callbacksArray);
-	        }
-	    }, {
-	        key: 'clear',
-	        value: function clear() {
-	            this._data = {};
-	            this._callAll();
 	        }
 	    }, {
 	        key: 'getData',
@@ -2116,7 +1438,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	}(Observable);
 
 /***/ }),
-/* 24 */
+/* 18 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -2126,23 +1448,23 @@ return /******/ (function(modules) { // webpackBootstrap
 	});
 	exports.Inject = exports.DirectiveDecorator = exports.ComponentDecorator = exports.IfArray = exports.IfObject = undefined;
 
-	var _ifObject = __webpack_require__(25);
+	var _ifObject = __webpack_require__(19);
 
 	var _ifObject2 = _interopRequireDefault(_ifObject);
 
-	var _ifArray = __webpack_require__(26);
+	var _ifArray = __webpack_require__(20);
 
 	var _ifArray2 = _interopRequireDefault(_ifArray);
 
-	var _component = __webpack_require__(27);
+	var _component = __webpack_require__(21);
 
 	var _component2 = _interopRequireDefault(_component);
 
-	var _directive = __webpack_require__(28);
+	var _directive = __webpack_require__(23);
 
 	var _directive2 = _interopRequireDefault(_directive);
 
-	var _inject = __webpack_require__(29);
+	var _inject = __webpack_require__(24);
 
 	var _inject2 = _interopRequireDefault(_inject);
 
@@ -2155,7 +1477,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	exports.Inject = _inject2.default;
 
 /***/ }),
-/* 25 */
+/* 19 */
 /***/ (function(module, exports) {
 
 	'use strict';
@@ -2180,7 +1502,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	}
 
 /***/ }),
-/* 26 */
+/* 20 */
 /***/ (function(module, exports) {
 
 	'use strict';
@@ -2202,7 +1524,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	}
 
 /***/ }),
-/* 27 */
+/* 21 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -2221,11 +1543,11 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var _directives = __webpack_require__(10);
 
-	var _events = __webpack_require__(21);
+	var _events = __webpack_require__(22);
 
 	var _Directives = __webpack_require__(11);
 
-	var _api = __webpack_require__(22);
+	var _api = __webpack_require__(16);
 
 	var _api2 = _interopRequireDefault(_api);
 
@@ -2234,12 +1556,14 @@ return /******/ (function(modules) { // webpackBootstrap
 	function ComponentDecorator(decoratorParams) {
 	    return function decorator(Class) {
 	        var func = function func(root, props, parent) {
-	            var newProps = _extends({}, props);
+	            var newProps = {};
 	            try {
 	                newProps = decoratorParams.props ? decoratorParams.props() : {};
 	            } catch (err) {
-	                throw new Error('props is not a function; ' + Class.name);
+	                throw new Error(err + '; props is not a function; ' + Class.name);
 	            }
+
+	            newProps = _extends(newProps, props);
 
 	            var proto = _core.Component.prototype;
 	            if (decoratorParams.super) {
@@ -2249,42 +1573,47 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	            var instance = new Class();
 
-	            Object.defineProperty(instance, 'props', { value: new _core.ObservableModel(newProps), writable: false });
-
-	            var _loop = function _loop(key) {
-	                Object.defineProperty(instance, key, {
-	                    set: function set(value) {
-	                        return instance.props.set(key, value);
-	                    },
-	                    get: function get() {
-	                        return instance.props.get(key);
-	                    },
-	                    configurable: true
-	                });
-	            };
-
-	            for (var key in newProps) {
-	                _loop(key);
-	            }
-
+	            var qwerty = [];
 	            if (_typeof(decoratorParams.services) === 'object') {
 	                for (var key in decoratorParams.services) {
 	                    if (decoratorParams.services.hasOwnProperty(key) && decoratorParams.services[key]) {
 	                        var injectedService = _api2.default.injectorGet(decoratorParams.services[key], Class);
 	                        if (injectedService) {
-
-	                            Object.defineProperty(instance, key, {
-	                                value: injectedService,
-	                                writable: false
-	                            });
-	                            Object.defineProperty(instance.props, key, {
-	                                value: injectedService,
-	                                writable: false
-	                            });
+	                            newProps[key] = injectedService;
+	                            qwerty.push({ key: key, injectedService: injectedService });
 	                        }
 	                    }
 	                }
 	            }
+
+	            Object.defineProperty(instance, 'props', { value: new _core.ObservableModel(newProps), writable: false });
+
+	            var _loop = function _loop(_key) {
+	                Object.defineProperty(instance, _key, {
+	                    set: function set(value) {
+	                        return instance.props.set(_key, value);
+	                    },
+	                    get: function get() {
+	                        return instance.props.get(_key);
+	                    },
+	                    configurable: true
+	                });
+	            };
+
+	            for (var _key in newProps) {
+	                _loop(_key);
+	            }
+
+	            qwerty.forEach(function (res) {
+	                Object.defineProperty(instance, res.key, {
+	                    value: res.injectedService,
+	                    writable: false
+	                });
+	                Object.defineProperty(instance.props, res.key, {
+	                    value: res.injectedService,
+	                    writable: false
+	                });
+	            });
 
 	            _core.Component.componentConstructor.call(instance, root, decoratorParams);
 	            if (parent) {
@@ -2299,7 +1628,18 @@ return /******/ (function(modules) { // webpackBootstrap
 	}
 
 /***/ }),
-/* 28 */
+/* 22 */
+/***/ (function(module, exports) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	var EVENTS_NAMES = exports.EVENTS_NAMES = ['click', 'keyup', 'change', 'mouseout', 'mouseover', 'mouseenter', 'mouseleave', 'mousedown', 'mouseup', 'scroll', 'mousewheel', 'submit', 'focus', 'blur', 'dragstart'];
+
+/***/ }),
+/* 23 */
 /***/ (function(module, exports) {
 
 	"use strict";
@@ -2316,7 +1656,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	}
 
 /***/ }),
-/* 29 */
+/* 24 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -2326,7 +1666,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	});
 	exports.default = Inject;
 
-	var _api = __webpack_require__(22);
+	var _api = __webpack_require__(16);
 
 	var _api2 = _interopRequireDefault(_api);
 
@@ -2351,6 +1691,696 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	        return func;
 	    };
+	}
+
+/***/ }),
+/* 25 */
+/***/ (function(module, exports) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	exports._class = _class;
+	function _class(array, data, loopIterator) {
+	    var _this = this;
+
+	    array.forEach(function (item) {
+	        var array = item.attr.replace(/ +/g, "").split(',');
+	        var attr = item.attr;
+	        var root = item.elem;
+
+	        array.forEach(function (prop) {
+	            try {
+	                if (prop[0] === '@') {
+	                    var params = prop.split('@');
+	                    // let variable = params[1].split('.');
+	                    var r = void 0; // = this.getComponentVariable(variable, data);
+
+	                    if (item.prev) {
+	                        root.classList.remove(item.prev);
+	                    }
+
+	                    // inside ac-for
+	                    r = _this.getPropsByScope(params[1], data, loopIterator);
+
+	                    //remove previous class
+	                    item.prev = r;
+
+	                    if (r) {
+	                        root.classList.add(r);
+	                    }
+	                } else {
+	                    var _params = prop.replace(/ +/g, "").split(':');
+	                    var className = _params[0];
+	                    // let variable = params[1].split('.');
+	                    var _r = void 0;
+
+	                    // inside ac-for
+	                    _r = _this.getPropsByScope(_params[1], data, loopIterator);
+
+	                    _r ? root.classList.add(className) : root.classList.remove(className);
+	                }
+	            } catch (err) {
+	                throw new Error(_this.constructor.name + '; ' + err);
+	            }
+	        });
+	    });
+	}
+
+/***/ }),
+/* 26 */
+/***/ (function(module, exports) {
+
+	"use strict";
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	exports._elRef = _elRef;
+	function _elRef(array) {
+	    var _this = this;
+
+	    array.forEach(function (item) {
+	        var attr = item.attr;
+	        _this.$refs[attr] = item.elem;
+	    });
+	}
+
+/***/ }),
+/* 27 */
+/***/ (function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+
+	var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
+
+	exports._for = _for;
+
+	var _core = __webpack_require__(6);
+
+	var _index = __webpack_require__(11);
+
+	var _init2 = __webpack_require__(28);
+
+	var _events = __webpack_require__(22);
+
+	var _api = __webpack_require__(16);
+
+	var _api2 = _interopRequireDefault(_api);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _for(array, data) {
+	    var _this = this;
+
+	    if (array.length) {
+	        //console.log(this); //console.time('modules')
+	        array.forEach(function (item) {
+	            var compName = item.elem.localName;
+	            var loopIterator = void 0;
+	            var collectionName = void 0;
+	            array = _this.getComponentVariable(item.attr.split('.'), data) || [];
+
+	            if (item.attr.indexOf('let ') > -1 && item.attr.indexOf('of ') > -1) {
+	                var params1 = item.attr.split('of')[0];
+	                collectionName = item.attr.split('of')[1].replace(/ +/g, "");
+	                loopIterator = params1.split('let ')[1].replace(/ +/g, "");
+	                var func = 'for(' + params1 + ' of this.' + collectionName + ') { } return this.' + collectionName;
+
+	                var arg = void 0;
+	                try {
+	                    arg = new Function(func).apply(data || _this.props);
+	                } catch (e) {
+	                    arg = [];
+	                }
+
+	                array = arg;
+	            }
+
+	            if (!_core.Utils.isCustomElement(item.elem)) {
+
+	                if (item.cached.length !== array.length) {
+	                    item.items.forEach(function (item) {
+	                        item.remove();
+	                    });
+	                    item.items = [];
+	                    item.directives = [];
+
+	                    var _loop = function _loop(i) {
+	                        var prevContent = item.elem.cloneNode(true);
+
+	                        // loop through the old element's attributes and give them to the new element
+	                        for (var _i = 0; _i < item.elem.attributes.length; _i++) {
+	                            prevContent.setAttribute(item.elem.attributes[_i].nodeName, item.elem.attributes[_i].nodeValue);
+	                        }
+
+	                        item.items.push(prevContent);
+	                        item.parent.insertBefore(prevContent, item.comment);
+
+	                        item.directives[i] = {
+	                            for: _index.Directives._init.call(_this, prevContent, 'ac-for'), // should go first for correct work
+	                            class: _index.Directives._init.call(_this, prevContent, 'ac-class'),
+	                            style: _index.Directives._init.call(_this, prevContent, 'ac-style'),
+	                            attrs: _index.Directives._init.call(_this, prevContent, 'ac-attr'),
+	                            if: _index.Directives._init.call(_this, prevContent, 'ac-if'),
+	                            model: _index.Directives._init.call(_this, prevContent, 'ac-model'),
+	                            props: _index.Directives._init.call(_this, prevContent, 'ac-value'),
+	                            links: _index.Directives._init.call(_this, prevContent, 'ac-link')
+	                            // events: eventsArray
+	                        };
+
+	                        var eventsArray = [];
+
+	                        _events.EVENTS_NAMES.forEach(function (directive) {
+	                            var prop = getCurrentProperty.bind(_this, item, collectionName, array[i], loopIterator);
+	                            eventsArray.push(_index.Directives._initEvent.call(_this, prevContent, directive, [], prop, loopIterator));
+	                        });
+	                        item.directives[i].events = eventsArray;
+
+	                        updateElement.call(_this, item, i, prevContent, array[i], collectionName, loopIterator);
+	                        bindModelToViewForLoop.call(_this, item.directives[i].model, prevContent, loopIterator, collectionName, array[i]);
+	                    };
+
+	                    for (var i = 0; i <= array.length - 1; i++) {
+	                        _loop(i);
+	                    }
+	                }
+
+	                var curRootProps = JSONStr(_this.props.getData());
+
+	                item.items.forEach(function (elem, i) {
+	                    // if current or root prop has been changed 
+	                    if (JSONStr(item.cached[i]) !== JSONStr(array[i]) || curRootProps !== item.rootCached) {
+	                        updateElement.call(_this, item, i, elem, array[i], collectionName, loopIterator);
+	                    }
+	                });
+
+	                item.rootCached = JSONStr(_this.props.getData());
+	                item.cached = JSON.parse(JSONStr(array));
+	            }
+
+	            if (_core.Utils.isCustomElement(item.elem)) {
+	                if (item.cached.length !== array.length) {
+	                    item.items.forEach(function (item) {
+	                        item.remove();
+	                    });
+	                    item.items = [];
+	                    _this.children[item.elem.COMPONENT.constructor.name] = [];
+	                    for (var i = 0; i <= array.length - 1; i++) {
+	                        var newComp = _api2.default.COMPONENTS.filter(function (r) {
+	                            return r.selector === compName;
+	                        })[0];
+	                        // if(newComp) {
+	                        var newEl = document.createElement(compName);
+	                        // this.root.appendChild(newEl);
+	                        var instance = new newComp(newEl, array[i], _this);
+	                        _this.children[item.elem.COMPONENT.constructor.name].push(instance);
+	                        // }
+
+	                        // loop through the old element's attributes and give them to the new element
+	                        for (var _i2 = 0; _i2 < item.elem.attributes.length; _i2++) {
+	                            newEl.setAttribute(item.elem.attributes[_i2].nodeName, item.elem.attributes[_i2].nodeValue);
+	                        }
+	                        item.items.push(newEl);
+	                        item.parent.insertBefore(newEl, item.comment);
+	                    }
+	                    item.cached = []; // refresh cached array
+	                    item.cachedIndexes = item.items.map(function (r) {
+	                        return _core.Utils.indexInParent(r);
+	                    });
+	                }
+
+	                item.items.forEach(function (elem, i) {
+	                    if (_core.Utils.indexInParent(elem) !== item.cachedIndexes[i]) {
+	                        // check if order was changed
+	                        elem.parentNode.insertBefore(elem, elem.parentNode.children.item(i));
+	                    }
+
+	                    if (JSONStr(item.cached[i]) !== JSONStr(array[i])) {
+	                        if (!elem.COMPONENT) {
+	                            console.warn('Please create component with name ' + compName);
+	                            return;
+	                        }
+	                        elem.COMPONENT.props.set(array[i]);
+	                    }
+	                });
+
+	                item.cached = JSON.parse(JSONStr(array));
+	                item.cachedIndexes = item.items.map(function (r) {
+	                    return _core.Utils.indexInParent(r);
+	                });
+	            }
+	        }); //console.timeEnd('modules')
+	    }
+	}
+
+	// check for cyclic object references before stringifying
+	function JSONStr(obj) {
+	    var seen = [];
+
+	    var replacer = function replacer(key, value) {
+	        if (value != null && (typeof value === 'undefined' ? 'undefined' : _typeof(value)) == "object") {
+	            if (seen.indexOf(value) >= 0) {
+	                return;
+	            }
+	            seen.push(value);
+	        }
+	        return value;
+	    };
+
+	    return JSON.stringify(obj, replacer);
+	}
+
+	function updateElement(item, i, elem, data, collectionName, loopIterator) {
+	    forAttachForLoop.call(this, item.directives[i].for, elem, data);
+
+	    bindClassForLoop.call(this, item.directives[i].class, elem, data, loopIterator);
+	    styleUnitForLoop.call(this, item.directives[i].style, elem, data, loopIterator);
+	    bindIfForLoop.call(this, item.directives[i].if, elem, data, loopIterator);
+	    bindPropsToViewForLoop.call(this, item.directives[i].props, elem, data, loopIterator);
+	    // bindModelToViewForLoop.call(this, item.directives[i].model, elem, collectionName, data);
+	    // bindPropsToViewForLoop.call(this, item.directives[i].model, elem, data);
+
+	    bindAttrsForLoop.call(this, item.directives[i].attrs, elem, data, loopIterator);
+	    addLinksRefsForLoop.call(this, item.directives[i].links, elem, data, loopIterator);
+	    eventsForLoop.call(this, item.directives[i].events, elem);
+	}
+
+	function getCurrentProperty(item, collectionName, data, loopIterator, variable) {
+	    var props = this.getPropsByScope(variable, data, loopIterator);
+	    return props;
+	}
+
+	function eventsForLoop(array, root) {
+	    // let array = [];
+
+	    // EVENTS_NAMES.forEach(directive => {
+	    //     array.push(Directives._initEvent.call(this, root, directive, [], context));
+	    // });
+
+	    array = array.reduce(function (a, b) {
+	        return a.concat(b);
+	    }, []);
+	    _index.Directives._events.call(this, array);
+	}
+
+	function addLinksRefsForLoop(array, root, data, loopIterator) {
+	    // let array = Directives._init.call(this, root, 'ac-link');
+	    _index.Directives._link.call(this, array, data, loopIterator);
+	}
+
+	function bindAttrsForLoop(array, root, data, loopIterator) {
+	    // let array = Directives._init.call(this, root, 'ac-attr');
+	    _index.Directives._attr.call(this, array, data, loopIterator);
+	}
+
+	function bindIfForLoop(array, root, data) {
+	    // let array = Directives._init(root, 'ac-if');
+	    _index.Directives._if.call(this, array, data);
+	}
+
+	function forAttachForLoop(array, root, data) {
+	    // let array = Directives._init.call(this, root, 'ac-for');
+	    _index.Directives._for.call(this, array, data);
+	}
+
+	function bindModelToViewForLoop(array, root, loopIterator, collectionName, data) {
+	    // let array = Directives._init.call(this, root, 'ac-value');
+	    _index.Directives._model.call(this, array, loopIterator, collectionName, data);
+	}
+
+	function bindPropsToViewForLoop(array, root, data, loopIterator) {
+	    // let array = Directives._init.call(this, root, 'ac-value');
+	    _index.Directives._props.call(this, array, data, loopIterator);
+	}
+
+	function styleUnitForLoop(array, root, data, loopIterator) {
+	    // let array = Directives._init.call(this, root, 'ac-style');
+	    _index.Directives._style.call(this, array, data, loopIterator);
+	}
+
+	function bindClassForLoop(array, root, data, loopIterator) {
+	    // let array = Directives._init.call(this, root, 'ac-class');
+	    _index.Directives._class.call(this, array, data, loopIterator);
+	}
+
+	function bindIfForLoop(array, root, data, loopIterator) {
+	    _index.Directives._if.call(this, array, data, loopIterator);
+	}
+
+/***/ }),
+/* 28 */
+/***/ (function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	exports._init = _init;
+	exports._initEvent = _initEvent;
+
+	var _private = __webpack_require__(9);
+
+	var _core = __webpack_require__(6);
+
+	var _event = __webpack_require__(29);
+
+	function _init(root, directive, newArray) {
+	    var array = newArray || [];
+
+	    var attr = root.getAttribute(directive);
+	    if (attr && !_core.Utils.isCustomElement(root)) {
+	        // only for loops
+	        var obj = {
+	            elem: root,
+	            attr: attr,
+	            items: [],
+	            parent: root.parentNode,
+	            cached: root
+	        };
+
+	        array.get ? array.get(this).push(obj) : array.push(obj);
+	        root.removeAttribute(directive);
+	        // if (directive === 'ac-for') elem.remove();
+	    }
+
+	    var _iteratorNormalCompletion = true;
+	    var _didIteratorError = false;
+	    var _iteratorError = undefined;
+
+	    try {
+	        for (var _iterator = root.querySelectorAll('[' + directive + ']')[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
+	            var elem = _step.value;
+
+	            var _attr = elem.getAttribute(directive);
+
+	            // exclude inner loops
+	            if (directive === 'ac-for' && elem.querySelectorAll('[ac-for]').length) {
+	                var _iteratorNormalCompletion2 = true;
+	                var _didIteratorError2 = false;
+	                var _iteratorError2 = undefined;
+
+	                try {
+	                    for (var _iterator2 = elem.querySelectorAll('[ac-for]')[Symbol.iterator](), _step2; !(_iteratorNormalCompletion2 = (_step2 = _iterator2.next()).done); _iteratorNormalCompletion2 = true) {
+	                        var innerElem = _step2.value;
+
+	                        innerElem.setAttribute('ac-inner-loop', true);
+	                    }
+	                } catch (err) {
+	                    _didIteratorError2 = true;
+	                    _iteratorError2 = err;
+	                } finally {
+	                    try {
+	                        if (!_iteratorNormalCompletion2 && _iterator2.return) {
+	                            _iterator2.return();
+	                        }
+	                    } finally {
+	                        if (_didIteratorError2) {
+	                            throw _iteratorError2;
+	                        }
+	                    }
+	                }
+	            }
+
+	            if (directive === 'ac-for' && elem.getAttribute('ac-inner-loop')) {
+	                elem.removeAttribute('ac-inner-loop');
+	                return;
+	            }
+
+	            var _obj = {
+	                elem: elem,
+	                attr: _attr,
+	                items: [],
+	                parent: elem.parentNode,
+	                cached: elem
+	            };
+
+	            // only for certain directives
+	            if (directive === 'ac-for' || directive === 'ac-if') {
+	                _obj.comment = _core.Utils.insertAfter(document.createComment(directive + ': ' + _attr), elem);
+	                _obj.cachedIndexes = [];
+	                _obj.rootCached = null;
+	            }
+	            array.get ? array.get(this).push(_obj) : array.push(_obj);
+	            elem.removeAttribute(directive);
+	            if (directive === 'ac-for') elem.remove();
+	        }
+	    } catch (err) {
+	        _didIteratorError = true;
+	        _iteratorError = err;
+	    } finally {
+	        try {
+	            if (!_iteratorNormalCompletion && _iterator.return) {
+	                _iterator.return();
+	            }
+	        } finally {
+	            if (_didIteratorError) {
+	                throw _iteratorError;
+	            }
+	        }
+	    }
+
+	    return array;
+	}
+
+	function _initEvent(root, directive, newArray, context, loopIterator) {
+	    var array = newArray || [];
+	    var targets = root.querySelectorAll('[ac-' + directive + ']');
+	    if (root.getAttribute('ac-' + directive)) {
+	        var obj = _event.createEventObject.call(this, root, directive, context, loopIterator);
+	        array.get ? array.get(this).push(obj) : array.push(obj);
+	    }
+
+	    var _iteratorNormalCompletion3 = true;
+	    var _didIteratorError3 = false;
+	    var _iteratorError3 = undefined;
+
+	    try {
+	        for (var _iterator3 = targets[Symbol.iterator](), _step3; !(_iteratorNormalCompletion3 = (_step3 = _iterator3.next()).done); _iteratorNormalCompletion3 = true) {
+	            var elem = _step3.value;
+
+	            var _obj2 = _event.createEventObject.call(this, elem, directive, context, loopIterator);
+	            array.get ? array.get(this).push(_obj2) : array.push(_obj2);
+	        }
+	    } catch (err) {
+	        _didIteratorError3 = true;
+	        _iteratorError3 = err;
+	    } finally {
+	        try {
+	            if (!_iteratorNormalCompletion3 && _iterator3.return) {
+	                _iterator3.return();
+	            }
+	        } finally {
+	            if (_didIteratorError3) {
+	                throw _iteratorError3;
+	            }
+	        }
+	    }
+
+	    return array;
+	}
+
+/***/ }),
+/* 29 */
+/***/ (function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+
+	var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
+
+	exports._events = _events;
+	exports.removeEventListeners = removeEventListeners;
+	exports.createEventObject = createEventObject;
+
+	var _private = __webpack_require__(9);
+
+	var _core = __webpack_require__(6);
+
+	function _events(array) {
+	    array.forEach(function (newEvent) {
+	        var modifiers = getEventMod(newEvent.el);
+	        newEvent.el.addEventListener(newEvent.event.toLowerCase(), newEvent.f, modifiers.indexOf('capture') > -1 ? true : false);
+	        newEvent.el.removeAttribute('ac-mod');
+	        newEvent.el.removeAttribute('ac-kmod');
+	    });
+	}
+
+	function removeEventListeners(array) {
+	    array.forEach(function (newEvent, i) {
+	        var modifiers = getEventMod(newEvent.el);
+	        newEvent.el.removeEventListener(newEvent.event, newEvent.f, modifiers.indexOf('capture') > -1 ? true : false);
+	    });
+	}
+
+	function getEventMod(elem) {
+	    return elem.getAttribute('ac-mod') ? elem.getAttribute('ac-mod').replace(/ +/g, "").split(',') : [];
+	}
+
+	function getKeyMod(elem) {
+	    return elem.getAttribute('ac-kmod') ? elem.getAttribute('ac-kmod').replace(/ +/g, "") : null;
+	}
+
+	function createEventObject(elem, event, context, loopIterator) {
+	    var _this = this;
+
+	    var funcParams = elem.getAttribute('ac-' + event);
+	    elem.removeAttribute('ac-' + event);
+	    var fnName = funcParams.replace(/ +/g, "");
+	    var modifiers = getEventMod(elem);
+	    var kModifiers = getKeyMod(elem);
+	    var once = { state: false };
+
+	    var regExp = /\(([^)]+)\)|\(()\)/;
+	    var fnParams = regExp.exec(fnName); // get value between brackets
+
+	    var functionName = fnName.replace(regExp, ''); // remove everything between brackets
+
+	    var newEvent = {
+	        fnName: functionName,
+	        event: event,
+	        el: elem,
+	        f: function f(e) {
+	            var args = [];
+
+	            if (fnParams) {
+	                if (fnParams[1]) {
+	                    fnParams[1].replace(/ +/g, "").split(',').forEach(function (res) {
+	                        var arg = void 0;
+	                        if (res.split('.')[0] === loopIterator) {
+	                            arg = context(res);
+	                        } else if (res === '$event') {
+	                            arg = e;
+	                        } else {
+	                            arg = getInputArgs(res, context ? context(res) : null);
+	                        }
+	                        args.push(arg);
+	                    });
+	                } else {
+	                    args.push(undefined);
+	                }
+	            }
+
+	            if (_this[functionName]) {
+	                callModifiers.call(_this, modifiers, e, elem, once).subscribe(function (res) {
+	                    if (kModifiers) {
+	                        callKModifiers.call(_this, e, kModifiers, function () {
+	                            var _functionName;
+
+	                            (_functionName = _this[functionName]).call.apply(_functionName, [_this].concat(args));
+	                        });
+	                    } else {
+	                        var _functionName2;
+
+	                        (_functionName2 = _this[functionName]).call.apply(_functionName2, [_this].concat(args));
+	                    }
+	                });
+	            } else {
+	                console.warn('You have no function in your component');
+	            }
+	        }
+	    };
+
+	    return newEvent;
+	}
+
+	function getInputArgs(res, context) {
+	    var type = void 0;
+	    var arg = void 0;
+	    try {
+	        type = _typeof(new Function('return ' + res).apply(this));
+	    } catch (e) {
+	        type = undefined;
+	    }
+
+	    switch (type) {
+	        case 'boolean':
+	        case 'string':
+	        case 'number':
+	        case 'object':
+	            arg = new Function('return ' + res).apply(this);
+	            break;
+
+	        default:
+	            arg = context;
+	            break;
+	    }
+
+	    return arg;
+	}
+
+	var modifierCode = {
+	    stop: stop,
+	    prevent: prevent
+	};
+
+	function stop(e) {
+	    e.stopPropagation();
+	}
+
+	function prevent(e) {
+	    e.preventDefault();
+	}
+
+	function callModifiers(modifiers, event, elem, once) {
+	    modifiers.forEach(function (mod) {
+	        if (modifierCode[mod]) {
+	            modifierCode[mod](event, elem);
+	        }
+	        // else {
+	        //     console.warn(this.constructor.name + '; Unknown modifier');
+	        // }
+	    });
+
+	    function selfModifier(f) {
+	        if (modifiers.indexOf('self') > -1 && event.target.isEqualNode(elem)) {
+	            once.state = true; // change only when event was fired
+	            f.call(this);
+	        } else if (modifiers.indexOf('self') === -1) {
+	            once.state = true; // change only when event was fired
+	            f.call(this);
+	        }
+	    }
+
+	    return {
+	        subscribe: function subscribe(f) {
+	            if (modifiers.indexOf('once') > -1 && !once.state) {
+	                selfModifier(f);
+	            } else if (modifiers.indexOf('once') === -1) {
+	                selfModifier(f);
+	            }
+	        }
+	    };
+	}
+
+	var keyCodes = {
+	    esc: 27,
+	    tab: 9,
+	    enter: 13,
+	    space: 32,
+	    up: 38,
+	    left: 37,
+	    right: 39,
+	    down: 40,
+	    'delete': [8, 46]
+	};
+
+	function callKModifiers(e, modifiers, cb) {
+	    if (typeof keyCodes[modifiers] === 'number' && e.keyCode === keyCodes[modifiers]) {
+	        cb.call();
+	    } else if (_typeof(keyCodes[modifiers]) === 'object' && keyCodes[modifiers].indexOf(e.keyCode) > -1) {
+	        cb.call();
+	    }
 	}
 
 /***/ }),
@@ -2416,7 +2446,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    value: true
 	});
 	exports._attr = _attr;
-	function _attr(array, data) {
+	function _attr(array, data, loopIterator) {
 	    var _this = this;
 
 	    array.forEach(function (item) {
@@ -2425,8 +2455,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	        array.forEach(function (prop) {
 	            var params = prop.replace(/ +/g, "").split(':');
 	            var attrName = params[0];
-	            var variable = params[1].split('.');
-	            var r = _this.getComponentVariable(variable, data);
+	            // let variable = params[1].split('.');
+	            var r = void 0; //= this.getComponentVariable(variable, data);
+
+	            r = _this.getPropsByScope(params[1], data, loopIterator);
 
 	            r || r === 0 ? item.elem.setAttribute(attrName, r) : item.elem.removeAttribute(attrName);
 	        });
@@ -2480,7 +2512,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var _core = __webpack_require__(6);
 
-	function _link(array, data) {
+	function _link(array, data, loopIterator) {
 	    var _this = this;
 
 	    array.forEach(function (item) {
@@ -2492,7 +2524,12 @@ return /******/ (function(modules) { // webpackBootstrap
 	        var matches = item.attr.match(regExp);
 	        var params = regExp.exec(item.attr);
 	        if (params) {
-	            var r = _this.getComponentVariable(params[1].split('.'), data);
+
+	            var r = void 0; //= this.getComponentVariable(params[1].split('.'), data);
+	            // let variable = params[1].split('.');
+
+	            r = _this.getPropsByScope(params[1], data, loopIterator);
+
 	            route = item.attr.replace(regExp, r);
 	        }
 
@@ -2708,7 +2745,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var _component = __webpack_require__(8);
 
-	var _api = __webpack_require__(22);
+	var _api = __webpack_require__(16);
 
 	var _api2 = _interopRequireDefault(_api);
 
@@ -2746,7 +2783,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	                var newValue = params[computed].call(this);
 	                this.props.set(computed, newValue, true);
 	            } catch (err) {
-	                throw new Error('computed prop must be a function; ' + this.constructor.name);
+	                throw new Error(err + '; ' + this.constructor.name);
 	            }
 	        }
 	    }
@@ -2771,7 +2808,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var _core = __webpack_require__(6);
 
-	var _api = __webpack_require__(22);
+	var _api = __webpack_require__(16);
 
 	var _api2 = _interopRequireDefault(_api);
 
@@ -2918,7 +2955,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	                var currentChild = this.root.childNodes[0].COMPONENT;
 	                if (currentChild) {
 	                    this.destroyAllChildren(currentChild.children);
-	                    // currentChild.children = [];
 	                    currentChild.destroy();
 	                }
 	            }
@@ -2932,8 +2968,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	            for (var key in children) {
 	                children[key].forEach(function (child) {
 	                    _this2.destroyAllChildren(child.children);
-	                    // child.children = [];
-	                    // console.log(child);
 	                    child.destroy();
 	                });
 	            }
@@ -3181,7 +3215,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    value: true
 	});
 
-	var _observable = __webpack_require__(23);
+	var _observable = __webpack_require__(17);
 
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
@@ -3868,7 +3902,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var _utils = __webpack_require__(44);
 
-	var _decorators = __webpack_require__(24);
+	var _decorators = __webpack_require__(18);
 
 	var Decorators = _interopRequireWildcard(_decorators);
 
@@ -4103,7 +4137,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	"use strict";
 
-	module.exports = "<div ac-outside=\"outside\" class=\"relative\">\r\n\t<div  style=\"width: 100%\" class=\"app-form__label__input\">\r\n\t\t<input type=\"text\" @click=\"openMenu\" class=\"app-form__label__input full-width\" readonly ac-value=\"formattedDate\">\r\n\t\t<div class=\"app-form__border\"></div>\r\n\t\t<!-- <img class=\"datepicker-icon\" src=\"../../assets/img/hanging-calendar.svg\" alt=\"\"> -->\r\n\t</div>\r\n\r\n\t<div class=\"j-calendar\" ac-if=\"this._show\" >\r\n\t    <div class=\"j-calendar__wrap\">\r\n\t        <div class=\"j-calendar__item\">\r\n\t            <div class=\"j-calendar__header\">\r\n\t                <div class=\"j-calendar__header__left\" @click=\"prev\">\r\n\t                    <span>prev</span>\r\n\t                </div>\r\n\t                <div class=\"j-calendar__header__center\">\r\n\t\t                <span ac-value=\"currentMonth\"></span>\r\n\t\t                <span style=\"margin-left: 7px;\" ac-value=\"currentYear\"></span>\r\n\t                </div>\r\n\t                <div class=\"j-calendar__header__right\" @click=\"next\">\r\n\t                    <span>Next</span>\r\n\t                </div>\r\n\t            </div>\r\n\t            <div class=\"j-calendar__content\">\r\n\t                <div class=\"j-calendar__days\">\r\n\t                    <div class=\"j-calendar__days__item\" ac-for=\"let item of daysOfWeekShort\">\r\n\t\t\t\t\t\t\t<span ac-value=\"index\"></span>\r\n\t\t\t\t\t\t</div>\r\n\t                </div>\r\n\t                <div class=\"j-calendar__date\">\r\n\t                    <div class=\"j-calendar__date__item\" \r\n\t                    ac-class=\"j-calendar__date__item--today:this.today, j-calendar__date__item--active:this.selected, j-calendar__date__item--inactive: this.inactive\"\r\n\t                    ac-for=\"let item of countOfDays\"\r\n\t                    @click=\"select(item)\" ac-value=\"index\"></div>\r\n\t                </div>\r\n\t            </div>\r\n\t        </div>\r\n\t    </div>\r\n\t</div>\r\n</div>\r\n";
+	module.exports = "<div ac-outside=\"outside\" class=\"relative\">\r\n\t<div  style=\"width: 100%\" class=\"app-form__label__input\">\r\n\t\t<input type=\"text\" @click=\"openMenu\" class=\"app-form__label__input full-width\" readonly ac-value=\"formattedDate\">\r\n\t\t<div class=\"app-form__border\"></div>\r\n\t\t<!-- <img class=\"datepicker-icon\" src=\"../../assets/img/hanging-calendar.svg\" alt=\"\"> -->\r\n\t</div>\r\n\r\n\t<div class=\"j-calendar\" ac-if=\"this._show\" >\r\n\t    <div class=\"j-calendar__wrap\">\r\n\t        <div class=\"j-calendar__item\">\r\n\t            <div class=\"j-calendar__header\">\r\n\t                <div class=\"j-calendar__header__left\" @click=\"prev($event)\">\r\n\t                    <span>prev</span>\r\n\t                </div>\r\n\t                <div class=\"j-calendar__header__center\">\r\n\t\t                <span ac-value=\"currentMonth\"></span>\r\n\t\t                <span style=\"margin-left: 7px;\" ac-value=\"currentYear\"></span>\r\n\t                </div>\r\n\t                <div class=\"j-calendar__header__right\" @click=\"next($event)\">\r\n\t                    <span>Next</span>\r\n\t                </div>\r\n\t            </div>\r\n\t            <div class=\"j-calendar__content\">\r\n\t                <div class=\"j-calendar__days\">\r\n\t                    <div class=\"j-calendar__days__item\" ac-for=\"let item of daysOfWeekShort\">\r\n\t\t\t\t\t\t\t<span ac-value=\"item.index\"></span>\r\n\t\t\t\t\t\t</div>\r\n\t                </div>\r\n\t                <div class=\"j-calendar__date\">\r\n\t                    <div class=\"j-calendar__date__item\" \r\n\t                    ac-class=\"j-calendar__date__item--today:item.today, j-calendar__date__item--active:item.selected, j-calendar__date__item--inactive: item.inactive\"\r\n\t                    ac-for=\"let item of countOfDays\"\r\n\t                    @click=\"select($event, item)\" ac-value=\"item.index\"></div>\r\n\t                </div>\r\n\t            </div>\r\n\t        </div>\r\n\t    </div>\r\n\t</div>\r\n</div>\r\n";
 
 /***/ }),
 /* 52 */
@@ -4121,7 +4155,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var _utils = __webpack_require__(44);
 
-	var _observable = __webpack_require__(23);
+	var _observable = __webpack_require__(17);
 
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
@@ -4254,7 +4288,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var _dec, _class;
 
-	var _decorators = __webpack_require__(24);
+	var _decorators = __webpack_require__(18);
 
 	var Decorators = _interopRequireWildcard(_decorators);
 
@@ -4354,7 +4388,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var _dec, _class;
 
-	var _decorators = __webpack_require__(24);
+	var _decorators = __webpack_require__(18);
 
 	var Decorators = _interopRequireWildcard(_decorators);
 
@@ -4427,7 +4461,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var _dec, _class;
 
-	var _decorators = __webpack_require__(24);
+	var _decorators = __webpack_require__(18);
 
 	var Decorators = _interopRequireWildcard(_decorators);
 
@@ -4780,7 +4814,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var _dec, _class;
 
-	var _decorators = __webpack_require__(24);
+	var _decorators = __webpack_require__(18);
 
 	var Decorators = _interopRequireWildcard(_decorators);
 
@@ -5605,7 +5639,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var _core = __webpack_require__(6);
 
-	var _decorators = __webpack_require__(24);
+	var _decorators = __webpack_require__(18);
 
 	var _headerComponent = __webpack_require__(72);
 
@@ -5949,7 +5983,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	"use strict";
 
-	module.exports = "<main>\r\n\r\n    <div class=\"main-content justify-space-between\">\r\n\r\n        <ul class=\"main-list\">\r\n            <li style=\"font-size: 14px;padding: 5px; font-weight: 300;\">\r\n                v<small ac-value=\"version\"></small>\r\n            </li>\r\n            <li ac-for=\"let item of categories\">\r\n                <div class=\"list-head\" ac-value=\"name\"></div>\r\n                <ol class=\"list\">\r\n                    <li ac-for=\"let item of items\">\r\n                        <a ac-value=\"name\" ac-link=\"{{route}}\" ac-link-exact=\"true\"></a>\r\n                    </li>\r\n                </ol>\r\n            </li>\r\n        </ul>\r\n\r\n        <div class=\"documentation-section\">\r\n            <child-route-switcher></child-route-switcher>\r\n        </div>\r\n    </div>\r\n</main>";
+	module.exports = "<main>\r\n\r\n    <div class=\"main-content justify-space-between\">\r\n\r\n        <ul class=\"main-list\">\r\n            <li style=\"font-size: 14px;padding: 5px; font-weight: 300;\">\r\n                v<small ac-value=\"version\"></small>\r\n            </li>\r\n            <li ac-for=\"let item of categories\">\r\n                <div class=\"list-head\" ac-value=\"item.name\"></div>\r\n                <ol class=\"list\">\r\n                    <li ac-for=\"let item of items\">\r\n                        <a ac-value=\"item.name\" ac-link=\"{{item.route}}\" ac-link-exact=\"true\"></a>\r\n                    </li>\r\n                </ol>\r\n            </li>\r\n        </ul>\r\n\r\n        <div class=\"documentation-section\">\r\n            <child-route-switcher></child-route-switcher>\r\n        </div>\r\n    </div>\r\n</main>";
 
 /***/ }),
 /* 80 */
@@ -6253,16 +6287,19 @@ return /******/ (function(modules) { // webpackBootstrap
 	var DocDirectivesComponent = exports.DocDirectivesComponent = (_dec = _core.Decorators.ComponentDecorator({
 	    selector: 'app-documentation-directives',
 	    template: _directivesComponent2.default,
-	    props: {
-	        value: 'value',
-	        model: 'Something',
-	        className: 'unclicked',
-	        showClass: true,
-	        isVisible: false,
-	        width: '50px',
-	        height: '100px',
-	        items: [{ name: 1 }, { name: 2 }, { name: 3 }],
-	        image: 'https://www.w3schools.com/css/img_fjords.jpg'
+	    props: function props() {
+	        return {
+	            value: 'value',
+	            model: 'Something',
+	            className: 'unclicked',
+	            showClass: true,
+	            isVisible: false,
+	            width: '50px',
+	            height: '100px',
+	            qwerty: { test: 1 },
+	            items: [{ name: 1, bg: '#ccc', route: '123', class: 'classname' }, { name: 2, class: 'test1' }, { name: 3 }],
+	            image: 'https://www.w3schools.com/css/img_fjords.jpg'
+	        };
 	    }
 	}), _dec(_class = function () {
 	    function DocDirectivesComponent(params) {
@@ -6291,6 +6328,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	            });
 	        }
 	    }, {
+	        key: 'onClick',
+	        value: function onClick(item, event) {}
+	    }, {
 	        key: 'showElement',
 	        value: function showElement() {
 	            this.props.set('isVisible', !this.props.get('isVisible'));
@@ -6314,7 +6354,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	"use strict";
 
-	module.exports = "<h3>Directives</h3>\r\n<div class=\"text\">Directives - special attributes with <b>ac-</b> prefix</div>\r\n<div class=\"text\">All properties of component are stored in special field called <b>props</b></div>\r\n\r\n<div class=\"block\">\r\n    <b class=\"title\">ac-value=\"value\"</b>\r\n    <div class=\"text\">\r\n        Bind props <b>value</b> with certain element\r\n        <br>\r\n        <input type=\"text\" ac-value=\"value\">\r\n    </div>\r\n</div>\r\n<div class=\"block\">\r\n    <b class=\"title\">ac-model=\"model\"</b> \r\n    <div class=\"text\">\r\n        <b>Two way data binding</b> between <b>model</b> and html element\r\n        <br>\r\n        <div>\r\n            <input type=\"text\" ac-model=\"model\">\r\n        </div>\r\n    </div>\r\n</div>\r\n<div class=\"block\">\r\n    <b class=\"title\">ac-input=\"inputData: selectedValue\"</b>\r\n    <div class=\"text\">Allow send <b>selectedValue</b> from parent component to child component <b>inputData</b>.</div>\r\n</div>\r\n<div class=\"block\">\r\n    <b class=\"title\">ac-ref=\"element\"</b>\r\n    <div class=\"text\">Add <b>element</b> to ui list. ui - is a list of reference elements</div>\r\n</div>\r\n<div class=\"block\">\r\n    <b class=\"title\">\r\n    ac-class=\"className: showClass\"\r\n    <br>\r\n    ac-class=\"@class\"\r\n    </b>\r\n    <div class=\"text\">Get 2 params: name of class, boolean(adds class if true). You can use\r\n        <b>comma(,)</b> symbol to specify several conditions. Also @ is available, so you can bind props to className\r\n        <br><br>\r\n        <button @click=\"changeClass\">Change class</button>\r\n        <b><span ac-class=\"@className\">Example</span></b>\r\n    </div>\r\n</div>\r\n<div class=\"block\">\r\n    <b class=\"title\">ac-style=\"height: height\"</b>\r\n    <div class=\"text\">\r\n            Binds props to css rules. Gets 2 params: <b>height</b> - css rule and <b>value</b> - value from \r\n            <br><br>\r\n            <button @click=\"changeSize\">Change size</button>\r\n            <br><br>\r\n            <div style=\"border: 1px solid red\" ac-style=\"height: height, width: width\"></div>\r\n     </div>\r\n</div>\r\n\r\n<div class=\"block\">\r\n    <b class=\"title\">ac-if=\"this.isVisible\"</b>\r\n    <div class=\"text\">Serve to hide or show element; Gets 1 params: <b>value</b>\r\n    <br><br>\r\n    <button @click=\"showElement\">Show</button>\r\n    <span ac-if=\"this.isVisible\">Element is shown now</span>\r\n    </div>\r\n</div>\r\n<div class=\"block\">\r\n    <b class=\"title\">ac-for=\"items\"</b>\r\n    <div class=\"text\">Repeater. Creates instance for every element in collection <b>items</b>\r\n    <br><br>\r\n    <ul>\r\n        <li ac-for=\"let item of items\" ac-value=\"name\"></li>\r\n    </ul>\r\n \r\n    </div>\r\n</div>\r\n<div class=\"block\">\r\n    <b class=\"title\">ac-attr=\"src: image\"</b>\r\n    <div class=\"text\">Binds attr <b>src</b> with url from <b>image</b>\r\n    <br>\r\n    <img ac-attr=\"src: image\" style=\"width: 200px\">\r\n    </div>\r\n</div>\r\n<div class=\"block\">\r\n    <b class=\"title\">ac-link=\"documentation\"</b>\r\n    <div class=\"text\">Serves for navigation inside application. In this case link leads to documentation page</div>\r\n</div>\r\n\r\n<div class=\"block\">\r\n    <b class=\"title\">ac-on=\"change: onChange\"</b>\r\n    <div class=\"text\">\r\n    Add event listener to the root element of component, that listen to child events\r\n    <br><br>\r\n    <app-example-child ac-on=\"onChange: onChange\"></app-example-child>\r\n    </div>\r\n</div>\r\n\r\n<div class=\"block\">\r\n    <b class=\"title\">ac-pattern=\"[0-9]\"</b>\r\n    <div class=\"text\">\r\n    Add <b>error class</b> to the element if value is invalid(doesn't match the pattern)\r\n    <form ac-submit=\"submit\">\r\n        <input required type=\"text\" ac-pattern=\"[0-9]: Invalid\">\r\n        <button>Submit</button>\r\n    </form>\r\n    \r\n    </div>\r\n</div>\r\n<div class=\"block\">\r\n    <b class=\"title\">ac-outside=\"outsideClick\"</b>\r\n    <div class=\"text\">Trigger method <b>outsideClick</b> if user clicked beyond the element where ac-outside is specified</div>\r\n</div>";
+	module.exports = "<h3>Directives</h3>\r\n<div class=\"text\">Directives - special attributes with <b>ac-</b> prefix</div>\r\n<div class=\"text\">All properties of component are stored in special field called <b>props</b></div>\r\n\r\n<div class=\"block\">\r\n    <b class=\"title\">ac-value=\"value\"</b>\r\n    <div class=\"text\">\r\n        Bind props <b>value</b> with certain element\r\n        <br>\r\n        <input type=\"text\" ac-value=\"value\">\r\n    </div>\r\n</div>\r\n<div class=\"block\">\r\n    <b class=\"title\">ac-model=\"model\"</b> \r\n    <div class=\"text\">\r\n        <b>Two way data binding</b> between <b>model</b> and html element\r\n        <br>\r\n        <div>\r\n            <input type=\"text\" ac-model=\"model\">\r\n        </div>\r\n    </div>\r\n</div>\r\n<div class=\"block\">\r\n    <b class=\"title\">ac-input=\"inputData: selectedValue\"</b>\r\n    <div class=\"text\">Allow send <b>selectedValue</b> from parent component to child component <b>inputData</b>.</div>\r\n</div>\r\n<div class=\"block\">\r\n    <b class=\"title\">ac-ref=\"element\"</b>\r\n    <div class=\"text\">Add <b>element</b> to ui list. ui - is a list of reference elements</div>\r\n</div>\r\n<div class=\"block\">\r\n    <b class=\"title\">\r\n    ac-class=\"className: showClass\"\r\n    <br>\r\n    ac-class=\"@class\"\r\n    </b>\r\n    <div class=\"text\">Get 2 params: name of class, boolean(adds class if true). You can use\r\n        <b>comma(,)</b> symbol to specify several conditions. Also @ is available, so you can bind props to className\r\n        <br><br>\r\n        <button @click=\"changeClass\">Change class</button>\r\n        <b><span ac-class=\"@className\">Example</span></b>\r\n    </div>\r\n</div>\r\n<div class=\"block\">\r\n    <b class=\"title\">ac-style=\"height: height\"</b>\r\n    <div class=\"text\">\r\n            Binds props to css rules. Gets 2 params: <b>height</b> - css rule and <b>value</b> - value from \r\n            <br><br>\r\n            <button @click=\"changeSize\">Change size</button>\r\n            <br><br>\r\n            <div style=\"border: 1px solid red\" ac-style=\"height: height, width: width\"></div>\r\n     </div>\r\n</div>\r\n\r\n<div class=\"block\">\r\n    <b class=\"title\">ac-if=\"this.isVisible\"</b>\r\n    <div class=\"text\">Serve to hide or show element; Gets 1 params: <b>value</b>\r\n    <br><br>\r\n    <button @click=\"showElement\">Show</button>\r\n    <span ac-if=\"this.isVisible\">Element is shown now</span>\r\n    </div>\r\n</div>\r\n<div class=\"block\">\r\n    <b class=\"title\">ac-for=\"items\"</b>\r\n    <div class=\"text\">Repeater. Creates instance for every element in collection <b>items</b>\r\n    <br><br>\r\n    <ul>\r\n        <li ac-for=\"let item of items\" \r\n        ac-value=\"item.name\" \r\n        ac-attr=\"width: item.bg\" \r\n        ac-style=\"background: item.bg\" \r\n      \r\n        ac-class=\"test: item.class === model, @item.class\" @click=\"onClick(item, $event)\">\r\n        </li>\r\n    </ul>\r\n \r\n    </div>\r\n</div>\r\n<div class=\"block\">\r\n    <b class=\"title\">ac-attr=\"src: image\"</b>\r\n    <div class=\"text\">Binds attr <b>src</b> with url from <b>image</b>\r\n    <br>\r\n    <img ac-attr=\"src: image\" style=\"width: 200px\">\r\n    </div>\r\n</div>\r\n<div class=\"block\">\r\n    <b class=\"title\">ac-link=\"documentation\"</b>\r\n    <div class=\"text\">Serves for navigation inside application. In this case link leads to documentation page</div>\r\n</div>\r\n\r\n<div class=\"block\">\r\n    <b class=\"title\">ac-on=\"change: onChange\"</b>\r\n    <div class=\"text\">\r\n    Add event listener to the root element of component, that listen to child events\r\n    <br><br>\r\n    <app-example-child ac-on=\"onChange: onChange\"></app-example-child>\r\n    </div>\r\n</div>\r\n\r\n<div class=\"block\">\r\n    <b class=\"title\">ac-pattern=\"[0-9]\"</b>\r\n    <div class=\"text\">\r\n    Add <b>error class</b> to the element if value is invalid(doesn't match the pattern)\r\n    <form ac-submit=\"submit\">\r\n        <input required type=\"text\" ac-pattern=\"[0-9]: Invalid\">\r\n        <button>Submit</button>\r\n    </form>\r\n    \r\n    </div>\r\n</div>\r\n<div class=\"block\">\r\n    <b class=\"title\">ac-outside=\"outsideClick\"</b>\r\n    <div class=\"text\">Trigger method <b>outsideClick</b> if user clicked beyond the element where ac-outside is specified</div>\r\n</div>";
 
 /***/ }),
 /* 93 */

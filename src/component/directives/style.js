@@ -1,12 +1,6 @@
-export function _style(array, data) {
+export function _style(array, data, loopIterator) {
     array.forEach(item => {
         let array = item.attr.split(',');
-
-        // for objects
-        // let a=  new Function('return ' + array).apply(this.props._data);
-        // for(let key in a){
-        //     item.elem.style[key] = a[key];
-        // }
 
         array.forEach(prop => {
             let minus = false;
@@ -16,9 +10,12 @@ export function _style(array, data) {
                 params[1] = params[1].substr(1);
                 minus = true;
             }
-            let variable = params[1].split('.');
-            let r = this.getComponentVariable(variable, data);
+            // let variable = params[1].split('.');
+            let r;
+           
+            r = this.getPropsByScope(params[1], data, loopIterator);
             r = minus ? '-' + r : r;
+
             r ? (item.elem.style[styleName] = r) : (item.elem.style[styleName] = '');
         });
     });

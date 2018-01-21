@@ -4,16 +4,19 @@ import Tpl from './directives.component.html';
 @Decorators.ComponentDecorator({
     selector: 'app-documentation-directives',
     template: Tpl,
-    props: {
-        value: 'value',
-        model: 'Something',
-        className: 'unclicked',
-        showClass: true,
-        isVisible: false,
-        width: '50px',
-        height: '100px',
-        items: [{name: 1}, {name: 2}, {name: 3}],
-        image: 'https://www.w3schools.com/css/img_fjords.jpg'
+    props: () => {
+        return {        
+            value: 'value',
+            model: 'Something',
+            className: 'unclicked',
+            showClass: true,
+            isVisible: false,
+            width: '50px',
+            height: '100px',
+            qwerty: {test: 1},
+            items: [{name: 1, bg: '#ccc', route: '123', class: 'classname'}, {name: 2, class: 'test1'}, {name: 3}],
+            image: 'https://www.w3schools.com/css/img_fjords.jpg'
+        }
     }
 })
 export class DocDirectivesComponent {
@@ -38,6 +41,10 @@ export class DocDirectivesComponent {
             height: '75px',
             width: '100px'
         })
+    }
+
+    onClick(item, event) {
+
     }
 
     showElement() {
