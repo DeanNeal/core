@@ -2,7 +2,7 @@
  * ace-js 0.7.9
  * May be freely distributed under the MIT license 
  * Author: Bogdan Zinkevich
- * Last update: 2018-1-21 22:06:30
+ * Last update: 2018-1-22 11:48:35
  * 
  */
 (function webpackUniversalModuleDefinition(root, factory) {
@@ -1715,8 +1715,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	            try {
 	                if (prop[0] === '@') {
 	                    var params = prop.split('@');
-	                    // let variable = params[1].split('.');
-	                    var r = void 0; // = this.getComponentVariable(variable, data);
+	                    var r = void 0;
 
 	                    if (item.prev) {
 	                        root.classList.remove(item.prev);
@@ -1734,7 +1733,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	                } else {
 	                    var _params = prop.replace(/ +/g, "").split(':');
 	                    var className = _params[0];
-	                    // let variable = params[1].split('.');
 	                    var _r = void 0;
 
 	                    // inside ac-for
@@ -5274,6 +5272,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	    value: true
 	});
 
+	var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
+
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -5365,7 +5365,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	        value: function reset() {
 	            this.valid = true;
 	            this.dirty = false;
-	            this.setValue(this.initValue, true);
+	            this.value = this.initValue;
+	            if (this.elem) {
+	                this.elem.value = this.initValue;
+	            }
 	        }
 	    }]);
 
@@ -5410,9 +5413,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	            for (var control in this.controls) {
 	                this.controls[control].reset();
 	            }
-	            if (this.component) {
-	                this.component.props._callAll();
-	            }
+
+	            this._validate();
+	            this.getValues();
 	        }
 	    }, {
 	        key: '_validate',
@@ -5434,8 +5437,23 @@ return /******/ (function(modules) { // webpackBootstrap
 	    }, {
 	        key: 'setValue',
 	        value: function setValue(name, value) {
-	            this.controls[name].setValue(value);
-	            this.getValues();
+	            if (typeof name === 'string') {
+	                this.controls[name].setValue(value);
+	                this.getValues();
+	            } else if ((typeof name === 'undefined' ? 'undefined' : _typeof(name)) === 'object') {
+
+	                for (var key in name) {
+	                    if (this.controls[key].elem) {
+	                        this.controls[key].elem.value = name[key];
+	                    }
+	                    this.controls[key].value = name[key];
+	                    this.controls[key].markAsDirty();
+	                }
+
+	                this.getValues();
+	                this.onChangeCallback();
+	                this._validate();
+	            }
 	        }
 	    }, {
 	        key: 'isValid',
@@ -6012,9 +6030,21 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	// import ProjectsStore from 'store/projects.store';
 
+
+	var count = 100;
+	var INDEX = 0;
+	var INDEX_VALUE = 100 / count;
+	// let state = true;
+	var QWERTY = 1;
+
 	var DocQuickStartComponent = exports.DocQuickStartComponent = (_dec = _core.Decorators.ComponentDecorator({
 	    selector: 'app-documentation-quick-start',
-	    template: _docQuickStartComponent2.default
+	    template: _docQuickStartComponent2.default,
+	    props: function props() {
+	        return {
+	            particles: []
+	        };
+	    }
 	}), _dec(_class = function () {
 	    function DocQuickStartComponent(params) {
 	        _classCallCheck(this, DocQuickStartComponent);
@@ -6022,7 +6052,85 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	    _createClass(DocQuickStartComponent, [{
 	        key: 'onInit',
-	        value: function onInit() {}
+	        value: function onInit() {
+	            var _this = this;
+
+	            this.getColors();
+	            setInterval(function () {
+	                _this.getColors();
+	            }, 60);
+	        }
+	    }, {
+	        key: 'getColors',
+	        value: function getColors() {
+	            var particles = [];
+
+	            // if (INDEX < count /*&& state*/) {
+	            INDEX += INDEX_VALUE;
+	            // }
+
+	            // if (INDEX < INDEX_VALUE) {
+	            //     state = true;
+	            // }
+
+
+	            // if (INDEX >= count || !state) {
+	            //     INDEX -= INDEX_VALUE;
+	            //     state = false;
+	            // }
+
+	            for (var i = 0; i <= count; i++) {
+	                // let modulo = (i * INDEX_VALUE + INDEX) % count;
+	                //    particles.push({ name: i, bg: this.perc2color(i * INDEX_VALUE  - modulo) });
+
+	                var val = i * INDEX_VALUE;
+	                particles.push({ name: i, bg: this.perc2color(i * INDEX_VALUE) });
+	            }
+
+	            this.particles = particles;
+	        }
+	    }, {
+	        key: 'perc2color',
+	        value: function perc2color(perc) {
+	            var r,
+	                g,
+	                b = 0;
+	            if (perc < 50) {
+	                r = 255;
+	                g = Math.round(5.1 * perc);
+	            } else {
+	                g = 255;
+	                r = Math.round(510 - 5.10 * perc);
+	            }
+	            var h = r * 0x10000 + g * 0x100 + b * 0x1;
+	            return '#' + ('000000' + h.toString(16)).slice(-6);
+	        }
+
+	        // colorLuminance(hex, lum) {
+
+	        // 	// validate hex string
+	        // 	hex = String(hex).replace(/[^0-9a-f]/gi, '');
+	        // 	if (hex.length < 6) {
+	        // 		hex = hex[0]+hex[0]+hex[1]+hex[1]+hex[2]+hex[2];
+	        // 	}
+	        // 	lum = lum || 0;
+
+	        // 	// convert to decimal and change luminosity
+	        // 	var rgb = "#", c, i;
+	        // 	for (i = 0; i < 3; i++) {
+	        // 		c = parseInt(hex.substr(i*2,2), 16);
+	        // 		c = Math.round(Math.min(Math.max(0, c + (c * lum)), 255)).toString(16);
+	        // 		rgb += ("00"+c).substr(c.length);
+	        // 	}
+
+	        // 	return rgb;
+	        // }
+
+	        // shadeColor2(color, percent) {   
+	        //     var f=parseInt(color.slice(1),16),t=percent<0?0:255,p=percent<0?percent*-1:percent,R=f>>16,G=f>>8&0x00FF,B=f&0x0000FF;
+	        //     return "#"+(0x1000000+(Math.round((t-R)*p)+R)*0x10000+(Math.round((t-G)*p)+G)*0x100+(Math.round((t-B)*p)+B)).toString(16).slice(1);
+	        // }
+
 	    }, {
 	        key: 'onDestroy',
 	        value: function onDestroy() {}
@@ -6037,7 +6145,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	"use strict";
 
-	module.exports = "<h3>Tutorial</h3>\r\n<span class=\"text\">This tutorial will help you to create your first app based on our framework</span>";
+	module.exports = "<h3>Tutorial</h3>\r\n<span class=\"text\">This tutorial will help you to create your first app based on our framework</span>\r\n\r\n<br>\r\n<div style=\"line-height: 0\">\r\n\t\r\n\t<span class=\"experiment\" ac-for=\"let particle of particles\" ac-style=\"background: particle.bg\"></span>\r\n</div>\r\n\r\n<style>\r\n\t.experiment {\r\n\t\twidth: 50px;\r\n\t\theight: 50px;\r\n\t\t/*font-size: 0;*/\r\n\t\tdisplay: inline-block;\r\n\t\tposition: relative;\r\n\t\r\n\r\n\t}\r\n</style>";
 
 /***/ }),
 /* 82 */

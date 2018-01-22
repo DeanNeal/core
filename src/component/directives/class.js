@@ -8,8 +8,7 @@ export function _class(array, data, loopIterator) {
             try {
                 if (prop[0] === '@') {
                     let params = prop.split('@');
-                    // let variable = params[1].split('.');
-                    let r;// = this.getComponentVariable(variable, data);
+                    let r;
 
                     if (item.prev) {
                         root.classList.remove(item.prev)
@@ -27,7 +26,6 @@ export function _class(array, data, loopIterator) {
                 } else {
                     let params = prop.replace(/ +/g, "").split(':');
                     let className = params[0];
-                    // let variable = params[1].split('.');
                     let r;
 
                     // inside ac-for

@@ -71,7 +71,10 @@ export class FormControl {
     reset() {
         this.valid = true;
         this.dirty = false;
-        this.setValue(this.initValue, true);
+        this.value = this.initValue;
+        if (this.elem) {
+            this.elem.value = this.initValue;
+        }
     }
 }
 
@@ -107,9 +110,9 @@ export class FormGroup {
         for (let control in this.controls) {
             this.controls[control].reset();
         }
-        if (this.component) {
-            this.component.props._callAll();
-        }
+
+        this._validate();
+        this.getValues();
     }
 
     _validate() {
@@ -127,8 +130,23 @@ export class FormGroup {
     }
 
     setValue(name, value) {
-        this.controls[name].setValue(value);
-        this.getValues();
+        if(typeof name === 'string'){
+            this.controls[name].setValue(value);
+            this.getValues();
+        } else if (typeof name === 'object') {
+
+            for (let key in name) {
+                if(this.controls[key].elem){
+                    this.controls[key].elem.value = name[key];
+                }
+                this.controls[key].value = name[key];
+                this.controls[key].markAsDirty();
+            }
+
+            this.getValues();
+            this.onChangeCallback();
+            this._validate();
+        }
     }
 
     isValid() {
