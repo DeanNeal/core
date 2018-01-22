@@ -1,3 +1,13 @@
+<a name="0.7.9"></a>
+# [0.7.9](https://github.com/DeanNeal/ace-js) (2018-01-22)
+### Features
+* **core:**  work with iterator within ac-for ([#91](https://github.com/DeanNeal/ace-js/issues/91))
+
+<a name="0.7.5"></a>
+# [0.7.5](https://github.com/DeanNeal/ace-js) (2018-01-14)
+### Features
+* **core:**  props as function to avoid instances with the same props ([#89](https://github.com/DeanNeal/ace-js/issues/89))
+
 <a name="0.6.0"></a>
 # [0.6.0](https://github.com/DeanNeal/ace-js) (2017-12-27)
 ### Features
