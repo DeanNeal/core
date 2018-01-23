@@ -164,9 +164,8 @@ function updateElement(item, i, elem, data, collectionName, loopIterator) {
     bindClassForLoop.call(this, item.directives[i].class, elem, data, loopIterator);
     styleUnitForLoop.call(this, item.directives[i].style, elem, data, loopIterator);
     bindIfForLoop.call(this, item.directives[i].if, elem, data, loopIterator);
-    bindPropsToViewForLoop.call(this, item.directives[i].props, elem, data, loopIterator);
-    // bindModelToViewForLoop.call(this, item.directives[i].model, elem, collectionName, data);
-    // bindPropsToViewForLoop.call(this, item.directives[i].model, elem, data);
+    bindValueToViewForLoop.call(this, item.directives[i].props, elem, data, loopIterator);
+    bindValueToViewForLoop.call(this, item.directives[i].model, elem, data, loopIterator);
 
     bindAttrsForLoop.call(this, item.directives[i].attrs, elem, data, loopIterator);
     addLinksRefsForLoop.call(this, item.directives[i].links, elem, data, loopIterator);
@@ -216,9 +215,9 @@ function bindModelToViewForLoop(array, root, loopIterator, collectionName, data)
     Directives._model.call(this, array, loopIterator, collectionName, data);
 }
 
-function bindPropsToViewForLoop(array, root, data, loopIterator) {
+function bindValueToViewForLoop(array, root, data, loopIterator) {
     // let array = Directives._init.call(this, root, 'ac-value');
-    Directives._props.call(this, array, data, loopIterator);
+    Directives._value.call(this, array, data, loopIterator);
 }
 
 function styleUnitForLoop(array, root, data, loopIterator) {

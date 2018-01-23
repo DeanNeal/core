@@ -1,8 +1,8 @@
 /*!
- * ace-js 0.7.10
+ * ace-js 0.7.11
  * May be freely distributed under the MIT license 
  * Author: Bogdan Zinkevich
- * Last update: 2018-1-23 22:03:11
+ * Last update: 2018-1-23 22:32:09
  * 
  */
 (function webpackUniversalModuleDefinition(root, factory) {
@@ -348,7 +348,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    var rootEl = document.querySelectorAll(options.root.selector)[0];
 	    if (rootEl) {
 	        var rootComponent = new options.root(rootEl);
-	        rootComponent.root.setAttribute('ac-version', ("0.7.10"));
+	        rootComponent.root.setAttribute('ac-version', ("0.7.11"));
 	    } else {
 	        console.warn('There is no root component');
 	    }
@@ -499,9 +499,9 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	                _Directives.Directives._if.call(_this2, _private.PRIVATES.DIRECTIVES['ac-if'].get(_this2));
 	                _Directives.Directives._for.call(_this2, _private.PRIVATES.DIRECTIVES['ac-for'].get(_this2));
-	                _Directives.Directives._props.call(_this2, _private.PRIVATES.DIRECTIVES['ac-value'].get(_this2));
+	                _Directives.Directives._value.call(_this2, _private.PRIVATES.DIRECTIVES['ac-value'].get(_this2));
 	                _Directives.Directives._input.call(_this2, _private.PRIVATES.DIRECTIVES['ac-input'].get(_this2));
-	                _Directives.Directives._props.call(_this2, _private.PRIVATES.DIRECTIVES['ac-model'].get(_this2));
+	                _Directives.Directives._value.call(_this2, _private.PRIVATES.DIRECTIVES['ac-model'].get(_this2));
 	                _Directives.Directives._style.call(_this2, _private.PRIVATES.DIRECTIVES['ac-style'].get(_this2));
 	                _Directives.Directives._class.call(_this2, _private.PRIVATES.DIRECTIVES['ac-class'].get(_this2));
 	                _Directives.Directives._attr.call(_this2, _private.PRIVATES.DIRECTIVES['ac-attr'].get(_this2));
@@ -858,7 +858,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var _style2 = __webpack_require__(12);
 
-	var _props2 = __webpack_require__(13);
+	var _props = __webpack_require__(13);
 
 	var _pattern2 = __webpack_require__(14);
 
@@ -896,7 +896,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var Directives = {
 	    _style: _style2._style,
-	    _props: _props2._props,
+	    _value: _props._value,
 	    _pattern: _pattern2._pattern,
 	    _if: _if2._if,
 	    _class: _class2._class,
@@ -968,11 +968,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	Object.defineProperty(exports, "__esModule", {
 	    value: true
 	});
-	exports._props = _props;
+	exports._value = _value;
 
 	var _core = __webpack_require__(6);
 
-	function _props(array, data, loopIterator) {
+	function _value(array, data, loopIterator) {
 	    var _this = this;
 
 	    array.forEach(function (item) {
@@ -2012,9 +2012,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	    bindClassForLoop.call(this, item.directives[i].class, elem, data, loopIterator);
 	    styleUnitForLoop.call(this, item.directives[i].style, elem, data, loopIterator);
 	    bindIfForLoop.call(this, item.directives[i].if, elem, data, loopIterator);
-	    bindPropsToViewForLoop.call(this, item.directives[i].props, elem, data, loopIterator);
-	    // bindModelToViewForLoop.call(this, item.directives[i].model, elem, collectionName, data);
-	    // bindPropsToViewForLoop.call(this, item.directives[i].model, elem, data);
+	    bindValueToViewForLoop.call(this, item.directives[i].props, elem, data, loopIterator);
+	    bindValueToViewForLoop.call(this, item.directives[i].model, elem, data, loopIterator);
 
 	    bindAttrsForLoop.call(this, item.directives[i].attrs, elem, data, loopIterator);
 	    addLinksRefsForLoop.call(this, item.directives[i].links, elem, data, loopIterator);
@@ -2064,9 +2063,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	    _index.Directives._model.call(this, array, loopIterator, collectionName, data);
 	}
 
-	function bindPropsToViewForLoop(array, root, data, loopIterator) {
+	function bindValueToViewForLoop(array, root, data, loopIterator) {
 	    // let array = Directives._init.call(this, root, 'ac-value');
-	    _index.Directives._props.call(this, array, data, loopIterator);
+	    _index.Directives._value.call(this, array, data, loopIterator);
 	}
 
 	function styleUnitForLoop(array, root, data, loopIterator) {
@@ -5944,7 +5943,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	            // });
 
 	            this.props.set({
-	                version: ("0.7.10"),
+	                version: ("0.7.11"),
 	                'categories': [{
 	                    name: 'Getting started',
 	                    items: [{

@@ -136,9 +136,9 @@ export class Component {
 
             Directives._if.call(this, PRIVATES.DIRECTIVES['ac-if'].get(this));
             Directives._for.call(this, PRIVATES.DIRECTIVES['ac-for'].get(this));
-            Directives._props.call(this, PRIVATES.DIRECTIVES['ac-value'].get(this));
+            Directives._value.call(this, PRIVATES.DIRECTIVES['ac-value'].get(this));
             Directives._input.call(this, PRIVATES.DIRECTIVES['ac-input'].get(this));
-            Directives._props.call(this, PRIVATES.DIRECTIVES['ac-model'].get(this));
+            Directives._value.call(this, PRIVATES.DIRECTIVES['ac-model'].get(this));
             Directives._style.call(this, PRIVATES.DIRECTIVES['ac-style'].get(this));
             Directives._class.call(this, PRIVATES.DIRECTIVES['ac-class'].get(this));
             Directives._attr.call(this, PRIVATES.DIRECTIVES['ac-attr'].get(this));

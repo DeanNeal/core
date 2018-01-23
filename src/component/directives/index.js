@@ -1,5 +1,5 @@
 import { _style } from './style';
-import { _props } from './props';
+import { _value } from './props';
 import { _pattern } from './pattern';
 import { _if } from './if';
 import { _class } from './class';
@@ -20,7 +20,7 @@ import { _computed } from './computed';
 
 const Directives = {
     _style,
-    _props,
+    _value,
     _pattern,
     _if,
     _class,

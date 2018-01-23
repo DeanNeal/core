@@ -1,5 +1,5 @@
 import { Utils } from '../../core';
-export function _props(array, data, loopIterator) {
+export function _value(array, data, loopIterator) {
     array.forEach(item => {
         if (Utils.isCustomElement(item.elem) === false) {
             let params = item.attr.split('|'), r;
