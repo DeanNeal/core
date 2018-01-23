@@ -60,7 +60,7 @@ class Observable {
     _callAll() {
         this.callbacksArray.forEach(r => {
             // if (this._data) {
-                r.f.call(this, this._data)
+            r.f.call(this, this._data)
             // }
         });
     }
@@ -90,7 +90,7 @@ export class ObservableModel extends Observable {
             this._data[data] = value;
         }
 
-        if(!silent){
+        if (!silent) {
             this._callAll();
         }
     }
@@ -105,7 +105,7 @@ export class ObservableCollection extends Observable {
 
     set(data, value, silent) {
         this._data = data;
-        if(!silent){
+        if (!silent) {
             this._callAll();
         }
     }
@@ -124,8 +124,47 @@ export class ObservableCollection extends Observable {
         return this._data[this._data.length - 1];
     }
 
+    first() {
+        return this._data[0];
+    }
+
+    filter(cb) {
+        return this._data.filter(cb);
+    }
+
+    sort(cb) {
+        return this._data.sort(cb);
+    }
+
+    splice(cb) {
+        return this._data.splice(cb);
+    }
+
+    splice(cb) {
+        return this._data.splice(cb);
+    }
+
+    slice(...rest) {
+        return this._data.slice(rest);
+    }
+
+    pop() {
+        return this._data.pop();
+    }
+
+    reverse() {
+        this._data.reverse();
+        this._callAll();
+    }
+
     push(data, model) {
         this._data.push(data);
+        this._callAll();
+    }
+
+
+    shift() {
+        this._data.shift(data);
         this._callAll();
     }
 
@@ -145,7 +184,7 @@ export class ObservableBoolean extends Observable {
     constructor(options) {
         super(options);
         this._data = options || false;
-    } 
+    }
 
     set(data, silent) {
         if (typeof data == 'boolean') {
@@ -156,7 +195,7 @@ export class ObservableBoolean extends Observable {
             console.warn('Only boolean');
         }
 
-        if(!silent){
+        if (!silent) {
             this._callAll();
         }
     }

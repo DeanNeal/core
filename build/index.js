@@ -2,7 +2,7 @@
  * ace-js 0.7.10
  * May be freely distributed under the MIT license 
  * Author: Bogdan Zinkevich
- * Last update: 2018-1-22 11:54:22
+ * Last update: 2018-1-23 22:03:11
  * 
  */
 (function webpackUniversalModuleDefinition(root, factory) {
@@ -1243,9 +1243,60 @@ return /******/ (function(modules) { // webpackBootstrap
 	            return this._data[this._data.length - 1];
 	        }
 	    }, {
+	        key: 'first',
+	        value: function first() {
+	            return this._data[0];
+	        }
+	    }, {
+	        key: 'filter',
+	        value: function filter(cb) {
+	            return this._data.filter(cb);
+	        }
+	    }, {
+	        key: 'sort',
+	        value: function sort(cb) {
+	            return this._data.sort(cb);
+	        }
+	    }, {
+	        key: 'splice',
+	        value: function splice(cb) {
+	            return this._data.splice(cb);
+	        }
+	    }, {
+	        key: 'splice',
+	        value: function splice(cb) {
+	            return this._data.splice(cb);
+	        }
+	    }, {
+	        key: 'slice',
+	        value: function slice() {
+	            for (var _len = arguments.length, rest = Array(_len), _key = 0; _key < _len; _key++) {
+	                rest[_key] = arguments[_key];
+	            }
+
+	            return this._data.slice(rest);
+	        }
+	    }, {
+	        key: 'pop',
+	        value: function pop() {
+	            return this._data.pop();
+	        }
+	    }, {
+	        key: 'reverse',
+	        value: function reverse() {
+	            this._data.reverse();
+	            this._callAll();
+	        }
+	    }, {
 	        key: 'push',
 	        value: function push(data, model) {
 	            this._data.push(data);
+	            this._callAll();
+	        }
+	    }, {
+	        key: 'shift',
+	        value: function shift() {
+	            this._data.shift(data);
 	            this._callAll();
 	        }
 	    }, {
