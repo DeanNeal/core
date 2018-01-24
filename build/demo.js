@@ -2,7 +2,7 @@
  * ace-js 0.7.12
  * May be freely distributed under the MIT license 
  * Author: Bogdan Zinkevich
- * Last update: 2018-1-24 00:07:13
+ * Last update: 2018-1-25 00:04:55
  * 
  */
 (function webpackUniversalModuleDefinition(root, factory) {
@@ -841,9 +841,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	Object.defineProperty(exports, "__esModule", {
 	    value: true
 	});
-	var DIRECTIVES_NAMES = exports.DIRECTIVES_NAMES = ['ac-for', 'ac-style', 'ac-value', 'ac-input', 'ac-model', 'ac-if', 'ac-class', 'ac-link', 'ac-attr', 'ac-on', 'ac-pattern', 'ac-outside', 'ac-ref',
-	// 'ac-form-validation',
-	'ac-form-group'];
+	var DIRECTIVES_NAMES = exports.DIRECTIVES_NAMES = ['ac-for', 'ac-style', 'ac-value', 'ac-input', 'ac-model', 'ac-if', 'ac-class', 'ac-link', 'ac-attr', 'ac-on', 'ac-pattern', 'ac-outside', 'ac-ref', 'ac-form-group'];
 
 /***/ }),
 /* 11 */
@@ -1854,7 +1852,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	            var compName = item.elem.localName;
 	            var loopIterator = void 0;
 	            var collectionName = void 0;
-	            array = _this.getComponentVariable(item.attr.split('.'), data) || [];
+	            var array = _this.getComponentVariable(item.attr.split('.'), data) || [];
 
 	            if (item.attr.indexOf('let ') > -1 && item.attr.indexOf('of ') > -1) {
 	                var params1 = item.attr.split('of')[0];
@@ -1873,120 +1871,128 @@ return /******/ (function(modules) { // webpackBootstrap
 	            }
 
 	            if (!_core.Utils.isCustomElement(item.elem)) {
-
-	                if (item.cached.length !== array.length) {
-	                    item.items.forEach(function (item) {
-	                        item.remove();
-	                    });
-	                    item.items = [];
-	                    item.directives = [];
-
-	                    var _loop = function _loop(i) {
-	                        var prevContent = item.elem.cloneNode(true);
-
-	                        // loop through the old element's attributes and give them to the new element
-	                        for (var _i = 0; _i < item.elem.attributes.length; _i++) {
-	                            prevContent.setAttribute(item.elem.attributes[_i].nodeName, item.elem.attributes[_i].nodeValue);
-	                        }
-
-	                        item.items.push(prevContent);
-	                        item.parent.insertBefore(prevContent, item.comment);
-
-	                        item.directives[i] = {
-	                            for: _index.Directives._init.call(_this, prevContent, 'ac-for'), // should go first for correct work
-	                            class: _index.Directives._init.call(_this, prevContent, 'ac-class'),
-	                            style: _index.Directives._init.call(_this, prevContent, 'ac-style'),
-	                            attrs: _index.Directives._init.call(_this, prevContent, 'ac-attr'),
-	                            if: _index.Directives._init.call(_this, prevContent, 'ac-if'),
-	                            model: _index.Directives._init.call(_this, prevContent, 'ac-model'),
-	                            props: _index.Directives._init.call(_this, prevContent, 'ac-value'),
-	                            links: _index.Directives._init.call(_this, prevContent, 'ac-link')
-	                            // events: eventsArray
-	                        };
-
-	                        var eventsArray = [];
-
-	                        _events.EVENTS_NAMES.forEach(function (directive) {
-	                            var prop = getCurrentProperty.bind(_this, item, collectionName, array[i], loopIterator);
-	                            eventsArray.push(_index.Directives._initEvent.call(_this, prevContent, directive, [], prop, loopIterator));
-	                        });
-	                        item.directives[i].events = eventsArray;
-
-	                        updateElement.call(_this, item, i, prevContent, array[i], collectionName, loopIterator);
-	                        bindModelToViewForLoop.call(_this, item.directives[i].model, prevContent, loopIterator, collectionName, array[i]);
-	                    };
-
-	                    for (var i = 0; i <= array.length - 1; i++) {
-	                        _loop(i);
-	                    }
-	                }
-
-	                var curRootProps = JSONStr(_this.props.getData());
-
-	                item.items.forEach(function (elem, i) {
-	                    // if current or root prop has been changed 
-	                    if (JSONStr(item.cached[i]) !== JSONStr(array[i]) || curRootProps !== item.rootCached) {
-	                        updateElement.call(_this, item, i, elem, array[i], collectionName, loopIterator);
-	                    }
-	                });
-
-	                item.rootCached = JSONStr(_this.props.getData());
-	                item.cached = JSON.parse(JSONStr(array));
+	                nativeElements.call(_this, item, array, loopIterator, collectionName);
 	            }
 
 	            if (_core.Utils.isCustomElement(item.elem)) {
-	                if (item.cached.length !== array.length) {
-	                    item.items.forEach(function (item) {
-	                        item.remove();
-	                    });
-	                    item.items = [];
-	                    _this.children[item.elem.COMPONENT.constructor.name] = [];
-	                    for (var i = 0; i <= array.length - 1; i++) {
-	                        var newComp = _api2.default.COMPONENTS.filter(function (r) {
-	                            return r.selector === compName;
-	                        })[0];
-	                        // if(newComp) {
-	                        var newEl = document.createElement(compName);
-	                        // this.root.appendChild(newEl);
-	                        var instance = new newComp(newEl, array[i], _this);
-	                        _this.children[item.elem.COMPONENT.constructor.name].push(instance);
-	                        // }
-
-	                        // loop through the old element's attributes and give them to the new element
-	                        for (var _i2 = 0; _i2 < item.elem.attributes.length; _i2++) {
-	                            newEl.setAttribute(item.elem.attributes[_i2].nodeName, item.elem.attributes[_i2].nodeValue);
-	                        }
-	                        item.items.push(newEl);
-	                        item.parent.insertBefore(newEl, item.comment);
-	                    }
-	                    item.cached = []; // refresh cached array
-	                    item.cachedIndexes = item.items.map(function (r) {
-	                        return _core.Utils.indexInParent(r);
-	                    });
-	                }
-
-	                item.items.forEach(function (elem, i) {
-	                    if (_core.Utils.indexInParent(elem) !== item.cachedIndexes[i]) {
-	                        // check if order was changed
-	                        elem.parentNode.insertBefore(elem, elem.parentNode.children.item(i));
-	                    }
-
-	                    if (JSONStr(item.cached[i]) !== JSONStr(array[i])) {
-	                        if (!elem.COMPONENT) {
-	                            console.warn('Please create component with name ' + compName);
-	                            return;
-	                        }
-	                        elem.COMPONENT.props.set(array[i]);
-	                    }
-	                });
-
-	                item.cached = JSON.parse(JSONStr(array));
-	                item.cachedIndexes = item.items.map(function (r) {
-	                    return _core.Utils.indexInParent(r);
-	                });
+	                customElements.call(_this, item, array, compName);
 	            }
 	        }); //console.timeEnd('modules')
 	    }
+	}
+
+	function nativeElements(item, array, loopIterator, collectionName) {
+	    var _this2 = this;
+
+	    if (item.cached.length !== array.length) {
+	        item.items.forEach(function (item) {
+	            item.remove();
+	        });
+	        item.items = [];
+	        item.directives = [];
+
+	        var _loop = function _loop(i) {
+	            var prevContent = item.elem.cloneNode(true);
+
+	            // loop through the old element's attributes and give them to the new element
+	            for (var _i = 0; _i < item.elem.attributes.length; _i++) {
+	                prevContent.setAttribute(item.elem.attributes[_i].nodeName, item.elem.attributes[_i].nodeValue);
+	            }
+
+	            item.items.push(prevContent);
+	            item.parent.insertBefore(prevContent, item.comment);
+
+	            item.directives[i] = {
+	                for: _index.Directives._init.call(_this2, prevContent, 'ac-for'), // should go first for correct work
+	                class: _index.Directives._init.call(_this2, prevContent, 'ac-class'),
+	                style: _index.Directives._init.call(_this2, prevContent, 'ac-style'),
+	                attrs: _index.Directives._init.call(_this2, prevContent, 'ac-attr'),
+	                if: _index.Directives._init.call(_this2, prevContent, 'ac-if'),
+	                model: _index.Directives._init.call(_this2, prevContent, 'ac-model'),
+	                props: _index.Directives._init.call(_this2, prevContent, 'ac-value'),
+	                links: _index.Directives._init.call(_this2, prevContent, 'ac-link')
+	                // events: eventsArray
+	            };
+
+	            var eventsArray = [];
+
+	            _events.EVENTS_NAMES.forEach(function (directive) {
+	                eventsArray.push(_index.Directives._initEvent.call(_this2, prevContent, directive, [], array[i], loopIterator));
+	            });
+	            item.directives[i].events = eventsArray;
+
+	            updateElement.call(_this2, item, i, array[i], loopIterator);
+	            bindModelToViewForLoop.call(_this2, item.directives[i].model, loopIterator, collectionName, array[i]);
+	        };
+
+	        for (var i = 0; i <= array.length - 1; i++) {
+	            _loop(i);
+	        }
+	    }
+
+	    var curRootProps = JSONStr(this.props.getData());
+
+	    item.items.forEach(function (elem, i) {
+	        // if current or root prop has been changed
+	        if (JSONStr(item.cached[i]) !== JSONStr(array[i]) || curRootProps !== item.rootCached) {
+	            updateElement.call(_this2, item, i, array[i], loopIterator);
+	        }
+	    });
+
+	    item.rootCached = JSONStr(this.props.getData());
+	    item.cached = JSON.parse(JSONStr(array));
+	}
+
+	function customElements(item, array, compName) {
+	    if (item.cached.length !== array.length) {
+	        item.items.forEach(function (item) {
+	            item.remove();
+	        });
+	        item.items = [];
+	        this.children[item.elem.COMPONENT.constructor.name] = [];
+	        for (var i = 0; i <= array.length - 1; i++) {
+	            var newComp = _api2.default.COMPONENTS.filter(function (r) {
+	                return r.selector === compName;
+	            })[0];
+	            // if(newComp) {
+	            var newEl = document.createElement(compName);
+	            // this.root.appendChild(newEl);
+	            var instance = new newComp(newEl, array[i], this);
+	            this.children[item.elem.COMPONENT.constructor.name].push(instance);
+	            // }
+
+	            // loop through the old element's attributes and give them to the new element
+	            for (var _i2 = 0; _i2 < item.elem.attributes.length; _i2++) {
+	                newEl.setAttribute(item.elem.attributes[_i2].nodeName, item.elem.attributes[_i2].nodeValue);
+	            }
+	            item.items.push(newEl);
+	            item.parent.insertBefore(newEl, item.comment);
+	        }
+	        item.cached = []; // refresh cached array
+	        item.cachedIndexes = item.items.map(function (r) {
+	            return _core.Utils.indexInParent(r);
+	        });
+	    }
+
+	    item.items.forEach(function (elem, i) {
+	        if (_core.Utils.indexInParent(elem) !== item.cachedIndexes[i]) {
+	            // check if order was changed
+	            elem.parentNode.insertBefore(elem, elem.parentNode.children.item(i));
+	        }
+
+	        if (JSONStr(item.cached[i]) !== JSONStr(array[i])) {
+	            if (!elem.COMPONENT) {
+	                console.warn('Please create component with name ' + compName);
+	                return;
+	            }
+	            elem.COMPONENT.props.set(array[i]);
+	        }
+	    });
+
+	    item.cached = JSON.parse(JSONStr(array));
+	    item.cachedIndexes = item.items.map(function (r) {
+	        return _core.Utils.indexInParent(r);
+	    });
 	}
 
 	// check for cyclic object references before stringifying
@@ -2006,79 +2012,56 @@ return /******/ (function(modules) { // webpackBootstrap
 	    return JSON.stringify(obj, replacer);
 	}
 
-	function updateElement(item, i, elem, data, collectionName, loopIterator) {
-	    forAttachForLoop.call(this, item.directives[i].for, elem, data);
+	function updateElement(item, i, data, loopIterator) {
+	    forAttachForLoop.call(this, item.directives[i].for, data);
 
-	    bindClassForLoop.call(this, item.directives[i].class, elem, data, loopIterator);
-	    styleUnitForLoop.call(this, item.directives[i].style, elem, data, loopIterator);
-	    bindIfForLoop.call(this, item.directives[i].if, elem, data, loopIterator);
-	    bindValueToViewForLoop.call(this, item.directives[i].props, elem, data, loopIterator);
-	    bindValueToViewForLoop.call(this, item.directives[i].model, elem, data, loopIterator);
+	    bindClassForLoop.call(this, item.directives[i].class, data, loopIterator);
+	    styleUnitForLoop.call(this, item.directives[i].style, data, loopIterator);
+	    bindIfForLoop.call(this, item.directives[i].if, data, loopIterator);
+	    bindValueToViewForLoop.call(this, item.directives[i].props, data, loopIterator);
+	    bindValueToViewForLoop.call(this, item.directives[i].model, data, loopIterator);
 
-	    bindAttrsForLoop.call(this, item.directives[i].attrs, elem, data, loopIterator);
-	    addLinksRefsForLoop.call(this, item.directives[i].links, elem, data, loopIterator);
-	    eventsForLoop.call(this, item.directives[i].events, elem);
+	    bindAttrsForLoop.call(this, item.directives[i].attrs, data, loopIterator);
+	    addLinksRefsForLoop.call(this, item.directives[i].links, data, loopIterator);
+	    eventsForLoop.call(this, item.directives[i].events);
 	}
 
-	function getCurrentProperty(item, collectionName, data, loopIterator, variable) {
-	    var props = this.getPropsByScope(variable, data, loopIterator);
-	    return props;
-	}
-
-	function eventsForLoop(array, root) {
-	    // let array = [];
-
-	    // EVENTS_NAMES.forEach(directive => {
-	    //     array.push(Directives._initEvent.call(this, root, directive, [], context));
-	    // });
-
+	function eventsForLoop(array) {
 	    array = array.reduce(function (a, b) {
 	        return a.concat(b);
 	    }, []);
 	    _index.Directives._events.call(this, array);
 	}
 
-	function addLinksRefsForLoop(array, root, data, loopIterator) {
-	    // let array = Directives._init.call(this, root, 'ac-link');
+	function addLinksRefsForLoop(array, data, loopIterator) {
 	    _index.Directives._link.call(this, array, data, loopIterator);
 	}
 
-	function bindAttrsForLoop(array, root, data, loopIterator) {
-	    // let array = Directives._init.call(this, root, 'ac-attr');
+	function bindAttrsForLoop(array, data, loopIterator) {
 	    _index.Directives._attr.call(this, array, data, loopIterator);
 	}
 
-	function bindIfForLoop(array, root, data) {
-	    // let array = Directives._init(root, 'ac-if');
-	    _index.Directives._if.call(this, array, data);
-	}
-
-	function forAttachForLoop(array, root, data) {
-	    // let array = Directives._init.call(this, root, 'ac-for');
+	function forAttachForLoop(array, data) {
 	    _index.Directives._for.call(this, array, data);
 	}
 
-	function bindModelToViewForLoop(array, root, loopIterator, collectionName, data) {
-	    // let array = Directives._init.call(this, root, 'ac-value');
+	function bindModelToViewForLoop(array, loopIterator, collectionName, data) {
 	    _index.Directives._model.call(this, array, loopIterator, collectionName, data);
 	}
 
-	function bindValueToViewForLoop(array, root, data, loopIterator) {
-	    // let array = Directives._init.call(this, root, 'ac-value');
+	function bindValueToViewForLoop(array, data, loopIterator) {
 	    _index.Directives._value.call(this, array, data, loopIterator);
 	}
 
-	function styleUnitForLoop(array, root, data, loopIterator) {
-	    // let array = Directives._init.call(this, root, 'ac-style');
+	function styleUnitForLoop(array, data, loopIterator) {
 	    _index.Directives._style.call(this, array, data, loopIterator);
 	}
 
-	function bindClassForLoop(array, root, data, loopIterator) {
-	    // let array = Directives._init.call(this, root, 'ac-class');
+	function bindClassForLoop(array, data, loopIterator) {
 	    _index.Directives._class.call(this, array, data, loopIterator);
 	}
 
-	function bindIfForLoop(array, root, data, loopIterator) {
+	function bindIfForLoop(array, data, loopIterator) {
 	    _index.Directives._if.call(this, array, data, loopIterator);
 	}
 
@@ -2198,11 +2181,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	    return array;
 	}
 
-	function _initEvent(root, directive, newArray, context, loopIterator) {
+	function _initEvent(root, directive, newArray, data, loopIterator) {
 	    var array = newArray || [];
 	    var targets = root.querySelectorAll('[ac-' + directive + ']');
 	    if (root.getAttribute('ac-' + directive)) {
-	        var obj = _event.createEventObject.call(this, root, directive, context, loopIterator);
+	        var obj = _event.createEventObject.call(this, root, directive, data, loopIterator);
 	        array.get ? array.get(this).push(obj) : array.push(obj);
 	    }
 
@@ -2214,7 +2197,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        for (var _iterator3 = targets[Symbol.iterator](), _step3; !(_iteratorNormalCompletion3 = (_step3 = _iterator3.next()).done); _iteratorNormalCompletion3 = true) {
 	            var elem = _step3.value;
 
-	            var _obj2 = _event.createEventObject.call(this, elem, directive, context, loopIterator);
+	            var _obj2 = _event.createEventObject.call(this, elem, directive, data, loopIterator);
 	            array.get ? array.get(this).push(_obj2) : array.push(_obj2);
 	        }
 	    } catch (err) {
@@ -2279,7 +2262,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    return elem.getAttribute('ac-kmod') ? elem.getAttribute('ac-kmod').replace(/ +/g, "") : null;
 	}
 
-	function createEventObject(elem, event, context, loopIterator) {
+	function createEventObject(elem, event, data, loopIterator) {
 	    var _this = this;
 
 	    var funcParams = elem.getAttribute('ac-' + event);
@@ -2306,11 +2289,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	                    fnParams[1].replace(/ +/g, "").split(',').forEach(function (res) {
 	                        var arg = void 0;
 	                        if (res.split('.')[0] === loopIterator) {
-	                            arg = context(res);
+	                            arg = _this.getPropsByScope(res, data, loopIterator);
 	                        } else if (res === '$event') {
 	                            arg = e;
 	                        } else {
-	                            arg = getInputArgs(res, context ? context(res) : null);
+	                            arg = getInputArgs(res, _this.getPropsByScope(res, data, loopIterator));
 	                        }
 	                        args.push(arg);
 	                    });
@@ -2342,7 +2325,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    return newEvent;
 	}
 
-	function getInputArgs(res, context) {
+	function getInputArgs(res, value) {
 	    var type = void 0;
 	    var arg = void 0;
 	    try {
@@ -2360,7 +2343,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	            break;
 
 	        default:
-	            arg = context;
+	            arg = value;
 	            break;
 	    }
 
@@ -4185,7 +4168,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	"use strict";
 
-	module.exports = "<div ac-outside=\"outside\" class=\"relative\">\r\n\t<div  style=\"width: 100%\" class=\"app-form__label__input\">\r\n\t\t<input type=\"text\" @click=\"openMenu\" class=\"app-form__label__input full-width\" readonly ac-value=\"formattedDate\">\r\n\t\t<div class=\"app-form__border\"></div>\r\n\t\t<!-- <img class=\"datepicker-icon\" src=\"../../assets/img/hanging-calendar.svg\" alt=\"\"> -->\r\n\t</div>\r\n\r\n\t<div class=\"j-calendar\" ac-if=\"this._show\" >\r\n\t    <div class=\"j-calendar__wrap\">\r\n\t        <div class=\"j-calendar__item\">\r\n\t            <div class=\"j-calendar__header\">\r\n\t                <div class=\"j-calendar__header__left\" @click=\"prev($event)\">\r\n\t                    <span>prev</span>\r\n\t                </div>\r\n\t                <div class=\"j-calendar__header__center\">\r\n\t\t                <span ac-value=\"currentMonth\"></span>\r\n\t\t                <span style=\"margin-left: 7px;\" ac-value=\"currentYear\"></span>\r\n\t                </div>\r\n\t                <div class=\"j-calendar__header__right\" @click=\"next($event)\">\r\n\t                    <span>Next</span>\r\n\t                </div>\r\n\t            </div>\r\n\t            <div class=\"j-calendar__content\">\r\n\t                <div class=\"j-calendar__days\">\r\n\t                    <div class=\"j-calendar__days__item\" ac-for=\"let item of daysOfWeekShort\">\r\n\t\t\t\t\t\t\t<span ac-value=\"item.index\"></span>\r\n\t\t\t\t\t\t</div>\r\n\t                </div>\r\n\t                <div class=\"j-calendar__date\">\r\n\t                    <div class=\"j-calendar__date__item\" \r\n\t                    ac-class=\"j-calendar__date__item--today:item.today, j-calendar__date__item--active:item.selected, j-calendar__date__item--inactive: item.inactive\"\r\n\t                    ac-for=\"let item of countOfDays\"\r\n\t                    @click=\"select($event, item)\" ac-value=\"item.index\"></div>\r\n\t                </div>\r\n\t            </div>\r\n\t        </div>\r\n\t    </div>\r\n\t</div>\r\n</div>\r\n";
+	module.exports = "<div ac-outside=\"outside\" class=\"relative\">\r\n\t<div  style=\"width: 100%\" class=\"app-form__label__input\">\r\n\t\t<input type=\"text\" @click=\"openMenu($event)\" class=\"app-form__label__input full-width\" readonly ac-value=\"formattedDate\">\r\n\t\t<div class=\"app-form__border\"></div>\r\n\t\t<!-- <img class=\"datepicker-icon\" src=\"../../assets/img/hanging-calendar.svg\" alt=\"\"> -->\r\n\t</div>\r\n\r\n\t<div class=\"j-calendar\" ac-if=\"this._show\" >\r\n\t    <div class=\"j-calendar__wrap\">\r\n\t        <div class=\"j-calendar__item\">\r\n\t            <div class=\"j-calendar__header\">\r\n\t                <div class=\"j-calendar__header__left\" @click=\"prev($event)\">\r\n\t                    <span>prev</span>\r\n\t                </div>\r\n\t                <div class=\"j-calendar__header__center\">\r\n\t\t                <span ac-value=\"currentMonth\"></span>\r\n\t\t                <span style=\"margin-left: 7px;\" ac-value=\"currentYear\"></span>\r\n\t                </div>\r\n\t                <div class=\"j-calendar__header__right\" @click=\"next($event)\">\r\n\t                    <span>Next</span>\r\n\t                </div>\r\n\t            </div>\r\n\t            <div class=\"j-calendar__content\">\r\n\t                <div class=\"j-calendar__days\">\r\n\t                    <div class=\"j-calendar__days__item\" ac-for=\"let item of daysOfWeekShort\">\r\n\t\t\t\t\t\t\t<span ac-value=\"item.index\"></span>\r\n\t\t\t\t\t\t</div>\r\n\t                </div>\r\n\t                <div class=\"j-calendar__date\">\r\n\t                    <div class=\"j-calendar__date__item\" \r\n\t                    ac-class=\"j-calendar__date__item--today:item.today, j-calendar__date__item--active:item.selected, j-calendar__date__item--inactive: item.inactive\"\r\n\t                    ac-for=\"let item of countOfDays\"\r\n\t                    @click=\"select($event, item)\" ac-value=\"item.index\"></div>\r\n\t                </div>\r\n\t            </div>\r\n\t        </div>\r\n\t    </div>\r\n\t</div>\r\n</div>\r\n";
 
 /***/ }),
 /* 52 */
@@ -6542,9 +6525,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	var DocCustomDirectivesComponent = exports.DocCustomDirectivesComponent = (_dec = _core.Decorators.ComponentDecorator({
 	    selector: 'app-documentation-custom-directives',
 	    template: _customDirectivesComponent2.default,
-	    props: {
-	        test: 'test',
-	        show: true
+	    props: function props() {
+	        return {
+	            test: 'test',
+	            show: true
+	        };
 	    }
 	}), _dec(_class = function () {
 	    function DocCustomDirectivesComponent(params) {

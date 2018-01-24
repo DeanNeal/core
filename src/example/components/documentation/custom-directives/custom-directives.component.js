@@ -1,12 +1,14 @@
-import { Component, Decorators} from '../../../../core';
+import {Component, Decorators} from '../../../../core';
 import Tpl from './custom-directives.component.html';
 
 @Decorators.ComponentDecorator({
     selector: 'app-documentation-custom-directives',
     template: Tpl,
-    props: {
-        test: 'test',
-        show: true
+    props: () => {
+        return {
+            test: 'test',
+            show: true
+        }
     }
 })
 export class DocCustomDirectivesComponent {

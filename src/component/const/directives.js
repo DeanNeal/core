@@ -12,6 +12,5 @@ export const DIRECTIVES_NAMES = [
     'ac-pattern',
     'ac-outside',
     'ac-ref',
-    // 'ac-form-validation',
     'ac-form-group'
 ];

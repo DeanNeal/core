@@ -25,7 +25,7 @@ function getKeyMod(elem) {
     return elem.getAttribute('ac-kmod') ? elem.getAttribute('ac-kmod').replace(/ +/g, "") : null;
 }
 
-export function createEventObject(elem, event, context, loopIterator) {
+export function createEventObject(elem, event, data, loopIterator) {
     let funcParams = elem.getAttribute(`ac-${event}`);
     elem.removeAttribute(`ac-${event}`);
     let fnName = funcParams.replace(/ +/g, "");
@@ -50,11 +50,11 @@ export function createEventObject(elem, event, context, loopIterator) {
                     fnParams[1].replace(/ +/g, "").split(',').forEach(res => {
                         let arg;
                         if(res.split('.')[0] === loopIterator) {
-                            arg = context(res);
+                            arg = this.getPropsByScope(res, data, loopIterator);
                         } else if(res === '$event') {
                             arg = e;
                         } else {
-                            arg = getInputArgs(res, context ? context(res) : null);
+                            arg = getInputArgs(res, this.getPropsByScope(res, data, loopIterator));
                         }
                         args.push(arg);
                     });
@@ -83,7 +83,7 @@ export function createEventObject(elem, event, context, loopIterator) {
 }
 
 
-function getInputArgs(res, context) {
+function getInputArgs(res, value) {
     let type;
     let arg;
     try {
@@ -101,7 +101,7 @@ function getInputArgs(res, context) {
         break;
 
         default:
-            arg = context;
+            arg = value;
         break;
     }
 
