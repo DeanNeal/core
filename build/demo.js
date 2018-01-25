@@ -1,8 +1,8 @@
 /*!
- * ace-js 0.7.12
+ * ace-js 0.7.13
  * May be freely distributed under the MIT license 
  * Author: Bogdan Zinkevich
- * Last update: 2018-1-25 00:04:55
+ * Last update: 2018-1-25 19:12:00
  * 
  */
 (function webpackUniversalModuleDefinition(root, factory) {
@@ -348,7 +348,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    var rootEl = document.querySelectorAll(options.root.selector)[0];
 	    if (rootEl) {
 	        var rootComponent = new options.root(rootEl);
-	        rootComponent.root.setAttribute('ac-version', ("0.7.12"));
+	        rootComponent.root.setAttribute('ac-version', ("0.7.13"));
 	    } else {
 	        console.warn('There is no root component');
 	    }
@@ -856,7 +856,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var _style2 = __webpack_require__(12);
 
-	var _props = __webpack_require__(13);
+	var _value2 = __webpack_require__(13);
 
 	var _pattern2 = __webpack_require__(14);
 
@@ -894,7 +894,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var Directives = {
 	    _style: _style2._style,
-	    _value: _props._value,
+	    _value: _value2._value,
 	    _pattern: _pattern2._pattern,
 	    _if: _if2._if,
 	    _class: _class2._class,
@@ -979,6 +979,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	                r = void 0;
 	            var formatter = params[1] ? _core.Utils.removeSpacesFromString(params[1]) : null;
 	            var formatterData = params[1] ? params[1].split(':') : null;
+	            var rowHtml = false;
 
 	            if (formatterData) {
 	                formatter = formatterData[0].trim();
@@ -991,6 +992,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	                r = JSON.stringify(r);
 	            } else if (formatter && formatter === 'date') {
 	                r = _core.Utils.getDateByFormat(r, formatterData || '');
+	            } else if (formatter && formatter === 'html') {
+	                rowHtml = true;
+	            } else if (formatter) {
+	                throw new Error('Unknown formatter ' + formatter);
 	            } else {
 	                r = r;
 	            }
@@ -1015,7 +1020,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	                }
 	            } else {
-	                item.elem.innerHTML = r;
+	                rowHtml ? item.elem.innerHTML = r : item.elem.textContent = r;
 	            }
 	        }
 	    });
@@ -5926,7 +5931,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	            // });
 
 	            this.props.set({
-	                version: ("0.7.12"),
+	                version: ("0.7.13"),
 	                'categories': [{
 	                    name: 'Getting started',
 	                    items: [{

@@ -1,5 +1,5 @@
 import { _style } from './style';
-import { _value } from './props';
+import { _value } from './value';
 import { _pattern } from './pattern';
 import { _if } from './if';
 import { _class } from './class';

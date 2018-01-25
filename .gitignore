@@ -5,6 +5,7 @@
 
 # dependencies
 /node_modules
+/build
 
 # IDEs and editors
 /.idea

@@ -5,6 +5,7 @@ export function _value(array, data, loopIterator) {
             let params = item.attr.split('|'), r;
             let formatter = params[1] ? Utils.removeSpacesFromString(params[1]) : null;
             let formatterData = params[1] ? params[1].split(':') : null;
+            let rowHtml = false;
 
             if (formatterData) {
                 formatter = formatterData[0].trim();
@@ -17,6 +18,10 @@ export function _value(array, data, loopIterator) {
                 r = JSON.stringify(r);
             } else if (formatter && formatter === 'date') {
                 r = Utils.getDateByFormat(r, formatterData || '');
+            } else if(formatter && formatter === 'html') {
+                rowHtml = true;
+            } else if(formatter) {
+                throw new Error('Unknown formatter ' + formatter);
             } else {
                 r = r;
             }
@@ -41,7 +46,7 @@ export function _value(array, data, loopIterator) {
 
                 }
             } else {
-                item.elem.innerHTML = r;
+                rowHtml ? (item.elem.innerHTML = r) : (item.elem.textContent = r);
             }
         }
 
