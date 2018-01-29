@@ -1,40 +1,48 @@
-const Interpolation = {
-    interpolationInit: (root, array) => {
-        // let regExp = /{{[^%>]+?}}/g;
-        // let matches = root.innerHTML.match(regExp);
+import { applyFormatter } from './../directives/value';
+import { Utils } from '../../utils/utils';
 
-        // if(matches) {        
-        //     matches.forEach((match, i) => {
-        //         let a = deepSearch(array, root, match);
-        //         // console.log(a, match);
-        //         // item.elem.innerHTML = item.elem.innerHTML.replace(expression[0], '<div ac-interpolaction>  </div>');
-        //         // let r = this.getComponentVariable(expression[1].split('.'), this.props)
-        //         // item.elem.innerHTML = item.cached.innerHTML.replace(expression[0], r);
-        //     });
-        // }
+const Interpolation = {
+    _init: function(root, newArray) {
+        let array = newArray || [];
+        let regExp = /({{[^%>]+?}})/g;
+        let self = this;
+
+
+        let items = Utils.getTextNodesIn(root, function(textNode, parent) {
+            if (textNode.nodeValue.match(regExp)/*regExp.test(textNode.nodeValue)*/) {
+                let vars = textNode.nodeValue.split(regExp);
+                vars.filter(r => r).forEach((r, i) => {
+                    let tNode = document.createTextNode(r);
+                    let match = /{{([^}]+)}}/g.exec(r);
+                    if (match) {
+                        tNode.nodeValue = '';
+                        let obj = {
+                            node: tNode,
+                            value: match[1]
+                        };
+
+                        array.get ? array.get(self).push(obj) : array.push(obj);
+                    }
+                    textNode.parentNode.insertBefore(tNode, textNode);
+                });
+                textNode.remove();
+            }
+        });
+
+        return array;
     },
 
-    interpolationRun: function(array) {
-        // array.forEach(item=>{
-        //     // console.log(item);
-        // })
+    _update: function(array, data, loopIterator) {
+        if (array.length) {
+            array.forEach(node => {
+                let params = node.value.split('|');
+                let r = this.getPropsByScope(params[0], data, loopIterator);
+                r = applyFormatter(r, params[1]);
+                node.node.nodeValue = r;
+            })
+        }
     }
 }
 
-function deepSearch(array, node, match) {
-    node.childNodes.forEach(r=>{
-        let regExp = /{{([^%>]+)?}}/;
-        let expression = regExp.exec(r.textContent);
 
-        console.log(r.textContent.trim()    );
-        if(r.nodeType === 3 && r.textContent.trim() === match){
-
-            array.push({
-                elem: r
-            });
-        }
-        deepSearch(array, r, match); 
-    });
-    return array;
-}
 export default Interpolation;

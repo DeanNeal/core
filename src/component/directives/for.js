@@ -4,7 +4,7 @@ import { _init } from './init';
 import { EVENTS_NAMES } from '../const/events';
 import API from'./../../api';
 
-
+import Interpolation from './../interpolation/interpolation';
 
 export function _for(array, data) {
     if (array.length) {
@@ -50,6 +50,7 @@ function nativeElements(item, array, loopIterator, collectionName) {
         });
         item.items = [];
         item.directives = [];
+        item.interpolationArray = [];
         for (let i = 0; i <= array.length - 1; i++) {
             let prevContent = item.elem.cloneNode(true);
 
@@ -61,18 +62,24 @@ function nativeElements(item, array, loopIterator, collectionName) {
             item.items.push(prevContent);
             item.parent.insertBefore(prevContent, item.comment);
 
-
             item.directives[i] = {
-                for:   Directives._init.call(this, prevContent, 'ac-for'), // should go first for correct work
+                for:   Directives._init.call(this, prevContent, 'ac-for')
+            }
+
+            item.interpolationArray[i] = Interpolation._init.call(this, prevContent);
+
+            item.directives[i] = Object.assign(item.directives[i], {
+                // for:   Directives._init.call(this, prevContent, 'ac-for'), // should go first for correct work
                 class: Directives._init.call(this, prevContent, 'ac-class'),
                 style: Directives._init.call(this, prevContent, 'ac-style'),
                 attrs: Directives._init.call(this, prevContent, 'ac-attr'),
                 if:    Directives._init.call(this, prevContent, 'ac-if'),
                 model: Directives._init.call(this, prevContent, 'ac-model'),
                 props: Directives._init.call(this, prevContent, 'ac-value'),
-                links: Directives._init.call(this, prevContent, 'ac-link'),
-                // events: eventsArray
-            };
+                links: Directives._init.call(this, prevContent, 'ac-link')
+            });
+
+            
 
             let eventsArray = [];
 
@@ -164,6 +171,8 @@ function JSONStr(obj) {
 function updateElement(item, i, data, loopIterator) {
     forAttachForLoop.call(this, item.directives[i].for, data);
 
+    bindInterPolation.call(this, item.interpolationArray[i], data, loopIterator);
+
     bindClassForLoop.call(this, item.directives[i].class, data, loopIterator);
     styleUnitForLoop.call(this, item.directives[i].style, data, loopIterator);
     bindIfForLoop.call(this, item.directives[i].if, data, loopIterator);
@@ -210,4 +219,8 @@ function bindClassForLoop(array, data, loopIterator) {
 
 function bindIfForLoop(array, data, loopIterator) {
     Directives._if.call(this, array, data, loopIterator);
+}
+
+function bindInterPolation(array, data, loopIterator) {
+   Interpolation._update.call(this, array, data, loopIterator);
 }

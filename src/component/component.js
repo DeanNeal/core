@@ -1,7 +1,7 @@
 import { Router, RouteSwitcher, ObservableBoolean, ObservableModel, TemplateEngine, Utils} from '../core';
 
 import { PRIVATES } from '../component/private';
-// import Interpolation from './interpolation/interpolation';
+import Interpolation from './interpolation/interpolation';
 import { Directives } from '../component/Directives';
 import { DIRECTIVES_NAMES } from '../component/const/directives';
 import { EVENTS_NAMES } from '../component/const/events';
@@ -78,10 +78,7 @@ export class Component {
             PRIVATES.CUSTOM_DIRECTIVES[directive.params.selector].set(this, []);
         });
 
-
-        // console.log(PRIVATES.CUSTOM_DIRECTIVES, this);
-
-        // this.$interpolationArray = [];
+        PRIVATES.INTERPOLATION.set(this, []);
     }
 
 
@@ -89,17 +86,20 @@ export class Component {
         this.root.innerHTML = this.preCompileTpl(this.tpl);
         this.onAttach();
 
-        // if (this.options.interpolation) {
-        //Interpolation.interpolationInit.call(this, this.root, this.$interpolationArray);
-        // }
-
         this.compile(); // render custom elements
         this.compileRouter(); // render main router
         // console.log(this);
 
+        Directives._init.call(this, this.root, 'ac-for', PRIVATES.DIRECTIVES['ac-for']);// exclude interpolation from ac-for
+
+
+        Interpolation._init.call(this, this.root, PRIVATES.INTERPOLATION);
+
         //internal directives
         DIRECTIVES_NAMES.forEach(directive => {
-            Directives._init.call(this, this.root, directive, PRIVATES.DIRECTIVES[directive]);
+            if(directive !== 'ac-for') {
+                Directives._init.call(this, this.root, directive, PRIVATES.DIRECTIVES[directive]);
+            }
         });
 
         //events
@@ -117,6 +117,7 @@ export class Component {
             }
         });
 
+
         Directives._model.call(this, PRIVATES.DIRECTIVES['ac-model'].get(this));
         Directives._on.call(this, PRIVATES.DIRECTIVES['ac-on'].get(this));
         Directives._outside.call(this, PRIVATES.DIRECTIVES['ac-outside'].get(this));
@@ -126,6 +127,7 @@ export class Component {
         Directives._hostEvents.call(this, PRIVATES.HOST.EVENTS.get(this));
 
         Directives._formGroup.call(this, PRIVATES.DIRECTIVES['ac-form-group'].get(this));
+
 
         this.onInit();
     }
@@ -148,7 +150,7 @@ export class Component {
             Directives._hostHidden.call(this, PRIVATES.HOST.HIDDEN.get(this));
 
 
-            // Interpolation.interpolationRun.call(this, this.$interpolationArray);
+            Interpolation._update.call(this, PRIVATES.INTERPOLATION.get(this));
 
             Directives._customDirective.call(this);
             this.onUpdate();

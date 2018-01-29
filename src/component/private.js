@@ -13,7 +13,8 @@ const PRIVATES = {
         EVENTS: new WeakMap(),
         HIDDEN: new WeakMap()
     },
-    COMPUTED: new WeakMap()
+    COMPUTED: new WeakMap(),
+    INTERPOLATION: new WeakMap()
 };
 
 DIRECTIVES_NAMES.forEach(directive => {

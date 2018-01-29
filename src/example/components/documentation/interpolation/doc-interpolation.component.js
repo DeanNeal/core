@@ -4,20 +4,26 @@ import Tpl from './doc-interpolation.component.html';
 
 
 @Decorators.ComponentDecorator({
+    selector: 'app-documentation-interpolation',
     template: Tpl,
-    props: {
-        isVisible: true,
-        title: 'test'
+    props: ()=> {
+        return {    
+            isVisible: true,
+            title: 'test',
+            isReady: true
+        }
     }
 })
 export class DocInterpolationComponent {
-    constructor(root, params) {  
+    constructor() {  
 
     }
 
     onInit() {
         // setInterval(()=>{
-        //     this.props.set('title', new Date());
+        //     // this.props.set('title', new Date());
+        //     this.title = new Date();
         // }, 1000);
+
     }
 }

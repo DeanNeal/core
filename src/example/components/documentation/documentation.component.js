@@ -54,10 +54,10 @@ export class DocumentationComponent {
                 {
                     name: 'Template',
                     items: [
-                    // {
-                    //     name: 'Interpolation',
-                    //     route: 'documentation/interpolation'
-                    // }, 
+                    {
+                        name: 'Interpolation',
+                        route: 'documentation/interpolation'
+                    }, 
                     {
                         name: 'Directives',
                         route: 'documentation/directives'

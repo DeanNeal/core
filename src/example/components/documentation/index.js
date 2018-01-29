@@ -8,7 +8,7 @@ import {DocDirectivesComponent} from './directives/directives.component';
 import {DocCustomDirectivesComponent} from './custom-directives/custom-directives.component';
 
 
-// import {DocInterpolationComponent} from './interpolation/doc-interpolation.component';
+import {DocInterpolationComponent} from './interpolation/doc-interpolation.component';
 import {DocConditionalComponent} from './conditional/doc-conditional.component';
 import {DocFormsComponent} from './forms/doc-forms.component';
 import {DocEventsComponent} from './events/doc-events.component';
@@ -34,7 +34,7 @@ export default [
     DocDirectivesComponent,
     DocCustomDirectivesComponent,
 
-    // DocInterpolationComponent,
+    DocInterpolationComponent,
     DocConditionalComponent,
     DocFormsComponent,
     DocEventsComponent,

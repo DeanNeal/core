@@ -64,7 +64,7 @@ const Utils = {
             case 'mmm dd, yyyy':
                 result = `${monthNamesShort[date.getMonth()]} ${day}, ${year}`;
                 break;
-            default: 
+            default:
                 result = year + '-' + month + '-' + day;
                 break;
         }
@@ -150,7 +150,7 @@ const Utils = {
                 });
                 break;
         }
-        
+
         if (params.reverse) {
             array.reverse();
         }
@@ -215,12 +215,52 @@ const Utils = {
     indexInParent(node) {
         var children = node.parentNode.childNodes;
         var num = 0;
-        for (var i=0; i<children.length; i++) {
-             if (children[i]==node) return num;
-             if (children[i].nodeType==1) num++;
+        for (var i = 0; i < children.length; i++) {
+            if (children[i] == node) return num;
+            if (children[i].nodeType == 1) num++;
         }
         return -1;
+    },
+
+    //ref http://cwestblog.com/2014/03/14/javascript-getting-all-text-nodes/
+    /**
+     * Gets an array of the matching text nodes contained by the specified element.
+     * @param  {!Element} elem
+     *     The DOM element which will be traversed.
+     * @param  {function(!Node,!Element):boolean} opt_fnFilter
+     *     Optional function that if a true-ish value is returned will cause the
+     *     text node in question to be added to the array to be returned from
+     *     getTextNodesIn().  The first argument passed will be the text node in
+     *     question while the second will be the parent of the text node.
+     * @return {!Array.<!--Node-->}
+     *     Array of the matching text nodes contained by the specified element.
+     */
+    getTextNodesIn(elem, opt_fnFilter) {
+        let textNodes = [];
+        if (elem) {
+            for (let nodes = elem.childNodes, i = nodes.length; i--;) {
+                let node = nodes[i],
+                    nodeType = node.nodeType;
+                if (nodeType == 3) {
+                    if (!opt_fnFilter || opt_fnFilter(node, elem)) {
+                        textNodes.push(node);
+                    }
+                } else if (nodeType == 1 || nodeType == 9 || nodeType == 11) {
+                    textNodes = textNodes.concat(Utils.getTextNodesIn(node, opt_fnFilter));
+                }
+            }
+        }
+        return textNodes;
     }
+
+    // textNodesUnder(node) {
+    //     var all = [];
+    //     for (node = node.firstChild; node; node = node.nextSibling) {
+    //         if (node.nodeType == 3) all.push(node);
+    //         else all = all.concat(Utils.textNodesUnder(node));
+    //     }
+    //     return all;
+    // }
 };
 
 export { Utils };
