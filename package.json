@@ -1,6 +1,6 @@
 {
   "name": "ace-js",
-  "version": "0.7.14",
+  "version": "0.8.0",
   "description": "AceJs - is a MVVM front-end framework based on web components technology",
   "keywords": "MVVM, JS, framework",
   "repository": "https://github.com/DeanNeal/ace-js.git",
