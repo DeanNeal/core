@@ -5,7 +5,7 @@
 		<!-- <img class="datepicker-icon" src="../../assets/img/hanging-calendar.svg" alt=""> -->
 	</div>
 
-	<div class="j-calendar" ac-if="this._show" >
+	<div class="j-calendar" ac-if="_show" >
 	    <div class="j-calendar__wrap">
 	        <div class="j-calendar__item">
 	            <div class="j-calendar__header">
@@ -30,7 +30,7 @@
 	                    <div class="j-calendar__date__item" 
 	                    ac-class="j-calendar__date__item--today:item.today, j-calendar__date__item--active:item.selected, j-calendar__date__item--inactive: item.inactive"
 	                    ac-for="let item of countOfDays"
-	                    @click="select($event, item)" ac-value="item.index"></div>
+	                    @click="select($event, item)">{{item.index}}</div>
 	                </div>
 	            </div>
 	        </div>

@@ -39,8 +39,8 @@ export class Component {
 
         this.root.COMPONENT = this;
 
-        if (this instanceof Component.root.class) {
-            Component.rootInstance = this;
+        if (this instanceof API.rootComponent.class) {
+            API.rootInstance = this;
         }
 
         Component.setPrivates.call(this, options);

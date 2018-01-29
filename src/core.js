@@ -1,4 +1,3 @@
-import { Register } from './register';
 import { ObservableModel, ObservableCollection, ObservableBoolean} from './observable/observable';
 import * as Decorators from './decorators';
 import { Component } from './component/component';
@@ -10,7 +9,7 @@ import { Utils } from './utils/utils';
 import * as Plugins from './plugins';
 import * as Controls from './controls';
 import { Http } from './http.js';
-// import API from './api';
+import API from './api';
 
 import {FormGroup} from 'reactive-forms/form-group';
 import {Validators} from 'reactive-forms/validators';
@@ -18,7 +17,6 @@ import {Validators} from 'reactive-forms/validators';
 import './polifills';
 
 export {
-    Register,
     ObservableModel,
     ObservableCollection,
     ObservableBoolean,
@@ -32,7 +30,7 @@ export {
     Plugins,
     Controls,
     Http,
-    // API,
+    API,
 
     FormGroup,
     Validators

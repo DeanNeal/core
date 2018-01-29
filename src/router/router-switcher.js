@@ -1,5 +1,4 @@
 import Router from './router-core';
-import { Component, GlobalData} from './../core';
 import API from'./../api';
 
 export class RouteSwitcher {
@@ -9,7 +8,7 @@ export class RouteSwitcher {
         this.children = {};
         this.parent = parent;
         this.root.COMPONENT = this;
-        // this.constructorName = this.constructor.name;
+
         this.onCreate();
     }
 
@@ -60,7 +59,7 @@ export class RouteSwitcher {
     }
 
     setActiveLink() {
-        let a = Component.rootInstance.root.querySelectorAll('[href]');//this.root.querySelectorAll('[href]');
+        let a = API.rootInstance.root.querySelectorAll('[href]');//this.root.querySelectorAll('[href]');
         a.forEach(item => {
             let fullRoute = Router.getCurrentFullPath();
             let fullPath = Router.getFullStringPath();

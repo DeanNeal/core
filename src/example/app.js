@@ -1,5 +1,5 @@
 import Styles from './styles/main.scss';
-import { Register } from '../core';
+import { API } from '../core';
 import {DatepickerComponent, TreeDebugComponent, BarChartComponent, LineChartComponent} from '../controls';
 
 import { HomeComponent } from './components/home/home.component';
@@ -18,7 +18,7 @@ import UpperCaseDirective from './directives/upper-case.directive.js';
 
 import { Routes } from './router.js';
 
-Register({
+API.register({
     root: RootComponent,
     styles: Styles,
     components: [

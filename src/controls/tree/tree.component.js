@@ -1,6 +1,6 @@
 import * as Decorators from '../../decorators';
-import { Component } from '../../component/component';
 import Tpl from './tree.component.html';
+import API from'./../../api';
 
 @Decorators.ComponentDecorator({
     selector: 'app-tree-debug',
@@ -19,7 +19,7 @@ export class AceTreeComponent {
 
     load() {
         console.time('tree')
-        this.getChildren(Component.rootInstance);
+        this.getChildren(API.rootInstance);
         console.timeEnd('tree')
 
         this.props.set('components', this.tree);
