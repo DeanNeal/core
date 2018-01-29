@@ -251,6 +251,33 @@ const Utils = {
             }
         }
         return textNodes;
+    },
+
+    applyFormatter(r, params) {
+        let formatterData = params ? params.split(':') : null;
+        let formatter = params ? Utils.removeSpacesFromString(params) : null;
+        if (formatterData) {
+            formatter = formatterData[0].trim();
+            formatterData = formatterData[1] ? formatterData[1].trim() : null;
+        }
+
+
+        if (formatter && formatter === 'json') {
+            r = JSON.stringify(r);
+        } else if (formatter && formatter === 'date') {
+            r = Utils.getDateByFormat(r, formatterData || '');
+        } else if (formatter && formatter === 'html') {
+            rowHtml = true;
+        } else if (formatter) {
+            throw new Error('Unknown formatter ' + formatter);
+        } else {
+            r = r;
+        }
+
+        if (!r) {
+            r = '';
+        }
+        return r;
     }
 
     // textNodesUnder(node) {

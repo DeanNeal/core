@@ -7,7 +7,7 @@ export function _value(array, data, loopIterator) {
             let rowHtml = false;
 
             r = this.getPropsByScope(params[0], data, loopIterator);
-            r = applyFormatter(r, params[1]);
+            r = Utils.applyFormatter(r, params[1]);
 
             if (item.elem.localName === 'input') {
                 switch (item.elem.type) {
@@ -30,31 +30,4 @@ export function _value(array, data, loopIterator) {
         }
 
     });
-}
-
-export function applyFormatter(r, params) {
-    let formatterData = params ? params.split(':') : null;
-    let formatter = params ? Utils.removeSpacesFromString(params) : null;
-    if (formatterData) {
-        formatter = formatterData[0].trim();
-        formatterData = formatterData[1] ? formatterData[1].trim() : null;
-    }
-
-
-    if (formatter && formatter === 'json') {
-        r = JSON.stringify(r);
-    } else if (formatter && formatter === 'date') {
-        r = Utils.getDateByFormat(r, formatterData || '');
-    } else if (formatter && formatter === 'html') {
-        rowHtml = true;
-    } else if (formatter) {
-        throw new Error('Unknown formatter ' + formatter);
-    } else {
-        r = r;
-    }
-
-    if (!r) {
-        r = '';
-    }
-    return r;
 }

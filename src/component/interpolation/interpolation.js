@@ -1,4 +1,5 @@
-import { applyFormatter } from './../directives/value';
+// import { applyFormatter } from './../directives/value';
+import { Directives } from '../../component/directives';
 import { Utils } from '../../utils/utils';
 
 const Interpolation = {
@@ -37,7 +38,7 @@ const Interpolation = {
             array.forEach(node => {
                 let params = node.value.split('|');
                 let r = this.getPropsByScope(params[0], data, loopIterator);
-                r = applyFormatter(r, params[1]);
+                r = Utils.applyFormatter(r, params[1]);
                 node.node.nodeValue = r;
             })
         }

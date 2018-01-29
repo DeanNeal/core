@@ -1,7 +1,7 @@
 import { Component, ObservableModel } from '../core';
 import { DIRECTIVES_NAMES } from '../component/const/directives';
 import { EVENTS_NAMES } from '../component/const/events';
-import { Directives } from '../component/Directives';
+import { Directives } from '../component/directives';
 import API from './../api';
 
 export default function ComponentDecorator(decoratorParams) {

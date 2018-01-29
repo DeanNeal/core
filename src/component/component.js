@@ -2,7 +2,7 @@ import { Router, RouteSwitcher, ObservableBoolean, ObservableModel, TemplateEngi
 
 import { PRIVATES } from '../component/private';
 import Interpolation from './interpolation/interpolation';
-import { Directives } from '../component/Directives';
+import { Directives } from '../component/directives';
 import { DIRECTIVES_NAMES } from '../component/const/directives';
 import { EVENTS_NAMES } from '../component/const/events';
 import API from'./../api';
