@@ -1,8 +1,8 @@
 /*!
- * ace-js 0.8.0
+ * ace-js 0.8.1
  * May be freely distributed under the MIT license 
  * Author: Bogdan Zinkevich
- * Last update: 2018-1-29 10:39:38
+ * Last update: 2018-1-29 10:40:43
  * 
  */
 (function webpackUniversalModuleDefinition(root, factory) {
@@ -348,7 +348,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    var rootEl = document.querySelectorAll(options.root.selector)[0];
 	    if (rootEl) {
 	        var rootComponent = new options.root(rootEl);
-	        rootComponent.root.setAttribute('ac-version', ("0.8.0"));
+	        rootComponent.root.setAttribute('ac-version', ("0.8.1"));
 	    } else {
 	        console.warn('There is no root component');
 	    }
@@ -1070,33 +1070,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	        }
 	    });
 	}
-
-	// export function applyFormatter(r, params) {
-	//     let formatterData = params ? params.split(':') : null;
-	//     let formatter = params ? Utils.removeSpacesFromString(params) : null;
-	//     if (formatterData) {
-	//         formatter = formatterData[0].trim();
-	//         formatterData = formatterData[1] ? formatterData[1].trim() : null;
-	//     }
-
-
-	//     if (formatter && formatter === 'json') {
-	//         r = JSON.stringify(r);
-	//     } else if (formatter && formatter === 'date') {
-	//         r = Utils.getDateByFormat(r, formatterData || '');
-	//     } else if (formatter && formatter === 'html') {
-	//         rowHtml = true;
-	//     } else if (formatter) {
-	//         throw new Error('Unknown formatter ' + formatter);
-	//     } else {
-	//         r = r;
-	//     }
-
-	//     if (!r) {
-	//         r = '';
-	//     }
-	//     return r;
-	// }
 
 /***/ }),
 /* 15 */
@@ -6087,7 +6060,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	            // });
 
 	            this.props.set({
-	                version: ("0.8.0"),
+	                version: ("0.8.1"),
 	                'categories': [{
 	                    name: 'Getting started',
 	                    items: [{
