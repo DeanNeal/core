@@ -1,3 +1,9 @@
+<a name="0.8.0"></a>
+# [0.8.0](https://github.com/DeanNeal/ace-js) (2018-01-29)
+### Features
+* **core:**  add possibility to use multiple {{ }} structures within one textNode #95 ([#95](https://github.com/DeanNeal/ace-js/issues/95))
+* **core:**  add interpolation expressions #17 ([#17](https://github.com/DeanNeal/ace-js/issues/17))
+
 <a name="0.7.9"></a>
 # [0.7.9](https://github.com/DeanNeal/ace-js) (2018-01-22)
 ### Features
