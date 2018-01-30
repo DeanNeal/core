@@ -1,0 +1,13 @@
+<h3>Conditional rendering</h3>
+<div class="section-title">ac-for</div>
+<br>
+props: <div>{{items|json}}</div>
+<div class="code-block">
+	<pre><span><</span>span <b>ac-for</b>="<span class="attr">let item of item</span>"><span class="text" ac-avoid>Item: {{item.name}}</span><span><</span>/span></pre>
+</div>
+will be replaces with
+<div class="code-block">
+	<pre><span ac-for="let item of items">Item: {{item.name}}</span></pre>
+</div>
+
+<div class="text"></div>

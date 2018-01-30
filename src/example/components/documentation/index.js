@@ -10,6 +10,7 @@ import {DocCustomDirectivesComponent} from './custom-directives/custom-directive
 
 import {DocInterpolationComponent} from './interpolation/doc-interpolation.component';
 import {DocConditionalComponent} from './conditional/doc-conditional.component';
+import {DocListRenderingComponent} from './list-rendering/doc-list-rendering.component';
 import {DocFormsComponent} from './forms/doc-forms.component';
 import {DocEventsComponent} from './events/doc-events.component';
 
@@ -36,6 +37,7 @@ export default [
 
     DocInterpolationComponent,
     DocConditionalComponent,
+    DocListRenderingComponent,
     DocFormsComponent,
     DocEventsComponent,
 
