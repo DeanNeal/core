@@ -1,8 +1,39 @@
 <h3>Events</h3>
+<div class="section-title">Event handling</div>
+
+<div class="code-block">
+    <pre><span><</span>input <b>@click</b>="<span class="attr">onClick($event, prop)</span>"><span class="text"></span></pre>
+</div>
+
+<div class="text">Whole list of events: </div>
+
+<ol style="list-style: disc;padding: 10px 20px 20px 20px;">
+    <li>click</li>
+    <li>mousedown</li>
+    <li>mouseup</li>
+    <li>keyup</li>
+    <li>change</li>
+    <li>mouseout</li>
+    <li>mouseover</li>
+    <li>mouseenter</li>
+    <li>mouseleave</li>
+    <li>click</li>
+    <li>scroll</li>
+    <li>mousewheel</li>
+    <li>submit</li>
+    <li>focus</li>
+    <li>blur</li>
+    <li>dragstart</li>
+    <li>dragend</li>
+</ol>
+
+Also you can use <b>@</b> instead of <b>ac-</b>
+
+
 <div class="section-title">ac-mod</div>
 
 <div class="code-block">
-    <pre><span><</span>input <b>ac-if</b>="<span class="attr">props.isVisible</span>" <b>ac-mod</b>="<span class="attr">prevent, stop, once, self, capture</span>"><span class="text"></span></pre>
+    <pre><span><</span>input <b>ac-mod</b>="<span class="attr">prevent, stop, once, self, capture</span>"><span class="text"></span></pre>
 </div>
 
 <div class="block">
@@ -41,7 +72,7 @@
 <div class="section-title">ac-keymod</div>
 
 <div class="code-block">
-    <pre><span><</span>input <b>ac-if</b>="<span class="attr">props.isVisible</span>" <b>ac-mod</b>="<span class="attr">prevent, stop, once, self, capture</span>"><span class="text"></span></pre>
+    <pre><span><</span>input  <b>ac-mod</b>="<span class="attr">prevent, stop, once, self, capture</span>"><span class="text"></span></pre>
 </div>
 
 <div class="block">
@@ -50,8 +81,8 @@
         The event's will be triggered if <b>event.keyCode = '13'</b>
     </div>
 </div>
-<div class="text">Full list of key modifier aliases:</div>
-<ol style="padding-left: 15px;list-style: disc">
+<div class="text">Whole list of key modifier aliases:</div>
+<ol style="list-style: disc;padding: 10px 20px 20px 20px;">
     <li>esc</li>
     <li>tab</li>
     <li>enter</li>

@@ -4,17 +4,19 @@ import Tpl from './doc-forms.component.html';
 @Decorators.ComponentDecorator({
     selector: 'app-documentation-forms',
     template: Tpl,
-    props: {
-        checkbox: {
+    props: ()=> {
+        return {        
+            checkbox: {
 
-        },
-        model: {
+            },
+            model: {
 
-        },
-        form: new FormGroup({
-            name: ['', [Validators.required, Validators.regExp('^[0-9a-zA-Z- ]+$')]],
-            number: ['', [Validators.required, Validators.regExp('^[0-9a-zA-Z- ]+$')]]
-        })
+            },
+            form: new FormGroup({
+                name: ['', [Validators.required, Validators.regExp('^[0-9a-zA-Z- ]+$')]],
+                number: ['', [Validators.required, Validators.regExp('^[0-9a-zA-Z- ]+$')]]
+            })
+        }
 
     }
 })

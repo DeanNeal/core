@@ -49,7 +49,7 @@
     <div class="code-header">app.js</div>
     <pre>
         import Styles from './styles/main.scss';
-        import { Register } from '../core';
+        import { API } from '../core';
         import { RootComponent } from './components/root/root.component';
         import { HomeComponent } from './components/home/home.component';
         import { HeaderComponent } from './components/header/header.component';
@@ -57,7 +57,7 @@
         import Docs from './components/documentation';
 
         import { Routes } from './router.js';
-        <b>Register</b>({
+        <b>API.register</b>({
             <b>root</b>: {
                 c: RootComponent, selector: 'app-root'
             },
@@ -68,7 +68,6 @@
             <b>modules</b>: [
                 Docs
             ],
-            <b>serverUrl</b>: "",
             <b>routes</b>: Routes,
             <b>styles</b>: Styles
         });

@@ -84,8 +84,8 @@ export class DocumentationComponent {
                 {
                     name: 'Data',
                     items: [{
-                        name: 'Stores',
-                        route: 'documentation/store'
+                        name: 'Services',
+                        route: 'documentation/services'
                     }, {
                         name: 'Observable',
                         route: 'documentation/smart-object'

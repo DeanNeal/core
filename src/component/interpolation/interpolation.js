@@ -10,7 +10,7 @@ const Interpolation = {
 
 
         let items = Utils.getTextNodesIn(root, function(textNode, parent) {
-            if (textNode.nodeValue.match(regExp)/*regExp.test(textNode.nodeValue)*/) {
+            if (textNode.nodeValue.match(regExp)/*regExp.test(textNode.nodeValue)*/ && textNode.parentNode.getAttribute('ac-avoid') !== '') {
                 let vars = textNode.nodeValue.split(regExp);
                 vars.filter(r => r).forEach((r, i) => {
                     let tNode = document.createTextNode(r);

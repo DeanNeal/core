@@ -16,8 +16,10 @@
         constructor(params) {
             super(params, {
                 <b>template</b>: Tpl,
-                <b>props</b>: {
-                    title: 'Some title'        
+                <b>props</b>: ()=> {
+                    return {
+                      title: 'Some title'        
+                    }
                 }
             });
         }
@@ -28,7 +30,7 @@
 
 <div class="code-block">
     <div class="code-header">example.component.html</div>
-	<pre><span><</span>span><span class="text">{{title}}</span><span><</span>/span></pre>
+	<pre><span><</span>span><span class="text" ac-avoid>{{title}}</span><span><</span>/span></pre>
 </div>
 
 <div class="text">will be replaced with props.title value</div>
@@ -39,7 +41,7 @@
 
 <div class="section-title">Javascript expressions</div>
 <div class="code-block">
-	<pre><span><</span>span><span class="text">{{isReady ? 'OK' : 'FAIL'}}</span><span><</span>/span></pre>
+	<pre><span><</span>span><span class="text" ac-avoid>{{isReady ? 'OK' : 'FAIL'}}</span><span><</span>/span></pre>
 </div>
 <div class="text">This expression will be calculated as ussual js expression</div>
 

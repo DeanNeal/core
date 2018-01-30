@@ -4,8 +4,10 @@ import Tpl from './doc-conditional.component.html';
 @Decorators.ComponentDecorator({
     selector: 'app-documentation-conditional',
     template: Tpl,
-    props: {
-        isVisible: true
+    props: ()=>{
+    	return {
+   	     isVisible: true
+    	}
     }
 })
 export class DocConditionalComponent {
