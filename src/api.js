@@ -65,8 +65,14 @@ class API {
         RouteSwitcher.ROUTES = options.routes;
         this.rootComponent = options.root;
 
-        options.components.forEach(c => this.registerComponent(c));
-
+        if(options.components) {
+            if (options.components instanceof Array) {
+                options.components.forEach(c => this.registerComponent(c));
+            } else {
+                throw new Error('components must be an array');
+            }
+        }
+        
         if (options.directives) {
             if (options.directives instanceof Array) {
                 options.directives.forEach(d => this.registerDirective(d));
@@ -75,18 +81,20 @@ class API {
             }
         }
 
-        if (options.import instanceof Array) {
-            options.import.forEach(module => {
-                if (Array.isArray(module)) {
-                    module.forEach(component => {
-                        this.registerComponent(component);
-                    });
-                } else {
-                    throw new Error('imported data must be an array');
-                }
-            });
-        } else {
-            throw new Error('imported data must be an array');
+        if(options.import) {        
+            if (options.import instanceof Array) {
+                options.import.forEach(module => {
+                    if (Array.isArray(module)) {
+                        module.forEach(component => {
+                            this.registerComponent(component);
+                        });
+                    } else {
+                        throw new Error('imported data must be an array');
+                    }
+                });
+            } else {
+                throw new Error('imported data must be an array');
+            }
         }
 
         let rootEl = document.querySelectorAll(options.root.selector)[0];

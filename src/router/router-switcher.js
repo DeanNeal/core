@@ -118,8 +118,8 @@ export class RouteSwitcher {
 
 
     destroyChildren(root) {
-        if (this.root.childNodes[0]) {
-            let currentChild = this.root.childNodes[0].COMPONENT;
+        if (root.childNodes[0]) {
+            let currentChild = root.childNodes[0].COMPONENT;
             if(currentChild) {
                 this.destroyAllChildren(currentChild.children);
                 currentChild.destroy();

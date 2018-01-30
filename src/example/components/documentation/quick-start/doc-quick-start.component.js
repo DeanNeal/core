@@ -24,53 +24,53 @@ export class DocQuickStartComponent {
     }
 
     onInit() {
-        this.getColors();
-        setInterval(() => {
-            this.getColors();
-        }, 60	);
+        // this.getColors();
+        // setInterval(() => {
+        //     this.getColors();
+        // }, 60	);
     }
 
-    getColors() {
-        let particles = [];
+    // getColors() {
+    //     let particles = [];
 
 
-        // if (INDEX < count /*&& state*/) {
-            INDEX += INDEX_VALUE;
-        // }
+    //     // if (INDEX < count /*&& state*/) {
+    //         INDEX += INDEX_VALUE;
+    //     // }
 
-	    // if (INDEX < INDEX_VALUE) {
-	    //     state = true;
-	    // }
+	   //  // if (INDEX < INDEX_VALUE) {
+	   //  //     state = true;
+	   //  // }
 
 
-	    // if (INDEX >= count || !state) {
-	    //     INDEX -= INDEX_VALUE;
-	    //     state = false;
-	    // }
+	   //  // if (INDEX >= count || !state) {
+	   //  //     INDEX -= INDEX_VALUE;
+	   //  //     state = false;
+	   //  // }
 
-        for (var i = 0; i <= count; i++) {
-        	// let modulo = (i * INDEX_VALUE + INDEX) % count;
-         //    particles.push({ name: i, bg: this.perc2color(i * INDEX_VALUE  - modulo) });
+    //     for (var i = 0; i <= count; i++) {
+    //     	// let modulo = (i * INDEX_VALUE + INDEX) % count;
+    //      //    particles.push({ name: i, bg: this.perc2color(i * INDEX_VALUE  - modulo) });
 
-         	let val = i * INDEX_VALUE;
-            particles.push({ name: i, bg: this.perc2color(i * INDEX_VALUE  ) });
-        }
+    //      	let val = i * INDEX_VALUE;
+    //         particles.push({ name: i, bg: this.perc2color(i * INDEX_VALUE  ) });
+    //     }
 
-        this.particles = particles;
-    }
+    //     this.particles = particles;
+    // }
 
-    perc2color(perc) {
-        var r, g, b = 0;
-        if (perc < 50) {
-            r = 255;
-            g = Math.round(5.1 * perc);
-        } else {
-            g = 255;
-            r = Math.round(510 - 5.10 * perc);
-        }
-        var h = r * 0x10000 + g * 0x100 + b * 0x1;
-        return '#' + ('000000' + h.toString(16)).slice(-6);
-    }
+    // perc2color(perc) {
+    //     var r, g, b = 0;
+    //     if (perc < 50) {
+    //         r = 255;
+    //         g = Math.round(5.1 * perc);
+    //     } else {
+    //         g = 255;
+    //         r = Math.round(510 - 5.10 * perc);
+    //     }
+    //     var h = r * 0x10000 + g * 0x100 + b * 0x1;
+    //     return '#' + ('000000' + h.toString(16)).slice(-6);
+    // }
 
     // colorLuminance(hex, lum) {
 

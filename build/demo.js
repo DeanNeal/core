@@ -2,7 +2,7 @@
  * ace-js 0.8.2
  * May be freely distributed under the MIT license 
  * Author: Bogdan Zinkevich
- * Last update: 2018-1-29 17:27:51
+ * Last update: 2018-1-30 15:41:42
  * 
  */
 (function webpackUniversalModuleDefinition(root, factory) {
@@ -1145,18 +1145,20 @@ return /******/ (function(modules) { // webpackBootstrap
 	                }
 	            }
 
-	            if (options.import instanceof Array) {
-	                options.import.forEach(function (module) {
-	                    if (Array.isArray(module)) {
-	                        module.forEach(function (component) {
-	                            _this2.registerComponent(component);
-	                        });
-	                    } else {
-	                        throw new Error('imported data must be an array');
-	                    }
-	                });
-	            } else {
-	                throw new Error('imported data must be an array');
+	            if (options.import) {
+	                if (options.import instanceof Array) {
+	                    options.import.forEach(function (module) {
+	                        if (Array.isArray(module)) {
+	                            module.forEach(function (component) {
+	                                _this2.registerComponent(component);
+	                            });
+	                        } else {
+	                            throw new Error('imported data must be an array');
+	                        }
+	                    });
+	                } else {
+	                    throw new Error('imported data must be an array');
+	                }
 	            }
 
 	            var rootEl = document.querySelectorAll(options.root.selector)[0];
@@ -1283,7 +1285,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	                    var router = void 0;
 
 	                    if (Object.keys(_this.children).length) {
-	                        childComp = _this.children[Object.keys(_this.children)[0]][0];
+	                        childComp = _this.children[Object.keys(_this.children)[0]][0];debugger;
 	                        if (childComp.root) {
 	                            router = childComp.root.querySelectorAll('child-route-switcher')[0];
 	                        }
@@ -6203,58 +6205,53 @@ return /******/ (function(modules) { // webpackBootstrap
 	    _createClass(DocQuickStartComponent, [{
 	        key: 'onInit',
 	        value: function onInit() {
-	            var _this = this;
-
 	            this.getColors();
-	            setInterval(function () {
-	                _this.getColors();
-	            }, 60);
+	            // setInterval(() => {
+	            //     this.getColors();
+	            // }, 60	);
 	        }
-	    }, {
-	        key: 'getColors',
-	        value: function getColors() {
-	            var particles = [];
 
-	            // if (INDEX < count /*&& state*/) {
-	            INDEX += INDEX_VALUE;
-	            // }
-
-	            // if (INDEX < INDEX_VALUE) {
-	            //     state = true;
-	            // }
+	        // getColors() {
+	        //     let particles = [];
 
 
-	            // if (INDEX >= count || !state) {
-	            //     INDEX -= INDEX_VALUE;
-	            //     state = false;
-	            // }
+	        //     // if (INDEX < count /*&& state*/) {
+	        //         INDEX += INDEX_VALUE;
+	        //     // }
 
-	            for (var i = 0; i <= count; i++) {
-	                // let modulo = (i * INDEX_VALUE + INDEX) % count;
-	                //    particles.push({ name: i, bg: this.perc2color(i * INDEX_VALUE  - modulo) });
+	        //  // if (INDEX < INDEX_VALUE) {
+	        //  //     state = true;
+	        //  // }
 
-	                var val = i * INDEX_VALUE;
-	                particles.push({ name: i, bg: this.perc2color(i * INDEX_VALUE) });
-	            }
 
-	            this.particles = particles;
-	        }
-	    }, {
-	        key: 'perc2color',
-	        value: function perc2color(perc) {
-	            var r,
-	                g,
-	                b = 0;
-	            if (perc < 50) {
-	                r = 255;
-	                g = Math.round(5.1 * perc);
-	            } else {
-	                g = 255;
-	                r = Math.round(510 - 5.10 * perc);
-	            }
-	            var h = r * 0x10000 + g * 0x100 + b * 0x1;
-	            return '#' + ('000000' + h.toString(16)).slice(-6);
-	        }
+	        //  // if (INDEX >= count || !state) {
+	        //  //     INDEX -= INDEX_VALUE;
+	        //  //     state = false;
+	        //  // }
+
+	        //     for (var i = 0; i <= count; i++) {
+	        //     	// let modulo = (i * INDEX_VALUE + INDEX) % count;
+	        //      //    particles.push({ name: i, bg: this.perc2color(i * INDEX_VALUE  - modulo) });
+
+	        //      	let val = i * INDEX_VALUE;
+	        //         particles.push({ name: i, bg: this.perc2color(i * INDEX_VALUE  ) });
+	        //     }
+
+	        //     this.particles = particles;
+	        // }
+
+	        // perc2color(perc) {
+	        //     var r, g, b = 0;
+	        //     if (perc < 50) {
+	        //         r = 255;
+	        //         g = Math.round(5.1 * perc);
+	        //     } else {
+	        //         g = 255;
+	        //         r = Math.round(510 - 5.10 * perc);
+	        //     }
+	        //     var h = r * 0x10000 + g * 0x100 + b * 0x1;
+	        //     return '#' + ('000000' + h.toString(16)).slice(-6);
+	        // }
 
 	        // colorLuminance(hex, lum) {
 
@@ -6295,7 +6292,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	"use strict";
 
-	module.exports = "<h3>Tutorial</h3>\r\n<span class=\"text\">This tutorial will help you to create your first app based on our framework</span>\r\n\r\n<br>\r\n<div style=\"line-height: 0\">\r\n\t\r\n\t<span class=\"experiment\" ac-for=\"let particle of particles\" ac-style=\"background: particle.bg\"></span>\r\n</div>\r\n\r\n<style>\r\n\t.experiment {\r\n\t\twidth: 50px;\r\n\t\theight: 50px;\r\n\t\t/*font-size: 0;*/\r\n\t\tdisplay: inline-block;\r\n\t\tposition: relative;\r\n\t\r\n\r\n\t}\r\n</style>";
+	module.exports = "<h3>Tutorial</h3>\r\n<span class=\"text\">This tutorial will help you to create your first app based on our framework</span>\r\n<!-- \r\n<br>\r\n<div style=\"line-height: 0\">\r\n\t\r\n\t<span class=\"experiment\" ac-for=\"let particle of particles\" ac-style=\"background: particle.bg\"></span>\r\n</div>\r\n\r\n<style>\r\n\t.experiment {\r\n\t\twidth: 50px;\r\n\t\theight: 50px;\r\n\t\t/*font-size: 0;*/\r\n\t\tdisplay: inline-block;\r\n\t\tposition: relative;\r\n\t\r\n\r\n\t}\r\n</style> -->";
 
 /***/ }),
 /* 82 */
