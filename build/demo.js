@@ -1,8 +1,8 @@
 /*!
- * ace-js 0.8.2
+ * ace-js 0.8.3
  * May be freely distributed under the MIT license 
  * Author: Bogdan Zinkevich
- * Last update: 2018-1-30 15:41:42
+ * Last update: 2018-1-30 15:58:58
  * 
  */
 (function webpackUniversalModuleDefinition(root, factory) {
@@ -1131,9 +1131,15 @@ return /******/ (function(modules) { // webpackBootstrap
 	            _routerSwitcher.RouteSwitcher.ROUTES = options.routes;
 	            this.rootComponent = options.root;
 
-	            options.components.forEach(function (c) {
-	                return _this2.registerComponent(c);
-	            });
+	            if (options.components) {
+	                if (options.components instanceof Array) {
+	                    options.components.forEach(function (c) {
+	                        return _this2.registerComponent(c);
+	                    });
+	                } else {
+	                    throw new Error('components must be an array');
+	                }
+	            }
 
 	            if (options.directives) {
 	                if (options.directives instanceof Array) {
@@ -1164,7 +1170,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	            var rootEl = document.querySelectorAll(options.root.selector)[0];
 	            if (rootEl) {
 	                var rootComponent = new options.root(rootEl);
-	                rootComponent.root.setAttribute('ac-version', ("0.8.2"));
+	                rootComponent.root.setAttribute('ac-version', ("0.8.3"));
 	            } else {
 	                console.warn('There is no root component');
 	            }
@@ -1285,7 +1291,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	                    var router = void 0;
 
 	                    if (Object.keys(_this.children).length) {
-	                        childComp = _this.children[Object.keys(_this.children)[0]][0];debugger;
+	                        childComp = _this.children[Object.keys(_this.children)[0]][0];
 	                        if (childComp.root) {
 	                            router = childComp.root.querySelectorAll('child-route-switcher')[0];
 	                        }
@@ -1384,8 +1390,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	    }, {
 	        key: 'destroyChildren',
 	        value: function destroyChildren(root) {
-	            if (this.root.childNodes[0]) {
-	                var currentChild = this.root.childNodes[0].COMPONENT;
+	            if (root.childNodes[0]) {
+	                var currentChild = root.childNodes[0].COMPONENT;
 	                if (currentChild) {
 	                    this.destroyAllChildren(currentChild.children);
 	                    currentChild.destroy();
@@ -6047,7 +6053,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	            // });
 
 	            this.props.set({
-	                version: ("0.8.2"),
+	                version: ("0.8.3"),
 	                'categories': [{
 	                    name: 'Getting started',
 	                    items: [{
@@ -6204,12 +6210,12 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	    _createClass(DocQuickStartComponent, [{
 	        key: 'onInit',
-	        value: function onInit() {
-	            this.getColors();
-	            // setInterval(() => {
-	            //     this.getColors();
-	            // }, 60	);
-	        }
+	        value: function onInit() {}
+	        // this.getColors();
+	        // setInterval(() => {
+	        //     this.getColors();
+	        // }, 60	);
+
 
 	        // getColors() {
 	        //     let particles = [];
