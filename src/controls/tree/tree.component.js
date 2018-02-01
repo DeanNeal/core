@@ -5,9 +5,11 @@ import API from'./../../api';
 @Decorators.ComponentDecorator({
     selector: 'app-tree-debug',
     template: Tpl,
-    props: {
-        components: [],
-        visible: true
+    props: ()=> {
+        return {        
+            components: [],
+            visible: true
+        }
     },
     hostHidden: 'visible'
 })

@@ -1,4 +1,5 @@
-import { Component, ObservableModel } from '../core';
+import {Component} from '../component/component';
+import {ObservableModel} from '../observable/observable';
 import { DIRECTIVES_NAMES } from '../component/const/directives';
 import { EVENTS_NAMES } from '../component/const/events';
 import { Directives } from '../component/directives';
@@ -66,6 +67,7 @@ export default function ComponentDecorator(decoratorParams) {
         };
         func.selector = decoratorParams.selector;
         func.class = Class;
+        func.super = Component;
         return func;
     }
 }

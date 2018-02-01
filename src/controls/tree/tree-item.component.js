@@ -12,9 +12,11 @@ import Tpl from './tree-item.component.html';
     //     'hidden': 'visible'
     // },
     // visibility: 'visible',
-    props: {
-        visible: false
-        // components: []
+    props: ()=> {
+        return {        
+            visible: false
+            // components: []
+        }
     }
 })
 export class AceTreeItemComponent {

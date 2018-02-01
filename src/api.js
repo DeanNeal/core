@@ -1,6 +1,7 @@
 // import { ObservableBoolean } from './observable/observable';
 import {RouteSwitcher} from './router/router-switcher';
 import { Component } from './component/component';
+import {Directive } from './decorators/directive';
 
 class API {
     constructor() {
@@ -114,21 +115,23 @@ class API {
             throw new Error('Duplicate declaration; ' + component.selector);
         }
 
-        if (component instanceof Component.constructor) {
+        if (component.super && Object.is(component.super.prototype, Component.prototype)) {
             this.COMPONENTS.push(component);
         } else {
-            console.warn('Wrong type of component');
+            throw new Error(component.name + ' must me inherited from ComponentDecorator');
         }
     }
 
     registerDirective(directive) {
         //avoid repeated directives
-        directive.params.selector;
-        if (this.CUSTOM_DIRECTIVES.map(r => r.params.selector).indexOf(directive.params.selector) > -1) {
-            throw new Error('Duplicate declaration; ' + directive.params.selector);
+        if(Object.is(directive.super.prototype, Directive.prototype)) {
+            if (this.CUSTOM_DIRECTIVES.map(r => r.params.selector).indexOf(directive.params.selector) > -1) {
+                throw new Error('Duplicate declaration; ' + directive.params.selector);
+            }
+            this.CUSTOM_DIRECTIVES.push(directive);
+        } else {
+            throw new Error(directive.name + ' must me inherited from DirectiveDecorator');
         }
-
-        this.CUSTOM_DIRECTIVES.push(directive);
     }
 
 
