@@ -278,6 +278,16 @@ const Utils = {
             r = '';
         }
         return r;
+    },
+
+    getValueBetweenBrackets(str, cb, err) {
+        let regExp = /\(([^)]+)\)|\(()\)/;
+        let res = regExp.exec(str) 
+        if( res && res[1]) {
+            cb(res[1]);
+        }  else {
+            err && err();
+        }
     }
 
     // textNodesUnder(node) {

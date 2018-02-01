@@ -6,8 +6,11 @@ props: <div>{{items|json}}</div>
 	<pre><span><</span>span <b>ac-for</b>="<span class="attr">let item of item</span>"><span class="text" ac-avoid>Item: {{item.name}}</span><span><</span>/span></pre>
 </div>
 will be replaces with
-<div class="code-block">
-	<pre><span ac-for="let item of items">Item: {{item.name}}</span></pre>
+<div class="code-block" @click="test(item)">
+	<pre><span ac-for="let (item, key, index) of items" >Item: {{item.name}} {{index}}</span></pre>
 </div>
 
 <div class="text"></div>
+
+
+<!-- <span ac-for="let (item, key, index) of object" @click="test(item)">{{item}} {{key}} {{index}}</span> -->

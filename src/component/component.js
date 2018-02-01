@@ -226,8 +226,8 @@ export class Component {
         let listOfVariables = this.getAllVariables();
         let listOfVariablesValues = listOfVariables.map(r=> this.props.get(r));
         
-        if(loopIterator) {
-            listOfVariables.push(loopIterator);
+        if(loopIterator && loopIterator.iterator) { 
+            listOfVariables.push(loopIterator.iterator);
             listOfVariablesValues.push(scope);
         }
 

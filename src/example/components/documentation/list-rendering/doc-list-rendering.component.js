@@ -6,7 +6,12 @@ import Tpl from './doc-list-rendering.component.html';
     template: Tpl,
     props: ()=>{
     	return {
-    		items: [{name: 1}, {name: 2}, {name: 3}]
+            test: 1,
+    		items: [{name: 1}, {name: 2}, {name: 3}],
+            object: {
+                test1: 1,
+                test2: 2
+            }
     	}
     }
 })
@@ -21,5 +26,9 @@ export class DocListRenderingComponent {
 
     onDestroy() {
 
+    }
+
+    test(item) {
+console.log(item);
     }
 }

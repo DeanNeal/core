@@ -11,19 +11,35 @@ export function _for(array, data) {
         //console.log(this); //console.time('modules')
         array.forEach(item => {
             let compName = item.elem.localName;
-            let loopIterator;
+            let loopIterator = {iterator: null};
             let collectionName;
-            let array = this.getComponentVariable(item.attr.split('.'), data) || [];
+            let array = [];//this.getComponentVariable(item.attr.split('.'), data) || [];
+            // let additionalParams = {};
 
             if(item.attr.indexOf('let ') > -1 && item.attr.indexOf('of ') > -1) {
                 let params1 = item.attr.split('of')[0];
                 collectionName = item.attr.split('of')[1].replace(/ +/g, "");
-                loopIterator = params1.split('let ')[1].replace(/ +/g, "");
-                let func = `for(${params1} of this.${collectionName}) { } return this.${collectionName}`;
+                let lParams = params1.split('let ')[1].replace(/ +/g, "");
+                // let func = `for(${params1} in this.${collectionName}) { } return this.${collectionName}`;
 
-                let arg
+                Utils.getValueBetweenBrackets(lParams, (value)=>{
+                    let params = value.split(',');
+                    loopIterator.iterator = params[0];
+                    if(params.indexOf('key') > -1) {
+                        loopIterator.key =  'key'
+                    } 
+                    if(params.indexOf('index') > -1) {
+                        loopIterator.index = 'index;'
+                    }
+                }, () =>{
+                    loopIterator.iterator = lParams;
+                });
+
+                let arg 
                 try {
-                    arg = new Function(func).apply(data || this.props);
+
+                    // arg = new Function(func).apply(data || this.props);
+                    arg = (data || this.props)[collectionName];
                 } catch(e) {
                     arg = [];
                 }
@@ -31,12 +47,14 @@ export function _for(array, data) {
                 array = arg;
             }
 
-            if (!Utils.isCustomElement(item.elem)) {
-                nativeElements.call(this, item, array, loopIterator, collectionName);
+            if(!Array.isArray(array)) { // if object
+                array = Object.keys(array).map(r=> array[r]);
             }
 
             if (Utils.isCustomElement(item.elem)) {
                 customElements.call(this, item, array, compName);
+            } else {
+                nativeElements.call(this, item, array, loopIterator, collectionName);
             }
         }); //console.timeEnd('modules')
 
@@ -79,7 +97,9 @@ function nativeElements(item, array, loopIterator, collectionName) {
                 links: Directives._init.call(this, prevContent, 'ac-link')
             });
 
-            
+            // if(loopIterator.index){
+            //     array[i].index = i;
+            // }
 
             let eventsArray = [];
 
