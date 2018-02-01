@@ -21,15 +21,14 @@ export function _for(array, data) {
                 collectionName = item.attr.split('of')[1].replace(/ +/g, "");
                 let lParams = params1.split('let ')[1].replace(/ +/g, "");
                 // let func = `for(${params1} in this.${collectionName}) { } return this.${collectionName}`;
-
                 Utils.getValueBetweenBrackets(lParams, (value)=>{
                     let params = value.split(',');
                     loopIterator.iterator = params[0];
                     if(params.indexOf('key') > -1) {
-                        loopIterator.key =  'key'
+                        loopIterator.key = true
                     } 
                     if(params.indexOf('index') > -1) {
-                        loopIterator.index = 'index;'
+                        loopIterator.index = true
                     }
                 }, () =>{
                     loopIterator.iterator = lParams;
@@ -37,31 +36,31 @@ export function _for(array, data) {
 
                 let arg 
                 try {
-
                     // arg = new Function(func).apply(data || this.props);
-                    arg = (data || this.props)[collectionName];
+                    arg = Utils.getDeepProp(data || this.props, collectionName) || [];
                 } catch(e) {
                     arg = [];
                 }
                  
                 array = arg;
             }
-
-            if(!Array.isArray(array)) { // if object
+            let keys;
+            if(array && !Array.isArray(array)) { // if object
+                keys = Object.keys(array);
                 array = Object.keys(array).map(r=> array[r]);
             }
 
             if (Utils.isCustomElement(item.elem)) {
                 customElements.call(this, item, array, compName);
             } else {
-                nativeElements.call(this, item, array, loopIterator, collectionName);
+                nativeElements.call(this, item, array, loopIterator, collectionName, keys);
             }
         }); //console.timeEnd('modules')
 
     }
 }
 
-function nativeElements(item, array, loopIterator, collectionName) {
+function nativeElements(item, array, loopI, collectionName, keys) {
     if (item.cached.length !== array.length) {
         item.items.forEach(item => {
             item.remove();
@@ -69,6 +68,8 @@ function nativeElements(item, array, loopIterator, collectionName) {
         item.items = [];
         item.directives = [];
         item.interpolationArray = [];
+        item.loopParams = [];
+
         for (let i = 0; i <= array.length - 1; i++) {
             let prevContent = item.elem.cloneNode(true);
 
@@ -97,19 +98,23 @@ function nativeElements(item, array, loopIterator, collectionName) {
                 links: Directives._init.call(this, prevContent, 'ac-link')
             });
 
-            // if(loopIterator.index){
-            //     array[i].index = i;
-            // }
+            if(loopI) {
+                item.loopParams.push({
+                    iterator: loopI.iterator,
+                    index: loopI.index && i,
+                    key: loopI.key && keys && keys[i]
+                });
+            }
 
             let eventsArray = [];
 
             EVENTS_NAMES.forEach(directive => {
-                eventsArray.push(Directives._initEvent.call(this, prevContent, directive, [], array[i], loopIterator));
+                eventsArray.push(Directives._initEvent.call(this, prevContent, directive, [], array[i], item.loopParams[i]));
             });
             item.directives[i].events = eventsArray;
 
-            updateElement.call(this, item, i, array[i], loopIterator);
-            bindModelToViewForLoop.call(this, item.directives[i].model, loopIterator, collectionName, array[i]);
+            // updateElement.call(this, item, i, array[i], item.loopParams[i]);
+            bindModelToViewForLoop.call(this, item.directives[i].model, item.loopParams[i], collectionName, array[i]);
         }
     }
 
@@ -118,7 +123,7 @@ function nativeElements(item, array, loopIterator, collectionName) {
     item.items.forEach((elem, i) => {
         // if current or root prop has been changed
         if (JSONStr(item.cached[i]) !== JSONStr(array[i]) ||  curRootProps !== item.rootCached ) {
-            updateElement.call(this, item, i, array[i], loopIterator);
+            updateElement.call(this, item, i, array[i], item.loopParams[i]);
         }
     });
 
@@ -188,19 +193,19 @@ function JSONStr(obj) {
     return JSON.stringify(obj, replacer); 
 }
 
-function updateElement(item, i, data, loopIterator) {
+function updateElement(item, i, data, loopParams) {
     forAttachForLoop.call(this, item.directives[i].for, data);
 
-    bindInterPolation.call(this, item.interpolationArray[i], data, loopIterator);
+    bindInterPolation.call(this, item.interpolationArray[i], data, loopParams);
 
-    bindClassForLoop.call(this, item.directives[i].class, data, loopIterator);
-    styleUnitForLoop.call(this, item.directives[i].style, data, loopIterator);
-    bindIfForLoop.call(this, item.directives[i].if, data, loopIterator);
-    bindValueToViewForLoop.call(this, item.directives[i].props, data, loopIterator);
-    bindValueToViewForLoop.call(this, item.directives[i].model, data, loopIterator);
+    bindClassForLoop.call(this, item.directives[i].class, data, loopParams);
+    styleUnitForLoop.call(this, item.directives[i].style, data, loopParams);
+    bindIfForLoop.call(this, item.directives[i].if, data, loopParams);
+    bindValueToViewForLoop.call(this, item.directives[i].props, data, loopParams);
+    bindValueToViewForLoop.call(this, item.directives[i].model, data, loopParams);
 
-    bindAttrsForLoop.call(this, item.directives[i].attrs, data, loopIterator);
-    addLinksRefsForLoop.call(this, item.directives[i].links, data, loopIterator);
+    bindAttrsForLoop.call(this, item.directives[i].attrs, data, loopParams);
+    addLinksRefsForLoop.call(this, item.directives[i].links, data, loopParams);
     eventsForLoop.call(this, item.directives[i].events);
 }
 
@@ -209,38 +214,38 @@ function eventsForLoop(array) {
     Directives._events.call(this, array);
 }
 
-function addLinksRefsForLoop(array, data, loopIterator) {
-    Directives._link.call(this, array, data, loopIterator);
+function addLinksRefsForLoop(array, data, loopParams) {
+    Directives._link.call(this, array, data, loopParams);
 }
 
-function bindAttrsForLoop(array, data, loopIterator) {
-    Directives._attr.call(this, array, data, loopIterator);
+function bindAttrsForLoop(array, data, loopParams) {
+    Directives._attr.call(this, array, data, loopParams);
 }
 
 function forAttachForLoop(array, data) {
     Directives._for.call(this, array, data);
 }
 
-function bindModelToViewForLoop(array, loopIterator, collectionName, data) {
-    Directives._model.call(this, array, loopIterator, collectionName, data);
+function bindModelToViewForLoop(array, loopParams, collectionName, data) {
+    Directives._model.call(this, array, loopParams, collectionName, data);
 }
 
-function bindValueToViewForLoop(array, data, loopIterator) {
-    Directives._value.call(this, array, data, loopIterator);
+function bindValueToViewForLoop(array, data, loopParams) {
+    Directives._value.call(this, array, data, loopParams);
 }
 
-function styleUnitForLoop(array, data, loopIterator) {
-    Directives._style.call(this, array, data, loopIterator);
+function styleUnitForLoop(array, data, loopParams) {
+    Directives._style.call(this, array, data, loopParams);
 }
 
-function bindClassForLoop(array, data, loopIterator) {
-    Directives._class.call(this, array, data, loopIterator);
+function bindClassForLoop(array, data, loopParams) {
+    Directives._class.call(this, array, data, loopParams);
 }
 
-function bindIfForLoop(array, data, loopIterator) {
-    Directives._if.call(this, array, data, loopIterator);
+function bindIfForLoop(array, data, loopParams) {
+    Directives._if.call(this, array, data, loopParams);
 }
 
-function bindInterPolation(array, data, loopIterator) {
-   Interpolation._update.call(this, array, data, loopIterator);
+function bindInterPolation(array, data, loopParams) {
+   Interpolation._update.call(this, array, data, loopParams);
 }

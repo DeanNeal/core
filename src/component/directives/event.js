@@ -25,7 +25,7 @@ function getKeyMod(elem) {
     return elem.getAttribute('ac-kmod') ? elem.getAttribute('ac-kmod').replace(/ +/g, "") : null;
 }
 
-export function createEventObject(elem, event, data, loopIterator) {
+export function createEventObject(elem, event, data, loopParams) {
     let funcParams = elem.getAttribute(`ac-${event}`);
     elem.removeAttribute(`ac-${event}`);
     let fnName = funcParams.replace(/ +/g, "");
@@ -38,6 +38,10 @@ export function createEventObject(elem, event, data, loopIterator) {
     
     let functionName = fnName.replace(regExp, ''); // remove everything between brackets
 
+    if(this.props[functionName]){
+        throw new Error('Duplicate identifier: ' + functionName + '; Rename method or variable in props');
+    }
+
     let newEvent = {
         fnName: functionName,
         event: event,
@@ -49,12 +53,16 @@ export function createEventObject(elem, event, data, loopIterator) {
                 if(fnParams[1]) {
                     fnParams[1].replace(/ +/g, "").split(',').forEach(res => {
                         let arg;
-                        if(res.split('.')[0] === loopIterator) {
-                            arg = this.getPropsByScope(res, data, loopIterator);
+                        if(res.split('.')[0] === loopParams && loopParams.iterator) {
+                            arg = this.getPropsByScope(res, data, loopParams);
                         } else if(res === '$event') {
                             arg = e;
+                        } else if (res === 'index') {
+                            arg = loopParams.index;
+                        } else if(res === 'key'){
+                            arg = loopParams.key;
                         } else {
-                            arg = getInputArgs(res, this.getPropsByScope(res, data, loopIterator));
+                            arg = getInputArgs(res, this.getPropsByScope(res, data, loopParams));
                         }
                         args.push(arg);
                     });

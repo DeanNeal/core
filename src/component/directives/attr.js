@@ -1,4 +1,4 @@
-export function _attr(array, data, loopIterator) {
+export function _attr(array, data, loopParams) {
     array.forEach(item => {
         let array = item.attr.split(',');
 
@@ -8,7 +8,7 @@ export function _attr(array, data, loopIterator) {
             // let variable = params[1].split('.');
             let r;//= this.getComponentVariable(variable, data);
 
-            r = this.getPropsByScope(params[1], data, loopIterator);
+            r = this.getPropsByScope(params[1], data, loopParams);
 
             (r || r === 0) ? item.elem.setAttribute(attrName, r) : item.elem.removeAttribute(attrName);
         });

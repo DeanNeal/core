@@ -1,12 +1,12 @@
 import { Utils, Component} from '../../core';
 import API from'./../../api';
 
-export function _if(array, data, loopIterator) {
+export function _if(array, data, loopParams) {
     array.forEach(item => {
         let params = item.attr; //.replace(/@+/g, "this.props."); // @ -alias of this.props
 
         try {
-            let r = this.getPropsByScope(params, data, loopIterator); //new Function('return ' + attr).apply(data || this.props);
+            let r = this.getPropsByScope(params, data, loopParams); //new Function('return ' + attr).apply(data || this.props);
             if (r) {
                 if (!item.elem.parentNode) { // insert only if elem doesn't exists
                     if (Utils.isCustomElement(item.elem)) {

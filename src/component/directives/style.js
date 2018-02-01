@@ -1,4 +1,4 @@
-export function _style(array, data, loopIterator) {
+export function _style(array, data, loopParams) {
     array.forEach(item => {
         let array = item.attr.split(',');
 
@@ -13,7 +13,7 @@ export function _style(array, data, loopIterator) {
             // let variable = params[1].split('.');
             let r;
            
-            r = this.getPropsByScope(params[1], data, loopIterator);
+            r = this.getPropsByScope(params[1], data, loopParams);
             r = minus ? '-' + r : r;
 
             r ? (item.elem.style[styleName] = r) : (item.elem.style[styleName] = '');

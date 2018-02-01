@@ -2,7 +2,7 @@
  * ace-js 0.8.5
  * May be freely distributed under the MIT license 
  * Author: Bogdan Zinkevich
- * Last update: 2018-1-30 18:12:18
+ * Last update: 2018-2-1 16:25:28
  * 
  */
 (function webpackUniversalModuleDefinition(root, factory) {
@@ -881,7 +881,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    value: true
 	});
 	exports._style = _style;
-	function _style(array, data, loopIterator) {
+	function _style(array, data, loopParams) {
 	    var _this = this;
 
 	    array.forEach(function (item) {
@@ -898,7 +898,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	            // let variable = params[1].split('.');
 	            var r = void 0;
 
-	            r = _this.getPropsByScope(params[1], data, loopIterator);
+	            r = _this.getPropsByScope(params[1], data, loopParams);
 	            r = minus ? '-' + r : r;
 
 	            r ? item.elem.style[styleName] = r : item.elem.style[styleName] = '';
@@ -919,7 +919,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var _core = __webpack_require__(6);
 
-	function _value(array, data, loopIterator) {
+	function _value(array, data, loopParams) {
 	    var _this = this;
 
 	    array.forEach(function (item) {
@@ -928,7 +928,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	                r = void 0;
 	            var rowHtml = false;
 
-	            r = _this.getPropsByScope(params[0], data, loopIterator);
+	            r = _this.getPropsByScope(params[0], data, loopParams);
 	            r = _core.Utils.applyFormatter(r, params[1]);
 
 	            if (item.elem.localName === 'input') {
@@ -999,14 +999,14 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-	function _if(array, data, loopIterator) {
+	function _if(array, data, loopParams) {
 	    var _this = this;
 
 	    array.forEach(function (item) {
 	        var params = item.attr; //.replace(/@+/g, "this.props."); // @ -alias of this.props
 
 	        try {
-	            var r = _this.getPropsByScope(params, data, loopIterator); //new Function('return ' + attr).apply(data || this.props);
+	            var r = _this.getPropsByScope(params, data, loopParams); //new Function('return ' + attr).apply(data || this.props);
 	            if (r) {
 	                if (!item.elem.parentNode) {
 	                    // insert only if elem doesn't exists
@@ -1814,7 +1814,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        }
 	    }, {
 	        key: 'getPropsByScope',
-	        value: function getPropsByScope(value, scope, loopIterator) {
+	        value: function getPropsByScope(value, scope, loopParams) {
 	            var _this4 = this;
 
 	            var r = void 0;
@@ -1824,9 +1824,21 @@ return /******/ (function(modules) { // webpackBootstrap
 	                return _this4.props.get(r);
 	            });
 
-	            if (loopIterator) {
-	                listOfVariables.push(loopIterator);
+	            if (loopParams && loopParams.iterator) {
+	                listOfVariables.push(loopParams.iterator);
 	                listOfVariablesValues.push(scope);
+
+	                if (loopParams.index || loopParams.index === 0) {
+	                    listOfVariables.push('index');
+	                    listOfVariablesValues.push(loopParams.index);
+	                } else {
+	                    listOfVariables.push('index');
+	                    listOfVariablesValues.push(undefined);
+	                }
+	                if (loopParams.key) {
+	                    listOfVariables.push('key');
+	                    listOfVariablesValues.push(loopParams.key);
+	                }
 	            }
 
 	            try {
@@ -1840,11 +1852,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	        }
 	    }, {
 	        key: 'setComponentVariable',
-	        value: function setComponentVariable(string, value, loopIterator, collectionName, data) {
+	        value: function setComponentVariable(string, value, loopParams, collectionName, data) {
 	            var params = string.split('.'); /*data ? string.split('.') : ('props.' + string).split('.');*/
 	            var lastProp = params[params.length - 1];
 
-	            if (params[0] === loopIterator) {
+	            if (params[0] === loopParams) {
 	                if (params.length > 1) {
 	                    data[lastProp] = value;
 	                    this.props._callAll();
@@ -2097,13 +2109,13 @@ return /******/ (function(modules) { // webpackBootstrap
 	        return array;
 	    },
 
-	    _update: function _update(array, data, loopIterator) {
+	    _update: function _update(array, data, loopParams) {
 	        var _this = this;
 
 	        if (array.length) {
 	            array.forEach(function (node) {
 	                var params = node.value.split('|');
-	                var r = _this.getPropsByScope(params[0], data, loopIterator);
+	                var r = _this.getPropsByScope(params[0], data, loopParams);
 	                r = _utils.Utils.applyFormatter(r, params[1]);
 	                node.node.nodeValue = r;
 	            });
@@ -2146,6 +2158,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	        return obj;
 	    },
 
+	    getDeepProp: function getDeepProp(data, prop) {
+	        return prop.split('.').reduce(function (o, i) {
+	            return o ? o[i] : null;
+	        }, data);
+	    },
 	    randomInteger: function randomInteger(min, max) {
 	        var rand = min - 0.5 + Math.random() * (max - min + 1);
 	        rand = Math.round(rand);
@@ -2384,10 +2401,19 @@ return /******/ (function(modules) { // webpackBootstrap
 	            r = r;
 	        }
 
-	        if (!r) {
+	        if (!r && r !== 0) {
 	            r = '';
 	        }
 	        return r;
+	    },
+	    getValueBetweenBrackets: function getValueBetweenBrackets(str, cb, err) {
+	        var regExp = /\(([^)]+)\)|\(()\)/;
+	        var res = regExp.exec(str);
+	        if (res && res[1]) {
+	            cb(res[1]);
+	        } else {
+	            err && err();
+	        }
 	    }
 
 	    // textNodesUnder(node) {
@@ -2413,7 +2439,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    value: true
 	});
 	exports._class = _class;
-	function _class(array, data, loopIterator) {
+	function _class(array, data, loopParams) {
 	    var _this = this;
 
 	    array.forEach(function (item) {
@@ -2432,7 +2458,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	                    }
 
 	                    // inside ac-for
-	                    r = _this.getPropsByScope(params[1], data, loopIterator);
+	                    r = _this.getPropsByScope(params[1], data, loopParams);
 
 	                    //remove previous class
 	                    item.prev = r;
@@ -2446,7 +2472,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	                    var _r = void 0;
 
 	                    // inside ac-for
-	                    _r = _this.getPropsByScope(_params[1], data, loopIterator);
+	                    _r = _this.getPropsByScope(_params[1], data, loopParams);
 
 	                    _r ? root.classList.add(className) : root.classList.remove(className);
 	                }
@@ -2517,38 +2543,58 @@ return /******/ (function(modules) { // webpackBootstrap
 	        //console.log(this); //console.time('modules')
 	        array.forEach(function (item) {
 	            var compName = item.elem.localName;
-	            var loopIterator = void 0;
+	            var loopIterator = { iterator: null };
 	            var collectionName = void 0;
-	            var array = _this.getComponentVariable(item.attr.split('.'), data) || [];
+	            var array = []; //this.getComponentVariable(item.attr.split('.'), data) || [];
+	            // let additionalParams = {};
 
 	            if (item.attr.indexOf('let ') > -1 && item.attr.indexOf('of ') > -1) {
 	                var params1 = item.attr.split('of')[0];
 	                collectionName = item.attr.split('of')[1].replace(/ +/g, "");
-	                loopIterator = params1.split('let ')[1].replace(/ +/g, "");
-	                var func = 'for(' + params1 + ' of this.' + collectionName + ') { } return this.' + collectionName;
+	                var lParams = params1.split('let ')[1].replace(/ +/g, "");
+	                // let func = `for(${params1} in this.${collectionName}) { } return this.${collectionName}`;
+	                _core.Utils.getValueBetweenBrackets(lParams, function (value) {
+	                    var params = value.split(',');
+	                    loopIterator.iterator = params[0];
+	                    if (params.indexOf('key') > -1) {
+	                        loopIterator.key = true;
+	                    }
+	                    if (params.indexOf('index') > -1) {
+	                        loopIterator.index = true;
+	                    }
+	                }, function () {
+	                    loopIterator.iterator = lParams;
+	                });
 
 	                var arg = void 0;
 	                try {
-	                    arg = new Function(func).apply(data || _this.props);
+	                    // arg = new Function(func).apply(data || this.props);
+	                    arg = _core.Utils.getDeepProp(data || _this.props, collectionName) || [];
 	                } catch (e) {
 	                    arg = [];
 	                }
 
 	                array = arg;
 	            }
-
-	            if (!_core.Utils.isCustomElement(item.elem)) {
-	                nativeElements.call(_this, item, array, loopIterator, collectionName);
+	            var keys = void 0;
+	            if (array && !Array.isArray(array)) {
+	                // if object
+	                keys = Object.keys(array);
+	                array = Object.keys(array).map(function (r) {
+	                    return array[r];
+	                });
 	            }
 
 	            if (_core.Utils.isCustomElement(item.elem)) {
 	                customElements.call(_this, item, array, compName);
+	            } else {
+	                nativeElements.call(_this, item, array, loopIterator, collectionName, keys);
 	            }
 	        }); //console.timeEnd('modules')
 	    }
 	}
 
-	function nativeElements(item, array, loopIterator, collectionName) {
+	function nativeElements(item, array, loopI, collectionName, keys) {
 	    var _this2 = this;
 
 	    if (item.cached.length !== array.length) {
@@ -2558,6 +2604,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        item.items = [];
 	        item.directives = [];
 	        item.interpolationArray = [];
+	        item.loopParams = [];
 
 	        var _loop = function _loop(i) {
 	            var prevContent = item.elem.cloneNode(true);
@@ -2587,15 +2634,23 @@ return /******/ (function(modules) { // webpackBootstrap
 	                links: _index.Directives._init.call(_this2, prevContent, 'ac-link')
 	            });
 
+	            if (loopI) {
+	                item.loopParams.push({
+	                    iterator: loopI.iterator,
+	                    index: loopI.index && i,
+	                    key: loopI.key && keys && keys[i]
+	                });
+	            }
+
 	            var eventsArray = [];
 
 	            _events.EVENTS_NAMES.forEach(function (directive) {
-	                eventsArray.push(_index.Directives._initEvent.call(_this2, prevContent, directive, [], array[i], loopIterator));
+	                eventsArray.push(_index.Directives._initEvent.call(_this2, prevContent, directive, [], array[i], item.loopParams[i]));
 	            });
 	            item.directives[i].events = eventsArray;
 
-	            updateElement.call(_this2, item, i, array[i], loopIterator);
-	            bindModelToViewForLoop.call(_this2, item.directives[i].model, loopIterator, collectionName, array[i]);
+	            // updateElement.call(this, item, i, array[i], item.loopParams[i]);
+	            bindModelToViewForLoop.call(_this2, item.directives[i].model, item.loopParams[i], collectionName, array[i]);
 	        };
 
 	        for (var i = 0; i <= array.length - 1; i++) {
@@ -2608,7 +2663,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    item.items.forEach(function (elem, i) {
 	        // if current or root prop has been changed
 	        if (JSONStr(item.cached[i]) !== JSONStr(array[i]) || curRootProps !== item.rootCached) {
-	            updateElement.call(_this2, item, i, array[i], loopIterator);
+	            updateElement.call(_this2, item, i, array[i], item.loopParams[i]);
 	        }
 	    });
 
@@ -2685,19 +2740,19 @@ return /******/ (function(modules) { // webpackBootstrap
 	    return JSON.stringify(obj, replacer);
 	}
 
-	function updateElement(item, i, data, loopIterator) {
+	function updateElement(item, i, data, loopParams) {
 	    forAttachForLoop.call(this, item.directives[i].for, data);
 
-	    bindInterPolation.call(this, item.interpolationArray[i], data, loopIterator);
+	    bindInterPolation.call(this, item.interpolationArray[i], data, loopParams);
 
-	    bindClassForLoop.call(this, item.directives[i].class, data, loopIterator);
-	    styleUnitForLoop.call(this, item.directives[i].style, data, loopIterator);
-	    bindIfForLoop.call(this, item.directives[i].if, data, loopIterator);
-	    bindValueToViewForLoop.call(this, item.directives[i].props, data, loopIterator);
-	    bindValueToViewForLoop.call(this, item.directives[i].model, data, loopIterator);
+	    bindClassForLoop.call(this, item.directives[i].class, data, loopParams);
+	    styleUnitForLoop.call(this, item.directives[i].style, data, loopParams);
+	    bindIfForLoop.call(this, item.directives[i].if, data, loopParams);
+	    bindValueToViewForLoop.call(this, item.directives[i].props, data, loopParams);
+	    bindValueToViewForLoop.call(this, item.directives[i].model, data, loopParams);
 
-	    bindAttrsForLoop.call(this, item.directives[i].attrs, data, loopIterator);
-	    addLinksRefsForLoop.call(this, item.directives[i].links, data, loopIterator);
+	    bindAttrsForLoop.call(this, item.directives[i].attrs, data, loopParams);
+	    addLinksRefsForLoop.call(this, item.directives[i].links, data, loopParams);
 	    eventsForLoop.call(this, item.directives[i].events);
 	}
 
@@ -2708,40 +2763,40 @@ return /******/ (function(modules) { // webpackBootstrap
 	    _index.Directives._events.call(this, array);
 	}
 
-	function addLinksRefsForLoop(array, data, loopIterator) {
-	    _index.Directives._link.call(this, array, data, loopIterator);
+	function addLinksRefsForLoop(array, data, loopParams) {
+	    _index.Directives._link.call(this, array, data, loopParams);
 	}
 
-	function bindAttrsForLoop(array, data, loopIterator) {
-	    _index.Directives._attr.call(this, array, data, loopIterator);
+	function bindAttrsForLoop(array, data, loopParams) {
+	    _index.Directives._attr.call(this, array, data, loopParams);
 	}
 
 	function forAttachForLoop(array, data) {
 	    _index.Directives._for.call(this, array, data);
 	}
 
-	function bindModelToViewForLoop(array, loopIterator, collectionName, data) {
-	    _index.Directives._model.call(this, array, loopIterator, collectionName, data);
+	function bindModelToViewForLoop(array, loopParams, collectionName, data) {
+	    _index.Directives._model.call(this, array, loopParams, collectionName, data);
 	}
 
-	function bindValueToViewForLoop(array, data, loopIterator) {
-	    _index.Directives._value.call(this, array, data, loopIterator);
+	function bindValueToViewForLoop(array, data, loopParams) {
+	    _index.Directives._value.call(this, array, data, loopParams);
 	}
 
-	function styleUnitForLoop(array, data, loopIterator) {
-	    _index.Directives._style.call(this, array, data, loopIterator);
+	function styleUnitForLoop(array, data, loopParams) {
+	    _index.Directives._style.call(this, array, data, loopParams);
 	}
 
-	function bindClassForLoop(array, data, loopIterator) {
-	    _index.Directives._class.call(this, array, data, loopIterator);
+	function bindClassForLoop(array, data, loopParams) {
+	    _index.Directives._class.call(this, array, data, loopParams);
 	}
 
-	function bindIfForLoop(array, data, loopIterator) {
-	    _index.Directives._if.call(this, array, data, loopIterator);
+	function bindIfForLoop(array, data, loopParams) {
+	    _index.Directives._if.call(this, array, data, loopParams);
 	}
 
-	function bindInterPolation(array, data, loopIterator) {
-	    _interpolation2.default._update.call(this, array, data, loopIterator);
+	function bindInterPolation(array, data, loopParams) {
+	    _interpolation2.default._update.call(this, array, data, loopParams);
 	}
 
 /***/ }),
@@ -2861,11 +2916,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	    return array;
 	}
 
-	function _initEvent(root, directive, newArray, data, loopIterator) {
+	function _initEvent(root, directive, newArray, data, loopParams) {
 	    var array = newArray || [];
 	    var targets = root.querySelectorAll('[ac-' + directive + ']');
 	    if (root.getAttribute('ac-' + directive)) {
-	        var obj = _event.createEventObject.call(this, root, directive, data, loopIterator);
+	        var obj = _event.createEventObject.call(this, root, directive, data, loopParams);
 	        array.get ? array.get(this).push(obj) : array.push(obj);
 	    }
 
@@ -2877,7 +2932,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        for (var _iterator3 = targets[Symbol.iterator](), _step3; !(_iteratorNormalCompletion3 = (_step3 = _iterator3.next()).done); _iteratorNormalCompletion3 = true) {
 	            var elem = _step3.value;
 
-	            var _obj2 = _event.createEventObject.call(this, elem, directive, data, loopIterator);
+	            var _obj2 = _event.createEventObject.call(this, elem, directive, data, loopParams);
 	            array.get ? array.get(this).push(_obj2) : array.push(_obj2);
 	        }
 	    } catch (err) {
@@ -2942,7 +2997,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    return elem.getAttribute('ac-kmod') ? elem.getAttribute('ac-kmod').replace(/ +/g, "") : null;
 	}
 
-	function createEventObject(elem, event, data, loopIterator) {
+	function createEventObject(elem, event, data, loopParams) {
 	    var _this = this;
 
 	    var funcParams = elem.getAttribute('ac-' + event);
@@ -2957,6 +3012,10 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	    var functionName = fnName.replace(regExp, ''); // remove everything between brackets
 
+	    if (this.props[functionName]) {
+	        throw new Error('Duplicate identifier: ' + functionName + '; Rename method or variable in props');
+	    }
+
 	    var newEvent = {
 	        fnName: functionName,
 	        event: event,
@@ -2968,12 +3027,16 @@ return /******/ (function(modules) { // webpackBootstrap
 	                if (fnParams[1]) {
 	                    fnParams[1].replace(/ +/g, "").split(',').forEach(function (res) {
 	                        var arg = void 0;
-	                        if (res.split('.')[0] === loopIterator) {
-	                            arg = _this.getPropsByScope(res, data, loopIterator);
+	                        if (res.split('.')[0] === loopParams && loopParams.iterator) {
+	                            arg = _this.getPropsByScope(res, data, loopParams);
 	                        } else if (res === '$event') {
 	                            arg = e;
+	                        } else if (res === 'index') {
+	                            arg = loopParams.index;
+	                        } else if (res === 'key') {
+	                            arg = loopParams.key;
 	                        } else {
-	                            arg = getInputArgs(res, _this.getPropsByScope(res, data, loopIterator));
+	                            arg = getInputArgs(res, _this.getPropsByScope(res, data, loopParams));
 	                        }
 	                        args.push(arg);
 	                    });
@@ -3104,12 +3167,12 @@ return /******/ (function(modules) { // webpackBootstrap
 	    value: true
 	});
 	exports._model = _model;
-	function _model(array, loopIterator, collectionName, data) {
+	function _model(array, loopParams, collectionName, data) {
 	    var _this = this;
 
 	    array.forEach(function (item) {
 
-	        if (item.attr === loopIterator) {
+	        if (item.attr === loopParams) {
 	            throw new Error('Cannot assign to a reference or variable; ' + _this.constructor.name + '; ' + collectionName);
 	        }
 	        if (item.elem.localName === 'input') {
@@ -3128,14 +3191,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	                case 'text':
 	                case 'email':
 	                case 'password':
-	                    // item.elem.addEventListener('keydown', (e) => {
-	                    //     this.setComponentVariable(item.attr, e.currentTarget.value, loopIterator, collectionName, data);
-	                    // }, false);
-	                    // item.elem.addEventListener('keyup', (e) => {
-	                    //     this.setComponentVariable(item.attr, e.currentTarget.value, loopIterator, collectionName, data);
-	                    // }, false);
 	                    item.elem.addEventListener('input', function (e) {
-	                        _this.setComponentVariable(item.attr, e.currentTarget.value, loopIterator, collectionName, data);
+	                        _this.setComponentVariable(item.attr, e.currentTarget.value, loopParams, collectionName, data);
 	                    }, false);
 	                    break;
 	            }
@@ -3157,7 +3214,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    value: true
 	});
 	exports._attr = _attr;
-	function _attr(array, data, loopIterator) {
+	function _attr(array, data, loopParams) {
 	    var _this = this;
 
 	    array.forEach(function (item) {
@@ -3169,7 +3226,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	            // let variable = params[1].split('.');
 	            var r = void 0; //= this.getComponentVariable(variable, data);
 
-	            r = _this.getPropsByScope(params[1], data, loopIterator);
+	            r = _this.getPropsByScope(params[1], data, loopParams);
 
 	            r || r === 0 ? item.elem.setAttribute(attrName, r) : item.elem.removeAttribute(attrName);
 	        });
@@ -3223,7 +3280,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var _core = __webpack_require__(6);
 
-	function _link(array, data, loopIterator) {
+	function _link(array, data, loopParams) {
 	    var _this = this;
 
 	    array.forEach(function (item) {
@@ -3239,7 +3296,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	            var r = void 0; //= this.getComponentVariable(params[1].split('.'), data);
 	            // let variable = params[1].split('.');
 
-	            r = _this.getPropsByScope(params[1], data, loopIterator);
+	            r = _this.getPropsByScope(params[1], data, loopParams);
 
 	            route = item.attr.replace(regExp, r);
 	        }
@@ -6820,7 +6877,12 @@ return /******/ (function(modules) { // webpackBootstrap
 	    template: _docListRenderingComponent2.default,
 	    props: function props() {
 	        return {
-	            items: [{ name: 1 }, { name: 2 }, { name: 3 }]
+	            qwerty: 1,
+	            items: [{ name: 'Item1' }, { name: 'Item2' }, { name: 'Item3' }],
+	            object: {
+	                prop1: 'obj1',
+	                prop2: 'obj2'
+	            }
 	        };
 	    }
 	}), _dec(_class = function () {
@@ -6834,6 +6896,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	    }, {
 	        key: 'onDestroy',
 	        value: function onDestroy() {}
+	    }, {
+	        key: 'test',
+	        value: function test(item, index, key) {
+	            console.log(item, index, key);
+	        }
 	    }]);
 
 	    return DocListRenderingComponent;
@@ -6845,7 +6912,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	"use strict";
 
-	module.exports = "<h3>Conditional rendering</h3>\r\n<div class=\"section-title\">ac-for</div>\r\n<br>\r\nprops: <div>{{items|json}}</div>\r\n<div class=\"code-block\">\r\n\t<pre><span><</span>span <b>ac-for</b>=\"<span class=\"attr\">let item of item</span>\"><span class=\"text\" ac-avoid>Item: {{item.name}}</span><span><</span>/span></pre>\r\n</div>\r\nwill be replaces with\r\n<div class=\"code-block\">\r\n\t<pre><span ac-for=\"let item of items\">Item: {{item.name}}</span></pre>\r\n</div>\r\n\r\n<div class=\"text\"></div>";
+	module.exports = "<h3>Conditional rendering</h3>\r\n<div class=\"section-title\">ac-for with arrays</div>\r\n<br>\r\n<!-- props: <div>{{items|json}}</div> -->\r\n<div class=\"code-block\">\r\n    <pre>\t\r\n    props: ()=>{\r\n    \treturn {\r\n    \t\titems: [\r\n\t    \t\t{name: 'Item1'}, \r\n\t    \t\t{name: 'Item2'}, \r\n\t    \t\t{name: 'Item3'}\r\n    \t\t]\r\n    \t}\r\n    }\r\n\t</pre>\r\n</div>\r\n<div class=\"code-block\">\r\n\t<pre><span><</span>ul><<span>li </span <b>ac-for</b>=\"<span class=\"attr\">let (item, index) of item</span>\"><span class=\"text\" ac-avoid>{{index}}- {{item.name}}</span><span><</span>/li><span><</span>/ul></pre>\r\n</div>\r\nwill be replaces with\r\n<div class=\"code-block\">\r\n\t<pre><ul><li ac-for=\"let (item, index) of items\" @click=\"test(item)\" >{{index}}- {{item.name}} </li></ul></pre>\r\n</div>\r\n\r\n<div class=\"section-title\">ac-for with objects</div>\r\n<br>\r\n\r\n<div class=\"code-block\">\r\n    <pre>\t\r\n    props: ()=>{\r\n    \treturn {\r\n\t    \tobject: {\r\n\t    \t    prop1: 'obj1',\r\n\t    \t    prop2: 'obj2'\r\n\t    \t}\r\n    \t}\r\n    }\r\n\t</pre>\r\n</div>\r\n\r\n<div class=\"code-block\">\r\n\t<pre><span><</span>ul><<span>li </span <b>ac-for</b>=\"<span class=\"attr\">let (item, key, index) of item</span>\"><span class=\"text\" ac-avoid>{{index}}- {{key}} {{item}}</span><span><</span>/li><span><</span>/ul></pre>\r\n</div>\r\n<div class=\"code-block\">\r\n\t\t<pre><ul><li ac-for=\"let (item, index, key) of object\" @click=\"test(item)\" >{{index}}- {{key}} {{item}}</li></ul></pre>\r\n</div>";
 
 /***/ }),
 /* 101 */

@@ -220,15 +220,27 @@ export class Component {
         return  Object.keys(this.props.getData());
     }
 
-    getPropsByScope(value, scope, loopIterator) {
+    getPropsByScope(value, scope, loopParams) {
         let r;
         let variable = value.split('.')
         let listOfVariables = this.getAllVariables();
         let listOfVariablesValues = listOfVariables.map(r=> this.props.get(r));
         
-        if(loopIterator && loopIterator.iterator) { 
-            listOfVariables.push(loopIterator.iterator);
+        if(loopParams && loopParams.iterator) { 
+            listOfVariables.push(loopParams.iterator);
             listOfVariablesValues.push(scope);
+
+            if(loopParams.index || loopParams.index === 0) {
+                listOfVariables.push('index');
+                listOfVariablesValues.push(loopParams.index);
+            } else {
+                listOfVariables.push('index');
+                listOfVariablesValues.push(undefined);
+            }
+            if(loopParams.key) {                
+                listOfVariables.push('key');
+                listOfVariablesValues.push(loopParams.key);
+            }
         }
 
         try {
@@ -241,12 +253,12 @@ export class Component {
         return r;
     }
 
-    setComponentVariable(string, value, loopIterator, collectionName, data) {
+    setComponentVariable(string, value, loopParams, collectionName, data) {
         let params = string.split('.'); /*data ? string.split('.') : ('props.' + string).split('.');*/
         let lastProp = params[params.length - 1];
 
 
-        if(params[0] === loopIterator) {
+        if(params[0] === loopParams) {
             if(params.length > 1){
                 data[lastProp] = value;
                 this.props._callAll();

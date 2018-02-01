@@ -22,6 +22,10 @@ const Utils = {
         return obj;
     },
 
+    getDeepProp(data, prop) {
+      return prop.split('.').reduce((o, i) => o ? o[i] : null, data);
+    },
+
     randomInteger(min, max) {
         let rand = min - 0.5 + Math.random() * (max - min + 1)
         rand = Math.round(rand);
@@ -274,7 +278,7 @@ const Utils = {
             r = r;
         }
 
-        if (!r) {
+        if (!r && r !== 0) {
             r = '';
         }
         return r;

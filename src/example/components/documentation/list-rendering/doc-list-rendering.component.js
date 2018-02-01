@@ -6,11 +6,15 @@ import Tpl from './doc-list-rendering.component.html';
     template: Tpl,
     props: ()=>{
     	return {
-            test: 1,
-    		items: [{name: 1}, {name: 2}, {name: 3}],
+            qwerty: 1,
+            items: [
+                {name: 'Item1'}, 
+                {name: 'Item2'}, 
+                {name: 'Item3'}
+            ],
             object: {
-                test1: 1,
-                test2: 2
+                prop1: 'obj1',
+                prop2: 'obj2'
             }
     	}
     }
@@ -28,7 +32,7 @@ export class DocListRenderingComponent {
 
     }
 
-    test(item) {
-console.log(item);
+    test(item, index, key) {
+        console.log(item, index, key);
     }
 }

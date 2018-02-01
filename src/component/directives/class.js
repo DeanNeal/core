@@ -1,4 +1,4 @@
-export function _class(array, data, loopIterator) {
+export function _class(array, data, loopParams) {
     array.forEach((item) => {
         let array = item.attr.replace(/ +/g, "").split(',');
         let attr = item.attr;
@@ -15,7 +15,7 @@ export function _class(array, data, loopIterator) {
                     }
 
                     // inside ac-for
-                    r = this.getPropsByScope(params[1], data, loopIterator);
+                    r = this.getPropsByScope(params[1], data, loopParams);
 
                     //remove previous class
                     item.prev = r;
@@ -29,7 +29,7 @@ export function _class(array, data, loopIterator) {
                     let r;
 
                     // inside ac-for
-                    r = this.getPropsByScope(params[1], data, loopIterator);
+                    r = this.getPropsByScope(params[1], data, loopParams);
 
                     r ? (root.classList.add(className)) : (root.classList.remove(className));
                 }

@@ -1,3 +1,9 @@
+<a name="0.8.6"></a>
+# [0.8.6](https://github.com/DeanNeal/ace-js) (2018-02-01)
+### Features
+* **core:**  add 'key' and 'index' arguments in ac-for #99 ([#99](https://github.com/DeanNeal/ace-js/issues/99))
+* **core:**  ac-for with objects #77([#77](https://github.com/DeanNeal/ace-js/issues/77))
+
 <a name="0.8.0"></a>
 # [0.8.0](https://github.com/DeanNeal/ace-js) (2018-01-29)
 ### Features

@@ -1,12 +1,12 @@
 import { Utils } from '../../core';
-export function _value(array, data, loopIterator) {
+export function _value(array, data, loopParams) {
     array.forEach(item => {
         if (Utils.isCustomElement(item.elem) === false) {
             let params = item.attr.split('|'),
                 r;
             let rowHtml = false;
 
-            r = this.getPropsByScope(params[0], data, loopIterator);
+            r = this.getPropsByScope(params[0], data, loopParams);
             r = Utils.applyFormatter(r, params[1]);
 
             if (item.elem.localName === 'input') {
