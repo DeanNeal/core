@@ -2,7 +2,7 @@
  * ace-js 0.8.7
  * May be freely distributed under the MIT license 
  * Author: Bogdan Zinkevich
- * Last update: 2018-2-1 19:22:56
+ * Last update: 2018-2-2 14:13:08
  * 
  */
 (function webpackUniversalModuleDefinition(root, factory) {
@@ -216,7 +216,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	Object.defineProperty(exports, "__esModule", {
 	    value: true
 	});
-	exports.Validators = exports.FormGroup = exports.API = exports.Http = exports.Controls = exports.Plugins = exports.Utils = exports.GlobalEvents = exports.TemplateEngine = exports.RouteSwitcher = exports.Router = exports.Component = exports.Decorators = exports.ObservableBoolean = exports.ObservableCollection = exports.ObservableModel = undefined;
+	exports.Validators = exports.FormGroup = exports.API = exports.Http = exports.Controls = exports.Plugins = exports.Utils = exports.GlobalEvents = exports.TemplateEngine = exports.RouteSwitcher = exports.Router = exports.Component = exports.Decorators = exports.Observable = undefined;
 
 	var _observable = __webpack_require__(7);
 
@@ -264,9 +264,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 
-	exports.ObservableModel = _observable.ObservableModel;
-	exports.ObservableCollection = _observable.ObservableCollection;
-	exports.ObservableBoolean = _observable.ObservableBoolean;
+	exports.Observable = _observable.Observable;
 	exports.Decorators = Decorators;
 	exports.Component = _component.Component;
 	exports.Router = _routerCore2.default;
@@ -290,7 +288,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	Object.defineProperty(exports, "__esModule", {
 	    value: true
 	});
-	exports.ObservableBoolean = exports.ObservableCollection = exports.ObservableModel = undefined;
+	exports.Observable = exports.ObservableNumber = exports.ObservableString = exports.ObservableBoolean = exports.ObservableCollection = exports.ObservableModel = undefined;
 
 	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
@@ -312,9 +310,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	// import objectMerge from 'object-merge';
 	// import merge from 'merge';
 
-	var Observable = function () {
-	    function Observable(options) {
-	        _classCallCheck(this, Observable);
+	var AbstractObservable = function () {
+	    function AbstractObservable(options) {
+	        _classCallCheck(this, AbstractObservable);
 
 	        this.lId = -1;
 	        if (options) {
@@ -324,7 +322,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        this.callbacksArray = [];
 	    }
 
-	    _createClass(Observable, [{
+	    _createClass(AbstractObservable, [{
 	        key: 'defineProperties',
 	        value: function defineProperties(options) {
 	            var _this = this;
@@ -397,11 +395,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	        }
 	    }]);
 
-	    return Observable;
+	    return AbstractObservable;
 	}();
 
-	var ObservableModel = exports.ObservableModel = (0, _decorators.IfObject)(_class = function (_Observable) {
-	    _inherits(ObservableModel, _Observable);
+	var ObservableModel = exports.ObservableModel = (0, _decorators.IfObject)(_class = function (_AbstractObservable) {
+	    _inherits(ObservableModel, _AbstractObservable);
 
 	    function ObservableModel(options) {
 	        _classCallCheck(this, ObservableModel);
@@ -437,10 +435,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	    }]);
 
 	    return ObservableModel;
-	}(Observable)) || _class;
+	}(AbstractObservable)) || _class;
 
-	var ObservableCollection = exports.ObservableCollection = (0, _decorators.IfArray)(_class2 = function (_Observable2) {
-	    _inherits(ObservableCollection, _Observable2);
+	var ObservableCollection = exports.ObservableCollection = (0, _decorators.IfArray)(_class2 = function (_AbstractObservable2) {
+	    _inherits(ObservableCollection, _AbstractObservable2);
 
 	    function ObservableCollection(options) {
 	        _classCallCheck(this, ObservableCollection);
@@ -546,10 +544,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	    }]);
 
 	    return ObservableCollection;
-	}(Observable)) || _class2;
+	}(AbstractObservable)) || _class2;
 
-	var ObservableBoolean = exports.ObservableBoolean = function (_Observable3) {
-	    _inherits(ObservableBoolean, _Observable3);
+	var ObservableBoolean = exports.ObservableBoolean = function (_AbstractObservable3) {
+	    _inherits(ObservableBoolean, _AbstractObservable3);
 
 	    function ObservableBoolean(options) {
 	        _classCallCheck(this, ObservableBoolean);
@@ -564,11 +562,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	        key: 'set',
 	        value: function set(data, silent) {
 	            if (typeof data == 'boolean') {
-	                // this._data = merge(this._data, data);
-	                // this.defineProperties(data);
 	                this._data = data;
 	            } else {
-	                console.warn('Only boolean');
+	                throw new Error('Only boolean');
 	            }
 
 	            if (!silent) {
@@ -578,7 +574,96 @@ return /******/ (function(modules) { // webpackBootstrap
 	    }]);
 
 	    return ObservableBoolean;
-	}(Observable);
+	}(AbstractObservable);
+
+	var ObservableString = exports.ObservableString = function (_AbstractObservable4) {
+	    _inherits(ObservableString, _AbstractObservable4);
+
+	    function ObservableString(options) {
+	        _classCallCheck(this, ObservableString);
+
+	        var _this8 = _possibleConstructorReturn(this, (ObservableString.__proto__ || Object.getPrototypeOf(ObservableString)).call(this, options));
+
+	        _this8._data = options || false;
+	        return _this8;
+	    }
+
+	    _createClass(ObservableString, [{
+	        key: 'set',
+	        value: function set(data, silent) {
+	            if (typeof data == 'string') {
+	                this._data = data;
+	            } else {
+	                throw new Error('Only string');
+	            }
+
+	            if (!silent) {
+	                this._callAll();
+	            }
+	        }
+	    }]);
+
+	    return ObservableString;
+	}(AbstractObservable);
+
+	var ObservableNumber = exports.ObservableNumber = function (_AbstractObservable5) {
+	    _inherits(ObservableNumber, _AbstractObservable5);
+
+	    function ObservableNumber(options) {
+	        _classCallCheck(this, ObservableNumber);
+
+	        var _this9 = _possibleConstructorReturn(this, (ObservableNumber.__proto__ || Object.getPrototypeOf(ObservableNumber)).call(this, options));
+
+	        _this9._data = options || false;
+	        return _this9;
+	    }
+
+	    _createClass(ObservableNumber, [{
+	        key: 'set',
+	        value: function set(data, silent) {
+	            if (typeof data == 'number') {
+	                this._data = data;
+	            } else {
+	                throw new Error('Only number');
+	            }
+
+	            if (!silent) {
+	                this._callAll();
+	            }
+	        }
+	    }]);
+
+	    return ObservableNumber;
+	}(AbstractObservable);
+
+	var Observable = exports.Observable = function () {
+	    function Observable(options) {
+	        _classCallCheck(this, Observable);
+
+	        return this.checkType(options);
+	    }
+
+	    _createClass(Observable, [{
+	        key: 'checkType',
+	        value: function checkType(options) {
+	            if (Array.isArray(options)) {
+	                return new ObservableCollection(options);
+	            } else if ((typeof options === 'undefined' ? 'undefined' : _typeof(options)) === 'object') {
+	                return new ObservableModel(options);
+	            } else if (typeof options === 'number') {
+	                return new ObservableNumber(options);
+	            } else if (typeof options === 'string') {
+	                return new ObservableString(options);
+	            } else if (typeof options === 'boolean') {
+	                return new ObservableBoolean(options);
+	            } else {
+	                throw new Error('Initial value must be set');
+	            }
+	        }
+	    }]);
+
+	    return Observable;
+	}();
 
 /***/ }),
 /* 8 */
@@ -731,7 +816,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	                }
 	            }
 
-	            Object.defineProperty(instance, 'props', { value: new _observable.ObservableModel(newProps), writable: false });
+	            Object.defineProperty(instance, 'props', { value: new _observable.Observable(newProps), writable: false });
 
 	            var _loop = function _loop(_key) {
 	                Object.defineProperty(instance, _key, {
@@ -1117,13 +1202,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	            // this.children = {};
 	            Object.defineProperty(this, 'children', { value: {}, writable: false });
 
-	            // Object.defineProperty(this, 'options', {
-	            //     value: Object.assign({}, options),
-	            //     writable: false
-	            // });
-
 	            Object.defineProperty(this, 'tpl', { value: options.template || 'Empty template', writable: false });
-	            // Object.defineProperty(this, 'props', { value: new ObservableModel(Object.assign({}, {}/*options.props*/)), writable: false });
 
 	            Object.defineProperty(this, '$refs', { value: {}, writable: false });
 
@@ -1552,8 +1631,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    value: true
 	});
 
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }(); // import { ObservableBoolean } from './observable/observable';
-
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 	var _routerSwitcher = __webpack_require__(22);
 
@@ -1567,7 +1645,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	    function API() {
 	        _classCallCheck(this, API);
 
-	        // this.isReady = new ObservableBoolean(false);
 	        this.rootComponent = null;
 	        this.rootInstance = null;
 	        this.config = {};
@@ -3678,7 +3755,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	    _classCallCheck(this, GlobalEvents);
 
-	    this.click = new _observable.ObservableModel();
+	    this.click = new _observable.Observable({});
 	    window.addEventListener('click', function (e) {
 	        _this.click.reset({ e: e });
 	    }, true);
@@ -4394,7 +4471,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    function ModalsStore() {
 	        _classCallCheck(this, ModalsStore);
 
-	        this.modal = new _observable.ObservableModel({
+	        this.modal = new _observable.Observable({
 	            visible: false,
 	            modalData: null
 	        });
@@ -5331,21 +5408,17 @@ return /******/ (function(modules) { // webpackBootstrap
 
 /***/ }),
 /* 63 */
-/***/ (function(module, exports, __webpack_require__) {
+/***/ (function(module, exports) {
 
 	'use strict';
 
 	Object.defineProperty(exports, "__esModule", {
 	    value: true
 	});
-	exports.Http = undefined;
 
 	var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
 
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }(); // import { ObservableModel } from './observable/observable';
-
-
-	var _core = __webpack_require__(6);
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
@@ -7137,7 +7210,14 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	    _createClass(DocSmartObjectComponent, [{
 	        key: 'onInit',
-	        value: function onInit() {}
+	        value: function onInit() {
+	            var a = new _core.Observable([]);
+
+	            a.sub(function (res) {
+	                console.log(res);
+	            });
+	            a.set('dsfdsf');
+	        }
 	    }, {
 	        key: 'onDestroy',
 	        value: function onDestroy() {}

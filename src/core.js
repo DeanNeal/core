@@ -1,4 +1,4 @@
-import { ObservableModel, ObservableCollection, ObservableBoolean} from './observable/observable';
+import {Observable} from './observable/observable';
 import * as Decorators from './decorators';
 import { Component } from './component/component';
 import { RouteSwitcher } from './router/router-switcher';
@@ -17,9 +17,7 @@ import {Validators} from 'reactive-forms/validators';
 import './polifills';
 
 export {
-    ObservableModel,
-    ObservableCollection,
-    ObservableBoolean,
+    Observable,
     Decorators,
     Component,
     Router,

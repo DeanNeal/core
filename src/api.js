@@ -1,11 +1,10 @@
-// import { ObservableBoolean } from './observable/observable';
+
 import {RouteSwitcher} from './router/router-switcher';
 import { Component } from './component/component';
 import {Directive } from './decorators/directive';
 
 class API {
     constructor() {
-        // this.isReady = new ObservableBoolean(false);
         this.rootComponent = null;
         this.rootInstance = null;
         this.config = {};

@@ -1,4 +1,4 @@
-import { Router, RouteSwitcher, ObservableBoolean, ObservableModel, TemplateEngine, Utils} from '../core';
+import { Router, RouteSwitcher, TemplateEngine, Utils} from '../core';
 
 import { PRIVATES } from '../component/private';
 import Interpolation from './interpolation/interpolation';
@@ -19,13 +19,7 @@ export class Component {
         // this.children = {};
         Object.defineProperty(this, 'children', { value: {}, writable: false });
 
-        // Object.defineProperty(this, 'options', {
-        //     value: Object.assign({}, options),
-        //     writable: false
-        // });
-
         Object.defineProperty(this, 'tpl', { value: options.template || 'Empty template', writable: false });
-        // Object.defineProperty(this, 'props', { value: new ObservableModel(Object.assign({}, {}/*options.props*/)), writable: false });
 
         Object.defineProperty(this, '$refs', { value: {}, writable: false });
 

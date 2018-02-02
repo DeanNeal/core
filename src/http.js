@@ -1,5 +1,3 @@
-// import { ObservableModel } from './observable/observable';
-import { ObservableModel} from './core';
 class HttpModule {
     constructor() {
         

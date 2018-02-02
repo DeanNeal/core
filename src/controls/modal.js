@@ -1,11 +1,11 @@
 // import {Component, Utils, Store, ObservableModel} from '../core';
 import {Utils} from '../utils/utils';
-import {ObservableModel} from '../observable/observable';
+import {Observable} from '../observable/observable';
 
 
 class ModalsStore {
     constructor() {
-        this.modal = new ObservableModel({
+        this.modal = new Observable({
             visible: false,
             modalData: null
         });

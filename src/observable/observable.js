@@ -3,7 +3,7 @@ import { IfObject, IfArray } from '../decorators';
 // import objectMerge from 'object-merge';
 // import merge from 'merge';
 
-class Observable {
+class AbstractObservable {
     constructor(options) {
         this.lId = -1;
         if (options) {
@@ -69,7 +69,7 @@ class Observable {
 
 
 @IfObject
-export class ObservableModel extends Observable {
+export class ObservableModel extends AbstractObservable {
     constructor(options) {
         super(options);
         this._data = options || {};
@@ -98,7 +98,7 @@ export class ObservableModel extends Observable {
 
 
 @IfArray
-export class ObservableCollection extends Observable {
+export class ObservableCollection extends AbstractObservable {
     constructor(options) {
         super(options);
     }
@@ -180,7 +180,7 @@ export class ObservableCollection extends Observable {
 
 }
 
-export class ObservableBoolean extends Observable {
+export class ObservableBoolean extends AbstractObservable {
     constructor(options) {
         super(options);
         this._data = options || false;
@@ -188,15 +188,74 @@ export class ObservableBoolean extends Observable {
 
     set(data, silent) {
         if (typeof data == 'boolean') {
-            // this._data = merge(this._data, data);
-            // this.defineProperties(data);
             this._data = data;
         } else {
-            console.warn('Only boolean');
+            throw new Error('Only boolean');
         }
 
         if (!silent) {
             this._callAll();
+        }
+    }
+}
+
+export class ObservableString extends AbstractObservable {
+    constructor(options) {
+        super(options);
+        this._data = options || false;
+    }
+
+    set(data, silent) {
+        if (typeof data == 'string') {
+            this._data = data;
+        } else {
+            throw new Error('Only string');
+        }
+
+        if (!silent) {
+            this._callAll();
+        }
+    }
+}
+
+export class ObservableNumber extends AbstractObservable {
+    constructor(options) {
+        super(options);
+        this._data = options || false;
+    }
+
+    set(data, silent) {
+        if (typeof data == 'number') {
+            this._data = data;
+        } else {
+            throw new Error('Only number');
+        }
+
+        if (!silent) {
+            this._callAll();
+        }
+    }
+}
+
+
+export class Observable {
+    constructor(options) {
+        return this.checkType(options);
+    }
+
+    checkType(options) {
+        if (Array.isArray(options)) {
+            return new ObservableCollection(options);
+        } else if (typeof options === 'object') {
+            return new ObservableModel(options);
+        } else if (typeof options === 'number') {
+            return new ObservableNumber(options);
+        } else if (typeof options === 'string') {
+            return new ObservableString(options);
+        } else if (typeof options === 'boolean') {
+            return new ObservableBoolean(options);
+        } else {
+            throw new Error('Initial value must be set');
         }
     }
 }

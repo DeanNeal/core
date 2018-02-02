@@ -1,5 +1,5 @@
 import {Component} from '../component/component';
-import {ObservableModel} from '../observable/observable';
+import {Observable} from '../observable/observable';
 import { DIRECTIVES_NAMES } from '../component/const/directives';
 import { EVENTS_NAMES } from '../component/const/events';
 import { Directives } from '../component/directives';
@@ -38,7 +38,7 @@ export default function ComponentDecorator(decoratorParams) {
                 }
             }
 
-            Object.defineProperty(instance, 'props', { value: new ObservableModel(newProps), writable: false });
+            Object.defineProperty(instance, 'props', { value: new Observable(newProps), writable: false });
 
             for (let key in newProps) {
                 Object.defineProperty(instance, key, {
