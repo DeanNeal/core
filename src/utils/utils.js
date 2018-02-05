@@ -292,6 +292,10 @@ const Utils = {
         }  else {
             err && err();
         }
+    },
+
+    isTextField(elem) {
+        return elem.type === 'text' || elem.type === 'email' || elem.type === 'password';
     }
 
     // textNodesUnder(node) {

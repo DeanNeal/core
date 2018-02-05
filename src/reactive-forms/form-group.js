@@ -1,10 +1,11 @@
+import {Utils} from '../utils/utils';
 export class FormControl {
     constructor(params, parent) {
         this.valid = true;
         this.dirty = false;
         this.value = params[0] || '';
         this.initValue = params[0] || '';
-        this.validators = params[1];
+        this.validators = params[1] || [];
         // this.parent = parent;
         Object.defineProperty(this, 'parent', {value: parent, writable: false})
         this.errors = {};
@@ -17,7 +18,7 @@ export class FormControl {
 
     setValue(value, silent) {
         this.value = value;
-        if (this.elem) {
+        if (this.elem && Utils.isTextField(this.elem)) {
             this.elem.value = value;
         }
 
@@ -72,7 +73,7 @@ export class FormControl {
         this.valid = true;
         this.dirty = false;
         this.value = this.initValue;
-        if (this.elem) {
+        if (this.elem && Utils.isTextField(this.elem)) {
             this.elem.value = this.initValue;
         }
     }
@@ -136,7 +137,7 @@ export class FormGroup {
         } else if (typeof name === 'object') {
 
             for (let key in name) {
-                if(this.controls[key].elem){
+                if(this.controls[key].elem && Utils.isTextField(this.controls[key].elem)){
                     this.controls[key].elem.value = name[key];
                 }
                 this.controls[key].value = name[key];

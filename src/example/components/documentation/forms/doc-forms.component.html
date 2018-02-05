@@ -63,15 +63,27 @@
     <div class="input">
         <input type="text" ac-form-control="name">
         <div class="input-border"></div>
-        <span class="invalid-message" ac-if="this.form.controls.name.errors.regExp && this.form.controls.name.dirty">Invalid value</span>
-        <span class="invalid-message" ac-if="this.form.controls.name.errors.required && this.form.controls.name.dirty">Empty</span>
+        <span class="invalid-message" ac-if="form.controls.name.errors.regExp && form.controls.name.dirty">Invalid value</span>
+        <span class="invalid-message" ac-if="form.controls.name.errors.required && form.controls.name.dirty">Empty</span>
     </div>
 
     <div class="input">
         <input type="text" ac-form-control="number">
         <div class="input-border" ></div>
-        <span class="invalid-message" ac-if="this.form.controls.number.errors.regExp && this.form.controls.number.dirty">Invalid value</span>
-        <span class="invalid-message" ac-if="this.form.controls.number.errors.required && this.form.controls.number.dirty">Empty</span>
+        <span class="invalid-message" ac-if="form.controls.number.errors.regExp && form.controls.number.dirty">Invalid value</span>
+        <span class="invalid-message" ac-if="form.controls.number.errors.required && form.controls.number.dirty">Empty</span>
+    </div>
+
+    <div style="position: relative;">Checkbox
+        <input type="checkbox" ac-form-control="checkbox" value="check-1">
+        <input type="checkbox" ac-form-control="checkbox" value="check-2">
+        <span class="invalid-message" ac-if="form.controls.checkbox.errors.required && form.controls.checkbox.dirty">Invalid value</span>
+    </div>
+
+    <div style="position: relative;">Radio
+        <input type="radio" name="radio" ac-form-control="radio" value="radio-1">
+        <input type="radio" name="radio" ac-form-control="radio" value="radio-2">
+        <span class="invalid-message" ac-if="form.controls.radio.errors.required && form.controls.radio.dirty">Invalid value</span>
     </div>
 
     <div class="input">

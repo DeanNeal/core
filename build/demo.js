@@ -2,7 +2,7 @@
  * ace-js 0.8.8
  * May be freely distributed under the MIT license 
  * Author: Bogdan Zinkevich
- * Last update: 2018-2-2 14:18:02
+ * Last update: 2018-2-5 10:50:13
  * 
  */
 (function webpackUniversalModuleDefinition(root, factory) {
@@ -3266,12 +3266,21 @@ return /******/ (function(modules) { // webpackBootstrap
 	    var _this = this;
 
 	    array.forEach(function (item) {
+	        var formControls = item.elem.querySelectorAll('[ac-form-control]');
+	        formControls = Array.prototype.map.call(formControls, function (r) {
+	            var attr = r.getAttribute('ac-form-control');
+	            r.removeAttribute('ac-form-control');
+	            r.dataset.name = attr;
+	            return r;
+	        });
+
 	        var formGroup = _this.getComponentVariable(item.attr.split('.'));
+
 	        if (formGroup) {
 	            formGroup.setComponent(_this);
 	            item.elem.setAttribute('novalidate', 'novalidate');
-	            item.elem.querySelectorAll('[ac-form-control]').forEach(function (control) {
-	                var attr = control.getAttribute('ac-form-control');
+	            formControls.forEach(function (control) {
+	                var attr = control.dataset.name;
 	                if (formGroup.controls[attr]) {
 	                    formGroup.controls[attr].setElem(control);;
 	                } else {
@@ -3280,18 +3289,20 @@ return /******/ (function(modules) { // webpackBootstrap
 	            });
 
 	            item.elem.addEventListener('input', function (e) {
-	                var attr = e.target.getAttribute('ac-form-control');
-	                if (attr) {
-	                    formGroup.setValue(attr, e.target.value);
-	                }
+	                var attr = e.target.dataset.name;
+	                setValues(formControls, attr, e, item, formGroup);
+	            }, false);
+
+	            item.elem.addEventListener('change', function (e) {
+	                var attr = e.target.dataset.name;
+	                setValues(formControls, attr, e, item, formGroup);
 	            }, false);
 
 	            item.elem.addEventListener('submit', function (e) {
 	                var focusState = false;
-	                var controls = e.target.querySelectorAll('[ac-form-control]');
 
-	                controls.forEach(function (target) {
-	                    var attr = target.getAttribute('ac-form-control');
+	                formControls.forEach(function (target) {
+	                    var attr = target.dataset.name;
 	                    if (formGroup.controls[attr].isValid() === false && !focusState) {
 	                        focusState = true;
 	                        formGroup.controls[attr].markAsDirty();
@@ -3302,6 +3313,40 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	                formGroup._validate();
 	            }, true);
+	        }
+	    });
+	}
+
+	function setValues(formControls, attr, event, item, formGroup) {
+	    formControls.forEach(function (elem) {
+	        if (elem.dataset.name === attr && elem.localName === 'input') {
+	            switch (elem.type) {
+	                case 'checkbox':
+	                    if (attr) {
+	                        var checkboxes = item.elem.querySelectorAll('input[type="checkbox"]:checked');
+	                        var values = Array.prototype.map.call(checkboxes, function (r) {
+	                            return r.value;
+	                        }).filter(function (r) {
+	                            return r;
+	                        });
+	                        if (!values.length) {
+	                            values = '';
+	                        }
+	                        formGroup.setValue(attr, values);
+	                    }
+	                    break;
+	                case 'radio':
+	                    if (attr) {
+	                        formGroup.setValue(attr, event.target.value);
+	                    }
+	                    break;
+	                case 'text':
+	                case 'email':
+	                case 'password':
+	                    formGroup.setValue(attr, event.target.value);
+	                    elem.value = event.target.value;
+	                    break;
+	            }
 	        }
 	    });
 	}
@@ -3652,6 +3697,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	        } else {
 	            err && err();
 	        }
+	    },
+	    isTextField: function isTextField(elem) {
+	        return elem.type === 'text' || elem.type === 'email' || elem.type === 'password';
 	    }
 
 	    // textNodesUnder(node) {
@@ -5576,17 +5624,20 @@ return /******/ (function(modules) { // webpackBootstrap
 
 /***/ }),
 /* 64 */
-/***/ (function(module, exports) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
 
 	Object.defineProperty(exports, "__esModule", {
 	    value: true
 	});
+	exports.FormGroup = exports.FormControl = undefined;
 
 	var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
 
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _utils = __webpack_require__(41);
 
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
@@ -5598,7 +5649,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        this.dirty = false;
 	        this.value = params[0] || '';
 	        this.initValue = params[0] || '';
-	        this.validators = params[1];
+	        this.validators = params[1] || [];
 	        // this.parent = parent;
 	        Object.defineProperty(this, 'parent', { value: parent, writable: false });
 	        this.errors = {};
@@ -5614,7 +5665,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        key: 'setValue',
 	        value: function setValue(value, silent) {
 	            this.value = value;
-	            if (this.elem) {
+	            if (this.elem && _utils.Utils.isTextField(this.elem)) {
 	                this.elem.value = value;
 	            }
 
@@ -5678,7 +5729,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	            this.valid = true;
 	            this.dirty = false;
 	            this.value = this.initValue;
-	            if (this.elem) {
+	            if (this.elem && _utils.Utils.isTextField(this.elem)) {
 	                this.elem.value = this.initValue;
 	            }
 	        }
@@ -5755,7 +5806,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	            } else if ((typeof name === 'undefined' ? 'undefined' : _typeof(name)) === 'object') {
 
 	                for (var key in name) {
-	                    if (this.controls[key].elem) {
+	                    if (this.controls[key].elem && _utils.Utils.isTextField(this.controls[key].elem)) {
 	                        this.controls[key].elem.value = name[key];
 	                    }
 	                    this.controls[key].value = name[key];
@@ -7041,7 +7092,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	            model: {},
 	            form: new _core.FormGroup({
 	                name: ['', [_core.Validators.required, _core.Validators.regExp('^[0-9a-zA-Z- ]+$')]],
-	                number: ['', [_core.Validators.required, _core.Validators.regExp('^[0-9a-zA-Z- ]+$')]]
+	                number: ['', [_core.Validators.required, _core.Validators.regExp('^[0-9a-zA-Z- ]+$')]],
+	                checkbox: ['', [_core.Validators.required]],
+	                radio: ['', [_core.Validators.required]]
 	            })
 	        };
 	    }
@@ -7066,9 +7119,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        }
 	    }, {
 	        key: 'keyup',
-	        value: function keyup() {
-	            console.log(213);
-	        }
+	        value: function keyup() {}
 	    }]);
 
 	    return DocFormsComponent;
@@ -7080,7 +7131,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	"use strict";
 
-	module.exports = "<h3>Forms</h3>\r\n\r\n<div class=\"section-title\">Model driven form</div>\r\n<br>\r\n\r\n<div class=\"title\">[type=\"text\"]</div>\r\n    <div ac-value=\"input\"></div>\r\n<div class=\"input\">\r\n    <input type=\"text\" ac-model=\"input\">\r\n    <div class=\"input-border\"></div>\r\n</div>\r\n<div class=\"title\">[type=\"email\"]</div>\r\n    <div ac-value=\"email\"></div>\r\n<div class=\"input\">\r\n    <input type=\"email\" ac-model=\"email\">\r\n    <div class=\"input-border\"></div>\r\n</div>\r\n<div class=\"title\">[type=\"password\"]</div>\r\n    <div ac-value=\"password\"></div>\r\n<div class=\"input\">\r\n    <input type=\"password\" ac-model=\"password\">\r\n    <div class=\"input-border\"></div>\r\n</div>\r\n<div class=\"title\">[type=\"radio\"]</div>\r\n<div class=\"input\">\r\n    <div ac-value=\"radio\"></div>\r\n    <input type=\"radio\" ac-model=\"radio\" value=\"1\" name=\"radio\">\r\n    <input type=\"radio\" ac-model=\"radio\" value=\"2\" name=\"radio\">\r\n</div>\r\n<div class=\"title\">[type=\"checkbox\"]</div>\r\n<div class=\"input\">\r\n    <div ac-value=\"checkbox.check1\"></div>\r\n    <div ac-value=\"checkbox.check2\"></div>\r\n    <input type=\"checkbox\" ac-model=\"checkbox.check1\" value=\"1\">\r\n    <input type=\"checkbox\" ac-model=\"checkbox.check2\" value=\"2\">\r\n</div>\r\n\r\n<!-- <div class=\"section-title\">Form validation</div>\r\n\r\n<form ac-submit=\"submit\" ac-form-validation>\r\n    <div class=\"input\">\r\n        Result: <span ac-value=\"model : json\"></span>\r\n    </div>\r\n    <div class=\"input\">\r\n        <input type=\"text\" placeholder=\"name\" ac-model=\"model.name\" required ac-pattern=\"[0-9]\" ac-pattern-title=\"0-9\">\r\n        <div class=\"input-border\"></div>\r\n    </div>\r\n    <div class=\"input\">\r\n        <input type=\"email\" placeholder=\"email\" ac-model=\"model.email\" required>\r\n        <div class=\"input-border\"></div>\r\n    </div>\r\n    <div class=\"input\">\r\n        <input type=\"checkbox\" ac-model=\"model.checkbox\" required>\r\n    </div>\r\n    <button>Submit</button>\r\n</form> -->\r\n\r\n<div class=\"section-title\">Reactive forms</div>\r\n\r\n<form ac-submit=\"submitReactive($event)\" ac-form-group=\"form\">\r\n\t<br>\r\n\tIs valid: <span ac-value=\"form.valid\"></span>\r\n    <div class=\"input\">\r\n        <input type=\"text\" ac-form-control=\"name\">\r\n        <div class=\"input-border\"></div>\r\n        <span class=\"invalid-message\" ac-if=\"this.form.controls.name.errors.regExp && this.form.controls.name.dirty\">Invalid value</span>\r\n        <span class=\"invalid-message\" ac-if=\"this.form.controls.name.errors.required && this.form.controls.name.dirty\">Empty</span>\r\n    </div>\r\n\r\n    <div class=\"input\">\r\n        <input type=\"text\" ac-form-control=\"number\">\r\n        <div class=\"input-border\" ></div>\r\n        <span class=\"invalid-message\" ac-if=\"this.form.controls.number.errors.regExp && this.form.controls.number.dirty\">Invalid value</span>\r\n        <span class=\"invalid-message\" ac-if=\"this.form.controls.number.errors.required && this.form.controls.number.dirty\">Empty</span>\r\n    </div>\r\n\r\n    <div class=\"input\">\r\n        Result: <span ac-value=\"form.value | json\"></span>\r\n    </div>\r\n\r\n    <button>Submit</button>\r\n</form>\r\n\r\n\r\n<style>\r\n    .invalid-message{\r\n        position: absolute;\r\n        top: -14px;\r\n        font-size: 12px;\r\n        color: red;\r\n    }\r\n</style>\r\n<!-- <br>\r\n<br>\r\n<app-tree-debug></app-tree-debug> -->";
+	module.exports = "<h3>Forms</h3>\r\n\r\n<div class=\"section-title\">Model driven form</div>\r\n<br>\r\n\r\n<div class=\"title\">[type=\"text\"]</div>\r\n    <div ac-value=\"input\"></div>\r\n<div class=\"input\">\r\n    <input type=\"text\" ac-model=\"input\">\r\n    <div class=\"input-border\"></div>\r\n</div>\r\n<div class=\"title\">[type=\"email\"]</div>\r\n    <div ac-value=\"email\"></div>\r\n<div class=\"input\">\r\n    <input type=\"email\" ac-model=\"email\">\r\n    <div class=\"input-border\"></div>\r\n</div>\r\n<div class=\"title\">[type=\"password\"]</div>\r\n    <div ac-value=\"password\"></div>\r\n<div class=\"input\">\r\n    <input type=\"password\" ac-model=\"password\">\r\n    <div class=\"input-border\"></div>\r\n</div>\r\n<div class=\"title\">[type=\"radio\"]</div>\r\n<div class=\"input\">\r\n    <div ac-value=\"radio\"></div>\r\n    <input type=\"radio\" ac-model=\"radio\" value=\"1\" name=\"radio\">\r\n    <input type=\"radio\" ac-model=\"radio\" value=\"2\" name=\"radio\">\r\n</div>\r\n<div class=\"title\">[type=\"checkbox\"]</div>\r\n<div class=\"input\">\r\n    <div ac-value=\"checkbox.check1\"></div>\r\n    <div ac-value=\"checkbox.check2\"></div>\r\n    <input type=\"checkbox\" ac-model=\"checkbox.check1\" value=\"1\">\r\n    <input type=\"checkbox\" ac-model=\"checkbox.check2\" value=\"2\">\r\n</div>\r\n\r\n<!-- <div class=\"section-title\">Form validation</div>\r\n\r\n<form ac-submit=\"submit\" ac-form-validation>\r\n    <div class=\"input\">\r\n        Result: <span ac-value=\"model : json\"></span>\r\n    </div>\r\n    <div class=\"input\">\r\n        <input type=\"text\" placeholder=\"name\" ac-model=\"model.name\" required ac-pattern=\"[0-9]\" ac-pattern-title=\"0-9\">\r\n        <div class=\"input-border\"></div>\r\n    </div>\r\n    <div class=\"input\">\r\n        <input type=\"email\" placeholder=\"email\" ac-model=\"model.email\" required>\r\n        <div class=\"input-border\"></div>\r\n    </div>\r\n    <div class=\"input\">\r\n        <input type=\"checkbox\" ac-model=\"model.checkbox\" required>\r\n    </div>\r\n    <button>Submit</button>\r\n</form> -->\r\n\r\n<div class=\"section-title\">Reactive forms</div>\r\n\r\n<form ac-submit=\"submitReactive($event)\" ac-form-group=\"form\">\r\n\t<br>\r\n\tIs valid: <span ac-value=\"form.valid\"></span>\r\n    <div class=\"input\">\r\n        <input type=\"text\" ac-form-control=\"name\">\r\n         <input type=\"text\" ac-form-control=\"name\">\r\n        <div class=\"input-border\"></div>\r\n        <span class=\"invalid-message\" ac-if=\"form.controls.name.errors.regExp && form.controls.name.dirty\">Invalid value</span>\r\n        <span class=\"invalid-message\" ac-if=\"form.controls.name.errors.required && form.controls.name.dirty\">Empty</span>\r\n    </div>\r\n\r\n    <div class=\"input\">\r\n        <input type=\"text\" ac-form-control=\"number\">\r\n        <div class=\"input-border\" ></div>\r\n        <span class=\"invalid-message\" ac-if=\"form.controls.number.errors.regExp && form.controls.number.dirty\">Invalid value</span>\r\n        <span class=\"invalid-message\" ac-if=\"form.controls.number.errors.required && form.controls.number.dirty\">Empty</span>\r\n    </div>\r\n\r\n    <div style=\"position: relative;\">Checkbox\r\n        <input type=\"checkbox\" ac-form-control=\"checkbox\" value=\"check-1\">\r\n        <input type=\"checkbox\" ac-form-control=\"checkbox\" value=\"check-2\">\r\n        <span class=\"invalid-message\" ac-if=\"form.controls.checkbox.errors.required && form.controls.checkbox.dirty\">Invalid value</span>\r\n    </div>\r\n\r\n    <div style=\"position: relative;\">Radio\r\n        <input type=\"radio\" name=\"radio\" ac-form-control=\"radio\" value=\"radio-1\">\r\n        <input type=\"radio\" name=\"radio\" ac-form-control=\"radio\" value=\"radio-2\">\r\n        <span class=\"invalid-message\" ac-if=\"form.controls.radio.errors.required && form.controls.radio.dirty\">Invalid value</span>\r\n    </div>\r\n\r\n    <div class=\"input\">\r\n        Result: <span ac-value=\"form.value | json\"></span>\r\n    </div>\r\n\r\n    <button>Submit</button>\r\n</form>\r\n\r\n\r\n<style>\r\n    .invalid-message{\r\n        position: absolute;\r\n        top: -14px;\r\n        font-size: 12px;\r\n        color: red;\r\n    }\r\n</style>\r\n<!-- <br>\r\n<br>\r\n<app-tree-debug></app-tree-debug> -->";
 
 /***/ }),
 /* 103 */

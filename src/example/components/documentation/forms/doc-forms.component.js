@@ -14,7 +14,9 @@ import Tpl from './doc-forms.component.html';
             },
             form: new FormGroup({
                 name: ['', [Validators.required, Validators.regExp('^[0-9a-zA-Z- ]+$')]],
-                number: ['', [Validators.required, Validators.regExp('^[0-9a-zA-Z- ]+$')]]
+                number: ['', [Validators.required, Validators.regExp('^[0-9a-zA-Z- ]+$')]],
+                checkbox: ['', [Validators.required]],
+                radio: ['', [Validators.required]]
             })
         }
 
@@ -34,13 +36,12 @@ export class DocFormsComponent {
         e.preventDefault(e);
         if (this.props.form.isValid()) {
             let res = this.props.form.value;
-
         } 
 
     }
 
     keyup() {
-        console.log(213);
+     
     }
 
 
