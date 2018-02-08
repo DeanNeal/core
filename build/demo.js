@@ -1,8 +1,8 @@
 /*!
- * ace-js 0.8.9
+ * ace-js 0.8.10
  * May be freely distributed under the MIT license 
  * Author: Bogdan Zinkevich
- * Last update: 2018-2-8 11:26:33
+ * Last update: 2018-2-8 11:30:16
  * 
  */
 (function webpackUniversalModuleDefinition(root, factory) {
@@ -1756,7 +1756,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	            var rootEl = document.querySelectorAll(options.root.selector)[0];
 	            if (rootEl) {
 	                var rootComponent = new options.root(rootEl);
-	                rootComponent.root.setAttribute('ac-version', ("0.8.9"));
+	                rootComponent.root.setAttribute('ac-version', ("0.8.10"));
 	            } else {
 	                console.warn('There is no root component');
 	            }
@@ -4239,7 +4239,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	exports.TreeDebugComponent = _tree2.default;
 	exports.BarChartComponent = _barChart.BarChartComponent;
 	exports.LineChartComponent = _lineChart.LineChartComponent;
-	// import {ModalComponent, ModalStore} from './modal';
 
 /***/ }),
 /* 49 */
@@ -5578,9 +5577,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	                return r.componentInstance === comp;
 	            })[0];
 	            if (instance) {
-	                // if (instance.onCompleteCallback) {
-	                //     instance.onCompleteCallback.call(this, value);
-	                // }
 	                instance.close();
 	            }
 	        }
@@ -6223,7 +6219,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	            // });
 
 	            this.props.set({
-	                version: ("0.8.9"),
+	                version: ("0.8.10"),
 	                'categories': [{
 	                    name: 'Getting started',
 	                    items: [{
