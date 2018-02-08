@@ -11,6 +11,8 @@ import * as Controls from './controls';
 import { Http } from './http.js';
 import API from './api';
 
+import {ModalController} from './controls/modal';
+
 import {FormGroup} from 'reactive-forms/form-group';
 import {Validators} from 'reactive-forms/validators';
 
@@ -29,6 +31,8 @@ export {
     Controls,
     Http,
     API,
+
+    ModalController,
 
     FormGroup,
     Validators

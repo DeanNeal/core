@@ -1,3 +1,8 @@
+<a name="0.8.10"></a>
+# [0.8.10](https://github.com/DeanNeal/ace-js) (2018-02-01)
+### Features
+* **core:**  modal refactoring. Use as new Modal(...) #101 ([#101](https://github.com/DeanNeal/ace-js/issues/101))
+
 <a name="0.8.6"></a>
 # [0.8.6](https://github.com/DeanNeal/ace-js) (2018-02-01)
 ### Features

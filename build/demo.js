@@ -1,8 +1,8 @@
 /*!
- * ace-js 0.8.8
+ * ace-js 0.8.9
  * May be freely distributed under the MIT license 
  * Author: Bogdan Zinkevich
- * Last update: 2018-2-5 10:50:13
+ * Last update: 2018-2-8 11:26:33
  * 
  */
 (function webpackUniversalModuleDefinition(root, factory) {
@@ -216,7 +216,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	Object.defineProperty(exports, "__esModule", {
 	    value: true
 	});
-	exports.Validators = exports.FormGroup = exports.API = exports.Http = exports.Controls = exports.Plugins = exports.Utils = exports.GlobalEvents = exports.TemplateEngine = exports.RouteSwitcher = exports.Router = exports.Component = exports.Decorators = exports.Observable = undefined;
+	exports.Validators = exports.FormGroup = exports.ModalController = exports.API = exports.Http = exports.Controls = exports.Plugins = exports.Utils = exports.GlobalEvents = exports.TemplateEngine = exports.RouteSwitcher = exports.Router = exports.Component = exports.Decorators = exports.Observable = undefined;
 
 	var _observable = __webpack_require__(7);
 
@@ -248,11 +248,13 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var Controls = _interopRequireWildcard(_controls);
 
-	var _http = __webpack_require__(63);
+	var _http = __webpack_require__(62);
 
 	var _api = __webpack_require__(21);
 
 	var _api2 = _interopRequireDefault(_api);
+
+	var _modal = __webpack_require__(63);
 
 	var _formGroup = __webpack_require__(64);
 
@@ -276,6 +278,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	exports.Controls = Controls;
 	exports.Http = _http.Http;
 	exports.API = _api2.default;
+	exports.ModalController = _modal.ModalController;
 	exports.FormGroup = _formGroup.FormGroup;
 	exports.Validators = _validators.Validators;
 
@@ -1753,7 +1756,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	            var rootEl = document.querySelectorAll(options.root.selector)[0];
 	            if (rootEl) {
 	                var rootComponent = new options.root(rootEl);
-	                rootComponent.root.setAttribute('ac-version', ("0.8.8"));
+	                rootComponent.root.setAttribute('ac-version', ("0.8.9"));
 	            } else {
 	                console.warn('There is no root component');
 	            }
@@ -4215,31 +4218,28 @@ return /******/ (function(modules) { // webpackBootstrap
 	Object.defineProperty(exports, "__esModule", {
 	    value: true
 	});
-	exports.LineChartComponent = exports.BarChartComponent = exports.TreeDebugComponent = exports.ModalStore = exports.ModalComponent = exports.DropdownComponent = exports.DatepickerComponent = undefined;
+	exports.LineChartComponent = exports.BarChartComponent = exports.TreeDebugComponent = exports.DropdownComponent = exports.DatepickerComponent = undefined;
 
 	var _datepicker = __webpack_require__(49);
 
 	var _dropdown = __webpack_require__(50);
 
-	var _modal = __webpack_require__(52);
-
-	var _tree = __webpack_require__(53);
+	var _tree = __webpack_require__(52);
 
 	var _tree2 = _interopRequireDefault(_tree);
 
-	var _barChart = __webpack_require__(58);
+	var _barChart = __webpack_require__(57);
 
-	var _lineChart = __webpack_require__(61);
+	var _lineChart = __webpack_require__(60);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	exports.DatepickerComponent = _datepicker.DatepickerComponent;
 	exports.DropdownComponent = _dropdown.DropdownComponent;
-	exports.ModalComponent = _modal.ModalComponent;
-	exports.ModalStore = _modal.ModalStore;
 	exports.TreeDebugComponent = _tree2.default;
 	exports.BarChartComponent = _barChart.BarChartComponent;
 	exports.LineChartComponent = _lineChart.LineChartComponent;
+	// import {ModalComponent, ModalStore} from './modal';
 
 /***/ }),
 /* 49 */
@@ -4504,133 +4504,15 @@ return /******/ (function(modules) { // webpackBootstrap
 	Object.defineProperty(exports, "__esModule", {
 	    value: true
 	});
-	exports.ModalComponent = exports.ModalStore = undefined;
 
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }(); // import {Component, Utils, Store, ObservableModel} from '../core';
+	var _tree = __webpack_require__(53);
 
-
-	var _utils = __webpack_require__(41);
-
-	var _observable = __webpack_require__(7);
-
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-	var ModalsStore = function () {
-	    function ModalsStore() {
-	        _classCallCheck(this, ModalsStore);
-
-	        this.modal = new _observable.Observable({
-	            visible: false,
-	            modalData: null
-	        });
-	    }
-
-	    _createClass(ModalsStore, [{
-	        key: 'init',
-	        value: function init() {}
-	    }, {
-	        key: 'open',
-	        value: function open(type) {
-	            var _this = this;
-
-	            var params = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
-
-	            setTimeout(function () {
-	                _this.type = type;
-	                _this.modal.set({
-	                    type: type,
-	                    visible: true,
-	                    modalData: params.data || {},
-	                    callback: params.callback
-	                });
-	            });
-	        }
-	    }, {
-	        key: 'close',
-	        value: function close(type) {
-	            if (type === this.type) {
-	                this.modal.set({
-	                    visible: false
-	                });
-	            }
-	        }
-	    }]);
-
-	    return ModalsStore;
-	}();
-
-	var ModalStore = new ModalsStore();
-
-	var ModalComponent = function () {
-	    function ModalComponent() {
-	        _classCallCheck(this, ModalComponent);
-	    }
-
-	    _createClass(ModalComponent, [{
-	        key: 'onInit',
-	        value: function onInit() {
-	            var _this2 = this;
-
-	            this.setSubscriptions(ModalStore.modal.sub(function (r) {
-	                if (r.visible && _this2.type === r.type) {
-	                    _this2.props.set(r);
-	                    _this2.onOpen();
-	                } else {
-	                    _this2.props.set({ visible: false });
-	                    _this2.onClose();
-	                }
-	            }));
-	        }
-	    }, {
-	        key: 'onOpen',
-	        value: function onOpen() {}
-	    }, {
-	        key: 'onClose',
-	        value: function onClose() {}
-	    }, {
-	        key: 'close',
-	        value: function close() {
-	            ModalStore.close(this.type);
-	        }
-	    }, {
-	        key: 'cancel',
-	        value: function cancel() {
-	            ModalStore.close(this.type);
-	        }
-	    }, {
-	        key: 'outside',
-	        value: function outside(e, item) {
-	            ModalStore.close(this.type);
-	        }
-	    }, {
-	        key: 'onDestroy',
-	        value: function onDestroy() {}
-	    }]);
-
-	    return ModalComponent;
-	}();
-
-	exports.ModalStore = ModalStore;
-	exports.ModalComponent = ModalComponent;
-
-/***/ }),
-/* 53 */
-/***/ (function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
-	    value: true
-	});
-
-	var _tree = __webpack_require__(54);
-
-	var _treeItem = __webpack_require__(56);
+	var _treeItem = __webpack_require__(55);
 
 	exports.default = [_tree.AceTreeComponent, _treeItem.AceTreeItemComponent];
 
 /***/ }),
-/* 54 */
+/* 53 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -4648,7 +4530,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var Decorators = _interopRequireWildcard(_decorators);
 
-	var _treeComponent = __webpack_require__(55);
+	var _treeComponent = __webpack_require__(54);
 
 	var _treeComponent2 = _interopRequireDefault(_treeComponent);
 
@@ -4726,7 +4608,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	}()) || _class);
 
 /***/ }),
-/* 55 */
+/* 54 */
 /***/ (function(module, exports) {
 
 	"use strict";
@@ -4734,7 +4616,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	module.exports = "<button @click=\"load\">Load</button>\r\n<app-tree-item-debug ac-for=\"components\"></app-tree-item-debug>\r\n<style>\r\napp-tree-item-debug {\r\n    display: block;\r\n    padding: 5px 0;\r\n}\r\n\r\napp-tree-item-debug.children {\r\n    padding-left: 25px;\r\n}\r\n\r\n.toggle-btn {\r\n    cursor: pointer;\r\n    width: 12px;\r\n    height: 12px;\r\n    display: inline-block;\r\n    position: absolute;\r\n    left: -22px;\r\n}\r\n.toggle-btn:before {\r\n    content: '\\25B6';\r\n    color: #757575;\r\n}\r\n.toggle-btn.active:before {\r\n    content: '\\25BC';\r\n    color: #757575;\r\n}\r\n\r\n.has-children {\r\n\tcursor: pointer;\r\n}\r\n</style>";
 
 /***/ }),
-/* 56 */
+/* 55 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -4754,7 +4636,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var _component = __webpack_require__(12);
 
-	var _treeItemComponent = __webpack_require__(57);
+	var _treeItemComponent = __webpack_require__(56);
 
 	var _treeItemComponent2 = _interopRequireDefault(_treeItemComponent);
 
@@ -4801,7 +4683,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	}()) || _class);
 
 /***/ }),
-/* 57 */
+/* 56 */
 /***/ (function(module, exports) {
 
 	"use strict";
@@ -4809,7 +4691,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	module.exports = "<div style=\"position: relative;\">\r\n\t<span @click=\"toggle\" class=\"toggle-btn\" ac-if=\"this.children.length\" ac-class=\"active: !this.visible\"></span>\r\n\t<span @click=\"toggle\" class=\"component-name\" ac-class=\"has-children: this.children.length\" ac-value=\"name\"></span>\r\n</div>\r\n\r\n<div ac-class=\"hidden: this.visible\">\r\n\t<app-tree-item-debug ac-for=\"let item of children\" class=\"children\"></app-tree-item-debug>\r\n</div>\r\n";
 
 /***/ }),
-/* 58 */
+/* 57 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -4827,11 +4709,11 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var Decorators = _interopRequireWildcard(_decorators);
 
-	var _barChart = __webpack_require__(59);
+	var _barChart = __webpack_require__(58);
 
 	var _barChart2 = _interopRequireDefault(_barChart);
 
-	var _chart = __webpack_require__(60);
+	var _chart = __webpack_require__(59);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -5033,7 +4915,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	}()) || _class);
 
 /***/ }),
-/* 59 */
+/* 58 */
 /***/ (function(module, exports) {
 
 	"use strict";
@@ -5041,7 +4923,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	module.exports = "<svg ac-ref=\"svg\" ac-attr=\"height: height, width: width\" ac-if=\"this.series.length\">\r\n    <rect class=\"highcharts-background\" x=\"0\" y=\"0\" ac-attr=\"height: height, width: width, fill: background\" rx=\"0\" ry=\"0\"></rect>\r\n    <text ac-attr=\"x: labelX\" text-anchor=\"middle\" class=\"acechart-title\" y=\"24\">\r\n        <tspan ac-value=\"title\"></tspan>\r\n    </text>\r\n    <text ac-attr=\"x: yLabelX, y: yLabelY, transform: yLabelTransform\" text-anchor=\"middle\" class=\"acecharts-axis-title\">\r\n        <tspan ac-value=\"yAxis.label\"></tspan>\r\n    </text>\r\n    <g class=\"acechart-grid acechart-yaxis-grid \">\r\n        <line ac-for=\"let item of xGrid\" ac-attr=\"x1: x1, x2: x2, y1: y1, y2: y2\" stroke=\"black\" stroke-width=\"1\" shape-rendering=\"crispEdges\" />\r\n    </g>\r\n    <g class=\"acechart-group\">\r\n        <rect ac-for=\"let item of series\" @mouseenter=\"mouseenter(item)\" @mouseleave=\"mouseleave\" ac-attr=\"x: x, y: y, stroke: stroke, fill: fill, stroke-width: strokeWidth, width: width, height: height\"></rect>\r\n    </g>\r\n    <!--     <g class=\"acechart-axis-labels acechart-xaxis-labels \" transform=\"translate(40,0) scale(1 1)\">\r\n        <text ac-for=\"xLabels\" ac-attr=\"x: x, y: y\" text-anchor=\"start\" transform=\"translate(0,0)\">\r\n            <tspan ac-value=\"name\"></tspan>\r\n        </text>\r\n    </g> -->\r\n    <g class=\"acechart-axis-labels acechart-xaxis-labels \">\r\n        <text ac-for=\"let item of xGroupLabels\" ac-attr=\"x: x, y: y\" text-anchor=\"start\" transform=\"translate(0,0)\">\r\n            <tspan ac-value=\"name\"></tspan>\r\n        </text>\r\n    </g>\r\n    <g class=\"acechart-axis-labels acechart-yaxis-labels \">\r\n        <text ac-for=\"let item of yLabels\" ac-attr=\"x: x, y: y\" text-anchor=\"end\" transform=\"translate(0,0)\">\r\n            <tspan ac-value=\"name\"></tspan>\r\n        </text>\r\n    </g>\r\n</svg>\r\n<div class=\"acecharts-tooltip\" ac-class=\"open: this.tooltipIsShown\" ac-style=\"top: tooltipCoords.y, left: tooltipCoords.x\">\r\n    <div style=\"font-size: 12px;\">Languages</div>\r\n    <br>\r\n    <span ac-value=\"tooltipSelected.name\"></span>\r\n    <b ac-value=\"tooltipSelected.value\"></b>% of total\r\n</div>\r\n<div ac-if=\"!this.series.length\">Bar chart. There is no data to show</div>\r\n<style>\r\nace-bar-chart {\r\n    display: inline-block;\r\n    position: relative;\r\n}\r\n\r\n.acecharts-tooltip.open {\r\n    opacity: 1;\r\n    visibility: visible;\r\n}\r\n\r\n\r\n\r\n.acecharts-tooltip {\r\n    position: absolute;\r\n    background: #fbf5f5c9;\r\n    /*width: 200px;*/\r\n    top: 0;\r\n    /*height: 100px;*/\r\n    transition: 0.2s;\r\n    opacity: 0;\r\n    visibility: hidden;\r\n    padding: 10px;\r\n    border: 1px solid #ddddde;\r\n    border-radius: 2px;\r\n}\r\n\r\n.acecharts-tooltip:after, .acecharts-tooltip:before {\r\n    top: 100%;\r\n    left: 50%;\r\n    border: solid transparent;\r\n    content: \" \";\r\n    height: 0;\r\n    width: 0;\r\n    position: absolute;\r\n    pointer-events: none;\r\n}\r\n\r\n.acecharts-tooltip:after {\r\n    border-color: rgba(247, 247, 247, 0);\r\n    border-top-color: #f7f7f7;\r\n    border-width: 10px;\r\n    margin-left: -10px;\r\n}\r\n.acecharts-tooltip:before {\r\n    border-color: rgba(221, 221, 222, 0);\r\n    border-top-color: #ddddde;\r\n    border-width: 11px;\r\n    margin-left: -11px;\r\n}\r\n\r\n.acechart-group rect {\r\n    /*fill: #5699dc;*/\r\n    transition: 0.5s;\r\n}\r\n\r\n.acechart-group rect:hover {\r\n    /*fill: #3e6a96;*/\r\n    opacity: 0.7;\r\n}\r\n\r\n.acechart-xaxis-labels text {\r\n    cursor: default;\r\n    font-size: 11px;\r\n    font-family: Verdana, sans-serif;\r\n    fill: #666666;\r\n    transition: 0.5s;\r\n}\r\n\r\n.acecharts-axis-title {\r\n    cursor: default;\r\n    font-size: 12px;\r\n    font-family: Verdana, sans-serif;\r\n    fill: #666666;\r\n}\r\n\r\n.acechart-title {\r\n    cursor: default;\r\n    font-size: 16px;\r\n    font-family: Verdana, sans-serif;\r\n    fill: #666666;\r\n    transition: 0.5s;\r\n}\r\n\r\n.acechart-yaxis-labels text {\r\n    cursor: default;\r\n    font-size: 11px;\r\n    font-family: Verdana, sans-serif;\r\n    fill: #666666;\r\n}\r\n\r\n.acechart-yaxis-grid line {\r\n    stroke: #ccc;\r\n}\r\n\r\n.acechart-group {}\r\n</style>";
 
 /***/ }),
-/* 60 */
+/* 59 */
 /***/ (function(module, exports) {
 
 	"use strict";
@@ -5162,7 +5044,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	exports.Chart = Chart;
 
 /***/ }),
-/* 61 */
+/* 60 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -5180,11 +5062,11 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var Decorators = _interopRequireWildcard(_decorators);
 
-	var _lineChart = __webpack_require__(62);
+	var _lineChart = __webpack_require__(61);
 
 	var _lineChart2 = _interopRequireDefault(_lineChart);
 
-	var _chart = __webpack_require__(60);
+	var _chart = __webpack_require__(59);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -5447,7 +5329,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	}()) || _class);
 
 /***/ }),
-/* 62 */
+/* 61 */
 /***/ (function(module, exports) {
 
 	"use strict";
@@ -5455,7 +5337,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	module.exports = "<svg ac-ref=\"svg\" ac-attr=\"height: height, width: width\" ac-if=\"this.series.length\">\r\n    <rect class=\"acechart-background\" x=\"0\" y=\"0\" ac-attr=\"height: height, width: width, fill: background\" rx=\"0\" ry=\"0\"></rect>\r\n    <text ac-attr=\"x: labelX\" text-anchor=\"middle\" class=\"acechart-title\" y=\"24\">\r\n        <tspan ac-value=\"title\"></tspan>\r\n    </text>\r\n    <g class=\"acechart-grid acechart-yaxis-grid \">\r\n        <line ac-for=\"let item of xGrid\" ac-attr=\"x1: x1, x2: x2, y1: y1, y2: y2\" stroke=\"black\" stroke-width=\"1\" shape-rendering=\"crispEdges\" />\r\n    </g>\r\n    <text ac-attr=\"x: yLabelX, y: yLabelY, transform: yLabelTransform\" text-anchor=\"middle\" class=\"acecharts-axis-title\">\r\n        <tspan ac-value=\"yAxis.label\"></tspan>\r\n    </text>\r\n    <g class=\"acechart-axis-labels acechart-yaxis-labels \">\r\n        <text ac-for=\"let item of yLabels\" ac-attr=\"x: x, y: y\" text-anchor=\"end\" transform=\"translate(0,0)\">\r\n            <tspan ac-value=\"name\"></tspan>\r\n        </text>\r\n    </g>\r\n    <g class=\"acechart-series\">\r\n        <path ac-for=\"let item of series\" fill=\"none\" ac-attr=\"d: d, stroke: stroke\" class=\"acechart-graph\" stroke-width=\"2\" stroke-linejoin=\"round\" stroke-linecap=\"round\"></path>\r\n    </g>\r\n\r\n    <g class=\"acechart-markers\">\r\n        <g ac-for=\"let item of markers\"> \r\n            <rect ac-for=\"let item of items\" @mouseenter=\"mouseenter(item)\" @mouseleave=\"mouseleave\" ac-attr=\"x: x, y: y, fill: fill, width: width, height: height\" ></rect>\r\n        </g>\r\n    </g>\r\n\r\n</svg>\r\n<div class=\"acecharts-tooltip\" ac-class=\"open: this.tooltipIsShown\" ac-style=\"top: tooltipCoords.y, left: tooltipCoords.x\">\r\n    <div style=\"font-size: 12px;\">Languages</div>\r\n    <br>\r\n    <span ac-value=\"tooltipSelected.name\"></span>\r\n    <b ac-value=\"tooltipSelected.value\"></b>\r\n</div>\r\n<div ac-if=\"!this.series.length\">Bar chart. There is no data to show</div>\r\n<style>\r\nace-line-chart {\r\n    display: inline-block;\r\n    position: relative;\r\n}\r\n\r\n.acecharts-tooltip.open {\r\n    opacity: 1;\r\n    visibility: visible;\r\n}\r\n\r\n.acechart-series path , .acechart-markers rect{\r\n    transition: 0.5s;\r\n}\r\n\r\n.acecharts-tooltip {\r\n    position: absolute;\r\n    background: #fbf5f5c9;\r\n    /*width: 200px;*/\r\n    top: 0;\r\n    /*height: 100px;*/\r\n    transition: 0.2s;\r\n    opacity: 0;\r\n    visibility: hidden;\r\n    padding: 10px;\r\n    border: 1px solid #ddddde;\r\n    border-radius: 2px;\r\n}\r\n\r\n.acecharts-tooltip:after,\r\n.acecharts-tooltip:before {\r\n    top: 100%;\r\n    left: 50%;\r\n    border: solid transparent;\r\n    content: \" \";\r\n    height: 0;\r\n    width: 0;\r\n    position: absolute;\r\n    pointer-events: none;\r\n}\r\n\r\n.acecharts-tooltip:after {\r\n    border-color: rgba(247, 247, 247, 0);\r\n    border-top-color: #f7f7f7;\r\n    border-width: 10px;\r\n    margin-left: -10px;\r\n}\r\n\r\n.acecharts-tooltip:before {\r\n    border-color: rgba(221, 221, 222, 0);\r\n    border-top-color: #ddddde;\r\n    border-width: 11px;\r\n    margin-left: -11px;\r\n}\r\n\r\n.acechart-group rect {\r\n    /*fill: #5699dc;*/\r\n    transition: 0.5s;\r\n}\r\n\r\n.acechart-group rect:hover {\r\n    /*fill: #3e6a96;*/\r\n    opacity: 0.7;\r\n}\r\n\r\n.acechart-xaxis-labels text {\r\n    cursor: default;\r\n    font-size: 11px;\r\n    font-family: Verdana, sans-serif;\r\n    fill: #666666;\r\n    transition: 0.5s;\r\n}\r\n\r\n.acecharts-axis-title {\r\n    cursor: default;\r\n    font-size: 12px;\r\n    font-family: Verdana, sans-serif;\r\n    fill: #666666;\r\n}\r\n\r\n.acechart-title {\r\n    cursor: default;\r\n    font-size: 16px;\r\n    font-family: Verdana, sans-serif;\r\n    fill: #666666;\r\n    transition: 0.5s;\r\n}\r\n\r\n.acechart-yaxis-labels text {\r\n    cursor: default;\r\n    font-size: 11px;\r\n    font-family: Verdana, sans-serif;\r\n    fill: #666666;\r\n}\r\n\r\n.acechart-yaxis-grid line {\r\n    stroke: #ccc;\r\n}\r\n\r\n.acechart-group {}\r\n</style>";
 
 /***/ }),
-/* 63 */
+/* 62 */
 /***/ (function(module, exports) {
 
 	'use strict';
@@ -5621,6 +5503,91 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var Http = new HttpModule();
 	exports.Http = Http;
+
+/***/ }),
+/* 63 */
+/***/ (function(module, exports) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	var instances = [];
+
+	var ModalController = exports.ModalController = function () {
+	    function ModalController(component) {
+	        _classCallCheck(this, ModalController);
+
+	        this.root = document.createElement('app-modal');
+	        this.component = component;
+	        this.componentInstance = null;
+	        this.onCompleteCallback = null;
+	        this.init();
+	    }
+
+	    _createClass(ModalController, [{
+	        key: 'init',
+	        value: function init() {
+	            var _this = this;
+
+	            this.componentInstance = new this.component(this.root, {}, this);
+	            document.body.appendChild(this.root);
+
+	            var overlay = document.createElement('app-modal-overlay');
+	            overlay.addEventListener('click', function (e) {
+	                _this.close();
+	            }, false);
+	            this.root.appendChild(overlay);
+
+	            instances.push(this);
+	        }
+	    }, {
+	        key: 'onComplete',
+	        value: function onComplete(fn) {
+	            this.onCompleteCallback = fn;
+	        }
+	    }, {
+	        key: 'close',
+	        value: function close() {
+	            this.componentInstance.destroy();
+	            document.body.removeChild(this.root);
+	        }
+	    }], [{
+	        key: 'confirm',
+	        value: function confirm(comp, value) {
+	            var instance = instances.filter(function (r) {
+	                return r.componentInstance === comp;
+	            })[0];
+	            if (instance) {
+	                if (instance.onCompleteCallback) {
+	                    instance.onCompleteCallback.call(this, value);
+	                }
+	                instance.close();
+	            }
+	        }
+	    }, {
+	        key: 'dismiss',
+	        value: function dismiss(comp) {
+	            var instance = instances.filter(function (r) {
+	                return r.componentInstance === comp;
+	            })[0];
+	            if (instance) {
+	                // if (instance.onCompleteCallback) {
+	                //     instance.onCompleteCallback.call(this, value);
+	                // }
+	                instance.close();
+	            }
+	        }
+	    }]);
+
+	    return ModalController;
+	}();
 
 /***/ }),
 /* 64 */
@@ -6256,7 +6223,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	            // });
 
 	            this.props.set({
-	                version: ("0.8.8"),
+	                version: ("0.8.9"),
 	                'categories': [{
 	                    name: 'Getting started',
 	                    items: [{
@@ -7131,7 +7098,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	"use strict";
 
-	module.exports = "<h3>Forms</h3>\r\n\r\n<div class=\"section-title\">Model driven form</div>\r\n<br>\r\n\r\n<div class=\"title\">[type=\"text\"]</div>\r\n    <div ac-value=\"input\"></div>\r\n<div class=\"input\">\r\n    <input type=\"text\" ac-model=\"input\">\r\n    <div class=\"input-border\"></div>\r\n</div>\r\n<div class=\"title\">[type=\"email\"]</div>\r\n    <div ac-value=\"email\"></div>\r\n<div class=\"input\">\r\n    <input type=\"email\" ac-model=\"email\">\r\n    <div class=\"input-border\"></div>\r\n</div>\r\n<div class=\"title\">[type=\"password\"]</div>\r\n    <div ac-value=\"password\"></div>\r\n<div class=\"input\">\r\n    <input type=\"password\" ac-model=\"password\">\r\n    <div class=\"input-border\"></div>\r\n</div>\r\n<div class=\"title\">[type=\"radio\"]</div>\r\n<div class=\"input\">\r\n    <div ac-value=\"radio\"></div>\r\n    <input type=\"radio\" ac-model=\"radio\" value=\"1\" name=\"radio\">\r\n    <input type=\"radio\" ac-model=\"radio\" value=\"2\" name=\"radio\">\r\n</div>\r\n<div class=\"title\">[type=\"checkbox\"]</div>\r\n<div class=\"input\">\r\n    <div ac-value=\"checkbox.check1\"></div>\r\n    <div ac-value=\"checkbox.check2\"></div>\r\n    <input type=\"checkbox\" ac-model=\"checkbox.check1\" value=\"1\">\r\n    <input type=\"checkbox\" ac-model=\"checkbox.check2\" value=\"2\">\r\n</div>\r\n\r\n<!-- <div class=\"section-title\">Form validation</div>\r\n\r\n<form ac-submit=\"submit\" ac-form-validation>\r\n    <div class=\"input\">\r\n        Result: <span ac-value=\"model : json\"></span>\r\n    </div>\r\n    <div class=\"input\">\r\n        <input type=\"text\" placeholder=\"name\" ac-model=\"model.name\" required ac-pattern=\"[0-9]\" ac-pattern-title=\"0-9\">\r\n        <div class=\"input-border\"></div>\r\n    </div>\r\n    <div class=\"input\">\r\n        <input type=\"email\" placeholder=\"email\" ac-model=\"model.email\" required>\r\n        <div class=\"input-border\"></div>\r\n    </div>\r\n    <div class=\"input\">\r\n        <input type=\"checkbox\" ac-model=\"model.checkbox\" required>\r\n    </div>\r\n    <button>Submit</button>\r\n</form> -->\r\n\r\n<div class=\"section-title\">Reactive forms</div>\r\n\r\n<form ac-submit=\"submitReactive($event)\" ac-form-group=\"form\">\r\n\t<br>\r\n\tIs valid: <span ac-value=\"form.valid\"></span>\r\n    <div class=\"input\">\r\n        <input type=\"text\" ac-form-control=\"name\">\r\n         <input type=\"text\" ac-form-control=\"name\">\r\n        <div class=\"input-border\"></div>\r\n        <span class=\"invalid-message\" ac-if=\"form.controls.name.errors.regExp && form.controls.name.dirty\">Invalid value</span>\r\n        <span class=\"invalid-message\" ac-if=\"form.controls.name.errors.required && form.controls.name.dirty\">Empty</span>\r\n    </div>\r\n\r\n    <div class=\"input\">\r\n        <input type=\"text\" ac-form-control=\"number\">\r\n        <div class=\"input-border\" ></div>\r\n        <span class=\"invalid-message\" ac-if=\"form.controls.number.errors.regExp && form.controls.number.dirty\">Invalid value</span>\r\n        <span class=\"invalid-message\" ac-if=\"form.controls.number.errors.required && form.controls.number.dirty\">Empty</span>\r\n    </div>\r\n\r\n    <div style=\"position: relative;\">Checkbox\r\n        <input type=\"checkbox\" ac-form-control=\"checkbox\" value=\"check-1\">\r\n        <input type=\"checkbox\" ac-form-control=\"checkbox\" value=\"check-2\">\r\n        <span class=\"invalid-message\" ac-if=\"form.controls.checkbox.errors.required && form.controls.checkbox.dirty\">Invalid value</span>\r\n    </div>\r\n\r\n    <div style=\"position: relative;\">Radio\r\n        <input type=\"radio\" name=\"radio\" ac-form-control=\"radio\" value=\"radio-1\">\r\n        <input type=\"radio\" name=\"radio\" ac-form-control=\"radio\" value=\"radio-2\">\r\n        <span class=\"invalid-message\" ac-if=\"form.controls.radio.errors.required && form.controls.radio.dirty\">Invalid value</span>\r\n    </div>\r\n\r\n    <div class=\"input\">\r\n        Result: <span ac-value=\"form.value | json\"></span>\r\n    </div>\r\n\r\n    <button>Submit</button>\r\n</form>\r\n\r\n\r\n<style>\r\n    .invalid-message{\r\n        position: absolute;\r\n        top: -14px;\r\n        font-size: 12px;\r\n        color: red;\r\n    }\r\n</style>\r\n<!-- <br>\r\n<br>\r\n<app-tree-debug></app-tree-debug> -->";
+	module.exports = "<h3>Forms</h3>\r\n\r\n<div class=\"section-title\">Model driven form</div>\r\n<br>\r\n\r\n<div class=\"title\">[type=\"text\"]</div>\r\n    <div ac-value=\"input\"></div>\r\n<div class=\"input\">\r\n    <input type=\"text\" ac-model=\"input\">\r\n    <div class=\"input-border\"></div>\r\n</div>\r\n<div class=\"title\">[type=\"email\"]</div>\r\n    <div ac-value=\"email\"></div>\r\n<div class=\"input\">\r\n    <input type=\"email\" ac-model=\"email\">\r\n    <div class=\"input-border\"></div>\r\n</div>\r\n<div class=\"title\">[type=\"password\"]</div>\r\n    <div ac-value=\"password\"></div>\r\n<div class=\"input\">\r\n    <input type=\"password\" ac-model=\"password\">\r\n    <div class=\"input-border\"></div>\r\n</div>\r\n<div class=\"title\">[type=\"radio\"]</div>\r\n<div class=\"input\">\r\n    <div ac-value=\"radio\"></div>\r\n    <input type=\"radio\" ac-model=\"radio\" value=\"1\" name=\"radio\">\r\n    <input type=\"radio\" ac-model=\"radio\" value=\"2\" name=\"radio\">\r\n</div>\r\n<div class=\"title\">[type=\"checkbox\"]</div>\r\n<div class=\"input\">\r\n    <div ac-value=\"checkbox.check1\"></div>\r\n    <div ac-value=\"checkbox.check2\"></div>\r\n    <input type=\"checkbox\" ac-model=\"checkbox.check1\" value=\"1\">\r\n    <input type=\"checkbox\" ac-model=\"checkbox.check2\" value=\"2\">\r\n</div>\r\n\r\n<!-- <div class=\"section-title\">Form validation</div>\r\n\r\n<form ac-submit=\"submit\" ac-form-validation>\r\n    <div class=\"input\">\r\n        Result: <span ac-value=\"model : json\"></span>\r\n    </div>\r\n    <div class=\"input\">\r\n        <input type=\"text\" placeholder=\"name\" ac-model=\"model.name\" required ac-pattern=\"[0-9]\" ac-pattern-title=\"0-9\">\r\n        <div class=\"input-border\"></div>\r\n    </div>\r\n    <div class=\"input\">\r\n        <input type=\"email\" placeholder=\"email\" ac-model=\"model.email\" required>\r\n        <div class=\"input-border\"></div>\r\n    </div>\r\n    <div class=\"input\">\r\n        <input type=\"checkbox\" ac-model=\"model.checkbox\" required>\r\n    </div>\r\n    <button>Submit</button>\r\n</form> -->\r\n\r\n<div class=\"section-title\">Reactive forms</div>\r\n\r\n<form ac-submit=\"submitReactive($event)\" ac-form-group=\"form\">\r\n\t<br>\r\n\tIs valid: <span ac-value=\"form.valid\"></span>\r\n    <div class=\"input\">\r\n        <input type=\"text\" ac-form-control=\"name\">\r\n        <div class=\"input-border\"></div>\r\n        <span class=\"invalid-message\" ac-if=\"form.controls.name.errors.regExp && form.controls.name.dirty\">Invalid value</span>\r\n        <span class=\"invalid-message\" ac-if=\"form.controls.name.errors.required && form.controls.name.dirty\">Empty</span>\r\n    </div>\r\n\r\n    <div class=\"input\">\r\n        <input type=\"text\" ac-form-control=\"number\">\r\n        <div class=\"input-border\" ></div>\r\n        <span class=\"invalid-message\" ac-if=\"form.controls.number.errors.regExp && form.controls.number.dirty\">Invalid value</span>\r\n        <span class=\"invalid-message\" ac-if=\"form.controls.number.errors.required && form.controls.number.dirty\">Empty</span>\r\n    </div>\r\n\r\n    <div style=\"position: relative;\">Checkbox\r\n        <input type=\"checkbox\" ac-form-control=\"checkbox\" value=\"check-1\">\r\n        <input type=\"checkbox\" ac-form-control=\"checkbox\" value=\"check-2\">\r\n        <span class=\"invalid-message\" ac-if=\"form.controls.checkbox.errors.required && form.controls.checkbox.dirty\">Invalid value</span>\r\n    </div>\r\n\r\n    <div style=\"position: relative;\">Radio\r\n        <input type=\"radio\" name=\"radio\" ac-form-control=\"radio\" value=\"radio-1\">\r\n        <input type=\"radio\" name=\"radio\" ac-form-control=\"radio\" value=\"radio-2\">\r\n        <span class=\"invalid-message\" ac-if=\"form.controls.radio.errors.required && form.controls.radio.dirty\">Invalid value</span>\r\n    </div>\r\n\r\n    <div class=\"input\">\r\n        Result: <span ac-value=\"form.value | json\"></span>\r\n    </div>\r\n\r\n    <button>Submit</button>\r\n</form>\r\n\r\n\r\n<style>\r\n    .invalid-message{\r\n        position: absolute;\r\n        top: -14px;\r\n        font-size: 12px;\r\n        color: red;\r\n    }\r\n</style>\r\n<!-- <br>\r\n<br>\r\n<app-tree-debug></app-tree-debug> -->";
 
 /***/ }),
 /* 103 */
