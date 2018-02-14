@@ -1,8 +1,8 @@
 /*!
- * ace-js 0.8.10
+ * ace-js 0.8.11
  * May be freely distributed under the MIT license 
  * Author: Bogdan Zinkevich
- * Last update: 2018-2-11 15:22:12
+ * Last update: 2018-2-14 10:57:55
  * 
  */
 (function webpackUniversalModuleDefinition(root, factory) {
@@ -1758,7 +1758,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	            var rootEl = document.querySelectorAll(options.root.selector)[0];
 	            if (rootEl) {
 	                var rootComponent = new options.root(rootEl);
-	                rootComponent.root.setAttribute('ac-version', ("0.8.10"));
+	                rootComponent.root.setAttribute('ac-version', ("0.8.11"));
 	            } else {
 	                console.warn('There is no root component');
 	            }
@@ -5532,7 +5532,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	        this.component = component;
 	        this.componentInstance = null;
 	        this.onCompleteCallback = null;
-	        instances.push(this);
 	        this.init();
 	    }
 
@@ -5549,6 +5548,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	                _this.close();
 	            }, false);
 	            this.root.appendChild(overlay);
+
+	            instances.push(this);
 	        }
 	    }, {
 	        key: 'onComplete',
@@ -5562,16 +5563,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	            document.body.removeChild(this.root);
 	        }
 	    }], [{
-	        key: 'getData',
-	        value: function getData(comp) {
-	            var instance = instances.filter(function (r) {
-	                return r.componentInstance === comp;
-	            })[0];
-	            if (instance) {
-	                return instance.props;
-	            }
-	        }
-	    }, {
 	        key: 'confirm',
 	        value: function confirm(comp, value) {
 	            var instance = instances.filter(function (r) {
@@ -6233,7 +6224,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	            // });
 
 	            this.props.set({
-	                version: ("0.8.10"),
+	                version: ("0.8.11"),
 	                'categories': [{
 	                    name: 'Getting started',
 	                    items: [{
