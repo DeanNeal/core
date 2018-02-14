@@ -1,6 +1,7 @@
 let instances = [];
 export class ModalController {
-    constructor(component) {
+    constructor(component, props) {
+        this.props = Object.assign({}, props);
         this.root = document.createElement('app-modal');
         this.component = component;
         this.componentInstance = null;
@@ -9,7 +10,7 @@ export class ModalController {
     }
 
     init() {
-        this.componentInstance = new this.component(this.root, {}, this);
+        this.componentInstance = new this.component(this.root, {}, this, this.props);
         document.body.appendChild(this.root);
 
         let overlay = document.createElement('app-modal-overlay');

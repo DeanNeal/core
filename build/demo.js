@@ -2,7 +2,7 @@
  * ace-js 0.8.10
  * May be freely distributed under the MIT license 
  * Author: Bogdan Zinkevich
- * Last update: 2018-2-8 11:30:16
+ * Last update: 2018-2-11 15:22:12
  * 
  */
 (function webpackUniversalModuleDefinition(root, factory) {
@@ -788,7 +788,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	function ComponentDecorator(decoratorParams) {
 	    return function decorator(Class) {
-	        var func = function func(root, props, parent) {
+	        var func = function func(root, props, parent, extraData) {
 	            var newProps = {};
 	            try {
 	                newProps = decoratorParams.props ? decoratorParams.props() : {};
@@ -806,14 +806,14 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	            var instance = new Class();
 
-	            var qwerty = [];
+	            var services = [];
 	            if (_typeof(decoratorParams.services) === 'object') {
 	                for (var key in decoratorParams.services) {
 	                    if (decoratorParams.services.hasOwnProperty(key) && decoratorParams.services[key]) {
 	                        var injectedService = _api2.default.injectorGet(decoratorParams.services[key], Class);
 	                        if (injectedService) {
 	                            newProps[key] = injectedService;
-	                            qwerty.push({ key: key, injectedService: injectedService });
+	                            services.push({ key: key, injectedService: injectedService });
 	                        }
 	                    }
 	                }
@@ -837,7 +837,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	                _loop(_key);
 	            }
 
-	            qwerty.forEach(function (res) {
+	            services.forEach(function (res) {
 	                Object.defineProperty(instance, res.key, {
 	                    value: res.injectedService,
 	                    writable: false
@@ -849,6 +849,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	            });
 
 	            _component.Component.componentConstructor.call(instance, root, decoratorParams);
+	            instance.onInit(extraData);
+
 	            if (parent) {
 	                instance.parent = parent;
 	            }
@@ -954,7 +956,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	            _directives.Directives._formGroup.call(this, _private.PRIVATES.DIRECTIVES['ac-form-group'].get(this));
 
-	            this.onInit();
+	            // this.onInit();
 	        }
 	    }, {
 	        key: 'listenToPropsChanges',
@@ -5513,6 +5515,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	    value: true
 	});
 
+	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -5520,13 +5524,15 @@ return /******/ (function(modules) { // webpackBootstrap
 	var instances = [];
 
 	var ModalController = exports.ModalController = function () {
-	    function ModalController(component) {
+	    function ModalController(component, props) {
 	        _classCallCheck(this, ModalController);
 
+	        this.props = _extends({}, props);
 	        this.root = document.createElement('app-modal');
 	        this.component = component;
 	        this.componentInstance = null;
 	        this.onCompleteCallback = null;
+	        instances.push(this);
 	        this.init();
 	    }
 
@@ -5535,7 +5541,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        value: function init() {
 	            var _this = this;
 
-	            this.componentInstance = new this.component(this.root, {}, this);
+	            this.componentInstance = new this.component(this.root, {}, this, this.props);
 	            document.body.appendChild(this.root);
 
 	            var overlay = document.createElement('app-modal-overlay');
@@ -5543,8 +5549,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	                _this.close();
 	            }, false);
 	            this.root.appendChild(overlay);
-
-	            instances.push(this);
 	        }
 	    }, {
 	        key: 'onComplete',
@@ -5558,6 +5562,16 @@ return /******/ (function(modules) { // webpackBootstrap
 	            document.body.removeChild(this.root);
 	        }
 	    }], [{
+	        key: 'getData',
+	        value: function getData(comp) {
+	            var instance = instances.filter(function (r) {
+	                return r.componentInstance === comp;
+	            })[0];
+	            if (instance) {
+	                return instance.props;
+	            }
+	        }
+	    }, {
 	        key: 'confirm',
 	        value: function confirm(comp, value) {
 	            var instance = instances.filter(function (r) {

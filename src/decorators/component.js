@@ -7,7 +7,7 @@ import API from './../api';
 
 export default function ComponentDecorator(decoratorParams) {
     return function decorator(Class) {
-        let func = (root, props, parent) => {
+        let func = (root, props, parent, extraData) => {
             let newProps = {};
             try {
                 newProps = decoratorParams.props ? decoratorParams.props() : {};
@@ -25,14 +25,14 @@ export default function ComponentDecorator(decoratorParams) {
 
             let instance = new Class();
 
-            let qwerty = [];
+            let services = [];
             if (typeof decoratorParams.services === 'object') {
                 for (let key in decoratorParams.services) {
                     if (decoratorParams.services.hasOwnProperty(key) && decoratorParams.services[key]) {
                         let injectedService = API.injectorGet(decoratorParams.services[key], Class);
                         if (injectedService) {
                             newProps[key] = injectedService;
-                            qwerty.push({ key, injectedService });
+                            services.push({ key, injectedService });
                         }
                     }
                 }
@@ -48,7 +48,7 @@ export default function ComponentDecorator(decoratorParams) {
                 });
             }
 
-            qwerty.forEach(res => {
+            services.forEach(res => {
                 Object.defineProperty(instance, res.key, {
                     value: res.injectedService,
                     writable: false
@@ -60,6 +60,8 @@ export default function ComponentDecorator(decoratorParams) {
             })
 
             Component.componentConstructor.call(instance, root, decoratorParams);
+            instance.onInit(extraData);
+
             if (parent) {
                 instance.parent = parent;
             }

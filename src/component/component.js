@@ -123,7 +123,7 @@ export class Component {
         Directives._formGroup.call(this, PRIVATES.DIRECTIVES['ac-form-group'].get(this));
 
 
-        this.onInit();
+        // this.onInit();
     }
 
     listenToPropsChanges() {
