@@ -13,13 +13,21 @@ export class FormControl {
 
     setElem(elem) {
         this.elem = elem;
-        this.setValue(this.value, true);
+        this.setValue(this.value, true, false);
     }
 
-    setValue(value, silent) {
+    setValue(value, silent = false, validate = true) {
         this.value = value;
         if (this.elem && Utils.isTextField(this.elem)) {
             this.elem.value = value;
+        }
+
+        if(this.elem && Utils.isCustomElement(this.elem)) {
+            if(this.elem.COMPONENT) {
+                this.elem.COMPONENT._onModelChange(value, this.dirty && !this.isValid());
+            } else {
+                throw new Error(this.elem.localName + ' is undefined');
+            }
         }
 
         this.parent.getValues();
@@ -27,8 +35,11 @@ export class FormControl {
             this.markAsDirty();
             this.parent.onChangeCallback();
         }
-        // this.validate();
-        this.parent._validate();
+
+        if(validate) {
+            this.parent._validate();
+        }
+     
     }
 
     validate() {
@@ -124,7 +135,7 @@ export class FormGroup {
         }
 
         this.valid = valid.filter(r => r).length === Object.keys(this.controls).length;
-        
+
         if (this.component) {
             this.component.props._callAll();
         }
@@ -137,11 +148,7 @@ export class FormGroup {
         } else if (typeof name === 'object') {
 
             for (let key in name) {
-                if(this.controls[key].elem && Utils.isTextField(this.controls[key].elem)){
-                    this.controls[key].elem.value = name[key];
-                }
-                this.controls[key].value = name[key];
-                this.controls[key].markAsDirty();
+                this.controls[key].setValue(name[key], false, false);
             }
 
             this.getValues();

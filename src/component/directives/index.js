@@ -17,6 +17,7 @@ import { _hostEvents, _hostClasses, _hostStyles, _hostHidden } from './host';
 import { _formGroup } from './form-group';
 import { _customDirective } from './custom-directive';
 import { _computed } from './computed';
+import { _dropdown} from './dropdown';
 
 const Directives = {
     _style,
@@ -43,7 +44,8 @@ const Directives = {
     _hostHidden,
     _formGroup,
     _customDirective,
-    _computed
+    _computed,
+    _dropdown
 };
 
 export { Directives };

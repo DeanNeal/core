@@ -295,17 +295,8 @@ const Utils = {
     },
 
     isTextField(elem) {
-        return elem.type === 'text' || elem.type === 'email' || elem.type === 'password';
+        return elem.type === 'text' || elem.type === 'email' || elem.type === 'password' || elem.type === 'textarea';
     }
-
-    // textNodesUnder(node) {
-    //     var all = [];
-    //     for (node = node.firstChild; node; node = node.nextSibling) {
-    //         if (node.nodeType == 3) all.push(node);
-    //         else all = all.concat(Utils.textNodesUnder(node));
-    //     }
-    //     return all;
-    // }
 };
 
 export { Utils };

@@ -1,6 +1,6 @@
 import {Utils} from '../../utils/utils';
 import * as Decorators  from '../../decorators';
-import {DropdownComponent} from '../dropdown';
+// import {DropdownComponent} from '../dropdown';
 import Tpl from './datepicker.html';
 
 const daysOfWeek = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
@@ -16,7 +16,7 @@ const TODAY = new Date();
             formattedDate: Utils.getDateByFormat(TODAY, 'yyyy-mm-dd')
         }
     },
-    super: DropdownComponent
+    // super: DropdownComponent
 })
 
 export class DatepickerComponent {
@@ -65,7 +65,7 @@ export class DatepickerComponent {
     select(event, params) {
         if (params.inactive === false) {
             this.emit('modelChange', params.date);
-            this.close();
+            this._close();
         }
         event.stopPropagation();
     }

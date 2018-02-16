@@ -1,13 +1,13 @@
 import { Utils } from '../../core';
 export function _value(array, data, loopParams) {
     array.forEach(item => {
-        if (Utils.isCustomElement(item.elem) === false) {
-            let params = item.attr.split('|'),
-                r;
-            let rowHtml = false;
+        let params = item.attr.split('|'),
+            r;
+        let rowHtml = false;
 
-            r = this.getPropsByScope(params[0], data, loopParams);
-            r = Utils.applyFormatter(r, params[1]);
+        r = this.getPropsByScope(params[0], data, loopParams);
+        r = Utils.applyFormatter(r, params[1]);
+        if (Utils.isCustomElement(item.elem) === false) {
 
             if (item.elem.localName === 'input') {
                 switch (item.elem.type) {
@@ -27,6 +27,8 @@ export function _value(array, data, loopParams) {
             } else {
                 rowHtml ? (item.elem.innerHTML = r) : (item.elem.textContent = r);
             }
+        } else {
+            item.elem.COMPONENT._onModelChange(r);
         }
 
     });

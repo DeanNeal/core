@@ -23,6 +23,11 @@ export function _formGroup(array, data) {
                 }
             });
 
+            item.elem.addEventListener('modelChange', (e) => {
+                let attr = e.target.dataset.name;
+                setValues(formControls, attr, e, item, formGroup);
+            }, false);
+
             item.elem.addEventListener('input', (e) => {
                 let attr = e.target.dataset.name;
                 setValues(formControls, attr, e, item, formGroup);
@@ -43,6 +48,11 @@ export function _formGroup(array, data) {
                         formGroup.controls[attr].markAsDirty();
                         formGroup.controls[attr].validate();
                         target.focus();
+                        if(Utils.isCustomElement(target)) {
+                            target.COMPONENT._onFocus();
+                        } else {
+                            target.focus();
+                        }
                     }
                 });
 
@@ -54,7 +64,7 @@ export function _formGroup(array, data) {
 
 function setValues(formControls, attr, event, item, formGroup) {
     formControls.forEach(elem =>{
-        if (elem.dataset.name === attr &&  elem.localName === 'input') {
+        if (elem.dataset.name === attr &&  (elem.localName === 'input' || elem.localName === 'textarea')) {
             switch (elem.type) {
                 case 'checkbox':
                     if (attr) {
@@ -74,11 +84,14 @@ function setValues(formControls, attr, event, item, formGroup) {
                 case 'text':
                 case 'email':
                 case 'password':
+                case 'textarea':
                     formGroup.setValue(attr, event.target.value);
                     elem.value = event.target.value;
                     break;
             }
 
+        } else if(elem.dataset.name === attr && Utils.isCustomElement(elem)) {
+            formGroup.setValue(attr, event.detail);
         }
     });
 }

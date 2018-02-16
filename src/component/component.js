@@ -29,6 +29,10 @@ export class Component {
             attrs[root.attributes[i].nodeName] = root.attributes[i].nodeValue
         }
 
+        if(attrs['ac-form-control'] && attrs['ac-model']) {
+            throw new Error('Using of ac-model inside ac-form-group is forbidden');
+        }
+
         Object.defineProperty(this, '$attrs', { value: attrs, writable: false });
 
         this.root.COMPONENT = this;
@@ -111,11 +115,12 @@ export class Component {
             }
         });
 
+        Directives._dropdown.call(this, PRIVATES.DIRECTIVES['ac-dropdown'].get(this));
 
         Directives._model.call(this, PRIVATES.DIRECTIVES['ac-model'].get(this));
         Directives._on.call(this, PRIVATES.DIRECTIVES['ac-on'].get(this));
         Directives._outside.call(this, PRIVATES.DIRECTIVES['ac-outside'].get(this));
-        Directives._pattern.call(this, PRIVATES.DIRECTIVES['ac-pattern'].get(this));
+        Directives._pattern.call(this, PRIVATES.DIRECTIVES['ac-pattern'].get(this));//TODO
         Directives._elRef.call(this, PRIVATES.DIRECTIVES['ac-ref'].get(this));
         Directives._events.call(this, PRIVATES.EVENTS.get(this));
         Directives._hostEvents.call(this, PRIVATES.HOST.EVENTS.get(this));
@@ -325,6 +330,10 @@ export class Component {
 
     INPUT() {
 
+    }
+
+    _onModelChange() {
+        
     }
 
     onDestroy() {

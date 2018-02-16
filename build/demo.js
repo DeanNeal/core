@@ -2,7 +2,7 @@
  * ace-js 0.8.11
  * May be freely distributed under the MIT license 
  * Author: Bogdan Zinkevich
- * Last update: 2018-2-14 10:57:55
+ * Last update: 2018-2-16 11:51:17
  * 
  */
 (function webpackUniversalModuleDefinition(root, factory) {
@@ -76,7 +76,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var _core = __webpack_require__(6);
 
-	var _controls = __webpack_require__(48);
+	var _controls = __webpack_require__(49);
 
 	var _home = __webpack_require__(67);
 
@@ -232,19 +232,19 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var _routerCore2 = _interopRequireDefault(_routerCore);
 
-	var _templateEngine = __webpack_require__(43);
+	var _templateEngine = __webpack_require__(44);
 
-	var _globalEvents = __webpack_require__(44);
+	var _globalEvents = __webpack_require__(45);
 
 	var _globalEvents2 = _interopRequireDefault(_globalEvents);
 
-	var _utils = __webpack_require__(41);
+	var _utils = __webpack_require__(42);
 
-	var _plugins = __webpack_require__(45);
+	var _plugins = __webpack_require__(46);
 
 	var Plugins = _interopRequireWildcard(_plugins);
 
-	var _controls = __webpack_require__(48);
+	var _controls = __webpack_require__(49);
 
 	var Controls = _interopRequireWildcard(_controls);
 
@@ -695,7 +695,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var _directive2 = _interopRequireDefault(_directive);
 
-	var _inject = __webpack_require__(42);
+	var _inject = __webpack_require__(43);
 
 	var _inject2 = _interopRequireDefault(_inject);
 
@@ -946,10 +946,12 @@ return /******/ (function(modules) { // webpackBootstrap
 	                }
 	            });
 
+	            _directives.Directives._dropdown.call(this, _private.PRIVATES.DIRECTIVES['ac-dropdown'].get(this));
+
 	            _directives.Directives._model.call(this, _private.PRIVATES.DIRECTIVES['ac-model'].get(this));
 	            _directives.Directives._on.call(this, _private.PRIVATES.DIRECTIVES['ac-on'].get(this));
 	            _directives.Directives._outside.call(this, _private.PRIVATES.DIRECTIVES['ac-outside'].get(this));
-	            _directives.Directives._pattern.call(this, _private.PRIVATES.DIRECTIVES['ac-pattern'].get(this));
+	            _directives.Directives._pattern.call(this, _private.PRIVATES.DIRECTIVES['ac-pattern'].get(this)); //TODO
 	            _directives.Directives._elRef.call(this, _private.PRIVATES.DIRECTIVES['ac-ref'].get(this));
 	            _directives.Directives._events.call(this, _private.PRIVATES.EVENTS.get(this));
 	            _directives.Directives._hostEvents.call(this, _private.PRIVATES.HOST.EVENTS.get(this));
@@ -1188,6 +1190,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	        key: 'INPUT',
 	        value: function INPUT() {}
 	    }, {
+	        key: '_onModelChange',
+	        value: function _onModelChange() {}
+	    }, {
 	        key: 'onDestroy',
 	        value: function onDestroy() {}
 	    }, {
@@ -1215,6 +1220,10 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	            for (var i = 0; i < root.attributes.length; i++) {
 	                attrs[root.attributes[i].nodeName] = root.attributes[i].nodeValue;
+	            }
+
+	            if (attrs['ac-form-control'] && attrs['ac-model']) {
+	                throw new Error('Using of ac-model inside ac-form-group is forbidden');
 	            }
 
 	            Object.defineProperty(this, '$attrs', { value: attrs, writable: false });
@@ -1315,7 +1324,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	Object.defineProperty(exports, "__esModule", {
 	    value: true
 	});
-	var DIRECTIVES_NAMES = exports.DIRECTIVES_NAMES = ['ac-for', 'ac-style', 'ac-value', 'ac-input', 'ac-model', 'ac-if', 'ac-class', 'ac-link', 'ac-attr', 'ac-on', 'ac-pattern', 'ac-outside', 'ac-ref', 'ac-form-group'];
+	var DIRECTIVES_NAMES = exports.DIRECTIVES_NAMES = ['ac-for', 'ac-style', 'ac-value', 'ac-input', 'ac-model', 'ac-if', 'ac-class', 'ac-link', 'ac-attr', 'ac-on', 'ac-pattern', 'ac-outside', 'ac-ref', 'ac-form-group', 'ac-dropdown'];
 
 /***/ }),
 /* 15 */
@@ -1329,7 +1338,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var _directives = __webpack_require__(16);
 
-	var _utils = __webpack_require__(41);
+	var _utils = __webpack_require__(42);
 
 	// import { applyFormatter } from './../directives/value';
 	var Interpolation = {
@@ -1429,6 +1438,8 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var _computed2 = __webpack_require__(40);
 
+	var _dropdown2 = __webpack_require__(41);
+
 	var Directives = {
 	    _style: _style2._style,
 	    _value: _value2._value,
@@ -1454,7 +1465,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	    _hostHidden: _host._hostHidden,
 	    _formGroup: _formGroup2._formGroup,
 	    _customDirective: _customDirective2._customDirective,
-	    _computed: _computed2._computed
+	    _computed: _computed2._computed,
+	    _dropdown: _dropdown2._dropdown
 	};
 
 	exports.Directives = Directives;
@@ -1511,13 +1523,13 @@ return /******/ (function(modules) { // webpackBootstrap
 	    var _this = this;
 
 	    array.forEach(function (item) {
-	        if (_core.Utils.isCustomElement(item.elem) === false) {
-	            var params = item.attr.split('|'),
-	                r = void 0;
-	            var rowHtml = false;
+	        var params = item.attr.split('|'),
+	            r = void 0;
+	        var rowHtml = false;
 
-	            r = _this.getPropsByScope(params[0], data, loopParams);
-	            r = _core.Utils.applyFormatter(r, params[1]);
+	        r = _this.getPropsByScope(params[0], data, loopParams);
+	        r = _core.Utils.applyFormatter(r, params[1]);
+	        if (_core.Utils.isCustomElement(item.elem) === false) {
 
 	            if (item.elem.localName === 'input') {
 	                switch (item.elem.type) {
@@ -1537,6 +1549,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	            } else {
 	                rowHtml ? item.elem.innerHTML = r : item.elem.textContent = r;
 	            }
+	        } else {
+	            item.elem.COMPONENT._onModelChange(r);
 	        }
 	    });
 	}
@@ -2970,7 +2984,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 /***/ }),
 /* 31 */
-/***/ (function(module, exports) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
 
@@ -2978,6 +2992,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	    value: true
 	});
 	exports._model = _model;
+
+	var _core = __webpack_require__(6);
+
 	function _model(array, loopParams, collectionName, data) {
 	    var _this = this;
 
@@ -3009,9 +3026,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	            }
 	        }
 
-	        item.elem.addEventListener('modelChange', function (e) {
-	            _this.setComponentVariable(item.attr, e.detail);
-	        }, false);
+	        if (_core.Utils.isCustomElement(item.elem)) {
+	            item.elem.addEventListener('modelChange', function (e) {
+	                _this.setComponentVariable(item.attr, e.detail);
+	            }, false);
+	        }
 	    });
 	}
 
@@ -3147,7 +3166,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	            if (res.e) {
 	                var ouside = _this.shadow ? item.elem.contains(res.e.path[0]) : item.elem.contains(res.e.target);
 	                if (!ouside) {
-	                    _this[attr].call(_this, res.e);
+	                    _this[attr] && _this[attr].call(_this, res.e);
 	                }
 	            }
 	        }));
@@ -3293,6 +3312,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	                }
 	            });
 
+	            item.elem.addEventListener('modelChange', function (e) {
+	                var attr = e.target.dataset.name;
+	                setValues(formControls, attr, e, item, formGroup);
+	            }, false);
+
 	            item.elem.addEventListener('input', function (e) {
 	                var attr = e.target.dataset.name;
 	                setValues(formControls, attr, e, item, formGroup);
@@ -3313,6 +3337,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	                        formGroup.controls[attr].markAsDirty();
 	                        formGroup.controls[attr].validate();
 	                        target.focus();
+	                        if (_core.Utils.isCustomElement(target)) {
+	                            target.COMPONENT._onFocus();
+	                        } else {
+	                            target.focus();
+	                        }
 	                    }
 	                });
 
@@ -3324,7 +3353,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	function setValues(formControls, attr, event, item, formGroup) {
 	    formControls.forEach(function (elem) {
-	        if (elem.dataset.name === attr && elem.localName === 'input') {
+	        if (elem.dataset.name === attr && (elem.localName === 'input' || elem.localName === 'textarea')) {
 	            switch (elem.type) {
 	                case 'checkbox':
 	                    if (attr) {
@@ -3348,10 +3377,13 @@ return /******/ (function(modules) { // webpackBootstrap
 	                case 'text':
 	                case 'email':
 	                case 'password':
+	                case 'textarea':
 	                    formGroup.setValue(attr, event.target.value);
 	                    elem.value = event.target.value;
 	                    break;
 	            }
+	        } else if (elem.dataset.name === attr && _core.Utils.isCustomElement(elem)) {
+	            formGroup.setValue(attr, event.detail);
 	        }
 	    });
 	}
@@ -3415,6 +3447,46 @@ return /******/ (function(modules) { // webpackBootstrap
 
 /***/ }),
 /* 41 */
+/***/ (function(module, exports) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	exports._dropdown = _dropdown;
+	function _dropdown(array, data, loopParams) {
+	    array.forEach(function (item) {
+	        var component = item.elem.COMPONENT;
+	        component._outside = function () {
+	            if (component.props.get('_show')) {
+	                component.props.set('_show', false);
+	                component.onClose && component.onClose();
+	            }
+	        };
+	        component._open = function () {
+	            if (component.getRoot().getAttribute('readonly') === null) {
+	                component.props.set('_show', !component.props.get('_show'));
+	                component.onOpen && component.onOpen();
+	            }
+	        };
+
+	        component._close = function () {
+	            if (component.props.get('_show')) {
+	                component.props.set('_show', false);
+	            }
+	        };
+
+	        component._onFocus = function () {
+	            component._open();
+	        };
+
+	        component.onDestroy = function () {};
+	    });
+	}
+
+/***/ }),
+/* 42 */
 /***/ (function(module, exports) {
 
 	"use strict";
@@ -3704,24 +3776,14 @@ return /******/ (function(modules) { // webpackBootstrap
 	        }
 	    },
 	    isTextField: function isTextField(elem) {
-	        return elem.type === 'text' || elem.type === 'email' || elem.type === 'password';
+	        return elem.type === 'text' || elem.type === 'email' || elem.type === 'password' || elem.type === 'textarea';
 	    }
-
-	    // textNodesUnder(node) {
-	    //     var all = [];
-	    //     for (node = node.firstChild; node; node = node.nextSibling) {
-	    //         if (node.nodeType == 3) all.push(node);
-	    //         else all = all.concat(Utils.textNodesUnder(node));
-	    //     }
-	    //     return all;
-	    // }
-
 	};
 
 	exports.Utils = Utils;
 
 /***/ }),
-/* 42 */
+/* 43 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -3759,7 +3821,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	}
 
 /***/ }),
-/* 43 */
+/* 44 */
 /***/ (function(module, exports) {
 
 	'use strict';
@@ -3790,7 +3852,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	}
 
 /***/ }),
-/* 44 */
+/* 45 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -3817,7 +3879,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	exports.default = new GlobalEvents();
 
 /***/ }),
-/* 45 */
+/* 46 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -3827,11 +3889,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	});
 	exports.Chart = exports.Sortable = undefined;
 
-	var _sortable = __webpack_require__(46);
+	var _sortable = __webpack_require__(47);
 
 	var _sortable2 = _interopRequireDefault(_sortable);
 
-	var _aceChart = __webpack_require__(47);
+	var _aceChart = __webpack_require__(48);
 
 	var _aceChart2 = _interopRequireDefault(_aceChart);
 
@@ -3841,7 +3903,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	exports.Chart = _aceChart2.default;
 
 /***/ }),
-/* 46 */
+/* 47 */
 /***/ (function(module, exports) {
 
 	'use strict';
@@ -3994,7 +4056,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	exports.default = new Sortable();
 
 /***/ }),
-/* 47 */
+/* 48 */
 /***/ (function(module, exports) {
 
 	"use strict";
@@ -4212,7 +4274,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	exports.default = BarChart;
 
 /***/ }),
-/* 48 */
+/* 49 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -4220,11 +4282,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	Object.defineProperty(exports, "__esModule", {
 	    value: true
 	});
-	exports.LineChartComponent = exports.BarChartComponent = exports.TreeDebugComponent = exports.DropdownComponent = exports.DatepickerComponent = undefined;
+	exports.LineChartComponent = exports.BarChartComponent = exports.TreeDebugComponent = exports.DatepickerComponent = undefined;
 
-	var _datepicker = __webpack_require__(49);
-
-	var _dropdown = __webpack_require__(50);
+	var _datepicker = __webpack_require__(50);
 
 	var _tree = __webpack_require__(52);
 
@@ -4237,13 +4297,12 @@ return /******/ (function(modules) { // webpackBootstrap
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	exports.DatepickerComponent = _datepicker.DatepickerComponent;
-	exports.DropdownComponent = _dropdown.DropdownComponent;
 	exports.TreeDebugComponent = _tree2.default;
 	exports.BarChartComponent = _barChart.BarChartComponent;
 	exports.LineChartComponent = _lineChart.LineChartComponent;
 
 /***/ }),
-/* 49 */
+/* 50 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -4256,14 +4315,14 @@ return /******/ (function(modules) { // webpackBootstrap
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 	var _dec, _class;
+	// import {DropdownComponent} from '../dropdown';
 
-	var _utils = __webpack_require__(41);
+
+	var _utils = __webpack_require__(42);
 
 	var _decorators = __webpack_require__(8);
 
 	var Decorators = _interopRequireWildcard(_decorators);
-
-	var _dropdown = __webpack_require__(50);
 
 	var _datepicker = __webpack_require__(51);
 
@@ -4287,8 +4346,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	            daysOfWeekShort: _utils.Utils.daysOfWeekShort,
 	            formattedDate: _utils.Utils.getDateByFormat(TODAY, 'yyyy-mm-dd')
 	        };
-	    },
-	    super: _dropdown.DropdownComponent
+	    }
+	    // super: DropdownComponent
 	}), _dec(_class = function () {
 	    function DatepickerComponent(params) {
 	        _classCallCheck(this, DatepickerComponent);
@@ -4341,7 +4400,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        value: function select(event, params) {
 	            if (params.inactive === false) {
 	                this.emit('modelChange', params.date);
-	                this.close();
+	                this._close();
 	            }
 	            event.stopPropagation();
 	        }
@@ -4433,68 +4492,12 @@ return /******/ (function(modules) { // webpackBootstrap
 	}()) || _class);
 
 /***/ }),
-/* 50 */
-/***/ (function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
-	    value: true
-	});
-	exports.DropdownComponent = undefined;
-
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-	var _component = __webpack_require__(12);
-
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-	var DropdownComponent = exports.DropdownComponent = function () {
-	    function DropdownComponent() {
-	        _classCallCheck(this, DropdownComponent);
-	    }
-
-	    _createClass(DropdownComponent, [{
-	        key: 'openMenu',
-	        value: function openMenu(e) {
-	            if (this.getRoot().getAttribute('readonly') === null) {
-	                this.props.set('_show', !this.props.get('_show'));
-	                this.onOpen();
-	            }
-	        }
-	    }, {
-	        key: 'outside',
-	        value: function outside() {
-	            if (this.props.get('_show')) {
-	                this.onClose();
-	                this.close();
-	            }
-	        }
-	    }, {
-	        key: 'onOpen',
-	        value: function onOpen() {}
-	    }, {
-	        key: 'onClose',
-	        value: function onClose() {}
-	    }, {
-	        key: 'close',
-	        value: function close() {
-	            if (this.props.get('_show')) {
-	                this.props.set('_show', false);
-	            }
-	        }
-	    }]);
-
-	    return DropdownComponent;
-	}();
-
-/***/ }),
 /* 51 */
 /***/ (function(module, exports) {
 
 	"use strict";
 
-	module.exports = "<div ac-outside=\"outside\" class=\"relative\">\r\n\t<div  style=\"width: 100%\" class=\"app-form__label__input\">\r\n\t\t<input type=\"text\" @click=\"openMenu($event)\" class=\"app-form__label__input full-width\" readonly ac-value=\"formattedDate\">\r\n\t\t<div class=\"app-form__border\"></div>\r\n\t\t<!-- <img class=\"datepicker-icon\" src=\"../../assets/img/hanging-calendar.svg\" alt=\"\"> -->\r\n\t</div>\r\n\r\n\t<div class=\"j-calendar\" ac-if=\"_show\" >\r\n\t    <div class=\"j-calendar__wrap\">\r\n\t        <div class=\"j-calendar__item\">\r\n\t            <div class=\"j-calendar__header\">\r\n\t                <div class=\"j-calendar__header__left\" @click=\"prev($event)\">\r\n\t                    <span>prev</span>\r\n\t                </div>\r\n\t                <div class=\"j-calendar__header__center\">\r\n\t\t                <span ac-value=\"currentMonth\"></span>\r\n\t\t                <span style=\"margin-left: 7px;\" ac-value=\"currentYear\"></span>\r\n\t                </div>\r\n\t                <div class=\"j-calendar__header__right\" @click=\"next($event)\">\r\n\t                    <span>Next</span>\r\n\t                </div>\r\n\t            </div>\r\n\t            <div class=\"j-calendar__content\">\r\n\t                <div class=\"j-calendar__days\">\r\n\t                    <div class=\"j-calendar__days__item\" ac-for=\"let item of daysOfWeekShort\">\r\n\t\t\t\t\t\t\t<span ac-value=\"item.index\"></span>\r\n\t\t\t\t\t\t</div>\r\n\t                </div>\r\n\t                <div class=\"j-calendar__date\">\r\n\t                    <div class=\"j-calendar__date__item\" \r\n\t                    ac-class=\"j-calendar__date__item--today:item.today, j-calendar__date__item--active:item.selected, j-calendar__date__item--inactive: item.inactive\"\r\n\t                    ac-for=\"let item of countOfDays\"\r\n\t                    @click=\"select($event, item)\">{{item.index}}</div>\r\n\t                </div>\r\n\t            </div>\r\n\t        </div>\r\n\t    </div>\r\n\t</div>\r\n</div>\r\n";
+	module.exports = "<div ac-outside=\"_outside\" class=\"relative\">\r\n\t<div  style=\"width: 100%\" class=\"app-form__label__input\">\r\n\t\t<input type=\"text\" @click=\"_open($event)\" class=\"app-form__label__input full-width\" readonly ac-value=\"formattedDate\">\r\n\t\t<div class=\"app-form__border\"></div>\r\n\t\t<!-- <img class=\"datepicker-icon\" src=\"../../assets/img/hanging-calendar.svg\" alt=\"\"> -->\r\n\t</div>\r\n\r\n\t<div class=\"j-calendar\" ac-if=\"_show\" >\r\n\t    <div class=\"j-calendar__wrap\">\r\n\t        <div class=\"j-calendar__item\">\r\n\t            <div class=\"j-calendar__header\">\r\n\t                <div class=\"j-calendar__header__left\" @click=\"prev($event)\">\r\n\t                    <span>prev</span>\r\n\t                </div>\r\n\t                <div class=\"j-calendar__header__center\">\r\n\t\t                <span ac-value=\"currentMonth\"></span>\r\n\t\t                <span style=\"margin-left: 7px;\" ac-value=\"currentYear\"></span>\r\n\t                </div>\r\n\t                <div class=\"j-calendar__header__right\" @click=\"next($event)\">\r\n\t                    <span>Next</span>\r\n\t                </div>\r\n\t            </div>\r\n\t            <div class=\"j-calendar__content\">\r\n\t                <div class=\"j-calendar__days\">\r\n\t                    <div class=\"j-calendar__days__item\" ac-for=\"let item of daysOfWeekShort\">\r\n\t\t\t\t\t\t\t<span ac-value=\"item.index\"></span>\r\n\t\t\t\t\t\t</div>\r\n\t                </div>\r\n\t                <div class=\"j-calendar__date\">\r\n\t                    <div class=\"j-calendar__date__item\" \r\n\t                    ac-class=\"j-calendar__date__item--today:item.today, j-calendar__date__item--active:item.selected, j-calendar__date__item--inactive: item.inactive\"\r\n\t                    ac-for=\"let item of countOfDays\"\r\n\t                    @click=\"select($event, item)\">{{item.index}}</div>\r\n\t                </div>\r\n\t            </div>\r\n\t        </div>\r\n\t    </div>\r\n\t</div>\r\n</div>\r\n";
 
 /***/ }),
 /* 52 */
@@ -5605,7 +5608,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-	var _utils = __webpack_require__(41);
+	var _utils = __webpack_require__(42);
 
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
@@ -5627,14 +5630,25 @@ return /******/ (function(modules) { // webpackBootstrap
 	        key: 'setElem',
 	        value: function setElem(elem) {
 	            this.elem = elem;
-	            this.setValue(this.value, true);
+	            this.setValue(this.value, true, false);
 	        }
 	    }, {
 	        key: 'setValue',
-	        value: function setValue(value, silent) {
+	        value: function setValue(value) {
+	            var silent = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : false;
+	            var validate = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : true;
+
 	            this.value = value;
 	            if (this.elem && _utils.Utils.isTextField(this.elem)) {
 	                this.elem.value = value;
+	            }
+
+	            if (this.elem && _utils.Utils.isCustomElement(this.elem)) {
+	                if (this.elem.COMPONENT) {
+	                    this.elem.COMPONENT._onModelChange(value, this.dirty && !this.isValid());
+	                } else {
+	                    throw new Error(this.elem.localName + ' is undefined');
+	                }
 	            }
 
 	            this.parent.getValues();
@@ -5642,8 +5656,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	                this.markAsDirty();
 	                this.parent.onChangeCallback();
 	            }
-	            // this.validate();
-	            this.parent._validate();
+
+	            if (validate) {
+	                this.parent._validate();
+	            }
 	        }
 	    }, {
 	        key: 'validate',
@@ -5774,11 +5790,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	            } else if ((typeof name === 'undefined' ? 'undefined' : _typeof(name)) === 'object') {
 
 	                for (var key in name) {
-	                    if (this.controls[key].elem && _utils.Utils.isTextField(this.controls[key].elem)) {
-	                        this.controls[key].elem.value = name[key];
-	                    }
-	                    this.controls[key].value = name[key];
-	                    this.controls[key].markAsDirty();
+	                    this.controls[key].setValue(name[key], false, false);
 	                }
 
 	                this.getValues();
