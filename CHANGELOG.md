@@ -1,5 +1,12 @@
+<a name="0.8.12"></a>
+# [0.8.12](https://github.com/DeanNeal/ace-js) (2018-02-16)
+### Features
+* **core:**  ac-model with custom elements #106 ([#106](https://github.com/DeanNeal/ace-js/issues/106))
+* **core:**  ac-dropdown directive #104 ([#104](https://github.com/DeanNeal/ace-js/issues/104))
+* **core:**  dropdowns refactoring. ac-form-control with custom elements #103 ([#103](https://github.com/DeanNeal/ace-js/issues/103))
+
 <a name="0.8.10"></a>
-# [0.8.10](https://github.com/DeanNeal/ace-js) (2018-02-01)
+# [0.8.10](https://github.com/DeanNeal/ace-js) (2018-02-14)
 ### Features
 * **core:**  modal refactoring. Use as new Modal(...) #101 ([#101](https://github.com/DeanNeal/ace-js/issues/101))
 
