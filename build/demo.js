@@ -2,7 +2,7 @@
  * ace-js 0.8.12
  * May be freely distributed under the MIT license 
  * Author: Bogdan Zinkevich
- * Last update: 2018-2-16 12:02:55
+ * Last update: 2018-2-17 15:08:07
  * 
  */
 (function webpackUniversalModuleDefinition(root, factory) {
@@ -216,7 +216,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	Object.defineProperty(exports, "__esModule", {
 	    value: true
 	});
-	exports.Validators = exports.FormGroup = exports.ModalController = exports.API = exports.Http = exports.Controls = exports.Plugins = exports.Utils = exports.GlobalEvents = exports.TemplateEngine = exports.RouteSwitcher = exports.Router = exports.Component = exports.Decorators = exports.Observable = undefined;
+	exports.Validators = exports.FormGroup = exports.ModalController = exports.API = exports.Http = exports.Controls = exports.Plugins = exports.Utils = exports.GlobalEvents = exports.TemplateEngine = exports.RouteSwitcher = exports.Router = exports.Inject = exports.Component = exports.Decorators = exports.Observable = undefined;
 
 	var _observable = __webpack_require__(7);
 
@@ -224,7 +224,13 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var Decorators = _interopRequireWildcard(_decorators);
 
-	var _component = __webpack_require__(12);
+	var _component = __webpack_require__(11);
+
+	var _component2 = _interopRequireDefault(_component);
+
+	var _inject = __webpack_require__(43);
+
+	var _inject2 = _interopRequireDefault(_inject);
 
 	var _routerSwitcher = __webpack_require__(22);
 
@@ -268,7 +274,8 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	exports.Observable = _observable.Observable;
 	exports.Decorators = Decorators;
-	exports.Component = _component.Component;
+	exports.Component = _component2.default;
+	exports.Inject = _inject2.default;
 	exports.Router = _routerCore2.default;
 	exports.RouteSwitcher = _routerSwitcher.RouteSwitcher;
 	exports.TemplateEngine = _templateEngine.TemplateEngine;
@@ -281,6 +288,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	exports.ModalController = _modal.ModalController;
 	exports.FormGroup = _formGroup.FormGroup;
 	exports.Validators = _validators.Validators;
+
+	// import { Component } from './component/component';
 
 /***/ }),
 /* 7 */
@@ -1209,7 +1218,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	        value: function componentConstructor(root, options) {
 	            this.root = root; //;console.log(root);
 
-	            // this.children = {};
 	            Object.defineProperty(this, 'children', { value: {}, writable: false });
 
 	            Object.defineProperty(this, 'tpl', { value: options.template || 'Empty template', writable: false });
@@ -3332,13 +3340,14 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	                formControls.forEach(function (target) {
 	                    var attr = target.dataset.name;
-	                    if (formGroup.controls[attr].isValid() === false && !focusState) {
+	                    var control = formGroup.controls[attr];
+	                    if (control.isValid() === false && !focusState) {
 	                        focusState = true;
-	                        formGroup.controls[attr].markAsDirty();
-	                        formGroup.controls[attr].validate();
-	                        target.focus();
+	                        control.markAsDirty();
+	                        control.validate();
 	                        if (_core.Utils.isCustomElement(target)) {
 	                            target.COMPONENT._onFocus();
+	                            target.COMPONENT._onModelChange(control.value, control.dirty && !control.isValid());
 	                        } else {
 	                            target.focus();
 	                        }
@@ -4315,8 +4324,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 	var _dec, _class;
-	// import {DropdownComponent} from '../dropdown';
-
 
 	var _utils = __webpack_require__(42);
 
@@ -4347,23 +4354,26 @@ return /******/ (function(modules) { // webpackBootstrap
 	            formattedDate: _utils.Utils.getDateByFormat(TODAY, 'yyyy-mm-dd')
 	        };
 	    }
-	    // super: DropdownComponent
 	}), _dec(_class = function () {
 	    function DatepickerComponent(params) {
 	        _classCallCheck(this, DatepickerComponent);
 	    }
 
 	    _createClass(DatepickerComponent, [{
+	        key: '_onModelChange',
+	        value: function _onModelChange(value, error) {
+
+	            this.props.set({
+	                model: new Date(value),
+	                formattedDate: _utils.Utils.getDateByFormat(value, 'yyyy-mm-dd')
+	            });
+	            this.currentDate = new Date(value); // init view
+
+	            this.update();
+	        }
+	    }, {
 	        key: 'INPUT',
 	        value: function INPUT(params) {
-	            if (params.model) {
-	                this.props.set({
-	                    model: new Date(params.model),
-	                    formattedDate: _utils.Utils.getDateByFormat(params.model, 'yyyy-mm-dd')
-	                });
-	                this.currentDate = new Date(params.model); // init view
-	            }
-
 	            if (params.maxDate) {
 	                this.maxDate = params.maxDate;
 	            }
@@ -4443,7 +4453,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	            var monthEnd = new Date(year, month + 1, 1);
 	            var monthLength = (monthEnd - monthStart) / (1000 * 60 * 60 * 24);
 	            var days = [];
-	            var minDate = new Date(this.minDate || new Date());
+	            var minDate = new Date(this.minDate);
 	            var maxDate = new Date(this.maxDate);
 	            var emptyDays = monthStart.getDay() - 1; // get last dates of prev month
 
@@ -4463,10 +4473,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	                if (this.props.get('model') && this.props.get('model').toDateString() == day.date.toDateString()) {
 	                    day.selected = true;
 	                }
-
-	                // if (this.props.get('model') && this.props.get('model').toDateString() == day.date.toDateString()) {
-	                //     day.selected = true;
-	                // }
 
 	                if (minDate && day.date.setHours(0, 0, 0, 0) < minDate.setHours(0, 0, 0, 0)) {
 	                    day.inactive = true;
@@ -6101,7 +6107,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	"use strict";
 
-	module.exports = "<main>\r\n\r\n    <div class=\"main-content justify-space-between\">\r\n\r\n        <ul class=\"main-list\">\r\n            <li ac-for=\"let item of controls\">\r\n                <a class=\"list-head\" ac-value=\"name\" ac-link=\"{{route}}\" ></a>\r\n            </li>\r\n        </ul>\r\n\r\n        <div class=\"plugins-section\">\r\n            <!-- <child-route-switcher></child-route-switcher> -->\r\n        \r\n        \t<h3>Datepicker</h3>\r\n            <div style=\"width: 200px\">\r\n                <app-datepicker ac-model=\"date\" ac-input=\"model: @date\"></app-datepicker>\r\n            </div>\r\n        </div>\r\n    </div>\r\n</main>\r\n\r\n\r\n\r\n";
+	module.exports = "<main>\r\n\r\n    <div class=\"main-content justify-space-between\">\r\n\r\n        <ul class=\"main-list\">\r\n            <li ac-for=\"let item of controls\">\r\n                <a class=\"list-head\" ac-value=\"name\" ac-link=\"{{route}}\" ></a>\r\n            </li>\r\n        </ul>\r\n\r\n        <div class=\"plugins-section\">\r\n            <!-- <child-route-switcher></child-route-switcher> -->\r\n        \r\n        \t<h3>Datepicker</h3>\r\n            <div style=\"width: 200px\">\r\n                <app-datepicker ac-dropdown ac-model=\"date\"></app-datepicker>\r\n            </div>\r\n        </div>\r\n    </div>\r\n</main>\r\n\r\n\r\n\r\n";
 
 /***/ }),
 /* 75 */

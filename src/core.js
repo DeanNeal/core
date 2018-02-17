@@ -1,6 +1,9 @@
 import {Observable} from './observable/observable';
 import * as Decorators from './decorators';
-import { Component } from './component/component';
+import Component from  './decorators/component';
+import Inject from './decorators/inject';
+
+// import { Component } from './component/component';
 import { RouteSwitcher } from './router/router-switcher';
 import Router from './router/router-core';
 import { TemplateEngine } from './template-engine';
@@ -22,6 +25,7 @@ export {
     Observable,
     Decorators,
     Component,
+    Inject,
     Router,
     RouteSwitcher,
     TemplateEngine,

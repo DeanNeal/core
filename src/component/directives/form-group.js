@@ -43,13 +43,14 @@ export function _formGroup(array, data) {
 
                 formControls.forEach(target => {
                     let attr = target.dataset.name;
-                    if (formGroup.controls[attr].isValid() === false && !focusState) {
+                    let control = formGroup.controls[attr];
+                    if (control.isValid() === false && !focusState) {
                         focusState = true;
-                        formGroup.controls[attr].markAsDirty();
-                        formGroup.controls[attr].validate();
-                        target.focus();
+                        control.markAsDirty();
+                        control.validate();
                         if(Utils.isCustomElement(target)) {
                             target.COMPONENT._onFocus();
+                            target.COMPONENT._onModelChange(control.value, control.dirty && !control.isValid());
                         } else {
                             target.focus();
                         }

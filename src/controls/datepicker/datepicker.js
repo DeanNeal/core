@@ -1,6 +1,5 @@
 import {Utils} from '../../utils/utils';
 import * as Decorators  from '../../decorators';
-// import {DropdownComponent} from '../dropdown';
 import Tpl from './datepicker.html';
 
 const daysOfWeek = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
@@ -15,8 +14,7 @@ const TODAY = new Date();
             daysOfWeekShort: Utils.daysOfWeekShort, 
             formattedDate: Utils.getDateByFormat(TODAY, 'yyyy-mm-dd')
         }
-    },
-    // super: DropdownComponent
+    }
 })
 
 export class DatepickerComponent {
@@ -24,15 +22,18 @@ export class DatepickerComponent {
 
     }
 
-    INPUT(params) {
-        if (params.model) {
-            this.props.set({
-                model: new Date(params.model),
-                formattedDate: Utils.getDateByFormat(params.model, 'yyyy-mm-dd')
-            });
-            this.currentDate = new Date(params.model); // init view
-        }
+    _onModelChange(value, error) {
+      
+        this.props.set({
+            model: new Date(value),
+            formattedDate: Utils.getDateByFormat(value, 'yyyy-mm-dd')
+        });
+        this.currentDate = new Date(value); // init view
+   
+        this.update();
+    }
 
+    INPUT(params) {
         if (params.maxDate) {
             this.maxDate = params.maxDate;
         }
@@ -105,7 +106,7 @@ export class DatepickerComponent {
         let monthEnd = new Date(year, month + 1, 1);
         let monthLength = (monthEnd - monthStart) / (1000 * 60 * 60 * 24);
         let days = [];
-        let minDate = new Date(this.minDate || new Date());
+        let minDate = new Date(this.minDate);
         let maxDate = new Date(this.maxDate);
         let emptyDays = monthStart.getDay() - 1; // get last dates of prev month
 
@@ -125,10 +126,6 @@ export class DatepickerComponent {
             if (this.props.get('model') && this.props.get('model').toDateString() == day.date.toDateString()) {
                 day.selected = true;
             }
-
-            // if (this.props.get('model') && this.props.get('model').toDateString() == day.date.toDateString()) {
-            //     day.selected = true;
-            // }
 
             if (minDate && day.date.setHours(0, 0, 0, 0) < minDate.setHours(0, 0, 0, 0)) {
                 day.inactive = true;

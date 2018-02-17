@@ -16,7 +16,6 @@ export class Component {
     static componentConstructor(root, options) {
         this.root = root; //;console.log(root);
 
-        // this.children = {};
         Object.defineProperty(this, 'children', { value: {}, writable: false });
 
         Object.defineProperty(this, 'tpl', { value: options.template || 'Empty template', writable: false });
