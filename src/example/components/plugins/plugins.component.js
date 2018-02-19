@@ -1,10 +1,21 @@
-import {Component, Plugins, Decorators} from '../../../core';
+import { Component, Plugins, Decorators } from '../../../core';
 import Tpl from './plugins.component.html';
 
 
 @Decorators.ComponentDecorator({
     selector: 'app-plugins',
-    template: Tpl
+    template: Tpl,
+    props: () => {
+        return {
+            plugins: [{
+                name: 'Sortable',
+                route: 'plugins/sortable'
+            }, {
+                name: 'Chart',
+                route: 'plugins/chart'
+            }]
+        }
+    }
 })
 export class PluginsComponent {
     constructor(options) {
@@ -13,13 +24,6 @@ export class PluginsComponent {
 
     onInit() {
 
-        this.props.set({plugins: [{
-            name: 'Sortable',
-            route: 'plugins/sortable'
-        }, {
-            name: 'Chart',
-            route: 'plugins/chart'
-        }]});
 
 
     }

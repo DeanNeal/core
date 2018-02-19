@@ -2,7 +2,7 @@
  * ace-js 0.8.13
  * May be freely distributed under the MIT license 
  * Author: Bogdan Zinkevich
- * Last update: 2018-2-17 15:10:48
+ * Last update: 2018-2-17 17:00:12
  * 
  */
 (function webpackUniversalModuleDefinition(root, factory) {
@@ -3262,7 +3262,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    for (var styleName in hostStyles) {
 	        if (typeof hostStyles[styleName].value === 'string') {
 	            var r = this.getComponentVariable(hostStyles[styleName].value.split('.'));
-	            this.root.style[styleName] = r + hostStyles[styleName].suffix;
+	            this.root.style[styleName] = r + (hostStyles[styleName].suffix || '');
 	        } else {
 	            this.root.style[styleName] = hostStyles[styleName].value + hostStyles[styleName].preffix;
 	        }

@@ -5,30 +5,32 @@ import {Chart} from './../chart';
 @Decorators.ComponentDecorator({
     selector: 'ace-line-chart',
     template: Tpl,
-    props: {
-        tooltipCoords: {
-            x: 0,
-            y: 0
-        },
-        xGrid: [],
+    props: ()=> {
+        return {
+            tooltipCoords: {
+                x: 0,
+                y: 0
+            },
+            xGrid: [],
 
-        yLabels: [],
-        xLabels: [],
-        tooltipIsShown: false,
-        title: 'test chart',
-        colors: [],
-        background: '#eee',
-        yAxis: {
-            // min: 0,
-            label: ''
-        },
-        stepCount: 5,
-        series: [],
-        xAxis: {
-               categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
-        },
-        height: 300,
-        width: 600
+            yLabels: [],
+            xLabels: [],
+            tooltipIsShown: false,
+            title: 'test chart',
+            colors: [],
+            background: '#eee',
+            yAxis: {
+                // min: 0,
+                label: ''
+            },
+            stepCount: 5,
+            series: [],
+            xAxis: {
+                   categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
+            },
+            height: 300,
+            width: 600
+        }
     },
     super: Chart
 })

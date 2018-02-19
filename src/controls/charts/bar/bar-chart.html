@@ -1,4 +1,4 @@
-<svg ac-ref="svg" ac-attr="height: height, width: width" ac-if="this.series.length">
+<svg ac-ref="svg" ac-attr="height: height, width: width" ac-if="series.length">
     <rect class="highcharts-background" x="0" y="0" ac-attr="height: height, width: width, fill: background" rx="0" ry="0"></rect>
     <text ac-attr="x: labelX" text-anchor="middle" class="acechart-title" y="24">
         <tspan ac-value="title"></tspan>
@@ -7,10 +7,10 @@
         <tspan ac-value="yAxis.label"></tspan>
     </text>
     <g class="acechart-grid acechart-yaxis-grid ">
-        <line ac-for="let item of xGrid" ac-attr="x1: x1, x2: x2, y1: y1, y2: y2" stroke="black" stroke-width="1" shape-rendering="crispEdges" />
+        <line ac-for="let item of xGrid" ac-attr="x1: item.x1, x2: item.x2, y1: item.y1, y2: item.y2" stroke="black" stroke-width="1" shape-rendering="crispEdges" />
     </g>
     <g class="acechart-group">
-        <rect ac-for="let item of series" @mouseenter="mouseenter(item)" @mouseleave="mouseleave" ac-attr="x: x, y: y, stroke: stroke, fill: fill, stroke-width: strokeWidth, width: width, height: height"></rect>
+        <rect ac-for="let item of series" @mouseenter="mouseenter($event, item)" @mouseleave="mouseleave($event)" ac-attr="x: item.x, y: item.y, stroke: item.stroke, fill: item.fill, stroke-width: item.strokeWidth, width: item.width, height: item.height"></rect>
     </g>
     <!--     <g class="acechart-axis-labels acechart-xaxis-labels " transform="translate(40,0) scale(1 1)">
         <text ac-for="xLabels" ac-attr="x: x, y: y" text-anchor="start" transform="translate(0,0)">
@@ -18,23 +18,23 @@
         </text>
     </g> -->
     <g class="acechart-axis-labels acechart-xaxis-labels ">
-        <text ac-for="let item of xGroupLabels" ac-attr="x: x, y: y" text-anchor="start" transform="translate(0,0)">
-            <tspan ac-value="name"></tspan>
+        <text ac-for="let item of xGroupLabels" ac-attr="x: item.x, y: item.y" text-anchor="start" transform="translate(0,0)">
+            <tspan ac-value="item.name"></tspan>
         </text>
     </g>
     <g class="acechart-axis-labels acechart-yaxis-labels ">
-        <text ac-for="let item of yLabels" ac-attr="x: x, y: y" text-anchor="end" transform="translate(0,0)">
-            <tspan ac-value="name"></tspan>
+        <text ac-for="let item of yLabels" ac-attr="x: item.x, y: item.y" text-anchor="end" transform="translate(0,0)">
+            <tspan ac-value="item.name"></tspan>
         </text>
     </g>
 </svg>
-<div class="acecharts-tooltip" ac-class="open: this.tooltipIsShown" ac-style="top: tooltipCoords.y, left: tooltipCoords.x">
+<div class="acecharts-tooltip" ac-class="open: tooltipIsShown" ac-style="top: tooltipCoords.y, left: tooltipCoords.x">
     <div style="font-size: 12px;">Languages</div>
     <br>
     <span ac-value="tooltipSelected.name"></span>
     <b ac-value="tooltipSelected.value"></b>% of total
 </div>
-<div ac-if="!this.series.length">Bar chart. There is no data to show</div>
+<div ac-if="!series.length">Bar chart. There is no data to show</div>
 <style>
 ace-bar-chart {
     display: inline-block;

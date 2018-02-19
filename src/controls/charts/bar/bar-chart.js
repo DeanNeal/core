@@ -5,26 +5,28 @@ import {Chart} from './../chart';
 @Decorators.ComponentDecorator({
     selector: 'ace-bar-chart',
     template: Tpl,
-    props: {
-        tooltipCoords: {
-            x: 0,
-            y: 0
-        },
-        xGrid: [],
-        xGroupLabels: [],
-        yLabels: [],
-        tooltipIsShown: false,
-        title: 'test chart',
-        colors: [],
-        background: '#eee',
-        yAxis: {
-            // min: 0,
-            label: ''
-        },
-        stepCount: 5,
-        series: [],
-        height: 300,
-        width: 600
+    props: ()=> {
+        return {
+            tooltipCoords: {
+                x: 0,
+                y: 0
+            },
+            xGrid: [],
+            xGroupLabels: [],
+            yLabels: [],
+            tooltipIsShown: false,
+            title: 'test chart',
+            colors: [],
+            background: '#eee',
+            yAxis: {
+                // min: 0,
+                label: ''
+            },
+            stepCount: 5,
+            series: [],
+            height: 300,
+            width: 600
+        }
     },
     super: Chart
 })
@@ -51,6 +53,7 @@ export class BarChartComponent {
             tooltipIsShown: true, 
             tooltipCoords: { x: item.x - 40 + 'px', y: item.y - 80  + 'px' },
             tooltipSelected: {
+                name: item.name,
                 value:  ((item.value / this.props.get('series').reduce((a,b) => a + b.value, 0)) * 100).toFixed(2)
             }
         });

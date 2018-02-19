@@ -5,45 +5,47 @@ import Tpl from './chart.component.html';
 @Decorators.ComponentDecorator({
     selector: 'app-plugins-chart',
     template: Tpl,
-    props: {
-        barChartData: {
-            title: 'Programming languages',
-            yAxis: {
-                // min: 0,
-                label: 'Popularity'
-            },
-            background: '#f0f0f0',
-            series: [
-                { name: 'JS', value: 6 },
-                { name: 'JAVA', value: 5 },
-                { name: 'PHP', value: 8 },
-                { name: 'PYTHON', value: 10 },
-                { name: 'C', value: 15 },
-                { name: 'PERl', value: 5 },
-                { name: 'C#', value: 20 }
-            ],
-            height: 300,
-            width: 600,
-            labelX: 300
-        },
-        lineChartData: {
-            title: 'Programming languages',
-            yAxis: {
-                // min: 0,
-                label: 'Popularity'
-            },
-            background: '#f0f0f0',
-            series: [
-                { name: 'JS', value: [10, 20, 300, 50, 30] },
-                { name: 'JAVA', value: [100, 200, 300, 500, 300] },
-                { name: 'PHP', value: [1000, 500, 500, 400, 20] }
-            ],
-            xAxis: {
-                categories: ['2010', '2011', '2012', '2013', '2014']
-            },
-            height: 300,
-            width: 600,
-            labelX: 300
+    props: () =>{
+        return {
+             barChartData: {
+                 title: 'Programming languages',
+                 yAxis: {
+                     // min: 0,
+                     label: 'Popularity'
+                 },
+                 background: '#f0f0f0',
+                 series: [
+                     { name: 'JS', value: 6 },
+                     { name: 'JAVA', value: 5 },
+                     { name: 'PHP', value: 8 },
+                     { name: 'PYTHON', value: 10 },
+                     { name: 'C', value: 15 },
+                     { name: 'PERl', value: 5 },
+                     { name: 'C#', value: 20 }
+                 ],
+                 height: 300,
+                 width: 600,
+                 labelX: 300
+             },
+             lineChartData: {
+                 title: 'Programming languages',
+                 yAxis: {
+                     // min: 0,
+                     label: 'Popularity'
+                 },
+                 background: '#f0f0f0',
+                 series: [
+                     { name: 'JS', value: [10, 20, 300, 50, 30] },
+                     { name: 'JAVA', value: [100, 200, 300, 500, 300] },
+                     { name: 'PHP', value: [1000, 500, 500, 400, 20] }
+                 ],
+                 xAxis: {
+                     categories: ['2010', '2011', '2012', '2013', '2014']
+                 },
+                 height: 300,
+                 width: 600,
+                 labelX: 300
+             }   
         }
     }
 })

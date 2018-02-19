@@ -24,7 +24,7 @@ export function _hostStyles(hostStyles) {
     for (let styleName in hostStyles) {
         if (typeof hostStyles[styleName].value === 'string') {
             let r = this.getComponentVariable(hostStyles[styleName].value.split('.'));
-            this.root.style[styleName] = r + hostStyles[styleName].suffix;
+            this.root.style[styleName] = r + (hostStyles[styleName].suffix || '');
         } else {
             this.root.style[styleName] = hostStyles[styleName].value + hostStyles[styleName].preffix;
         }
