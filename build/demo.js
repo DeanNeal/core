@@ -1,8 +1,8 @@
 /*!
- * ace-js 0.8.13
+ * ace-js 0.8.14
  * May be freely distributed under the MIT license 
  * Author: Bogdan Zinkevich
- * Last update: 2018-2-17 17:00:12
+ * Last update: 2018-2-19 14:27:32
  * 
  */
 (function webpackUniversalModuleDefinition(root, factory) {
@@ -1780,7 +1780,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	            var rootEl = document.querySelectorAll(options.root.selector)[0];
 	            if (rootEl) {
 	                var rootComponent = new options.root(rootEl);
-	                rootComponent.root.setAttribute('ac-version', ("0.8.13"));
+	                rootComponent.root.setAttribute('ac-version', ("0.8.14"));
 	            } else {
 	                console.warn('There is no root component');
 	            }
@@ -4734,26 +4734,28 @@ return /******/ (function(modules) { // webpackBootstrap
 	var BarChartComponent = exports.BarChartComponent = (_dec = Decorators.ComponentDecorator({
 	    selector: 'ace-bar-chart',
 	    template: _barChart2.default,
-	    props: {
-	        tooltipCoords: {
-	            x: 0,
-	            y: 0
-	        },
-	        xGrid: [],
-	        xGroupLabels: [],
-	        yLabels: [],
-	        tooltipIsShown: false,
-	        title: 'test chart',
-	        colors: [],
-	        background: '#eee',
-	        yAxis: {
-	            // min: 0,
-	            label: ''
-	        },
-	        stepCount: 5,
-	        series: [],
-	        height: 300,
-	        width: 600
+	    props: function props() {
+	        return {
+	            tooltipCoords: {
+	                x: 0,
+	                y: 0
+	            },
+	            xGrid: [],
+	            xGroupLabels: [],
+	            yLabels: [],
+	            tooltipIsShown: false,
+	            title: 'test chart',
+	            colors: [],
+	            background: '#eee',
+	            yAxis: {
+	                // min: 0,
+	                label: ''
+	            },
+	            stepCount: 5,
+	            series: [],
+	            height: 300,
+	            width: 600
+	        };
 	    },
 	    super: _chart.Chart
 	}), _dec(_class = function () {
@@ -4785,6 +4787,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	                tooltipIsShown: true,
 	                tooltipCoords: { x: item.x - 40 + 'px', y: item.y - 80 + 'px' },
 	                tooltipSelected: {
+	                    name: item.name,
 	                    value: (item.value / this.props.get('series').reduce(function (a, b) {
 	                        return a + b.value;
 	                    }, 0) * 100).toFixed(2)
@@ -4930,7 +4933,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	"use strict";
 
-	module.exports = "<svg ac-ref=\"svg\" ac-attr=\"height: height, width: width\" ac-if=\"this.series.length\">\r\n    <rect class=\"highcharts-background\" x=\"0\" y=\"0\" ac-attr=\"height: height, width: width, fill: background\" rx=\"0\" ry=\"0\"></rect>\r\n    <text ac-attr=\"x: labelX\" text-anchor=\"middle\" class=\"acechart-title\" y=\"24\">\r\n        <tspan ac-value=\"title\"></tspan>\r\n    </text>\r\n    <text ac-attr=\"x: yLabelX, y: yLabelY, transform: yLabelTransform\" text-anchor=\"middle\" class=\"acecharts-axis-title\">\r\n        <tspan ac-value=\"yAxis.label\"></tspan>\r\n    </text>\r\n    <g class=\"acechart-grid acechart-yaxis-grid \">\r\n        <line ac-for=\"let item of xGrid\" ac-attr=\"x1: x1, x2: x2, y1: y1, y2: y2\" stroke=\"black\" stroke-width=\"1\" shape-rendering=\"crispEdges\" />\r\n    </g>\r\n    <g class=\"acechart-group\">\r\n        <rect ac-for=\"let item of series\" @mouseenter=\"mouseenter(item)\" @mouseleave=\"mouseleave\" ac-attr=\"x: x, y: y, stroke: stroke, fill: fill, stroke-width: strokeWidth, width: width, height: height\"></rect>\r\n    </g>\r\n    <!--     <g class=\"acechart-axis-labels acechart-xaxis-labels \" transform=\"translate(40,0) scale(1 1)\">\r\n        <text ac-for=\"xLabels\" ac-attr=\"x: x, y: y\" text-anchor=\"start\" transform=\"translate(0,0)\">\r\n            <tspan ac-value=\"name\"></tspan>\r\n        </text>\r\n    </g> -->\r\n    <g class=\"acechart-axis-labels acechart-xaxis-labels \">\r\n        <text ac-for=\"let item of xGroupLabels\" ac-attr=\"x: x, y: y\" text-anchor=\"start\" transform=\"translate(0,0)\">\r\n            <tspan ac-value=\"name\"></tspan>\r\n        </text>\r\n    </g>\r\n    <g class=\"acechart-axis-labels acechart-yaxis-labels \">\r\n        <text ac-for=\"let item of yLabels\" ac-attr=\"x: x, y: y\" text-anchor=\"end\" transform=\"translate(0,0)\">\r\n            <tspan ac-value=\"name\"></tspan>\r\n        </text>\r\n    </g>\r\n</svg>\r\n<div class=\"acecharts-tooltip\" ac-class=\"open: this.tooltipIsShown\" ac-style=\"top: tooltipCoords.y, left: tooltipCoords.x\">\r\n    <div style=\"font-size: 12px;\">Languages</div>\r\n    <br>\r\n    <span ac-value=\"tooltipSelected.name\"></span>\r\n    <b ac-value=\"tooltipSelected.value\"></b>% of total\r\n</div>\r\n<div ac-if=\"!this.series.length\">Bar chart. There is no data to show</div>\r\n<style>\r\nace-bar-chart {\r\n    display: inline-block;\r\n    position: relative;\r\n}\r\n\r\n.acecharts-tooltip.open {\r\n    opacity: 1;\r\n    visibility: visible;\r\n}\r\n\r\n\r\n\r\n.acecharts-tooltip {\r\n    position: absolute;\r\n    background: #fbf5f5c9;\r\n    /*width: 200px;*/\r\n    top: 0;\r\n    /*height: 100px;*/\r\n    transition: 0.2s;\r\n    opacity: 0;\r\n    visibility: hidden;\r\n    padding: 10px;\r\n    border: 1px solid #ddddde;\r\n    border-radius: 2px;\r\n}\r\n\r\n.acecharts-tooltip:after, .acecharts-tooltip:before {\r\n    top: 100%;\r\n    left: 50%;\r\n    border: solid transparent;\r\n    content: \" \";\r\n    height: 0;\r\n    width: 0;\r\n    position: absolute;\r\n    pointer-events: none;\r\n}\r\n\r\n.acecharts-tooltip:after {\r\n    border-color: rgba(247, 247, 247, 0);\r\n    border-top-color: #f7f7f7;\r\n    border-width: 10px;\r\n    margin-left: -10px;\r\n}\r\n.acecharts-tooltip:before {\r\n    border-color: rgba(221, 221, 222, 0);\r\n    border-top-color: #ddddde;\r\n    border-width: 11px;\r\n    margin-left: -11px;\r\n}\r\n\r\n.acechart-group rect {\r\n    /*fill: #5699dc;*/\r\n    transition: 0.5s;\r\n}\r\n\r\n.acechart-group rect:hover {\r\n    /*fill: #3e6a96;*/\r\n    opacity: 0.7;\r\n}\r\n\r\n.acechart-xaxis-labels text {\r\n    cursor: default;\r\n    font-size: 11px;\r\n    font-family: Verdana, sans-serif;\r\n    fill: #666666;\r\n    transition: 0.5s;\r\n}\r\n\r\n.acecharts-axis-title {\r\n    cursor: default;\r\n    font-size: 12px;\r\n    font-family: Verdana, sans-serif;\r\n    fill: #666666;\r\n}\r\n\r\n.acechart-title {\r\n    cursor: default;\r\n    font-size: 16px;\r\n    font-family: Verdana, sans-serif;\r\n    fill: #666666;\r\n    transition: 0.5s;\r\n}\r\n\r\n.acechart-yaxis-labels text {\r\n    cursor: default;\r\n    font-size: 11px;\r\n    font-family: Verdana, sans-serif;\r\n    fill: #666666;\r\n}\r\n\r\n.acechart-yaxis-grid line {\r\n    stroke: #ccc;\r\n}\r\n\r\n.acechart-group {}\r\n</style>";
+	module.exports = "<svg ac-ref=\"svg\" ac-attr=\"height: height, width: width\" ac-if=\"series.length\">\r\n    <rect class=\"highcharts-background\" x=\"0\" y=\"0\" ac-attr=\"height: height, width: width, fill: background\" rx=\"0\" ry=\"0\"></rect>\r\n    <text ac-attr=\"x: labelX\" text-anchor=\"middle\" class=\"acechart-title\" y=\"24\">\r\n        <tspan ac-value=\"title\"></tspan>\r\n    </text>\r\n    <text ac-attr=\"x: yLabelX, y: yLabelY, transform: yLabelTransform\" text-anchor=\"middle\" class=\"acecharts-axis-title\">\r\n        <tspan ac-value=\"yAxis.label\"></tspan>\r\n    </text>\r\n    <g class=\"acechart-grid acechart-yaxis-grid \">\r\n        <line ac-for=\"let item of xGrid\" ac-attr=\"x1: item.x1, x2: item.x2, y1: item.y1, y2: item.y2\" stroke=\"black\" stroke-width=\"1\" shape-rendering=\"crispEdges\" />\r\n    </g>\r\n    <g class=\"acechart-group\">\r\n        <rect ac-for=\"let item of series\" @mouseenter=\"mouseenter($event, item)\" @mouseleave=\"mouseleave($event)\" ac-attr=\"x: item.x, y: item.y, stroke: item.stroke, fill: item.fill, stroke-width: item.strokeWidth, width: item.width, height: item.height\"></rect>\r\n    </g>\r\n    <!--     <g class=\"acechart-axis-labels acechart-xaxis-labels \" transform=\"translate(40,0) scale(1 1)\">\r\n        <text ac-for=\"xLabels\" ac-attr=\"x: x, y: y\" text-anchor=\"start\" transform=\"translate(0,0)\">\r\n            <tspan ac-value=\"name\"></tspan>\r\n        </text>\r\n    </g> -->\r\n    <g class=\"acechart-axis-labels acechart-xaxis-labels \">\r\n        <text ac-for=\"let item of xGroupLabels\" ac-attr=\"x: item.x, y: item.y\" text-anchor=\"start\" transform=\"translate(0,0)\">\r\n            <tspan ac-value=\"item.name\"></tspan>\r\n        </text>\r\n    </g>\r\n    <g class=\"acechart-axis-labels acechart-yaxis-labels \">\r\n        <text ac-for=\"let item of yLabels\" ac-attr=\"x: item.x, y: item.y\" text-anchor=\"end\" transform=\"translate(0,0)\">\r\n            <tspan ac-value=\"item.name\"></tspan>\r\n        </text>\r\n    </g>\r\n</svg>\r\n<div class=\"acecharts-tooltip\" ac-class=\"open: tooltipIsShown\" ac-style=\"top: tooltipCoords.y, left: tooltipCoords.x\">\r\n    <div style=\"font-size: 12px;\">Languages</div>\r\n    <br>\r\n    <span ac-value=\"tooltipSelected.name\"></span>\r\n    <b ac-value=\"tooltipSelected.value\"></b>% of total\r\n</div>\r\n<div ac-if=\"!series.length\">Bar chart. There is no data to show</div>\r\n<style>\r\nace-bar-chart {\r\n    display: inline-block;\r\n    position: relative;\r\n}\r\n\r\n.acecharts-tooltip.open {\r\n    opacity: 1;\r\n    visibility: visible;\r\n}\r\n\r\n\r\n\r\n.acecharts-tooltip {\r\n    position: absolute;\r\n    background: #fbf5f5c9;\r\n    /*width: 200px;*/\r\n    top: 0;\r\n    /*height: 100px;*/\r\n    transition: 0.2s;\r\n    opacity: 0;\r\n    visibility: hidden;\r\n    padding: 10px;\r\n    border: 1px solid #ddddde;\r\n    border-radius: 2px;\r\n}\r\n\r\n.acecharts-tooltip:after, .acecharts-tooltip:before {\r\n    top: 100%;\r\n    left: 50%;\r\n    border: solid transparent;\r\n    content: \" \";\r\n    height: 0;\r\n    width: 0;\r\n    position: absolute;\r\n    pointer-events: none;\r\n}\r\n\r\n.acecharts-tooltip:after {\r\n    border-color: rgba(247, 247, 247, 0);\r\n    border-top-color: #f7f7f7;\r\n    border-width: 10px;\r\n    margin-left: -10px;\r\n}\r\n.acecharts-tooltip:before {\r\n    border-color: rgba(221, 221, 222, 0);\r\n    border-top-color: #ddddde;\r\n    border-width: 11px;\r\n    margin-left: -11px;\r\n}\r\n\r\n.acechart-group rect {\r\n    /*fill: #5699dc;*/\r\n    transition: 0.5s;\r\n}\r\n\r\n.acechart-group rect:hover {\r\n    /*fill: #3e6a96;*/\r\n    opacity: 0.7;\r\n}\r\n\r\n.acechart-xaxis-labels text {\r\n    cursor: default;\r\n    font-size: 11px;\r\n    font-family: Verdana, sans-serif;\r\n    fill: #666666;\r\n    transition: 0.5s;\r\n}\r\n\r\n.acecharts-axis-title {\r\n    cursor: default;\r\n    font-size: 12px;\r\n    font-family: Verdana, sans-serif;\r\n    fill: #666666;\r\n}\r\n\r\n.acechart-title {\r\n    cursor: default;\r\n    font-size: 16px;\r\n    font-family: Verdana, sans-serif;\r\n    fill: #666666;\r\n    transition: 0.5s;\r\n}\r\n\r\n.acechart-yaxis-labels text {\r\n    cursor: default;\r\n    font-size: 11px;\r\n    font-family: Verdana, sans-serif;\r\n    fill: #666666;\r\n}\r\n\r\n.acechart-yaxis-grid line {\r\n    stroke: #ccc;\r\n}\r\n\r\n.acechart-group {}\r\n</style>";
 
 /***/ }),
 /* 59 */
@@ -5089,30 +5092,32 @@ return /******/ (function(modules) { // webpackBootstrap
 	var LineChartComponent = exports.LineChartComponent = (_dec = Decorators.ComponentDecorator({
 	    selector: 'ace-line-chart',
 	    template: _lineChart2.default,
-	    props: {
-	        tooltipCoords: {
-	            x: 0,
-	            y: 0
-	        },
-	        xGrid: [],
+	    props: function props() {
+	        return {
+	            tooltipCoords: {
+	                x: 0,
+	                y: 0
+	            },
+	            xGrid: [],
 
-	        yLabels: [],
-	        xLabels: [],
-	        tooltipIsShown: false,
-	        title: 'test chart',
-	        colors: [],
-	        background: '#eee',
-	        yAxis: {
-	            // min: 0,
-	            label: ''
-	        },
-	        stepCount: 5,
-	        series: [],
-	        xAxis: {
-	            categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
-	        },
-	        height: 300,
-	        width: 600
+	            yLabels: [],
+	            xLabels: [],
+	            tooltipIsShown: false,
+	            title: 'test chart',
+	            colors: [],
+	            background: '#eee',
+	            yAxis: {
+	                // min: 0,
+	                label: ''
+	            },
+	            stepCount: 5,
+	            series: [],
+	            xAxis: {
+	                categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
+	            },
+	            height: 300,
+	            width: 600
+	        };
 	    },
 	    super: _chart.Chart
 	}), _dec(_class = function () {
@@ -5344,7 +5349,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	"use strict";
 
-	module.exports = "<svg ac-ref=\"svg\" ac-attr=\"height: height, width: width\" ac-if=\"this.series.length\">\r\n    <rect class=\"acechart-background\" x=\"0\" y=\"0\" ac-attr=\"height: height, width: width, fill: background\" rx=\"0\" ry=\"0\"></rect>\r\n    <text ac-attr=\"x: labelX\" text-anchor=\"middle\" class=\"acechart-title\" y=\"24\">\r\n        <tspan ac-value=\"title\"></tspan>\r\n    </text>\r\n    <g class=\"acechart-grid acechart-yaxis-grid \">\r\n        <line ac-for=\"let item of xGrid\" ac-attr=\"x1: x1, x2: x2, y1: y1, y2: y2\" stroke=\"black\" stroke-width=\"1\" shape-rendering=\"crispEdges\" />\r\n    </g>\r\n    <text ac-attr=\"x: yLabelX, y: yLabelY, transform: yLabelTransform\" text-anchor=\"middle\" class=\"acecharts-axis-title\">\r\n        <tspan ac-value=\"yAxis.label\"></tspan>\r\n    </text>\r\n    <g class=\"acechart-axis-labels acechart-yaxis-labels \">\r\n        <text ac-for=\"let item of yLabels\" ac-attr=\"x: x, y: y\" text-anchor=\"end\" transform=\"translate(0,0)\">\r\n            <tspan ac-value=\"name\"></tspan>\r\n        </text>\r\n    </g>\r\n    <g class=\"acechart-series\">\r\n        <path ac-for=\"let item of series\" fill=\"none\" ac-attr=\"d: d, stroke: stroke\" class=\"acechart-graph\" stroke-width=\"2\" stroke-linejoin=\"round\" stroke-linecap=\"round\"></path>\r\n    </g>\r\n\r\n    <g class=\"acechart-markers\">\r\n        <g ac-for=\"let item of markers\"> \r\n            <rect ac-for=\"let item of items\" @mouseenter=\"mouseenter(item)\" @mouseleave=\"mouseleave\" ac-attr=\"x: x, y: y, fill: fill, width: width, height: height\" ></rect>\r\n        </g>\r\n    </g>\r\n\r\n</svg>\r\n<div class=\"acecharts-tooltip\" ac-class=\"open: this.tooltipIsShown\" ac-style=\"top: tooltipCoords.y, left: tooltipCoords.x\">\r\n    <div style=\"font-size: 12px;\">Languages</div>\r\n    <br>\r\n    <span ac-value=\"tooltipSelected.name\"></span>\r\n    <b ac-value=\"tooltipSelected.value\"></b>\r\n</div>\r\n<div ac-if=\"!this.series.length\">Bar chart. There is no data to show</div>\r\n<style>\r\nace-line-chart {\r\n    display: inline-block;\r\n    position: relative;\r\n}\r\n\r\n.acecharts-tooltip.open {\r\n    opacity: 1;\r\n    visibility: visible;\r\n}\r\n\r\n.acechart-series path , .acechart-markers rect{\r\n    transition: 0.5s;\r\n}\r\n\r\n.acecharts-tooltip {\r\n    position: absolute;\r\n    background: #fbf5f5c9;\r\n    /*width: 200px;*/\r\n    top: 0;\r\n    /*height: 100px;*/\r\n    transition: 0.2s;\r\n    opacity: 0;\r\n    visibility: hidden;\r\n    padding: 10px;\r\n    border: 1px solid #ddddde;\r\n    border-radius: 2px;\r\n}\r\n\r\n.acecharts-tooltip:after,\r\n.acecharts-tooltip:before {\r\n    top: 100%;\r\n    left: 50%;\r\n    border: solid transparent;\r\n    content: \" \";\r\n    height: 0;\r\n    width: 0;\r\n    position: absolute;\r\n    pointer-events: none;\r\n}\r\n\r\n.acecharts-tooltip:after {\r\n    border-color: rgba(247, 247, 247, 0);\r\n    border-top-color: #f7f7f7;\r\n    border-width: 10px;\r\n    margin-left: -10px;\r\n}\r\n\r\n.acecharts-tooltip:before {\r\n    border-color: rgba(221, 221, 222, 0);\r\n    border-top-color: #ddddde;\r\n    border-width: 11px;\r\n    margin-left: -11px;\r\n}\r\n\r\n.acechart-group rect {\r\n    /*fill: #5699dc;*/\r\n    transition: 0.5s;\r\n}\r\n\r\n.acechart-group rect:hover {\r\n    /*fill: #3e6a96;*/\r\n    opacity: 0.7;\r\n}\r\n\r\n.acechart-xaxis-labels text {\r\n    cursor: default;\r\n    font-size: 11px;\r\n    font-family: Verdana, sans-serif;\r\n    fill: #666666;\r\n    transition: 0.5s;\r\n}\r\n\r\n.acecharts-axis-title {\r\n    cursor: default;\r\n    font-size: 12px;\r\n    font-family: Verdana, sans-serif;\r\n    fill: #666666;\r\n}\r\n\r\n.acechart-title {\r\n    cursor: default;\r\n    font-size: 16px;\r\n    font-family: Verdana, sans-serif;\r\n    fill: #666666;\r\n    transition: 0.5s;\r\n}\r\n\r\n.acechart-yaxis-labels text {\r\n    cursor: default;\r\n    font-size: 11px;\r\n    font-family: Verdana, sans-serif;\r\n    fill: #666666;\r\n}\r\n\r\n.acechart-yaxis-grid line {\r\n    stroke: #ccc;\r\n}\r\n\r\n.acechart-group {}\r\n</style>";
+	module.exports = "<svg ac-ref=\"svg\" ac-attr=\"height: height, width: width\" ac-if=\"series.length\">\r\n    <rect class=\"acechart-background\" x=\"0\" y=\"0\" ac-attr=\"height: height, width: width, fill: background\" rx=\"0\" ry=\"0\"></rect>\r\n    <text ac-attr=\"x: labelX\" text-anchor=\"middle\" class=\"acechart-title\" y=\"24\">\r\n        <tspan ac-value=\"title\"></tspan>\r\n    </text>\r\n    <g class=\"acechart-grid acechart-yaxis-grid \">\r\n        <line ac-for=\"let item of xGrid\" ac-attr=\"x1: item.x1, x2: item.x2, y1: item.y1, y2: item.y2\" stroke=\"black\" stroke-width=\"1\" shape-rendering=\"crispEdges\" />\r\n    </g>\r\n    <text ac-attr=\"x: yLabelX, y: yLabelY, transform: yLabelTransform\" text-anchor=\"middle\" class=\"acecharts-axis-title\">\r\n        <tspan ac-value=\"yAxis.label\"></tspan>\r\n    </text>\r\n    <g class=\"acechart-axis-labels acechart-yaxis-labels \">\r\n        <text ac-for=\"let item of yLabels\" ac-attr=\"x: item.x, y: item.y\" text-anchor=\"end\" transform=\"translate(0,0)\">\r\n            <tspan ac-value=\"item.name\"></tspan>\r\n        </text>\r\n    </g>\r\n    <g class=\"acechart-series\">\r\n        <path ac-for=\"let item of series\" fill=\"none\" ac-attr=\"d: item.d, stroke: item.stroke\" class=\"acechart-graph\" stroke-width=\"2\" stroke-linejoin=\"round\" stroke-linecap=\"round\"></path>\r\n    </g>\r\n\r\n    <g class=\"acechart-markers\">\r\n        <g ac-for=\"let item of markers\"> \r\n            <rect ac-for=\"let item of items\" @mouseenter=\"mouseenter($event, item)\" @mouseleave=\"mouseleave($event)\" ac-attr=\"x: item.x, y: item.y, fill: item.fill, width: item.width, height: item.height\" ></rect>\r\n        </g>\r\n    </g>\r\n\r\n</svg>\r\n<div class=\"acecharts-tooltip\" ac-class=\"open: tooltipIsShown\" ac-style=\"top: tooltipCoords.y, left: tooltipCoords.x\">\r\n    <div style=\"font-size: 12px;\">Languages</div>\r\n    <br>\r\n    <span ac-value=\"tooltipSelected.name\"></span>\r\n    <b ac-value=\"tooltipSelected.value\"></b>\r\n</div>\r\n<div ac-if=\"!series.length\">Bar chart. There is no data to show</div>\r\n<style>\r\nace-line-chart {\r\n    display: inline-block;\r\n    position: relative;\r\n}\r\n\r\n.acecharts-tooltip.open {\r\n    opacity: 1;\r\n    visibility: visible;\r\n}\r\n\r\n.acechart-series path , .acechart-markers rect{\r\n    transition: 0.5s;\r\n}\r\n\r\n.acecharts-tooltip {\r\n    position: absolute;\r\n    background: #fbf5f5c9;\r\n    /*width: 200px;*/\r\n    top: 0;\r\n    /*height: 100px;*/\r\n    transition: 0.2s;\r\n    opacity: 0;\r\n    visibility: hidden;\r\n    padding: 10px;\r\n    border: 1px solid #ddddde;\r\n    border-radius: 2px;\r\n}\r\n\r\n.acecharts-tooltip:after,\r\n.acecharts-tooltip:before {\r\n    top: 100%;\r\n    left: 50%;\r\n    border: solid transparent;\r\n    content: \" \";\r\n    height: 0;\r\n    width: 0;\r\n    position: absolute;\r\n    pointer-events: none;\r\n}\r\n\r\n.acecharts-tooltip:after {\r\n    border-color: rgba(247, 247, 247, 0);\r\n    border-top-color: #f7f7f7;\r\n    border-width: 10px;\r\n    margin-left: -10px;\r\n}\r\n\r\n.acecharts-tooltip:before {\r\n    border-color: rgba(221, 221, 222, 0);\r\n    border-top-color: #ddddde;\r\n    border-width: 11px;\r\n    margin-left: -11px;\r\n}\r\n\r\n.acechart-group rect {\r\n    /*fill: #5699dc;*/\r\n    transition: 0.5s;\r\n}\r\n\r\n.acechart-group rect:hover {\r\n    /*fill: #3e6a96;*/\r\n    opacity: 0.7;\r\n}\r\n\r\n.acechart-xaxis-labels text {\r\n    cursor: default;\r\n    font-size: 11px;\r\n    font-family: Verdana, sans-serif;\r\n    fill: #666666;\r\n    transition: 0.5s;\r\n}\r\n\r\n.acecharts-axis-title {\r\n    cursor: default;\r\n    font-size: 12px;\r\n    font-family: Verdana, sans-serif;\r\n    fill: #666666;\r\n}\r\n\r\n.acechart-title {\r\n    cursor: default;\r\n    font-size: 16px;\r\n    font-family: Verdana, sans-serif;\r\n    fill: #666666;\r\n    transition: 0.5s;\r\n}\r\n\r\n.acechart-yaxis-labels text {\r\n    cursor: default;\r\n    font-size: 11px;\r\n    font-family: Verdana, sans-serif;\r\n    fill: #666666;\r\n}\r\n\r\n.acechart-yaxis-grid line {\r\n    stroke: #ccc;\r\n}\r\n\r\n.acechart-group {}\r\n</style>";
 
 /***/ }),
 /* 62 */
@@ -6242,7 +6247,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	            // });
 
 	            this.props.set({
-	                version: ("0.8.13"),
+	                version: ("0.8.14"),
 	                'categories': [{
 	                    name: 'Getting started',
 	                    items: [{
@@ -7575,7 +7580,18 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var PluginsComponent = exports.PluginsComponent = (_dec = _core.Decorators.ComponentDecorator({
 	    selector: 'app-plugins',
-	    template: _pluginsComponent2.default
+	    template: _pluginsComponent2.default,
+	    props: function props() {
+	        return {
+	            plugins: [{
+	                name: 'Sortable',
+	                route: 'plugins/sortable'
+	            }, {
+	                name: 'Chart',
+	                route: 'plugins/chart'
+	            }]
+	        };
+	    }
 	}), _dec(_class = function () {
 	    function PluginsComponent(options) {
 	        _classCallCheck(this, PluginsComponent);
@@ -7583,16 +7599,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	    _createClass(PluginsComponent, [{
 	        key: 'onInit',
-	        value: function onInit() {
-
-	            this.props.set({ plugins: [{
-	                    name: 'Sortable',
-	                    route: 'plugins/sortable'
-	                }, {
-	                    name: 'Chart',
-	                    route: 'plugins/chart'
-	                }] });
-	        }
+	        value: function onInit() {}
 	    }]);
 
 	    return PluginsComponent;
@@ -7604,7 +7611,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	"use strict";
 
-	module.exports = "<main>\r\n\r\n    <div class=\"main-content justify-space-between\">\r\n\r\n        <ol class=\"main-list\">\r\n            <li ac-for=\"let item of plugins\">\r\n                <a class=\"list-head\" ac-value=\"name\" ac-link=\"{{route}}\"  ac-link-exact=\"true\"></a>\r\n            </li>\r\n        </ol>\r\n\r\n        <div class=\"plugins-section\">\r\n            <child-route-switcher></child-route-switcher>\r\n        </div>\r\n    </div>\r\n</main>\r\n\r\n\r\n\r\n";
+	module.exports = "<main>\r\n\r\n    <div class=\"main-content justify-space-between\">\r\n\r\n        <ol class=\"main-list\">\r\n            <li ac-for=\"let item of plugins\">\r\n                <a class=\"list-head\" ac-link=\"{{route}}\"  ac-link-exact=\"true\">{{name}}</a>\r\n            </li>\r\n        </ol>\r\n\r\n        <div class=\"plugins-section\">\r\n            <child-route-switcher></child-route-switcher>\r\n        </div>\r\n    </div>\r\n</main>\r\n\r\n\r\n\r\n";
 
 /***/ }),
 /* 121 */
@@ -7634,34 +7641,36 @@ return /******/ (function(modules) { // webpackBootstrap
 	var PluginsChartComponent = exports.PluginsChartComponent = (_dec = _core.Decorators.ComponentDecorator({
 	    selector: 'app-plugins-chart',
 	    template: _chartComponent2.default,
-	    props: {
-	        barChartData: {
-	            title: 'Programming languages',
-	            yAxis: {
-	                // min: 0,
-	                label: 'Popularity'
+	    props: function props() {
+	        return {
+	            barChartData: {
+	                title: 'Programming languages',
+	                yAxis: {
+	                    // min: 0,
+	                    label: 'Popularity'
+	                },
+	                background: '#f0f0f0',
+	                series: [{ name: 'JS', value: 6 }, { name: 'JAVA', value: 5 }, { name: 'PHP', value: 8 }, { name: 'PYTHON', value: 10 }, { name: 'C', value: 15 }, { name: 'PERl', value: 5 }, { name: 'C#', value: 20 }],
+	                height: 300,
+	                width: 600,
+	                labelX: 300
 	            },
-	            background: '#f0f0f0',
-	            series: [{ name: 'JS', value: 6 }, { name: 'JAVA', value: 5 }, { name: 'PHP', value: 8 }, { name: 'PYTHON', value: 10 }, { name: 'C', value: 15 }, { name: 'PERl', value: 5 }, { name: 'C#', value: 20 }],
-	            height: 300,
-	            width: 600,
-	            labelX: 300
-	        },
-	        lineChartData: {
-	            title: 'Programming languages',
-	            yAxis: {
-	                // min: 0,
-	                label: 'Popularity'
-	            },
-	            background: '#f0f0f0',
-	            series: [{ name: 'JS', value: [10, 20, 300, 50, 30] }, { name: 'JAVA', value: [100, 200, 300, 500, 300] }, { name: 'PHP', value: [1000, 500, 500, 400, 20] }],
-	            xAxis: {
-	                categories: ['2010', '2011', '2012', '2013', '2014']
-	            },
-	            height: 300,
-	            width: 600,
-	            labelX: 300
-	        }
+	            lineChartData: {
+	                title: 'Programming languages',
+	                yAxis: {
+	                    // min: 0,
+	                    label: 'Popularity'
+	                },
+	                background: '#f0f0f0',
+	                series: [{ name: 'JS', value: [10, 20, 300, 50, 30] }, { name: 'JAVA', value: [100, 200, 300, 500, 300] }, { name: 'PHP', value: [1000, 500, 500, 400, 20] }],
+	                xAxis: {
+	                    categories: ['2010', '2011', '2012', '2013', '2014']
+	                },
+	                height: 300,
+	                width: 600,
+	                labelX: 300
+	            }
+	        };
 	    }
 	}), _dec(_class = function () {
 	    function PluginsChartComponent() {
