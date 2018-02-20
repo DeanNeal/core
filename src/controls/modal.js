@@ -3,6 +3,7 @@ export class ModalController {
     constructor(component, props) {
         this.props = Object.assign({}, props);
         this.root = document.createElement('app-modal');
+        this.root.style.zIndex = 999;
         this.component = component;
         this.componentInstance = null;
         this.onCompleteCallback = null;

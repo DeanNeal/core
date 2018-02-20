@@ -1,8 +1,8 @@
 /*!
- * ace-js 0.8.14
+ * ace-js 0.8.15
  * May be freely distributed under the MIT license 
  * Author: Bogdan Zinkevich
- * Last update: 2018-2-20 10:38:28
+ * Last update: 2018-2-20 13:39:13
  * 
  */
 (function webpackUniversalModuleDefinition(root, factory) {
@@ -1617,10 +1617,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	    var _this = this;
 
 	    array.forEach(function (item) {
-	        var params = item.attr; //.replace(/@+/g, "this.props."); // @ -alias of this.props
+	        var params = item.attr;
 
 	        try {
-	            var r = _this.getPropsByScope(params, data, loopParams); //new Function('return ' + attr).apply(data || this.props);
+	            var r = _this.getPropsByScope(params, data, loopParams);
 	            if (r) {
 	                if (!item.elem.parentNode) {
 	                    // insert only if elem doesn't exists
@@ -1784,7 +1784,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	            var rootEl = document.querySelectorAll(options.root.selector)[0];
 	            if (rootEl) {
 	                var rootComponent = new options.root(rootEl);
-	                rootComponent.root.setAttribute('ac-version', ("0.8.14"));
+	                rootComponent.root.setAttribute('ac-version', ("0.8.15"));
 	            } else {
 	                console.warn('There is no root component');
 	            }
@@ -5547,6 +5547,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	        this.props = _extends({}, props);
 	        this.root = document.createElement('app-modal');
+	        this.root.style.zIndex = 999;
 	        this.component = component;
 	        this.componentInstance = null;
 	        this.onCompleteCallback = null;
@@ -6251,7 +6252,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	            // });
 
 	            this.props.set({
-	                version: ("0.8.14"),
+	                version: ("0.8.15"),
 	                'categories': [{
 	                    name: 'Getting started',
 	                    items: [{
