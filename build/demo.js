@@ -2,7 +2,7 @@
  * ace-js 0.8.15
  * May be freely distributed under the MIT license 
  * Author: Bogdan Zinkevich
- * Last update: 2018-2-20 13:39:13
+ * Last update: 2018-2-20 14:55:32
  * 
  */
 (function webpackUniversalModuleDefinition(root, factory) {
@@ -244,7 +244,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var _globalEvents2 = _interopRequireDefault(_globalEvents);
 
-	var _utils = __webpack_require__(42);
+	var _utils = __webpack_require__(24);
 
 	var _plugins = __webpack_require__(46);
 
@@ -700,7 +700,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var _component2 = _interopRequireDefault(_component);
 
-	var _directive = __webpack_require__(24);
+	var _directive = __webpack_require__(25);
 
 	var _directive2 = _interopRequireDefault(_directive);
 
@@ -785,7 +785,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var _directives = __webpack_require__(14);
 
-	var _events = __webpack_require__(30);
+	var _events = __webpack_require__(31);
 
 	var _directives2 = __webpack_require__(16);
 
@@ -902,7 +902,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var _directives2 = __webpack_require__(14);
 
-	var _events = __webpack_require__(30);
+	var _events = __webpack_require__(31);
 
 	var _api = __webpack_require__(21);
 
@@ -1186,10 +1186,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	            if (this.$propsSub) {
 	                this.$propsSub.unsubscribe();
 	            }
-	            // this.props.clear();
 
 	            _directives.Directives.removeEventListeners.call(this, _private.PRIVATES.EVENTS.get(this));
-
+	            console.log(_private.PRIVATES.SUBSCRIPTIONS);
 	            //unsubscribe from components subscribers
 	            _private.PRIVATES.SUBSCRIPTIONS.get(this).forEach(function (item) {
 	                return item.unsubscribe();
@@ -1350,7 +1349,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var _directives = __webpack_require__(16);
 
-	var _utils = __webpack_require__(42);
+	var _utils = __webpack_require__(24);
 
 	// import { applyFormatter } from './../directives/value';
 	var Interpolation = {
@@ -1420,37 +1419,37 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var _if2 = __webpack_require__(20);
 
-	var _class2 = __webpack_require__(25);
+	var _class2 = __webpack_require__(26);
 
-	var _elRef2 = __webpack_require__(26);
+	var _elRef2 = __webpack_require__(27);
 
-	var _for2 = __webpack_require__(27);
+	var _for2 = __webpack_require__(28);
 
-	var _model2 = __webpack_require__(31);
+	var _model2 = __webpack_require__(32);
 
-	var _attr2 = __webpack_require__(32);
+	var _attr2 = __webpack_require__(33);
 
-	var _input2 = __webpack_require__(33);
+	var _input2 = __webpack_require__(34);
 
-	var _link2 = __webpack_require__(34);
+	var _link2 = __webpack_require__(35);
 
-	var _event = __webpack_require__(29);
+	var _event = __webpack_require__(30);
 
-	var _outside2 = __webpack_require__(35);
+	var _outside2 = __webpack_require__(36);
 
-	var _on2 = __webpack_require__(36);
+	var _on2 = __webpack_require__(37);
 
-	var _init2 = __webpack_require__(28);
+	var _init2 = __webpack_require__(29);
 
-	var _host = __webpack_require__(37);
+	var _host = __webpack_require__(38);
 
-	var _formGroup2 = __webpack_require__(38);
+	var _formGroup2 = __webpack_require__(39);
 
-	var _customDirective2 = __webpack_require__(39);
+	var _customDirective2 = __webpack_require__(40);
 
-	var _computed2 = __webpack_require__(40);
+	var _computed2 = __webpack_require__(41);
 
-	var _dropdown2 = __webpack_require__(41);
+	var _dropdown2 = __webpack_require__(42);
 
 	var Directives = {
 	    _style: _style2._style,
@@ -1668,7 +1667,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var _component = __webpack_require__(12);
 
-	var _directive = __webpack_require__(24);
+	var _directive = __webpack_require__(25);
 
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
@@ -1867,6 +1866,8 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var _api2 = _interopRequireDefault(_api);
 
+	var _utils = __webpack_require__(24);
+
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
@@ -2006,27 +2007,32 @@ return /******/ (function(modules) { // webpackBootstrap
 	    }, {
 	        key: 'destroyChildren',
 	        value: function destroyChildren(root) {
-	            if (root.childNodes[0]) {
-	                var currentChild = root.childNodes[0].COMPONENT;
-	                if (currentChild) {
-	                    this.destroyAllChildren(currentChild.children);
-	                    currentChild.destroy();
+	            var elements = root.querySelectorAll('*');
+	            elements.forEach(function (node) {
+	                if (_utils.Utils.isCustomElement(node)) {
+	                    node.COMPONENT && node.COMPONENT.destroy();
 	                }
-	            }
+	            });
+
+	            // if (root.childNodes[0]) {
+	            //     let currentChild = root.childNodes[0].COMPONENT;
+	            //     if(currentChild) {
+	            //         this.destroyAllChildren(currentChild.children);
+	            //         currentChild.destroy();
+	            //     }
+	            // }
 	            root.innerHTML = '';
 	        }
-	    }, {
-	        key: 'destroyAllChildren',
-	        value: function destroyAllChildren(children) {
-	            var _this2 = this;
 
-	            for (var key in children) {
-	                children[key].forEach(function (child) {
-	                    _this2.destroyAllChildren(child.children);
-	                    child.destroy();
-	                });
-	            }
-	        }
+	        // destroyAllChildren(children) {
+	        //     for (let key in children) {
+	        //         children[key].forEach(child => {
+	        //             this.destroyAllChildren(child.children);
+	        //             child.destroy();
+	        //         })
+	        //     }
+	        // }
+
 	    }, {
 	        key: 'appendEmpty',
 	        value: function appendEmpty(root) {
@@ -2238,6 +2244,324 @@ return /******/ (function(modules) { // webpackBootstrap
 	Object.defineProperty(exports, "__esModule", {
 	    value: true
 	});
+	var scrollArray = [];
+	var monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+	var monthNamesShort = ["Jan", "Feb", "Mar", "Apr", "May", "June", "July", "Aug", "Sept", "Oct", "Nov", "Dec"];
+	var daysOfWeekShort = ['Mo', 'Tu', 'Wen', 'Th', 'Fr', 'Sat', 'Sun'];
+	var Utils = {
+	    monthNames: monthNames,
+	    monthNamesShort: monthNamesShort,
+	    daysOfWeekShort: daysOfWeekShort,
+	    serialize: function serialize(form) {
+	        var obj = {};
+	        var elements = form.querySelectorAll("input, select, textarea");
+	        for (var i = 0; i < elements.length; ++i) {
+	            var element = elements[i];
+	            var name = element.name;
+	            var value = element.value;
+
+	            if (name) {
+	                obj[name] = value;
+	            }
+	        }
+
+	        return obj;
+	    },
+
+	    getDeepProp: function getDeepProp(data, prop) {
+	        return prop.split('.').reduce(function (o, i) {
+	            return o ? o[i] : null;
+	        }, data);
+	    },
+	    randomInteger: function randomInteger(min, max) {
+	        var rand = min - 0.5 + Math.random() * (max - min + 1);
+	        rand = Math.round(rand);
+	        return rand;
+	    },
+	    addDays: function addDays(date, count) {
+	        date = new Date(date);
+	        var clone = new Date(date.getTime());
+	        return new Date(clone.setDate(clone.getDate() + count));
+	    },
+	    getDateByFormat: function getDateByFormat(date, format) {
+	        var result = '';
+	        date = new Date(date);
+	        var year = date.getFullYear().toString();
+	        var month = (date.getMonth() + 1).toString().length === 1 ? '0' + (date.getMonth() + 1) : date.getMonth() + 1;
+	        var day = date.getDate().toString().length === 1 ? '0' + date.getDate() : date.getDate();
+	        var hh = date.getHours().toString().length === 1 ? '0' + date.getHours() : date.getHours();
+	        var mm = date.getMinutes().toString().length === 1 ? '0' + date.getMinutes() : date.getMinutes();
+	        switch (format) {
+	            case 'yyyy-mm-dd':
+	                result = year + '-' + month + '-' + day;
+	                break;
+	            case 'yyyymmdd':
+	                result = year + month + day;
+	                break;
+	            case 'yyyy/mm/dd':
+	                result = year + '/' + month + '/' + day;
+	                break;
+	            case 'yyyy-mm-dd hh:mm':
+	                result = year + '-' + month + '-' + day + ' ' + hh + ':' + mm;
+	                break;
+	            case 'hh:mm':
+	                result = hh + ':' + mm;
+	                break;
+	            case 'dd.mm.yyyy':
+	                result = day + '.' + month + '.' + year;
+	                break;
+	            case 'mmm dd, yyyy':
+	                result = monthNamesShort[date.getMonth()] + " " + day + ", " + year;
+	                break;
+	            default:
+	                result = year + '-' + month + '-' + day;
+	                break;
+	        }
+	        return result;
+	    },
+	    getDaysBetweenDates: function getDaysBetweenDates(dt1, dt2) {
+	        dt1 = new Date(dt1);
+	        dt2 = new Date(dt2);
+	        var a = Date.UTC(dt2.getFullYear(), dt2.getMonth(), dt2.getDate());
+	        var b = Date.UTC(dt1.getFullYear(), dt1.getMonth(), dt1.getDate());
+
+	        return Math.floor(Math.abs(a - b) / (1000 * 60 * 60 * 24));
+	    },
+	    closest: function closest(array, num) {
+	        var i = 0;
+	        var minDiff = 1000;
+	        var ans = void 0;
+	        for (i in array) {
+	            var m = Math.abs(num - array[i]);
+	            if (m < minDiff) {
+	                minDiff = m;
+	                ans = array[i];
+	            }
+	        }
+	        return ans;
+	    },
+	    insertAfter: function insertAfter(elem, refElem) {
+	        var parent = refElem.parentNode;
+	        var next = refElem.nextSibling;
+	        if (next) {
+	            return parent.insertBefore(elem, next);
+	        } else {
+	            return parent.appendChild(elem);
+	        }
+	    },
+	    isCustomElement: function isCustomElement(element) {
+	        if (element.tagName.indexOf("-") !== -1) {
+	            return true;
+	        }
+	        var isAttribute = element.getAttribute("is");
+	        if (isAttribute === null) {
+	            return false;
+	        }
+	        return isAttribute.indexOf("-") !== -1;
+	    },
+	    changeSortingId: function changeSortingId(array, params) {
+	        params.reverse = !params.reverse;
+	        return array.map(function (item) {
+	            if (item.id === params.id) {
+	                item.active = true;
+	            } else {
+	                item.active = false;
+	                item.reverse = false;
+	            }
+	            return item;
+	        });
+	    },
+	    sorting: function sorting(array, params) {
+	        switch (params.type) {
+	            case 'date':
+	                array.sort(function (a, b) {
+	                    return new Date(a[params.id]).getTime() - new Date(b[params.id]).getTime();
+	                });
+	                break;
+	            case 'string':
+	                array.sort(function (a, b) {
+	                    if (a[params.id] < b[params.id]) {
+	                        return -1;
+	                    } else {
+	                        return 1;
+	                    }
+	                });
+	                break;
+	            case 'number':
+	                array.sort(function (a, b) {
+	                    return a[params.id] - b[params.id];
+	                });
+	                break;
+	        }
+
+	        if (params.reverse) {
+	            array.reverse();
+	        }
+
+	        return array;
+	    },
+	    scrollTop: function scrollTop(element, to, duration) {
+	        this.scrollTo('top', element, to, duration);
+	    },
+	    scrollLeft: function scrollLeft(element, to, duration) {
+	        this.scrollTo('left', element, to, duration);
+	    },
+	    scrollTo: function scrollTo(direction, element, to, duration) {
+	        if (scrollArray.filter(function (r) {
+	            return r.isEqualNode(element);
+	        }).length === 0) {
+	            scrollArray.push(element);
+	            // console.log('start');
+	            var start = direction === 'left' ? element.scrollLeft : element.scrollTop,
+	                change = to - start,
+	                currentTime = 0,
+	                increment = 20;
+
+	            this.animateScroll({ direction: direction, element: element, increment: increment, currentTime: currentTime, change: change, start: start, duration: duration });
+	        }
+	    },
+	    animateScroll: function animateScroll(r) {
+	        var _this = this;
+
+	        r.currentTime += r.increment;
+	        if (r.direction === 'left') r.element.scrollLeft = this.easeInOutQuad(r.currentTime, r.start, r.change, r.duration);
+	        if (r.direction === 'top') r.element.scrollTop = this.easeInOutQuad(r.currentTime, r.start, r.change, r.duration);
+
+	        if (r.currentTime < r.duration) {
+	            setTimeout(function () {
+	                _this.animateScroll(r);
+	            }, r.increment);
+	        } else {
+	            // console.log('finish');
+	            scrollArray.forEach(function (item, i) {
+	                if (item.isEqualNode(r.element)) {
+	                    scrollArray.splice(i, 1);
+	                }
+	            });
+	        }
+	    },
+	    easeInOutQuad: function easeInOutQuad(t, b, c, d) {
+	        t /= d / 2;
+	        if (t < 1) return c / 2 * t * t + b;
+	        t--;
+	        return -c / 2 * (t * (t - 2) - 1) + b;
+	    },
+	    removeSpacesFromString: function removeSpacesFromString(str) {
+	        str = str || '';
+	        return str.replace(/ +/g, "");
+	    },
+	    indexInParent: function indexInParent(node) {
+	        var children = node.parentNode.childNodes;
+	        var num = 0;
+	        for (var i = 0; i < children.length; i++) {
+	            if (children[i] == node) return num;
+	            if (children[i].nodeType == 1) num++;
+	        }
+	        return -1;
+	    },
+
+
+	    //ref http://cwestblog.com/2014/03/14/javascript-getting-all-text-nodes/
+	    /**
+	     * Gets an array of the matching text nodes contained by the specified element.
+	     * @param  {!Element} elem
+	     *     The DOM element which will be traversed.
+	     * @param  {function(!Node,!Element):boolean} opt_fnFilter
+	     *     Optional function that if a true-ish value is returned will cause the
+	     *     text node in question to be added to the array to be returned from
+	     *     getTextNodesIn().  The first argument passed will be the text node in
+	     *     question while the second will be the parent of the text node.
+	     * @return {!Array.<!--Node-->}
+	     *     Array of the matching text nodes contained by the specified element.
+	     */
+	    getTextNodesIn: function getTextNodesIn(elem, opt_fnFilter) {
+	        var textNodes = [];
+	        if (elem) {
+	            for (var nodes = elem.childNodes, i = nodes.length; i--;) {
+	                var node = nodes[i],
+	                    nodeType = node.nodeType;
+	                if (nodeType == 3) {
+	                    if (!opt_fnFilter || opt_fnFilter(node, elem)) {
+	                        textNodes.push(node);
+	                    }
+	                } else if (nodeType == 1 || nodeType == 9 || nodeType == 11) {
+	                    textNodes = textNodes.concat(Utils.getTextNodesIn(node, opt_fnFilter));
+	                }
+	            }
+	        }
+	        return textNodes;
+	    },
+
+
+	    // getCustomElements(elem, opt_fnFilter){
+	    //     let textNodes = [];
+	    //     if (elem) {
+	    //         for (let nodes = elem.childNodes, i = nodes.length; i--;) {
+	    //             let node = nodes[i],
+	    //                 nodeType = node.nodeType;
+	    //             if (nodeType == 1) {
+	    //                 if (!opt_fnFilter || opt_fnFilter(node, elem)) {
+	    //                     textNodes.push(node);
+	    //                 }
+	    //             } 
+	    //             else if (nodeType == 1 || nodeType == 9 || nodeType == 11) {
+	    //                 textNodes = textNodes.concat(Utils.getTextNodesIn(node, opt_fnFilter));
+	    //             }
+	    //         }
+	    //     }
+	    //     return textNodes;
+	    // },
+
+	    applyFormatter: function applyFormatter(r, params) {
+	        var formatterData = params ? params.split(':') : null;
+	        var formatter = params ? Utils.removeSpacesFromString(params) : null;
+	        if (formatterData) {
+	            formatter = formatterData[0].trim();
+	            formatterData = formatterData[1] ? formatterData[1].trim() : null;
+	        }
+
+	        if (formatter && formatter === 'json') {
+	            r = JSON.stringify(r);
+	        } else if (formatter && formatter === 'date') {
+	            r = Utils.getDateByFormat(r, formatterData || '');
+	        } else if (formatter && formatter === 'html') {
+	            rowHtml = true;
+	        } else if (formatter) {
+	            throw new Error('Unknown formatter ' + formatter);
+	        } else {
+	            r = r;
+	        }
+
+	        if (!r && r !== 0) {
+	            r = '';
+	        }
+	        return r;
+	    },
+	    getValueBetweenBrackets: function getValueBetweenBrackets(str, cb, err) {
+	        var regExp = /\(([^)]+)\)|\(()\)/;
+	        var res = regExp.exec(str);
+	        if (res && res[1]) {
+	            cb(res[1]);
+	        } else {
+	            err && err();
+	        }
+	    },
+	    isTextField: function isTextField(elem) {
+	        return elem.type === 'text' || elem.type === 'email' || elem.type === 'password' || elem.type === 'textarea';
+	    }
+	};
+
+	exports.Utils = Utils;
+
+/***/ }),
+/* 25 */
+/***/ (function(module, exports) {
+
+	"use strict";
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
 	exports.default = DirectiveDecorator;
 
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -2256,7 +2580,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	}
 
 /***/ }),
-/* 25 */
+/* 26 */
 /***/ (function(module, exports) {
 
 	'use strict';
@@ -2310,7 +2634,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	}
 
 /***/ }),
-/* 26 */
+/* 27 */
 /***/ (function(module, exports) {
 
 	"use strict";
@@ -2329,7 +2653,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	}
 
 /***/ }),
-/* 27 */
+/* 28 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -2348,9 +2672,9 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var _index = __webpack_require__(16);
 
-	var _init2 = __webpack_require__(28);
+	var _init2 = __webpack_require__(29);
 
-	var _events = __webpack_require__(30);
+	var _events = __webpack_require__(31);
 
 	var _api = __webpack_require__(21);
 
@@ -2626,7 +2950,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	}
 
 /***/ }),
-/* 28 */
+/* 29 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -2641,7 +2965,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var _core = __webpack_require__(6);
 
-	var _event = __webpack_require__(29);
+	var _event = __webpack_require__(30);
 
 	function _init(root, directive, newArray) {
 	    var array = newArray || [];
@@ -2780,7 +3104,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	}
 
 /***/ }),
-/* 29 */
+/* 30 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -2984,7 +3308,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	}
 
 /***/ }),
-/* 30 */
+/* 31 */
 /***/ (function(module, exports) {
 
 	'use strict';
@@ -2995,7 +3319,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	var EVENTS_NAMES = exports.EVENTS_NAMES = ['click', 'keyup', 'change', 'mouseout', 'mouseover', 'mouseenter', 'mouseleave', 'mousedown', 'mouseup', 'scroll', 'mousewheel', 'submit', 'focus', 'blur', 'dragstart', 'dragend'];
 
 /***/ }),
-/* 31 */
+/* 32 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -3047,7 +3371,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	}
 
 /***/ }),
-/* 32 */
+/* 33 */
 /***/ (function(module, exports) {
 
 	'use strict';
@@ -3076,7 +3400,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	}
 
 /***/ }),
-/* 33 */
+/* 34 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -3110,7 +3434,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	}
 
 /***/ }),
-/* 34 */
+/* 35 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -3154,7 +3478,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	}
 
 /***/ }),
-/* 35 */
+/* 36 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -3186,7 +3510,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	}
 
 /***/ }),
-/* 36 */
+/* 37 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -3228,7 +3552,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	}
 
 /***/ }),
-/* 37 */
+/* 38 */
 /***/ (function(module, exports) {
 
 	'use strict';
@@ -3286,7 +3610,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	}
 
 /***/ }),
-/* 38 */
+/* 39 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -3402,7 +3726,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	}
 
 /***/ }),
-/* 39 */
+/* 40 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -3436,7 +3760,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	}
 
 /***/ }),
-/* 40 */
+/* 41 */
 /***/ (function(module, exports) {
 
 	'use strict';
@@ -3459,8 +3783,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	}
 
 /***/ }),
-/* 41 */
-/***/ (function(module, exports) {
+/* 42 */
+/***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
 
@@ -3468,9 +3792,24 @@ return /******/ (function(modules) { // webpackBootstrap
 	    value: true
 	});
 	exports._dropdown = _dropdown;
+
+	var _core = __webpack_require__(6);
+
 	function _dropdown(array, data, loopParams) {
+	    var _this = this;
+
 	    array.forEach(function (item) {
 	        var component = item.elem.COMPONENT;
+
+	        component.setSubscriptions(_core.GlobalEvents.click.sub(function (res) {
+	            if (res.e) {
+	                var ouside = _this.shadow ? item.elem.contains(res.e.path[0]) : item.elem.contains(res.e.target);
+	                if (!ouside) {
+	                    component._outside && component._outside();
+	                }
+	            }
+	        }));
+
 	        component._outside = function () {
 	            if (component.props.get('_show')) {
 	                component.props.set('_show', false);
@@ -3493,307 +3832,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	        component._onFocus = function () {
 	            component._open();
 	        };
-
-	        component.onDestroy = function () {};
 	    });
 	}
-
-/***/ }),
-/* 42 */
-/***/ (function(module, exports) {
-
-	"use strict";
-
-	Object.defineProperty(exports, "__esModule", {
-	    value: true
-	});
-	var scrollArray = [];
-	var monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
-	var monthNamesShort = ["Jan", "Feb", "Mar", "Apr", "May", "June", "July", "Aug", "Sept", "Oct", "Nov", "Dec"];
-	var daysOfWeekShort = ['Mo', 'Tu', 'Wen', 'Th', 'Fr', 'Sat', 'Sun'];
-	var Utils = {
-	    monthNames: monthNames,
-	    monthNamesShort: monthNamesShort,
-	    daysOfWeekShort: daysOfWeekShort,
-	    serialize: function serialize(form) {
-	        var obj = {};
-	        var elements = form.querySelectorAll("input, select, textarea");
-	        for (var i = 0; i < elements.length; ++i) {
-	            var element = elements[i];
-	            var name = element.name;
-	            var value = element.value;
-
-	            if (name) {
-	                obj[name] = value;
-	            }
-	        }
-
-	        return obj;
-	    },
-
-	    getDeepProp: function getDeepProp(data, prop) {
-	        return prop.split('.').reduce(function (o, i) {
-	            return o ? o[i] : null;
-	        }, data);
-	    },
-	    randomInteger: function randomInteger(min, max) {
-	        var rand = min - 0.5 + Math.random() * (max - min + 1);
-	        rand = Math.round(rand);
-	        return rand;
-	    },
-	    addDays: function addDays(date, count) {
-	        date = new Date(date);
-	        var clone = new Date(date.getTime());
-	        return new Date(clone.setDate(clone.getDate() + count));
-	    },
-	    getDateByFormat: function getDateByFormat(date, format) {
-	        var result = '';
-	        date = new Date(date);
-	        var year = date.getFullYear().toString();
-	        var month = (date.getMonth() + 1).toString().length === 1 ? '0' + (date.getMonth() + 1) : date.getMonth() + 1;
-	        var day = date.getDate().toString().length === 1 ? '0' + date.getDate() : date.getDate();
-	        var hh = date.getHours().toString().length === 1 ? '0' + date.getHours() : date.getHours();
-	        var mm = date.getMinutes().toString().length === 1 ? '0' + date.getMinutes() : date.getMinutes();
-	        switch (format) {
-	            case 'yyyy-mm-dd':
-	                result = year + '-' + month + '-' + day;
-	                break;
-	            case 'yyyymmdd':
-	                result = year + month + day;
-	                break;
-	            case 'yyyy/mm/dd':
-	                result = year + '/' + month + '/' + day;
-	                break;
-	            case 'yyyy-mm-dd hh:mm':
-	                result = year + '-' + month + '-' + day + ' ' + hh + ':' + mm;
-	                break;
-	            case 'hh:mm':
-	                result = hh + ':' + mm;
-	                break;
-	            case 'dd.mm.yyyy':
-	                result = day + '.' + month + '.' + year;
-	                break;
-	            case 'mmm dd, yyyy':
-	                result = monthNamesShort[date.getMonth()] + " " + day + ", " + year;
-	                break;
-	            default:
-	                result = year + '-' + month + '-' + day;
-	                break;
-	        }
-	        return result;
-	    },
-	    getDaysBetweenDates: function getDaysBetweenDates(dt1, dt2) {
-	        dt1 = new Date(dt1);
-	        dt2 = new Date(dt2);
-	        var a = Date.UTC(dt2.getFullYear(), dt2.getMonth(), dt2.getDate());
-	        var b = Date.UTC(dt1.getFullYear(), dt1.getMonth(), dt1.getDate());
-
-	        return Math.floor(Math.abs(a - b) / (1000 * 60 * 60 * 24));
-	    },
-	    closest: function closest(array, num) {
-	        var i = 0;
-	        var minDiff = 1000;
-	        var ans = void 0;
-	        for (i in array) {
-	            var m = Math.abs(num - array[i]);
-	            if (m < minDiff) {
-	                minDiff = m;
-	                ans = array[i];
-	            }
-	        }
-	        return ans;
-	    },
-	    insertAfter: function insertAfter(elem, refElem) {
-	        var parent = refElem.parentNode;
-	        var next = refElem.nextSibling;
-	        if (next) {
-	            return parent.insertBefore(elem, next);
-	        } else {
-	            return parent.appendChild(elem);
-	        }
-	    },
-	    isCustomElement: function isCustomElement(element) {
-	        if (element.tagName.indexOf("-") !== -1) {
-	            return true;
-	        }
-	        var isAttribute = element.getAttribute("is");
-	        if (isAttribute === null) {
-	            return false;
-	        }
-	        return isAttribute.indexOf("-") !== -1;
-	    },
-	    changeSortingId: function changeSortingId(array, params) {
-	        params.reverse = !params.reverse;
-	        return array.map(function (item) {
-	            if (item.id === params.id) {
-	                item.active = true;
-	            } else {
-	                item.active = false;
-	                item.reverse = false;
-	            }
-	            return item;
-	        });
-	    },
-	    sorting: function sorting(array, params) {
-	        switch (params.type) {
-	            case 'date':
-	                array.sort(function (a, b) {
-	                    return new Date(a[params.id]).getTime() - new Date(b[params.id]).getTime();
-	                });
-	                break;
-	            case 'string':
-	                array.sort(function (a, b) {
-	                    if (a[params.id] < b[params.id]) {
-	                        return -1;
-	                    } else {
-	                        return 1;
-	                    }
-	                });
-	                break;
-	            case 'number':
-	                array.sort(function (a, b) {
-	                    return a[params.id] - b[params.id];
-	                });
-	                break;
-	        }
-
-	        if (params.reverse) {
-	            array.reverse();
-	        }
-
-	        return array;
-	    },
-	    scrollTop: function scrollTop(element, to, duration) {
-	        this.scrollTo('top', element, to, duration);
-	    },
-	    scrollLeft: function scrollLeft(element, to, duration) {
-	        this.scrollTo('left', element, to, duration);
-	    },
-	    scrollTo: function scrollTo(direction, element, to, duration) {
-	        if (scrollArray.filter(function (r) {
-	            return r.isEqualNode(element);
-	        }).length === 0) {
-	            scrollArray.push(element);
-	            // console.log('start');
-	            var start = direction === 'left' ? element.scrollLeft : element.scrollTop,
-	                change = to - start,
-	                currentTime = 0,
-	                increment = 20;
-
-	            this.animateScroll({ direction: direction, element: element, increment: increment, currentTime: currentTime, change: change, start: start, duration: duration });
-	        }
-	    },
-	    animateScroll: function animateScroll(r) {
-	        var _this = this;
-
-	        r.currentTime += r.increment;
-	        if (r.direction === 'left') r.element.scrollLeft = this.easeInOutQuad(r.currentTime, r.start, r.change, r.duration);
-	        if (r.direction === 'top') r.element.scrollTop = this.easeInOutQuad(r.currentTime, r.start, r.change, r.duration);
-
-	        if (r.currentTime < r.duration) {
-	            setTimeout(function () {
-	                _this.animateScroll(r);
-	            }, r.increment);
-	        } else {
-	            // console.log('finish');
-	            scrollArray.forEach(function (item, i) {
-	                if (item.isEqualNode(r.element)) {
-	                    scrollArray.splice(i, 1);
-	                }
-	            });
-	        }
-	    },
-	    easeInOutQuad: function easeInOutQuad(t, b, c, d) {
-	        t /= d / 2;
-	        if (t < 1) return c / 2 * t * t + b;
-	        t--;
-	        return -c / 2 * (t * (t - 2) - 1) + b;
-	    },
-	    removeSpacesFromString: function removeSpacesFromString(str) {
-	        str = str || '';
-	        return str.replace(/ +/g, "");
-	    },
-	    indexInParent: function indexInParent(node) {
-	        var children = node.parentNode.childNodes;
-	        var num = 0;
-	        for (var i = 0; i < children.length; i++) {
-	            if (children[i] == node) return num;
-	            if (children[i].nodeType == 1) num++;
-	        }
-	        return -1;
-	    },
-
-
-	    //ref http://cwestblog.com/2014/03/14/javascript-getting-all-text-nodes/
-	    /**
-	     * Gets an array of the matching text nodes contained by the specified element.
-	     * @param  {!Element} elem
-	     *     The DOM element which will be traversed.
-	     * @param  {function(!Node,!Element):boolean} opt_fnFilter
-	     *     Optional function that if a true-ish value is returned will cause the
-	     *     text node in question to be added to the array to be returned from
-	     *     getTextNodesIn().  The first argument passed will be the text node in
-	     *     question while the second will be the parent of the text node.
-	     * @return {!Array.<!--Node-->}
-	     *     Array of the matching text nodes contained by the specified element.
-	     */
-	    getTextNodesIn: function getTextNodesIn(elem, opt_fnFilter) {
-	        var textNodes = [];
-	        if (elem) {
-	            for (var nodes = elem.childNodes, i = nodes.length; i--;) {
-	                var node = nodes[i],
-	                    nodeType = node.nodeType;
-	                if (nodeType == 3) {
-	                    if (!opt_fnFilter || opt_fnFilter(node, elem)) {
-	                        textNodes.push(node);
-	                    }
-	                } else if (nodeType == 1 || nodeType == 9 || nodeType == 11) {
-	                    textNodes = textNodes.concat(Utils.getTextNodesIn(node, opt_fnFilter));
-	                }
-	            }
-	        }
-	        return textNodes;
-	    },
-	    applyFormatter: function applyFormatter(r, params) {
-	        var formatterData = params ? params.split(':') : null;
-	        var formatter = params ? Utils.removeSpacesFromString(params) : null;
-	        if (formatterData) {
-	            formatter = formatterData[0].trim();
-	            formatterData = formatterData[1] ? formatterData[1].trim() : null;
-	        }
-
-	        if (formatter && formatter === 'json') {
-	            r = JSON.stringify(r);
-	        } else if (formatter && formatter === 'date') {
-	            r = Utils.getDateByFormat(r, formatterData || '');
-	        } else if (formatter && formatter === 'html') {
-	            rowHtml = true;
-	        } else if (formatter) {
-	            throw new Error('Unknown formatter ' + formatter);
-	        } else {
-	            r = r;
-	        }
-
-	        if (!r && r !== 0) {
-	            r = '';
-	        }
-	        return r;
-	    },
-	    getValueBetweenBrackets: function getValueBetweenBrackets(str, cb, err) {
-	        var regExp = /\(([^)]+)\)|\(()\)/;
-	        var res = regExp.exec(str);
-	        if (res && res[1]) {
-	            cb(res[1]);
-	        } else {
-	            err && err();
-	        }
-	    },
-	    isTextField: function isTextField(elem) {
-	        return elem.type === 'text' || elem.type === 'email' || elem.type === 'password' || elem.type === 'textarea';
-	    }
-	};
-
-	exports.Utils = Utils;
 
 /***/ }),
 /* 43 */
@@ -4329,7 +4369,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var _dec, _class;
 
-	var _utils = __webpack_require__(42);
+	var _utils = __webpack_require__(24);
 
 	var _decorators = __webpack_require__(8);
 
@@ -5525,17 +5565,20 @@ return /******/ (function(modules) { // webpackBootstrap
 
 /***/ }),
 /* 63 */
-/***/ (function(module, exports) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
 
 	Object.defineProperty(exports, "__esModule", {
 	    value: true
 	});
+	exports.ModalController = undefined;
 
 	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _utils = __webpack_require__(24);
 
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
@@ -5549,7 +5592,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	        this.root = document.createElement('app-modal');
 	        this.root.style.zIndex = 999;
 	        this.component = component;
-	        this.componentInstance = null;
 	        this.onCompleteCallback = null;
 	        this.init();
 	    }
@@ -5557,14 +5599,12 @@ return /******/ (function(modules) { // webpackBootstrap
 	    _createClass(ModalController, [{
 	        key: 'init',
 	        value: function init() {
-	            var _this = this;
-
-	            this.componentInstance = new this.component(this.root, {}, this, this.props);
+	            var comp = new this.component(this.root, {}, this, this.props);
 	            document.body.appendChild(this.root);
 
 	            var overlay = document.createElement('app-modal-overlay');
 	            overlay.addEventListener('click', function (e) {
-	                _this.close();
+	                ModalController.close(comp);
 	            }, false);
 	            this.root.appendChild(overlay);
 
@@ -5575,13 +5615,20 @@ return /******/ (function(modules) { // webpackBootstrap
 	        value: function onComplete(fn) {
 	            this.onCompleteCallback = fn;
 	        }
-	    }, {
-	        key: 'close',
-	        value: function close() {
-	            this.componentInstance.destroy();
-	            document.body.removeChild(this.root);
-	        }
 	    }], [{
+	        key: 'close',
+	        value: function close(comp) {
+	            var elements = comp.root.querySelectorAll('*');
+	            elements.forEach(function (node) {
+	                if (_utils.Utils.isCustomElement(node)) {
+	                    node.COMPONENT && node.COMPONENT.destroy();
+	                }
+	            });
+
+	            document.body.removeChild(comp.root);
+	            comp.destroy();
+	        }
+	    }, {
 	        key: 'confirm',
 	        value: function confirm(comp, value) {
 	            var instance = instances.filter(function (r) {
@@ -5624,7 +5671,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-	var _utils = __webpack_require__(42);
+	var _utils = __webpack_require__(24);
 
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 

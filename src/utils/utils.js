@@ -257,6 +257,26 @@ const Utils = {
         return textNodes;
     },
 
+
+    // getCustomElements(elem, opt_fnFilter){
+    //     let textNodes = [];
+    //     if (elem) {
+    //         for (let nodes = elem.childNodes, i = nodes.length; i--;) {
+    //             let node = nodes[i],
+    //                 nodeType = node.nodeType;
+    //             if (nodeType == 1) {
+    //                 if (!opt_fnFilter || opt_fnFilter(node, elem)) {
+    //                     textNodes.push(node);
+    //                 }
+    //             } 
+    //             else if (nodeType == 1 || nodeType == 9 || nodeType == 11) {
+    //                 textNodes = textNodes.concat(Utils.getTextNodesIn(node, opt_fnFilter));
+    //             }
+    //         }
+    //     }
+    //     return textNodes;
+    // },
+
     applyFormatter(r, params) {
         let formatterData = params ? params.split(':') : null;
         let formatter = params ? Utils.removeSpacesFromString(params) : null;

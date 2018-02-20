@@ -317,7 +317,6 @@ export class Component {
         if (this.$propsSub) {
             this.$propsSub.unsubscribe();
         }
-        // this.props.clear();
 
         Directives.removeEventListeners.call(this, PRIVATES.EVENTS.get(this));
 

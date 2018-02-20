@@ -1,5 +1,6 @@
 import Router from './router-core';
-import API from'./../api';
+import API from './../api';
+import { Utils } from '../utils/utils';
 
 export class RouteSwitcher {
     constructor(root, parent) {
@@ -27,11 +28,11 @@ export class RouteSwitcher {
                     let childComp;
                     let router;
 
-                    if(Object.keys(this.children).length) {
+                    if (Object.keys(this.children).length) {
                         childComp = this.children[Object.keys(this.children)[0]][0];
-                        if(childComp.root) {
+                        if (childComp.root) {
                             router = childComp.root.querySelectorAll('child-route-switcher')[0];
-                        }   
+                        }
                     }
 
                     if (router) {
@@ -59,7 +60,7 @@ export class RouteSwitcher {
     }
 
     setActiveLink() {
-        let a = API.rootInstance.root.querySelectorAll('[href]');//this.root.querySelectorAll('[href]');
+        let a = API.rootInstance.root.querySelectorAll('[href]'); //this.root.querySelectorAll('[href]');
         a.forEach(item => {
             let fullRoute = Router.getCurrentFullPath();
             let fullPath = Router.getFullStringPath();
@@ -102,7 +103,7 @@ export class RouteSwitcher {
     checkAccess(root, newComp, route, cb) {
         if (route.protector) {
 
-            let protector = API.injectorGet(route.protector);//new route.protector();
+            let protector = API.injectorGet(route.protector); //new route.protector();
             if (protector.check()) {
                 root.appendChild(newComp);
                 cb();
@@ -118,24 +119,31 @@ export class RouteSwitcher {
 
 
     destroyChildren(root) {
-        if (root.childNodes[0]) {
-            let currentChild = root.childNodes[0].COMPONENT;
-            if(currentChild) {
-                this.destroyAllChildren(currentChild.children);
-                currentChild.destroy();
+        let elements = root.querySelectorAll('*');
+        elements.forEach(node => {
+            if (Utils.isCustomElement(node)) {
+                node.COMPONENT && node.COMPONENT.destroy();
             }
-        }
+        })
+
+        // if (root.childNodes[0]) {
+        //     let currentChild = root.childNodes[0].COMPONENT;
+        //     if(currentChild) {
+        //         this.destroyAllChildren(currentChild.children);
+        //         currentChild.destroy();
+        //     }
+        // }
         root.innerHTML = '';
     }
 
-    destroyAllChildren(children) {
-        for (let key in children) {
-            children[key].forEach(child => {
-                this.destroyAllChildren(child.children);
-                child.destroy();
-            })
-        }
-    }
+    // destroyAllChildren(children) {
+    //     for (let key in children) {
+    //         children[key].forEach(child => {
+    //             this.destroyAllChildren(child.children);
+    //             child.destroy();
+    //         })
+    //     }
+    // }
 
     appendEmpty(root) {
         let newComp = document.createElement('div');

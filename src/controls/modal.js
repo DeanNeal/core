@@ -1,3 +1,4 @@
+import {Utils} from '../utils/utils';
 let instances = [];
 export class ModalController {
     constructor(component, props) {
@@ -5,18 +6,17 @@ export class ModalController {
         this.root = document.createElement('app-modal');
         this.root.style.zIndex = 999;
         this.component = component;
-        this.componentInstance = null;
         this.onCompleteCallback = null;
         this.init();
     }
 
     init() {
-        this.componentInstance = new this.component(this.root, {}, this, this.props);
+        let comp = new this.component(this.root, {}, this, this.props);
         document.body.appendChild(this.root);
 
         let overlay = document.createElement('app-modal-overlay');
         overlay.addEventListener('click', (e) => {
-            this.close();
+            ModalController.close(comp);
         }, false);
         this.root.appendChild(overlay);
 
@@ -27,9 +27,16 @@ export class ModalController {
         this.onCompleteCallback = fn;
     }
 
-    close() {
-        this.componentInstance.destroy();
-        document.body.removeChild(this.root);
+    static close(comp) {
+        let elements = comp.root.querySelectorAll('*');
+        elements.forEach(node=>{
+           if(Utils.isCustomElement(node)){
+                node.COMPONENT && node.COMPONENT.destroy();
+           } 
+        })
+
+        document.body.removeChild(comp.root);
+        comp.destroy();
     }
 
     static confirm(comp, value) {
