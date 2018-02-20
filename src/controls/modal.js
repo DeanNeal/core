@@ -6,17 +6,18 @@ export class ModalController {
         this.root = document.createElement('app-modal');
         this.root.style.zIndex = 999;
         this.component = component;
+        this.componentInstance = null;
         this.onCompleteCallback = null;
         this.init();
     }
 
     init() {
-        let comp = new this.component(this.root, {}, this, this.props);
+        this.componentInstance = new this.component(this.root, {}, this, this.props);
         document.body.appendChild(this.root);
 
         let overlay = document.createElement('app-modal-overlay');
         overlay.addEventListener('click', (e) => {
-            ModalController.close(comp);
+            ModalController.close(this.componentInstance);
         }, false);
         this.root.appendChild(overlay);
 
@@ -45,14 +46,14 @@ export class ModalController {
              if (instance.onCompleteCallback) {
                  instance.onCompleteCallback.call(this, value);
              }
-             instance.close();   
+             ModalController.close(comp);   
         }
     }
 
     static dismiss(comp) {
         let instance = instances.filter(r=> r.componentInstance === comp)[0];
         if(instance){
-            instance.close();   
+            ModalController.close(comp);   
         }
     }
 }

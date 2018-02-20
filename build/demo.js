@@ -2,7 +2,7 @@
  * ace-js 0.8.16
  * May be freely distributed under the MIT license 
  * Author: Bogdan Zinkevich
- * Last update: 2018-2-20 15:07:38
+ * Last update: 2018-2-20 23:27:54
  * 
  */
 (function webpackUniversalModuleDefinition(root, factory) {
@@ -5592,6 +5592,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        this.root = document.createElement('app-modal');
 	        this.root.style.zIndex = 999;
 	        this.component = component;
+	        this.componentInstance = null;
 	        this.onCompleteCallback = null;
 	        this.init();
 	    }
@@ -5599,12 +5600,14 @@ return /******/ (function(modules) { // webpackBootstrap
 	    _createClass(ModalController, [{
 	        key: 'init',
 	        value: function init() {
-	            var comp = new this.component(this.root, {}, this, this.props);
+	            var _this = this;
+
+	            this.componentInstance = new this.component(this.root, {}, this, this.props);
 	            document.body.appendChild(this.root);
 
 	            var overlay = document.createElement('app-modal-overlay');
 	            overlay.addEventListener('click', function (e) {
-	                ModalController.close(comp);
+	                ModalController.close(_this.componentInstance);
 	            }, false);
 	            this.root.appendChild(overlay);
 
@@ -5638,7 +5641,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	                if (instance.onCompleteCallback) {
 	                    instance.onCompleteCallback.call(this, value);
 	                }
-	                instance.close();
+	                ModalController.close(comp);
 	            }
 	        }
 	    }, {
@@ -5648,7 +5651,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	                return r.componentInstance === comp;
 	            })[0];
 	            if (instance) {
-	                instance.close();
+	                ModalController.close(comp);
 	            }
 	        }
 	    }]);
