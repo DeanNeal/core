@@ -13,7 +13,7 @@ export class Component {
         Component.componentConstructor.call(this, root, options);
     }
 
-    static componentConstructor(root, options) {
+    static componentConstructor(root, options, extraData) {
         this.root = root; //;console.log(root);
 
         Object.defineProperty(this, 'children', { value: {}, writable: false });
@@ -47,6 +47,7 @@ export class Component {
         } else {
             this.render();
             this.listenToPropsChanges();
+            this.onInit(extraData);
         }
     }
 

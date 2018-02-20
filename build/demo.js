@@ -2,7 +2,7 @@
  * ace-js 0.8.14
  * May be freely distributed under the MIT license 
  * Author: Bogdan Zinkevich
- * Last update: 2018-2-19 14:27:32
+ * Last update: 2018-2-20 10:38:28
  * 
  */
 (function webpackUniversalModuleDefinition(root, factory) {
@@ -857,8 +857,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	                });
 	            });
 
-	            _component.Component.componentConstructor.call(instance, root, decoratorParams);
-	            instance.onInit(extraData);
+	            _component.Component.componentConstructor.call(instance, root, decoratorParams, extraData);
+
+	            // if(!instance.root.getAttribute('ac-for')) {
+	            //     instance.onInit(extraData);
+	            // }
 
 	            if (parent) {
 	                instance.parent = parent;
@@ -1215,7 +1218,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        value: function onInit() {}
 	    }], [{
 	        key: 'componentConstructor',
-	        value: function componentConstructor(root, options) {
+	        value: function componentConstructor(root, options, extraData) {
 	            this.root = root; //;console.log(root);
 
 	            Object.defineProperty(this, 'children', { value: {}, writable: false });
@@ -1249,6 +1252,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	            } else {
 	                this.render();
 	                this.listenToPropsChanges();
+	                this.onInit(extraData);
 	            }
 	        }
 	    }, {

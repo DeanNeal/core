@@ -59,9 +59,12 @@ export default function ComponentDecorator(decoratorParams) {
                 });
             })
 
-            Component.componentConstructor.call(instance, root, decoratorParams);
-            instance.onInit(extraData);
+            Component.componentConstructor.call(instance, root, decoratorParams, extraData);
 
+            // if(!instance.root.getAttribute('ac-for')) {
+            //     instance.onInit(extraData);
+            // }
+            
             if (parent) {
                 instance.parent = parent;
             }
