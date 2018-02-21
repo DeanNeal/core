@@ -1,8 +1,8 @@
 /*!
- * ace-js 0.8.17
+ * ace-js 0.8.18
  * May be freely distributed under the MIT license 
  * Author: Bogdan Zinkevich
- * Last update: 2018-2-21 11:29:21
+ * Last update: 2018-2-21 11:36:38
  * 
  */
 (function webpackUniversalModuleDefinition(root, factory) {
@@ -1794,7 +1794,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	            var rootEl = document.querySelectorAll(options.root.selector)[0];
 	            if (rootEl) {
 	                var rootComponent = new options.root(rootEl);
-	                rootComponent.root.setAttribute('ac-version', ("0.8.17"));
+	                rootComponent.root.setAttribute('ac-version', ("0.8.18"));
 	            } else {
 	                console.warn('There is no root component');
 	            }
@@ -1879,8 +1879,6 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var _utils = __webpack_require__(24);
 
-	var _private = __webpack_require__(13);
-
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
@@ -1916,7 +1914,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	                        _this.renderComponent(_this, route, params);
 	                        _this.prevPage = route.path;
 	                    }
-	                    console.log(_private.PRIVATES);
 
 	                    var childComp = void 0;
 	                    var router = void 0;
@@ -6316,7 +6313,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	            // });
 
 	            this.props.set({
-	                version: ("0.8.17"),
+	                version: ("0.8.18"),
 	                'categories': [{
 	                    name: 'Getting started',
 	                    items: [{
