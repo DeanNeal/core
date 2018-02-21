@@ -116,6 +116,7 @@ export class Component {
         });
 
         Directives._dropdown.call(this, PRIVATES.DIRECTIVES['ac-dropdown'].get(this));
+        Directives._lazy.call(this, PRIVATES.DIRECTIVES['ac-lazy-load'].get(this));
 
         Directives._model.call(this, PRIVATES.DIRECTIVES['ac-model'].get(this));
         Directives._on.call(this, PRIVATES.DIRECTIVES['ac-on'].get(this));

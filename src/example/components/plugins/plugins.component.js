@@ -13,6 +13,9 @@ import Tpl from './plugins.component.html';
             }, {
                 name: 'Chart',
                 route: 'plugins/chart'
+            }, {
+                name: 'Lazy load',
+                route: 'plugins/lazy'
             }]
         }
     }

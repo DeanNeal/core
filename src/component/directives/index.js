@@ -18,6 +18,7 @@ import { _formGroup } from './form-group';
 import { _customDirective } from './custom-directive';
 import { _computed } from './computed';
 import { _dropdown} from './dropdown';
+import { _lazy} from './lazy';
 
 const Directives = {
     _style,
@@ -45,7 +46,8 @@ const Directives = {
     _formGroup,
     _customDirective,
     _computed,
-    _dropdown
+    _dropdown,
+    _lazy
 };
 
 export { Directives };

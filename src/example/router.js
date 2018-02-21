@@ -6,7 +6,8 @@ export let Routes = [
         component: 'app-plugins',
         children: [
             { path: 'sortable', component: 'app-plugins-sortable' },
-            { path: 'chart', component: 'app-plugins-chart' }
+            { path: 'chart', component: 'app-plugins-chart' },
+            { path: 'lazy', component: 'app-plugins-lazy' }
         ]
     },
     {

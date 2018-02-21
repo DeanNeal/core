@@ -13,5 +13,6 @@ export const DIRECTIVES_NAMES = [
     'ac-outside',
     'ac-ref',
     'ac-form-group',
-    'ac-dropdown'
+    'ac-dropdown',
+    'ac-lazy-load'
 ];

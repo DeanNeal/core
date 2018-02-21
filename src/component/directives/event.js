@@ -82,7 +82,8 @@ export function createEventObject(elem, event, data, loopParams) {
                     }
                 });
             } else {
-                console.warn('You have no function in your component');
+                // console.warn('You have no function in your component');
+                throw new Error('Unknown method ' + functionName);
             }
         }
     };

@@ -22,6 +22,7 @@ export class RouteSwitcher {
                         this.destroyChildren(this.root);
                         this.renderComponent(this, route, params);
                         this.prevPage = route.path;
+                        this.prevChild = null;
                     }
 
 
