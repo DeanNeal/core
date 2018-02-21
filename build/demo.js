@@ -2,7 +2,7 @@
  * ace-js 0.8.17
  * May be freely distributed under the MIT license 
  * Author: Bogdan Zinkevich
- * Last update: 2018-2-20 23:34:07
+ * Last update: 2018-2-21 11:29:21
  * 
  */
 (function webpackUniversalModuleDefinition(root, factory) {
@@ -1194,8 +1194,20 @@ return /******/ (function(modules) { // webpackBootstrap
 	                return item.unsubscribe();
 	            });
 
+	            this.destroyPrivates(_private.PRIVATES);
 	            // this.root.remove();
 	            this.root = null;
+	        }
+	    }, {
+	        key: 'destroyPrivates',
+	        value: function destroyPrivates(privates) {
+	            for (var val in privates) {
+	                if (privates[val].constructor.name === 'WeakMap') {
+	                    privates[val].delete(this);
+	                } else {
+	                    this.destroyPrivates(privates[val]);
+	                }
+	            }
 	        }
 	    }, {
 	        key: 'INPUT',
@@ -1308,7 +1320,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	    CUSTOM_DIRECTIVES: {},
 	    EVENTS: new WeakMap(),
 	    SUBSCRIPTIONS: new WeakMap(),
-	    // GLOBAL_EVENTS: new WeakMap(),
 	    HOST: {
 	        CLASS: new WeakMap(),
 	        STYLE: new WeakMap(),
@@ -1868,6 +1879,8 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var _utils = __webpack_require__(24);
 
+	var _private = __webpack_require__(13);
+
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
@@ -1903,6 +1916,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	                        _this.renderComponent(_this, route, params);
 	                        _this.prevPage = route.path;
 	                    }
+	                    console.log(_private.PRIVATES);
 
 	                    var childComp = void 0;
 	                    var router = void 0;

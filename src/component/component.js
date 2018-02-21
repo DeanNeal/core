@@ -319,12 +319,23 @@ export class Component {
         }
 
         Directives.removeEventListeners.call(this, PRIVATES.EVENTS.get(this));
-
+    
         //unsubscribe from components subscribers
         PRIVATES.SUBSCRIPTIONS.get(this).forEach(item => item.unsubscribe());
 
+        this.destroyPrivates(PRIVATES);
         // this.root.remove();
         this.root = null;
+    }
+
+    destroyPrivates(privates) {
+        for(let val in privates) {
+            if(privates[val].constructor.name === 'WeakMap'){
+                privates[val].delete(this);
+            } else {
+                this.destroyPrivates(privates[val]);
+            }
+        }
     }
 
     INPUT() {

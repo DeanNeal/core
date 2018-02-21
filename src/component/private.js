@@ -6,7 +6,6 @@ const PRIVATES = {
     CUSTOM_DIRECTIVES: {},
     EVENTS: new WeakMap(),
     SUBSCRIPTIONS: new WeakMap(),
-    // GLOBAL_EVENTS: new WeakMap(),
     HOST: {
         CLASS: new WeakMap(),
         STYLE: new WeakMap(),
