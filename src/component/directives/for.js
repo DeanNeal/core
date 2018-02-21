@@ -134,7 +134,7 @@ function nativeElements(item, array, loopI, collectionName, keys) {
 function customElements(item, array, compName) {
     if (item.cached.length !== array.length) {
         item.items.forEach(item => {
-            item.remove();
+            item.COMPONENT && item.COMPONENT.destroy();
         });
         item.items = [];
         this.children[item.elem.COMPONENT.constructor.name] = [];

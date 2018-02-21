@@ -18,7 +18,7 @@ export class Component {
 
         Object.defineProperty(this, 'children', { value: {}, writable: false });
 
-        Object.defineProperty(this, 'tpl', { value: options.template || 'Empty template', writable: false });
+        Object.defineProperty(this, 'tpl', { value: options.template || '', writable: false });
 
         Object.defineProperty(this, '$refs', { value: {}, writable: false });
 
@@ -325,7 +325,7 @@ export class Component {
         PRIVATES.SUBSCRIPTIONS.get(this).forEach(item => item.unsubscribe());
 
         this.destroyPrivates(PRIVATES);
-        // this.root.remove();
+        this.root.remove();
         this.root = null;
     }
 

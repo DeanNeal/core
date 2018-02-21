@@ -2,7 +2,7 @@
  * ace-js 0.8.19
  * May be freely distributed under the MIT license 
  * Author: Bogdan Zinkevich
- * Last update: 2018-2-21 16:26:46
+ * Last update: 2018-2-21 22:15:44
  * 
  */
 (function webpackUniversalModuleDefinition(root, factory) {
@@ -1196,7 +1196,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	            });
 
 	            this.destroyPrivates(_private.PRIVATES);
-	            // this.root.remove();
+	            this.root.remove();
 	            this.root = null;
 	        }
 	    }, {
@@ -1235,7 +1235,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	            Object.defineProperty(this, 'children', { value: {}, writable: false });
 
-	            Object.defineProperty(this, 'tpl', { value: options.template || 'Empty template', writable: false });
+	            Object.defineProperty(this, 'tpl', { value: options.template || '', writable: false });
 
 	            Object.defineProperty(this, '$refs', { value: {}, writable: false });
 
@@ -2840,7 +2840,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	function customElements(item, array, compName) {
 	    if (item.cached.length !== array.length) {
 	        item.items.forEach(function (item) {
-	            item.remove();
+	            item.COMPONENT && item.COMPONENT.destroy();
 	        });
 	        item.items = [];
 	        this.children[item.elem.COMPONENT.constructor.name] = [];
