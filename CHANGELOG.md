@@ -1,3 +1,9 @@
+<a name="0.8.20"></a>
+# [0.8.20](https://github.com/DeanNeal/ace-js) (2018-02-22)
+### Features
+* **core:** ac-if replace comment with element #114 ([#114](https://github.com/DeanNeal/ace-js/issues/114))
+* **core:**  dispatcher #113 (https://github.com/DeanNeal/ace-js/issues/113))
+
 <a name="0.8.12"></a>
 # [0.8.12](https://github.com/DeanNeal/ace-js) (2018-02-16)
 ### Features
