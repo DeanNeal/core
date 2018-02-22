@@ -14,6 +14,8 @@ import * as Controls from './controls';
 import { Http } from './http.js';
 import API from './api';
 
+import Events from './dispatcher';
+
 import {ModalController} from './controls/modal';
 
 import {FormGroup} from 'reactive-forms/form-group';
@@ -29,6 +31,7 @@ export {
     Router,
     RouteSwitcher,
     TemplateEngine,
+    Events,
     GlobalEvents,
     Utils,
     Plugins,

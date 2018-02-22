@@ -1,23 +1,35 @@
-function Dispatcher() {
-    this.eventList = {};
-    var self = this;
+class Dispatcher {
+    constructor() {
+        this.eventList = {};
+    }
 
-    this.subscribe = function(eventName, eventHandler) {
-        if (self.eventList[eventName] === undefined) {
-            self.eventList[eventName] = [];
+    subscribe(root, eventName, eventHandler) {
+        if (this.eventList[eventName] === undefined) {
+            this.eventList[eventName] = [];
         }
-        self.eventList[eventName].push(eventHandler);
+        this.eventList[eventName].push({ context: root, eventHandler });
     };
 
-    this.dispatch = function(eventName) {
+    unsubscribe(root, eventName, eventHandler) {
+        if (this.eventList[eventName] === undefined) {
+            console.error(`This event: ${eventName} does not exist`);
+            return false;
+        }
+
+        this.eventList[eventName] = this.eventList[eventName].filter(listener => {
+            return listener.context !== root;
+        });
+    }
+
+    dispatch(eventName) {
         var args = Array.prototype.slice.call(arguments);
         args.shift();
-        var eventList = self.eventList[eventName];
+        var eventList = this.eventList[eventName];
         if (eventList !== undefined) {
             for (var i in eventList) {
-                eventList[i].apply(this, args);
+                eventList[i].eventHandler.apply(eventList[i].context, args);
             }
         }
     };
 }
-export default window.dispatcher = new Dispatcher();
+export default new Dispatcher();

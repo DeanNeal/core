@@ -289,16 +289,17 @@ export class Component {
         return this.root;
     }
 
-    emit(event, data, parentName) {
+    emit(event, data /*parentName*/) {
         let myEvent = new CustomEvent(event, {
             detail: data,
             bubbles: true,
             cancelable: false
         });
 
-        if (parentName) {
-            this.getParentComponent(parentName).dispatchEvent(myEvent);
-        } else if (this.root) {
+        // if (parentName) {
+        //     this.getParentComponent(parentName).dispatchEvent(myEvent);
+        // } else 
+        if (this.root) {
             this.root.dispatchEvent(myEvent);
         }
     }

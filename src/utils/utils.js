@@ -221,7 +221,7 @@ const Utils = {
         var num = 0;
         for (var i = 0; i < children.length; i++) {
             if (children[i] == node) return num;
-            if (children[i].nodeType == 1) num++;
+            if (children[i].nodeType == 1 || children[i].nodeType == 8) num++;
         }
         return -1;
     },

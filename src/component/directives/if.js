@@ -1,5 +1,5 @@
-import { Utils, Component} from '../../core';
-import API from'./../../api';
+import { Utils, Component } from '../../core';
+import API from './../../api';
 
 export function _if(array, data, loopParams) {
     array.forEach(item => {
@@ -17,9 +17,12 @@ export function _if(array, data, loopParams) {
                             }
                         });
                     }
-                    Utils.insertAfter(item.elem, item.comment)
+                    // Utils.insertAfter(item.elem, item.comment)
+                    item.comment.replaceWith(item.elem);
                 }
             } else {
+
+                item.elem.replaceWith(item.comment);
 
                 if (Utils.isCustomElement(item.elem)) {
                     if (item.elem.COMPONENT) {
@@ -27,9 +30,9 @@ export function _if(array, data, loopParams) {
                         item.elem.COMPONENT = null;
                         delete item.elem.COMPONENT;
                     }
+                } else {
+                    item.elem.remove()
                 }
-
-                item.elem.remove()
             }
         } catch (err) {
             throw new Error(this.constructor.name + '; ' + err);
