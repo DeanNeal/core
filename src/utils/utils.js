@@ -316,6 +316,18 @@ const Utils = {
 
     isTextField(elem) {
         return elem.type === 'text' || elem.type === 'email' || elem.type === 'password' || elem.type === 'textarea';
+    },
+
+    getYearsFromTo(from, to) {
+        let years = [];
+        for (var i = from; i<= to; i++) {
+            years.push(i);
+        }
+        return years;
+    },
+
+    getDaysInMonth(year, month) {
+        return new Date(year, month, 0).getDate();
     }
 };
 
