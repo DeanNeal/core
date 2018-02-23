@@ -1,8 +1,8 @@
 /*!
- * ace-js 0.8.24
+ * ace-js 0.8.25
  * May be freely distributed under the MIT license 
  * Author: Bogdan Zinkevich
- * Last update: 2018-2-23 13:25:19
+ * Last update: 2018-2-23 13:30:45
  * 
  */
 (function webpackUniversalModuleDefinition(root, factory) {
@@ -1806,7 +1806,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	            var rootEl = document.querySelectorAll(options.root.selector)[0];
 	            if (rootEl) {
 	                var rootComponent = new options.root(rootEl);
-	                rootComponent.root.setAttribute('ac-version', ("0.8.24"));
+	                rootComponent.root.setAttribute('ac-version', ("0.8.25"));
 	            } else {
 	                console.warn('There is no root component');
 	            }
@@ -6532,7 +6532,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	            // });
 
 	            this.props.set({
-	                version: ("0.8.24"),
+	                version: ("0.8.25"),
 	                'categories': [{
 	                    name: 'Getting started',
 	                    items: [{
