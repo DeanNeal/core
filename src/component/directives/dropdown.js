@@ -22,6 +22,11 @@ export function _dropdown(array, data, loopParams) {
         component._open = () => {
             if (component.getRoot().getAttribute('readonly') === null) {
                 component.props.set('_show', !component.props.get('_show'));
+                if(window.innerHeight - component.root.getBoundingClientRect().top < 250) {
+                    component.root.setAttribute('dropdown-position', 'top')
+                } else {
+                    component.root.removeAttribute('dropdown-position')
+                }
                 component.onOpen && component.onOpen();
             }
         }

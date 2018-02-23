@@ -2,7 +2,7 @@
  * ace-js 0.8.23
  * May be freely distributed under the MIT license 
  * Author: Bogdan Zinkevich
- * Last update: 2018-2-23 11:48:23
+ * Last update: 2018-2-23 12:32:26
  * 
  */
 (function webpackUniversalModuleDefinition(root, factory) {
@@ -3854,6 +3854,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	        component._open = function () {
 	            if (component.getRoot().getAttribute('readonly') === null) {
 	                component.props.set('_show', !component.props.get('_show'));
+	                if (window.innerHeight - component.root.getBoundingClientRect().top < 250) {
+	                    component.root.setAttribute('dropdown-position', 'top');
+	                } else {
+	                    component.root.removeAttribute('dropdown-position');
+	                }
 	                component.onOpen && component.onOpen();
 	            }
 	        };
