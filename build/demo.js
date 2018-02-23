@@ -2,7 +2,7 @@
  * ace-js 0.8.22
  * May be freely distributed under the MIT license 
  * Author: Bogdan Zinkevich
- * Last update: 2018-2-22 21:46:15
+ * Last update: 2018-2-23 11:34:08
  * 
  */
 (function webpackUniversalModuleDefinition(root, factory) {
@@ -2580,7 +2580,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        }
 	        return years;
 	    },
-	    getDaysInMonth: function getDaysInMonth(year, month) {
+	    getDatesInMonth: function getDatesInMonth(year, month) {
 	        return new Date(year, month, 0).getDate();
 	    }
 	};
@@ -3215,7 +3215,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	                            arg = _this.getPropsByScope(res, data, loopParams);
 	                        } else if (res === '$event') {
 	                            arg = e;
-	                        } else if (res === 'index') {
+	                        } else if (res === '$index') {
 	                            arg = loopParams.index;
 	                        } else if (res === 'key') {
 	                            arg = loopParams.key;

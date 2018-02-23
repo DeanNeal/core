@@ -57,7 +57,7 @@ export function createEventObject(elem, event, data, loopParams) {
                             arg = this.getPropsByScope(res, data, loopParams);
                         } else if(res === '$event') {
                             arg = e;
-                        } else if (res === 'index') {
+                        } else if (res === '$index') {
                             arg = loopParams.index;
                         } else if(res === 'key'){
                             arg = loopParams.key;
