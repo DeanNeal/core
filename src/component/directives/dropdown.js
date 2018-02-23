@@ -1,11 +1,11 @@
-import {GlobalEvents} from '../../core';
+import { GlobalEvents } from '../../core';
 
 export function _dropdown(array, data, loopParams) {
     array.forEach(item => {
         let component = item.elem.COMPONENT;
 
-        component.setSubscriptions(GlobalEvents.click.sub(res=>{
-            if(res.e){          
+        component.setSubscriptions(GlobalEvents.click.sub(res => {
+            if (res.e) {
                 let ouside = this.shadow ? item.elem.contains(res.e.path[0]) : item.elem.contains(res.e.target);
                 if (!ouside) {
                     component._outside && component._outside();
@@ -13,19 +13,21 @@ export function _dropdown(array, data, loopParams) {
             }
         }));
 
-        component._outside = ()=>{
-            if (component.props.get('_show')) {
-                component.props.set('_show', false)
-                component.onClose && component.onClose();
-            }
+        component._outside = () => {
+            component._close();       
         }
+
         component._open = () => {
             if (component.getRoot().getAttribute('readonly') === null) {
                 component.props.set('_show', !component.props.get('_show'));
-                if(window.innerHeight - component.root.getBoundingClientRect().top < 250) {
-                    component.root.setAttribute('dropdown-position', 'top')
-                } else {
-                    component.root.removeAttribute('dropdown-position')
+                let container = component.getElement('[ac-dropdown-container]')[0];
+
+                if(container) {                
+                    if (window.innerHeight - component.root.getBoundingClientRect().top < (container.clientHeight + component.root.clientHeight || 250)) {
+                        component.root.setAttribute('dropdown-position', 'top')
+                    } else {
+                        component.root.removeAttribute('dropdown-position')
+                    }
                 }
                 component.onOpen && component.onOpen();
             }
@@ -33,7 +35,8 @@ export function _dropdown(array, data, loopParams) {
 
         component._close = () => {
             if (component.props.get('_show')) {
-                component.props.set('_show', false)
+                component.props.set('_show', false);
+                component.onClose && component.onClose();
             }
         }
 

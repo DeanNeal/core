@@ -2,7 +2,7 @@
  * ace-js 0.8.24
  * May be freely distributed under the MIT license 
  * Author: Bogdan Zinkevich
- * Last update: 2018-2-23 12:37:33
+ * Last update: 2018-2-23 13:25:19
  * 
  */
 (function webpackUniversalModuleDefinition(root, factory) {
@@ -3846,18 +3846,20 @@ return /******/ (function(modules) { // webpackBootstrap
 	        }));
 
 	        component._outside = function () {
-	            if (component.props.get('_show')) {
-	                component.props.set('_show', false);
-	                component.onClose && component.onClose();
-	            }
+	            component._close();
 	        };
+
 	        component._open = function () {
 	            if (component.getRoot().getAttribute('readonly') === null) {
 	                component.props.set('_show', !component.props.get('_show'));
-	                if (window.innerHeight - component.root.getBoundingClientRect().top < 250) {
-	                    component.root.setAttribute('dropdown-position', 'top');
-	                } else {
-	                    component.root.removeAttribute('dropdown-position');
+	                var container = component.getElement('[ac-dropdown-container]')[0];
+
+	                if (container) {
+	                    if (window.innerHeight - component.root.getBoundingClientRect().top < (container.clientHeight + component.root.clientHeight || 250)) {
+	                        component.root.setAttribute('dropdown-position', 'top');
+	                    } else {
+	                        component.root.removeAttribute('dropdown-position');
+	                    }
 	                }
 	                component.onOpen && component.onOpen();
 	            }
@@ -3866,6 +3868,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        component._close = function () {
 	            if (component.props.get('_show')) {
 	                component.props.set('_show', false);
+	                component.onClose && component.onClose();
 	            }
 	        };
 
