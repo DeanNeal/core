@@ -1,5 +1,5 @@
 {
-  "name": "ace-js",
+  "name": "@bogdan-js/core",
   "version": "0.8.25",
   "description": "AceJs - is a MVVM front-end framework based on web components technology",
   "keywords": "MVVM, JS, framework",
@@ -48,5 +48,9 @@
   "dependencies": {},
   "main": "build/index.js",
   "author": "Bogdan Zinkevich",
-  "license": "MIT"
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/DeanNeal/ace-js/issues"
+  },
+  "homepage": "https://github.com/DeanNeal/ace-js#readme"
 }

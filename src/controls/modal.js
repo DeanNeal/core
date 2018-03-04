@@ -5,14 +5,14 @@ export class ModalController {
         this.props = Object.assign({}, props);
         this.root = document.createElement('app-modal');
         this.root.style.zIndex = 999;
-        this.component = component;
+        // this.component = component;
         this.componentInstance = null;
         this.onCompleteCallback = null;
-        this.init();
+        this.init(component);
     }
 
-    init() {
-        this.componentInstance = new this.component(this.root, {}, this, this.props);
+    init(component) {
+        this.componentInstance = new component(this.root, {}, this, this.props);
         document.body.appendChild(this.root);
 
         let overlay = document.createElement('app-modal-overlay');

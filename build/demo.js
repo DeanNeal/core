@@ -1,8 +1,8 @@
 /*!
- * ace-js 0.8.25
+ * @bogdan-js/core 0.8.25
  * May be freely distributed under the MIT license 
  * Author: Bogdan Zinkevich
- * Last update: 2018-2-23 13:30:45
+ * Last update: 3/4/2018, 8:27:36 PM
  * 
  */
 (function webpackUniversalModuleDefinition(root, factory) {
@@ -5821,18 +5821,18 @@ return /******/ (function(modules) { // webpackBootstrap
 	        this.props = _extends({}, props);
 	        this.root = document.createElement('app-modal');
 	        this.root.style.zIndex = 999;
-	        this.component = component;
+	        // this.component = component;
 	        this.componentInstance = null;
 	        this.onCompleteCallback = null;
-	        this.init();
+	        this.init(component);
 	    }
 
 	    _createClass(ModalController, [{
 	        key: 'init',
-	        value: function init() {
+	        value: function init(component) {
 	            var _this = this;
 
-	            this.componentInstance = new this.component(this.root, {}, this, this.props);
+	            this.componentInstance = new component(this.root, {}, this, this.props);
 	            document.body.appendChild(this.root);
 
 	            var overlay = document.createElement('app-modal-overlay');
