@@ -1,9 +1,16 @@
 {
-  "name": "@bogdan-js/core",
+  "name": "@bogdan/core",
   "version": "0.8.25",
   "description": "AceJs - is a MVVM front-end framework based on web components technology",
-  "keywords": "MVVM, JS, framework",
-  "repository": "https://github.com/DeanNeal/ace-js.git",
+  "keywords": [
+    "MVVM",
+    "JS",
+    "framework"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/DeanNeal/ace-js.git"
+  },
   "scripts": {
     "watch": "webpack --watch",
     "dev": "webpack-dev-server --progress --colors --inline --display-modules --display-reasons --profile",
