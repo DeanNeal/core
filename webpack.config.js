@@ -16,8 +16,8 @@ var outputFile = libraryName + '.js';
 
 module.exports = {
     entry: {
-        index: ['./src/core.js'],
-        demo: ['./src/example/app.js']
+        index: ['./src/core.js']
+        // demo: ['./src/example/app.js']
     },
     output: {
         path: path.join('build'),
@@ -64,27 +64,27 @@ module.exports = {
             NODE_ENV: JSON.stringify(NODE_ENV),
             VERSION: JSON.stringify(packageJSON.version)
         }),
-        new ExtractTextPlugin("[name].css", { allChunks: true }),
+        // new ExtractTextPlugin("[name].css", { allChunks: true }),
         // new webpack.HotModuleReplacementPlugin(),
-        new CopyWebpackPlugin([{
-            context: 'src/example/img',
-            from: '**/*',
-            to: 'img'
-        }, {
-            context: 'src/example/css',
-            from: '**/*',
-            to: 'css'
-        }]),
-        new HtmlWebpackPlugin({
-            title: 'ACE',
-            alwaysWriteToDisk: true,
-            filename: path.resolve('index.html'),
-            template: path.resolve(__dirname, 'src/example/index.html')
-        }),
-        new HtmlWebpackHarddiskPlugin({
-            alwaysWriteToDisk: true,
-            filename: 'index.html'
-        })
+        // new CopyWebpackPlugin([{
+        //     context: 'src/example/img',
+        //     from: '**/*',
+        //     to: 'img'
+        // }, {
+        //     context: 'src/example/css',
+        //     from: '**/*',
+        //     to: 'css'
+        // }]),
+        // new HtmlWebpackPlugin({
+        //     title: 'ACE',
+        //     alwaysWriteToDisk: true,
+        //     filename: path.resolve('index.html'),
+        //     template: path.resolve(__dirname, 'src/example/index.html')
+        // }),
+        // new HtmlWebpackHarddiskPlugin({
+        //     alwaysWriteToDisk: true,
+        //     filename: 'index.html'
+        // })
     ],
     // Create Sourcemaps for the bundle
     // devtool: 'source-map',

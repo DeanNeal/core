@@ -16,7 +16,7 @@ import API from './api';
 
 import Events from './dispatcher';
 
-import {ModalController} from './controls/modal';
+// import {ModalController} from './controls/modal';
 
 import {FormGroup} from 'reactive-forms/form-group';
 import {Validators} from 'reactive-forms/validators';
@@ -39,7 +39,7 @@ export {
     Http,
     API,
 
-    ModalController,
+    // ModalController,
 
     FormGroup,
     Validators
