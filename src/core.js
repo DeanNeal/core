@@ -11,7 +11,7 @@ import GlobalEvents from './global-events';
 import { Utils } from './utils/utils';
 import * as Plugins from './plugins';
 
-import { Http } from './http.js';
+// import { Http } from './http.js';
 import API from './api';
 
 import Events from './dispatcher';
@@ -36,7 +36,7 @@ export {
     Utils,
     Plugins,
 
-    Http,
+    // Http,
     API,
 
     // ModalController,

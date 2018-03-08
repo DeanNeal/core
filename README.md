@@ -4,8 +4,8 @@
 
 [![NPM](https://img.shields.io/npm/v/@dean_neal/core.svg)](https://www.npmjs.com/package/@dean_neal/core)
 [![Downloads](https://img.shields.io/npm/dm/@dean_neal/core.svg)](http://npm-stat.com/charts.html?package=@dean_neal/core)
-[![License](https://img.shields.io/github/license/DeanNeal/dean_neal-core.svg?style=flat-square)](https://npmjs.org/package/dean_neal-core)
-[![Issues](https://img.shields.io/github/issues/DeanNeal/dean_neal-core.svg?style=flat-square)](https://github.com/DeanNeal/dean_neal-core/issues)
+[![License](https://img.shields.io/github/license/DeanNeal/core.svg?style=flat-square)](https://npmjs.org/package/core)
+[![Issues](https://img.shields.io/github/issues/DeanNeal/core.svg?style=flat-square)](https://github.com/DeanNeal/core/issues)
 
 ## Don't use it in production. It's alpha version!!!
 ## Installation
@@ -26,9 +26,9 @@ npm i @dean_neal/core@latest
 In your code:
 
 ```bash
-let AceJs = require('dean_neal-core');
+let AceJs = require('@dean_neal/core');
 or
-import {...} from 'dean_neal-core';
+import {...} from '@dean_neal/core';
 ```
 
 
@@ -36,7 +36,7 @@ import {...} from 'dean_neal-core';
 
 MIT License
 
-Copyright (c) 2017 Bogdan Zinkevich
+Copyright (c) 2017-2018 Bogdan Zinkevich
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
