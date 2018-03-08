@@ -1,6 +1,4 @@
-# AceJS
-
-  > AceJs - is a MVVM front-end framework based on web components technology.
+# @dean_neal/core
 
 [![NPM](https://img.shields.io/npm/v/@dean_neal/core.svg)](https://www.npmjs.com/package/@dean_neal/core)
 [![Downloads](https://img.shields.io/npm/dm/@dean_neal/core.svg)](http://npm-stat.com/charts.html?package=@dean_neal/core)
@@ -26,7 +24,7 @@ npm i @dean_neal/core@latest
 In your code:
 
 ```bash
-let AceJs = require('@dean_neal/core');
+let App = require('@dean_neal/core');
 or
 import {...} from '@dean_neal/core';
 ```
