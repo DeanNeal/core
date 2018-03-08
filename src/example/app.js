@@ -1,6 +1,6 @@
 import Styles from './styles/main.scss';
 import { API } from '../core';
-import {DatepickerComponent, TreeDebugComponent, BarChartComponent, LineChartComponent} from '../controls';
+import {DatepickerComponent, TreeDebugComponent, BarChartComponent, LineChartComponent} from '@dean_neal/controls'
 
 import { HomeComponent } from './components/home/home.component';
 import { RootComponent } from './components/root/root.component';

@@ -10,7 +10,7 @@ import { TemplateEngine } from './template-engine';
 import GlobalEvents from './global-events';
 import { Utils } from './utils/utils';
 import * as Plugins from './plugins';
-import * as Controls from './controls';
+
 import { Http } from './http.js';
 import API from './api';
 
@@ -35,7 +35,7 @@ export {
     GlobalEvents,
     Utils,
     Plugins,
-    Controls,
+
     Http,
     API,
 
