@@ -9,7 +9,7 @@
   ],
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/DeanNeal/ace-js.git"
+    "url": "git+https://github.com/DeanNeal/dean_neal-core.git"
   },
   "scripts": {
     "publish": "npm publish --access=public",
@@ -57,7 +57,7 @@
   "author": "Bogdan Zinkevich",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/DeanNeal/ace-js/issues"
+    "url": "https://github.com/DeanNeal/dean_neal-core/issues"
   },
-  "homepage": "https://github.com/DeanNeal/ace-js#readme"
+  "homepage": "https://github.com/DeanNeal/dean_neal-core#readme"
 }
