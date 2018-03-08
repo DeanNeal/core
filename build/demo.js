@@ -1,8 +1,8 @@
 /*!
- * @bogdan-js/core 0.8.25
+ * @dean_neal/core 0.8.26
  * May be freely distributed under the MIT license 
  * Author: Bogdan Zinkevich
- * Last update: 3/4/2018, 8:27:36 PM
+ * Last update: 3/8/2018, 12:40:55 PM
  * 
  */
 (function webpackUniversalModuleDefinition(root, factory) {
@@ -1806,7 +1806,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	            var rootEl = document.querySelectorAll(options.root.selector)[0];
 	            if (rootEl) {
 	                var rootComponent = new options.root(rootEl);
-	                rootComponent.root.setAttribute('ac-version', ("0.8.25"));
+	                rootComponent.root.setAttribute('ac-version', ("0.8.26"));
 	            } else {
 	                console.warn('There is no root component');
 	            }
@@ -6532,7 +6532,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	            // });
 
 	            this.props.set({
-	                version: ("0.8.25"),
+	                version: ("0.8.26"),
 	                'categories': [{
 	                    name: 'Getting started',
 	                    items: [{
