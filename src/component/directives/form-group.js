@@ -1,10 +1,10 @@
 import { Utils } from '../../core';
 export function _formGroup(array, data) {
     array.forEach(item => {
-        let formControls = item.elem.querySelectorAll('[ac-form-control]');
+        let formControls = item.elem.querySelectorAll('[bind-form-control]');
         formControls = Array.prototype.map.call(formControls, r=> {
-            let attr = r.getAttribute('ac-form-control');
-            r.removeAttribute('ac-form-control');
+            let attr = r.getAttribute('bind-form-control');
+            r.removeAttribute('bind-form-control');
             r.dataset.name = attr;
             return r;
         });

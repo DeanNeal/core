@@ -17,7 +17,7 @@ const PRIVATES = {
 };
 
 DIRECTIVES_NAMES.forEach(directive => {
-    PRIVATES.DIRECTIVES[directive] = new WeakMap();
+    PRIVATES.DIRECTIVES[directive.name] = new WeakMap();
 });
 
 

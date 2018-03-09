@@ -64,9 +64,9 @@ export class FormControl {
     toggleClass() {
         if(this.elem) {
             if (this.dirty) {
-                this.valid ? this.elem.classList.remove('ac-invalid') : this.elem.classList.add('ac-invalid');
+                this.valid ? this.elem.classList.remove('form-invalid') : this.elem.classList.add('form-invalid');
             } else {
-                this.elem.classList.remove('ac-invalid');
+                this.elem.classList.remove('form-invalid');
             }
         }
     }

@@ -6,7 +6,7 @@ import API from'./../../api';
 
 import Interpolation from './../interpolation/interpolation';
 
-export function _for(array, data) {
+export function _for(array, data, loopParams) {
     if (array.length) {
         //console.log(this); //console.time('modules')
         array.forEach(item => {
@@ -34,15 +34,13 @@ export function _for(array, data) {
                     loopIterator.iterator = lParams;
                 });
 
-                let arg 
                 try {
                     // arg = new Function(func).apply(data || this.props);
-                    arg = Utils.getDeepProp(data || this.props, collectionName) || [];
+                    // arg = Utils.getDeepProp(data || this.props, collectionName) || [];
+                    array = this.getPropsByScope(collectionName, data, loopParams);
                 } catch(e) {
-                    arg = [];
+                    array = [];
                 }
-                 
-                array = arg;
             }
             let keys;
             if(array && !Array.isArray(array)) { // if object
@@ -82,20 +80,20 @@ function nativeElements(item, array, loopI, collectionName, keys) {
             item.parent.insertBefore(prevContent, item.comment);
 
             item.directives[i] = {
-                for:   Directives._init.call(this, prevContent, 'ac-for')
+                for:   Directives._init.call(this, prevContent, 'bind-for')
             }
 
             item.interpolationArray[i] = Interpolation._init.call(this, prevContent);
 
             item.directives[i] = Object.assign(item.directives[i], {
-                // for:   Directives._init.call(this, prevContent, 'ac-for'), // should go first for correct work
-                class: Directives._init.call(this, prevContent, 'ac-class'),
-                style: Directives._init.call(this, prevContent, 'ac-style'),
-                attrs: Directives._init.call(this, prevContent, 'ac-attr'),
-                if:    Directives._init.call(this, prevContent, 'ac-if'),
-                model: Directives._init.call(this, prevContent, 'ac-model'),
-                props: Directives._init.call(this, prevContent, 'ac-value'),
-                links: Directives._init.call(this, prevContent, 'ac-link')
+                // for:   Directives._init.call(this, prevContent, 'bind-for'), // should go first for correct work
+                class: Directives._init.call(this, prevContent, 'bind-class'),
+                style: Directives._init.call(this, prevContent, 'bind-style'),
+                attrs: Directives._init.call(this, prevContent, 'bind-attr'),
+                if:    Directives._init.call(this, prevContent, 'bind-if'),
+                model: Directives._init.call(this, prevContent, 'bind-model'),
+                props: Directives._init.call(this, prevContent, 'bind-value'),
+                links: Directives._init.call(this, prevContent, 'bind-link')
             });
 
             if(loopI) {
@@ -194,7 +192,7 @@ function JSONStr(obj) {
 }
 
 function updateElement(item, i, data, loopParams) {
-    forAttachForLoop.call(this, item.directives[i].for, data);
+    forAttachForLoop.call(this, item.directives[i].for, data, loopParams);
 
     bindInterPolation.call(this, item.interpolationArray[i], data, loopParams);
 
@@ -222,8 +220,8 @@ function bindAttrsForLoop(array, data, loopParams) {
     Directives._attr.call(this, array, data, loopParams);
 }
 
-function forAttachForLoop(array, data) {
-    Directives._for.call(this, array, data);
+function forAttachForLoop(array, data, loopParams) {
+    Directives._for.call(this, array, data, loopParams);
 }
 
 function bindModelToViewForLoop(array, loopParams, collectionName, data) {

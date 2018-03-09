@@ -16,24 +16,23 @@ export function _init(root, directive, newArray) {
 
         array.get ? array.get(this).push(obj) : array.push(obj);
         root.removeAttribute(directive);
-        // if (directive === 'ac-for') elem.remove();
+        // if (directive === 'bind-for') elem.remove();
     }
-
-    for (let elem of root.querySelectorAll(`[${directive}]`)) {
+    root.querySelectorAll(`[${directive}]`).forEach(elem=>{
         let attr = elem.getAttribute(directive);
-
+        
         // exclude inner loops
-        if (directive === 'ac-for' && elem.querySelectorAll('[ac-for]').length) {
-            for (let innerElem of elem.querySelectorAll(`[ac-for]`)) {
-                innerElem.setAttribute('ac-inner-loop', true);
+        if (directive === 'bind-for' && elem.querySelectorAll('[bind-for]').length) {
+            for (let innerElem of elem.querySelectorAll(`[bind-for]`)) {
+                innerElem.setAttribute('bind-inner-loop', true);
             }
         }
 
-        if (directive === 'ac-for' && elem.getAttribute('ac-inner-loop')) {
-            elem.removeAttribute('ac-inner-loop');
+        if (directive === 'bind-for' && elem.getAttribute('bind-inner-loop')) {
+            elem.removeAttribute('bind-inner-loop');
             return;
         }
- 
+        
         let obj = {
             elem,
             attr,
@@ -43,7 +42,7 @@ export function _init(root, directive, newArray) {
         };
         
         // only for certain directives
-        if(directive === 'ac-for' || directive === 'ac-if') { 
+        if(directive === 'bind-for' || directive === 'bind-if') { 
             obj.comment = Utils.insertAfter(document.createComment(directive + ': ' + attr), elem);
             obj.cachedIndexes = [];
             obj.rootCached = null;
@@ -51,8 +50,8 @@ export function _init(root, directive, newArray) {
         }
         array.get ? array.get(this).push(obj) : array.push(obj);
         elem.removeAttribute(directive);
-        if (directive === 'ac-for') elem.remove();
-    }
+        if (directive === 'bind-for') elem.remove();
+    });
 
     return array;
 }
@@ -60,8 +59,8 @@ export function _init(root, directive, newArray) {
 
 export function _initEvent(root, directive, newArray, data, loopParams) {
     let array = newArray || [];
-    let targets = root.querySelectorAll(`[ac-${directive}]`);
-    if (root.getAttribute(`ac-${directive}`)) {
+    let targets = root.querySelectorAll(`[bind-${directive}]`);
+    if (root.getAttribute(`bind-${directive}`)) {
         let obj = createEventObject.call(this, root, directive, data, loopParams);
         array.get ? array.get(this).push(obj) : array.push(obj);
     }

@@ -1,18 +1,23 @@
 export const DIRECTIVES_NAMES = [
-    'ac-for',
-    'ac-style',
-    'ac-value',
-    'ac-input',
-    'ac-model',
-    'ac-if',
-    'ac-class',
-    'ac-link',
-    'ac-attr',
-    'ac-on',
-    'ac-pattern',
-    'ac-outside',
-    'ac-ref',
-    'ac-form-group',
-    'ac-dropdown',
-    'ac-lazy-load'
-];
+    'for',
+    'style',
+    'value',
+    'input',
+    'model',
+    'if',
+    'class',
+    'link',
+    'attr',
+    'on',
+    'pattern',
+    'outside',
+    'ref',
+    'form-group',
+    'dropdown',
+    'lazy-load'
+].map(r=> {
+    return {
+        name: r,
+        alias: 'bind-' + r
+    }
+});

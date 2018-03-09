@@ -66,7 +66,7 @@ export class RouteSwitcher {
             let fullRoute = Router.getCurrentFullPath();
             let fullPath = Router.getFullStringPath();
             let attr = item.getAttribute('href');
-            let setActive = attr === fullPath || (fullRoute[0] === attr && !item.getAttribute('ac-link-exact'));
+            let setActive = attr === fullPath || (fullRoute[0] === attr && !item.getAttribute('bind-link-exact'));
             setActive ? item.classList.add('active') : item.classList.remove('active')
         });
     }

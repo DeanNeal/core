@@ -1,0 +1,62 @@
+<div class="tabs">
+    <div class="tabs-items">
+        <div :for="let (item) of tabs" class="tabs-item" @click="select(index)" :class="active: selectedIndex === index">
+            {{item}} {{index}}
+        </div>
+    </div>
+    <!-- Values-->
+    <div class="tabs-content" :if="selectedIndex === 0">
+        <h3>Values</h3>
+        <div>{{value}}</div>
+        <div :value="value" @click="test" :attr="title: attrs.title"></div>
+    </div>
+    <!-- Values-->
+
+    <!-- Loop-->
+    <div class="tabs-content" :if="selectedIndex === 1">
+        <h3>Loop</h3>
+        <div :for="let item of collection">
+            <div :for="let a of item">
+                <div :for="let b of a">
+                    {{b}}
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Loop-->
+    
+    <div class="tabs-content" :if="selectedIndex === 2">
+        <h3>If</h3>
+        <div style="height: 20px;">
+            <span :if="show">Is shown</span>
+        </div>
+    </div>
+    <div class="tabs-content" :if="selectedIndex === 3">
+        <h3>Style</h3>
+        <div :style="background: style.bg, width: style.width, height: style.height"></div>
+    </div>
+    <div class="tabs-content" :if="selectedIndex === 4">
+        <h3>Lazy load</h3>
+        <div :lazy-load="onLazyLoad" style="height: 400px">
+            <div style="border: 1px solid #ccc;padding: 20px;margin-bottom: 10px" :for="let item of items">{{item}}</div>
+        </div>
+    </div>
+</div>
+<style>
+.tabs {}
+
+.tabs-items {
+    display: flex;
+}
+
+.tabs-item {
+    border: 1px solid;
+    display: inline-block;
+    padding: 5px;
+    cursor: pointer;
+}
+
+.tabs-item.active {
+    background: red;
+}
+</style>

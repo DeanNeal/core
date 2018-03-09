@@ -28,8 +28,8 @@ export class Component {
             attrs[root.attributes[i].nodeName] = root.attributes[i].nodeValue
         }
 
-        if(attrs['ac-form-control'] && attrs['ac-model']) {
-            throw new Error('Using of ac-model inside ac-form-group is forbidden');
+        if(attrs['bind-form-control'] && attrs['bind-model']) {
+            throw new Error('Using of bind-model inside bind-form-group is forbidden');
         }
 
         Object.defineProperty(this, '$attrs', { value: attrs, writable: false });
@@ -42,7 +42,7 @@ export class Component {
 
         Component.setPrivates.call(this, options);
 
-        if (this.root.getAttribute('ac-for')) {
+        if (this.root.getAttribute('bind-for')) {
             // console.warn('Foor loop is detected!')
         } else {
             this.render();
@@ -88,21 +88,21 @@ export class Component {
         this.compileRouter(); // render main router
         // console.log(this);
 
-        Directives._init.call(this, this.root, 'ac-for', PRIVATES.DIRECTIVES['ac-for']);// exclude interpolation from ac-for
+        Directives._init.call(this, this.root, 'bind-for', PRIVATES.DIRECTIVES['for']);// exclude interpolation from bind-for
 
 
         Interpolation._init.call(this, this.root, PRIVATES.INTERPOLATION);
 
         //internal directives
         DIRECTIVES_NAMES.forEach(directive => {
-            if(directive !== 'ac-for') {
-                Directives._init.call(this, this.root, directive, PRIVATES.DIRECTIVES[directive]);
+            if(directive.name !== 'for') {
+                Directives._init.call(this, this.root, directive.alias, PRIVATES.DIRECTIVES[directive.name]);
             }
         });
 
         //events
-        EVENTS_NAMES.forEach(directive => {
-            Directives._initEvent.call(this, this.root, directive, PRIVATES.EVENTS);
+        EVENTS_NAMES.forEach(event => {
+            Directives._initEvent.call(this, this.root, event, PRIVATES.EVENTS);
         });
 
         //custom directives
@@ -115,18 +115,18 @@ export class Component {
             }
         });
 
-        Directives._dropdown.call(this, PRIVATES.DIRECTIVES['ac-dropdown'].get(this));
-        Directives._lazy.call(this, PRIVATES.DIRECTIVES['ac-lazy-load'].get(this));
+        Directives._dropdown.call(this, PRIVATES.DIRECTIVES['dropdown'].get(this));
+        Directives._lazy.call(this, PRIVATES.DIRECTIVES['lazy-load'].get(this));
 
-        Directives._model.call(this, PRIVATES.DIRECTIVES['ac-model'].get(this));
-        Directives._on.call(this, PRIVATES.DIRECTIVES['ac-on'].get(this));
-        Directives._outside.call(this, PRIVATES.DIRECTIVES['ac-outside'].get(this));
-        Directives._pattern.call(this, PRIVATES.DIRECTIVES['ac-pattern'].get(this));//TODO
-        Directives._elRef.call(this, PRIVATES.DIRECTIVES['ac-ref'].get(this));
+        Directives._model.call(this, PRIVATES.DIRECTIVES['model'].get(this));
+        Directives._on.call(this, PRIVATES.DIRECTIVES['on'].get(this));
+        Directives._outside.call(this, PRIVATES.DIRECTIVES['outside'].get(this));
+        Directives._pattern.call(this, PRIVATES.DIRECTIVES['pattern'].get(this));//TODO
+        Directives._elRef.call(this, PRIVATES.DIRECTIVES['ref'].get(this));
         Directives._events.call(this, PRIVATES.EVENTS.get(this));
         Directives._hostEvents.call(this, PRIVATES.HOST.EVENTS.get(this));
 
-        Directives._formGroup.call(this, PRIVATES.DIRECTIVES['ac-form-group'].get(this));
+        Directives._formGroup.call(this, PRIVATES.DIRECTIVES['form-group'].get(this));
 
 
         // this.onInit();
@@ -136,15 +136,15 @@ export class Component {
         let $propsSub = this.props.sub(r => {
             Directives._computed.call(this, PRIVATES.COMPUTED.get(this)); // should go first
 
-            Directives._if.call(this, PRIVATES.DIRECTIVES['ac-if'].get(this));
-            Directives._for.call(this, PRIVATES.DIRECTIVES['ac-for'].get(this));
-            Directives._value.call(this, PRIVATES.DIRECTIVES['ac-value'].get(this));
-            Directives._input.call(this, PRIVATES.DIRECTIVES['ac-input'].get(this));
-            Directives._value.call(this, PRIVATES.DIRECTIVES['ac-model'].get(this));
-            Directives._style.call(this, PRIVATES.DIRECTIVES['ac-style'].get(this));
-            Directives._class.call(this, PRIVATES.DIRECTIVES['ac-class'].get(this));
-            Directives._attr.call(this, PRIVATES.DIRECTIVES['ac-attr'].get(this));
-            Directives._link.call(this, PRIVATES.DIRECTIVES['ac-link'].get(this));
+            Directives._if.call(this, PRIVATES.DIRECTIVES['if'].get(this));
+            Directives._for.call(this, PRIVATES.DIRECTIVES['for'].get(this));
+            Directives._value.call(this, PRIVATES.DIRECTIVES['value'].get(this));
+            Directives._input.call(this, PRIVATES.DIRECTIVES['input'].get(this));
+            Directives._value.call(this, PRIVATES.DIRECTIVES['model'].get(this));
+            Directives._style.call(this, PRIVATES.DIRECTIVES['style'].get(this));
+            Directives._class.call(this, PRIVATES.DIRECTIVES['class'].get(this));
+            Directives._attr.call(this, PRIVATES.DIRECTIVES['attr'].get(this));
+            Directives._link.call(this, PRIVATES.DIRECTIVES['link'].get(this));
             Directives._hostClasses.call(this, PRIVATES.HOST.CLASS.get(this));
             Directives._hostStyles.call(this, PRIVATES.HOST.STYLE.get(this));
             Directives._hostHidden.call(this, PRIVATES.HOST.HIDDEN.get(this));
@@ -193,10 +193,16 @@ export class Component {
         EVENTS_NAMES.forEach(event => {
             let stringToGoIntoTheRegex = '@' + event;
             let regex = new RegExp(stringToGoIntoTheRegex, "g");
-            html = html.replace(regex, `ac-${event}`)
+            html = html.replace(regex, `bind-${event}`)
         });
 
-        return html
+        DIRECTIVES_NAMES.forEach(directive => {
+           let stringToGoIntoTheRegex = ':'+ directive.name;
+           let regex = new RegExp(stringToGoIntoTheRegex, "g");
+           html = html.replace(regex, `${directive.alias}`)
+        });
+
+        return html;
     }
 
     setSubscriptions(...rest) {
@@ -231,11 +237,14 @@ export class Component {
             listOfVariablesValues.push(scope);
 
             if(loopParams.index || loopParams.index === 0) {
-                listOfVariables.push('index');
-                listOfVariablesValues.push(loopParams.index);
+                if(listOfVariables.indexOf('index') > -1) {
+                    listOfVariablesValues[listOfVariables.indexOf('index')] = loopParams.index;
+                } else {
+                    listOfVariables.push('index');
+                    listOfVariablesValues.push(loopParams.index);
+                }
             } else {
-                listOfVariables.push('index');
-                listOfVariablesValues.push(undefined);
+                listOfVariables.push('index'); // if index doesn't exist
             }
             if(loopParams.key) {                
                 listOfVariables.push('key');

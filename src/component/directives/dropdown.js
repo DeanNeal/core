@@ -20,7 +20,7 @@ export function _dropdown(array, data, loopParams) {
         component._open = () => {
             if (component.getRoot().getAttribute('readonly') === null) {
                 component.props.set('_show', !component.props.get('_show'));
-                let container = component.getElement('[ac-dropdown-container]')[0];
+                let container = component.getElement('[dropdown-container]')[0];
 
                 if(container) {                
                     if (window.innerHeight - component.root.getBoundingClientRect().top < (container.clientHeight + component.root.clientHeight || 250)) {

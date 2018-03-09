@@ -100,7 +100,7 @@ class API {
         let rootEl = document.querySelectorAll(options.root.selector)[0];
         if (rootEl) {
             let rootComponent = new options.root(rootEl);
-            rootComponent.root.setAttribute('ac-version', VERSION);
+            rootComponent.root.setAttribute('app-version', VERSION);
         } else {
             console.warn('There is no root component');
         }

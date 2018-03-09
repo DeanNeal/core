@@ -5,8 +5,8 @@ export function _events(array) {
     array.forEach(newEvent => {
         let modifiers = getEventMod(newEvent.el);
         newEvent.el.addEventListener(newEvent.event.toLowerCase(), newEvent.f, modifiers.indexOf('capture') > -1 ? true : false);
-        newEvent.el.removeAttribute('ac-mod');
-        newEvent.el.removeAttribute('ac-kmod')
+        newEvent.el.removeAttribute('bind-mod');
+        newEvent.el.removeAttribute('bind-kmod')
     });
 }
 
@@ -18,16 +18,16 @@ export function removeEventListeners(array) {
 }
 
 function getEventMod(elem) {
-    return elem.getAttribute('ac-mod') ? elem.getAttribute('ac-mod').replace(/ +/g, "").split(',') : [];
+    return elem.getAttribute('bind-mod') ? elem.getAttribute('bind-mod').replace(/ +/g, "").split(',') : [];
 }
 
 function getKeyMod(elem) {
-    return elem.getAttribute('ac-kmod') ? elem.getAttribute('ac-kmod').replace(/ +/g, "") : null;
+    return elem.getAttribute('bind-kmod') ? elem.getAttribute('bind-kmod').replace(/ +/g, "") : null;
 }
 
 export function createEventObject(elem, event, data, loopParams) {
-    let funcParams = elem.getAttribute(`ac-${event}`);
-    elem.removeAttribute(`ac-${event}`);
+    let funcParams = elem.getAttribute(`bind-${event}`);
+    elem.removeAttribute(`bind-${event}`);
     let fnName = funcParams.replace(/ +/g, "");
     let modifiers = getEventMod(elem);
     let kModifiers = getKeyMod(elem);
@@ -57,7 +57,7 @@ export function createEventObject(elem, event, data, loopParams) {
                             arg = this.getPropsByScope(res, data, loopParams);
                         } else if(res === '$event') {
                             arg = e;
-                        } else if (res === '$index') {
+                        } else if (res === 'index') {
                             arg = loopParams.index;
                         } else if(res === 'key'){
                             arg = loopParams.key;

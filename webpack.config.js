@@ -16,8 +16,8 @@ var outputFile = libraryName + '.js';
 
 module.exports = {
     entry: {
-        index: ['./src/core.js']
-        // demo: ['./src/example/app.js']
+        index: ['./src/core.js'],
+        demo: ['./src/app.js']
     },
     output: {
         path: path.join('build'),
@@ -75,19 +75,19 @@ module.exports = {
         //     from: '**/*',
         //     to: 'css'
         // }]),
-        // new HtmlWebpackPlugin({
-        //     title: 'ACE',
-        //     alwaysWriteToDisk: true,
-        //     filename: path.resolve('index.html'),
-        //     template: path.resolve(__dirname, 'src/example/index.html')
-        // }),
-        // new HtmlWebpackHarddiskPlugin({
-        //     alwaysWriteToDisk: true,
-        //     filename: 'index.html'
-        // })
+        new HtmlWebpackPlugin({
+            title: '@dean_neal',
+            alwaysWriteToDisk: true,
+            filename: path.resolve('index.html'),
+            template: path.resolve(__dirname, 'src/index.html')
+        }),
+        new HtmlWebpackHarddiskPlugin({
+            alwaysWriteToDisk: true,
+            filename: 'index.html'
+        })
     ],
     // Create Sourcemaps for the bundle
-    // devtool: 'source-map',
+    devtool: 'source-map',
     resolve: {
         root: path.resolve(__dirname, 'src'),
         alias: {
