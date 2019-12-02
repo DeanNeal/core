@@ -4,7 +4,7 @@ import Component from  './decorators/component';
 import Inject from './decorators/inject';
 
 // import { Component } from './component/component';
-import { RouteSwitcher } from './router/router-switcher';
+// import { RouteSwitcher } from './router/router-switcher';
 import Router from './router/router-core';
 import { TemplateEngine } from './template-engine';
 import GlobalEvents from './global-events';
@@ -29,7 +29,7 @@ export {
     Component,
     Inject,
     Router,
-    RouteSwitcher,
+    // RouteSwitcher,
     TemplateEngine,
     Events,
     GlobalEvents,

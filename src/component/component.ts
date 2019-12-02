@@ -1,4 +1,4 @@
-import { Router, RouteSwitcher, TemplateEngine, Utils } from '../core';
+// import { Router, RouteSwitcher, TemplateEngine, Utils } from '../core';
 
 import Interpolation from './interpolation/interpolation';
 import { Directives } from './directives';
@@ -34,7 +34,7 @@ export class Component  {
 
     componentConstructor(root: HTMLElement, options: any, extraData?) {
         Object.defineProperty(this, 'root', { value: root, writable: false });
-        Object.defineProperty(this, 'children', { value: {}, writable: false });
+        Object.defineProperty(this, 'children', { value: {}, writable: true });
         Object.defineProperty(this, 'tpl', { value: options.template, writable: false });
         Object.defineProperty(this, '$attrs', { value: {}, writable: true });
         Object.defineProperty(this, '_host', { value: {
@@ -88,8 +88,6 @@ export class Component  {
 
         Object.defineProperty(this, '_directives', { value: directives, writable: false });
 
-        // this._events = [];
-        // this._subscriptions = [];
         // PRIVATES.GLOBAL_EVENTS.set(this, null);
         this._host.events = options.hostEvents;
         this._host.class = options.hostClasses;
@@ -100,7 +98,7 @@ export class Component  {
             cached: this['root']
         }];
         
-        this._interpolation = [];//.set(this, []);
+        this._interpolation = [];
         
         this._computed = options.computed;
 
@@ -191,22 +189,22 @@ export class Component  {
         Object.defineProperty(this, '$propsSub', { value: $propsSub, writable: false });
     }
 
-    compile() {
-        API.COMPONENTS.forEach(comp => {
-            let components = this.root.querySelectorAll(comp.selector);
-            if (components.length) {
-                components.forEach(r => {
-                    if (!r.COMPONENT) { // don't reinitialize
-                        let a = comp(r, {}, this);
-                        if (!this.children[a.constructor.name]) {
-                            this.children[a.constructor.name] = [];
-                            this.children[a.constructor.name].push(a);
-                        }
-                    }
-                });
-            }
-        });
-    }
+    // compile() {
+    //     API.COMPONENTS.forEach(comp => {
+    //         let components = this.root.querySelectorAll(comp.selector);
+    //         if (components.length) {
+    //             components.forEach(r => {
+    //                 if (!r.COMPONENT) { // don't reinitialize
+    //                     let a = comp(r, {}, this);
+    //                     if (!this.children[a.constructor.name]) {
+    //                         this.children[a.constructor.name] = [];
+    //                         this.children[a.constructor.name].push(a);
+    //                     }
+    //                 }
+    //             });
+    //         }
+    //     });
+    // }
 
     // compileRouter() {
     //     let router = this.root.querySelectorAll('route-switcher')[0];

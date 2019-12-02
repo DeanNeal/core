@@ -1,6 +1,7 @@
 import { Application, Decorators } from './core';
 
 import * as Tpl from './app.html';
+import {Router} from './router';
 
 @Decorators.ComponentDecorator({
   selector: 'app-child',
@@ -11,7 +12,7 @@ export class ChildComponent {
 }
 
 @Decorators.ComponentDecorator({
-  selector: 'app-root',
+  selector: 'app-home',
   template: Tpl
 })
 class AppComponent {
@@ -35,9 +36,9 @@ class AppComponent {
     }
 
     onInit() {
-      setInterval(() => {
-        this.show = !this.show;
-      }, 1000);
+      // setInterval(() => {
+      //   this.show = !this.show;
+      // }, 1000);
       this.load();
     }
 
@@ -67,14 +68,23 @@ class AppComponent {
 
 }
 
+
+@Decorators.ComponentDecorator({
+  selector: 'app-root',
+  template: '<a :link="/">HOME</a><a :link="page">PAGE</a><route-switcher></route-switcher>'
+})
+class RootComponent {
+
+}
+
 Application.register({
-  // root: RootComponent,
+
   // styles: Styles,
-  components: [AppComponent, ChildComponent],
+  components: [RootComponent, AppComponent, ChildComponent],
   directives: [
 
   ],
   import: [],
-  // routes: Routes
+  router: Router
 
 });

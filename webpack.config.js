@@ -123,31 +123,32 @@ module.exports = {
         contentBase: path.join(__dirname, ''),
         port: 8000,
         open: true,
-        publicPath: "/build"
+        historyApiFallback: true
+        // publicPath: "/build"
       }
 };
 
 
 //------PRODUCTION CONFIG--------//
 
-// if (NODE_ENV == 'prod') {
-//     module.exports.plugins.push(
-//         // new webpack.optimize.UglifyJsPlugin({
-//         //     compress: {
-//         //         warnings: false
-//         //     },
-//         //     mangle: {
-//         //         keep_fnames: true
-//         //     }
-//         // }),
-//         new SmartBannerPlugin({
-//             banner: `${packageJSON.name} ${packageJSON.version}\nMay be freely distributed under the MIT license \nAuthor: ${packageJSON.author}\nLast update: ${new Date().toLocaleString()}\n`,
-//             raw: false,
-//             entryOnly: true
-//         }),
-//         new CleanWebpackPlugin(['build'], {
-//             root: path.resolve(__dirname),
-//             verbose: true
-//         })
-//     )
-// }
+if (NODE_ENV == 'prod') {
+    module.exports.plugins.push(
+        // new webpack.optimize.UglifyJsPlugin({
+        //     compress: {
+        //         warnings: false
+        //     },
+        //     mangle: {
+        //         keep_fnames: true
+        //     }
+        // }),
+        new SmartBannerPlugin({
+            banner: `${packageJSON.name} ${packageJSON.version}\nMay be freely distributed under the MIT license \nAuthor: ${packageJSON.author}\nLast update: ${new Date().toLocaleString()}\n`,
+            raw: false,
+            entryOnly: true
+        }),
+        new CleanWebpackPlugin(['build'], {
+            root: path.resolve(__dirname),
+            verbose: true
+        })
+    )
+}

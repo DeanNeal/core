@@ -1,7 +1,7 @@
 
-import {RouteSwitcher} from './router/router-switcher';
+// import { RouteSwitcher } from './router/router-switcher';
 import { Component } from './component/component';
-import {Directive } from './decorators/directive';
+import { Directive } from './decorators/directive';
 
 class API {
     public rootComponent;
@@ -34,7 +34,7 @@ class API {
         });
     }
 
-    injectorGet(service, Class) {
+    injectorGet(service, Class?) {
         let instanceName = (Class ? Class.name : '');
         if (typeof service !== 'function') {
             throw new Error('Is not a service; ' + instanceName);
@@ -64,30 +64,37 @@ class API {
     }
 
     register(options) {
-        // this.loadStyle(options.styles);
+        this.loadStyle(options.styles);
 
         // if (options.services && options.services.length) {
         //     this.setServices(options.services);
         // }
 
-        // RouteSwitcher.ROUTES = options.routes;
+        // RouteSwitcher.ROUTES = options.router;
         // this.rootComponent = options.root;
 
-        if(options.components) {
+        if (options.components) {
             if (options.components instanceof Array) {
-                options.components.forEach(c => c());//this.registerComponent(c));
+                this.COMPONENTS =  options.components;
+                options.components.forEach(c => {
+                    // new c();
+                });//this.registerComponent(c));
             } else {
                 throw new Error('components must be an array');
             }
         }
-        
-        // if (options.directives) {
-        //     if (options.directives instanceof Array) {
-        //         options.directives.forEach(d => this.registerDirective(d));
-        //     } else {
-        //         throw new Error('directives must be an array');
-        //     }
-        // }
+
+        if (options.directives) {
+            if (options.directives instanceof Array) {
+                options.directives.forEach(d => this.registerDirective(d));
+            } else {
+                throw new Error('directives must be an array');
+            }
+        }
+
+        if (options.router) {
+            options.router();
+        }
 
         // if(options.import) {        
         //     if (options.import instanceof Array) {
@@ -121,22 +128,22 @@ class API {
     }
 
     // registerComponent(component) {
-        //avoid repeated components
-        // if (this.COMPONENTS.map(r => r.selector).indexOf(component.selector) > -1) {
-        //     throw new Error('Duplicate declaration; ' + component.selector);
-        // }
+    //avoid repeated components
+    // if (this.COMPONENTS.map(r => r.selector).indexOf(component.selector) > -1) {
+    //     throw new Error('Duplicate declaration; ' + component.selector);
+    // }
 
 
-        // if (component.super && Object.is(component.super.prototype, Component.prototype)) {
-        //     this.COMPONENTS.push(component);
-        // } else {
-        //     throw new Error(component.name + ' must me inherited from ComponentDecorator');
-        // }
+    // if (component.super && Object.is(component.super.prototype, Component.prototype)) {
+    //     this.COMPONENTS.push(component);
+    // } else {
+    //     throw new Error(component.name + ' must me inherited from ComponentDecorator');
+    // }
     // }
 
     registerDirective(directive) {
         //avoid repeated directives
-        if(Object.is(directive.super.prototype, Directive.prototype)) {
+        if (Object.is(directive.super.prototype, Directive.prototype)) {
             if (this.CUSTOM_DIRECTIVES.map(r => r.params.selector).indexOf(directive.params.selector) > -1) {
                 throw new Error('Duplicate declaration; ' + directive.params.selector);
             }
