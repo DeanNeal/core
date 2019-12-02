@@ -1,5 +1,5 @@
-import { PRIVATES } from '../private';
-import { Utils } from '../../core';
+// import { PRIVATES } from '../private';
+// import { Utils } from '../../core';
 
 export function _events(array) {
     array.forEach(newEvent => {
@@ -38,7 +38,7 @@ export function createEventObject(elem, event, data, loopParams) {
     
     let functionName = fnName.replace(regExp, ''); // remove everything between brackets
 
-    if(this.props[functionName]){
+    if(this._props[functionName]){
         throw new Error('Duplicate identifier: ' + functionName + '; Rename method or variable in props');
     }
 

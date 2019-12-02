@@ -2,7 +2,7 @@ import { Component, Utils} from '../../core';
 import { Directives } from './index';
 import { _init } from './init';
 import { EVENTS_NAMES } from '../const/events';
-import API from'./../../api';
+import API from'../../api';
 
 import Interpolation from './../interpolation/interpolation';
 
@@ -59,6 +59,8 @@ export function _for(array, data, loopParams) {
 }
 
 function nativeElements(item, array, loopI, collectionName, keys) {
+    if(!array) throw new Error('Array is undefined');
+
     if (item.cached.length !== array.length) {
         item.items.forEach(item => {
             item.remove();
@@ -116,7 +118,7 @@ function nativeElements(item, array, loopI, collectionName, keys) {
         }
     }
 
-    let curRootProps = JSONStr(this.props.getData());
+    let curRootProps = JSONStr(this._props.getData());
 
     item.items.forEach((elem, i) => {
         // if current or root prop has been changed
@@ -125,7 +127,7 @@ function nativeElements(item, array, loopI, collectionName, keys) {
         }
     });
 
-    item.rootCached = JSONStr(this.props.getData());
+    item.rootCached = JSONStr(this._props.getData());
     item.cached = JSON.parse(JSONStr(array));
 }
 
@@ -166,7 +168,7 @@ function customElements(item, array, compName) {
                 console.warn('Please create component with name ' + compName);
                 return
             }
-            elem.COMPONENT.props.set(array[i]);
+            elem.COMPONENT._props.set(array[i]);
         }
     });
 

@@ -1,6 +1,6 @@
 <div class="tabs">
     <div class="tabs-items">
-        <div :for="let (item) of tabs" class="tabs-item" @click="select(index)" :class="active: selectedIndex === index">
+        <div :for="let (item, index) of tabs" class="tabs-item" @click="select(index)" :class="active: selectedIndex === index">
             {{item}} {{index}}
         </div>
     </div>
@@ -42,6 +42,9 @@
         </div>
     </div>
 </div>
+
+<app-child :if="show"></app-child>
+
 <style>
 .tabs {}
 

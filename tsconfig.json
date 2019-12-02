@@ -1,0 +1,19 @@
+{
+    "compilerOptions": {
+        "module": "commonjs",
+        "target": "es6",
+        "noImplicitAny": false,
+        "removeComments": true,
+        "preserveConstEnums": true,
+        // "outFile": "../../built/local/tsc.js",
+        "sourceMap": true,
+        "experimentalDecorators": true
+    },
+    // "include": [
+    //     "src/**/*"
+    // ],
+    "exclude": [
+        "node_modules",
+        "**/*.spec.ts"
+    ]
+}

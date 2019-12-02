@@ -3,9 +3,13 @@ import { IfObject, IfArray } from '../decorators';
 // import objectMerge from 'object-merge';
 // import merge from 'merge';
 
-class AbstractObservable {
+export class AbstractObservable {
+    public lId: number = -1;
+    public callbacksArray: any[] = [];
+    public _data;
+
     constructor(options) {
-        this.lId = -1;
+        // this.lId = -1;
         if (options) {
             this.defineProperties(options);
         }
@@ -57,6 +61,10 @@ class AbstractObservable {
         return this._data[key];
     }
 
+    set(key, value, silent?) {
+
+    }
+
     _callAll() {
         this.callbacksArray.forEach(r => {
             // if (this._data) {
@@ -103,7 +111,7 @@ export class ObservableCollection extends AbstractObservable {
         super(options);
     }
 
-    set(data, value, silent) {
+    set(data, value?, silent?) {
         this._data = data;
         if (!silent) {
             this._callAll();
@@ -140,10 +148,6 @@ export class ObservableCollection extends AbstractObservable {
         return this._data.splice(cb);
     }
 
-    splice(cb) {
-        return this._data.splice(cb);
-    }
-
     slice(...rest) {
         return this._data.slice(rest);
     }
@@ -163,7 +167,7 @@ export class ObservableCollection extends AbstractObservable {
     }
 
 
-    shift() {
+    shift(data) {
         this._data.shift(data);
         this._callAll();
     }
@@ -240,7 +244,7 @@ export class ObservableNumber extends AbstractObservable {
 
 export class Observable {
     constructor(options) {
-        return this.checkType(options);
+        // return this.checkType(options);
     }
 
     checkType(options) {

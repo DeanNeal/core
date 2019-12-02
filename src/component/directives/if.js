@@ -26,7 +26,6 @@ export function _if(array, data, loopParams) {
 
                 if (Utils.isCustomElement(item.elem)) {
                     if (item.elem.COMPONENT) {
-                        item.elem.COMPONENT.destroy();
                         item.elem.COMPONENT = null;
                         delete item.elem.COMPONENT;
                     }

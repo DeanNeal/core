@@ -1,8 +1,17 @@
 import {Utils} from '../utils/utils';
 export class FormControl {
+    public valid:boolean = true;
+    public dirty: boolean = false;
+    public value: string;
+    public initValue: string;
+    public validators: [];
+    public errors;
+    public elem;
+    public parent;
+
     constructor(params, parent) {
-        this.valid = true;
-        this.dirty = false;
+        // this.valid = true;
+        // this.dirty = false;
         this.value = params[0] || '';
         this.initValue = params[0] || '';
         this.validators = params[1] || [];
@@ -46,14 +55,14 @@ export class FormControl {
         if (this.validators.length) {
            
             this.errors = {};
-            this.validators.forEach(v=>{
+            this.validators.forEach((v: any)=>{
                 let validator = v(this);
                 if(!validator[1] && Object.keys(this.errors).length === 0 && this.dirty) {
                     this.errors[validator[0]] = true;
                 }
             });
 
-            this.valid = this.validators.filter(validator => validator(this)[1]).length === this.validators.length;
+            this.valid = this.validators.filter((validator: any) => validator(this)[1]).length === this.validators.length;
         } else {
             this.valid = true;
         }
@@ -91,6 +100,12 @@ export class FormControl {
 }
 
 export class FormGroup {
+    public valid: boolean = false;
+    public controls;
+    public value;
+    public component;
+    public onChangeCallback = ()=> {}
+
     constructor(controls) {
         this.valid = false;
         this.controls = {};

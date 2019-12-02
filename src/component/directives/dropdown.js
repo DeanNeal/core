@@ -19,7 +19,7 @@ export function _dropdown(array, data, loopParams) {
 
         component._open = () => {
             if (component.getRoot().getAttribute('readonly') === null) {
-                component.props.set('_show', !component.props.get('_show'));
+                component._props.set('_show', !component._props.get('_show'));
                 let container = component.getElement('[dropdown-container]')[0];
 
                 if(container) {                
@@ -34,8 +34,8 @@ export function _dropdown(array, data, loopParams) {
         }
 
         component._close = () => {
-            if (component.props.get('_show')) {
-                component.props.set('_show', false);
+            if (component._props.get('_show')) {
+                component._props.set('_show', false);
                 component.onClose && component.onClose();
             }
         }

@@ -1,5 +1,3 @@
-// import { applyFormatter } from './../directives/value';
-import { Directives } from '../../component/directives';
 import { Utils } from '../../utils/utils';
 
 const Interpolation = {

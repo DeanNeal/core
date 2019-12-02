@@ -88,7 +88,7 @@ const Utils = {
         let i = 0;
         let minDiff = 1000;
         let ans;
-        for (i in array) {
+        for (let i in array) {
             let m = Math.abs(num - array[i]);
             if (m < minDiff) {
                 minDiff = m;
@@ -284,6 +284,7 @@ const Utils = {
             formatter = formatterData[0].trim();
             formatterData = formatterData[1] ? formatterData[1].trim() : null;
         }
+        let rowHtml = false;
 
 
         if (formatter && formatter === 'json') {

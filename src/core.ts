@@ -12,14 +12,14 @@ import { Utils } from './utils/utils';
 import * as Plugins from './plugins';
 
 // import { Http } from './http.js';
-import API from './api';
+import Application from './api';
 
 import Events from './dispatcher';
 
 // import {ModalController} from './controls/modal';
 
-import {FormGroup} from 'reactive-forms/form-group';
-import {Validators} from 'reactive-forms/validators';
+import {FormGroup} from './reactive-forms/form-group';
+import {Validators} from './reactive-forms/validators';
 
 import './polifills';
 
@@ -37,7 +37,7 @@ export {
     Plugins,
 
     // Http,
-    API,
+    Application,
 
     // ModalController,
 
