@@ -299,7 +299,7 @@ const Utils = {
             r = r;
         }
 
-        if (!r && r !== 0) {
+        if (!r && r !== 0 && r !== false) {
             r = '';
         }
         return r;

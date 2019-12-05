@@ -1,8 +1,8 @@
-import { Component, Utils} from '../../core';
+import { Component, Utils } from '../../core';
 import { Directives } from './index';
 import { _init } from './init';
 import { EVENTS_NAMES } from '../const/events';
-import API from'../../api';
+// import API from'../../api';
 
 import Interpolation from './../interpolation/interpolation';
 
@@ -11,26 +11,26 @@ export function _for(array, data, loopParams) {
         //console.log(this); //console.time('modules')
         array.forEach(item => {
             let compName = item.elem.localName;
-            let loopIterator = {iterator: null};
+            let loopIterator = { iterator: null };
             let collectionName;
             let array = [];//this.getComponentVariable(item.attr.split('.'), data) || [];
             // let additionalParams = {};
 
-            if(item.attr.indexOf('let ') > -1 && item.attr.indexOf('of ') > -1) {
+            if (item.attr.indexOf('let ') > -1 && item.attr.indexOf('of ') > -1) {
                 let params1 = item.attr.split('of')[0];
                 collectionName = item.attr.split('of')[1].replace(/ +/g, "");
                 let lParams = params1.split('let ')[1].replace(/ +/g, "");
                 // let func = `for(${params1} in this.${collectionName}) { } return this.${collectionName}`;
-                Utils.getValueBetweenBrackets(lParams, (value)=>{
+                Utils.getValueBetweenBrackets(lParams, (value) => {
                     let params = value.split(',');
                     loopIterator.iterator = params[0];
-                    if(params.indexOf('key') > -1) {
+                    if (params.indexOf('key') > -1) {
                         loopIterator.key = true
-                    } 
-                    if(params.indexOf('index') > -1) {
+                    }
+                    if (params.indexOf('index') > -1) {
                         loopIterator.index = true
                     }
-                }, () =>{
+                }, () => {
                     loopIterator.iterator = lParams;
                 });
 
@@ -38,14 +38,14 @@ export function _for(array, data, loopParams) {
                     // arg = new Function(func).apply(data || this.props);
                     // arg = Utils.getDeepProp(data || this.props, collectionName) || [];
                     array = this.getPropsByScope(collectionName, data, loopParams);
-                } catch(e) {
+                } catch (e) {
                     array = [];
                 }
             }
             let keys;
-            if(array && !Array.isArray(array)) { // if object
+            if (array && !Array.isArray(array)) { // if object
                 keys = Object.keys(array);
-                array = Object.keys(array).map(r=> array[r]);
+                array = Object.keys(array).map(r => array[r]);
             }
 
             if (Utils.isCustomElement(item.elem)) {
@@ -59,7 +59,7 @@ export function _for(array, data, loopParams) {
 }
 
 function nativeElements(item, array, loopI, collectionName, keys) {
-    if(!array) throw new Error('Array is undefined');
+    if (!array) throw new Error('Array is undefined: ' + this.constructor.name + '; ' + item.attr);
 
     if (item.cached.length !== array.length) {
         item.items.forEach(item => {
@@ -82,7 +82,7 @@ function nativeElements(item, array, loopI, collectionName, keys) {
             item.parent.insertBefore(prevContent, item.comment);
 
             item.directives[i] = {
-                for:   Directives._init.call(this, prevContent, 'bind-for')
+                for: Directives._init.call(this, prevContent, 'bind-for')
             }
 
             item.interpolationArray[i] = Interpolation._init.call(this, prevContent);
@@ -92,13 +92,15 @@ function nativeElements(item, array, loopI, collectionName, keys) {
                 class: Directives._init.call(this, prevContent, 'bind-class'),
                 style: Directives._init.call(this, prevContent, 'bind-style'),
                 attrs: Directives._init.call(this, prevContent, 'bind-attr'),
-                if:    Directives._init.call(this, prevContent, 'bind-if'),
+                if: Directives._init.call(this, prevContent, 'bind-if'),
                 model: Directives._init.call(this, prevContent, 'bind-model'),
-                props: Directives._init.call(this, prevContent, 'bind-value'),
-                links: Directives._init.call(this, prevContent, 'bind-link')
+                input: Directives._init.call(this, prevContent, 'bind-input'),
+                value: Directives._init.call(this, prevContent, 'bind-value'),
+                links: Directives._init.call(this, prevContent, 'bind-link'),
+                on: Directives._init.call(this, prevContent, 'bind-on')
             });
 
-            if(loopI) {
+            if (loopI) {
                 item.loopParams.push({
                     iterator: loopI.iterator,
                     index: loopI.index && i,
@@ -114,7 +116,10 @@ function nativeElements(item, array, loopI, collectionName, keys) {
             item.directives[i].events = eventsArray;
 
             // updateElement.call(this, item, i, array[i], item.loopParams[i]);
+
+            //without update
             bindModelToViewForLoop.call(this, item.directives[i].model, item.loopParams[i], collectionName, array[i]);
+            bindOnForLoop.call(this, item.directives[i].on);
         }
     }
 
@@ -122,7 +127,7 @@ function nativeElements(item, array, loopI, collectionName, keys) {
 
     item.items.forEach((elem, i) => {
         // if current or root prop has been changed
-        if (JSONStr(item.cached[i]) !== JSONStr(array[i]) ||  curRootProps !== item.rootCached ) {
+        if (JSONStr(item.cached[i]) !== JSONStr(array[i]) || curRootProps !== item.rootCached) {
             updateElement.call(this, item, i, array[i], item.loopParams[i]);
         }
     });
@@ -133,29 +138,36 @@ function nativeElements(item, array, loopI, collectionName, keys) {
 
 function customElements(item, array, compName) {
     if (item.cached.length !== array.length) {
-        item.items.forEach(item => {
-            item.COMPONENT && item.COMPONENT.destroy();
-        });
-        item.items = [];
-        this.children[item.elem.COMPONENT.constructor.name] = [];
+        // item.items.forEach(item => {
+        //     item.COMPONENT && item.COMPONENT.destroy();
+        // });
+        // item.items = [];
+        // this.children[item.elem.COMPONENT.constructor.name] = [];
+
         for (let i = 0; i <= array.length - 1; i++) {
-            let newComp = API.COMPONENTS.filter(r => r.selector === compName)[0];
+            // let newComp = API.COMPONENTS.filter(r => r.selector === compName)[0];
             // if(newComp) {
+
             let newEl = document.createElement(compName);
+            // console.log(1111, newEl);
             // this.root.appendChild(newEl);
-            let instance = new newComp(newEl, array[i], this);
-            this.children[item.elem.COMPONENT.constructor.name].push(instance);
+
+            // let instance = new newComp(newEl, array[i], this);
+
+            // this.children[item.elem.COMPONENT.constructor.name].push(instance);
             // }
 
             // loop through the old element's attributes and give them to the new element
             for (let i = 0; i < item.elem.attributes.length; i++) {
                 newEl.setAttribute(item.elem.attributes[i].nodeName, item.elem.attributes[i].nodeValue);
             }
+
+
             item.items.push(newEl);
             item.parent.insertBefore(newEl, item.comment);
         }
         item.cached = []; // refresh cached array
-        item.cachedIndexes = item.items.map(r=> Utils.indexInParent(r))
+        item.cachedIndexes = item.items.map(r => Utils.indexInParent(r))
     }
 
     item.items.forEach((elem, i) => {
@@ -164,33 +176,33 @@ function customElements(item, array, compName) {
         }
 
         if (JSONStr(item.cached[i]) !== JSONStr(array[i])) {
-            if (!elem.COMPONENT) {
-                console.warn('Please create component with name ' + compName);
-                return
-            }
-            elem.COMPONENT._props.set(array[i]);
+            // if (!elem.COMPONENT) {
+            //     console.warn('Please create component with name ' + compName);
+            //     return
+            // }
+            // elem.COMPONENT._props.set(array[i]);
         }
     });
 
     item.cached = JSON.parse(JSONStr(array));
-    item.cachedIndexes = item.items.map(r=> Utils.indexInParent(r));
+    item.cachedIndexes = item.items.map(r => Utils.indexInParent(r));
 }
 
 // check for cyclic object references before stringifying
 function JSONStr(obj) {
-    let seen = []; 
+    let seen = [];
 
-    let replacer = function(key, value) {
-      if (value != null && typeof value == "object") {
-        if (seen.indexOf(value) >= 0) {
-          return;
+    let replacer = function (key, value) {
+        if (value != null && typeof value == "object") {
+            if (seen.indexOf(value) >= 0) {
+                return;
+            }
+            seen.push(value);
         }
-        seen.push(value);
-      }
-      return value;
+        return value;
     };
 
-    return JSON.stringify(obj, replacer); 
+    return JSON.stringify(obj, replacer);
 }
 
 function updateElement(item, i, data, loopParams) {
@@ -201,8 +213,11 @@ function updateElement(item, i, data, loopParams) {
     bindClassForLoop.call(this, item.directives[i].class, data, loopParams);
     styleUnitForLoop.call(this, item.directives[i].style, data, loopParams);
     bindIfForLoop.call(this, item.directives[i].if, data, loopParams);
-    bindValueToViewForLoop.call(this, item.directives[i].props, data, loopParams);
+    bindValueToViewForLoop.call(this, item.directives[i].value, data, loopParams);
     bindValueToViewForLoop.call(this, item.directives[i].model, data, loopParams);
+
+    bindInputForLoop.call(this, item.directives[i].input, data, loopParams);
+
 
     bindAttrsForLoop.call(this, item.directives[i].attrs, data, loopParams);
     addLinksRefsForLoop.call(this, item.directives[i].links, data, loopParams);
@@ -247,5 +262,13 @@ function bindIfForLoop(array, data, loopParams) {
 }
 
 function bindInterPolation(array, data, loopParams) {
-   Interpolation._update.call(this, array, data, loopParams);
+    Interpolation._update.call(this, array, data, loopParams);
+}
+
+function bindInputForLoop(array, data, loopParams) {
+    Directives._input.call(this, array, data, loopParams);
+}
+
+function bindOnForLoop(array, data, loopParams) {
+    Directives._on.call(this, array, data, loopParams);
 }

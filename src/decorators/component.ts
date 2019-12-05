@@ -1,23 +1,43 @@
-import { Component } from '../component/component';
+import { Component } from './../component/component';
 import { Observable, AbstractObservable, ObservableModel } from '../observable/observable';
-import { DIRECTIVES_NAMES } from '../component/const/directives';
-import { EVENTS_NAMES } from '../component/const/events';
-import { Application } from '../core';
+import { DIRECTIVES_NAMES } from './../component/const/directives';
+import { EVENTS_NAMES } from './../component/const/events';
+import { Application } from './../core';
 
+function preCompileTpl(html) {
+
+    EVENTS_NAMES.forEach(event => {
+        let stringToGoIntoTheRegex = '@' + event;
+        let regex = new RegExp(stringToGoIntoTheRegex, "g");
+        html = html.replace(regex, `bind-${event}`)
+    });
+
+    DIRECTIVES_NAMES.forEach(directive => {
+        let stringToGoIntoTheRegex = ':' + directive.name;
+        let regex = new RegExp(stringToGoIntoTheRegex, "g");
+        html = html.replace(regex, `${directive.alias}`)
+    });
+
+    return html;
+}
 
 export default function ComponentDecorator(decoratorParams) {
-    return function decorator(Class) {
-
-
-        const registeredClass = class extends HTMLElement {
-
-            static get selector() {
-                return decoratorParams.selector;
+    return (Class) => {
+        if(customElements.get(decoratorParams.selector)) return;
+            // throw new Error(decoratorParams.selector + ' is already declared');\
+            
+        window.customElements.define(decoratorParams.selector, class extends HTMLElement {
+            constructor() {
+                super();
             }
-
             connectedCallback() {
+                if (this.getAttribute('bind-for')) {
+                    return;
+                }
+
                 let instance;
                 let newProps = {};
+
 
                 const template = document.createElement('template');
                 template.innerHTML = preCompileTpl(decoratorParams.template);
@@ -29,14 +49,16 @@ export default function ComponentDecorator(decoratorParams) {
                 } else {
                     this.appendChild(clone);
                 }
-                let proto = Component.prototype;
-                Object.setPrototypeOf(Class.prototype, proto);
 
+                Object.setPrototypeOf(Class.prototype, Component.prototype);
+
+                Class.selector = decoratorParams.selector;
+  
                 instance = new Class();
 
-                if (!Application.rootComponent) {
-                    Application.rootComponent = instance;
-                }
+                // if (!Application.rootComponent) {
+                    // Application.rootComponent = instance;
+                // }
 
                 Object.keys(instance).forEach((key) => {
                     newProps[key] = instance[key];
@@ -55,6 +77,23 @@ export default function ComponentDecorator(decoratorParams) {
                 //     }
                 // }
 
+                //add getters
+                Reflect.ownKeys(Class.prototype).filter(name => {
+                    const getter = Reflect.getOwnPropertyDescriptor(Class.prototype, name)["get"];
+                    if (typeof getter === "function") {
+                        Object.defineProperty(newProps, name, {
+                            set: value => {
+                                console.log('SET');
+                            },
+                            get: () => {
+                                return getter.call(instance);
+                            },
+                            // configurable: true,
+                            enumerable: true
+                        });
+                    }
+                }) as string[];
+
                 Object.defineProperty(instance, '_props', { value: new ObservableModel(newProps), writable: false });
 
                 for (let key in newProps) {
@@ -64,6 +103,7 @@ export default function ComponentDecorator(decoratorParams) {
                         configurable: true
                     });
                 }
+
 
                 // services.forEach(res => {
                 //     Object.defineProperty(instance, res.key, {
@@ -80,32 +120,9 @@ export default function ComponentDecorator(decoratorParams) {
             }
 
             disconnectedCallback() {
-                // instance.destroy();
-                this.innerHTML = '';
-                // instance = undefined;
+                const event = new CustomEvent('destroy', { detail: null });
+                this.dispatchEvent(event);
             }
-        }
-
-
-        function preCompileTpl(html) {
-
-            EVENTS_NAMES.forEach(event => {
-                let stringToGoIntoTheRegex = '@' + event;
-                let regex = new RegExp(stringToGoIntoTheRegex, "g");
-                html = html.replace(regex, `bind-${event}`)
-            });
-
-            DIRECTIVES_NAMES.forEach(directive => {
-                let stringToGoIntoTheRegex = ':' + directive.name;
-                let regex = new RegExp(stringToGoIntoTheRegex, "g");
-                html = html.replace(regex, `${directive.alias}`)
-            });
-
-            return html;
-        }
-
-        window.customElements.define(decoratorParams.selector, registeredClass);
-
-        return registeredClass;
+        });
     }
 }

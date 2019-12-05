@@ -1,0 +1,134 @@
+<svg ac-ref="svg" ac-attr="height: height, width: width" ac-if="series.length">
+    <rect class="highcharts-background" x="0" y="0" ac-attr="height: height, width: width, fill: background" rx="0" ry="0"></rect>
+    <text ac-attr="x: labelX" text-anchor="middle" class="acechart-title" y="24">
+        <tspan ac-value="title"></tspan>
+    </text>
+    <text ac-attr="x: yLabelX, y: yLabelY, transform: yLabelTransform" text-anchor="middle" class="acecharts-axis-title">
+        <tspan ac-value="yAxis.label"></tspan>
+    </text>
+    <g class="acechart-grid acechart-yaxis-grid ">
+        <line ac-for="let item of xGrid" ac-attr="x1: item.x1, x2: item.x2, y1: item.y1, y2: item.y2" stroke="black" stroke-width="1" shape-rendering="crispEdges" />
+    </g>
+    <g class="acechart-group">
+        <rect ac-for="let item of series" @mouseenter="mouseenter($event, item)" @mouseleave="mouseleave($event)" ac-attr="x: item.x, y: item.y, stroke: item.stroke, fill: item.fill, stroke-width: item.strokeWidth, width: item.width, height: item.height"></rect>
+    </g>
+    <!--     <g class="acechart-axis-labels acechart-xaxis-labels " transform="translate(40,0) scale(1 1)">
+        <text ac-for="xLabels" ac-attr="x: x, y: y" text-anchor="start" transform="translate(0,0)">
+            <tspan ac-value="name"></tspan>
+        </text>
+    </g> -->
+    <g class="acechart-axis-labels acechart-xaxis-labels ">
+        <text ac-for="let item of xGroupLabels" ac-attr="x: item.x, y: item.y" text-anchor="start" transform="translate(0,0)">
+            <tspan ac-value="item.name"></tspan>
+        </text>
+    </g>
+    <g class="acechart-axis-labels acechart-yaxis-labels ">
+        <text ac-for="let item of yLabels" ac-attr="x: item.x, y: item.y" text-anchor="end" transform="translate(0,0)">
+            <tspan ac-value="item.name"></tspan>
+        </text>
+    </g>
+</svg>
+<div class="acecharts-tooltip" ac-class="open: tooltipIsShown" ac-style="top: tooltipCoords.y, left: tooltipCoords.x">
+    <div style="font-size: 12px;">Languages</div>
+    <br>
+    <span ac-value="tooltipSelected.name"></span>
+    <b ac-value="tooltipSelected.value"></b>% of total
+</div>
+<div ac-if="!series.length">Bar chart. There is no data to show</div>
+<style>
+ace-bar-chart {
+    display: inline-block;
+    position: relative;
+}
+
+.acecharts-tooltip.open {
+    opacity: 1;
+    visibility: visible;
+}
+
+
+
+.acecharts-tooltip {
+    position: absolute;
+    background: #fbf5f5c9;
+    /*width: 200px;*/
+    top: 0;
+    /*height: 100px;*/
+    transition: 0.2s;
+    opacity: 0;
+    visibility: hidden;
+    padding: 10px;
+    border: 1px solid #ddddde;
+    border-radius: 2px;
+}
+
+.acecharts-tooltip:after, .acecharts-tooltip:before {
+    top: 100%;
+    left: 50%;
+    border: solid transparent;
+    content: " ";
+    height: 0;
+    width: 0;
+    position: absolute;
+    pointer-events: none;
+}
+
+.acecharts-tooltip:after {
+    border-color: rgba(247, 247, 247, 0);
+    border-top-color: #f7f7f7;
+    border-width: 10px;
+    margin-left: -10px;
+}
+.acecharts-tooltip:before {
+    border-color: rgba(221, 221, 222, 0);
+    border-top-color: #ddddde;
+    border-width: 11px;
+    margin-left: -11px;
+}
+
+.acechart-group rect {
+    /*fill: #5699dc;*/
+    transition: 0.5s;
+}
+
+.acechart-group rect:hover {
+    /*fill: #3e6a96;*/
+    opacity: 0.7;
+}
+
+.acechart-xaxis-labels text {
+    cursor: default;
+    font-size: 11px;
+    font-family: Verdana, sans-serif;
+    fill: #666666;
+    transition: 0.5s;
+}
+
+.acecharts-axis-title {
+    cursor: default;
+    font-size: 12px;
+    font-family: Verdana, sans-serif;
+    fill: #666666;
+}
+
+.acechart-title {
+    cursor: default;
+    font-size: 16px;
+    font-family: Verdana, sans-serif;
+    fill: #666666;
+    transition: 0.5s;
+}
+
+.acechart-yaxis-labels text {
+    cursor: default;
+    font-size: 11px;
+    font-family: Verdana, sans-serif;
+    fill: #666666;
+}
+
+.acechart-yaxis-grid line {
+    stroke: #ccc;
+}
+
+.acechart-group {}
+</style>

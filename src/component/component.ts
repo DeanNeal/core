@@ -7,9 +7,9 @@ import { EVENTS_NAMES } from './const/events';
 import API from '../api';
 
 
-export class Component  {
+export class Component {
     private root: HTMLElement;
-    private children = {};
+    // private children = {};
     private tpl;
     private $refs = {};
     private $propsSub;
@@ -25,30 +25,47 @@ export class Component  {
         style: [],
         hidden: []
     };
-    private _computed = [];
+    // private _computed = [];
     private _custom_directive = [];
 
     // constructor(root, options) {
     //     // this.componentConstructor(root, options);
     // }
 
+    // constructor() {
+    //     super();
+    // }
+    
+
     componentConstructor(root: HTMLElement, options: any, extraData?) {
         Object.defineProperty(this, 'root', { value: root, writable: false });
-        Object.defineProperty(this, 'children', { value: {}, writable: true });
+        // Object.defineProperty(this, 'children', { value: {}, writable: true });
         Object.defineProperty(this, 'tpl', { value: options.template, writable: false });
         Object.defineProperty(this, '$attrs', { value: {}, writable: true });
-        Object.defineProperty(this, '_host', { value: {
-            events: [],
-            class: [],
-            style: [],
-            hidden: []
-        }, writable: true });
+        Object.defineProperty(this, '$refs', { value: {}, writable: false });
+        Object.defineProperty(this, '_host', {
+            value: {
+                events: [],
+                class: [],
+                style: [],
+                hidden: []
+            }, writable: true
+        });
         Object.defineProperty(this, '_events', { value: [], writable: true });
         Object.defineProperty(this, '_interpolation', { value: [], writable: true });
         Object.defineProperty(this, '_subscriptions', { value: [], writable: true });
-        Object.defineProperty(this, '_computed', { value: [], writable: true });
+        // Object.defineProperty(this, '_computed', { value: [], writable: true });
         Object.defineProperty(this, '_custom_directive', { value: [], writable: true });
-        
+
+        // this.modelChangeListener = this.modelChangeListener.bind(this);
+        Object.defineProperty(this, 'modelChangeListener', {value: this.modelChangeListener.bind(this), writable: false});
+        Object.defineProperty(this, 'inputListener', {value: this.inputListener.bind(this), writable: false});
+        Object.defineProperty(this, 'destroyListener', {value: this.destroyListener.bind(this), writable: false});
+
+        Object.defineProperty(this, '$inputParams', { value: [], writable: false });
+        // this.inputListener = this.inputListener.bind(this);
+        // this.destroyListener = this.destroyListener.bind(this);
+
         let attrs = {};
 
         for (let i = 0; i < root.attributes.length; i++) {
@@ -61,7 +78,7 @@ export class Component  {
 
         this.$attrs = attrs;
 
-        this.root['COMPONENT'] = this;
+        // this.root['COMPONENT'] = this;
 
         // if (this instanceof API.rootComponent.class) {
         //     API.rootInstance = this;
@@ -70,13 +87,16 @@ export class Component  {
         this.setPrivates(options);
 
 
-        if (this.root.getAttribute('bind-for')) {
+        // if (this.root.getAttribute('bind-for')) {
             // console.warn('Foor loop is detected!')
-        } else {
-            this.render();
-            this.listenToPropsChanges();
-            this.onInit(extraData);
-        }
+        // } else {
+        this.addListeners();
+
+        this.render();
+        this.listenToPropsChanges();
+        
+        this.onInit(extraData);
+        // }
     }
 
     setPrivates(options) {
@@ -97,17 +117,17 @@ export class Component  {
             comment: document.createComment(this.constructor.name),
             cached: this['root']
         }];
-        
+
         this._interpolation = [];
-        
-        this._computed = options.computed;
+
+        // this._computed = options.computed;
 
         API.CUSTOM_DIRECTIVES.forEach((directive) => {
             if (!this._custom_directive[directive.params.selector]) {
-                this._custom_directive[directive.params.selector] = new WeakMap();
+                this._custom_directive[directive.params.selector] = new WeakMap();//TODO
             }
             this._custom_directive[directive.params.selector].set(this, []);
-        });      
+        });
     }
 
     render() {
@@ -158,14 +178,45 @@ export class Component  {
         Directives._hostEvents.call(this, this._host.events);
 
         Directives._formGroup.call(this, this._directives['form-group']);
+    }
 
+    addListeners() {
+        this.root.addEventListener('model-change', this.modelChangeListener, false);
+        this.root.addEventListener('input-params', this.inputListener, false);
+        this.root.addEventListener('destroy', this.destroyListener, false);
+    }
 
-        // this.onInit();
+    inputListener(e) {
+        //TODO add validators
+        for(let key in e.detail) {
+            this[key] = e.detail[key];
+            Object.defineProperty(this, key, {
+                set: value => this._props.set(key, value),
+                get: () => this._props.get(key),
+                configurable: true
+            });
+        }
+
+        this._props.set(e.detail);
+    }
+
+    modelChangeListener(e) {
+        // this._props.set(e.detail);
+    }
+
+    destroyListener() {
+        this.destroy();
+    }
+
+    removeListeners() {
+        this.root.removeEventListener('model-change', this.modelChangeListener, false);
+        this.root.removeEventListener('input-params', this.inputListener, false);
+        this.root.removeEventListener('destroy', this.destroyListener, false);
     }
 
     listenToPropsChanges() {
         const $propsSub = this._props.sub(r => {
-            Directives._computed.call(this, this._computed); // should go first
+            // Directives._computed.call(this, this._computed); // should go first
 
             Directives._if.call(this, this._directives['if']);
             Directives._for.call(this, this._directives['for']);
@@ -188,34 +239,6 @@ export class Component  {
 
         Object.defineProperty(this, '$propsSub', { value: $propsSub, writable: false });
     }
-
-    // compile() {
-    //     API.COMPONENTS.forEach(comp => {
-    //         let components = this.root.querySelectorAll(comp.selector);
-    //         if (components.length) {
-    //             components.forEach(r => {
-    //                 if (!r.COMPONENT) { // don't reinitialize
-    //                     let a = comp(r, {}, this);
-    //                     if (!this.children[a.constructor.name]) {
-    //                         this.children[a.constructor.name] = [];
-    //                         this.children[a.constructor.name].push(a);
-    //                     }
-    //                 }
-    //             });
-    //         }
-    //     });
-    // }
-
-    // compileRouter() {
-    //     let router = this.root.querySelectorAll('route-switcher')[0];
-    //     if (router) {
-    //         let newComp = new RouteSwitcher(router, this);
-    //         if (!this.children[newComp.constructor.name]) {
-    //             this.children[newComp.constructor.name] = [];
-    //             this.children[newComp.constructor.name].push(newComp);
-    //         }
-    //     }
-    // }
 
     setSubscriptions(...rest) {
         this._subscriptions = this._subscriptions.concat(rest);
@@ -285,7 +308,7 @@ export class Component  {
                 this._props._callAll();
             }
         } else {
-            let params = ('props.' + string).split('.');
+            let params = ('_props.' + string).split('.');
             if (params.length > 1) {
                 params.splice(-1, 1);
             }
@@ -342,13 +365,13 @@ export class Component  {
         }
 
         Directives.removeEventListeners.call(this, this._events);
-
+        
         //unsubscribe from components subscribers
         this._subscriptions.forEach(item => item.unsubscribe());
-    }
 
-    INPUT() {
+        this.removeListeners();
 
+        this.root.innerHTML = null;
     }
 
     _onModelChange() {

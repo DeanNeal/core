@@ -76,9 +76,10 @@ class API {
         if (options.components) {
             if (options.components instanceof Array) {
                 this.COMPONENTS =  options.components;
-                options.components.forEach(c => {
+                // options.components.forEach(c => {
                     // new c();
-                });//this.registerComponent(c));
+                // });
+                //this.registerComponent(c));
             } else {
                 throw new Error('components must be an array');
             }

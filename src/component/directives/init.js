@@ -14,7 +14,7 @@ export function _init(root, directive, newArray) {
             cached: root
         };
 
-        array.get ? array.get(this).push(obj) : array.push(obj);
+        array.push(obj);
         root.removeAttribute(directive);
         // if (directive === 'bind-for') elem.remove();
     }
@@ -42,13 +42,13 @@ export function _init(root, directive, newArray) {
         };
         
         // only for certain directives
-        if(directive === 'bind-for' || directive === 'bind-if') { 
+        if(directive === 'bind-for' || directive === 'bind-if') {
             obj.comment = Utils.insertAfter(document.createComment(directive + ': ' + attr), elem);
             obj.cachedIndexes = [];
             obj.rootCached = null;
             obj.interpolationArray = [];
         }
-        array.get ? array.get(this).push(obj) : array.push(obj);
+        array.push(obj);
         elem.removeAttribute(directive);
         if (directive === 'bind-for') elem.remove();
     });

@@ -1,6 +1,6 @@
 import {Observable} from './observable/observable';
 import * as Decorators from './decorators';
-import Component from  './decorators/component';
+import ComponentDecorator from  './decorators/component';
 import Inject from './decorators/inject';
 
 // import { Component } from './component/component';
@@ -26,7 +26,7 @@ import './polifills';
 export {
     Observable,
     Decorators,
-    Component,
+    ComponentDecorator,
     Inject,
     Router,
     // RouteSwitcher,

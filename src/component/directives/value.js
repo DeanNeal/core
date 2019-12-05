@@ -28,7 +28,8 @@ export function _value(array, data, loopParams) {
                 rowHtml ? (item.elem.innerHTML = r) : (item.elem.textContent = r);
             }
         } else {
-            item.elem.COMPONENT._onModelChange(r);
+            // const event = new CustomEvent('model-change', {detail: r});
+            // item.elem.dispatchEvent(event);
         }
 
     });
