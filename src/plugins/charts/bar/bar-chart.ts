@@ -4,7 +4,8 @@ import * as Tpl from './bar-chart.html';
 
 @Component({
     selector: 'bar-chart',
-    template: Tpl
+    template: Tpl,
+    shadowDom: true
 })
 
 export class BarChartComponent {

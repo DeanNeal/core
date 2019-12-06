@@ -3,7 +3,7 @@ import { Utils } from '../../core';
 export function _input(array) {
     array.forEach(item => {
         // if (item.elem.COMPONENT) {
-        let array = Utils.removeSpacesFromString(item.attr).split(',');
+        let array = item.attr.split(',');//Utils.removeSpacesFromString(item.attr).split(',');
         let inputParams = {};
         array.forEach(item => {
             let variable = item.split(':')[0];

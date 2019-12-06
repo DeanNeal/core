@@ -48,9 +48,11 @@ export default function ComponentDecorator(decoratorParams) {
                     template.innerHTML = preCompileTpl(decoratorParams.template);
 
                     const clone = document.importNode(template.content, true);
-
-                    if (decoratorParams.useShadow) {
-                        this.attachShadow({ mode: 'open' }).appendChild(clone);
+                    let shadowDom;
+                    if (decoratorParams.shadowDom) {
+                        if(!this.shadowRoot) {
+                            shadowDom = this.attachShadow({ mode: 'open' }).appendChild(clone);
+                        }
                     } else {
                         this.appendChild(clone);
                     }
@@ -121,7 +123,14 @@ export default function ComponentDecorator(decoratorParams) {
                     //     });
                     // })
 
-                    instance.componentConstructor.call(instance, this, decoratorParams, {});
+                    // let mountedElement;
+                    // if(shadowDom){
+                    //     mountedElement = document.createElement("div");
+                    //     mountedElement.appendChild(shadowDom);
+                    //     debugger
+                    // }
+
+                    instance.componentConstructor.call(instance, (shadowDom ? this.shadowRoot : this), decoratorParams, {});
                 }
 
                 disconnectedCallback() {

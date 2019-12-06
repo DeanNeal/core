@@ -4,7 +4,7 @@ import {createEventObject} from './event';
 export function _init(root, directive, newArray) {
     let array = newArray || [];
 
-    let attr = root.getAttribute(directive);
+    let attr = root.getAttribute ? root.getAttribute(directive) : null;
     if (attr && !Utils.isCustomElement(root)) { // only for loops
         let obj = {
             elem: root,
@@ -18,6 +18,7 @@ export function _init(root, directive, newArray) {
         root.removeAttribute(directive);
         // if (directive === 'bind-for') elem.remove();
     }
+
     root.querySelectorAll(`[${directive}]`).forEach(elem=>{
         let attr = elem.getAttribute(directive);
         
@@ -60,7 +61,7 @@ export function _init(root, directive, newArray) {
 export function _initEvent(root, directive, newArray, data, loopParams) {
     let array = newArray || [];
     let targets = root.querySelectorAll(`[bind-${directive}]`);
-    if (root.getAttribute(`bind-${directive}`)) {
+    if (root.getAttribute && root.getAttribute(`bind-${directive}`)) {
         let obj = createEventObject.call(this, root, directive, data, loopParams);
         array.get ? array.get(this).push(obj) : array.push(obj);
     }

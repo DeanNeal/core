@@ -1,4 +1,4 @@
-import Sortable from './sortable';
+import Sortable from './sortable/sortable';
 import {LineChartComponent} from './charts/line/line-chart';
 import {BarChartComponent} from './charts/bar/bar-chart';
 

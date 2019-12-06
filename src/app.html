@@ -43,7 +43,7 @@
                     <div>
                         <span :if="show">Now you see me!</span>
 
-                        <app-child :if="show"></app-child>
+                        <app-child :if="show" :input="forChildComponent: 'Now you see me!'"></app-child>
                     </div>
                 </div>
             </div>
@@ -55,7 +55,7 @@
         </div>
         <div class="col" :if="selectedIndex === 4">
             <h3>Lazy load</h3>
-            <div :lazy-load="onLazyLoad" style="height: 400px">
+            <div :lazy-load="onLazyLoad">
                 <div style="border: 1px solid #ccc;padding: 20px;margin-bottom: 10px" :for="let item of items">{{item}}
                 </div>
             </div>
@@ -81,21 +81,27 @@
                         <input type="text" class="form-control" placeholder="forChildComponent"
                             :model="forChildComponent">
                     </div>
-                    <app-child :input="forChildComponent: forChildComponent"></app-child>
+                    <!-- <app-child :input="forChildComponent: forChildComponent"></app-child> -->
                 </div>
             </div>
         </div>
 
         <div class="col" :if="selectedIndex === 7">
-            <h3>Plugins</h3>
+            <h3 class="mb-3">Plugins</h3>
 
-            <div>
+            <div class="mb-3">
                 <h4>Line chart</h4>
                 <line-chart></line-chart>
             </div>
-            <div>
+            <div class="mb-3">
                 <h4>Bar chart</h4>
                 <bar-chart></bar-chart>
+            </div>
+            <div class="mb-3">
+                <h4>Sortable</h4>
+                <ul :ref="sortableElement" class="list-group">
+                    <li class="list-group-item" draggable="true" :for="let item of tabs">{{item}}</li>
+                </ul>
             </div>
         </div>
 
@@ -131,4 +137,5 @@
         color: #ccc;
         cursor: pointer;
     }
+
 </style>

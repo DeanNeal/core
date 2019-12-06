@@ -4,24 +4,27 @@ const Interpolation = {
     _init: function(root, newArray) {
         let array = newArray || [];
         let regExp = /({{[^%>]+?}})/g;
-        let self = this;
+   
 
-
-        let items = Utils.getTextNodesIn(root, function(textNode, parent) {
-            if (textNode.nodeValue.match(regExp)/*regExp.test(textNode.nodeValue)*/ && textNode.parentNode.getAttribute('bind-avoid') !== '') {
+        Utils.getTextNodesIn(root, function(textNode, parent) {
+            if (textNode.nodeValue.match(regExp)/*regExp.test(textNode.nodeValue)*/ ) { //&& textNode.parentNode.getAttribute('bind-avoid') !== '') {
                 let vars = textNode.nodeValue.split(regExp);
                 vars.filter(r => r).forEach((r, i) => {
                     let tNode = document.createTextNode(r);
+
                     let match = /{{([^}]+)}}/g.exec(r);
+                    
                     if (match) {
                         tNode.nodeValue = '';
                         let obj = {
                             node: tNode,
                             value: match[1]
                         };
-
-                        array.get ? array.get(self).push(obj) : array.push(obj);
+                        // console.log(tNode);
+                        // array.get ? array.get(self).push(obj) : array.push(obj);
+                        array.push(obj);
                     }
+  
                     textNode.parentNode.insertBefore(tNode, textNode);
                 });
                 textNode.remove();
@@ -42,6 +45,5 @@ const Interpolation = {
         }
     }
 }
-
 
 export default Interpolation;

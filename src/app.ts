@@ -13,14 +13,11 @@ import * as Tpl from './app.html';
   // {{input}} {{show}}
   // `
 
-  template: `
-  <div> Child component: </div>
-  {{forChildComponent}}
-  `
+  template: `<div> Child component: </div>{{forChildComponent}}`,
+  shadowDom: true
 })
 export class ChildComponent {
   list = [1, 2, 3];
-  test = 1;
   constructor() {
     // debugger
     // this;
@@ -81,6 +78,13 @@ class AppComponent {
     //   this.show = !this.show;
     // }, 1000);
     this.load();
+
+    Plugins.Sortable.init({
+      el: this['$refs'].sortableElement,
+      onDragEnd: ()=> {
+        console.log('drag end')
+      }
+    });
 
   }
 

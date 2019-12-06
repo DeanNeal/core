@@ -35,7 +35,7 @@ export class Component {
     // constructor() {
     //     super();
     // }
-    
+
 
     componentConstructor(root: HTMLElement, options: any, extraData?) {
         Object.defineProperty(this, 'root', { value: root, writable: false });
@@ -58,9 +58,9 @@ export class Component {
         Object.defineProperty(this, '_custom_directive', { value: [], writable: true });
 
         // this.modelChangeListener = this.modelChangeListener.bind(this);
-        Object.defineProperty(this, 'modelChangeListener', {value: this.modelChangeListener.bind(this), writable: false});
-        Object.defineProperty(this, 'inputListener', {value: this.inputListener.bind(this), writable: false});
-        Object.defineProperty(this, 'destroyListener', {value: this.destroyListener.bind(this), writable: false});
+        Object.defineProperty(this, 'modelChangeListener', { value: this.modelChangeListener.bind(this), writable: false });
+        Object.defineProperty(this, 'inputListener', { value: this.inputListener.bind(this), writable: false });
+        Object.defineProperty(this, 'destroyListener', { value: this.destroyListener.bind(this), writable: false });
 
         Object.defineProperty(this, '$inputParams', { value: [], writable: false });
         // this.inputListener = this.inputListener.bind(this);
@@ -68,15 +68,18 @@ export class Component {
 
         let attrs = {};
 
-        for (let i = 0; i < root.attributes.length; i++) {
-            attrs[root.attributes[i].nodeName] = root.attributes[i].nodeValue
+        if (root.attributes) {
+            for (let i = 0; i < root.attributes.length; i++) {
+                attrs[root.attributes[i].nodeName] = root.attributes[i].nodeValue
+            }
+
+            if (attrs['bind-form-control'] && attrs['bind-model']) {
+                throw new Error('Using of bind-model inside bind-form-group is forbidden');
+            }
+
+            this.$attrs = attrs;
         }
 
-        if (attrs['bind-form-control'] && attrs['bind-model']) {
-            throw new Error('Using of bind-model inside bind-form-group is forbidden');
-        }
-
-        this.$attrs = attrs;
 
         // this.root['COMPONENT'] = this;
 
@@ -88,13 +91,13 @@ export class Component {
 
 
         // if (this.root.getAttribute('bind-for')) {
-            // console.warn('Foor loop is detected!')
+        // console.warn('Foor loop is detected!')
         // } else {
         this.addListeners();
 
         this.render();
         this.listenToPropsChanges();
-        
+
         this.onInit(extraData);
         // }
     }
@@ -181,14 +184,16 @@ export class Component {
     }
 
     addListeners() {
-        this.root.addEventListener('model-change', this.modelChangeListener, false);
-        this.root.addEventListener('input-params', this.inputListener, false);
-        this.root.addEventListener('destroy', this.destroyListener, false);
+        const host = this.root instanceof DocumentFragment ? this.root['host'] : this.root;
+
+        host.addEventListener('model-change', this.modelChangeListener, false);
+        host.addEventListener('input-params', this.inputListener, false);
+        host.addEventListener('destroy', this.destroyListener, false);
     }
 
     inputListener(e) {
         //TODO add validators
-        for(let key in e.detail) {
+        for (let key in e.detail) {
             this[key] = e.detail[key];
             Object.defineProperty(this, key, {
                 set: value => this._props.set(key, value),
@@ -209,9 +214,11 @@ export class Component {
     }
 
     removeListeners() {
-        this.root.removeEventListener('model-change', this.modelChangeListener, false);
-        this.root.removeEventListener('input-params', this.inputListener, false);
-        this.root.removeEventListener('destroy', this.destroyListener, false);
+        const host = this.root instanceof DocumentFragment ? this.root['host'] : this.root;
+
+        host.removeEventListener('model-change', this.modelChangeListener, false);
+        host.removeEventListener('input-params', this.inputListener, false);
+        host.removeEventListener('destroy', this.destroyListener, false);
     }
 
     listenToPropsChanges() {
@@ -365,13 +372,16 @@ export class Component {
         }
 
         Directives.removeEventListeners.call(this, this._events);
-        
+
         //unsubscribe from components subscribers
         this._subscriptions.forEach(item => item.unsubscribe());
 
         this.removeListeners();
 
-        this.root.innerHTML = null;
+        if (this.root instanceof DocumentFragment === false) {
+            this.root.innerHTML = null;
+        }
+
     }
 
     _onModelChange() {
