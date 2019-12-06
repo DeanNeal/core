@@ -1,6 +1,6 @@
-import { Application, Plugins } from './core';
-import Component from './decorators/component';
-import {LineChartComponent} from './plugins/charts/line/line-chart';
+import { Application, Plugins, Component } from './core';
+// import Component from './decorators/component';
+// import {LineChartComponent} from './plugins/charts/line/line-chart';
 
 
 import * as Tpl from './app.html';
@@ -42,11 +42,11 @@ export class ChildComponent {
   template: Tpl
 })
 class AppComponent {
-  public show = false;
+  public show: boolean = false;
   public selectedIndex = 0;
   public items = [];
   public list = [1, 2, 3];
-  public tabs = ['Values', 'Loop', 'If', 'Style', 'Lazy load', 'Model', 'Pass properties', 'Plugins'];
+  public tabs = ['Values', 'Loop', 'If', 'Style', 'Lazy load', 'Model', 'Pass properties', 'Plugins', 'Router'];
   public collection = [[[13, 14]], [[16, 17]]];
   public value = 1234;
   public attrs = {
@@ -132,13 +132,13 @@ class AppComponent {
 // }
 
 
-Application.register({
+Application.bootstrap({
 
   // styles: Styles,
-  components: [],//[AppComponent, ChildComponent, Plugins.LineChartComponent],
-  directives: [
+  components: [AppComponent, ChildComponent, Plugins.LineChartComponent, Plugins.BarChartComponent],
+  // directives: [
 
-  ]
+  // ]
   // import: []
   // router: Router
 

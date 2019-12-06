@@ -1,6 +1,6 @@
 <svg :ref="svg" :attr="height: height, width: width" :if="series.length">
     <rect class="acechart-background" x="0" y="0" :attr="height: height, width: width, fill: background" rx="0" ry="0"></rect>
-    <text :attr="x: labelX" text-anchor="middle" class="acechart-title" y="24">
+    <text :attr="x: labelX, width: width" text-anchor="middle" class="acechart-title" y="24">
         <tspan :value="title"></tspan>
     </text>
     <g class="acechart-grid acechart-yaxis-grid ">
@@ -25,7 +25,7 @@
     </g>
 
 </svg>
-<div class="acecharts-tooltip" :class="open: tooltipIsShown" :style="top: tooltipCoords.y, left: tooltipCoords.x">
+<div :ref="tooltip" class="acecharts-tooltip" :class="open: tooltipIsShown" :style="top: tooltipCoords.y, left: tooltipCoords.x">
     <div style="font-size: 12px;">Languages</div>
     <br>
     <span :value="tooltipSelected.name"></span>
@@ -34,7 +34,7 @@
 
 <div :if="!series.length">Bar chart. There is no data to show</div>
 <style>
-ace-line-chart {
+line-chart {
     display: inline-block;
     position: relative;
 }
@@ -49,7 +49,7 @@ ace-line-chart {
 }
 
 .acecharts-tooltip {
-    position: absolute;
+    position: fixed;
     background: #fbf5f5c9;
     /*width: 200px;*/
     top: 0;

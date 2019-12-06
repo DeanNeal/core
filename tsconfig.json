@@ -7,7 +7,16 @@
         "preserveConstEnums": true,
         // "outFile": "../../built/local/tsc.js",
         "sourceMap": true,
-        "experimentalDecorators": true
+        "experimentalDecorators": true,
+        "allowSyntheticDefaultImports": true,
+
+        "baseUrl": ".",
+        "paths": {
+            // "@modules/*": ["rest/modules/*"],
+            "*": ["*"],
+            "@plugins/*": ["src/plugins/*"],
+            "@src/*": ["src/*"]
+        }
     },
     // "include": [
     //     "src/**/*"

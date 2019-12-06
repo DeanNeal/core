@@ -1,6 +1,8 @@
+import Application from './api';
 import {Observable} from './observable/observable';
-import * as Decorators from './decorators';
-import ComponentDecorator from  './decorators/component';
+// import * as Decorators from './decorators';
+import Component from  './decorators/component';
+import Route from  './decorators/router';
 import Inject from './decorators/inject';
 
 // import { Component } from './component/component';
@@ -12,7 +14,7 @@ import { Utils } from './utils/utils';
 import * as Plugins from './plugins';
 
 // import { Http } from './http.js';
-import Application from './api';
+
 
 import Events from './dispatcher';
 
@@ -25,8 +27,9 @@ import './polifills';
 
 export {
     Observable,
-    Decorators,
-    ComponentDecorator,
+    // Decorators,
+    Component,
+    Route,
     Inject,
     Router,
     // RouteSwitcher,

@@ -1,6 +1,6 @@
-import { Decorators } from './core';
+import { Route } from './core';
 
-@Decorators.RouterDecorator({
+@Route({
    routes: [
       { path: '/', component: 'app-home' },
       { path: 'page', component: 'app-child' }

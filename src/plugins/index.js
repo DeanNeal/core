@@ -1,9 +1,9 @@
-// import Sortable from './sortable';
-// import Chart from './ace-chart';
+import Sortable from './sortable';
 import {LineChartComponent} from './charts/line/line-chart';
+import {BarChartComponent} from './charts/bar/bar-chart';
 
 export {
-	// Sortable,
-	// Chart
-	LineChartComponent
+	Sortable,
+	LineChartComponent,
+	BarChartComponent
 }

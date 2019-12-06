@@ -3,7 +3,7 @@
 import { Component } from './component/component';
 import { Directive } from './decorators/directive';
 
-class API {
+class Application {
     public rootComponent;
     public rootInstance;
     public config;
@@ -63,8 +63,8 @@ class API {
         }
     }
 
-    register(options) {
-        this.loadStyle(options.styles);
+    bootstrap(options) {
+        // this.loadStyle(options.styles);
 
         // if (options.services && options.services.length) {
         //     this.setServices(options.services);
@@ -75,11 +75,12 @@ class API {
 
         if (options.components) {
             if (options.components instanceof Array) {
-                this.COMPONENTS =  options.components;
-                // options.components.forEach(c => {
-                    // new c();
-                // });
-                //this.registerComponent(c));
+                this.COMPONENTS = options.components;
+                
+                options.components.forEach(c => {
+                    const comp = new c();
+                    comp.register();
+                });
             } else {
                 throw new Error('components must be an array');
             }
@@ -121,26 +122,7 @@ class API {
         //     console.warn('There is no root component');
         // }
 
-
-        //TODO
-        // customElements.define('expanding-list', ExpandingList, { extends: "ul" });
-
-        // this.isReady.set(true);
     }
-
-    // registerComponent(component) {
-    //avoid repeated components
-    // if (this.COMPONENTS.map(r => r.selector).indexOf(component.selector) > -1) {
-    //     throw new Error('Duplicate declaration; ' + component.selector);
-    // }
-
-
-    // if (component.super && Object.is(component.super.prototype, Component.prototype)) {
-    //     this.COMPONENTS.push(component);
-    // } else {
-    //     throw new Error(component.name + ' must me inherited from ComponentDecorator');
-    // }
-    // }
 
     registerDirective(directive) {
         //avoid repeated directives
@@ -154,22 +136,21 @@ class API {
         }
     }
 
+    // loadStyle(styles) {
+    //     if (styles) {
+    //         let css = styles.toString(),
+    //             style = document.createElement('style');
 
-    loadStyle(styles) {
-        if (styles) {
-            let css = styles.toString(),
-                style = document.createElement('style');
-
-            style.type = 'text/css';
-            if (style['styleSheet']) {
-                style['styleSheet'].cssText = css;
-            } else {
-                style.appendChild(document.createTextNode(css));
-            }
-            // document.head.append(style);
-            document.getElementsByTagName('head')[0].appendChild(style);
-        }
-    }
+    //         style.type = 'text/css';
+    //         if (style['styleSheet']) {
+    //             style['styleSheet'].cssText = css;
+    //         } else {
+    //             style.appendChild(document.createTextNode(css));
+    //         }
+    //         // document.head.append(style);
+    //         document.getElementsByTagName('head')[0].appendChild(style);
+    //     }
+    // }
 }
 
-export default new API();
+export default new Application();

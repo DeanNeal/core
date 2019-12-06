@@ -17,10 +17,13 @@ import { Utils } from "../utils/utils";
 
 export default function RouterDecorator(decoratorParams) {
     return function decorator(Class) {
-        function func() {
-         
+        Class.prototype.register = function () {
             const routes = decoratorParams.routes;
-            const registeredClass = class extends HTMLElement {
+            if (customElements.get('route-switcher')) {
+                throw new Error(decoratorParams.selector + ' is already declared');
+                return;
+            }
+            window.customElements.define('route-switcher', class extends HTMLElement {
                 connectedCallback() {
                     let prevPage;
                     let prevChild;
@@ -35,18 +38,18 @@ export default function RouterDecorator(decoratorParams) {
                                     prevPage = route.path;
                                     prevChild = null;
                                 }
-            
-            
+
+
                                 let childComp;
                                 let router;
-            
+
                                 if (Object.keys(this.children).length) {
                                     childComp = this.children[Object.keys(this.children)[0]][0];
                                     if (childComp && childComp.root) {
                                         router = childComp.root.querySelectorAll('child-route-switcher')[0];
                                     }
                                 }
-            
+
                                 // if (router) {
                                 //     this.destroyChildren(router);
                                 //     let newComp = new ChildRouter(router, childComp);
@@ -54,17 +57,17 @@ export default function RouterDecorator(decoratorParams) {
                                 //         childComp.children[newComp.constructor.name] = [];
                                 //         childComp.children[newComp.constructor.name].push(newComp);
                                 //     }
-            
+
                                 //     let current = routes.filter(item => item.path === route.path)[0];
                                 //     let path = Router.getCurrentFullPath()[1];
                                 //     let child = this.getChild(current, path);
-            
+
                                 //     if (prevChild !== path || !prevChild) {
                                 //         this.renderComponent(newComp, child, params);
                                 //         prevChild = path;
                                 //     }
                                 // }
-            
+
                                 this.setActiveLink();
                             });
                     });
@@ -92,7 +95,7 @@ export default function RouterDecorator(decoratorParams) {
                 renderComponent(component, route, params) {
                     if (route) {
                         let newCompObject = this.getComponentName(route); //Component.COMPONENTS.filter(r => r.selector === route.component)[0];
-                        
+
                         if (newCompObject) {
                             let newComp = document.createElement(route.component);
                             this.checkAccess(component, newComp, route, () => {
@@ -101,11 +104,11 @@ export default function RouterDecorator(decoratorParams) {
                                 // component.children[a.constructor.name] = [];
                                 // component.children[a.constructor.name].push(a);
                             });
-            
+
                         } else {
                             this.appendEmpty(component);
                         }
-            
+
                     } else {
                         this.appendEmpty(component.root);
                     }
@@ -123,7 +126,7 @@ export default function RouterDecorator(decoratorParams) {
 
                 checkAccess(root, newComp, route, cb) {
                     if (route.protector) {
-            
+
                         let protector = Application.injectorGet(route.protector); //new route.protector();
                         if (protector.check()) {
                             root.appendChild(newComp);
@@ -135,7 +138,7 @@ export default function RouterDecorator(decoratorParams) {
                         root.appendChild(newComp);
                         cb();
                     }
-            
+
                 }
 
                 destroyChildren(root) {
@@ -145,7 +148,7 @@ export default function RouterDecorator(decoratorParams) {
                             node.COMPONENT && node.COMPONENT.destroy();
                         }
                     })
-            
+
                     // if (root.childNodes[0]) {
                     //     let currentChild = root.childNodes[0].COMPONENT;
                     //     if(currentChild) {
@@ -157,13 +160,11 @@ export default function RouterDecorator(decoratorParams) {
                 }
 
                 disconnectedCallback() {
-  
+
                 }
-            }
+            });
+        }
 
-            window.customElements.define('route-switcher', registeredClass);
-        };
 
-        return func;
     }
 }

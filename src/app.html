@@ -34,19 +34,24 @@
 
         <div class="col" :if="selectedIndex === 2">
             <h3>If</h3>
-            <label>
-                Show block: <input type="checkbox" :model="show">
-            </label>
-            <div>
-                <span :if="show">Now you see me!</span>
 
-                <app-child :if="show"></app-child>
+            <div class="row">
+                <div class="col-3">
+                    <label>
+                        Show block: <input type="checkbox" :model="show">
+                    </label>
+                    <div>
+                        <span :if="show">Now you see me!</span>
+
+                        <app-child :if="show"></app-child>
+                    </div>
+                </div>
             </div>
+
         </div>
         <div class="col" :if="selectedIndex === 3">
             <h3>Style</h3>
-            <div :style="background: style.bg, width: style.width, height: style.height" @click="changeStyle()">click on
-                me</div>
+            <div :style="background: style.bg, width: style.width, height: style.height" @click="changeStyle()">click on me</div>
         </div>
         <div class="col" :if="selectedIndex === 4">
             <h3>Lazy load</h3>
@@ -88,8 +93,15 @@
                 <h4>Line chart</h4>
                 <line-chart></line-chart>
             </div>
+            <div>
+                <h4>Bar chart</h4>
+                <bar-chart></bar-chart>
+            </div>
         </div>
 
+        <div class="col" :if="selectedIndex === 8">
+            <h3>Router</h3>
+        </div>
 
     </div>
 </div>

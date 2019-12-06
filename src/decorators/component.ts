@@ -23,106 +23,115 @@ function preCompileTpl(html) {
 
 export default function ComponentDecorator(decoratorParams) {
     return (Class) => {
-        if(customElements.get(decoratorParams.selector)) return;
-            // throw new Error(decoratorParams.selector + ' is already declared');\
-            
-        window.customElements.define(decoratorParams.selector, class extends HTMLElement {
-            constructor() {
-                super();
+
+
+        Class.prototype.register = function () {
+            if (customElements.get(decoratorParams.selector)) {
+                throw new Error(decoratorParams.selector + ' is already declared');
+                return;
+
             }
-            connectedCallback() {
-                if (this.getAttribute('bind-for')) {
-                    return;
+            window.customElements.define(decoratorParams.selector, class extends HTMLElement {
+                constructor() {
+                    super();
                 }
+                connectedCallback() {
+                    if (this.getAttribute('bind-for')) {
+                        return;
+                    }
 
-                let instance;
-                let newProps = {};
+                    let instance;
+                    let newProps = {};
 
 
-                const template = document.createElement('template');
-                template.innerHTML = preCompileTpl(decoratorParams.template);
+                    const template = document.createElement('template');
+                    template.innerHTML = preCompileTpl(decoratorParams.template);
 
-                const clone = document.importNode(template.content, true);
+                    const clone = document.importNode(template.content, true);
 
-                if (decoratorParams.useShadow) {
-                    this.attachShadow({ mode: 'open' }).appendChild(clone);
-                } else {
-                    this.appendChild(clone);
-                }
+                    if (decoratorParams.useShadow) {
+                        this.attachShadow({ mode: 'open' }).appendChild(clone);
+                    } else {
+                        this.appendChild(clone);
+                    }
 
-                Object.setPrototypeOf(Class.prototype, Component.prototype);
+                    Object.setPrototypeOf(Class.prototype, Component.prototype);
 
-                Class.selector = decoratorParams.selector;
-  
-                instance = new Class();
+                    Class.selector = decoratorParams.selector;
 
-                // if (!Application.rootComponent) {
+                    instance = new Class();
+
+                    // if (!Application.rootComponent) {
                     // Application.rootComponent = instance;
-                // }
+                    // }
 
-                Object.keys(instance).forEach((key) => {
-                    newProps[key] = instance[key];
-                });
+                    Object.keys(instance).forEach((key) => {
+                        newProps[key] = instance[key];
+                    });
 
-                // let services = [];
-                // if (typeof decoratorParams.services === 'object') {
-                //     for (let key in decoratorParams.services) {
-                //         if (decoratorParams.services.hasOwnProperty(key) && decoratorParams.services[key]) {
-                //             let injectedService = API.injectorGet(decoratorParams.services[key], Class);
-                //             if (injectedService) {
-                //                 newProps[key] = injectedService;
-                //                 services.push({ key, injectedService });
-                //             }
-                //         }
-                //     }
-                // }
+                    // let services = [];
+                    // if (typeof decoratorParams.services === 'object') {
+                    //     for (let key in decoratorParams.services) {
+                    //         if (decoratorParams.services.hasOwnProperty(key) && decoratorParams.services[key]) {
+                    //             let injectedService = API.injectorGet(decoratorParams.services[key], Class);
+                    //             if (injectedService) {
+                    //                 newProps[key] = injectedService;
+                    //                 services.push({ key, injectedService });
+                    //             }
+                    //         }
+                    //     }
+                    // }
 
-                //add getters
-                Reflect.ownKeys(Class.prototype).filter(name => {
-                    const getter = Reflect.getOwnPropertyDescriptor(Class.prototype, name)["get"];
-                    if (typeof getter === "function") {
-                        Object.defineProperty(newProps, name, {
-                            set: value => {
-                                console.log('SET');
-                            },
-                            get: () => {
-                                return getter.call(instance);
-                            },
-                            // configurable: true,
-                            enumerable: true
+                    //add getters
+                    Reflect.ownKeys(Class.prototype).filter(name => {
+                        const getter = Reflect.getOwnPropertyDescriptor(Class.prototype, name)["get"];
+                        if (typeof getter === "function") {
+                            Object.defineProperty(newProps, name, {
+                                set: value => {
+                                    console.log('SET');
+                                },
+                                get: () => {
+                                    return getter.call(instance);
+                                },
+                                // configurable: true,
+                                enumerable: true
+                            });
+                        }
+                    }) as string[];
+
+                    Object.defineProperty(instance, '_props', { value: new ObservableModel(newProps), writable: false });
+
+                    for (let key in newProps) {
+                        Object.defineProperty(instance, key, {
+                            set: value => instance._props.set(key, value),
+                            get: () => instance._props.get(key),
+                            configurable: true
                         });
                     }
-                }) as string[];
 
-                Object.defineProperty(instance, '_props', { value: new ObservableModel(newProps), writable: false });
 
-                for (let key in newProps) {
-                    Object.defineProperty(instance, key, {
-                        set: value => instance._props.set(key, value),
-                        get: () => instance._props.get(key),
-                        configurable: true
-                    });
+                    // services.forEach(res => {
+                    //     Object.defineProperty(instance, res.key, {
+                    //         value: res.injectedService,
+                    //         writable: false
+                    //     });
+                    //     Object.defineProperty(instance.props, res.key, {
+                    //         value: res.injectedService,
+                    //         writable: false
+                    //     });
+                    // })
+
+                    instance.componentConstructor.call(instance, this, decoratorParams, {});
                 }
 
+                disconnectedCallback() {
+                    const event = new CustomEvent('destroy', { detail: null });
+                    this.dispatchEvent(event);
+                }
+            });
+        }
 
-                // services.forEach(res => {
-                //     Object.defineProperty(instance, res.key, {
-                //         value: res.injectedService,
-                //         writable: false
-                //     });
-                //     Object.defineProperty(instance.props, res.key, {
-                //         value: res.injectedService,
-                //         writable: false
-                //     });
-                // })
 
-                instance.componentConstructor.call(instance, this, decoratorParams, {});
-            }
-
-            disconnectedCallback() {
-                const event = new CustomEvent('destroy', { detail: null });
-                this.dispatchEvent(event);
-            }
-        });
+        // return Class;
     }
 }

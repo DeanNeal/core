@@ -1,13 +1,16 @@
-import { ComponentDecorator } from '../../../core';
-import * as Tpl from './line-chart.html';
+import { Component } from './../../../core';
+import * as  Tpl from './line-chart.html';
 import { Chart } from '../chart';
 
-@ComponentDecorator({
+@Component({
     selector: 'line-chart',
     template: Tpl,
+    shadowDom: true
     // super: Chart
 })
 export class LineChartComponent {
+    title = 'Title goes here';
+    background = '#eee';
     _tooltipInterval;
     tooltipCoords: any = {
         x: 0,
@@ -20,10 +23,10 @@ export class LineChartComponent {
     yLabelX = 0;
     yLabelY = 0;
     yLabelTransform;
-    labelX;
+    labelX = 30;
     _series: any = [{
         d: 'TEXT',
-        value: [1,2,3,1,5,6]
+        value: [1, 2, 3, 1, 5, 6]
     }];
     series: any = [];
     markers = [];
@@ -38,7 +41,6 @@ export class LineChartComponent {
     constructor() {
 
     }
-
 
     onInit() {
         this.draw();
@@ -70,14 +72,18 @@ export class LineChartComponent {
 
     mouseenter(e, item) {
         clearTimeout(this._tooltipInterval);
-// console.log(item, e.target.getBoundingClientRect());
-        const {left, top} = e.target.getBoundingClientRect();
+
+        const { left, top } = e.target.getBoundingClientRect();
 
         this.tooltipIsShown = true;
-        this.tooltipCoords = { x: left - 33 + 'px', y: top - 80 + 'px' };
+
         this.tooltipSelected = {
             value: item.value.toFixed(2)
         };
+
+        const { width, height } = this['$refs'].tooltip.getBoundingClientRect();
+
+        this.tooltipCoords = { x: left - width / 2 + 5 + 'px', y: top - height - 15 + 'px' };
     }
 
     mouseleave(e) {
