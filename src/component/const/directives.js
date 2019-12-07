@@ -2,7 +2,7 @@ export const DIRECTIVES_NAMES = [
     'for',
     'style',
     'value',
-    'input',
+    'params',
     'model',
     'if',
     'class',

@@ -38,9 +38,9 @@ export function createEventObject(elem, event, data, loopParams) {
     
     let functionName = fnName.replace(regExp, ''); // remove everything between brackets
 
-    if(this._props[functionName]){
-        throw new Error('Duplicate identifier: ' + functionName + '; Rename method or variable in props');
-    }
+    // if(this._props[functionName]){
+    //     throw new Error('Duplicate identifier: ' + functionName + '; Rename method or variable in props');
+    // }
 
     let newEvent = {
         fnName: functionName,

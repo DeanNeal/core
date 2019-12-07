@@ -1,8 +1,14 @@
-import { Component } from './../component/component';
+import { BaseComponent } from './../component/component';
 import { Observable, AbstractObservable, ObservableModel } from '../observable/observable';
 import { DIRECTIVES_NAMES } from './../component/const/directives';
 import { EVENTS_NAMES } from './../component/const/events';
 import { Application } from './../core';
+// import { onChange } from './../utils/onChange';
+
+import 'zone.js';
+declare let Zone: any;
+import 'zone.js/dist/long-stack-trace-zone';
+
 
 function preCompileTpl(html) {
 
@@ -41,96 +47,62 @@ export default function ComponentDecorator(decoratorParams) {
                     }
 
                     let instance;
-                    let newProps = {};
-
-
+                    let shadowDom;
                     const template = document.createElement('template');
                     template.innerHTML = preCompileTpl(decoratorParams.template);
 
                     const clone = document.importNode(template.content, true);
-                    let shadowDom;
+                    
                     if (decoratorParams.shadowDom) {
-                        if(!this.shadowRoot) {
+                        if (!this.shadowRoot) {
                             shadowDom = this.attachShadow({ mode: 'open' }).appendChild(clone);
                         }
                     } else {
                         this.appendChild(clone);
                     }
 
-                    Object.setPrototypeOf(Class.prototype, Component.prototype);
+                    // Class.selector = decoratorParams.selector;
+                    Zone.current.fork({
+                        name: decoratorParams.selector + ' zone',
+                        // onInvoke: function(parentZoneDelegate, _, targetZone, delegate, applyThis, applyArgs, source) {
+                        //     // console.log(parentZoneDelegate, _, targetZone, delegate, applyThis, applyArgs, source);
+                        // },
 
-                    Class.selector = decoratorParams.selector;
+                        onScheduleTask(parentZoneDelegate, _, targetZone, task) {
+                            // console.log(
+                            //     'Где-то мы вызвали асинхронный таск и его колбек будет чуть позже вызван в нашей зоне...'
+                            // );
 
-                    instance = new Class();
+                            return parentZoneDelegate.scheduleTask(targetZone, task);
+                        },
 
-                    // if (!Application.rootComponent) {
-                    // Application.rootComponent = instance;
-                    // }
-
-                    Object.keys(instance).forEach((key) => {
-                        newProps[key] = instance[key];
-                    });
-
-                    // let services = [];
-                    // if (typeof decoratorParams.services === 'object') {
-                    //     for (let key in decoratorParams.services) {
-                    //         if (decoratorParams.services.hasOwnProperty(key) && decoratorParams.services[key]) {
-                    //             let injectedService = API.injectorGet(decoratorParams.services[key], Class);
-                    //             if (injectedService) {
-                    //                 newProps[key] = injectedService;
-                    //                 services.push({ key, injectedService });
-                    //             }
-                    //         }
-                    //     }
-                    // }
-
-                    //add getters
-                    Reflect.ownKeys(Class.prototype).filter(name => {
-                        const getter = Reflect.getOwnPropertyDescriptor(Class.prototype, name)["get"];
-                        if (typeof getter === "function") {
-                            Object.defineProperty(newProps, name, {
-                                set: value => {
-                                    console.log('SET');
-                                },
-                                get: () => {
-                                    return getter.call(instance);
-                                },
-                                // configurable: true,
-                                enumerable: true
-                            });
+                        onInvokeTask(parentZoneDelegate, _, targetZone, task, applyThis, applyArgs) {
+                            console.log('Somewhere a callback of asynchronous task has been invoked...', instance);
+                            const delegate = parentZoneDelegate.invokeTask(targetZone, task, applyThis, applyArgs);
+                            instance.changeDetection();
+                            return delegate;
+                        },
+                        // onCancelTask(parentZoneDelegate, _, targetZone, task) {
+                        //     console.log(111, parentZoneDelegate, _, targetZone, task);
+                        // },
+                        onHasTask(parent, current, target, hasTask) {
+                            if (hasTask.macroTask) {
+                              console.log("There are outstanding MacroTasks.");
+                            } else {
+                              console.log("All MacroTasks have been completed.");
+                              instance.changeDetection();
+                            }
+                          },
+                        onHandleError: function (parentZoneDelegate, currentZone, targetZone, error) {
+                            console.log(error.stack);
                         }
-                    }) as string[];
+                    }).run(() => {
+                        Object.setPrototypeOf(Class.prototype, BaseComponent.prototype);
 
-                    Object.defineProperty(instance, '_props', { value: new ObservableModel(newProps), writable: false });
-
-                    for (let key in newProps) {
-                        Object.defineProperty(instance, key, {
-                            set: value => instance._props.set(key, value),
-                            get: () => instance._props.get(key),
-                            configurable: true
-                        });
-                    }
-
-
-                    // services.forEach(res => {
-                    //     Object.defineProperty(instance, res.key, {
-                    //         value: res.injectedService,
-                    //         writable: false
-                    //     });
-                    //     Object.defineProperty(instance.props, res.key, {
-                    //         value: res.injectedService,
-                    //         writable: false
-                    //     });
-                    // })
-
-                    // let mountedElement;
-                    // if(shadowDom){
-                    //     mountedElement = document.createElement("div");
-                    //     mountedElement.appendChild(shadowDom);
-                    //     debugger
-                    // }
-
-                    instance.componentConstructor.call(instance, (shadowDom ? this.shadowRoot : this), decoratorParams, {});
+                        instance = new Class();
+     
+                        instance.componentConstructor.call(instance, (shadowDom ? this.shadowRoot : this), decoratorParams, {});
+                    });
                 }
 
                 disconnectedCallback() {
@@ -140,7 +112,99 @@ export default function ComponentDecorator(decoratorParams) {
             });
         }
 
-
         // return Class;
     }
 }
+
+
+
+ // Object.keys(instance).forEach((key) => {
+ //     newProps[key] = instance[key];
+ // });
+
+ // let services = [];
+ // if (typeof decoratorParams.services === 'object') {
+ //     for (let key in decoratorParams.services) {
+ //         if (decoratorParams.services.hasOwnProperty(key) && decoratorParams.services[key]) {
+ //             let injectedService = API.injectorGet(decoratorParams.services[key], Class);
+ //             if (injectedService) {
+ //                 newProps[key] = injectedService;
+ //                 services.push({ key, injectedService });
+ //             }
+ //         }
+ //     }
+ // }
+
+ //add getters
+ // Reflect.ownKeys(Class.prototype).filter(name => {
+ //     const getter = Reflect.getOwnPropertyDescriptor(Class.prototype, name)["get"];
+ //     if (typeof getter === "function") {
+ //         Object.defineProperty(newProps, name, {
+ //             set: value => {
+ //                 console.log('SET');
+ //             },
+ //             get: () => {
+ //                 return getter.call(instance);
+ //             },
+ //             // configurable: true,
+ //             enumerable: true
+ //         });
+ //     }
+ // }) as string[];
+
+
+ // Object.defineProperty(instance, '_props', { value: new ObservableModel(newProps), writable: false });
+ // const proxy = new Proxy(instance, {
+ //     get(target, prop:any, receiver) {
+
+ //         // if(Object.keys(instance).includes(prop)) {
+ //         if(Reflect.ownKeys(Class.prototype).includes(prop)) {
+
+ //         }
+
+
+ //         return Reflect.get(target, prop, receiver); // (1)
+ //     },
+ //     set(target, prop:any, val, receiver) {
+ //         // alert(`SET ${prop}=${val}`);
+ //         // if(Reflect.ownKeys(instance).includes(prop)) {
+
+ //         const success = Reflect.set(target, prop, val, receiver);
+ //         if(success && Object.keys(instance).includes(prop)) {
+ //             console.log(prop);
+ //             instance.listenToPropsChanges();
+ //         }
+ //         return  success;// (2)
+ //     }
+ // });
+
+ // Object.defineProperty(instance, '_props', { value: proxy, writable: false });
+
+ // for (let key in newProps) {
+ //     Object.defineProperty(instance, key, {
+ //         set: value => {
+ //             // instance._props.set(key, value)
+ //             // instance._props[key] = value;
+
+ //         },
+ //         // get: () => {
+ //         //     // instance._props.get(key)
+ //         //     // return instance._props.get(key);
+
+ //         //     return  Reflect.set(instance, key, newProps[key], proxy);
+ //         // },
+ //         configurable: true
+ //     });
+ // }
+
+
+ // services.forEach(res => {
+ //     Object.defineProperty(instance, res.key, {
+ //         value: res.injectedService,
+ //         writable: false
+ //     });
+ //     Object.defineProperty(instance.props, res.key, {
+ //         value: res.injectedService,
+ //         writable: false
+ //     });
+ // })

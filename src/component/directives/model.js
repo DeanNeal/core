@@ -21,9 +21,11 @@ export function _model(array, loopParams, collectionName, data) {
                     break;
                 case 'text':
                 case 'email':
+                case 'number':
                 case 'password':
                     item.elem.addEventListener('input', (e) => {
-                        this.setComponentVariable(item.attr, e.currentTarget.value, loopParams, collectionName, data);
+                        const value = (item.elem.type === 'number' ? parseFloat(e.currentTarget.value) : e.currentTarget.value);
+                        this.setComponentVariable(item.attr, value, loopParams, collectionName, data);
                     }, false);
                     break;
             }

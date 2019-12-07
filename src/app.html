@@ -43,7 +43,7 @@
                     <div>
                         <span :if="show">Now you see me!</span>
 
-                        <app-child :if="show" :input="forChildComponent: 'Now you see me!'"></app-child>
+                        <app-child :if="show" :params="forChildComponent: 'Now you see me!'"></app-child>
                     </div>
                 </div>
             </div>
@@ -51,7 +51,32 @@
         </div>
         <div class="col" :if="selectedIndex === 3">
             <h3>Style</h3>
-            <div :style="background: style.bg, width: style.width, height: style.height" @click="changeStyle()">click on me</div>
+
+            {{cubeStyle | json}}
+
+            <div class="row">
+                <div class="col-3">
+                    <div class="input-group mb-3">
+                        <input type="number" maxlength="5" class="form-control" placeholder="width"
+                            :model="cubeStyle.width">
+                    </div>
+                </div>
+                <div class="col-3">
+                    <div class="input-group mb-3">
+                        <input type="number" maxlength="5" class="form-control" placeholder="height"
+                            :model="cubeStyle.height">
+                    </div>
+                </div>
+                <div class="col-3">
+                    <div class="input-group mb-3">
+                        <input type="text" maxlength="10" class="form-control" placeholder="background"
+                            :model="cubeStyle.bg">
+                    </div>
+                </div>
+            </div>
+
+
+            <div :style="background: cubeStyle.bg, width: widthOfCube, height: heightOfCube"></div>
         </div>
         <div class="col" :if="selectedIndex === 4">
             <h3>Lazy load</h3>
@@ -66,7 +91,7 @@
             <input type="text" :model="input1" placeholder="firstname">
 
             <input type="text" :model="input2" placeholder="lastname">
-
+            
             <div>{{input1}}</div>
             <div>{{input2}}</div>
 
@@ -81,7 +106,7 @@
                         <input type="text" class="form-control" placeholder="forChildComponent"
                             :model="forChildComponent">
                     </div>
-                    <!-- <app-child :input="forChildComponent: forChildComponent"></app-child> -->
+                    <app-child :params="forChildComponent: forChildComponent"></app-child>
                 </div>
             </div>
         </div>
@@ -137,5 +162,4 @@
         color: #ccc;
         cursor: pointer;
     }
-
 </style>

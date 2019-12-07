@@ -1,5 +1,5 @@
 export class Chart {
-    _props;
+    // _props;
     static get colorsTheme() {
         return ["#7cb5ec", "#434348", "#90ed7d", "#f7a35c", "#8085e9", "#f15c80", "#e4d354", "#2b908f", "#f45b5b", "#91e8e1", "#7cb5ec", "#434348"];
     }
@@ -9,7 +9,7 @@ export class Chart {
     }
 
     static get xOffset() {
-        return 140;
+        return 120;
     }
 
     static get yOffset() {
@@ -78,11 +78,11 @@ export class Chart {
     }
 
 
-    getSvgHeight() {
-        return this._props.get('height') - Chart.yOffset;
-    }
+    // getSvgHeight() {
+    //     return this._props.get('height') - Chart.yOffset;
+    // }
 
-    getSvgWidth() {
-        return this._props.get('width') - Chart.xOffset;
-    }
+    // getSvgWidth() {
+    //     return this._props.get('width') - Chart.xOffset;
+    // }
 }

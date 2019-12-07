@@ -94,7 +94,7 @@ function nativeElements(item, array, loopI, collectionName, keys) {
                 attrs: Directives._init.call(this, prevContent, 'bind-attr'),
                 if: Directives._init.call(this, prevContent, 'bind-if'),
                 model: Directives._init.call(this, prevContent, 'bind-model'),
-                input: Directives._init.call(this, prevContent, 'bind-input'),
+                input: Directives._init.call(this, prevContent, 'bind-params'),
                 value: Directives._init.call(this, prevContent, 'bind-value'),
                 links: Directives._init.call(this, prevContent, 'bind-link'),
                 on: Directives._init.call(this, prevContent, 'bind-on')
@@ -123,7 +123,8 @@ function nativeElements(item, array, loopI, collectionName, keys) {
         }
     }
 
-    let curRootProps = JSONStr(this._props.getData());
+    // let curRootProps = JSONStr(this._props.getData());
+    let curRootProps = JSONStr(this);
 
     item.items.forEach((elem, i) => {
         // if current or root prop has been changed
@@ -132,7 +133,7 @@ function nativeElements(item, array, loopI, collectionName, keys) {
         }
     });
 
-    item.rootCached = JSONStr(this._props.getData());
+    item.rootCached = JSONStr(this);//JSONStr(this._props.getData());
     item.cached = JSON.parse(JSONStr(array));
 }
 

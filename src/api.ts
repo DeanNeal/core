@@ -1,6 +1,6 @@
 
 // import { RouteSwitcher } from './router/router-switcher';
-import { Component } from './component/component';
+// import { Component } from './component/component';
 import { Directive } from './decorators/directive';
 
 class Application {

@@ -2,6 +2,7 @@ export const EVENTS_NAMES = [
    'click',
    'keyup',
    'change',
+   'input',
    'mouseout',
    'mouseover',
    'mouseenter',

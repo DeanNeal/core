@@ -13,23 +13,27 @@ import * as Tpl from './app.html';
   // {{input}} {{show}}
   // `
 
-  template: `<div> Child component: </div>{{forChildComponent}}`,
+  template: `<div @click="click()"> Child component: </div>{{forChildComponent}}`,
   shadowDom: true
 })
 export class ChildComponent {
   list = [1, 2, 3];
-  constructor() {
-    // debugger
-    // this;
-  }
+  forChildComponent = 10;
+
   onInit() {
-    this;
+
     // console.log( this);
     // this.test = 2;
 
-    //  setTimeout(()=> {
-    //   this['emit']('test', 1);
-    //  }, 1000)
+    setTimeout(() => {
+      // this['emit']('test', 1);
+      // this.emit('test', 1);
+    }, 1000)
+
+  }
+
+  click() {
+
   }
 }
 
@@ -38,7 +42,7 @@ export class ChildComponent {
   selector: 'app-root',
   template: Tpl
 })
-class AppComponent {
+class AppComponent{
   public show: boolean = false;
   public selectedIndex = 0;
   public items = [];
@@ -47,45 +51,56 @@ class AppComponent {
   public collection = [[[13, 14]], [[16, 17]]];
   public value = 1234;
   public attrs = {
-    title: 'test'
+    title: {
+      test: 'test'
+    }
   };
+
   public input1 = '';
   public input2 = '';
 
-  public style = {
-    width: '50px',
-    height: '50px',
+  public cubeStyle = {
+    width: 50,
+    height: 50,
     bg: '#999'
   };
 
   // forChildComponent = '';
-  
+
+  onUpdate() {
+    // this.value+=this.value;
+  }
 
   get input1AndInput2() {
     return this.input1 + '-' + this.input2;
   }
 
-  constructor() {
-
-
-    // setTimeout(() => {
-    //   this.value = 10;
-    // }, 1000)
+  get widthOfCube() {
+    let width = this.cubeStyle.width;
+    if (width > 1000) width = 1000;
+    return width + 'px';
   }
 
-  onInit() {
-    // setInterval(() => {
-    //   this.show = !this.show;
-    // }, 1000);
+  get heightOfCube() {
+    let height = this.cubeStyle.height;
+    if (height > 500) height = 500;
+    return height + 'px';
+  }
+
+  constructor() {
+
+  }
+
+
+  onInit() { 
     this.load();
 
-    Plugins.Sortable.init({
-      el: this['$refs'].sortableElement,
-      onDragEnd: ()=> {
-        console.log('drag end')
-      }
-    });
-
+    // Plugins.Sortable.init({
+    //   el: this.$refs.sortableElement,
+    //   onDragEnd: () => {
+    //     console.log('drag end')
+    //   }
+    // });
   }
 
 
@@ -98,13 +113,13 @@ class AppComponent {
     console.log('RRRRRRRRRRRRR')
   }
 
-  changeStyle() {
-    this.style = {
-      width: '100px',
-      height: '100px',
-      bg: '#ccc'
-    }
-  }
+  // changeStyle() {
+  //   this.style = {
+  //     width: '100px',
+  //     height: '100px',
+  //     bg: '#ccc'
+  //   }
+  // }
 
   onLazyLoad(lazy) {
     setTimeout(() => {

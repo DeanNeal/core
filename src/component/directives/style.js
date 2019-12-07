@@ -10,10 +10,8 @@ export function _style(array, data, loopParams) {
                 params[1] = params[1].substr(1);
                 minus = true;
             }
-            // let variable = params[1].split('.');
-            let r;
-           
-            r = this.getPropsByScope(params[1], data, loopParams);
+
+            let r = this.getPropsByScope(params[1], data, loopParams);
             r = minus ? '-' + r : r;
 
             r ? (item.elem.style[styleName] = r) : (item.elem.style[styleName] = '');

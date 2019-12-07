@@ -7,11 +7,11 @@ import { EVENTS_NAMES } from './const/events';
 import API from '../api';
 
 
-export class Component {
+export class BaseComponent {
     private root: HTMLElement;
     // private children = {};
-    private tpl;
-    private $refs = {};
+    // private tpl;
+    public $refs: { [key: string]: HTMLElement } = {};
     private $propsSub;
     private $attrs = {};
     private _props;
@@ -32,16 +32,17 @@ export class Component {
     //     // this.componentConstructor(root, options);
     // }
 
-    // constructor() {
-    //     super();
-    // }
+    constructor() {
+        // super();
+        debugger
+    }
 
 
     componentConstructor(root: HTMLElement, options: any, extraData?) {
         Object.defineProperty(this, 'root', { value: root, writable: false });
         // Object.defineProperty(this, 'children', { value: {}, writable: true });
-        Object.defineProperty(this, 'tpl', { value: options.template, writable: false });
-        Object.defineProperty(this, '$attrs', { value: {}, writable: true });
+        // Object.defineProperty(this, 'tpl', { value: options.template, writable: false });
+
         Object.defineProperty(this, '$refs', { value: {}, writable: false });
         Object.defineProperty(this, '_host', {
             value: {
@@ -77,7 +78,8 @@ export class Component {
                 throw new Error('Using of bind-model inside bind-form-group is forbidden');
             }
 
-            this.$attrs = attrs;
+
+            Object.defineProperty(this, '$attrs', { value: attrs, writable: false, enumerable: false });
         }
 
 
@@ -89,17 +91,13 @@ export class Component {
 
         this.setPrivates(options);
 
-
-        // if (this.root.getAttribute('bind-for')) {
-        // console.warn('Foor loop is detected!')
-        // } else {
         this.addListeners();
 
-        this.render();
-        this.listenToPropsChanges();
+        this.initDirectives();
 
-        this.onInit(extraData);
-        // }
+        this.onInit();
+
+        this.changeDetection();
     }
 
     setPrivates(options) {
@@ -133,7 +131,7 @@ export class Component {
         });
     }
 
-    render() {
+    initDirectives() {
         // this.root.innerHTML = this.preCompileTpl(this.tpl);
         this.onAttach();
 
@@ -192,17 +190,20 @@ export class Component {
     }
 
     inputListener(e) {
+
         //TODO add validators
         for (let key in e.detail) {
             this[key] = e.detail[key];
-            Object.defineProperty(this, key, {
-                set: value => this._props.set(key, value),
-                get: () => this._props.get(key),
-                configurable: true
-            });
+            // Object.defineProperty(this, key, {
+            //     set: value => this._props.set(key, value),
+            //     get: () => this._props.get(key),
+            //     configurable: true
+            // });
         }
 
-        this._props.set(e.detail);
+        // this._props.set(e.detail);
+
+        // this.changeDetection();
     }
 
     modelChangeListener(e) {
@@ -221,30 +222,33 @@ export class Component {
         host.removeEventListener('destroy', this.destroyListener, false);
     }
 
-    listenToPropsChanges() {
-        const $propsSub = this._props.sub(r => {
-            // Directives._computed.call(this, this._computed); // should go first
+    changeDetection() {
+        // console.log('success MOTHER FUCKER!');
 
-            Directives._if.call(this, this._directives['if']);
-            Directives._for.call(this, this._directives['for']);
-            Directives._value.call(this, this._directives['value']);
-            Directives._input.call(this, this._directives['input']);
-            Directives._value.call(this, this._directives['model']);
-            Directives._style.call(this, this._directives['style']);
-            Directives._class.call(this, this._directives['class']);
-            Directives._attr.call(this, this._directives['attr']);
-            Directives._link.call(this, this._directives['link']);
-            Directives._hostClasses.call(this, this._host.class);
-            Directives._hostStyles.call(this, this._host.style);
-            Directives._hostHidden.call(this, this._host.hidden);
+        // return;
+        // const $propsSub = this._props.sub(r => {
+        // Directives._computed.call(this, this._computed); // should go first
 
-            Interpolation._update.call(this, this._interpolation);
+        Directives._if.call(this, this._directives['if']);
+        Directives._for.call(this, this._directives['for']);
+        Directives._value.call(this, this._directives['value']);
+        Directives._input.call(this, this._directives['params']);
+        Directives._value.call(this, this._directives['model']);
+        Directives._style.call(this, this._directives['style']);
+        Directives._class.call(this, this._directives['class']);
+        Directives._attr.call(this, this._directives['attr']);
+        Directives._link.call(this, this._directives['link']);
+        Directives._hostClasses.call(this, this._host.class);
+        Directives._hostStyles.call(this, this._host.style);
+        Directives._hostHidden.call(this, this._host.hidden);
 
-            Directives._customDirective.call(this);
-            this.onUpdate();
-        });
+        Interpolation._update.call(this, this._interpolation);
 
-        Object.defineProperty(this, '$propsSub', { value: $propsSub, writable: false });
+        Directives._customDirective.call(this);
+        this.onUpdate();
+        // });
+
+        // Object.defineProperty(this, '$propsSub', { value: $propsSub, writable: false });
     }
 
     setSubscriptions(...rest) {
@@ -252,6 +256,7 @@ export class Component {
     }
 
     getComponentVariable(variable, data) {
+        debugger
         if (data && typeof data !== 'object') return data;
         if (variable.length === 1 && variable[0] === 'this') return data || this._props.getData(); // entire props
 
@@ -265,14 +270,21 @@ export class Component {
     }
 
     getAllVariables() {
-        return Object.keys(this._props.getData());
+        // return Object.keys(this._props.getData());
+        const getters: any[] = Reflect.ownKeys(this.constructor.prototype).filter(name => {
+            const getter = Reflect.getOwnPropertyDescriptor(this.constructor.prototype, name)["get"];
+
+            return typeof getter === "function";
+        });
+
+        return Object.keys(this).concat(getters);
     }
 
     getPropsByScope(value, scope, loopParams) {
         let r;
         let variable = value.split('.')
         let listOfVariables = this.getAllVariables();
-        let listOfVariablesValues = listOfVariables.map(r => this._props.get(r));
+        let listOfVariablesValues = listOfVariables.map(r => this[r]);
 
         if (loopParams && loopParams.iterator) {
             listOfVariables.push(loopParams.iterator);
@@ -305,31 +317,40 @@ export class Component {
     }
 
     setComponentVariable(string, value, loopParams, collectionName, data) {
-        let params = string.split('.'); /*data ? string.split('.') : ('props.' + string).split('.');*/
-        let lastProp = params[params.length - 1];
+        // let params = string.split('.'); /*data ? string.split('.') : ('props.' + string).split('.');*/
+        // let lastProp = params[params.length - 1];
 
 
-        if (params[0] === loopParams) {
-            if (params.length > 1) {
-                data[lastProp] = value;
-                this._props._callAll();
-            }
-        } else {
-            let params = ('_props.' + string).split('.');
-            if (params.length > 1) {
-                params.splice(-1, 1);
-            }
+        // if (params[0] === loopParams) {
+        //     if (params.length > 1) {
+        //         data[lastProp] = value;
+        //         // this._props._callAll();
+        //     }
+        // } else {
 
-            let target = params.reduce((o, i) => o[i], this);
-            if (target === this._props) { // use instanceof
-                // target._data[lastProp] = value;
-                this._props.set(lastProp, value);
-            } else {
-                target[lastProp] = value;
-                this._props.set(this._props.getData());
-            }
-        }
+        // let params = ('_props.' + string).split('.');
+        // if (params.length > 1) {
+        //     params.splice(-1, 1);
+        // }
 
+        // let target = params.reduce((o, i) => o[i], this);
+
+        // if (target === this._props) { // use instanceof
+        //     // target._data[lastProp] = value;
+        //     // this._props.set(lastProp, value);
+        //     this[lastProp] = value;
+        // } else {
+        //     target[lastProp] = value;
+        //     this._props.set(this._props.getData());
+        // }
+        // let newValue;
+
+        if (typeof value === 'string') value = `'${value}'`;
+
+        const fn = `this.${string}=${value}`;
+
+        new Function(``, fn).apply(this, []);
+        // }
     }
 
     getElement(target) {
@@ -381,7 +402,6 @@ export class Component {
         if (this.root instanceof DocumentFragment === false) {
             this.root.innerHTML = null;
         }
-
     }
 
     _onModelChange() {
