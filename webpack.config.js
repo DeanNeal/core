@@ -17,7 +17,7 @@ var outputFile = libraryName + '.js';
 module.exports = {
     entry: {
         index: ['./src/core.ts'],
-        demo: ['./src/app.ts']
+        demo: ['./src/sandbox/main.ts']
     },
     output: {
         path: path.resolve(__dirname, 'build'),//path.join('build'),
