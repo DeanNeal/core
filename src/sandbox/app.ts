@@ -1,55 +1,41 @@
-import { Application, Plugins, Component } from './core';
-// import Component from './decorators/component';
-// import {LineChartComponent} from './plugins/charts/line/line-chart';
-
-
+import { Plugins, Component } from './../core';
 import * as Tpl from './app.html';
-// import { Router } from './router';
-
-@Component({
-  selector: 'app-child',
-  // template: `
-  // child component: <div :for="let (item) of list">{{item}}</div> 
-  // {{input}} {{show}}
-  // `
-
-  template: `<div @click="click()"> Child component: </div>{{forChildComponent}}`,
-  shadowDom: true
-})
-export class ChildComponent {
-  list = [1, 2, 3];
-  forChildComponent = 10;
-
-  onInit() {
-
-    // console.log( this);
-    // this.test = 2;
-
-    setTimeout(() => {
-      // this['emit']('test', 1);
-      // this.emit('test', 1);
-    }, 1000)
-
-  }
-
-  click() {
-
-  }
-}
 
 
 @Component({
   selector: 'app-root',
-  template: Tpl
+  template: Tpl,
+  hostListeners: {
+    click: (e, vm) => {
+
+    }
+  },
+  hostAttrs: {
+    class: (vm) => {
+      return vm.input1AndInput2;
+    },
+    style: {
+      background: () => {
+        return '#aaa';
+      }
+    },
+    title: () => {
+      return 'title'
+    }
+    // hidden: (vm) => {
+    //   return vm.input1;
+    // }
+  },
+  // shadowDom: true
 })
-class AppComponent{
+export class AppComponent {
   public show: boolean = false;
   public selectedIndex = 0;
   public items = [];
   public list = [1, 2, 3];
   public tabs = ['Values', 'Loop', 'If', 'Style', 'Lazy load', 'Model', 'Pass properties', 'Plugins', 'Router'];
   public collection = [[[13, 14]], [[16, 17]]];
-  public value = 1234;
+  public value = 'value';
   public attrs = {
     title: {
       test: 'test'
@@ -59,13 +45,12 @@ class AppComponent{
   public input1 = '';
   public input2 = '';
 
-  public cubeStyle = {
+  public cubeStyle: any = {
     width: 50,
     height: 50,
     bg: '#999'
   };
-
-  // forChildComponent = '';
+  forChildComponent = '1000';
 
   onUpdate() {
     // this.value+=this.value;
@@ -91,16 +76,24 @@ class AppComponent{
 
   }
 
+  hostClick() {
+    alert(1);
+  }
 
-  onInit() { 
+  onCubeClick() {
+    this.cubeStyle.width += 5;
+  }
+
+
+  onInit() {
     this.load();
 
-    // Plugins.Sortable.init({
-    //   el: this.$refs.sortableElement,
-    //   onDragEnd: () => {
-    //     console.log('drag end')
-    //   }
-    // });
+    Plugins.Sortable.init({
+      el: this['$refs'].sortableElement,
+      onDragEnd: () => {
+        console.log('drag end')
+      }
+    });
   }
 
 
@@ -108,18 +101,10 @@ class AppComponent{
     this.selectedIndex = index;
   }
 
-  test() {
+  test(e, data) {
     // alert();
-    console.log('RRRRRRRRRRRRR')
+    console.log(e, data)
   }
-
-  // changeStyle() {
-  //   this.style = {
-  //     width: '100px',
-  //     height: '100px',
-  //     bg: '#ccc'
-  //   }
-  // }
 
   onLazyLoad(lazy) {
     setTimeout(() => {
@@ -139,7 +124,6 @@ class AppComponent{
 
 }
 
-
 // @Component({
 //   selector: 'app-root',
 //   template: '<a :link="/">HOME</a><a :link="page">PAGE</a><route-switcher></route-switcher>'
@@ -151,14 +135,3 @@ class AppComponent{
 // }
 
 
-Application.bootstrap({
-
-  // styles: Styles,
-  components: [AppComponent, ChildComponent, Plugins.LineChartComponent, Plugins.BarChartComponent],
-  // directives: [
-
-  // ]
-  // import: []
-  // router: Router
-
-});

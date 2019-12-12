@@ -11,9 +11,7 @@ export function _link(array, data, loopParams) {
         let params = regExp.exec(item.attr)
         if (params) {
             
-            let r;//= this.getComponentVariable(params[1].split('.'), data);
-            // let variable = params[1].split('.');
-            
+            let r;
             r = this.getPropsByScope(params[1], data, loopParams);
 
             route = item.attr.replace(regExp, r);

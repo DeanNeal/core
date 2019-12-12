@@ -1,9 +1,7 @@
 import { BaseComponent } from './../component/component';
-import { Observable, AbstractObservable, ObservableModel } from '../observable/observable';
 import { DIRECTIVES_NAMES } from './../component/const/directives';
 import { EVENTS_NAMES } from './../component/const/events';
-import { Application } from './../core';
-// import { onChange } from './../utils/onChange';
+
 
 import 'zone.js';
 declare let Zone: any;
@@ -30,7 +28,7 @@ function preCompileTpl(html) {
 export default function ComponentDecorator(decoratorParams) {
     return (Class) => {
 
-
+        Class.selector = decoratorParams.selector;
         Class.prototype.register = function () {
             if (customElements.get(decoratorParams.selector)) {
                 throw new Error(decoratorParams.selector + ' is already declared');
@@ -47,15 +45,16 @@ export default function ComponentDecorator(decoratorParams) {
                     }
 
                     let instance;
-                    let shadowDom;
                     const template = document.createElement('template');
                     template.innerHTML = preCompileTpl(decoratorParams.template);
 
                     const clone = document.importNode(template.content, true);
-                    
+
                     if (decoratorParams.shadowDom) {
                         if (!this.shadowRoot) {
-                            shadowDom = this.attachShadow({ mode: 'open' }).appendChild(clone);
+                            this.attachShadow({ mode: 'open' }).appendChild(clone);
+                        } else {
+                            this.shadowRoot.appendChild(clone);
                         }
                     } else {
                         this.appendChild(clone);
@@ -77,8 +76,9 @@ export default function ComponentDecorator(decoratorParams) {
                         },
 
                         onInvokeTask(parentZoneDelegate, _, targetZone, task, applyThis, applyArgs) {
-                            console.log('Somewhere a callback of asynchronous task has been invoked...', instance);
+                            // console.log('Somewhere a callback of asynchronous task has been invoked...', parentZoneDelegate, _, targetZone, task, applyThis, applyArgs);
                             const delegate = parentZoneDelegate.invokeTask(targetZone, task, applyThis, applyArgs);
+                            // if(task.eventName === 'input-params') return delegate;
                             instance.changeDetection();
                             return delegate;
                         },
@@ -87,21 +87,22 @@ export default function ComponentDecorator(decoratorParams) {
                         // },
                         onHasTask(parent, current, target, hasTask) {
                             if (hasTask.macroTask) {
-                              console.log("There are outstanding MacroTasks.");
+                                console.log("There are outstanding MacroTasks.");
                             } else {
-                              console.log("All MacroTasks have been completed.");
-                              instance.changeDetection();
+                                console.log("All MacroTasks have been completed.");
+                                instance.changeDetection();
                             }
-                          },
+                        },
                         onHandleError: function (parentZoneDelegate, currentZone, targetZone, error) {
-                            console.log(error.stack);
+                            // console.log(error.stack);
+                            throw new Error(error.stack);
                         }
                     }).run(() => {
                         Object.setPrototypeOf(Class.prototype, BaseComponent.prototype);
 
                         instance = new Class();
-     
-                        instance.componentConstructor.call(instance, (shadowDom ? this.shadowRoot : this), decoratorParams, {});
+
+                        instance.componentConstructor.call(instance, (this.shadowRoot ? this.shadowRoot : this), decoratorParams, {});
                     });
                 }
 

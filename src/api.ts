@@ -8,6 +8,7 @@ class Application {
     public rootInstance;
     public config;
     public COMPONENTS;
+    public REGISTERED_COMPONENTS = [];
     public CUSTOM_DIRECTIVES;
     public _SERVICES;
     public _READY_SERVICES;
@@ -76,6 +77,9 @@ class Application {
         if (options.components) {
             if (options.components instanceof Array) {
                 this.COMPONENTS = options.components;
+                options.components.forEach(c=> {
+                    this.REGISTERED_COMPONENTS.push(c.selector);
+                });
                 
                 options.components.forEach(c => {
                     const comp = new c();

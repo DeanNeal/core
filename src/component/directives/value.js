@@ -19,6 +19,7 @@ export function _value(array, data, loopParams) {
                         break;
                     case 'text':
                     case 'email':
+                    case 'number':
                     case 'password':
                         item.elem.value = r;
                         break;

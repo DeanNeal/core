@@ -6,7 +6,7 @@ export function _attr(array, data, loopParams) {
             let params = prop.replace(/ +/g, "").split(':');
             let attrName = params[0];
             // let variable = params[1].split('.');
-            let r;//= this.getComponentVariable(variable, data);
+            let r;
 
             r = this.getPropsByScope(params[1], data, loopParams);
 

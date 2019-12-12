@@ -1,6 +1,12 @@
 // import {PRIVATES} from '../private';
 import {Utils} from '../../core';
 import {createEventObject} from './event';
+import api from '../../api';
+
+function camelCase(str) { 
+    return str.replace(/-([a-z])/g, function (g) { return g[1].toUpperCase(); });
+} 
+
 export function _init(root, directive, newArray) {
     let array = newArray || [];
 
@@ -18,6 +24,38 @@ export function _init(root, directive, newArray) {
         root.removeAttribute(directive);
         // if (directive === 'bind-for') elem.remove();
     }
+
+    //syntax sugar [params]=""
+    if(directive === 'bind-params') {
+        root = root.host || root;
+        api.REGISTERED_COMPONENTS.forEach(compName=> {
+            root.querySelectorAll(`${compName}`).forEach(elem=>{
+                
+                const attrAr = [...elem.attributes].map((attr)=> {
+                    let matchReg = /\[.*?\]/g;
+                    let match = attr.name.match(matchReg);
+             
+                    if(match) {
+                        root.removeAttribute(attr.name);
+                        return {
+                            [camelCase(attr.name.replace(/\[(.*?)\]/g,"$1"))]: attr.value
+                        };
+                    }
+                }).filter(r=> r);
+    
+                if(attrAr.length) {
+                    let obj = {
+                        elem: elem,
+                        attrs: attrAr
+                    }
+                    
+                    array.push(obj);
+                }
+            });
+        })
+        return array;
+    }
+
 
     root.querySelectorAll(`[${directive}]`).forEach(elem=>{
         let attr = elem.getAttribute(directive);

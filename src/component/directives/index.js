@@ -9,14 +9,14 @@ import { _model } from './model';
 import { _attr } from './attr';
 import { _input } from './input';
 import { _link } from './link';
-import { _events, eventUnitCore, removeEventListeners } from './event';
+import { _events, removeEventListeners } from './event';
 import { _outside } from './outside';
 import { _on } from './on';
 import { _init, _initEvent } from './init';
-import { _hostEvents, _hostClasses, _hostStyles, _hostHidden } from './host';
+import { _hostEvents, _hostAttr } from './host';
 import { _formGroup } from './form-group';
 import { _customDirective } from './custom-directive';
-import { _computed } from './computed';
+// import { _computed } from './computed';
 import { _dropdown } from './dropdown';
 import { _lazy } from './lazy';
 
@@ -33,19 +33,17 @@ const Directives = {
     _input,
     _link,
     _events,
-    eventUnitCore,
+    // eventUnitCore,
     removeEventListeners,
     _outside,
     _on,
     _init,
     _initEvent,
     _hostEvents,
-    _hostClasses,
-    _hostStyles,
-    _hostHidden,
+    _hostAttr,
     _formGroup,
     _customDirective,
-    _computed,
+    // _computed,
     _dropdown,
     _lazy
 };

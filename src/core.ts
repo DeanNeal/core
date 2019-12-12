@@ -4,7 +4,8 @@ import {Observable} from './observable/observable';
 import Component from  './decorators/component';
 import Route from  './decorators/router';
 import Inject from './decorators/inject';
-
+import {Output} from './decorators/output';
+import {EventEmitter} from './utils/event-emitter';
 // import { Component } from './component/component';
 // import { RouteSwitcher } from './router/router-switcher';
 import Router from './router/router-core';
@@ -28,10 +29,13 @@ import './polifills';
 export {
     Observable,
     // Decorators,
+    EventEmitter,
     Component,
     Route,
     Inject,
     Router,
+
+    Output,
     // RouteSwitcher,
     TemplateEngine,
     Events,

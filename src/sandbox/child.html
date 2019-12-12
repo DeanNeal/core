@@ -1,0 +1,11 @@
+<div @click="click()"> Child component: </div>
+
+<div :if="forChildComponent > 9">hidden</div>
+
+<div class="input-group mb-3">
+   <input type="text" class="form-control" placeholder="forChildComponent">
+</div>
+
+{{forChildComponent}} {{test}}
+
+<div :for="let i of list">{{i}}</div>

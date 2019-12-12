@@ -1,5 +1,5 @@
-import { Utils, Component } from '../../core';
-import API from './../../api';
+// import { Utils, Component } from '../../core';
+// import API from './../../api';
 
 export function _if(array, data, loopParams) {
     array.forEach(item => {

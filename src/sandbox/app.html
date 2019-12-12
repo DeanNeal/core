@@ -11,11 +11,11 @@
             <h3>Values</h3>
 
             <div>
-                <!-- <b>Interpolation</b>:   -->
+      
                 {{value}}
             </div>
             <div>
-                <!-- <b>: value="value": </b> -->
+       
                 <span :value="value" @click="test" :attr="title: attrs.title"></span>
             </div>
         </div>
@@ -23,10 +23,20 @@
 
         <div class="col" :if="selectedIndex === 1">
             <h3>Loop</h3>
-            <div :for="let item of collection">
+            <!-- <div :for="let item of collection">
                 <div :for="let a of item">
                     <ul class="list-group" :for="let b of a">
                         <li class="list-group-item">{{b}}</li>
+                    </ul>
+                </div>
+            </div> -->
+
+            {{collection | json}}
+
+            <div :for="let child1 of collection">
+                <div :for="let child2 of child1">
+                    <ul class="list-group" :for="let child3 of child2">
+                        <app-child :on="onChange: test"></app-child>
                     </ul>
                 </div>
             </div>
@@ -43,7 +53,7 @@
                     <div>
                         <span :if="show">Now you see me!</span>
 
-                        <app-child :if="show" :params="forChildComponent: 'Now you see me!'"></app-child>
+                        <app-child :if="show"></app-child>
                     </div>
                 </div>
             </div>
@@ -75,8 +85,8 @@
                 </div>
             </div>
 
-
-            <div :style="background: cubeStyle.bg, width: widthOfCube, height: heightOfCube"></div>
+            <div :style="background: cubeStyle.bg, width: widthOfCube, height: heightOfCube" @click="onCubeClick()">
+            </div>
         </div>
         <div class="col" :if="selectedIndex === 4">
             <h3>Lazy load</h3>
@@ -91,7 +101,7 @@
             <input type="text" :model="input1" placeholder="firstname">
 
             <input type="text" :model="input2" placeholder="lastname">
-            
+
             <div>{{input1}}</div>
             <div>{{input2}}</div>
 
@@ -106,7 +116,7 @@
                         <input type="text" class="form-control" placeholder="forChildComponent"
                             :model="forChildComponent">
                     </div>
-                    <app-child :params="forChildComponent: forChildComponent"></app-child>
+                    <app-child [for-child-component]="forChildComponent" [test]="value" :on="onChange: test"></app-child>
                 </div>
             </div>
         </div>
@@ -136,6 +146,7 @@
 
     </div>
 </div>
+
 
 <style>
     app-child {
