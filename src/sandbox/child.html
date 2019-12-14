@@ -3,9 +3,12 @@
 <div :if="forChildComponent > 9">hidden</div>
 
 <div class="input-group mb-3">
-   <input type="text" class="form-control" placeholder="forChildComponent">
+   <input type="text" class="form-control" placeholder="forChildComponent" :model="qqq">
 </div>
 
 {{forChildComponent}} {{test}}
 
 <div :for="let i of list">{{i}}</div>
+
+
+<app-test [fuck]="qqq"></app-test>

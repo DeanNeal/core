@@ -6,9 +6,7 @@ import * as Tpl from './app.html';
   selector: 'app-root',
   template: Tpl,
   hostListeners: {
-    click: (e, vm) => {
-
-    }
+    click: (e, vm) => {}
   },
   hostAttrs: {
     class: (vm) => {

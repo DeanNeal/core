@@ -36,7 +36,7 @@
             <div :for="let child1 of collection">
                 <div :for="let child2 of child1">
                     <ul class="list-group" :for="let child3 of child2">
-                        <app-child :on="onChange: test"></app-child>
+                        <app-child [for-child-component]="forChildComponent" :on="onChange: test"></app-child>
                     </ul>
                 </div>
             </div>
@@ -116,7 +116,7 @@
                         <input type="text" class="form-control" placeholder="forChildComponent"
                             :model="forChildComponent">
                     </div>
-                    <app-child [for-child-component]="forChildComponent" [test]="value" :on="onChange: test"></app-child>
+                    <app-child [frc]="forChildComponent" [test]="value" :on="onChange: test"></app-child>
                 </div>
             </div>
         </div>

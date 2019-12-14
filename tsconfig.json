@@ -16,7 +16,10 @@
             "*": ["*"],
             "@plugins/*": ["src/plugins/*"],
             "@src/*": ["src/*"]
-        }
+        },
+        "types": [
+            "reflect-metadata"
+        ]
     },
     // "include": [
     //     "src/**/*"

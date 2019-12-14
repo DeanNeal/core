@@ -1,4 +1,4 @@
-import { Utils } from '../../core';
+// import { Utils } from '../../core';
 
 export function _input(array, data, loopParams) {
     array.forEach(item => {

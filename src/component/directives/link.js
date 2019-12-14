@@ -1,4 +1,4 @@
-import { Component, Router, TemplateEngine } from '../../core';
+import { Router } from '../../core';
 
 export function _link(array, data, loopParams) {
     array.forEach(item => {

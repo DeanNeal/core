@@ -5,6 +5,7 @@ import { Directives } from './directives';
 import { DIRECTIVES_NAMES } from './const/directives';
 import { EVENTS_NAMES } from './const/events';
 import API from '../api';
+import { getFilteredProperties } from './../decorators/input';
 
 interface IOptions {
     template: string;
@@ -57,8 +58,6 @@ export class BaseComponent {
         Object.defineProperty(this, 'modelChangeListener', { value: this.modelChangeListener.bind(this), writable: false });
         Object.defineProperty(this, 'inputListener', { value: this.inputListener.bind(this), writable: false });
         Object.defineProperty(this, 'destroyListener', { value: this.destroyListener.bind(this), writable: false });
-
-        Object.defineProperty(this, '$inputParams', { value: [], writable: false });
 
 
         let attrs = {};
@@ -125,7 +124,7 @@ export class BaseComponent {
 
         //internal directives
         DIRECTIVES_NAMES.forEach(directive => {
-            if (directive.name !== 'for' ) {
+            if (directive.name !== 'for') {
                 Directives._init.call(this, this.root, directive.alias, this._directives[directive.name]);
             }
         });
@@ -168,11 +167,16 @@ export class BaseComponent {
     }
 
     inputListener(e) {
-
         for (let key in e.detail) {
-            this[key] = e.detail[key];
+            const inputProperties = getFilteredProperties(this);
+            const exist = inputProperties.find(r=> r.sourceName === key);
+            // console.log(e.detail, this);
+            if (exist) {
+                this[exist.propertyKey] = e.detail[key];
+            } else {
+                throw new Error('@Input property is not declared: ' + key);
+            }
         }
-
     }
 
     modelChangeListener(e) {

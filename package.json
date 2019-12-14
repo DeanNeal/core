@@ -22,6 +22,7 @@
     "bootstrap": "^3.3.7",
     "clean-webpack-plugin": "^0.1.9",
     "copy-webpack-plugin": "^3.0.1",
+    "core-js": "^3.5.0",
     "cross-env": "^1.0.8",
     "css-sourcemaps-webpack-plugin": "^1.0.3",
     "file-loader": "^0.8.5",
@@ -32,6 +33,7 @@
     "postcss-loader": "^0.9.1",
     "preprocess-loader": "^0.2.0",
     "raw-loader": "^0.5.1",
+    "reflect-metadata": "^0.1.13",
     "resolve-url": "^0.2.1",
     "resolve-url-loader": "^1.4.3",
     "smart-banner-webpack-plugin": "^3.0.1",
@@ -44,7 +46,9 @@
     "webpack-dev-server": "^3.9.0",
     "zone.js": "^0.10.2"
   },
-  "dependencies": {},
+  "dependencies": {
+    "@types/reflect-metadata": "^0.1.0"
+  },
   "main": "build/index.js",
   "author": "Bogdan Zinkevich",
   "license": "MIT",

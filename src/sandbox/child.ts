@@ -1,16 +1,17 @@
-import { Component, Output } from './../core';
+import { Component, Output, Input } from './../core';
 import * as Tpl from './child.html';
 
 @Component({
    selector: 'app-child',
    template: Tpl,
-   style: `<style>input{color: red}</style>`
-   // shadowDom: true
+   style: `<style>input{color: red}</style>`,
+   shadowDom: true
  })
  export class ChildComponent {
    list = [1, 2, 3];
-   // forChildComponent= 10;
-   // @Input('forChildComponent') forChildComponent;
+
+   @Input('frc') forChildComponent;
+   @Input('test') test;
    @Output('onChange') output;
  
    onInit() {
@@ -24,6 +25,14 @@ import * as Tpl from './child.html';
    click() {
      this.output.emit(10);
    }
+ }
+
+ @Component({
+   selector: 'app-test',
+   template: 'app-test: {{qqq}}'
+ })
+ export class TestComponent {
+   @Input('fuck') qqq; 
  }
  
  
