@@ -9,6 +9,7 @@ function camelCase(str) {
 
 export function _init(root, directive, newArray) {
     let array = newArray || [];
+    let host = root.host || root;
 
     let attr = root.getAttribute ? root.getAttribute(directive) : null;
     if (attr && !Utils.isCustomElement(root)) { // only for loops
@@ -22,22 +23,22 @@ export function _init(root, directive, newArray) {
 
         array.push(obj);
         root.removeAttribute(directive);
-        // if (directive === 'bind-for') elem.remove();
     }
 
     //syntax sugar [params]=""
-    if(directive === 'bind-params') {
-        root = root.host || root;
+    if(directive === 'bind-params' && Utils.isCustomElement(host)) {
+        
         api.REGISTERED_COMPONENTS.forEach(compName=> {
+         
             root.querySelectorAll(`${compName}`).forEach(elem=>{
-                
+                  
                 const attrAr = [...elem.attributes].map((attr)=> {
                     let matchReg = /\[.*?\]/g;
                     let match = attr.name.match(matchReg);
                     
                     if(match) {
                         if(match[0] === '[]') throw new Error('The name of passed property must be specified: ' + this.constructor.name);
-                        root.removeAttribute(attr.name);
+                        elem.removeAttribute(attr.name);
                         return {
                             [camelCase(attr.name.replace(/\[(.*?)\]/g,"$1"))]: attr.value
                         };

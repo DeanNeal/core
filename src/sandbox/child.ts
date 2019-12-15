@@ -29,7 +29,8 @@ import * as Tpl from './child.html';
 
  @Component({
    selector: 'app-test',
-   template: 'app-test: {{qqq}}'
+   template: 'app-test: {{qqq}}',
+   shadowDom: true
  })
  export class TestComponent {
    @Input('fuck') qqq; 
