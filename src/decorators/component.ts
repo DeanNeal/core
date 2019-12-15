@@ -7,8 +7,6 @@ import 'zone.js';
 declare let Zone: any;
 import 'zone.js/dist/long-stack-trace-zone';
 
-// const squareRegx = /\[.*?\]/g;
-
 
 function preCompileTpl(html) {
 
@@ -31,6 +29,22 @@ function preCompileTpl(html) {
     });
 
     return html;
+}
+
+
+function appendStyles(decoratorParams) {
+    const style = document.createElement('style');
+    const styleNode = document.createTextNode(decoratorParams.style);
+    style.appendChild(styleNode);
+    style.id = decoratorParams.selector;
+
+    if (this.shadowRoot) {
+        this.shadowRoot.prepend(style);
+    } else {
+        if (!document.head.querySelector('#' + decoratorParams.selector)) {
+            document.getElementsByTagName('head')[0].appendChild(style);
+        }
+    }
 }
 
 export default function ComponentDecorator(decoratorParams) {
@@ -68,7 +82,11 @@ export default function ComponentDecorator(decoratorParams) {
                         this.appendChild(clone);
                     }
 
-                    // Class.selector = decoratorParams.selector;
+                    if (decoratorParams.style) {
+                        appendStyles.call(this, decoratorParams);
+                    }
+
+
                     Zone.current.fork({
                         name: decoratorParams.selector + ' zone',
                         // onInvoke: function(parentZoneDelegate, _, targetZone, delegate, applyThis, applyArgs, source) {
@@ -125,12 +143,6 @@ export default function ComponentDecorator(decoratorParams) {
     }
 }
 
-
-
- // Object.keys(instance).forEach((key) => {
- //     newProps[key] = instance[key];
- // });
-
  // let services = [];
  // if (typeof decoratorParams.services === 'object') {
  //     for (let key in decoratorParams.services) {
@@ -143,77 +155,3 @@ export default function ComponentDecorator(decoratorParams) {
  //         }
  //     }
  // }
-
- //add getters
- // Reflect.ownKeys(Class.prototype).filter(name => {
- //     const getter = Reflect.getOwnPropertyDescriptor(Class.prototype, name)["get"];
- //     if (typeof getter === "function") {
- //         Object.defineProperty(newProps, name, {
- //             set: value => {
- //                 console.log('SET');
- //             },
- //             get: () => {
- //                 return getter.call(instance);
- //             },
- //             // configurable: true,
- //             enumerable: true
- //         });
- //     }
- // }) as string[];
-
-
- // Object.defineProperty(instance, '_props', { value: new ObservableModel(newProps), writable: false });
- // const proxy = new Proxy(instance, {
- //     get(target, prop:any, receiver) {
-
- //         // if(Object.keys(instance).includes(prop)) {
- //         if(Reflect.ownKeys(Class.prototype).includes(prop)) {
-
- //         }
-
-
- //         return Reflect.get(target, prop, receiver); // (1)
- //     },
- //     set(target, prop:any, val, receiver) {
- //         // alert(`SET ${prop}=${val}`);
- //         // if(Reflect.ownKeys(instance).includes(prop)) {
-
- //         const success = Reflect.set(target, prop, val, receiver);
- //         if(success && Object.keys(instance).includes(prop)) {
- //             console.log(prop);
- //             instance.listenToPropsChanges();
- //         }
- //         return  success;// (2)
- //     }
- // });
-
- // Object.defineProperty(instance, '_props', { value: proxy, writable: false });
-
- // for (let key in newProps) {
- //     Object.defineProperty(instance, key, {
- //         set: value => {
- //             // instance._props.set(key, value)
- //             // instance._props[key] = value;
-
- //         },
- //         // get: () => {
- //         //     // instance._props.get(key)
- //         //     // return instance._props.get(key);
-
- //         //     return  Reflect.set(instance, key, newProps[key], proxy);
- //         // },
- //         configurable: true
- //     });
- // }
-
-
- // services.forEach(res => {
- //     Object.defineProperty(instance, res.key, {
- //         value: res.injectedService,
- //         writable: false
- //     });
- //     Object.defineProperty(instance.props, res.key, {
- //         value: res.injectedService,
- //         writable: false
- //     });
- // })

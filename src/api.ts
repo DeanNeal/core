@@ -139,22 +139,7 @@ class Application {
             throw new Error(directive.name + ' must me inherited from DirectiveDecorator');
         }
     }
-
-    // loadStyle(styles) {
-    //     if (styles) {
-    //         let css = styles.toString(),
-    //             style = document.createElement('style');
-
-    //         style.type = 'text/css';
-    //         if (style['styleSheet']) {
-    //             style['styleSheet'].cssText = css;
-    //         } else {
-    //             style.appendChild(document.createTextNode(css));
-    //         }
-    //         // document.head.append(style);
-    //         document.getElementsByTagName('head')[0].appendChild(style);
-    //     }
-    // }
+    
 }
 
 export default new Application();

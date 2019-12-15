@@ -39,36 +39,13 @@ module.exports = {
             use: {
               loader: 'html-loader'
             }
+          },
+          {
+            test: /\.css$/i,
+            use: ['to-string-loader', 'css-loader'],
           }
         ]
-        // loaders: [{
-        //         loader: 'babel-loader',
-        //         test: path.join(__dirname, 'src'),
-        //         query: {
-        //             presets: 'es2015',
-        //             plugins: ['transform-decorators-legacy', 'transform-object-assign']
-        //         }
-        //     },
-        //     {
-        //         test: /\.(tpl|html)$/,
-        //         loader: 'html',
-        //         query: {
-        //             withImports: true
-        //         }
-        //     },
-        //     {
-        //         test: /\.scss$/,
-        //         loader: 'css-loader!resolve-url!sass-loader'
-        //     },
-        //     {
-        //         test: /\.css$/,
-        //         loader: 'css-loader'
-        //     },
-        //     {
-        //         test: /\.(png|jpg|svg)$/,
-        //         loader: 'file?name=[path][name].[ext]'
-        //     }
-        // ]
+
     },
 
     plugins: [

@@ -1,10 +1,11 @@
 import { Component, Output, Input } from './../core';
 import * as Tpl from './child.html';
+import * as styles from './child.css'
 
 @Component({
    selector: 'app-child',
    template: Tpl,
-   style: `<style>input{color: red}</style>`,
+   style: styles,
    shadowDom: true
  })
  export class ChildComponent {

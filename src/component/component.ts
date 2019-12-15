@@ -180,7 +180,7 @@ export class BaseComponent {
     }
 
     modelChangeListener(e) {
-        // this._props.set(e.detail);
+   
     }
 
     destroyListener() {
@@ -323,8 +323,9 @@ export class BaseComponent {
         this._subscriptions.forEach(item => item.unsubscribe());
 
         this.removeListeners();
-
+        
         this.root.innerHTML = null;
+       
         // if (this.root instanceof DocumentFragment === false) {
 
         // }
