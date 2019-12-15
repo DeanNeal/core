@@ -329,7 +329,22 @@ const Utils = {
 
     getDatesInMonth(year, month) {
         return new Date(year, month, 0).getDate();
-    }
+    },
+
+    camelToSnake(string) {
+        return string.replace(/[\w]([A-Z])/g, function(m) {
+            return m[0] + "-" + m[1];
+        }).toLowerCase();
+    },
+
+    camelCase(str) { 
+        return str.replace(/-([a-z])/g, function (g) { return g[1].toUpperCase(); });
+        // return string.replace(/(_\w)/g, function(m){
+        //     return m[1].toUpperCase();
+        // });
+    } 
+
+    
 };
 
 export { Utils };

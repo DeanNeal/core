@@ -10,7 +10,7 @@ import * as Tpl from './child.html';
  export class ChildComponent {
    list = [1, 2, 3];
 
-   @Input('frc') forChildComponent;
+   @Input('forChildComponent') forChildComponent;
    @Input('test') test;
    @Output('onChange') output;
  

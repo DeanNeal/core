@@ -3,10 +3,6 @@ import {Utils} from '../../core';
 import {createEventObject} from './event';
 import api from '../../api';
 
-function camelCase(str) { 
-    return str.replace(/-([a-z])/g, function (g) { return g[1].toUpperCase(); });
-} 
-
 export function _init(root, directive, newArray) {
     let array = newArray || [];
     let host = root.host || root;
@@ -40,7 +36,7 @@ export function _init(root, directive, newArray) {
                         if(match[0] === '[]') throw new Error('The name of passed property must be specified: ' + this.constructor.name);
                         elem.removeAttribute(attr.name);
                         return {
-                            [camelCase(attr.name.replace(/\[(.*?)\]/g,"$1"))]: attr.value
+                            [Utils.camelCase(attr.name.replace(/\[(.*?)\]/g,"$1"))]: attr.value
                         };
                     }
                 }).filter(r=> r);

@@ -1,11 +1,13 @@
 import { BaseComponent } from './../component/component';
 import { DIRECTIVES_NAMES } from './../component/const/directives';
 import { EVENTS_NAMES } from './../component/const/events';
-
+import { Utils } from './../core';
 
 import 'zone.js';
 declare let Zone: any;
 import 'zone.js/dist/long-stack-trace-zone';
+
+// const squareRegx = /\[.*?\]/g;
 
 
 function preCompileTpl(html) {
@@ -20,6 +22,12 @@ function preCompileTpl(html) {
         let stringToGoIntoTheRegex = ':' + directive.name;
         let regex = new RegExp(stringToGoIntoTheRegex, "g");
         html = html.replace(regex, `${directive.alias}`)
+    });
+
+    //convert camelCase into string with dashes
+    html = html.replace(/\[(.*?)\]/g, (match, value) => {
+        const newString = Utils.camelToSnake(value);
+        return `[${newString}]`;
     });
 
     return html;
