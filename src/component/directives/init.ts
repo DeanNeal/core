@@ -3,33 +3,30 @@ import { Utils } from '../../core';
 import { createEventObject } from './event';
 import api from '../../api';
 
-
 export function _initLoop(root, directive, newArray) {
     let array = newArray || [];
 
     let attr = root.getAttribute ? root.getAttribute(directive) : null;
 
     if (attr) {
-        let obj:any = {
+        let obj: any = {
             elem: root,
             attr,
             items: [],
             parent: root.parentNode,
-            cached: root
+            cached: []
         };
 
         // only for certain directives
         if (directive === 'bind-if') {
-            obj.comment = document.createComment(directive + ': ' + attr);//Utils.insertAfter(document.createComment(directive + ': ' + attr), root);
-            obj.cachedIndexes = [];
+            obj.comment = document.createComment(directive + ': ' + attr);
+            // obj.cachedIndexes = [];
             obj.rootCached = null;
             obj.interpolationArray = [];
         }
 
         array.push(obj);
         root.removeAttribute(directive);
-
-        return array;
     }
 
     if (directive === 'bind-params' && Utils.isCustomElement(root)) {
@@ -37,10 +34,12 @@ export function _initLoop(root, directive, newArray) {
         if (outer) {
             array.push(outer);
         }
-        return array;
     }
 
-    return _init.call(this, root, directive, newArray);
+    let rest = _init.call(this, root, directive, newArray);
+    array = [...array, ...rest];
+
+    return array;
 }
 
 export function _init(root, directive, newArray) {
@@ -78,20 +77,25 @@ export function _init(root, directive, newArray) {
             return;
         }
 
-        let obj:any = {
+        let obj: any = {
             elem,
             attr,
             items: [],
             parent: elem.parentNode,
-            cached: elem
+            cached: []
         };
 
         // only for certain directives
         if (directive === 'bind-for' || directive === 'bind-if') {
             obj.comment = Utils.insertAfter(document.createComment(directive + ': ' + attr), elem);
-            obj.cachedIndexes = [];
+            // obj.cachedIndexes = [];
             obj.rootCached = null;
+        }
+
+        if (directive === 'bind-for') {
             obj.interpolationArray = [];
+            obj.loopParams = [];
+            obj.directives = [];
         }
 
         array.push(obj);

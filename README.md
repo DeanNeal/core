@@ -34,7 +34,7 @@ import {...} from '@dean_neal/core';
 
 MIT License
 
-Copyright (c) 2017-2018 Bogdan Zinkevich
+Copyright (c) 2017-2019 Bogdan Zinkevich
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal

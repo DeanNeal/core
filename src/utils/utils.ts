@@ -342,9 +342,23 @@ const Utils = {
         // return string.replace(/(_\w)/g, function(m){
         //     return m[1].toUpperCase();
         // });
-    } 
+    },
 
+    JSONStr(obj) {
+        let seen = [];
     
+        let replacer = function (key, value) {
+            if (value != null && typeof value == "object") {
+                if (seen.indexOf(value) >= 0) {
+                    return;
+                }
+                seen.push(value);
+            }
+            return value;
+        };
+    
+        return JSON.stringify(obj, replacer);
+    }
 };
 
 export { Utils };
