@@ -1,6 +1,6 @@
 {
   "name": "@dean_neal/core",
-  "version": "0.9.13",
+  "version": "0.9.14",
   "description": "Core package of MVVM front-end framework",
   "keywords": [
     "MVVM",
