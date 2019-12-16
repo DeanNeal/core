@@ -32,7 +32,7 @@ export class AppComponent {
   public items = [];
   public list = [1, 2, 3];
   public tabs = ['Values', 'Loop', 'If', 'Style', 'Lazy load', 'Model', 'Pass properties', 'Plugins', 'Router'];
-  public collection = [[[13, 14]], [[16, 17]]];
+  public collection = [[[13, 14, 15]], [[16, 17]]];
   public value = 'value';
   public attrs = {
     title: {

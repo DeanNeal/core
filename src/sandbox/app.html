@@ -23,23 +23,22 @@
 
         <div class="col" :if="selectedIndex === 1">
             <h3>Loop</h3>
-            <!-- <div :for="let item of collection">
-                <div :for="let a of item">
-                    <ul class="list-group" :for="let b of a">
-                        <li class="list-group-item">{{b}}</li>
-                    </ul>
-                </div>
-            </div> -->
 
             {{collection | json}}
 
-            <div :for="let child1 of collection">
-                <div :for="let child2 of child1">
-                    <ul class="list-group" :for="let child3 of child2">
-                        <app-child [forChildComponent]="forChildComponent" :on="onChange: test"></app-child>
-                    </ul>
-                </div>
+            <div class="input-group mb-3">
+                <input type="text" class="form-control" placeholder="forChildComponent"
+                    :model="forChildComponent">
             </div>
+
+             <div :for="let child1 of collection">
+                <div :for="let child2 of child1" :if="child2">
+                    <div :if="child2.length>2">
+                        <app-child  :if="child3>16" [forChildComponent]="forChildComponent" :on="onChange: test" :for="let child3 of child2"></app-child>
+                    </div>
+                </div> 
+             </div>
+
         </div>
 
         <div class="col" :if="selectedIndex === 2">

@@ -48,11 +48,12 @@ export function _for(array, data, loopParams) {
                 array = Object.keys(array).map(r => array[r]);
             }
 
-            if (Utils.isCustomElement(item.elem)) {
-                customElements.call(this, item, array, compName);
-            } else {
-                nativeElements.call(this, item, array, loopIterator, collectionName, keys);
-            }
+            nativeElements.call(this, item, array, loopIterator, collectionName, keys);
+            // if (Utils.isCustomElement(item.elem)) {
+            //     customElements.call(this, item, array, compName);
+            // } else {
+            //     nativeElements.call(this, item, array, loopIterator, collectionName, keys);
+            // }
         }); //console.timeEnd('modules')
 
     }
@@ -73,31 +74,26 @@ function nativeElements(item, array, loopI, collectionName, keys) {
         for (let i = 0; i <= array.length - 1; i++) {
             let prevContent = item.elem.cloneNode(true);
 
-            // loop through the old element's attributes and give them to the new element
-            for (let i = 0; i < item.elem.attributes.length; i++) {
-                prevContent.setAttribute(item.elem.attributes[i].nodeName, item.elem.attributes[i].nodeValue);
-            }
 
             item.items.push(prevContent);
             item.parent.insertBefore(prevContent, item.comment);
 
             item.directives[i] = {
-                for: Directives._init.call(this, prevContent, 'bind-for')
+                for: Directives._initLoop.call(this, prevContent, 'bind-for')
             }
 
             item.interpolationArray[i] = Interpolation._init.call(this, prevContent);
 
             item.directives[i] = Object.assign(item.directives[i], {
-                // for:   Directives._init.call(this, prevContent, 'bind-for'), // should go first for correct work
-                class: Directives._init.call(this, prevContent, 'bind-class'),
-                style: Directives._init.call(this, prevContent, 'bind-style'),
-                attrs: Directives._init.call(this, prevContent, 'bind-attr'),
-                if: Directives._init.call(this, prevContent, 'bind-if'),
-                model: Directives._init.call(this, prevContent, 'bind-model'),
-                input: Directives._init.call(this, prevContent, 'bind-params'),
-                value: Directives._init.call(this, prevContent, 'bind-value'),
-                links: Directives._init.call(this, prevContent, 'bind-link'),
-                on: Directives._init.call(this, prevContent, 'bind-on')
+                class: Directives._initLoop.call(this, prevContent, 'bind-class'),
+                style: Directives._initLoop.call(this, prevContent, 'bind-style'),
+                attrs: Directives._initLoop.call(this, prevContent, 'bind-attr'),
+                if: Directives._initLoop.call(this, prevContent, 'bind-if'),
+                model: Directives._initLoop.call(this, prevContent, 'bind-model'),
+                input: Directives._initLoop.call(this, prevContent, 'bind-params'),
+                value: Directives._initLoop.call(this, prevContent, 'bind-value'),
+                links: Directives._initLoop.call(this, prevContent, 'bind-link'),
+                on: Directives._initLoop.call(this, prevContent, 'bind-on')
             });
 
             if (loopI) {
@@ -137,57 +133,58 @@ function nativeElements(item, array, loopI, collectionName, keys) {
     item.cached = JSON.parse(JSONStr(array));
 }
 
-function customElements(item, array, compName) {
-    if (item.cached.length !== array.length) {
-        // item.items.forEach(item => {
-        //     item.COMPONENT && item.COMPONENT.destroy();
-        // });
-        // item.items = [];
-        // this.children[item.elem.COMPONENT.constructor.name] = [];
+// function customElements(item, array, compName) {
+//     if (item.cached.length !== array.length) {
+//         // item.items.forEach(item => {
+//         //     item.COMPONENT && item.COMPONENT.destroy();
+//         // });
+//         // item.items = [];
+//         // this.children[item.elem.COMPONENT.constructor.name] = [];
 
-        for (let i = 0; i <= array.length - 1; i++) {
-            // let newComp = API.COMPONENTS.filter(r => r.selector === compName)[0];
-            // if(newComp) {
+//         for (let i = 0; i <= array.length - 1; i++) {
+//             // let newComp = API.COMPONENTS.filter(r => r.selector === compName)[0];
+//             // if(newComp) {
 
-            let newEl = document.createElement(compName);
-            // console.log(1111, newEl);
-            // this.root.appendChild(newEl);
+//             let newEl = document.createElement(compName);
+//             // console.log(1111, newEl);
+//             // this.root.appendChild(newEl);
 
-            // let instance = new newComp(newEl, array[i], this);
+//             // let instance = new newComp(newEl, array[i], this);
 
-            // this.children[item.elem.COMPONENT.constructor.name].push(instance);
-            // }
+//             // this.children[item.elem.COMPONENT.constructor.name].push(instance);
+//             // }
 
-            // loop through the old element's attributes and give them to the new element
-            for (let i = 0; i < item.elem.attributes.length; i++) {
-                newEl.setAttribute(item.elem.attributes[i].nodeName, item.elem.attributes[i].nodeValue);
-            }
+//             // loop through the old element's attributes and give them to the new element
+//             for (let i = 0; i < item.elem.attributes.length; i++) {
+//                 newEl.setAttribute(item.elem.attributes[i].nodeName, item.elem.attributes[i].nodeValue);
+//             }
 
 
-            item.items.push(newEl);
-            item.parent.insertBefore(newEl, item.comment);
-        }
-        item.cached = []; // refresh cached array
-        item.cachedIndexes = item.items.map(r => Utils.indexInParent(r))
-    }
+//             item.items.push(newEl);
+//             item.parent.insertBefore(newEl, item.comment);
+//         }
+//         item.cached = []; // refresh cached array
+//         item.cachedIndexes = item.items.map(r => Utils.indexInParent(r))
+//     }
 
-    item.items.forEach((elem, i) => {
-        if (Utils.indexInParent(elem) !== item.cachedIndexes[i]) { // check if order was changed
-            elem.parentNode.insertBefore(elem, elem.parentNode.children.item(i));
-        }
+//     item.items.forEach((elem, i) => {
+//         if (Utils.indexInParent(elem) !== item.cachedIndexes[i]) { // check if order was changed
+//             elem.parentNode.insertBefore(elem, elem.parentNode.children.item(i));
+//         }
 
-        if (JSONStr(item.cached[i]) !== JSONStr(array[i])) {
-            // if (!elem.COMPONENT) {
-            //     console.warn('Please create component with name ' + compName);
-            //     return
-            // }
-            // elem.COMPONENT._props.set(array[i]);
-        }
-    });
+//         if (JSONStr(item.cached[i]) !== JSONStr(array[i])) {
+//             // if (!elem.COMPONENT) {
+//             //     console.warn('Please create component with name ' + compName);
+//             //     return
+//             // }
+//             // elem.COMPONENT._props.set(array[i]);
+//         }
+//     });
 
-    item.cached = JSON.parse(JSONStr(array));
-    item.cachedIndexes = item.items.map(r => Utils.indexInParent(r));
-}
+//     item.cached = JSON.parse(JSONStr(array));
+//     item.cachedIndexes = item.items.map(r => Utils.indexInParent(r));
+// }
+// 
 
 // check for cyclic object references before stringifying
 function JSONStr(obj) {

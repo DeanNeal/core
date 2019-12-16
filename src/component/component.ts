@@ -242,7 +242,7 @@ export class BaseComponent {
 
     getPropsByScope(value, scope, loopParams) {
         let r;
-        let variable = value.split('.')
+        // let variable = value.split('.')
         let listOfVariables = this.getAllVariables();
         let listOfVariablesValues = listOfVariables.map(r => this[r]);
 
