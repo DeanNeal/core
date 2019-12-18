@@ -1,12 +1,12 @@
 // import { Utils } from '../../core';
 
-export function _input(array, data, loopParams) {
+export function _input(array, loopParams) {
     array.forEach(item => {
         let inputParams = {};
         
         item.attrs.forEach((attr) => {
             for(let key in attr) {
-                inputParams[key] = this.getPropsByScope(attr[key], data, loopParams);
+                inputParams[key] = this.getPropsByScope(attr[key], loopParams);
             }
         });
 

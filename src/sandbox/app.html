@@ -31,8 +31,8 @@
                     :model="forChildComponent">
             </div>
 
-             <div :for="let child1 of collection">
-                <div :for="let child2 of child1" :if="child2">
+             <div :for="let (child1,index) of collection">
+                <div :for="let (child2, index) of child1" :if="child2">
                     <div :if="child2.length>1">
                         <app-child  :if="child3>14" [forChildComponent]="forChildComponent" :on="onChange: test" :for="let child3 of child2"></app-child>
                     </div>

@@ -34,11 +34,11 @@ const Interpolation = {
         return array;
     },
 
-    _update: function(array, data, loopParams) {
+    _update: function(array, loopParams) {
         if (array.length) {
             array.forEach(node => {
                 let params = node.value.split('|');
-                let r = this.getPropsByScope(params[0], data, loopParams);
+                let r = this.getPropsByScope(params[0], loopParams);
                 r = Utils.applyFormatter(r, params[1]);
                 node.node.nodeValue = r;
             })

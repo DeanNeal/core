@@ -115,7 +115,7 @@ export default function ComponentDecorator(decoratorParams) {
                             if (hasTask.macroTask) {
                                 console.log("There are outstanding MacroTasks.");
                             } else {
-                                console.log("All MacroTasks have been completed.");
+                                // console.log("All MacroTasks have been completed.");
                                 instance.changeDetection();
                             }
                         },

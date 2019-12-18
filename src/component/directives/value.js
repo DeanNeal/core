@@ -1,11 +1,11 @@
 import { Utils } from '../../core';
-export function _value(array, data, loopParams) {
+export function _value(array, loopParams) {
     array.forEach(item => {
         let params = item.attr.split('|'),
             r;
         let rowHtml = false;
 
-        r = this.getPropsByScope(params[0], data, loopParams);
+        r = this.getPropsByScope(params[0], loopParams);
         r = Utils.applyFormatter(r, params[1]);
         if (Utils.isCustomElement(item.elem) === false) {
 

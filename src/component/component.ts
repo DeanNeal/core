@@ -169,7 +169,7 @@ export class BaseComponent {
     inputListener(e) {
         for (let key in e.detail) {
             const inputProperties = getFilteredProperties(this);
-            const exist = inputProperties.find(r=> r.sourceName === key);
+            const exist = inputProperties.find(r => r.sourceName === key);
             // console.log(e.detail, this);
             if (exist) {
                 this[exist.propertyKey] = e.detail[key];
@@ -180,7 +180,7 @@ export class BaseComponent {
     }
 
     modelChangeListener(e) {
-   
+
     }
 
     destroyListener() {
@@ -240,31 +240,39 @@ export class BaseComponent {
         return Object.keys(this).concat(getters);
     }
 
-    getPropsByScope(value, scope, loopParams) {
+    getLoopParams(loopParams, arr) {
+        arr.unshift({ 
+            key: loopParams.iterator, 
+            value: loopParams.value,
+
+            index: loopParams.index,
+            indexName: loopParams.indexName
+        });
+
+        if (loopParams.parent) {
+            this.getLoopParams(loopParams.parent, arr);
+        }
+        return arr;
+    }
+
+    getPropsByScope(value, loopParams) {
         let r;
-        // console.log(value, scope, loopParams);
-        // let variable = value.split('.')
+
         let listOfVariables = this.getAllVariables();
         let listOfVariablesValues = listOfVariables.map(r => this[r]);
 
-        if (loopParams && loopParams.iterator) {
-            listOfVariables.push(loopParams.iterator);
-            listOfVariablesValues.push(scope);
+        if (loopParams) {
+            let loops = this.getLoopParams(loopParams, []);
 
-            if (loopParams.index || loopParams.index === 0) {
-                if (listOfVariables.indexOf('index') > -1) {
-                    listOfVariablesValues[listOfVariables.indexOf('index')] = loopParams.index;
-                } else {
-                    listOfVariables.push('index');
-                    listOfVariablesValues.push(loopParams.index);
+            loops.forEach(loop => {
+                listOfVariables.push(loop.key);
+                listOfVariablesValues.push(loop.value);
+
+                if(loop.indexName) {
+                    listOfVariables.push(loop.indexName);
+                    listOfVariablesValues.push(loop.index);
                 }
-            } else {
-                listOfVariables.push('index'); // if index doesn't exist
-            }
-            if (loopParams.key) {
-                listOfVariables.push('key');
-                listOfVariablesValues.push(loopParams.key);
-            }
+            });
         }
 
         try {
@@ -277,41 +285,16 @@ export class BaseComponent {
         return r;
     }
 
-    setComponentVariable(string, value, loopParams, collectionName, data) {
-        // let params = string.split('.'); /*data ? string.split('.') : ('props.' + string).split('.');*/
-        // let lastProp = params[params.length - 1];
+    setComponentVariable(string, value, loopParams) {
+        if (loopParams) {
+            loopParams.value = value;
+        } else {
+            if (typeof value === 'string') value = `'${value}'`;
 
+            const fn = `this.${string}=${value}`;
 
-        // if (params[0] === loopParams) {
-        //     if (params.length > 1) {
-        //         data[lastProp] = value;
-        //         // this._props._callAll();
-        //     }
-        // } else {
-
-        // let params = ('_props.' + string).split('.');
-        // if (params.length > 1) {
-        //     params.splice(-1, 1);
-        // }
-
-        // let target = params.reduce((o, i) => o[i], this);
-
-        // if (target === this._props) { // use instanceof
-        //     // target._data[lastProp] = value;
-        //     // this._props.set(lastProp, value);
-        //     this[lastProp] = value;
-        // } else {
-        //     target[lastProp] = value;
-        //     this._props.set(this._props.getData());
-        // }
-        // let newValue;
-
-        if (typeof value === 'string') value = `'${value}'`;
-
-        const fn = `this.${string}=${value}`;
-
-        new Function(``, fn).apply(this, []);
-        // }
+            new Function(``, fn).apply(this, []);
+        }
     }
 
     destroy() {
@@ -324,9 +307,9 @@ export class BaseComponent {
         this._subscriptions.forEach(item => item.unsubscribe());
 
         this.removeListeners();
-        
+
         this.root.innerHTML = null;
-       
+
         // if (this.root instanceof DocumentFragment === false) {
 
         // }

@@ -1,12 +1,12 @@
 // import { Utils, Component } from '../../core';
 // import API from './../../api';
 
-export function _if(array, data, loopParams) {
+export function _if(array, loopParams) {
     array.forEach(item => {
         let params = item.attr;
 
         try {
-            let r = this.getPropsByScope(params, data, loopParams);
+            let r = this.getPropsByScope(params, loopParams);
             if (r) {
                 if (!item.elem.parentNode) { // insert only if elem doesn't exists
                     item.comment.replaceWith(item.elem);

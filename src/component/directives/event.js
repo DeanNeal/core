@@ -25,7 +25,7 @@ function getKeyMod(elem) {
     return elem.getAttribute('bind-kmod') ? elem.getAttribute('bind-kmod').replace(/ +/g, "") : null;
 }
 
-export function createEventObject(elem, event, data, loopParams) {
+export function createEventObject(elem, event, loopParams) {
     let funcParams = elem.getAttribute(`bind-${event}`);
     elem.removeAttribute(`bind-${event}`);
     let fnName = funcParams.replace(/ +/g, "");
@@ -52,18 +52,8 @@ export function createEventObject(elem, event, data, loopParams) {
             if (fnParams) {
                 if(fnParams[1]) {
                     fnParams[1].replace(/ +/g, "").split(',').forEach(res => {
-                        let arg;
-                        if(res.split('.')[0] === loopParams && loopParams.iterator) {
-                            arg = this.getPropsByScope(res, data, loopParams);
-                        } else if(res === '$event') {
-                            arg = e;
-                        } else if (res === 'index') {
-                            arg = loopParams.index;
-                        } else if(res === 'key'){
-                            arg = loopParams.key;
-                        } else {
-                            arg = getInputArgs(res, this.getPropsByScope(res, data, loopParams));
-                        }
+                        let arg = this.getPropsByScope(res, loopParams);
+
                         args.push(arg);
                     });
                 } else {
@@ -89,32 +79,6 @@ export function createEventObject(elem, event, data, loopParams) {
     };
 
     return newEvent;
-}
-
-
-function getInputArgs(res, value) {
-    let type;
-    let arg;
-    try {
-        type = typeof new Function('return ' + res).apply(this);
-    } catch(e) {
-        type = undefined;
-    }
-
-    switch(type) {
-        case 'boolean':
-        case 'string':
-        case 'number':
-        case 'object':
-            arg = new Function('return ' + res).apply(this);
-        break;
-
-        default:
-            arg = value;
-        break;
-    }
-
-    return arg;
 }
 
 var modifierCode = {

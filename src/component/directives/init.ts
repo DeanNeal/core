@@ -107,16 +107,16 @@ export function _init(root, directive, newArray) {
 }
 
 
-export function _initEvent(root, directive, newArray, data, loopParams) {
+export function _initEvent(root, directive, newArray, loopParams) {
     let array = newArray || [];
     let targets = root.querySelectorAll(`[bind-${directive}]`);
     if (root.getAttribute && root.getAttribute(`bind-${directive}`)) {
-        let obj = createEventObject.call(this, root, directive, data, loopParams);
+        let obj = createEventObject.call(this, root, directive, loopParams);
         array.get ? array.get(this).push(obj) : array.push(obj);
     }
 
     for (let elem of targets) {
-        let obj = createEventObject.call(this, elem, directive, data, loopParams);
+        let obj = createEventObject.call(this, elem, directive, loopParams);
         array.get ? array.get(this).push(obj) : array.push(obj);
     }
     return array;

@@ -1,6 +1,6 @@
 import { Router } from '../../core';
 
-export function _link(array, data, loopParams) {
+export function _link(array, loopParams) {
     array.forEach(item => {
         item.elem.removeEventListener('click', item.callback, false); // remove previous handler
 
@@ -12,7 +12,7 @@ export function _link(array, data, loopParams) {
         if (params) {
             
             let r;
-            r = this.getPropsByScope(params[1], data, loopParams);
+            r = this.getPropsByScope(params[1], loopParams);
 
             route = item.attr.replace(regExp, r);
         }

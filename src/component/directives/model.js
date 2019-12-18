@@ -1,11 +1,14 @@
 import { Utils } from '../../core';
 
-export function _model(array, loopParams, collectionName, data) {
+export function _model(array, loopParams) {
     array.forEach(item => {
-
-        if (item.attr === loopParams) {
-            throw new Error('Cannot assign to a reference or variable; ' + this.constructor.name + '; ' + collectionName);
+        
+        if (loopParams) {
+            if(item.attr !== loopParams.iterator) {
+                throw new Error(`Incorrect model value ${item.attr}; ` + this.constructor.name);
+            }
         }
+        
         if (item.elem.localName === 'input') {
 
             switch (item.elem.type) {
@@ -25,7 +28,7 @@ export function _model(array, loopParams, collectionName, data) {
                 case 'password':
                     item.elem.addEventListener('input', (e) => {
                         const value = (item.elem.type === 'number' ? parseFloat(e.currentTarget.value) : e.currentTarget.value);
-                        this.setComponentVariable(item.attr, value, loopParams, collectionName, data);
+                        this.setComponentVariable(item.attr, value, loopParams);
                     }, false);
                     break;
             }
