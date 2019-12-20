@@ -1,11 +1,11 @@
-export function _hostEvents(events) {
+export function _hostEvents(events: any) {
     for (let event in events) {
         let fn = events[event].bind(this);
         this.root.addEventListener(event, (e) => { fn.call(this, e, this) }, false);
     }
 }
 
-export function _hostAttr(params) {
+export function _hostAttr(params: any) {
     for (let key in params) {
         switch (key) {
             case 'style':
@@ -21,7 +21,7 @@ export function _hostAttr(params) {
     }
 }
 
-function bindClass(params) {
+function bindClass(params: any) {
     let r = params.fn(this);
     if (params.prev) {
         this.host.classList.remove(params.prev);
@@ -31,14 +31,14 @@ function bindClass(params) {
 }
 
 
-function bindStyle(params) {
+function bindStyle(params: any) {
     for (let key in params.fn) {
         let r = params.fn[key](this);
         this.host.style[key] = r;
     }
 }
 
-function bindAttr(params, attr) {
+function bindAttr(params: any, attr: string) {
     let r = params.fn(this);
 
     if (attr === 'hidden') r = !!r;

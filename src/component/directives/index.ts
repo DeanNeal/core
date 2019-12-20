@@ -10,14 +10,14 @@ import { _attr } from './attr';
 import { _input } from './input';
 import { _link } from './link';
 import { _events, removeEventListeners } from './event';
-import { _outside } from './outside';
+// import { _outside } from './outside';
 import { _on } from './on';
 import { _init, _initLoop, _initEvent } from './init';
 import { _hostEvents, _hostAttr } from './host';
 import { _formGroup } from './form-group';
 import { _customDirective } from './custom-directive';
 // import { _computed } from './computed';
-import { _dropdown } from './dropdown';
+// import { _dropdown } from './dropdown';
 import { _lazy } from './lazy';
 
 const Directives = {
@@ -35,7 +35,7 @@ const Directives = {
     _events,
     // eventUnitCore,
     removeEventListeners,
-    _outside,
+    // _outside,
     _on,
     _init,
     _initLoop,
@@ -45,7 +45,7 @@ const Directives = {
     _formGroup,
     _customDirective,
     // _computed,
-    _dropdown,
+    // _dropdown,
     _lazy
 };
 

@@ -1,6 +1,8 @@
 import { Utils } from '../../core';
-export function _value(array, loopParams) {
-    array.forEach(item => {
+import { ILoopParams, IDirectiveParams } from 'src/interfaces';
+
+export function _value(array: IDirectiveParams[], loopParams: ILoopParams) {
+    array.forEach((item: IDirectiveParams) => {
         let params = item.attr.split('|'),
             r;
         let rowHtml = false;
@@ -10,18 +12,18 @@ export function _value(array, loopParams) {
         if (Utils.isCustomElement(item.elem) === false) {
 
             if (item.elem.localName === 'input') {
-                switch (item.elem.type) {
+                switch ((item.elem as HTMLInputElement).type) {
                     case 'checkbox':
-                        r ? item.elem.setAttribute('checked', true) : item.elem.removeAttribute('checked');
+                        r ? item.elem.setAttribute('checked', 'true') : item.elem.removeAttribute('checked');
                         break;
                     case 'radio':
-                        item.elem.value === r ? item.elem.setAttribute('checked', true) : item.elem.removeAttribute('selected');
+                        (item.elem as HTMLInputElement).value === r ? item.elem.setAttribute('checked', 'true') : item.elem.removeAttribute('selected');
                         break;
                     case 'text':
                     case 'email':
                     case 'number':
                     case 'password':
-                        item.elem.value = r;
+                        (item.elem as HTMLInputElement).value = r;
                         break;
 
                 }

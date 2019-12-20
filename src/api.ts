@@ -2,6 +2,8 @@
 // import { RouteSwitcher } from './router/router-switcher';
 // import { Component } from './component/component';
 import { Directive } from './decorators/directive';
+import { IBootstrapOptions, IBaseComponent } from './interfaces';
+import { BaseComponent } from './component/component';
 
 class Application {
     public rootComponent;
@@ -23,17 +25,17 @@ class Application {
         this._READY_SERVICES = [];
     }
 
-    setServices(options) {
-        options.forEach(r => {
-            if (Array.isArray(r)) {
-                r.forEach(r => {
-                    this._SERVICES.push(r);
-                })
-            } else {
-                this._SERVICES.push(r);
-            }
-        });
-    }
+    // setServices(options) {
+    //     options.forEach(r => {
+    //         if (Array.isArray(r)) {
+    //             r.forEach(r => {
+    //                 this._SERVICES.push(r);
+    //             })
+    //         } else {
+    //             this._SERVICES.push(r);
+    //         }
+    //     });
+    // }
 
     injectorGet(service, Class?) {
         let instanceName = (Class ? Class.name : '');
@@ -64,8 +66,7 @@ class Application {
         }
     }
 
-    bootstrap(options) {
-        // this.loadStyle(options.styles);
+    bootstrap(options: IBootstrapOptions) {
 
         // if (options.services && options.services.length) {
         //     this.setServices(options.services);
@@ -74,22 +75,6 @@ class Application {
         // RouteSwitcher.ROUTES = options.router;
         // this.rootComponent = options.root;
 
-        if (options.components) {
-            if (options.components instanceof Array) {
-                this.COMPONENTS = options.components;
-                options.components.forEach(c=> {
-                    this.REGISTERED_COMPONENTS.push(c.selector);
-                });
-                
-                options.components.forEach(c => {
-                    const comp = new c();
-                    comp.register();
-                });
-            } else {
-                throw new Error('components must be an array');
-            }
-        }
-
         if (options.directives) {
             if (options.directives instanceof Array) {
                 options.directives.forEach(d => this.registerDirective(d));
@@ -97,6 +82,24 @@ class Application {
                 throw new Error('directives must be an array');
             }
         }
+        
+
+        if (options.components) {
+            if (options.components instanceof Array) {
+                this.COMPONENTS = options.components;
+                options.components.forEach((c: IBaseComponent<BaseComponent>) => {
+                    this.REGISTERED_COMPONENTS.push(c.selector);
+                });
+
+                options.components.forEach((c: IBaseComponent<BaseComponent>) => {
+                    c.register();
+                });
+            } else {
+                throw new Error('components must be an array');
+            }
+        }
+
+
 
         if (options.router) {
             options.router();
@@ -125,21 +128,20 @@ class Application {
         // } else {
         //     console.warn('There is no root component');
         // }
-
     }
 
     registerDirective(directive) {
         //avoid repeated directives
         if (Object.is(directive.super.prototype, Directive.prototype)) {
-            if (this.CUSTOM_DIRECTIVES.map(r => r.params.selector).indexOf(directive.params.selector) > -1) {
-                throw new Error('Duplicate declaration; ' + directive.params.selector);
-            }
+            // if (this.CUSTOM_DIRECTIVES.map(r => r.params.selector).indexOf(directive.params.selector) > -1) {
+            //     throw new Error('Duplicate declaration; ' + directive.params.selector);
+            // }
             this.CUSTOM_DIRECTIVES.push(directive);
         } else {
             throw new Error(directive.name + ' must me inherited from DirectiveDecorator');
         }
     }
-    
+
 }
 
 export default new Application();

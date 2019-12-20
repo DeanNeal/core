@@ -1,4 +1,6 @@
-export const DIRECTIVES_NAMES = [
+import { IDirectiveName } from "src/interfaces";
+
+export const DIRECTIVES_NAMES: { name: string, alias: string }[] = [
     'for',
     'style',
     'value',
@@ -15,7 +17,7 @@ export const DIRECTIVES_NAMES = [
     'form-group',
     'dropdown',
     'lazy-load'
-].map(r=> {
+].map((r): IDirectiveName => {
     return {
         name: r,
         alias: 'bind-' + r

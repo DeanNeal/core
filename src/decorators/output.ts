@@ -1,6 +1,6 @@
 import { EventEmitter } from "./../utils/event-emitter";
 
-export function Output(name) {
+export function Output(name: string) {
    return (target: any, propertyKey: string | symbol) => {
     
      Object.defineProperty(target, propertyKey, {

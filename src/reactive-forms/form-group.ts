@@ -20,12 +20,12 @@ export class FormControl {
         this.errors = {};
     }
 
-    setElem(elem) {
+    setElem(elem: HTMLElement) {
         this.elem = elem;
         this.setValue(this.value, true, false);
     }
 
-    setValue(value, silent = false, validate = true) {
+    setValue(value, silent: boolean = false, validate: boolean = true) {
         this.value = value;
         if (this.elem && Utils.isTextField(this.elem)) {
             this.elem.value = value;
@@ -106,7 +106,7 @@ export class FormGroup {
     public component;
     public onChangeCallback = ()=> {}
 
-    constructor(controls) {
+    constructor(controls: FormControl[]) {
         this.valid = false;
         this.controls = {};
         this.value = {};

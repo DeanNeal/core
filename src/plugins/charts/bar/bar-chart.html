@@ -28,7 +28,7 @@
         </text>
     </g>
 </svg>
-<div :ref="tooltip" class="acecharts-tooltip" :class="open: tooltipIsShown" :style="top: tooltipCoords.y, left: tooltipCoords.x">
+<div :ref="tooltip" class="acecharts-tooltip" :class="'open': tooltipIsShown" :style="top: tooltipCoords.y, left: tooltipCoords.x">
     <div style="font-size: 12px;">Languages</div>
     <br>
     <span :value="tooltipSelected.name"></span>

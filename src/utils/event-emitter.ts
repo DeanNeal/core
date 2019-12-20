@@ -1,8 +1,8 @@
 
 export class EventEmitter {
-   private host;
-   private name;
-   constructor(host, name) {
+   private host: HTMLElement;
+   private name: string;
+   constructor(host: HTMLElement, name: string) {
       Object.defineProperties(this, {
          host: {
             value: host,
@@ -15,7 +15,7 @@ export class EventEmitter {
       });
    }
 
-   emit(data) {
+   emit(data: any) {
       let myEvent = new CustomEvent(this.name, {
          detail: data,
          bubbles: true,

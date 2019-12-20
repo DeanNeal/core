@@ -1,8 +1,10 @@
-export function _style(array, loopParams) {
-    array.forEach(item => {
+import { IDirectiveParams, ILoopParams } from "src/interfaces";
+
+export function _style(array: IDirectiveParams[], loopParams: ILoopParams) {
+    array.forEach((item: IDirectiveParams) => {
         let array = item.attr.split(',');
 
-        array.forEach(prop => {
+        array.forEach((prop: string) => {
             let minus = false;
             let params = prop.replace(/ +/g, "").split(':');
             let styleName = params[0];

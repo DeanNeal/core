@@ -6,24 +6,24 @@ import { Utils } from './../core';
 import 'zone.js';
 declare let Zone: any;
 import 'zone.js/dist/long-stack-trace-zone';
+import { IComponentParams, IDirectiveName } from 'src/interfaces';
 
 
-function preCompileTpl(html) {
-
-    EVENTS_NAMES.forEach(event => {
+function preCompileTpl(html: string) {
+    EVENTS_NAMES.forEach((event: string) => {
         let stringToGoIntoTheRegex = '@' + event;
         let regex = new RegExp(stringToGoIntoTheRegex, "g");
         html = html.replace(regex, `bind-${event}`)
     });
 
-    DIRECTIVES_NAMES.forEach(directive => {
+    DIRECTIVES_NAMES.forEach((directive: IDirectiveName) => {
         let stringToGoIntoTheRegex = ':' + directive.name;
         let regex = new RegExp(stringToGoIntoTheRegex, "g");
         html = html.replace(regex, `${directive.alias}`)
     });
 
     //convert camelCase into string with dashes
-    html = html.replace(/\[(.*?)\]/g, (match, value) => {
+    html = html.replace(/\[(.*?)\]/g, (match: string, value: string) => {
         const newString = Utils.camelToSnake(value);
         return `[${newString}]`;
     });
@@ -32,7 +32,7 @@ function preCompileTpl(html) {
 }
 
 
-function appendStyles(decoratorParams) {
+function appendStyles(decoratorParams: IComponentParams) {
     const style = document.createElement('style');
     const styleNode = document.createTextNode(decoratorParams.style);
     style.appendChild(styleNode);
@@ -47,22 +47,22 @@ function appendStyles(decoratorParams) {
     }
 }
 
-export default function ComponentDecorator(decoratorParams) {
+export default function ComponentDecorator(decoratorParams: IComponentParams) {
     return (Class) => {
 
         Class.selector = decoratorParams.selector;
-        Class.prototype.register = function () {
+        Class.register = function () {
             if (customElements.get(decoratorParams.selector)) {
                 throw new Error(decoratorParams.selector + ' is already declared');
-                return;
-
             }
+            
             window.customElements.define(decoratorParams.selector, class extends HTMLElement {
                 constructor() {
                     super();
                 }
                 connectedCallback() {
                     if (this.getAttribute('bind-for')) {
+                        alert('Error');
                         return;
                     }
 
@@ -116,7 +116,7 @@ export default function ComponentDecorator(decoratorParams) {
                                 console.log("There are outstanding MacroTasks.");
                             } else {
                                 // console.log("All MacroTasks have been completed.");
-                                instance.changeDetection();
+                                // instance.changeDetection();
                             }
                         },
                         onHandleError: function (parentZoneDelegate, currentZone, targetZone, error) {

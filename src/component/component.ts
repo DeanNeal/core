@@ -6,41 +6,44 @@ import { DIRECTIVES_NAMES } from './const/directives';
 import { EVENTS_NAMES } from './const/events';
 import API from '../api';
 import { getFilteredProperties } from './../decorators/input';
+import { ILoopParams, IOptions, IDirectiveName, IInput, IInterpolationItem, IEvent } from 'src/interfaces';
 
-interface IOptions {
-    template: string;
-    hostListeners: { [key: string]: any };
-    hostAttrs: { [key: string]: any };
-}
 
-export class BaseComponent {
+
+export abstract class BaseComponent {
     private root: HTMLElement;
     private host: HTMLElement;
     public $refs: { [key: string]: HTMLElement } = {};
-    // private _props;
-    private _directives = {};
-    private _events = [];
-    private _interpolation = [];
-    private _subscriptions = [];
-    private _hostBinding: { [key: string]: any } = {
-        events: [],
-        attr: []
+
+    private _directives: { [key: string]: {} } = {};
+    private _events: IEvent[] = [];
+    private _interpolation: IInterpolationItem[] = [];
+    private _hostBinding: { [key: string]: {} } = {
+        events: {},
+        attr: {}
     };
 
-    private _custom_directive = [];
+    private _custom_directives = {};
 
-    constructor() {
+    static selector() {
 
     }
 
-    componentConstructor(root: HTMLElement, options: IOptions) {
+    constructor(a,b,c) {
+        debugger
+    }
+
+    register() {
+
+    }
+
+    componentConstructor(root: HTMLElement, options: IOptions): void {
         Object.defineProperty(this, 'root', { value: root, writable: false });
         Object.defineProperty(this, 'host', {
-            get: () => {
+            get: (): HTMLElement => {
                 return this.root instanceof DocumentFragment ? this.root['host'] : this.root;
             }
         });
-
 
         Object.defineProperty(this, '$refs', { value: {}, writable: false });
         Object.defineProperty(this, '_hostBinding', {
@@ -49,16 +52,14 @@ export class BaseComponent {
                 attr: []
             }, writable: true
         });
+
         Object.defineProperty(this, '_events', { value: [], writable: true });
         Object.defineProperty(this, '_interpolation', { value: [], writable: true });
-        Object.defineProperty(this, '_subscriptions', { value: [], writable: true });
 
-        Object.defineProperty(this, '_custom_directive', { value: [], writable: true });
+        Object.defineProperty(this, '_custom_directives', { value: {}, writable: true });
 
-        Object.defineProperty(this, 'modelChangeListener', { value: this.modelChangeListener.bind(this), writable: false });
         Object.defineProperty(this, 'inputListener', { value: this.inputListener.bind(this), writable: false });
         Object.defineProperty(this, 'destroyListener', { value: this.destroyListener.bind(this), writable: false });
-
 
         let attrs = {};
 
@@ -75,7 +76,6 @@ export class BaseComponent {
             Object.defineProperty(this, '$attrs', { value: attrs, writable: false, enumerable: false });
         }
 
-
         this.setPrivates(options);
 
         this.addListeners();
@@ -87,10 +87,10 @@ export class BaseComponent {
         this.changeDetection();
     }
 
-    setPrivates(options) {
+    setPrivates(options: IOptions): void {
         const directives = {};
 
-        DIRECTIVES_NAMES.forEach(directive => {
+        DIRECTIVES_NAMES.forEach((directive: IDirectiveName) => {
             directives[directive.name] = [];
         });
 
@@ -100,22 +100,22 @@ export class BaseComponent {
 
         for (let key in options.hostAttrs) {
             this._hostBinding.attr[key] = {
-                fn: options.hostAttrs[key],
-                prevValue: undefined
+                fn: options.hostAttrs[key]
             };
         }
 
         this._interpolation = [];
 
         API.CUSTOM_DIRECTIVES.forEach((directive) => {
-            if (!this._custom_directive[directive.params.selector]) {
-                this._custom_directive[directive.params.selector] = new WeakMap();//TODO
+            
+            if (!this._custom_directives[directive.params.selector]) {
+                this._custom_directives[directive.params.selector] = [];
             }
-            this._custom_directive[directive.params.selector].set(this, []);
+
         });
     }
 
-    initDirectives() {
+    initDirectives(): void {
         this.onAttach();
 
         Directives._init.call(this, this.root, 'bind-for', this._directives['for']);// exclude interpolation, params from bind-for
@@ -123,33 +123,34 @@ export class BaseComponent {
         Interpolation._init.call(this, this.root, this._interpolation);
 
         //internal directives
-        DIRECTIVES_NAMES.forEach(directive => {
+        DIRECTIVES_NAMES.forEach((directive: IDirectiveName) => {
             if (directive.name !== 'for') {
                 Directives._init.call(this, this.root, directive.alias, this._directives[directive.name]);
             }
         });
 
         //events
-        EVENTS_NAMES.forEach(event => {
+        EVENTS_NAMES.forEach((event: string) => {
             Directives._initEvent.call(this, this.root, event, this._events);
         });
 
         //custom directives
         API.CUSTOM_DIRECTIVES.forEach((Directive) => {
-            let array = Directives._init.call(this, this.root, Directive.params.selector, this._custom_directive[Directive.params.selector]);
+            let array = Directives._init.call(this, this.root, Directive.params.selector, this._custom_directives[Directive.params.selector]);
+
             if (array) {
-                array.get(this).map(item => {
+                array.map(item => {
                     item.directive = new Directive(item.elem);
                 });
             }
         });
 
-        Directives._dropdown.call(this, this._directives['dropdown']);
+        // Directives._dropdown.call(this, this._directives['dropdown']);
         Directives._lazy.call(this, this._directives['lazy-load']);
 
         Directives._model.call(this, this._directives['model']);
 
-        Directives._outside.call(this, this._directives['outside']);
+        // Directives._outside.call(this, this._directives['outside']);
         Directives._pattern.call(this, this._directives['pattern']);//TODO
         Directives._elRef.call(this, this._directives['ref']);
         Directives._events.call(this, this._events);
@@ -160,17 +161,17 @@ export class BaseComponent {
         Directives._on.call(this, this._directives['on']);
     }
 
-    addListeners() {
-        this.host.addEventListener('model-change', this.modelChangeListener, false);
+    addListeners(): void {
+        // this.host.addEventListener('model-change', this.modelChangeListener, false);
         this.host.addEventListener('input-params', this.inputListener, false);
         this.host.addEventListener('destroy', this.destroyListener, false);
     }
 
-    inputListener(e) {
+    inputListener(e: CustomEvent): void {
         for (let key in e.detail) {
             const inputProperties = getFilteredProperties(this);
-            const exist = inputProperties.find(r => r.sourceName === key);
-            // console.log(e.detail, this);
+            const exist = inputProperties.find((r: IInput) => r.sourceName === key);
+
             if (exist) {
                 this[exist.propertyKey] = e.detail[key];
             } else {
@@ -179,21 +180,18 @@ export class BaseComponent {
         }
     }
 
-    modelChangeListener(e) {
-
-    }
-
-    destroyListener() {
+    destroyListener(): void {
         this.destroy();
     }
 
-    removeListeners() {
-        this.host.removeEventListener('model-change', this.modelChangeListener, false);
+    removeListeners(): void {
+        // this.host.removeEventListener('model-change', this.modelChangeListener, false);
         this.host.removeEventListener('input-params', this.inputListener, false);
         this.host.removeEventListener('destroy', this.destroyListener, false);
     }
 
-    changeDetection() {
+    changeDetection(): void {
+        this.beforeUpdate();
         Directives._if.call(this, this._directives['if']);
         Directives._for.call(this, this._directives['for']);
         Directives._value.call(this, this._directives['value']);
@@ -206,32 +204,27 @@ export class BaseComponent {
         Directives._hostAttr.call(this, this._hostBinding.attr);
 
         Interpolation._update.call(this, this._interpolation);
-
-        Directives._customDirective.call(this);
+        
+        Directives._customDirective.call(this, this._custom_directives);
         this.onUpdate();
     }
 
-    setSubscriptions(...rest) {
-        this._subscriptions = this._subscriptions.concat(rest);
-    }
+    // getComponentVariable(variable, data) {
+    // debugger
+    // if (data && typeof data !== 'object') return data;
+    // if (variable.length === 1 && variable[0] === 'this') return data || this._props.getData(); // entire props
 
-    getComponentVariable(variable, data) {
-        debugger
-        // if (data && typeof data !== 'object') return data;
-        // if (variable.length === 1 && variable[0] === 'this') return data || this._props.getData(); // entire props
+    // return variable.reduce((o, i, index) => {
+    //     if (!o[i] && o[i] !== 0 && o[i] !== false) { // in case when variable is undefined
+    //         return index === variable.length - 1 ? null : {};
+    //     } else {
+    //         return o[i]
+    //     }
+    // }, data || this._props)
+    // }
 
-        // return variable.reduce((o, i, index) => {
-        //     if (!o[i] && o[i] !== 0 && o[i] !== false) { // in case when variable is undefined
-        //         return index === variable.length - 1 ? null : {};
-        //     } else {
-        //         return o[i]
-        //     }
-        // }, data || this._props)
-    }
-
-    getAllVariables() {
-        // return Object.keys(this._props.getData());
-        const getters: any[] = Reflect.ownKeys(this.constructor.prototype).filter(name => {
+    getAllVariables(): any[] {
+        const getters: any[] = Reflect.ownKeys(this.constructor.prototype).filter((name: string) => {
             const getter = Reflect.getOwnPropertyDescriptor(this.constructor.prototype, name)["get"];
 
             return typeof getter === "function";
@@ -240,14 +233,8 @@ export class BaseComponent {
         return Object.keys(this).concat(getters);
     }
 
-    getLoopParams(loopParams, arr) {
-        arr.unshift({ 
-            key: loopParams.iterator, 
-            value: loopParams.value,
-
-            index: loopParams.index,
-            indexName: loopParams.indexName
-        });
+    getLoopParams(loopParams: ILoopParams, arr: any[]) {
+        arr.unshift({ ...loopParams });
 
         if (loopParams.parent) {
             this.getLoopParams(loopParams.parent, arr);
@@ -255,20 +242,20 @@ export class BaseComponent {
         return arr;
     }
 
-    getPropsByScope(value, loopParams) {
+    getPropsByScope(value: string, loopParams: ILoopParams) {
         let r;
 
         let listOfVariables = this.getAllVariables();
-        let listOfVariablesValues = listOfVariables.map(r => this[r]);
+        let listOfVariablesValues = listOfVariables.map((r: string) => this[r]);
 
         if (loopParams) {
             let loops = this.getLoopParams(loopParams, []);
 
             loops.forEach(loop => {
-                listOfVariables.push(loop.key);
+                listOfVariables.push(loop.iterator);
                 listOfVariablesValues.push(loop.value);
 
-                if(loop.indexName) {
+                if (loop.indexName) {
                     listOfVariables.push(loop.indexName);
                     listOfVariablesValues.push(loop.index);
                 }
@@ -285,7 +272,7 @@ export class BaseComponent {
         return r;
     }
 
-    setComponentVariable(string, value, loopParams) {
+    setComponentVariable(string: string, value: any, loopParams: ILoopParams): void {
         if (loopParams) {
             loopParams.value = value;
         } else {
@@ -297,26 +284,15 @@ export class BaseComponent {
         }
     }
 
-    destroy() {
+    destroy(): void {
         this.onDestroy();
 
         // remove all event listeners
         Directives.removeEventListeners.call(this, this._events);
 
-        //unsubscribe from components subscribers
-        this._subscriptions.forEach(item => item.unsubscribe());
-
         this.removeListeners();
 
         this.root.innerHTML = null;
-
-        // if (this.root instanceof DocumentFragment === false) {
-
-        // }
-    }
-
-    _onModelChange() {
-
     }
 
     onDestroy() {
@@ -324,6 +300,10 @@ export class BaseComponent {
     }
 
     onAttach() {
+
+    }
+
+    beforeUpdate() {
 
     }
 

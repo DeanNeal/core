@@ -2,13 +2,14 @@ let scrollArray = [];
 const monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
 const monthNamesShort = ["Jan", "Feb", "Mar", "Apr", "May", "June", "July", "Aug", "Sept", "Oct", "Nov", "Dec"];
 const daysOfWeekShort = ['Mo', 'Tu', 'Wen', 'Th', 'Fr', 'Sat', 'Sun'];
+
 const Utils = {
     monthNames: monthNames,
     monthNamesShort: monthNamesShort,
     daysOfWeekShort: daysOfWeekShort,
-    serialize: (form) => {
+    serialize: (form: HTMLFormElement) => {
         let obj = {};
-        let elements = form.querySelectorAll("input, select, textarea");
+        let elements: any = form.querySelectorAll("input, select, textarea");
         for (let i = 0; i < elements.length; ++i) {
             let element = elements[i];
             let name = element.name;
@@ -22,21 +23,21 @@ const Utils = {
         return obj;
     },
 
-    getDeepProp(data, prop) {
-      return prop.split('.').reduce((o, i) => o ? o[i] : null, data);
-    },
+    // getDeepProp(data, prop) {
+    //   return prop.split('.').reduce((o, i) => o ? o[i] : null, data);
+    // },
 
-    randomInteger(min, max) {
+    randomInteger<T extends number>(min: T, max: T): number {
         let rand = min - 0.5 + Math.random() * (max - min + 1)
         rand = Math.round(rand);
         return rand;
     },
 
-    addDays(date, count) {
-        date = new Date(date);
-        let clone = new Date(date.getTime());
-        return new Date(clone.setDate(clone.getDate() + count));
-    },
+    // addDays(date, count) {
+    //     date = new Date(date);
+    //     let clone = new Date(date.getTime());
+    //     return new Date(clone.setDate(clone.getDate() + count));
+    // },
 
     getDateByFormat(date, format) {
         let result = '';
@@ -75,30 +76,30 @@ const Utils = {
         return result;
     },
 
-    getDaysBetweenDates(dt1, dt2) {
-        dt1 = new Date(dt1);
-        dt2 = new Date(dt2);
-        let a = Date.UTC(dt2.getFullYear(), dt2.getMonth(), dt2.getDate());
-        let b = Date.UTC(dt1.getFullYear(), dt1.getMonth(), dt1.getDate());
+    // getDaysBetweenDates(dt1, dt2) {
+    //     dt1 = new Date(dt1);
+    //     dt2 = new Date(dt2);
+    //     let a = Date.UTC(dt2.getFullYear(), dt2.getMonth(), dt2.getDate());
+    //     let b = Date.UTC(dt1.getFullYear(), dt1.getMonth(), dt1.getDate());
 
-        return Math.floor(Math.abs(a - b) / (1000 * 60 * 60 * 24));
-    },
+    //     return Math.floor(Math.abs(a - b) / (1000 * 60 * 60 * 24));
+    // },
 
-    closest(array, num) {
-        let i = 0;
-        let minDiff = 1000;
-        let ans;
-        for (let i in array) {
-            let m = Math.abs(num - array[i]);
-            if (m < minDiff) {
-                minDiff = m;
-                ans = array[i];
-            }
-        }
-        return ans;
-    },
+    // closest(array, num) {
+    //     let i = 0;
+    //     let minDiff = 1000;
+    //     let ans;
+    //     for (let i in array) {
+    //         let m = Math.abs(num - array[i]);
+    //         if (m < minDiff) {
+    //             minDiff = m;
+    //             ans = array[i];
+    //         }
+    //     }
+    //     return ans;
+    // },
 
-    insertAfter(elem, refElem) {
+    insertAfter(elem: HTMLElement | Comment, refElem: HTMLElement) {
         let parent = refElem.parentNode;
         let next = refElem.nextSibling;
         if (next) {
@@ -108,7 +109,7 @@ const Utils = {
         }
     },
 
-    isCustomElement(element) {
+    isCustomElement(element: HTMLElement) {
         if (element.tagName.indexOf("-") !== -1) {
             return true;
         }
@@ -119,48 +120,48 @@ const Utils = {
         return isAttribute.indexOf("-") !== -1;
     },
 
-    changeSortingId(array, params) {
-        params.reverse = !params.reverse;
-        return array.map(item => {
-            if (item.id === params.id) {
-                item.active = true;
-            } else {
-                item.active = false;
-                item.reverse = false;
-            }
-            return item;
-        });
-    },
+    // changeSortingId(array, params) {
+    //     params.reverse = !params.reverse;
+    //     return array.map(item => {
+    //         if (item.id === params.id) {
+    //             item.active = true;
+    //         } else {
+    //             item.active = false;
+    //             item.reverse = false;
+    //         }
+    //         return item;
+    //     });
+    // },
 
-    sorting(array, params) {
-        switch (params.type) {
-            case 'date':
-                array.sort((a, b) => {
-                    return new Date(a[params.id]).getTime() - new Date(b[params.id]).getTime();
-                });
-                break;
-            case 'string':
-                array.sort((a, b) => {
-                    if (a[params.id] < b[params.id]) {
-                        return -1;
-                    } else {
-                        return 1;
-                    }
-                });
-                break;
-            case 'number':
-                array.sort((a, b) => {
-                    return a[params.id] - b[params.id];
-                });
-                break;
-        }
+    // sorting(array, params) {
+    //     switch (params.type) {
+    //         case 'date':
+    //             array.sort((a, b) => {
+    //                 return new Date(a[params.id]).getTime() - new Date(b[params.id]).getTime();
+    //             });
+    //             break;
+    //         case 'string':
+    //             array.sort((a, b) => {
+    //                 if (a[params.id] < b[params.id]) {
+    //                     return -1;
+    //                 } else {
+    //                     return 1;
+    //                 }
+    //             });
+    //             break;
+    //         case 'number':
+    //             array.sort((a, b) => {
+    //                 return a[params.id] - b[params.id];
+    //             });
+    //             break;
+    //     }
 
-        if (params.reverse) {
-            array.reverse();
-        }
+    //     if (params.reverse) {
+    //         array.reverse();
+    //     }
 
-        return array;
-    },
+    //     return array;
+    // },
 
     scrollTop(element, to, duration) {
         this.scrollTo('top', element, to, duration);
@@ -204,19 +205,19 @@ const Utils = {
         }
     },
 
-    easeInOutQuad(t, b, c, d) {
+    easeInOutQuad(t: number, b: number, c: number, d: number): number {
         t /= d / 2;
         if (t < 1) return c / 2 * t * t + b;
         t--;
         return -c / 2 * (t * (t - 2) - 1) + b;
     },
 
-    removeSpacesFromString(str) {
+    removeSpacesFromString(str: string): string {
         str = str || '';
         return str.replace(/ +/g, "");
     },
 
-    indexInParent(node) {
+    indexInParent(node: HTMLElement): number {
         var children = node.parentNode.childNodes;
         var num = 0;
         for (var i = 0; i < children.length; i++) {
@@ -277,7 +278,7 @@ const Utils = {
     //     return textNodes;
     // },
 
-    applyFormatter(r, params) {
+    applyFormatter(r, params): void {
         let formatterData = params ? params.split(':') : null;
         let formatter = params ? Utils.removeSpacesFromString(params) : null;
         if (formatterData) {
@@ -305,48 +306,48 @@ const Utils = {
         return r;
     },
 
-    getValueBetweenBrackets(str, cb, err) {
+    getValueBetweenBrackets(str: string, cb, err): void {
         let regExp = /\(([^)]+)\)|\(()\)/;
-        let res = regExp.exec(str) 
-        if( res && res[1]) {
+        let res = regExp.exec(str)
+        if (res && res[1]) {
             cb(res[1]);
-        }  else {
+        } else {
             err && err();
         }
     },
 
-    isTextField(elem) {
+    isTextField(elem: any): boolean {
         return elem.type === 'text' || elem.type === 'email' || elem.type === 'password' || elem.type === 'textarea';
     },
 
-    getYearsFromTo(from, to) {
-        let years = [];
-        for (var i = from; i<= to; i++) {
-            years.push(i);
-        }
-        return years;
-    },
+    // getYearsFromTo(from, to) {
+    //     let years = [];
+    //     for (var i = from; i <= to; i++) {
+    //         years.push(i);
+    //     }
+    //     return years;
+    // },
 
-    getDatesInMonth(year, month) {
-        return new Date(year, month, 0).getDate();
-    },
+    // getDatesInMonth(year, month) {
+    //     return new Date(year, month, 0).getDate();
+    // },
 
-    camelToSnake(string) {
-        return string.replace(/[\w]([A-Z])/g, function(m) {
+    camelToSnake(string: string): string {
+        return string.replace(/[\w]([A-Z])/g, function (m) {
             return m[0] + "-" + m[1];
         }).toLowerCase();
     },
 
-    camelCase(str) { 
+    camelCase(str: string): string {
         return str.replace(/-([a-z])/g, function (g) { return g[1].toUpperCase(); });
         // return string.replace(/(_\w)/g, function(m){
         //     return m[1].toUpperCase();
         // });
     },
 
-    JSONStr(obj) {
+    JSONStr(obj: {}): string {
         let seen = [];
-    
+
         let replacer = function (key, value) {
             if (value != null && typeof value == "object") {
                 if (seen.indexOf(value) >= 0) {
@@ -356,7 +357,7 @@ const Utils = {
             }
             return value;
         };
-    
+
         return JSON.stringify(obj, replacer);
     }
 };

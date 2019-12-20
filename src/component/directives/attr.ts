@@ -1,11 +1,12 @@
-export function _attr(array, loopParams) {
-    array.forEach(item => {
+import { ILoopParams, IDirectiveParams } from "src/interfaces";
+
+export function _attr(array: IDirectiveParams[], loopParams: ILoopParams) {
+    array.forEach((item: IDirectiveParams) => {
         let array = item.attr.split(',');
 
-        array.forEach(prop => {
+        array.forEach((prop: string) => {
             let params = prop.replace(/ +/g, "").split(':');
             let attrName = params[0];
-            // let variable = params[1].split('.');
             let r;
 
             r = this.getPropsByScope(params[1], loopParams);

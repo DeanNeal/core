@@ -1,4 +1,4 @@
-export const EVENTS_NAMES = [
+export const EVENTS_NAMES: string[] = [
    'click',
    'keyup',
    'change',

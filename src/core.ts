@@ -2,6 +2,8 @@ import Application from './api';
 // import {Observable} from './observable/observable';
 // import * as Decorators from './decorators';
 import Component from  './decorators/component';
+import Directive from './decorators/directive';
+
 import Route from  './decorators/router';
 // import Inject from './decorators/inject';
 import {Output} from './decorators/output';
@@ -29,6 +31,7 @@ import './polyfills';
 export {
     EventEmitter,
     Component,
+    Directive,
     Route,
     // Inject,
     Router,

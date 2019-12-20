@@ -2,7 +2,7 @@
 
     <ul class="nav nav-tabs">
         <li :for="let (item, index, key) of tabs" @click="select(index)" class="nav-item">
-            <span class="nav-link" :class="active: selectedIndex === index">{{item}}</span>
+            <span class="nav-link" :class="'active': selectedIndex === index">{{item}}</span>
         </li>
     </ul>
 
@@ -10,8 +10,7 @@
         <div class="col" :if="selectedIndex === 0">
             <h3>Values</h3>
 
-            <div>
-      
+            <div uppercase>
                 {{value}}
             </div>
             <div>
@@ -34,7 +33,10 @@
              <div :for="let (child1,index) of collection">
                 <div :for="let (child2, index) of child1" :if="child2">
                     <div :if="child2.length>1">
-                        <app-child  :if="child3>14" [forChildComponent]="forChildComponent" :on="onChange: test" :for="let child3 of child2"></app-child>
+                        <div :for="let child3 of child2" :class="'test' + child3: child3, 'test2'+child3: child3">
+                            <input type="text" :model="child3">
+                        </div>
+                        <!-- <app-child  :if="child3>14" [forChildComponent]="forChildComponent" :on="onChange: test" :for="let child3 of child2"></app-child> -->
                     </div>
                 </div> 
              </div>

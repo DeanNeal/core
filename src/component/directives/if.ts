@@ -1,8 +1,10 @@
+import { ILoopParams, IDirectiveParams } from "src/interfaces";
+
 // import { Utils, Component } from '../../core';
 // import API from './../../api';
 
-export function _if(array, loopParams) {
-    array.forEach(item => {
+export function _if(array: IDirectiveParams[], loopParams: ILoopParams) {
+    array.forEach((item: IDirectiveParams) => {
         let params = item.attr;
 
         try {

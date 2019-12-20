@@ -2,8 +2,9 @@
 import { Utils } from '../../core';
 import { createEventObject } from './event';
 import api from '../../api';
+import { ILoopParams, IEvent, IDirectiveParams } from 'src/interfaces';
 
-export function _initLoop(root, directive, newArray) {
+export function _initLoop(root: HTMLElement, directive: string, newArray: IDirectiveParams[]) {
     let array = newArray || [];
 
     let attr = root.getAttribute ? root.getAttribute(directive) : null;
@@ -20,14 +21,18 @@ export function _initLoop(root, directive, newArray) {
         // only for certain directives
         if (directive === 'bind-if') {
             obj.comment = document.createComment(directive + ': ' + attr);
-            // obj.cachedIndexes = [];
             obj.rootCached = null;
             obj.interpolationArray = [];
+        }
+
+        if(directive === 'bind-class') {
+            obj.prevValue = [];
         }
 
         array.push(obj);
         root.removeAttribute(directive);
     }
+    
 
     if (directive === 'bind-params' && Utils.isCustomElement(root)) {
         const outer = initParams(root);
@@ -42,15 +47,15 @@ export function _initLoop(root, directive, newArray) {
     return array;
 }
 
-export function _init(root, directive, newArray) {
+export function _init(root: any, directive: string, newArray: IDirectiveParams[]) {
     let array = newArray || [];
     let host = root.host || root;
 
     //syntax sugar [params]=""
     if (directive === 'bind-params' && Utils.isCustomElement(host)) {
 
-        api.REGISTERED_COMPONENTS.forEach(compName => {
-            root.querySelectorAll(`${compName}`).forEach(elem => {
+        api.REGISTERED_COMPONENTS.forEach((compName: string) => {
+            root.querySelectorAll(`${compName}`).forEach((elem: HTMLElement) => {
                 const inner = initParams(elem);
 
                 if (inner) {
@@ -62,13 +67,13 @@ export function _init(root, directive, newArray) {
         return array;
     }
 
-    root.querySelectorAll(`[${directive}]`).forEach(elem => {
+    root.querySelectorAll(`[${directive}]`).forEach((elem: HTMLElement) => {
         let attr = elem.getAttribute(directive);
 
         // exclude inner loops
         if (directive === 'bind-for' && elem.querySelectorAll('[bind-for]').length) {
             for (let innerElem of elem.querySelectorAll(`[bind-for]`)) {
-                innerElem.setAttribute('bind-inner-loop', true);
+                innerElem.setAttribute('bind-inner-loop', 'true');
             }
         }
 
@@ -88,8 +93,11 @@ export function _init(root, directive, newArray) {
         // only for certain directives
         if (directive === 'bind-for' || directive === 'bind-if') {
             obj.comment = Utils.insertAfter(document.createComment(directive + ': ' + attr), elem);
-            // obj.cachedIndexes = [];
             obj.rootCached = null;
+        }
+
+        if(directive === 'bind-class') {
+            obj.prevValue = [];
         }
 
         if (directive === 'bind-for') {
@@ -107,25 +115,26 @@ export function _init(root, directive, newArray) {
 }
 
 
-export function _initEvent(root, directive, newArray, loopParams) {
+export function _initEvent(root: HTMLElement, directive: string, newArray: IEvent[], loopParams: ILoopParams): IEvent[] {
     let array = newArray || [];
     let targets = root.querySelectorAll(`[bind-${directive}]`);
     if (root.getAttribute && root.getAttribute(`bind-${directive}`)) {
         let obj = createEventObject.call(this, root, directive, loopParams);
-        array.get ? array.get(this).push(obj) : array.push(obj);
+        array.push(obj);
     }
 
     for (let elem of targets) {
         let obj = createEventObject.call(this, elem, directive, loopParams);
-        array.get ? array.get(this).push(obj) : array.push(obj);
+        array.push(obj);
     }
     return array;
 }
 
-function initParams(el) {
+
+function initParams(el: any): IDirectiveParams {
     let obj;
     let elem = el.host || el;
-    const attrAr = [...elem.attributes].map((attr) => {
+    const attrAr = [...elem.attributes].map((attr: Attr) => {
         let matchReg = /\[.*?\]/g;
         let match = attr.name.match(matchReg);
 

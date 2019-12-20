@@ -4,13 +4,14 @@ import { _init } from './init';
 import { EVENTS_NAMES } from '../const/events';
 // import API from'../../api';
 
-import Interpolation from './../interpolation/interpolation';
+import Interpolation from '../interpolation/interpolation';
+import { ILoopParams, IDirectiveParams, IEvent } from 'src/interfaces';
 
-export function _for(array, loopParams) {
+export function _for(array: IDirectiveParams[], loopParams: ILoopParams) {
     if (array.length) {
         // console.time('modules')
-        array.forEach(item => {
-            let loopIterator = { iterator: null };
+        array.forEach((item: IDirectiveParams) => {
+            let loopIterator = { iterator: null, key: null, index: null };
             let collectionName;
             let array = [];
 
@@ -47,7 +48,7 @@ export function _for(array, loopParams) {
                 array = Object.keys(array).map(r => array[r]);
             }
 
-            renderList.call(this, item, array, loopIterator, collectionName, keys, loopParams);
+            renderList.call(this, item, array, loopIterator, keys, loopParams);
 
         }); 
         // console.timeEnd('modules')
@@ -55,7 +56,7 @@ export function _for(array, loopParams) {
     }
 }
 
-function renderList(item, array, loopI, collectionName, keys, loopParams) {
+function renderList(item: IDirectiveParams, array: any[], loopI, keys: any[], loopParams: ILoopParams) {
     if (!array) throw new Error('Array is undefined: ' + this.constructor.name + '; ' + item.attr);
 
     if (item.cached.length !== array.length) {
@@ -96,6 +97,7 @@ function renderList(item, array, loopI, collectionName, keys, loopParams) {
 
                 Object.defineProperty(param, 'value', {
                     configurable: true,
+                    enumerable: true,
                     get: ()=> {
                         return array[i];
                     },
@@ -109,14 +111,16 @@ function renderList(item, array, loopI, collectionName, keys, loopParams) {
 
             let eventsArray = [];
 
-            EVENTS_NAMES.forEach(directive => {
+            EVENTS_NAMES.forEach((directive: string) => {
                 eventsArray.push(Directives._initEvent.call(this, prevContent, directive, [], item.loopParams[i]));
             });
             item.directives[i].events = eventsArray;
 
             //without update
-            bindModelToViewForLoop.call(this, item.directives[i].model, item.loopParams[i]);
-            bindOnForLoop.call(this, item.directives[i].on);
+            // bindModelToViewForLoop.call(this, item.directives[i].model, item.loopParams[i]);
+            Directives._model.call(this, item.directives[i].model, item.loopParams[i]);
+            // bindOnForLoop.call(this, item.directives[i].on);
+            Directives._on.call(this, item.directives[i].on, loopParams);
         }
    
     }
@@ -134,70 +138,21 @@ function renderList(item, array, loopI, collectionName, keys, loopParams) {
     item.cached = JSON.parse(Utils.JSONStr(array));
 }
 
-function updateElement(item, i, loopParams) {
-    forAttachForLoop.call(this, item.directives[i].for, loopParams);
-
-    bindInterPolation.call(this, item.interpolationArray[i], loopParams);
-
-    bindClassForLoop.call(this, item.directives[i].class, loopParams);
-    styleUnitForLoop.call(this, item.directives[i].style, loopParams);
-    bindIfForLoop.call(this, item.directives[i].if, loopParams);
-    bindValueToViewForLoop.call(this, item.directives[i].value, loopParams);
-    bindValueToViewForLoop.call(this, item.directives[i].model, loopParams);
-
-    bindInputForLoop.call(this, item.directives[i].input, loopParams);
-
-
-    bindAttrsForLoop.call(this, item.directives[i].attrs, loopParams);
-    addLinksRefsForLoop.call(this, item.directives[i].links, loopParams);
+function updateElement(item: IDirectiveParams, i: number, loopParams: ILoopParams) {
+    Directives._for.call(this, item.directives[i].for, loopParams);
+    Interpolation._update.call(this, item.interpolationArray[i], loopParams);
+    Directives._class.call(this, item.directives[i].class, loopParams);
+    Directives._style.call(this, item.directives[i].style, loopParams);
+    Directives._if.call(this, item.directives[i].if, loopParams);
+    Directives._value.call(this, item.directives[i].value, loopParams);
+    Directives._value.call(this, item.directives[i].model, loopParams);
+    Directives._input.call(this, item.directives[i].input, loopParams);
+    Directives._attr.call(this, item.directives[i].attrs, loopParams);
+    Directives._link.call(this, item.directives[i].links, loopParams);
     eventsForLoop.call(this, item.directives[i].events);
 }
 
-function eventsForLoop(array) {
+function eventsForLoop(array: IDirectiveParams[]) {
     array = array.reduce((a, b) => a.concat(b), []);
     Directives._events.call(this, array);
-}
-
-function addLinksRefsForLoop(array, loopParams) {
-    Directives._link.call(this, array, loopParams);
-}
-
-function bindAttrsForLoop(array, loopParams) {
-    Directives._attr.call(this, array, loopParams);
-}
-
-function forAttachForLoop(array, loopParams) {
-    Directives._for.call(this, array, loopParams);
-}
-
-function bindModelToViewForLoop(array, loopParams) {
-    Directives._model.call(this, array, loopParams);
-}
-
-function bindValueToViewForLoop(array, loopParams) {
-    Directives._value.call(this, array, loopParams);
-}
-
-function styleUnitForLoop(array, loopParams) {
-    Directives._style.call(this, array, loopParams);
-}
-
-function bindClassForLoop(array, loopParams) {
-    Directives._class.call(this, array, loopParams);
-}
-
-function bindIfForLoop(array, loopParams) {
-    Directives._if.call(this, array, loopParams);
-}
-
-function bindInterPolation(array, loopParams) {
-    Interpolation._update.call(this, array, loopParams);
-}
-
-function bindInputForLoop(array, loopParams) {
-    Directives._input.call(this, array, loopParams);
-}
-
-function bindOnForLoop(array, loopParams) {
-    Directives._on.call(this, array, loopParams);
 }
