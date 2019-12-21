@@ -2,6 +2,7 @@ import { Component, Utils } from '../../core';
 import { Directives } from './index';
 import { _init } from './init';
 import { EVENTS_NAMES } from '../const/events';
+import API from './../../api';
 // import API from'../../api';
 
 import Interpolation from '../interpolation/interpolation';
@@ -74,6 +75,12 @@ function renderList(item: IDirectiveParams, array: any[], loopI, keys: any[], lo
 
             item.interpolationArray[i] = Interpolation._init.call(this, prevContent);
 
+            item.custom_directives[i] = {};
+
+
+            Directives._initCustom.call(this, prevContent, item.custom_directives[i]);
+   
+
             item.directives[i] = Object.assign(item.directives[i], {
                 class: Directives._initLoop.call(this, prevContent, 'bind-class'),
                 style: Directives._initLoop.call(this, prevContent, 'bind-style'),
@@ -83,7 +90,8 @@ function renderList(item: IDirectiveParams, array: any[], loopI, keys: any[], lo
                 input: Directives._initLoop.call(this, prevContent, 'bind-params'),
                 value: Directives._initLoop.call(this, prevContent, 'bind-value'),
                 links: Directives._initLoop.call(this, prevContent, 'bind-link'),
-                on: Directives._initLoop.call(this, prevContent, 'bind-on')
+                on: Directives._initLoop.call(this, prevContent, 'bind-on'),
+                events: []
             });
 
             if (loopI) {
@@ -109,17 +117,13 @@ function renderList(item: IDirectiveParams, array: any[], loopI, keys: any[], lo
                 item.loopParams.push(param);
             }
 
-            let eventsArray = [];
 
             EVENTS_NAMES.forEach((directive: string) => {
-                eventsArray.push(Directives._initEvent.call(this, prevContent, directive, [], item.loopParams[i]));
+                Directives._initEvent.call(this, prevContent, directive, item.directives[i].events, item.loopParams[i]);
             });
-            item.directives[i].events = eventsArray;
-
+            
             //without update
-            // bindModelToViewForLoop.call(this, item.directives[i].model, item.loopParams[i]);
             Directives._model.call(this, item.directives[i].model, item.loopParams[i]);
-            // bindOnForLoop.call(this, item.directives[i].on);
             Directives._on.call(this, item.directives[i].on, loopParams);
         }
    
@@ -141,6 +145,9 @@ function renderList(item: IDirectiveParams, array: any[], loopI, keys: any[], lo
 function updateElement(item: IDirectiveParams, i: number, loopParams: ILoopParams) {
     Directives._for.call(this, item.directives[i].for, loopParams);
     Interpolation._update.call(this, item.interpolationArray[i], loopParams);
+    // console.log(item.custom_directives[i]);
+    
+    Directives._customDirective.call(this, item.custom_directives[i]);
     Directives._class.call(this, item.directives[i].class, loopParams);
     Directives._style.call(this, item.directives[i].style, loopParams);
     Directives._if.call(this, item.directives[i].if, loopParams);

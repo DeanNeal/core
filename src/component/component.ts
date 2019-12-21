@@ -53,6 +53,7 @@ export abstract class BaseComponent {
             }, writable: true
         });
 
+        Object.defineProperty(this, '_directives', { value: {}, writable: false });
         Object.defineProperty(this, '_events', { value: [], writable: true });
         Object.defineProperty(this, '_interpolation', { value: [], writable: true });
 
@@ -72,7 +73,6 @@ export abstract class BaseComponent {
                 throw new Error('Using of bind-model inside bind-form-group is forbidden');
             }
 
-
             Object.defineProperty(this, '$attrs', { value: attrs, writable: false, enumerable: false });
         }
 
@@ -88,14 +88,6 @@ export abstract class BaseComponent {
     }
 
     setPrivates(options: IOptions): void {
-        const directives = {};
-
-        DIRECTIVES_NAMES.forEach((directive: IDirectiveName) => {
-            directives[directive.name] = [];
-        });
-
-        Object.defineProperty(this, '_directives', { value: directives, writable: false });
-
         this._hostBinding.events = options.hostListeners;
 
         for (let key in options.hostAttrs) {
@@ -105,25 +97,20 @@ export abstract class BaseComponent {
         }
 
         this._interpolation = [];
-
-        API.CUSTOM_DIRECTIVES.forEach((directive) => {
-            
-            if (!this._custom_directives[directive.params.selector]) {
-                this._custom_directives[directive.params.selector] = [];
-            }
-
-        });
     }
 
     initDirectives(): void {
         this.onAttach();
 
+        this._directives['for'] = [];
         Directives._init.call(this, this.root, 'bind-for', this._directives['for']);// exclude interpolation, params from bind-for
 
         Interpolation._init.call(this, this.root, this._interpolation);
 
         //internal directives
         DIRECTIVES_NAMES.forEach((directive: IDirectiveName) => {
+            if(!this._directives[directive.name])  this._directives[directive.name]  = [];
+            
             if (directive.name !== 'for') {
                 Directives._init.call(this, this.root, directive.alias, this._directives[directive.name]);
             }
@@ -135,16 +122,9 @@ export abstract class BaseComponent {
         });
 
         //custom directives
-        API.CUSTOM_DIRECTIVES.forEach((Directive) => {
-            let array = Directives._init.call(this, this.root, Directive.params.selector, this._custom_directives[Directive.params.selector]);
+        Directives._initCustom.call(this, this.root, this._custom_directives);
 
-            if (array) {
-                array.map(item => {
-                    item.directive = new Directive(item.elem);
-                });
-            }
-        });
-
+ 
         // Directives._dropdown.call(this, this._directives['dropdown']);
         Directives._lazy.call(this, this._directives['lazy-load']);
 

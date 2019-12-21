@@ -69,6 +69,7 @@ export interface IDirectiveParams {
    comment?: Comment;
    rootCached?: string;
    interpolationArray?: { [key: string]: any[] }[];
+   custom_directives?: { [key: string]: any[] }[];
    loopParams?: ILoopParams[];
    directives?: { [key: string]: any[] }[];
    prevValue?: string[];

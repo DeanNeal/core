@@ -1,8 +1,43 @@
 // import {PRIVATES} from '../private';
 import { Utils } from '../../core';
 import { createEventObject } from './event';
-import api from '../../api';
+import API from '../../api';
 import { ILoopParams, IEvent, IDirectiveParams } from 'src/interfaces';
+
+export function _initCustom(root: HTMLElement, newArray: IDirectiveParams[]) {
+    let array = newArray || {};
+
+    API.CUSTOM_DIRECTIVES.forEach((Directive) => {
+        if (!array[Directive.params.selector]) {
+            array[Directive.params.selector] = [];
+        }
+
+        let attr = root.getAttribute ? root.hasAttribute(Directive.params.selector) : null;
+      
+        if(attr) {
+
+            let obj = {
+                elem: root,
+                directive: new Directive(root)
+            };
+
+            array[Directive.params.selector].push(obj);
+            root.removeAttribute(Directive.params.selector);
+        }
+
+        root.querySelectorAll(`[${Directive.params.selector}]`).forEach((elem: HTMLElement) => {
+            let obj = {
+                elem: elem,
+                directive: new Directive(elem)
+            };
+
+            array[Directive.params.selector].push(obj);
+            elem.removeAttribute(Directive.params.selector);
+        });
+    });
+
+    return array;
+}
 
 export function _initLoop(root: HTMLElement, directive: string, newArray: IDirectiveParams[]) {
     let array = newArray || [];
@@ -25,14 +60,14 @@ export function _initLoop(root: HTMLElement, directive: string, newArray: IDirec
             obj.interpolationArray = [];
         }
 
-        if(directive === 'bind-class') {
+        if (directive === 'bind-class') {
             obj.prevValue = [];
         }
 
         array.push(obj);
         root.removeAttribute(directive);
     }
-    
+
 
     if (directive === 'bind-params' && Utils.isCustomElement(root)) {
         const outer = initParams(root);
@@ -54,7 +89,7 @@ export function _init(root: any, directive: string, newArray: IDirectiveParams[]
     //syntax sugar [params]=""
     if (directive === 'bind-params' && Utils.isCustomElement(host)) {
 
-        api.REGISTERED_COMPONENTS.forEach((compName: string) => {
+        API.REGISTERED_COMPONENTS.forEach((compName: string) => {
             root.querySelectorAll(`${compName}`).forEach((elem: HTMLElement) => {
                 const inner = initParams(elem);
 
@@ -96,7 +131,7 @@ export function _init(root: any, directive: string, newArray: IDirectiveParams[]
             obj.rootCached = null;
         }
 
-        if(directive === 'bind-class') {
+        if (directive === 'bind-class') {
             obj.prevValue = [];
         }
 
@@ -104,6 +139,7 @@ export function _init(root: any, directive: string, newArray: IDirectiveParams[]
             obj.interpolationArray = [];
             obj.loopParams = [];
             obj.directives = [];
+            obj.custom_directives = [];
         }
 
         array.push(obj);

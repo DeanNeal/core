@@ -12,7 +12,7 @@ import { _link } from './link';
 import { _events, removeEventListeners } from './event';
 // import { _outside } from './outside';
 import { _on } from './on';
-import { _init, _initLoop, _initEvent } from './init';
+import { _init, _initLoop, _initCustom, _initEvent } from './init';
 import { _hostEvents, _hostAttr } from './host';
 import { _formGroup } from './form-group';
 import { _customDirective } from './custom-directive';
@@ -39,6 +39,7 @@ const Directives = {
     _on,
     _init,
     _initLoop,
+    _initCustom,
     _initEvent,
     _hostEvents,
     _hostAttr,
