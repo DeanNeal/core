@@ -29,8 +29,8 @@ export interface IBaseComponent<T> {
 
 export interface IOptions {
    template: string;
-   hostListeners: { [key: string]: any };
-   hostAttrs: { [key: string]: any };
+   hostListeners: SimpleObjectOfAny;
+   hostAttrs: SimpleObjectOfAny;
 }
 
 export interface IBootstrapOptions {
@@ -68,11 +68,13 @@ export interface IDirectiveParams {
    cached?: [];
    comment?: Comment;
    rootCached?: string;
-   interpolationArray?: { [key: string]: any[] }[];
-   custom_directives?: { [key: string]: any[] }[];
+   interpolationArray?: SimpleObjectOfArrays[];
+   custom_directives?: SimpleObjectOfArrays[];
    loopParams?: ILoopParams[];
-   directives?: { [key: string]: any[] }[];
+   directives?: SimpleObjectOfArrays[];
    prevValue?: string[];
 }
 
 export type SimpleObject = { [key: string]: string };
+export type SimpleObjectOfArrays = { [key: string]: any[] };
+export type SimpleObjectOfAny = { [key: string]: any };

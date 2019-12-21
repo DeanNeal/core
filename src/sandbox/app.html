@@ -146,6 +146,47 @@
             <h3>Router</h3>
         </div>
 
+        <div class="col" :if="selectedIndex === 9">
+            <h3>Form</h3>
+            {{form.value | json}}
+   
+            <form :form-group="form" @submit="submit($event)">
+                <div class="input-group mb-3">
+                    <input type="text" class="form-control" placeholder="name" :form-control="name">
+                    <span class="invalid-message" :if="form.controls.name.errors.required && form.controls.name.dirty">Required</span>
+                </div>
+
+                <div class="input-group mb-3">
+                    <input type="text" class="form-control" placeholder="age" :form-control="age">
+                    <span class="invalid-message" :if="form.controls.age.errors.required && form.controls.age.dirty">Required</span>
+                </div>
+                <div>
+                    
+                    <label class="form-check-label">
+                        <input type="radio" name="radio" value="1" :form-control="radio">Radio 1
+                    </label>
+                </div>
+                <div>
+                    <label class="form-check-label">
+                        <input type="radio" name="radio" value="2" :form-control="radio">Radio 2
+                    </label>
+                </div>
+
+                <div class="form-check mb-3">
+                    <input id="exampleCheck1" type="checkbox" value="1" class="form-check-input"  placeholder="enable" :form-control="checkbox">
+                    <label class="form-check-label" for="exampleCheck1">Check me out</label>
+                </div>
+
+                <div class="form-check mb-3">
+                    <input id="exampleCheck2" type="checkbox" value="2" class="form-check-input"  placeholder="enable" :form-control="checkbox">
+                    <label class="form-check-label" for="exampleCheck2">Check me out</label>
+                </div>
+
+
+                <button type="submit">Submit</button>
+            </form>
+        </div>
+
     </div>
 </div>
 

@@ -23,8 +23,8 @@ import Events from './dispatcher';
 
 // import {ModalController} from './controls/modal';
 
-import {FormGroup} from './reactive-forms/form-group';
-import {Validators} from './reactive-forms/validators';
+import {FormGroup} from './component/reactive-forms/form-group';
+import {Validators} from './component/reactive-forms/validators';
 
 import './polyfills';
 

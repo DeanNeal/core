@@ -1,4 +1,4 @@
-import { Plugins, Component } from './../core';
+import { Plugins, Component, FormGroup, Validators } from './../core';
 import * as Tpl from './app.html';
 
 
@@ -6,7 +6,7 @@ import * as Tpl from './app.html';
   selector: 'app-root',
   template: Tpl,
   hostListeners: {
-    click: (e, vm) => {}
+    click: (e, vm) => { }
   },
   hostAttrs: {
     class: (vm) => {
@@ -31,7 +31,7 @@ export class AppComponent {
   public selectedIndex = 0;
   public items = [];
   public list = [1, 2, 3];
-  public tabs = ['Values', 'Loop', 'If', 'Style', 'Lazy load', 'Model', 'Pass properties', 'Plugins', 'Router'];
+  public tabs = ['Values', 'Loop', 'If', 'Style', 'Lazy load', 'Model', 'Pass properties', 'Plugins', 'Router', 'Form'];
   public collection = [[[13, 14, 15]], [[16, 17]]];
   public value = 'value';
   public attrs = {
@@ -50,8 +50,15 @@ export class AppComponent {
   };
   forChildComponent = '1000';
 
+  public form = new FormGroup({
+    name: ['', [Validators.required]],
+    age: ['', [Validators.required]],
+    checkbox: [],
+    radio: []
+  });
+
   onUpdate() {
-    // this.value+=this.value;
+
   }
 
   get input1AndInput2() {
@@ -100,7 +107,6 @@ export class AppComponent {
   }
 
   test(e, data) {
-    // alert();
     console.log(e, data)
   }
 
@@ -118,6 +124,15 @@ export class AppComponent {
     }
 
     this.items = this.items.concat(items);
+  }
+
+  submit(e) {
+    e.preventDefault();
+    if (this.form.valid) {
+      this.form.reset();
+      console.log(this.form.value);
+    }
+
   }
 
 }

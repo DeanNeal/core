@@ -76,18 +76,6 @@ export abstract class BaseComponent {
             Object.defineProperty(this, '$attrs', { value: attrs, writable: false, enumerable: false });
         }
 
-        this.setPrivates(options);
-
-        this.addListeners();
-
-        this.initDirectives();
-
-        this.onInit();
-
-        this.changeDetection();
-    }
-
-    setPrivates(options: IOptions): void {
         this._hostBinding.events = options.hostListeners;
 
         for (let key in options.hostAttrs) {
@@ -96,7 +84,13 @@ export abstract class BaseComponent {
             };
         }
 
-        this._interpolation = [];
+        this.addListeners();
+
+        this.initDirectives();
+
+        this.onInit();
+
+        this.changeDetection();
     }
 
     initDirectives(): void {
@@ -133,10 +127,12 @@ export abstract class BaseComponent {
         // Directives._outside.call(this, this._directives['outside']);
         Directives._pattern.call(this, this._directives['pattern']);//TODO
         Directives._elRef.call(this, this._directives['ref']);
+
+        Directives._formGroup.call(this, this._directives['form-group']);
         Directives._events.call(this, this._events);
         Directives._hostEvents.call(this, this._hostBinding.events);
 
-        Directives._formGroup.call(this, this._directives['form-group']);
+       
 
         Directives._on.call(this, this._directives['on']);
     }
