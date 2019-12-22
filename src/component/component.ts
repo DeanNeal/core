@@ -6,7 +6,7 @@ import { DIRECTIVES_NAMES } from './const/directives';
 import { EVENTS_NAMES } from './const/events';
 import API from '../api';
 import { getFilteredProperties } from './../decorators/input';
-import { ILoopParams, IOptions, IDirectiveName, IInput, IInterpolationItem, IEvent } from 'src/interfaces';
+import { ILoopParams, IOptions, IDirectiveName, IInput, IInterpolationItem, IEvent, SimpleObjectOfAny } from 'src/interfaces';
 
 
 
@@ -218,11 +218,19 @@ export abstract class BaseComponent {
         return arr;
     }
 
-    getPropsByScope(value: string, loopParams: ILoopParams) {
+    getPropsByScope(value: string, loopParams: ILoopParams, extra?: SimpleObjectOfAny) {
         let r;
+        let error;
 
         let listOfVariables = this.getAllVariables();
         let listOfVariablesValues = listOfVariables.map((r: string) => this[r]);
+
+        if(extra) {
+            for(let key in extra) {
+                listOfVariables.push(key);
+                listOfVariablesValues.push(extra[key]);
+            }
+        }
 
         if (loopParams) {
             let loops = this.getLoopParams(loopParams, []);
@@ -241,11 +249,10 @@ export abstract class BaseComponent {
         try {
             r = new Function(listOfVariables.toString(), 'return ' + value).apply(this, listOfVariablesValues);
         } catch (err) {
-            // throw new Error(err + '; ' + this);
-            // console.warn(err + '; ' + this);
+            error = err;
         }
 
-        return r;
+        return r || error;
     }
 
     setComponentVariable(string: string, value: any, loopParams: ILoopParams): void {

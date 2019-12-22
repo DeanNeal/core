@@ -151,16 +151,18 @@ export function _init(root: any, directive: string, newArray: IDirectiveParams[]
 }
 
 
-export function _initEvent(root: HTMLElement, directive: string, newArray: IEvent[], loopParams: ILoopParams): IEvent[] {
+export function _initEvent(root: HTMLElement, eventName: string, newArray: IEvent[], loopParams: ILoopParams): IEvent[] {
     let array = newArray || [];
-    let targets = root.querySelectorAll(`[bind-${directive}]`);
-    if (root.getAttribute && root.getAttribute(`bind-${directive}`)) {
-        let obj = createEventObject.call(this, root, directive, loopParams);
+    let targets = root.querySelectorAll(`[bind-${eventName}]`);
+    if (root.getAttribute && root.getAttribute(`bind-${eventName}`)) {
+        let obj = createEventObject.call(this, root, eventName, loopParams);
+        root.removeAttribute(`bind-${eventName}`);
         array.push(obj);
     }
 
     for (let elem of targets) {
-        let obj = createEventObject.call(this, elem, directive, loopParams);
+        let obj = createEventObject.call(this, elem, eventName, loopParams);
+        elem.removeAttribute(`bind-${eventName}`);
         array.push(obj);
     }
     return array;

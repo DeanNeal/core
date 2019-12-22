@@ -150,7 +150,7 @@
             <h3>Form</h3>
             {{form.value | json}}
    
-            <form :form-group="form" @submit="submit($event)">
+            <form :form-group="form" @submit="submit($event) | prevent">
                 <div class="input-group mb-3">
                     <input type="text" class="form-control" placeholder="name" :form-control="name">
                     <span class="invalid-message" :if="form.controls.name.errors.required && form.controls.name.dirty">Required</span>

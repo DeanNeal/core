@@ -127,7 +127,7 @@ export class AppComponent {
   }
 
   submit(e) {
-    e.preventDefault();
+    // e.preventDefault();
     if (this.form.valid) {
       this.form.reset();
       console.log(this.form.value);
