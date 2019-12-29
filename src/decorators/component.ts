@@ -139,7 +139,7 @@ export default function ComponentDecorator(decoratorParams: IComponentParams) {
             });
         }
 
-        // return Class;
+        return Class;
     }
 }
 

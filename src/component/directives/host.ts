@@ -1,7 +1,7 @@
 export function _hostEvents(events: any) {
     for (let event in events) {
         let fn = events[event].bind(this);
-        this.root.addEventListener(event, (e) => { fn.call(this, e, this) }, false);
+        this.root.addEventListener(event, (e) => { fn.call(this, e) }, false);
     }
 }
 
@@ -22,7 +22,7 @@ export function _hostAttr(params: any) {
 }
 
 function bindClass(params: any) {
-    let r = params.fn(this);
+    let r = params.fn.call(this);
     if (params.prev) {
         this.host.classList.remove(params.prev);
     }
@@ -33,13 +33,13 @@ function bindClass(params: any) {
 
 function bindStyle(params: any) {
     for (let key in params.fn) {
-        let r = params.fn[key](this);
+        let r = params.fn[key].call(this);
         this.host.style[key] = r;
     }
 }
 
 function bindAttr(params: any, attr: string) {
-    let r = params.fn(this);
+    let r = params.fn.call(this);
 
     if (attr === 'hidden') r = !!r;
 

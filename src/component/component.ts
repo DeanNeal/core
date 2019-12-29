@@ -6,7 +6,7 @@ import { DIRECTIVES_NAMES } from './const/directives';
 import { EVENTS_NAMES } from './const/events';
 import API from '../api';
 import { getFilteredProperties } from './../decorators/input';
-import { ILoopParams, IOptions, IDirectiveName, IInput, IInterpolationItem, IEvent, SimpleObjectOfAny } from 'src/interfaces';
+import { ILoopParams, IDirectiveName, IInput, IInterpolationItem, IEvent, SimpleObjectOfAny, IComponentParams } from 'src/interfaces';
 
 
 
@@ -29,7 +29,7 @@ export abstract class BaseComponent {
 
     }
 
-    constructor(a,b,c) {
+    constructor(a, b, c) {
         debugger
     }
 
@@ -37,7 +37,7 @@ export abstract class BaseComponent {
 
     }
 
-    componentConstructor(root: HTMLElement, options: IOptions): void {
+    componentConstructor(root: HTMLElement, options: IComponentParams): void {
         Object.defineProperty(this, 'root', { value: root, writable: false });
         Object.defineProperty(this, 'host', {
             get: (): HTMLElement => {
@@ -103,8 +103,8 @@ export abstract class BaseComponent {
 
         //internal directives
         DIRECTIVES_NAMES.forEach((directive: IDirectiveName) => {
-            if(!this._directives[directive.name])  this._directives[directive.name]  = [];
-            
+            if (!this._directives[directive.name]) this._directives[directive.name] = [];
+
             if (directive.name !== 'for') {
                 Directives._init.call(this, this.root, directive.alias, this._directives[directive.name]);
             }
@@ -118,7 +118,7 @@ export abstract class BaseComponent {
         //custom directives
         Directives._initCustom.call(this, this.root, this._custom_directives);
 
- 
+
         // Directives._dropdown.call(this, this._directives['dropdown']);
         Directives._lazy.call(this, this._directives['lazy-load']);
 
@@ -132,7 +132,7 @@ export abstract class BaseComponent {
         Directives._events.call(this, this._events);
         Directives._hostEvents.call(this, this._hostBinding.events);
 
-       
+
 
         Directives._on.call(this, this._directives['on']);
     }
@@ -180,7 +180,7 @@ export abstract class BaseComponent {
         Directives._hostAttr.call(this, this._hostBinding.attr);
 
         Interpolation._update.call(this, this._interpolation);
-        
+
         Directives._customDirective.call(this, this._custom_directives);
         this.onUpdate();
     }
@@ -218,15 +218,15 @@ export abstract class BaseComponent {
         return arr;
     }
 
-    getPropsByScope(value: string, loopParams: ILoopParams, extra?: SimpleObjectOfAny) {
+    getPropsByScope(value: string, loopParams: ILoopParams, extra?: SimpleObjectOfAny, showError?) {
         let r;
         let error;
 
         let listOfVariables = this.getAllVariables();
         let listOfVariablesValues = listOfVariables.map((r: string) => this[r]);
 
-        if(extra) {
-            for(let key in extra) {
+        if (extra) {
+            for (let key in extra) {
                 listOfVariables.push(key);
                 listOfVariablesValues.push(extra[key]);
             }
@@ -249,7 +249,9 @@ export abstract class BaseComponent {
         try {
             r = new Function(listOfVariables.toString(), 'return ' + value).apply(this, listOfVariablesValues);
         } catch (err) {
-            error = err;
+            if (showError) {
+                error = err;
+            }
         }
 
         return r || error;

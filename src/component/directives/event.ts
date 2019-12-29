@@ -35,7 +35,7 @@ export function createEventObject(elem: HTMLElement, event: string, loopParams: 
                 const methods = funcParams.split('|')[0].split(';').filter(r => r).map(r => 'this.' + r);
                 const extra = methods.some(r => regExp.exec(r)[1] === '$event');
 
-                const r = this.getPropsByScope(methods, loopParams, extra ? { $event: e } : {});
+                const r = this.getPropsByScope(methods, loopParams, extra ? { $event: e } : {}, true);
 
                 if (r instanceof Error) {
                     throw new Error(r.toString());

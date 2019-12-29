@@ -6,18 +6,18 @@ import * as Tpl from './app.html';
   selector: 'app-root',
   template: Tpl,
   hostListeners: {
-    click: (e, vm) => { }
+    click(e) { }
   },
   hostAttrs: {
-    class: (vm) => {
-      return vm.input1AndInput2;
+    class() {
+      return this.input1AndInput2;
     },
     style: {
-      background: () => {
+      background() {
         return '#aaa';
       }
     },
-    title: () => {
+    title() {
       return 'title'
     }
     // hidden: (vm) => {
